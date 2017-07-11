@@ -36,6 +36,7 @@ import cn.ngame.store.core.fileload.GameFileStatus;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
+import cn.ngame.store.core.utils.ConstantKey;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.search.view.SearchActivity;
@@ -180,7 +181,7 @@ public class GameDetailActivity extends BaseFgActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("gameId", String.valueOf(gameId));
+                params.put(ConstantKey.GAME_ID, String.valueOf(gameId));
                 return params;
             }
         };
