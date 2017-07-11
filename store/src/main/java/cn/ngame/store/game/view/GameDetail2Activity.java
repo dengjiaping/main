@@ -174,7 +174,7 @@ public class GameDetail2Activity extends BaseFgActivity implements StickyScrollV
 
     private void initViewPager() {
         fragments = new ArrayList<Fragment>();
-        fragments.add(GameDetailFragment.newInstance(this, gameInfo));
+        fragments.add(GameDetailFragment.newInstance( gameInfo));
         fragments.add(GameDetail2Fragment.newInstance());
         fragments.add(GameDetail2Fragment.newInstance());
 

@@ -4,12 +4,12 @@
         "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\layout\\mul_picture_item_camera.xml"
     },
     {
-        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\activity_about.xml",
-        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\layout\\activity_about.xml"
-    },
-    {
         "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_item_material.xml",
         "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\layout\\select_dialog_item_material.xml"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\activity_about.xml",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\layout\\activity_about.xml"
     },
     {
         "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\question_detail_activity.xml",
@@ -24,12 +24,12 @@
         "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\layout\\item_search_item.xml"
     },
     {
-        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\selected_topics_activity.xml",
-        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\layout\\selected_topics_activity.xml"
-    },
-    {
         "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_separator.xml",
         "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.1\\res\\layout\\design_navigation_item_separator.xml"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\selected_topics_activity.xml",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\layout\\selected_topics_activity.xml"
     },
     {
         "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\back_button.xml",
@@ -44,12 +44,12 @@
         "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\layout\\order_msg_item.xml"
     },
     {
-        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_video_rank.xml",
-        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\layout\\fragment_video_rank.xml"
-    },
-    {
         "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\vote_msg_item.xml",
         "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\layout\\vote_msg_item.xml"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_video_rank.xml",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\layout\\fragment_video_rank.xml"
     },
     {
         "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\del_browse_pop_item.xml",
@@ -128,12 +128,12 @@
         "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\layout\\help_and_feedback.xml"
     },
     {
-        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\ranking_header_view.xml",
-        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\layout\\ranking_header_view.xml"
-    },
-    {
         "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_tab_text.xml",
         "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.1\\res\\layout\\design_layout_tab_text.xml"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\ranking_header_view.xml",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\layout\\ranking_header_view.xml"
     },
     {
         "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\item_lv_game_loading.xml",
@@ -256,12 +256,12 @@
         "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\layout\\item_lv_push_msg.xml"
     },
     {
-        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\layout_notification_download.xml",
-        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\layout\\layout_notification_download.xml"
-    },
-    {
         "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\activity_begin.xml",
         "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\layout\\activity_begin.xml"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\layout_notification_download.xml",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\layout\\layout_notification_download.xml"
     },
     {
         "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\loadint_fragment.xml",
@@ -284,12 +284,12 @@
         "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\layout\\fragment_vr_video.xml"
     },
     {
-        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_layout.xml",
-        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\layout\\abc_list_menu_item_layout.xml"
-    },
-    {
         "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\design_menu_item_action_area.xml",
         "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.1\\res\\layout\\design_menu_item_action_area.xml"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_layout.xml",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\layout\\abc_list_menu_item_layout.xml"
     },
     {
         "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\layout\\activity_feedback.xml",
