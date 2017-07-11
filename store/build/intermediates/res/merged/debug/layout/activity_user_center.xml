@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ngame="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray">
+
+    <cn.ngame.store.view.SimpleTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_title_height"
+        android:layout_alignParentTop="true"
+        ngame:left_but_visable="true"
+        ngame:left_but="@drawable/back"
+        ngame:left_tv_visable="true"
+        ngame:left_text="@string/user_info"
+        ngame:left_text_size="18sp"
+        ngame:right_but_visable="false"/>
+
+    <LinearLayout
+        android:id="@+id/tv_tag1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_bar"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/layout_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:textColor="@color/font_black_6"
+                android:text="@string/user_photo"/>
+
+            <cn.ngame.store.view.PicassoImageView
+                android:id="@+id/img_photo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/white" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"/>
+
+        <RelativeLayout
+            android:id="@+id/layout_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:textColor="@color/font_black_6"
+                android:text="@string/user_nick_name"/>
+
+            <TextView
+                android:id="@+id/tv_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/font_gray"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:textColor="@color/font_black_6"
+                android:text="@string/user_login_name"/>
+
+            <TextView
+                android:id="@+id/tv_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/font_gray"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/tv_logout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="15dp"
+        android:background="@drawable/selector_yj_blue_but"
+        android:gravity="center"
+        android:onClick="onLogoutClick"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:text="@string/user_logout"/>
+
+</RelativeLayout>

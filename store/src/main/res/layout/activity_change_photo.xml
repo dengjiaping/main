@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ngame="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray">
+
+    <cn.ngame.store.view.SimpleTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/app_title_height"
+        android:layout_alignParentTop="true"
+        ngame:left_but_visable="true"
+        ngame:left_but="@drawable/back"
+        ngame:left_tv_visable="true"
+        ngame:left_text="返回"
+        ngame:left_text_size="18sp"
+        ngame:right_but_visable="false" />
+
+    <cn.ngame.store.view.PicassoImageView
+        android:id="@+id/img_photo"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/login_photo_big" />
+
+    <LinearLayout
+        android:id="@+id/layout_1"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textColor="@color/font_black_6"
+           android:paddingLeft="10dp"
+            android:textSize="16sp"
+            android:text="从相册选一张" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray" />
+
+    <LinearLayout
+        android:id="@+id/layout_2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textColor="@color/font_black_6"
+            android:paddingLeft="10dp"
+            android:textSize="16sp"
+            android:text="拍一张照片" />
+
+    </LinearLayout>
+
+</LinearLayout>

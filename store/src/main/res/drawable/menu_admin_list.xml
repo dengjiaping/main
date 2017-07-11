@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?><!-- 引导页面小圆点选中与未选择状态 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item android:state_selected="true" android:drawable="@drawable/admin_list_bg"></item>-->
+    <!--<item android:state_selected="false" android:drawable="@color/white"></item>-->
+
+    <item android:drawable="@drawable/admin_list_bg" android:state_pressed="true" />
+    <!-- focused state -->
+    <item android:drawable="@drawable/admin_list_bg" android:state_focused="true" />
+    <!-- default state -->
+    <item android:drawable="@color/white" />
+</selector>

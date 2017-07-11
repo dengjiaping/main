@@ -1,0 +1,442 @@
+[
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_plus_signin_btn_icon_dark_pressed.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_plus_signin_btn_icon_dark_pressed.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\sliding_menu_background.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\sliding_menu_background.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\game_sb_but.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\game_sb_but.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\sliding_menu_about.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\sliding_menu_about.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\sliding_menu_spirit.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\sliding_menu_spirit.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\ic_mapping_sprite.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\ic_mapping_sprite.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\loading_plane.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\loading_plane.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\msg_dot_red.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\msg_dot_red.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\login_eye_open.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\login_eye_open.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\home_bt_vr.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\home_bt_vr.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\play_normal.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\play_normal.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\checkbox_normal.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\checkbox_normal.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\arrow_down.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\arrow_down.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_plus_signin_btn_icon_light_normal.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_plus_signin_btn_icon_light_normal.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_plus_signin_btn_text_dark_pressed.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_plus_signin_btn_text_dark_pressed.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\game_vr_but.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\game_vr_but.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\horn_small.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\horn_small.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_plus_signin_btn_text_light_disabled.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_plus_signin_btn_text_light_disabled.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\store.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\store.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\star_big_black.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\star_big_black.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\mv360.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\mv360.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_video.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\default_video.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\review.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\review.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\star_small_black.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\star_small_black.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_plus_signin_btn_icon_dark_focused.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_plus_signin_btn_icon_dark_focused.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\star_small_normal.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\star_small_normal.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\logo_tswj.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\logo_tswj.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_plus_signin_btn_icon_dark_normal.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_plus_signin_btn_icon_dark_normal.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\logo_status.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\logo_status.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_google_signin_btn_text_dark_disabled.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_google_signin_btn_text_dark_disabled.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_google_signin_btn_text_dark_normal.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_google_signin_btn_text_dark_normal.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\home_bt_rank.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\home_bt_rank.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_google_signin_btn_text_light_normal.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_google_signin_btn_text_light_normal.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\register_msg.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\register_msg.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_google_signin_btn_icon_dark_disabled.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_google_signin_btn_icon_dark_disabled.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\sliding_menu_feedback.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\sliding_menu_feedback.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\login_user.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\login_user.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\login_wx.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\login_wx.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\search.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\search.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_google_signin_btn_icon_dark_focused.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_google_signin_btn_icon_dark_focused.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\history_lock.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\history_lock.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\fork.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\fork.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\sliding_menu_device.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\sliding_menu_device.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\toggle_but_off.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\toggle_but_off.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\search_title.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\search_title.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_plus_signin_btn_text_dark_disabled.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_plus_signin_btn_text_dark_disabled.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\vr_video.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\vr_video.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_plus_signin_btn_icon_light_disabled.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_plus_signin_btn_icon_light_disabled.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_plus_signin_btn_text_light_normal.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_plus_signin_btn_text_light_normal.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_google_signin_btn_text_light_disabled.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_google_signin_btn_text_light_disabled.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\back.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\back.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\local_history.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\local_history.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\msg_title_red.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\msg_title_red.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\logo_blue_en.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\logo_blue_en.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\local_game.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\local_game.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_google_signin_btn_icon_light_pressed.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_google_signin_btn_icon_light_pressed.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_google_signin_btn_text_light_focused.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_google_signin_btn_text_light_focused.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\login_phone.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\login_phone.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\login_pwd.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\login_pwd.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\vr_360.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\vr_360.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\login_photo_small.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\login_photo_small.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_plus_signin_btn_text_light_pressed.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_plus_signin_btn_text_light_pressed.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\login_lock.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\login_lock.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\vr_game.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\vr_game.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\arrow_left.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\arrow_left.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_full_open_on_phone.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_full_open_on_phone.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\msg_title.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\msg_title.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\play_black.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\play_black.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_plus_signin_btn_icon_light_focused.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_plus_signin_btn_icon_light_focused.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_google_signin_btn_icon_dark_normal.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_google_signin_btn_icon_dark_normal.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\toggle_but_on.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\toggle_but_on.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\trash_black.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\trash_black.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\logo_white.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\logo_white.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\agree.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\agree.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_google_signin_btn_icon_dark_pressed.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_google_signin_btn_icon_dark_pressed.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\login_eye_close.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\login_eye_close.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\sliding_menu_disclaimer.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\sliding_menu_disclaimer.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\sliding_menu_setting.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\sliding_menu_setting.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\login_photo_big.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\login_photo_big.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_google_signin_btn_icon_light_focused.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_google_signin_btn_icon_light_focused.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_google_signin_btn_icon_light_disabled.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_google_signin_btn_icon_light_disabled.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\login_wb.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\login_wb.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_google_signin_btn_text_dark_pressed.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_google_signin_btn_text_dark_pressed.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_google_signin_btn_text_light_pressed.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_google_signin_btn_text_light_pressed.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\login_qq.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\login_qq.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\logo_blue_r.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\logo_blue_r.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\menu_home_normal.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\menu_home_normal.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\checkbox_pressed.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\checkbox_pressed.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\start.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\start.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\double_right_arrow.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\double_right_arrow.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\arrow_right_gray.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\arrow_right_gray.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_plus_signin_btn_icon_light_pressed.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_plus_signin_btn_icon_light_pressed.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_plus_signin_btn_text_dark_focused.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_plus_signin_btn_text_dark_focused.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\search_white.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\search_white.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\logo_ngame_white.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\logo_ngame_white.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\home_bt_game.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\home_bt_game.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_plus_signin_btn_icon_dark_disabled.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_plus_signin_btn_icon_dark_disabled.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\menu_video_balck.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\menu_video_balck.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\logo_blue.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\logo_blue.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\arrow_right.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\arrow_right.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_plus_signin_btn_text_dark_normal.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_plus_signin_btn_text_dark_normal.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_plus_signin_btn_text_light_focused.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_plus_signin_btn_text_light_focused.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\type_defalut.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\type_defalut.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\star_big_normal.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\star_big_normal.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\msg_dot_gray.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\msg_dot_gray.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\game_cp_but.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\game_cp_but.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\download_arrow.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\download_arrow.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_google_signin_btn_icon_light_normal.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_google_signin_btn_icon_light_normal.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\common_google_signin_btn_text_dark_focused.9.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_google_signin_btn_text_dark_focused.9.png"
+    },
+    {
+        "merged": "F:\\seven7\\android\\trunk\\main\\store\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\play_bakground.png",
+        "source": "F:\\seven7\\android\\trunk\\main\\store\\src\\main\\res\\drawable-xhdpi\\play_bakground.png"
+    }
+]

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ngame="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+    <!--item的时候没有反应，无法获取的焦点-->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingTop="8dp">
+
+        <ImageView
+            android:id="@+id/img_1"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/tv_position" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/img_1"
+            android:clickable="false"
+            android:maxLines="1"
+            android:paddingRight="10dp"
+            android:text="qweqwe"
+            android:textColor="@color/font_black_6"
+            android:textSize="16sp" />
+
+        <RatingBar
+            android:id="@+id/rating_bar"
+            style="@style/RatingBarSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/img_1"
+            android:clickable="false"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progress="0"
+            android:secondaryProgress="0" />
+
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/rating_bar"
+            android:clickable="false"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/text1"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/tv_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rating_bar"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/img_1"
+            android:clickable="false"
+            android:ellipsize="end"
+            android:lines="1"
+            android:paddingRight="20dp"
+            android:text="wqeqweqwe"
+            android:textSize="12sp" />
+
+        <cn.ngame.store.view.GameLoadProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="60dp"
+            android:layout_height="27dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:clickable="true"
+            android:text="@string/download"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            ngame:progress="0" />
+        <!--@drawable/shape_green_download-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_summary"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/img_1">
+
+            <TextView
+                android:id="@+id/tv_shoubing"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_gray_rank"
+                android:gravity="center_horizontal"
+                android:layout_marginRight="5dp"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp"
+                android:text="手柄"
+                android:textColor="@color/font_black_9"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tv_vr"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/shape_gray_rank"
+                android:gravity="center_horizontal"
+                android:paddingBottom="2dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="2dp"
+                android:text="VR"
+                android:textColor="@color/font_black_9"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tv_toukong"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_gray_rank"
+                android:gravity="center_horizontal"
+                android:paddingBottom="2dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="2dp"
+                android:text="头控"
+                android:textColor="@color/font_black_9"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

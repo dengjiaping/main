@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:ngame="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="220dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/game_rank_bg">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/sdv_img_2"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    fresco:actualImageScaleType="centerCrop"
+                    fresco:placeholderImage="@drawable/default_logo"
+                    fresco:placeholderImageScaleType="centerCrop" />
+                <!--fresco:viewAspectRatio=""-->/>
+                <!--fresco:placeholderImage="@color/gray_dd"-->
+                <ImageView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ranking_two" />
+
+                <TextView
+                    android:id="@+id/tv_rank_name_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_download_num_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="3dp"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <cn.ngame.store.view.GameLoadProgressBar
+                    android:id="@+id/day_progress_bar_two"
+                    android:layout_width="60dp"
+                    android:layout_height="27dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="6dp"
+                    android:background="@color/white"
+                    android:clickable="true"
+                    android:text="@string/download"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    ngame:progress="0" />
+                <!--@drawable/shape_white_empty-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"
+                android:orientation="vertical">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/sdv_img_1"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    fresco:actualImageScaleType="centerCrop"
+                    fresco:placeholderImage="@drawable/default_logo"
+                    fresco:placeholderImageScaleType="centerCrop" />
+                <!--fresco:viewAspectRatio=""-->/>
+                <!--fresco:placeholderImage="@color/gray_dd"-->
+                <ImageView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ranking_one" />
+
+                <TextView
+                    android:id="@+id/tv_rank_name_one"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_download_num_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="3dp"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <cn.ngame.store.view.GameLoadProgressBar
+                    android:id="@+id/day_progress_bar_one"
+                    android:layout_width="60dp"
+                    android:layout_height="27dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="6dp"
+                    android:background="@color/white"
+                    android:clickable="true"
+                    android:text="@string/download"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    fresco:progress="0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/sdv_img_3"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    fresco:actualImageScaleType="centerCrop"
+                    fresco:placeholderImage="@drawable/default_logo"
+                    fresco:placeholderImageScaleType="centerCrop" />
+                <!--fresco:viewAspectRatio=""-->/>
+                <!--fresco:placeholderImage="@color/gray_dd"-->
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ranking_three" />
+
+                <TextView
+                    android:id="@+id/tv_rank_name_three"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_download_num_three"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="3dp"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <cn.ngame.store.view.GameLoadProgressBar
+                    android:id="@+id/day_progress_bar_three"
+                    android:layout_width="60dp"
+                    android:layout_height="27dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="6dp"
+                    android:background="@color/white"
+                    android:clickable="true"
+                    android:text="@string/download"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    ngame:progress="0" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/game_rank_bot_bg" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/gray" />
+</LinearLayout>

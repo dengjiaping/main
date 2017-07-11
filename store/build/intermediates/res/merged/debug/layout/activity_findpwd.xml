@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ngame="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gray">
+
+    <cn.ngame.store.view.BaseTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/app_title_height"
+        ngame:left_but_visable="true"
+        ngame:left_but_img="@drawable/back"
+        ngame:title_size="22sp"
+        ngame:title_text="@string/find_pwd"/>
+
+
+    <!-- /////////////  用户名 /////////// -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/shape_yj_white_rectangle">
+
+        <ImageView
+            android:id="@+id/img_1"
+            android:layout_width="30dp"
+            android:layout_height="210dp"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="7dp"
+            android:background="@drawable/login_phone"/>
+
+        <EditText
+            android:id="@+id/et_login_user"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_toRightOf="@+id/img_1"
+            android:layout_marginLeft="1dp"
+            android:background="@null"
+            android:hint="@string/register_mobile"
+            android:inputType="phone"
+            android:singleLine="true"
+            android:textColor="@color/font_default"
+            android:textColorHint="@color/font_default"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+    <!-- /////////////  验证码 /////////// -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/shape_yj_white_rectangle">
+
+        <ImageView
+            android:id="@+id/img_4"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="7dp"
+            android:background="@drawable/register_msg"/>
+
+        <EditText
+            android:id="@+id/et_captcha"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_toRightOf="@+id/img_4"
+            android:layout_marginLeft="1dp"
+            android:background="@null"
+            android:inputType="number"
+            android:hint="@string/register_captcha"
+            android:textColorHint="@color/font_default"
+            android:textColor="@color/font_default"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_captcha"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_margin="7dp"
+            android:text="@string/register_get_captcha"
+            android:textColor="@color/colorPrimary"/>
+
+    </RelativeLayout>
+
+
+    <!-- /////////////  密码 /////////// -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/shape_yj_white_rectangle">
+
+        <ImageView
+            android:id="@+id/img_2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="7dp"
+            android:background="@drawable/login_lock"/>
+
+        <EditText
+            android:id="@+id/et_login_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_toRightOf="@+id/img_2"
+            android:layout_marginLeft="1dp"
+            android:background="@null"
+            android:inputType="textPassword"
+            android:hint="@string/find_new"
+            android:textColorHint="@color/font_default"
+            android:textColor="@color/font_default"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@+id/bt_show_pwd"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="7dp"
+            android:background="@drawable/login_selector_eye_but"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/bt_find_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:onClick="onLoginClick"
+        android:background="@drawable/selector_yj_blue_but"
+        android:textColor="@color/white"
+        android:text="@string/find_now"
+        android:textSize="18sp" />
+
+</LinearLayout>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_score"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/comment_detail_rating_count"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:text="0分"
+            android:textColor="@color/colorPrimary"/>
+
+        <RatingBar
+            android:id="@+id/rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            style="@style/RatingBarSmall"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:rating="0"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/tv_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:textSize="12dp"
+            android:textColor="@color/colorPrimary" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/content_wrapper"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/font_gray"
+                android:textSize="12dp"
+                android:text="5分"
+                android:layout_gravity="center"
+                android:gravity="center" />
+
+            <ProgressBar
+                android:id="@+id/progressBar5"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="14dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/progressbar_comentitem_color"
+                style="?android:attr/progressBarStyleHorizontal"/>
+
+            <TextView
+                android:id="@+id/text5"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/font_gray"
+                android:textSize="12dp"
+                android:text="0"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/font_gray"
+                android:textSize="12dp"
+                android:text="4分"
+                android:layout_gravity="center"
+                android:gravity="center" />
+
+            <ProgressBar
+                android:id="@+id/progressBar4"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="14dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/progressbar_comentitem_color"
+                style="?android:attr/progressBarStyleHorizontal"/>
+
+            <TextView
+                android:id="@+id/text4"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/font_gray"
+                android:textSize="12dp"
+                android:text="0"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/font_gray"
+                android:textSize="12dp"
+                android:text="3分"
+                android:layout_gravity="center"
+                android:gravity="center" />
+
+            <ProgressBar
+                android:id="@+id/progressBar3"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="14dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/progressbar_comentitem_color"
+                style="?android:attr/progressBarStyleHorizontal"/>
+
+            <TextView
+                android:id="@+id/text3"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/font_gray"
+                android:textSize="12dp"
+                android:text="0"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/font_gray"
+                android:textSize="12dp"
+                android:text="2分"
+                android:layout_gravity="center"
+                android:gravity="center" />
+
+            <ProgressBar
+                android:id="@+id/progressBar2"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="14dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/progressbar_comentitem_color"
+                style="?android:attr/progressBarStyleHorizontal"/>
+
+            <TextView
+                android:id="@+id/text2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/font_gray"
+                android:textSize="12dp"
+                android:text="0"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/font_gray"
+                android:textSize="12dp"
+                android:text="1分"
+                android:layout_gravity="center"
+                android:gravity="center" />
+
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="14dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/progressbar_comentitem_color"
+                style="?android:attr/progressBarStyleHorizontal"/>
+
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/font_gray"
+                android:textSize="12dp"
+                android:text="0"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

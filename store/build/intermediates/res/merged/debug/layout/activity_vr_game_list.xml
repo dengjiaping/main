@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ngame="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray">
+
+    <cn.ngame.store.view.BaseTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/app_title_height"
+        ngame:title_text="@string/vr_game"
+        ngame:title_size="20sp"
+        ngame:left_but_visable="true"
+        ngame:left_but_img="@drawable/back"
+        ngame:right_but_visable="false" />
+
+    <cn.ngame.store.view.LoadStateView
+        android:id="@+id/loadStateView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        ngame:ing="@string/loading"
+        ngame:end="@string/load_end" />
+
+    <!--<ListView-->
+        <!--android:id="@+id/listView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="4dp"-->
+        <!--android:divider="@color/gray"-->
+        <!--android:dividerHeight="4dp"-->
+        <!--android:scrollbars="none"-->
+        <!--android:scrollingCache="false"-->
+        <!--android:animationCache="false"-->
+        <!--android:background="@color/white" />-->
+
+    <cn.ngame.store.widget.pulllistview.PullToRefreshListView
+        android:id="@+id/pullListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="0dp"
+        android:background="@color/gray"
+        android:divider="@null"
+        android:scrollbars="none"></cn.ngame.store.widget.pulllistview.PullToRefreshListView>
+</LinearLayout>

@@ -1,0 +1,18 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- APP的Title高度 -->
+    <dimen name="app_title_height">45dp</dimen>
+
+    <!-- ListView 中图片尺寸 -->
+    <dimen name="list_detail_image_size">65dp</dimen>
+    <dimen name="list_detail_image_size_80">80dp</dimen>
+    <dimen name="list_detail_image_size_100">100dp</dimen>
+    <dimen name="recycle_detail_image_size">160dp</dimen>
+    <!-- 轮播图片高度 -->
+    <dimen name="banner_image_height">214dp</dimen>
+    <!-- 侧滑菜单宽度 -->
+    <dimen name="sliding_menu_width">80dp</dimen>
+</resources>

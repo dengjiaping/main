@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ngame="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:background="@color/white"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/img_1"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_toLeftOf="@+id/progress_bar"
+            android:layout_toRightOf="@+id/img_1">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="5dp"
+                android:text="0%"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
+
+
+            <ProgressBar
+                android:id="@+id/pb"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_below="@+id/tv_title"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/gray"
+                android:indeterminate="false"
+                android:indeterminateOnly="false"
+                android:progress="12"
+                android:progressDrawable="@drawable/progressbar_horizontal" />
+
+
+            <TextView
+                android:id="@+id/tv_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/pb"
+                android:text="已下载"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tv_finished"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/pb"
+                android:layout_toLeftOf="@+id/tv_length"
+                android:text="0"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tv_length"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/pb"
+                android:layout_marginRight="5dp"
+                android:text="/0"
+                android:textSize="10sp" />
+
+
+        </RelativeLayout>
+
+        <cn.ngame.store.view.GameLoadProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="60dp"
+            android:layout_height="27dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:clickable="true"
+            android:text="@string/download"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            ngame:progress="0" />
+    </RelativeLayout>
+</LinearLayout>

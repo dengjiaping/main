@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="commonwidget-">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/store/build/intermediates/exploded-aar/commonwidget/res" />
+      <root url="jar://$PROJECT_DIR$/store/build/intermediates/exploded-aar/commonwidget/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

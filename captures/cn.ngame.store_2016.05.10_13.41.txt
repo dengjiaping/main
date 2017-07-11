@@ -1,0 +1,40 @@
+Activity Resolver Table:
+  Non-Data Actions:
+      android.intent.action.MAIN:
+        257086aa cn.ngame.store/.activity.BeginActivity
+
+Receiver Resolver Table:
+  Non-Data Actions:
+      android.net.conn.CONNECTIVITY_CHANGE:
+        b6d529b cn.ngame.store/.receiver.NetStatusReceiver
+
+Key Set Manager:
+  [cn.ngame.store]
+      Signing KeySets: 12
+
+Packages:
+  Package [cn.ngame.store] (2b999638):
+    userId=10076 gids=[3003]
+    pkg=Package{37a3611 cn.ngame.store}
+    codePath=/data/app/cn.ngame.store-1
+    resourcePath=/data/app/cn.ngame.store-1
+    legacyNativeLibraryDir=/data/app/cn.ngame.store-1/lib
+    primaryCpuAbi=null
+    secondaryCpuAbi=null
+    versionCode=1 targetSdk=23
+    versionName=1.0
+    splits=[base]
+    applicationInfo=ApplicationInfo{19a86376 cn.ngame.store}
+    flags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    dataDir=/data/data/cn.ngame.store
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    timeStamp=2016-05-09 22:21:56
+    firstInstallTime=2016-05-09 22:21:56
+    lastUpdateTime=2016-05-09 22:21:56
+    signatures=PackageSignatures{1e447d77 [26ddde4]}
+    permissionsFixed=true haveGids=true installStatus=1
+    pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    User 0:  installed=true hidden=false stopped=false notLaunched=false enabled=0
+    grantedPermissions:
+      android.permission.INTERNET
+      android.permission.ACCESS_NETWORK_STATE

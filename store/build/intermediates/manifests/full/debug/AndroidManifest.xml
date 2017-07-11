@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.ngame.store"
+    android:versionCode="300001"
+    android:versionName="V3.0.1" >
+
+    <uses-sdk
+        android:maxSdkVersion="23"
+        android:minSdkVersion="19"
+        android:targetSdkVersion="23" />
+
+    <!-- 网络访问权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 允许获取网络状态权限 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 读写手机状态和身份 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 读写存储权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 允许挂载和反挂载文件系统可移动存储卡权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+    <!-- 蓝牙操作权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <!-- 监听APP安装与卸载权限 -->
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- 百度推送权限 start -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.cn.ngame.store" />
+
+    <permission
+        android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.cn.ngame.store"
+        android:protectionLevel="normal" />
+
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <!-- 百度推送权限 end -->
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="false" />
+
+    <application
+        android:name="cn.ngame.store.StoreApplication"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="cn.ngame.store.base.activity.BeginActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="cn.ngame.store.base.activity.GuideViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.base.activity.WelcomeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.activity.PadToolActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|navigation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.search.view.SearchActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.user.view.LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.user.view.RegisterActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.user.view.FindPwdActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.game.view.GameDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.game.view.GameDetail2Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.activity.ReviewActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.activity.ReviewListActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.base.activity.AboutActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.base.activity.FeedbackActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.base.activity.DisclaimerActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.activity.admin.SettingActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.user.view.UserCenterActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.user.view.ChangePhotoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.activity.VRVideoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.game.view.SBGameActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.game.view.VRGameActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.game.view.CPGameActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.game.view.GameSelectionActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.game.view.GameRecommendActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.game.view.GameListActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.video.view.VideoDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.video.view.VideoRecommendActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.video.view.VideoPlayActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.video.view.VideoPlay3DActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.video.view.VideoMediaPlayerActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="com.soundcloud.android.crop.CropImageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.ota.view.OtaActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.ota.view.OtaHelpActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.local.view.MyGameActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.local.view.WatchHistoryActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.push.view.PushMessageActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.push.view.MessageDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.push.view.NotifyMsgDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="cn.ngame.store.gamehub.view.ReportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.gamehub.view.PostMsgActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.gamehub.view.SubmitGameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.gamehub.view.StrategyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.gamehub.view.VoteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.gamehub.view.ChooseModuleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.gamehub.view.ChooseGameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.gamehub.view.NoticeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.gamehub.view.ShowViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.gamehub.view.SearchPostActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.base.activity.AdvertisingPageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.gamehub.view.MsgDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="cn.ngame.store.widget.mulpicture.MulPictureActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.activity.main.MainHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.activity.main.FictitiousActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.activity.main.SelectedTopicsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.activity.main.TopicsDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.activity.admin.MyGameDownloadActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.activity.admin.FeedbackSucceedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.activity.admin.HelpAndFeedbackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.activity.admin.QuestionListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.activity.admin.QuestionDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.ngame.store.activity.admin.SystemInfoActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 注册后台服务组件 -->
+        <!-- <service android:name=".core.service.StoreService" /> -->
+        <service android:name="cn.ngame.store.core.fileload.FileLoadService" />
+        <service android:name="cn.ngame.store.ota.model.OtaService" />
+
+        <receiver android:name="cn.ngame.store.receiver.NetStatusReceiver" >
+            <intent-filter>
+
+                <!-- 监听网络变动事件 -->
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 监听APP安装与卸载 -->
+        <receiver
+            android:name="cn.ngame.store.receiver.InstallStatusReceiver"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <!-- baidu push service start -->
+        <!-- 此处Receiver名字修改为当前包名路径 -->
+        <receiver android:name="cn.ngame.store.receiver.PushMsgReceiver" >
+            <intent-filter>
+
+                <!-- 接收push消息 -->
+                <action android:name="com.baidu.android.pushservice.action.MESSAGE" />
+                <!-- 接收bind、setTags等method的返回结果 -->
+                <action android:name="com.baidu.android.pushservice.action.RECEIVE" />
+                <!-- 接收通知点击事件，和通知自定义内容 -->
+                <action android:name="com.baidu.android.pushservice.action.notification.CLICK" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 用于接收系统消息以保证PushService正常运行 -->
+        <receiver
+            android:name="com.baidu.android.pushservice.PushServiceReceiver"
+            android:process=":bdservice_v1" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="com.baidu.android.pushservice.action.notification.SHOW" />
+                <action android:name="com.baidu.android.pushservice.action.media.CLICK" />
+                <!-- 以下四项为可选的action声明，可大大提高service存活率和消息到达速度 -->
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+        <!-- Push服务接收客户端发送的各种请求 -->
+        <receiver
+            android:name="com.baidu.android.pushservice.RegistrationReceiver"
+            android:process=":bdservice_v1" >
+            <intent-filter>
+                <action android:name="com.baidu.android.pushservice.action.METHOD" />
+                <action android:name="com.baidu.android.pushservice.action.BIND_SYNC" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.baidu.android.pushservice.PushService"
+            android:exported="true"
+            android:process=":bdservice_v1" >
+            <intent-filter>
+                <action android:name="com.baidu.android.pushservice.action.PUSH_SERVICE" />
+            </intent-filter>
+        </service>
+        <!-- 4.4版本新增的CommandService声明，提升小米和魅族手机上的实际推送到达率 -->
+        <service
+            android:name="com.baidu.android.pushservice.CommandService"
+            android:exported="true" />
+
+        <!-- 适配Android N系统必需的ContentProvider声明，写权限包含应用包名 -->
+        <provider
+            android:name="com.baidu.android.pushservice.PushInfoProvider"
+            android:authorities="cn.ngame.store.bdpush"
+            android:exported="true"
+            android:protectionLevel="signature"
+            android:writePermission="baidu.push.permission.WRITE_PUSHINFOPROVIDER.cn.ngame.store" />
+        <!-- baidu push结束 -->
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="59474c33c62dca28fd000fe6" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="ngame_test" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+    </application>
+
+</manifest>

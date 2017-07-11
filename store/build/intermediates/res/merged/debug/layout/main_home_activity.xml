@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:id="@+id/main_list_fragments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_bot_tab"
+        android:layout_marginBottom="-20dp"
+        />
+
+    <!--<android.support.v4.view.ViewPager-->
+        <!--android:id="@+id/viewpager"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginBottom="-20dp"-->
+        <!--android:layout_above="@+id/ll_bot_tab"-->
+        <!--android:visibility="gone"/>-->
+
+    <LinearLayout
+        android:id="@+id/ll_bot_tab"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:alpha="1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/home_tabshadow">
+        <LinearLayout
+            android:id="@+id/menu_home"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:paddingBottom="2dp">
+
+            <Button
+                android:id="@+id/menu_home_bt"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:background="@drawable/menu_home"
+                android:clickable="false"
+                android:enabled="false" />
+
+            <TextView
+                android:id="@+id/menu_home_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:text="精选"
+                android:textColor="@color/font_black_3"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/menu_game"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:paddingBottom="2dp">
+
+            <Button
+                android:id="@+id/menu_game_bt"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:background="@drawable/menu_game"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false" />
+
+            <TextView
+                android:id="@+id/menu_game_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:text="排行"
+                android:textColor="@color/font_black_3"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="0dp">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/menu_video"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:paddingBottom="2dp">
+
+            <Button
+                android:id="@+id/menu_video_bt"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:background="@drawable/menu_video"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false" />
+
+            <TextView
+                android:id="@+id/menu_video_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:text="分类"
+                android:textColor="@color/font_black_3"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/menu_manager"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:paddingBottom="2dp">
+
+            <Button
+                android:id="@+id/menu_manager_bt"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:background="@drawable/menu_manage"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false" />
+
+            <TextView
+                android:id="@+id/menu_manager_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:text="管理"
+                android:textColor="@color/font_black_3"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/menu_game_hub"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+        <ImageView
+            android:id="@+id/menu_game_hub_bt"
+            android:layout_width="29dp"
+            android:layout_height="29dp"
+            android:layout_marginBottom="4dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/menu_game_hub" />
+        <TextView
+            android:id="@+id/menu_gamehub_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="4dp"
+            android:text="圈子"
+            android:textColor="@color/font_black_3"
+            android:textSize="11sp"/>
+    </LinearLayout>
+</RelativeLayout>

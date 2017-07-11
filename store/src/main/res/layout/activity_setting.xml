@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray">
+
+    <RelativeLayout
+        android:id="@id/layout_2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_title_height"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary" >
+
+        <Button
+            android:id="@+id/left_but"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/back"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:text="设置"
+            android:textSize="22sp"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+
+    <TextView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+         android:paddingTop="13dp"
+         android:paddingBottom="13dp"
+         android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+         android:textColor="@color/font_black_6"
+         android:textSize="16sp"
+         android:text="推送"
+         android:background="@color/white"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_gravity="center_vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/font_black_9"
+            android:textSize="14sp"
+            android:text="接收消息推送"/>
+
+        <ToggleButton
+            android:id="@+id/but_push"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/transparent"
+            android:button="@drawable/selector_toggle_but"
+            android:checked="true"
+            android:text=""
+            android:textOff=""
+            android:textOn="" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textColor="@color/font_black_6"
+        android:textSize="16sp"
+        android:text="下载"
+        android:background="@color/white"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_gravity="center_vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/font_black_9"
+            android:textSize="14sp"
+            android:text="允许运营商网络下载"/>
+
+        <ToggleButton
+            android:id="@+id/but_load"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/transparent"
+            android:button="@drawable/selector_toggle_but"
+            android:checked="false"
+            android:text=""
+            android:textOff=""
+            android:textOn="" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textColor="@color/font_black_6"
+        android:textSize="16sp"
+        android:text="安装"
+        android:background="@color/white"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_gravity="center_vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/font_black_9"
+            android:textSize="14sp"
+            android:text="安装后自动删除安装包"/>
+
+        <ToggleButton
+            android:id="@+id/but_install"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/transparent"
+            android:button="@drawable/selector_toggle_but"
+            android:checked="false"
+            android:text=""
+            android:textOff=""
+            android:textOn="" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textColor="@color/font_black_6"
+        android:textSize="16sp"
+        android:text="更新"
+        android:background="@color/white"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_gravity="center_vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/font_black_9"
+            android:textSize="14sp"
+            android:text="游戏更新提醒"/>
+
+        <ToggleButton
+            android:id="@+id/but_update"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/transparent"
+            android:button="@drawable/selector_toggle_but"
+            android:checked="false"
+            android:text=""
+            android:textOff=""
+            android:textOn="" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textColor="@color/font_black_6"
+        android:textSize="16sp"
+        android:text="清理"
+        android:background="@color/white"/>
+
+    <RelativeLayout
+        android:id="@+id/layout_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_gravity="center_vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/font_black_9"
+            android:textSize="14sp"
+            android:text="清理缓存"/>
+
+        <TextView
+            android:id="@+id/tv_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/font_black_9"
+            android:textSize="14sp"
+            android:text="0Kb"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

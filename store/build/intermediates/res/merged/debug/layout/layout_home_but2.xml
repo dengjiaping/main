@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableRow>
+
+        <LinearLayout
+            android:id="@+id/but1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_1"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:src="@drawable/mv360" />
+
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/font_gray"
+                android:textStyle="normal"
+                android:text="全景美女" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/but2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_2"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:src="@drawable/home_bt_vr" />
+
+            <TextView
+                android:id="@+id/text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/font_gray"
+                android:text="VR游戏" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/but3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_3"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:src="@drawable/home_bt_rank" />
+
+            <TextView
+                android:id="@+id/text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/font_gray"
+                android:text="排行榜" />
+
+        </LinearLayout>
+
+    </TableRow>
+
+    <TableRow>
+
+        <LinearLayout
+            android:id="@+id/but4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_4"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:src="@drawable/mv360" />
+
+            <TextView
+                android:id="@+id/text4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/font_gray"
+                android:textStyle="normal"
+                android:text="全景美女" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/but5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_5"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:src="@drawable/home_bt_vr" />
+
+            <TextView
+                android:id="@+id/text5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/font_gray"
+                android:text="VR游戏" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/but6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_6"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:src="@drawable/home_bt_rank" />
+
+            <TextView
+                android:id="@+id/text6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/font_gray"
+                android:text="排行榜" />
+
+        </LinearLayout>
+
+    </TableRow>
+
+</TableLayout>
