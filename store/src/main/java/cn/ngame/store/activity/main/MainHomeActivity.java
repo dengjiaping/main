@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -69,15 +70,16 @@ import cn.ngame.store.gamehub.view.GameHubFragment;
 import cn.ngame.store.local.model.IWatchRecordModel;
 import cn.ngame.store.local.model.WatchRecordModel;
 import cn.ngame.store.ota.model.OtaService;
+import cn.ngame.store.push.model.IPushMessageModel;
 import cn.ngame.store.push.model.PushMessage;
+import cn.ngame.store.push.model.PushMessageModel;
 import cn.ngame.store.push.view.MessageDetailActivity;
 import cn.ngame.store.push.view.NotifyMsgDetailActivity;
 import cn.ngame.store.push.view.PushMessageActivity;
 import cn.ngame.store.search.view.SearchActivity;
+import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.DialogModel;
 
-import static cn.ngame.store.R.id.but_msg;
-import static cn.ngame.store.R.id.but_search;
 import static cn.ngame.store.StoreApplication.deviceId;
 
 /**
@@ -109,11 +111,11 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private boolean isDownloading = false;
     private boolean isChecking = false;
 
-    private SelectedFragment selectedFragment;
+    private RecommendFragment selectedFragment;
     private RankingFragment rankingFragment;
     private GameHubFragment gameHubFragment;
-    private ClassificationFragment classificationFragment;
-    private AdministrationFragment administrationFragment;
+    private DiscoverFragment discoverFragment;
+    private ManagerFragment administrationFragment;
 
     /**
      * 底部切换栏
@@ -134,6 +136,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private List<Fragment> mfragmentlist = new ArrayList<>();
     private FragmentTransaction mTransaction;
     private int rbIndex;
+    private ImageView im_toSearch;
+    private FrameLayout fl_notifi;
+    private TextView tv_notifi_num;
+    private ImageView mIconIv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,6 +181,17 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         tv_video = (TextView) findViewById(R.id.menu_video_tv);
         tv_manager = (TextView) findViewById(R.id.menu_manager_tv);
         menu_game_hub_bt = (ImageView) findViewById(R.id.menu_game_hub_bt);
+
+        //标题上面的消息和搜索
+        im_toSearch = (ImageView) findViewById(R.id.im_toSearch);
+        fl_notifi = (FrameLayout) findViewById(R.id.fl_notifi);
+        tv_notifi_num = (TextView) findViewById(R.id.tv_notifi_num); //右上角消息数目
+
+        mIconIv = (ImageView) findViewById(R.id.iv_icon_title);
+
+        im_toSearch.setOnClickListener(this);
+        fl_notifi.setOnClickListener(this);
+        mIconIv.setOnClickListener(this);
 
         colorDark = getResources().getColor(R.color.colorPrimary);
         colorNormal = getResources().getColor(R.color.font_black_3);
@@ -223,7 +240,31 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         isFromNotification();
     }
 
-//    private List<Fragment> getFragmentList() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //右上角消息状态
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                IPushMessageModel pushModel = new PushMessageModel(MainHomeActivity.this);
+                final int count = pushModel.getUnReadMsgCount(0);
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (count == 0) {
+                            tv_notifi_num.setVisibility(View.GONE);
+                        } else {
+                            tv_notifi_num.setVisibility(View.VISIBLE);
+                            tv_notifi_num.setText(count + "");
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+    //    private List<Fragment> getFragmentList() {
 //        List<Fragment> fragmentlist = new ArrayList<>();
 //        fragmentlist.add(SelectedFragment.newInstance(0));
 //        fragmentlist.add(RankingFragment.newInstance(""));
@@ -307,11 +348,11 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 //            list.add(VideoFragment.getInstance());
 //            list.add(LocalFragment.getInstance());
 
-            list.add(SelectedFragment.newInstance(0));
+            list.add(RecommendFragment.newInstance(0));
             list.add(RankingFragment.newInstance(""));
             list.add(GameHubFragment.newInstance());
-            list.add(ClassificationFragment.newInstance(""));
-            list.add(AdministrationFragment.newInstance());
+            list.add(DiscoverFragment.newInstance(""));
+            list.add(ManagerFragment.newInstance());
 
             adapter = new FragmentViewPagerAdapter(manager);
             adapter.setDate(list);
@@ -346,9 +387,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         hideFragments(transaction);
         switch (currentMenu) {
-            case 0:
+            case 0://推荐
                 if (null == selectedFragment) {
-                    selectedFragment = new SelectedFragment();
+                    selectedFragment = new RecommendFragment();
                     transaction.add(R.id.main_list_fragments, selectedFragment);
                 } else {
                     transaction.show(selectedFragment);
@@ -356,7 +397,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 bt_home.setSelected(true);
                 tv_home.setTextColor(colorDark);
                 break;
-            case 1:
+            case 1://排行
                 if (null == rankingFragment) {
                     rankingFragment = new RankingFragment();
                     transaction.add(R.id.main_list_fragments, rankingFragment);
@@ -366,7 +407,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 bt_game.setSelected(true);
                 tv_game.setTextColor(colorDark);
                 break;
-            case 2:
+            case 2://圈子
                 if (null == gameHubFragment) {
                     gameHubFragment = new GameHubFragment();
                     transaction.add(R.id.main_list_fragments, gameHubFragment);
@@ -377,18 +418,18 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 menu_gamehub_tv.setTextColor(colorDark);
                 break;
             case 3:
-                if (null == classificationFragment) {
-                    classificationFragment = new ClassificationFragment();
-                    transaction.add(R.id.main_list_fragments, classificationFragment);
+                if (null == discoverFragment) {
+                    discoverFragment = new DiscoverFragment();
+                    transaction.add(R.id.main_list_fragments, discoverFragment);
                 } else {
-                    transaction.show(classificationFragment);
+                    transaction.show(discoverFragment);
                 }
                 bt_video.setSelected(true);
                 tv_video.setTextColor(colorDark);
                 break;
             case 4:
                 if (null == administrationFragment) {
-                    administrationFragment = new AdministrationFragment();
+                    administrationFragment = new ManagerFragment();
                     transaction.add(R.id.main_list_fragments, administrationFragment);
                 } else {
                     transaction.show(administrationFragment);
@@ -410,8 +451,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         if (null != gameHubFragment) {
             transaction.hide(gameHubFragment);
         }
-        if (null != classificationFragment) {
-            transaction.hide(classificationFragment);
+        if (null != discoverFragment) {
+            transaction.hide(discoverFragment);
         }
         if (null != administrationFragment) {
             transaction.hide(administrationFragment);
@@ -548,14 +589,22 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case but_search:
+           /* case but_search:
                 Intent searchIntent = new Intent(this, SearchActivity.class);
                 startActivity(searchIntent);
-
                 break;
             case but_msg:
                 Intent msgIntent = new Intent(this, PushMessageActivity.class);
                 startActivity(msgIntent);
+                break;*/
+            case R.id.im_toSearch:
+                startActivity(new Intent(MainHomeActivity.this, SearchActivity.class));
+                break;
+            case R.id.fl_notifi:
+                startActivity(new Intent(MainHomeActivity.this, PushMessageActivity.class));
+                break;
+            case R.id.iv_icon_title:
+                ToastUtil.show(this,"点击");
                 break;
         }
     }
@@ -638,9 +687,11 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 if (versionInfo != null) {
 
                     //如果后台正在升级，则直接显示进度框
-                    GameFileStatus downloadFileInfo = fileLoad.getGameFileLoadStatus(versionInfo.fileName, versionInfo.url, versionInfo.packageName, versionInfo.versionCode);
+                    GameFileStatus downloadFileInfo = fileLoad.getGameFileLoadStatus(versionInfo.fileName, versionInfo.url,
+                            versionInfo.packageName, versionInfo.versionCode);
                     if (downloadFileInfo != null) {
-                        if (downloadFileInfo.getStatus() == GameFileStatus.STATE_DOWNLOAD || downloadFileInfo.getStatus() == GameFileStatus.STATE_PAUSE) {
+                        if (downloadFileInfo.getStatus() == GameFileStatus.STATE_DOWNLOAD || downloadFileInfo.getStatus() ==
+                                GameFileStatus.STATE_PAUSE) {
 
                             showProgressDialog();
                             doUpdateUi();
@@ -731,7 +782,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             public void onClick(View v) {
                 dialogFragment.dismiss();
 
-                fileLoad.load(versionInfo.fileName, versionInfo.url, versionInfo.md5, versionInfo.packageName, versionInfo.versionCode, versionInfo.fileName, versionInfo.url, versionInfo.id, false);
+                fileLoad.load(versionInfo.fileName, versionInfo.url, versionInfo.md5, versionInfo.packageName, versionInfo
+                        .versionCode, versionInfo.fileName, versionInfo.url, versionInfo.id, false);
                 showProgressDialog();   //显示进度条对话框
                 doUpdateUi();           //启动更新进度条线程
             }
@@ -811,7 +863,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     @Override
                     public void run() {
 
-                        GameFileStatus downloadFileInfo = fileLoad.getGameFileLoadStatus(versionInfo.fileName, versionInfo.url, versionInfo.packageName, versionInfo.versionCode);
+                        GameFileStatus downloadFileInfo = fileLoad.getGameFileLoadStatus(versionInfo.fileName, versionInfo.url,
+                                versionInfo.packageName, versionInfo.versionCode);
                         if (downloadFileInfo != null) {
 
                             double finished = downloadFileInfo.getFinished();
@@ -850,7 +903,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                                 if (process == 100) {
                                     //处理安装App的操作
                                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                                    SimpleDialogFragment prev = (SimpleDialogFragment) getSupportFragmentManager().findFragmentByTag("downloadDialog");
+                                    SimpleDialogFragment prev = (SimpleDialogFragment) getSupportFragmentManager()
+                                            .findFragmentByTag("downloadDialog");
                                     if (prev != null) {
                                         ft.remove(prev);
                                     }

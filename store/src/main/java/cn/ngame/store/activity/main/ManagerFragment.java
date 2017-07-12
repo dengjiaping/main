@@ -49,7 +49,7 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
  * Created by gp on 2017/3/14 0014.
  */
 
-public class AdministrationFragment extends BaseSearchFragment implements View.OnClickListener {
+public class ManagerFragment extends BaseSearchFragment implements View.OnClickListener {
 
     private PullToRefreshListView pullListView;
     /**
@@ -70,16 +70,16 @@ public class AdministrationFragment extends BaseSearchFragment implements View.O
     private int systemMsgNum; //已读消息数
     private int resultSize;
 
-    public static AdministrationFragment newInstance() {
+    public static ManagerFragment newInstance() {
         Bundle args = new Bundle();
-        AdministrationFragment fragment = new AdministrationFragment();
+        ManagerFragment fragment = new ManagerFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     protected int getContentViewLayoutID() {
-        return R.layout.administration_fragment;
+        return R.layout.fragment_manager;
     }
 
     @Override
@@ -96,7 +96,7 @@ public class AdministrationFragment extends BaseSearchFragment implements View.O
         pullListView.setScrollLoadEnabled(false);
         pullListView.setLastUpdatedLabel(new Date().toLocaleString());
         //添加头布局
-        View view = View.inflate(getActivity(), R.layout.administration_head_view, null);
+        View view = View.inflate(getActivity(), R.layout.manager_head_view, null);
         initHeadView(view);
         //头布局放入listView中
         if (pullListView.getRefreshableView().getHeaderViewsCount() == 0) {
@@ -269,6 +269,7 @@ public class AdministrationFragment extends BaseSearchFragment implements View.O
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tv_to_login:
             case R.id.iv_icon:
                 if (pwd != null && !"".endsWith(pwd)) {
                     startActivity(new Intent(getActivity(), UserCenterActivity.class));
@@ -276,13 +277,7 @@ public class AdministrationFragment extends BaseSearchFragment implements View.O
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
                 break;
-            case R.id.tv_to_login:
-                if (pwd != null && !"".endsWith(pwd)) {
 
-                } else {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                }
-                break;
             case R.id.rl_my_device:
                 Intent intent0 = new Intent(getActivity(), OtaActivity.class);
                 startActivity(intent0);

@@ -7,7 +7,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.jzt.hol.android.jkda.sdk.bean.classification.ClassifiHomeBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
@@ -30,7 +29,6 @@ import cn.ngame.store.adapter.ClassifiXiuxianAdapter;
 import cn.ngame.store.adapter.HomeRaiderAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.game.view.SBGameActivity;
-import cn.ngame.store.search.view.SearchActivity;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 
@@ -39,7 +37,7 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
  * Created by gp on 2017/3/14 0014.
  */
 
-public class ClassificationFragment extends BaseSearchFragment implements View.OnClickListener {
+public class DiscoverFragment extends BaseSearchFragment implements View.OnClickListener {
 
     private static final int SUB_TYPE_ID_VR = 13;
     private static final int SUB_TYPE_ID_STADN = 14;
@@ -49,7 +47,6 @@ public class ClassificationFragment extends BaseSearchFragment implements View.O
     /**
      * 顶部栏
      */
-    private TextView tv_toSearch;
     private PullToRefreshListView pullListView;
     /**
      * headerView
@@ -74,8 +71,8 @@ public class ClassificationFragment extends BaseSearchFragment implements View.O
     ClassifiTiyuAdapter tiyuAdapter;
     List<ClassifiHomeBean.DataBean.SportListBean> tiyuList = new ArrayList<>();
 
-    public static ClassificationFragment newInstance(String arg) {
-        ClassificationFragment fragment = new ClassificationFragment();
+    public static DiscoverFragment newInstance(String arg) {
+        DiscoverFragment fragment = new DiscoverFragment();
         Bundle bundle = new Bundle();
         bundle.putString("", arg);
         fragment.setArguments(bundle);
@@ -84,7 +81,7 @@ public class ClassificationFragment extends BaseSearchFragment implements View.O
 
     @Override
     protected int getContentViewLayoutID() {
-        return R.layout.classification_fragment;
+        return R.layout.fragment_discover;
     }
 
     @Override
@@ -93,10 +90,7 @@ public class ClassificationFragment extends BaseSearchFragment implements View.O
     }
 
     private void init(View view) {
-        tv_toSearch = (TextView) view.findViewById(R.id.tv_toSearch);
         pullListView = (PullToRefreshListView) view.findViewById(R.id.pullListView);
-
-        tv_toSearch.setOnClickListener(this);
 
         pullListView.setPullLoadEnabled(false); //false,不允许上拉加载
         pullListView.setScrollLoadEnabled(false);
@@ -113,7 +107,7 @@ public class ClassificationFragment extends BaseSearchFragment implements View.O
             }
         });
         //添加头布局
-        View headView = View.inflate(getActivity(), R.layout.classification_header_view, null);
+        View headView = View.inflate(getActivity(), R.layout.discover_header_view, null);
         initHeadView(headView);
         //头布局放入listView中
         if (pullListView.getRefreshableView().getHeaderViewsCount() == 0) {
@@ -313,9 +307,6 @@ public class ClassificationFragment extends BaseSearchFragment implements View.O
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_toSearch:
-                startActivity(new Intent(getActivity(), SearchActivity.class));
-                break;
             case R.id.iv_vr:
                 Intent intent1 = new Intent(getActivity(), SBGameActivity.class);
                 intent1.putExtra("title", "VR游戏");

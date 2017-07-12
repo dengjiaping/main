@@ -1,8 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/main_home_title_rlay"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/iv_icon_title"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="2dp"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/menu_game_hub_circle"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_icon_title"/>
+
+        <ImageView
+            android:id="@+id/im_toSearch"
+            android:layout_width="52dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="20dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/discover_sousuo"/>
+
+        <FrameLayout
+            android:id="@+id/fl_notifi"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/im_toSearch">
+
+            <TextView
+                android:id="@+id/tv_notifi_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/shape_circle_green"
+                android:gravity="center"
+                android:text="31"
+                android:textColor="@color/white"
+                android:textSize="8sp"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/discover_tongzhi"
+                android:scaleType="centerInside"/>
+        </FrameLayout>
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/main_list_fragments"
@@ -10,32 +69,33 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/ll_bot_tab"
         android:layout_marginBottom="-20dp"
+        android:layout_below="@id/main_home_title_rlay"
         />
 
     <!--<android.support.v4.view.ViewPager-->
-        <!--android:id="@+id/viewpager"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginBottom="-20dp"-->
-        <!--android:layout_above="@+id/ll_bot_tab"-->
-        <!--android:visibility="gone"/>-->
+    <!--android:id="@+id/viewpager"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginBottom="-20dp"-->
+    <!--android:layout_above="@+id/ll_bot_tab"-->
+    <!--android:visibility="gone"/>-->
 
     <LinearLayout
         android:id="@+id/ll_bot_tab"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:alpha="1"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-      >
+        android:alpha="1"
+        >
         <!--android:background="@drawable/home_tabshadow"-->
         <LinearLayout
             android:id="@+id/menu_home"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:layout_weight="1"
             android:gravity="center"
-            android:layout_gravity="bottom"
             android:orientation="vertical"
             android:paddingBottom="2dp">
 
@@ -45,27 +105,27 @@
                 android:layout_height="23dp"
                 android:background="@drawable/menu_home"
                 android:clickable="false"
-                android:enabled="false" />
+                android:enabled="false"/>
 
             <TextView
                 android:id="@+id/menu_home_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
                 android:text="推荐"
                 android:textColor="@color/font_black_3"
-                android:textSize="11sp" />
+                android:textSize="11sp"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/menu_game"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:layout_weight="1"
             android:clickable="true"
             android:gravity="center"
-            android:layout_gravity="bottom"
             android:orientation="vertical"
             android:paddingBottom="2dp">
 
@@ -76,17 +136,17 @@
                 android:background="@drawable/menu_game"
                 android:clickable="false"
                 android:enabled="false"
-                android:focusable="false" />
+                android:focusable="false"/>
 
             <TextView
                 android:id="@+id/menu_game_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
                 android:text="排行"
                 android:textColor="@color/font_black_3"
-                android:textSize="11sp" />
+                android:textSize="11sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -104,10 +164,10 @@
             android:id="@+id/menu_video"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:layout_weight="1"
             android:clickable="true"
             android:gravity="center"
-            android:layout_gravity="bottom"
             android:orientation="vertical"
             android:paddingBottom="2dp">
 
@@ -118,27 +178,27 @@
                 android:background="@drawable/menu_video"
                 android:clickable="false"
                 android:enabled="false"
-                android:focusable="false" />
+                android:focusable="false"/>
 
             <TextView
                 android:id="@+id/menu_video_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
                 android:text="发现"
                 android:textColor="@color/font_black_3"
-                android:textSize="11sp" />
+                android:textSize="11sp"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/menu_manager"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:layout_weight="1"
             android:clickable="true"
             android:gravity="center"
-            android:layout_gravity="bottom"
             android:orientation="vertical"
             android:paddingBottom="2dp">
 
@@ -149,41 +209,45 @@
                 android:background="@drawable/menu_manage"
                 android:clickable="false"
                 android:enabled="false"
-                android:focusable="false" />
+                android:focusable="false"/>
 
             <TextView
                 android:id="@+id/menu_manager_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
                 android:text="管理"
                 android:textColor="@color/font_black_3"
-                android:textSize="11sp" />
+                android:textSize="11sp"/>
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/menu_game_hub"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+
         <ImageView
             android:id="@+id/menu_game_hub_bt"
             android:layout_width="23dp"
             android:layout_height="23dp"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/menu_game_hub" />
+            android:background="@drawable/menu_game_hub"/>
+
         <TextView
             android:id="@+id/menu_gamehub_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="2dp"
             android:layout_marginBottom="4dp"
+            android:layout_marginTop="2dp"
             android:text="圈子"
             android:textColor="@color/font_black_3"
             android:textSize="11sp"/>
     </LinearLayout>
+
 </RelativeLayout>

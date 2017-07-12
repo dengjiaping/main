@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,15 +58,10 @@ import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.TextUtil;
-import cn.ngame.store.game.view.GameDetail2Activity;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.game.view.GameListActivity;
 import cn.ngame.store.gamehub.view.MsgDetailActivity;
 import cn.ngame.store.gamehub.view.StrategyActivity;
-import cn.ngame.store.push.model.IPushMessageModel;
-import cn.ngame.store.push.model.PushMessageModel;
-import cn.ngame.store.push.view.PushMessageActivity;
-import cn.ngame.store.search.view.SearchActivity;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.util.StringUtil;
 import cn.ngame.store.video.view.VideoDetailActivity;
@@ -82,8 +76,8 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
  * Created by gp on 2017/3/14 0014.
  */
 
-public class SelectedFragment extends BaseSearchFragment implements View.OnClickListener {
-    public static final String TAG = SelectedFragment.class.getSimpleName();
+public class RecommendFragment extends BaseSearchFragment implements View.OnClickListener {
+    public static final String TAG = RecommendFragment.class.getSimpleName();
     private static final int TYPE_HAND = 21; // 9
     private static final int TYPE_XUNI = 11;
     PullToRefreshListView pullListView;
@@ -91,9 +85,7 @@ public class SelectedFragment extends BaseSearchFragment implements View.OnClick
      * 顶部栏搜索-消息
      */
     private TextView tv_top_bar_bg;
-    private TextView tv_toSearch;
-    private FrameLayout fl_notifi;
-    private TextView tv_notifi_num;
+
     /**
      * banner
      */
@@ -150,8 +142,8 @@ public class SelectedFragment extends BaseSearchFragment implements View.OnClick
     private SelectGameAdapter gameListAdapter;
     private MainHomeRaiderAdapter raiderAdapter;
 
-    public static SelectedFragment newInstance(int arg) {
-        SelectedFragment fragment = new SelectedFragment();
+    public static RecommendFragment newInstance(int arg) {
+        RecommendFragment fragment = new RecommendFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("", arg);
         fragment.setArguments(bundle);
@@ -160,7 +152,7 @@ public class SelectedFragment extends BaseSearchFragment implements View.OnClick
 
     @Override
     protected int getContentViewLayoutID() {
-        return R.layout.selected_fragment;
+        return R.layout.fragment_recommend;
     }
 
     @Override
@@ -176,13 +168,9 @@ public class SelectedFragment extends BaseSearchFragment implements View.OnClick
     }
 
     public void initListView(final View view) {
-        tv_top_bar_bg = (TextView) view.findViewById(R.id.tv_top_bar_bg);
-        tv_toSearch = (TextView) view.findViewById(R.id.tv_toSearch);
-        fl_notifi = (FrameLayout) view.findViewById(R.id.fl_notifi);
-        tv_notifi_num = (TextView) view.findViewById(R.id.tv_notifi_num); //右上角消息数目
+        //tv_top_bar_bg = (TextView) view.findViewById(R.id.tv_top_bar_bg);
+
         pullListView = (PullToRefreshListView) view.findViewById(R.id.pullListView);
-        tv_toSearch.setOnClickListener(this);
-        fl_notifi.setOnClickListener(this);
         pullListView.setPullLoadEnabled(false); //false,不允许上拉加载
         pullListView.setScrollLoadEnabled(false);
         pullListView.setLastUpdatedLabel(new Date().toLocaleString());
@@ -223,9 +211,10 @@ public class SelectedFragment extends BaseSearchFragment implements View.OnClick
 
             }
 
+            //向下头部颜色渐变
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem == 0 && pullListView.getRefreshableView().getChildAt(0) != null && pullListView.getRefreshableView().getChildAt(0).getTop() != 0) {
+               /* if (firstVisibleItem == 0 && pullListView.getRefreshableView().getChildAt(0) != null && pullListView.getRefreshableView().getChildAt(0).getTop() != 0) {
                     float total_height = ll_everyday.getTop() * 3;
                     int viewScrollHeigh = Math.abs(pullListView.getRefreshableView().getChildAt(0).getTop());
                     if (viewScrollHeigh < total_height) {
@@ -244,7 +233,7 @@ public class SelectedFragment extends BaseSearchFragment implements View.OnClick
                         tv_top_bar_bg.setBackgroundColor(getResources().getColor(R.color.white));
                         tv_top_bar_bg.setAlpha(0.2f);
                     }
-                }
+                }*/
             }
         });
         //添加头布局
@@ -595,26 +584,6 @@ public class SelectedFragment extends BaseSearchFragment implements View.OnClick
     @Override
     public void onResume() {
         super.onResume();
-        //右上角消息状态
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                IPushMessageModel pushModel = new PushMessageModel(getActivity());
-                final int count = pushModel.getUnReadMsgCount(0);
-
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (count == 0) {
-                            tv_notifi_num.setVisibility(View.GONE);
-                        } else {
-                            tv_notifi_num.setVisibility(View.VISIBLE);
-                            tv_notifi_num.setText(count + "");
-                        }
-                    }
-                });
-            }
-        }).start();
     }
 
     @Override
@@ -662,12 +631,6 @@ public class SelectedFragment extends BaseSearchFragment implements View.OnClick
                 i.setClass(getActivity(), StrategyActivity.class);
                 i.putExtra("typeValue", "1");
                 startActivity(i);
-                break;
-            case R.id.tv_toSearch:
-                startActivity(new Intent(getActivity(), SearchActivity.class));
-                break;
-            case R.id.fl_notifi:
-                startActivity(new Intent(getActivity(), PushMessageActivity.class));
                 break;
         }
     }

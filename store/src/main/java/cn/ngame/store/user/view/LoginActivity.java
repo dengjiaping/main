@@ -110,9 +110,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 }
                 break;
             case R.id.but_login:
-
                 doLogin();
-
                 break;
             case R.id.tv_find_pwd:
 
@@ -124,17 +122,14 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
 
                 Intent rIntent = new Intent(this, RegisterActivity.class);
                 startActivity(rIntent);
-
                 break;
         }
-
     }
 
     /**
      * 执行HTTP登录操作
      */
     private void doLogin() {
-
         userName = et_user.getText().toString();
         password = et_pwd.getText().toString();
 
@@ -161,7 +156,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 }
 
                 if (result.code == 0) {
-
                     Token token = result.data;
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString(Constant.CONFIG_USER_NAME, userName);
