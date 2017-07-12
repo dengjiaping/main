@@ -259,6 +259,7 @@ public class AdministrationFragment extends BaseSearchFragment implements View.O
                                 tv_download_num.setVisibility(View.GONE);
                             }
                         } else {
+
 //                            ToastUtil.show(getActivity(), result.getMsg());
                         }
                     }
