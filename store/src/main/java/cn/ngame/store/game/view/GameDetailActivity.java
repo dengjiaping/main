@@ -123,7 +123,8 @@ public class GameDetailActivity extends BaseFgActivity {
     private void getGameInfo() {
 
         String url = Constant.WEB_SITE + Constant.URL_GAME_DETAIL;
-        Response.Listener<JsonResult<GameInfo>> successListener = new Response.Listener<JsonResult<GameInfo>>() {
+        Response.Listener<JsonResult<GameInfo>> successListener = new Response
+                .Listener<JsonResult<GameInfo>>() {
             @Override
             public void onResponse(JsonResult<GameInfo> result) {
 
@@ -134,13 +135,19 @@ public class GameDetailActivity extends BaseFgActivity {
                 if (gameInfo != null) {
 
                     //设置进度条状态
-                    progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.filename, gameInfo.gameLink, gameInfo.packages, ConvUtil.NI(gameInfo.versionCode)));
+                    progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.filename,
+                            gameInfo.gameLink, gameInfo.packages, ConvUtil.NI(gameInfo
+                                    .versionCode)));
                     //必须设置，否则点击进度条后无法进行响应操作
-                    FileLoadInfo fileLoadInfo = new FileLoadInfo(gameInfo.filename, gameInfo.gameLink, gameInfo.md5, ConvUtil.NI(gameInfo.versionCode), gameInfo.gameName, gameInfo.gameLogo, gameInfo.id, FileLoadInfo.TYPE_GAME);
+                    FileLoadInfo fileLoadInfo = new FileLoadInfo(gameInfo.filename, gameInfo
+                            .gameLink, gameInfo.md5, ConvUtil.NI(gameInfo.versionCode), gameInfo
+                            .gameName, gameInfo.gameLogo, gameInfo.id, FileLoadInfo.TYPE_GAME);
                     progressBar.setFileLoadInfo(fileLoadInfo);
                     fileLoadInfo.setPackageName(gameInfo.packages);
                     fileLoadInfo.setVersionCode(ConvUtil.NI(gameInfo.versionCode));
-                    progressBar.setOnStateChangeListener(new ProgressBarStateListener(GameDetailActivity.this, GameDetailActivity.this.getSupportFragmentManager()));
+                    progressBar.setOnStateChangeListener(new ProgressBarStateListener
+                            (GameDetailActivity.this, GameDetailActivity.this
+                                    .getSupportFragmentManager()));
                     progressBar.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -173,7 +180,8 @@ public class GameDetailActivity extends BaseFgActivity {
             }
         };
 
-        Request<JsonResult<GameInfo>> request = new GsonRequest<JsonResult<GameInfo>>(Request.Method.POST, url,
+        Request<JsonResult<GameInfo>> request = new GsonRequest<JsonResult<GameInfo>>(Request
+                .Method.POST, url,
                 successListener, errorListener, new TypeToken<JsonResult<GameInfo>>() {
         }.getType()) {
 
@@ -230,7 +238,9 @@ public class GameDetailActivity extends BaseFgActivity {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo.filename, gameInfo.gameLink, gameInfo.packages, ConvUtil.NI(gameInfo.versionCode));
+                        GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo
+                                .filename, gameInfo.gameLink, gameInfo.packages, ConvUtil.NI
+                                (gameInfo.versionCode));
                         progressBar.setLoadState(fileStatus);
                     }
                 });

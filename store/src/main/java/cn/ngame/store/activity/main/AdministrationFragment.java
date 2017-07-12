@@ -83,7 +83,7 @@ public class AdministrationFragment extends BaseSearchFragment implements View.O
     }
 
     @Override
-    protected void initViewsAndEvents(View view) {
+    protected void initViewsAndEvents(View view) {//初始化
 //        typeValue = getArguments().getInt("", 1);
         pullListView = (PullToRefreshListView) view.findViewById(R.id.pulllistview);
         initListView();
@@ -140,7 +140,8 @@ public class AdministrationFragment extends BaseSearchFragment implements View.O
         super.onResume();
         pwd = StoreApplication.passWord;
         if (pwd != null && !"".endsWith(pwd)) {
-            imageLoader.displayImage(StoreApplication.userHeadUrl, iv_icon, FileUtil.getRoundOptions(R.drawable.manage_usericon, 360));
+            imageLoader.displayImage(StoreApplication.userHeadUrl, iv_icon, FileUtil.getRoundOptions(R.drawable
+                    .manage_usericon, 360));
             tv_to_login.setText(StoreApplication.nickName);
         } else {
             imageLoader.displayImage("", iv_icon, FileUtil.getRoundOptions(R.drawable.manage_usericon, 360));
@@ -151,7 +152,8 @@ public class AdministrationFragment extends BaseSearchFragment implements View.O
         List<FileLoadInfo> updateList = fileLoad.getLoadedFileInfo();
         String updateGameInfo = "";
         for (int i = 0; i < updateList.size(); i++) {
-            updateGameInfo = ((updateGameInfo + ",").equals(",") ? "" : (updateGameInfo + ",")) + (updateList.get(i).getServerId() + "_" + updateList.get(i).getVersionCode());
+            updateGameInfo = ((updateGameInfo + ",").equals(",") ? "" : (updateGameInfo + ",")) + (updateList.get(i)
+                    .getServerId() + "_" + updateList.get(i).getVersionCode());
         }
 //        updateGameInfo = "149_1365,137_102004001";
         runSelectUpdateGame(updateGameInfo);
@@ -213,7 +215,7 @@ public class AdministrationFragment extends BaseSearchFragment implements View.O
                     //已读消息数
                     tv_system_msg_num.setVisibility(View.VISIBLE);
                     //总数-已读数 = 未读数
-                    if(resultSize - ConvUtil.NI(msg.obj) > 0){
+                    if (resultSize - ConvUtil.NI(msg.obj) > 0) {
                         tv_system_msg_num.setText((resultSize - ConvUtil.NI(msg.obj)) + "");
                     } else {
                         tv_system_msg_num.setVisibility(View.GONE);
@@ -228,7 +230,8 @@ public class AdministrationFragment extends BaseSearchFragment implements View.O
     /**
      * 已下载的游戏，是否需要更新
      *
-     * @param gameInfo {"gameIdAndVisionCodeStr":"136_2,137_102004001","appTypeId":2}, gameIdAndVisionCodeStr 表示多个已下载游戏id和versionCode字段拼接。
+     * @param gameInfo {"gameIdAndVisionCodeStr":"136_2,137_102004001","appTypeId":2}, gameIdAndVisionCodeStr
+     *                 表示多个已下载游戏id和versionCode字段拼接。
      */
     private void runSelectUpdateGame(String gameInfo) {
         AdminGameUpdateBody body = new AdminGameUpdateBody();
