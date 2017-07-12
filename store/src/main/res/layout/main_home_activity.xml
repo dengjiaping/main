@@ -27,7 +27,8 @@
         android:alpha="1"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="@drawable/home_tabshadow">
+      >
+        <!--android:background="@drawable/home_tabshadow"-->
         <LinearLayout
             android:id="@+id/menu_home"
             android:layout_width="0dp"
@@ -52,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
-                android:text="精选"
+                android:text="推荐"
                 android:textColor="@color/font_black_3"
                 android:textSize="11sp" />
         </LinearLayout>
@@ -170,9 +171,8 @@
         android:layout_centerHorizontal="true">
         <ImageView
             android:id="@+id/menu_game_hub_bt"
-            android:layout_width="29dp"
-            android:layout_height="29dp"
-            android:layout_marginBottom="4dp"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/menu_game_hub" />
         <TextView
@@ -180,7 +180,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="2dp"
             android:layout_marginBottom="4dp"
             android:text="圈子"
             android:textColor="@color/font_black_3"
