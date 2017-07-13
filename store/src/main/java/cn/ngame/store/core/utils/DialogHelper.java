@@ -159,7 +159,7 @@ public class DialogHelper {
         if(prev == null || !prev.isAdded()){
 
             DialogFragment newFragment = WaitingDialogFragment.newInstance();
-            newFragment.setCancelable(false);
+            newFragment.setCancelable(true);
             Bundle bundle = new Bundle();
             bundle.putString("msg",msg);
             newFragment.setArguments(bundle);

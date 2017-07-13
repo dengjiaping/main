@@ -170,6 +170,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 } else {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误: " + result.msg);
                     Toast.makeText(LoginActivity.this, "登录失败，" + result.msg, Toast.LENGTH_SHORT).show();
+                    DialogHelper.hideWaiting(getSupportFragmentManager());
                 }
             }
         };
@@ -180,6 +181,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 volleyError.printStackTrace();
                 Toast.makeText(LoginActivity.this, "登录失败，请检查网络连接!", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "HTTP请求失败：网络连接错误！");
+                DialogHelper.hideWaiting(getSupportFragmentManager());
             }
         };
 

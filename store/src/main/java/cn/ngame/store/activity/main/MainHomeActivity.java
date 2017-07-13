@@ -37,6 +37,7 @@ import com.jzt.hol.android.jkda.sdk.bean.gamehub.AppCarouselBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.BrowseHistoryBodyBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.gamehub.AppCarouselClient;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -60,6 +61,7 @@ import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.AppInstallHelper;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
+import cn.ngame.store.core.utils.FileUtil;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.LoginHelper;
 import cn.ngame.store.core.utils.TextUtil;
@@ -132,7 +134,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private int colorDark;
     private int colorNormal;
     private String imgUrl;
-
+    ImageLoader imageLoader = ImageLoader.getInstance();
     private List<Fragment> mfragmentlist = new ArrayList<>();
     private FragmentTransaction mTransaction;
     private int rbIndex;
@@ -140,6 +142,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private FrameLayout fl_notifi;
     private TextView tv_notifi_num;
     private ImageView mIconIv;
+    private String pwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,11 +204,12 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         setCurrentMenu(0);    //当前选中标签
         setOnTouchListener(this.new MenuOnTouchListener());
 
+        pwd = StoreApplication.passWord;
         //如果用户没有主动退出，则重新登录
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (!TextUtil.isEmpty(StoreApplication.passWord)) {
+                if (!TextUtil.isEmpty(pwd)) {
                     LoginHelper loginHelper = new LoginHelper(MainHomeActivity.this);
                     loginHelper.reLogin();
                 }
@@ -238,11 +242,21 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         }
         //判断App是否从通知栏消息进来，如果是，直接启动消息详情页
         isFromNotification();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        //主界面顶部头像
+        pwd = StoreApplication.passWord;
+        if (pwd != null && !"".endsWith(pwd)) {
+            imageLoader.displayImage(StoreApplication.userHeadUrl, mIconIv,
+                    FileUtil.getRoundOptions(R.drawable.ic_icon_title, 360));
+            mIconIv.setPadding(0,0,0,0);
+        } else {
+            imageLoader.displayImage("", mIconIv, FileUtil.getRoundOptions(R.drawable.ic_icon_title, 360));
+        }
         //右上角消息状态
         new Thread(new Runnable() {
             @Override
@@ -604,7 +618,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 startActivity(new Intent(MainHomeActivity.this, PushMessageActivity.class));
                 break;
             case R.id.iv_icon_title:
-                ToastUtil.show(this,"点击");
+                ToastUtil.show(this, "点击");
                 break;
         }
     }
