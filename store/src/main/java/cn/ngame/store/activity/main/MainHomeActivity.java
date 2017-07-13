@@ -33,10 +33,12 @@ import com.android.volley.VolleyError;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 import com.google.gson.reflect.TypeToken;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.AppCarouselBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.BrowseHistoryBodyBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.gamehub.AppCarouselClient;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
@@ -79,7 +81,6 @@ import cn.ngame.store.push.view.MessageDetailActivity;
 import cn.ngame.store.push.view.NotifyMsgDetailActivity;
 import cn.ngame.store.push.view.PushMessageActivity;
 import cn.ngame.store.search.view.SearchActivity;
-import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.DialogModel;
 
 import static cn.ngame.store.StoreApplication.deviceId;
@@ -143,6 +144,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private TextView tv_notifi_num;
     private ImageView mIconIv;
     private String pwd;
+    private SlidingMenu mSlidingMenu;
+    private ImageView mSmIconIv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,7 +194,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         tv_notifi_num = (TextView) findViewById(R.id.tv_notifi_num); //右上角消息数目
 
         mIconIv = (ImageView) findViewById(R.id.iv_icon_title);
-
         im_toSearch.setOnClickListener(this);
         fl_notifi.setOnClickListener(this);
         mIconIv.setOnClickListener(this);
@@ -243,7 +245,86 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         //判断App是否从通知栏消息进来，如果是，直接启动消息详情页
         isFromNotification();
 
+        //侧边栏
+        initSlidingMenu();
+
     }
+
+    DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_icon_title, 360);
+
+    //侧边栏
+    private void initSlidingMenu() {
+        mSlidingMenu = new SlidingMenu(this);
+        mSlidingMenu.setMode(SlidingMenu.LEFT);
+        // 设置触摸屏幕的模式
+        mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);//右边空白区可以触摸
+        // mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);//右边全屏幕可以触摸
+
+        mSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);//阴影宽度
+        mSlidingMenu.setShadowDrawable(R.color.semitransparent);
+        mSlidingMenu.setBehindWidthRes(R.dimen.sliding_menu_offset); // 菜单右边宽度
+        mSlidingMenu.setFadeEnabled(false);//是否有渐变
+        mSlidingMenu.setFadeDegree(0.35f);     // 设置 左边菜单 渐入渐出效果的值
+        mSlidingMenu.setOffsetFadeDegree(0.4f);// 设置 右边 渐入渐出效果的值
+
+        mSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+        //为侧滑菜单设置布局
+        mSlidingMenu.setMenu(R.layout.left_menu);
+
+        findSMViewById(R.id.sm_system_settings);
+        findSMViewById(R.id.sm_joypad_settings);
+        findSMViewById(R.id.sm_about_us);
+        findSMViewById(R.id.sm_ad);
+
+        mSmIconIv = (ImageView) findViewById(R.id.sm_top_icon_iv);
+        //int statusBarHeight = ImageUtil.getStatusBarHeight(this);
+        /**
+         7 设置SlidingMenu滑动的拖拽效果
+         slidingMenu.setBehindScrollScale(0);
+
+         8 设置SlidingMenu判断打开状态 并 自动关闭或开启
+         menu.toggle();
+         如果SlidingMenu 它是open的，它会被关闭，反之亦然。
+
+         9 设置SlidingMenu触碰屏幕的范围
+         menu.setTouchModeBehind(SlidingMenu.TOUCHMODE_FULLSCREEN);
+         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+         设置菜单滑动，触碰屏幕的范围setTouchModeAbove
+
+         10 设置SlidingMenu关闭器监听
+         监听主要分2种 open 和 close
+         open:
+         menu.setOnOpenedListener(onOpenListener);//监听slidingmenu打开之后调用
+         menu.setOnOpenListener(onOpenListener);//监听slidingmenu打开时调用
+         close:
+         两个监听器 注意看了 一个是 closed 一个是 close
+         menu.setOnClosedListener(listener);
+         menu.setOnCloseListener(listener);
+
+         这两个的区别就是
+         menu.OnCloseListener(OnClosedListener);//监听Slidingmenu关闭时事件
+         menu.OnClosedListener(OnClosedListener);//监听Slidingmenu关闭后事件
+         */
+        //menu.showMenu();//显示SlidingMenu
+        //menu.showContent();//显示内容
+    }
+
+    private void findSMViewById(int id) {
+        findViewById(id).setOnClickListener(mLeftMenuClickLstener);
+    }
+
+    View.OnClickListener mLeftMenuClickLstener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mSlidingMenu.toggle();
+            int id = v.getId();
+            if (id == R.id.sm_system_settings) {//系统设置
+            } else if (id == R.id.sm_joypad_settings) {//手柄设置
+            } else if (id == R.id.sm_about_us) {//手柄设置
+            } else if (id == R.id.sm_ad) {//手柄设置
+            }
+        }
+    };
 
     @Override
     protected void onResume() {
@@ -251,11 +332,12 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         //主界面顶部头像
         pwd = StoreApplication.passWord;
         if (pwd != null && !"".endsWith(pwd)) {
-            imageLoader.displayImage(StoreApplication.userHeadUrl, mIconIv,
-                    FileUtil.getRoundOptions(R.drawable.ic_icon_title, 360));
-            mIconIv.setPadding(0,0,0,0);
+            imageLoader.displayImage(StoreApplication.userHeadUrl, mIconIv, roundOptions);
+            imageLoader.displayImage(StoreApplication.userHeadUrl, mSmIconIv, roundOptions);
+            mIconIv.setPadding(0, 0, 0, 0);
         } else {
-            imageLoader.displayImage("", mIconIv, FileUtil.getRoundOptions(R.drawable.ic_icon_title, 360));
+            imageLoader.displayImage("", mIconIv, roundOptions);
+            imageLoader.displayImage("", mSmIconIv, roundOptions);
         }
         //右上角消息状态
         new Thread(new Runnable() {
@@ -616,9 +698,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 break;
             case R.id.fl_notifi:
                 startActivity(new Intent(MainHomeActivity.this, PushMessageActivity.class));
-                break;
             case R.id.iv_icon_title:
-                ToastUtil.show(this, "点击");
+                if (null != mSlidingMenu) {
+                    mSlidingMenu.toggle();
+                }
                 break;
         }
     }

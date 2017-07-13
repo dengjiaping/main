@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/sm_top_rlay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sm_top_llay_height"
+        android:background="@color/colorPrimary"
+        >
+
+        <ImageView
+            android:id="@+id/sm_top_icon_iv"
+            android:layout_width="@dimen/sm_top_icon_height"
+            android:layout_height="@dimen/sm_top_icon_height"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="52dp"
+            android:background="@drawable/menu_game_hub_circle"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_icon_title"/>
+
+        <TextView
+            android:id="@+id/sm_top_nikename_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="52dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:lines="1"
+            android:maxLength="15"
+            android:text="Gool Lee"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sm_top_name_tv_font"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/sm_system_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sliding_menu_item_marginTop"
+        android:gravity="center|left"
+        android:paddingLeft="@dimen/sliding_menu_item_paddingLeft"
+        >
+
+        <ImageView
+            android:layout_width="@dimen/font_sliding_menu_item"
+            android:layout_height="@dimen/font_sliding_menu_item"
+            android:layout_gravity="center"
+            android:scaleType="center"
+            android:src="@drawable/msg_detail_disagree"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="系统基本设置"
+            android:textColor="@color/font_black_6"
+            android:textSize="@dimen/font_sliding_menu_item"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/sm_joypad_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sliding_menu_item_marginTop"
+        android:gravity="center|left"
+        android:paddingLeft="@dimen/sliding_menu_item_paddingLeft"
+        >
+
+        <ImageView
+            android:layout_width="@dimen/font_sliding_menu_item"
+            android:layout_height="@dimen/font_sliding_menu_item"
+            android:layout_gravity="center"
+            android:scaleType="center"
+            android:src="@drawable/msg_detail_disagree"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="游戏手柄设置"
+            android:textColor="@color/font_black_6"
+            android:textSize="@dimen/font_sliding_menu_item"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/sm_about_us"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sliding_menu_item_marginTop"
+        android:gravity="center|left"
+        android:paddingLeft="@dimen/sliding_menu_item_paddingLeft"
+        >
+
+        <ImageView
+            android:layout_width="@dimen/font_sliding_menu_item"
+            android:layout_height="@dimen/font_sliding_menu_item"
+            android:layout_gravity="center"
+            android:scaleType="center"
+            android:src="@drawable/msg_detail_disagree"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="关于NgameZone"
+            android:textColor="@color/font_black_6"
+            android:textSize="@dimen/font_sliding_menu_item"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/sm_ad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sliding_menu_item_marginTop"
+        android:gravity="center|left"
+        android:paddingLeft="@dimen/sliding_menu_item_paddingLeft"
+        >
+
+        <ImageView
+            android:layout_width="@dimen/font_sliding_menu_item"
+            android:layout_height="@dimen/font_sliding_menu_item"
+            android:layout_gravity="center"
+            android:scaleType="center"
+            android:src="@drawable/msg_detail_disagree"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="广告合作"
+            android:textColor="@color/font_black_6"
+            android:textSize="@dimen/font_sliding_menu_item"/>
+    </LinearLayout>
+</LinearLayout>

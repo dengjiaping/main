@@ -1,6 +1,7 @@
 package cn.ngame.store.core.utils;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.util.Base64;
 import android.util.DisplayMetrics;
@@ -63,5 +64,15 @@ public class ImageUtil {
         mScreenHeight = dm.heightPixels - statusBarHeight;
         mRatio = mScreenWidth / (float) mScreenHeight;
         scale = activity.getResources().getDisplayMetrics().density;
+    }
+
+    public static int getStatusBarHeight(Activity activity) {
+        int result = 0;
+        Resources resources = activity.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = resources.getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 }

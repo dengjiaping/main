@@ -175,6 +175,7 @@
     <orderEntry type="library" exported="" name="animated-gif-0.12.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-basement-8.4.0" level="project" />
     <orderEntry type="module" module-name="imagelib" exported="" />
+    <orderEntry type="module" module-name="sliding_menu" exported="" />
     <orderEntry type="module" module-name="RestfulApi" exported="" />
     <orderEntry type="library" exported="" scope="TEST" name="fest-android-1.0.7" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="objenesis-1.0" level="project" />
@@ -185,6 +186,7 @@
     <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="mockito-core-1.9.5" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="fest-assert-core-2.0M10" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-13.0.0" level="project" />
     <orderEntry type="library" exported="" name="okio-1.8.0" level="project" />
     <orderEntry type="library" exported="" name="rxjava-1.1.9" level="project" />
     <orderEntry type="library" exported="" name="gson-2.6.2" level="project" />

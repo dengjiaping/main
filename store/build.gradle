@@ -108,6 +108,7 @@ dependencies {
     compile 'com.android.support:design:23.2.1'
     //引入名为imagelib的第三方库（图片截取库）
     compile project(path: ':imagelib')
+    compile project(':sliding_menu')
     compile files('libs/mpermissions.jar')
     //解决 dex file cannot execute 64K [multidex]
     compile 'com.android.support:multidex:1.0.1'

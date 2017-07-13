@@ -41,4 +41,7 @@
     <color name="download_bg">#e6f9f8</color>
     <color name="download_bg2">#93DBDD</color>
 
+    <color name="font_4d">#4d4d4d</color>
+    <color name="semitransparent">#efff</color>
+
 </resources>
