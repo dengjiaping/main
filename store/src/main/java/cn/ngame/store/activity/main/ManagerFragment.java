@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,7 +21,6 @@ import java.util.Date;
 import java.util.List;
 
 import cn.ngame.store.R;
-import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.PadToolActivity;
 import cn.ngame.store.activity.admin.HelpAndFeedbackActivity;
 import cn.ngame.store.activity.admin.MyGameDownloadActivity;
@@ -36,11 +34,8 @@ import cn.ngame.store.core.db.DatabaseManager;
 import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
-import cn.ngame.store.core.utils.FileUtil;
 import cn.ngame.store.local.view.WatchHistoryActivity;
 import cn.ngame.store.ota.view.OtaActivity;
-import cn.ngame.store.user.view.LoginActivity;
-import cn.ngame.store.user.view.UserCenterActivity;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 
@@ -55,15 +50,12 @@ public class ManagerFragment extends BaseSearchFragment implements View.OnClickL
     /**
      * headerView
      */
-    private ImageView iv_icon;
-    private TextView tv_to_login;
     private RelativeLayout rl_my_device, rl_jingling;
     private RelativeLayout rl_download, rl_history, rl_system_msg, rl_system_set, rl_disclaimer, rl_feedback, rl_about;
     private TextView tv_download_num, tv_system_msg_num;
     private IFileLoad fileLoad;
 
     ImageLoader imageLoader = ImageLoader.getInstance();
-    private String pwd;
     private GameRankListBean infoBean;
     private DatabaseManager dbManager;
     SystemMsgBean msgbean;
@@ -109,8 +101,6 @@ public class ManagerFragment extends BaseSearchFragment implements View.OnClickL
     }
 
     private void initHeadView(View view) {
-        iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
-        tv_to_login = (TextView) view.findViewById(R.id.tv_to_login);
         rl_my_device = (RelativeLayout) view.findViewById(R.id.rl_my_device);
         rl_jingling = (RelativeLayout) view.findViewById(R.id.rl_jingling);
         rl_download = (RelativeLayout) view.findViewById(R.id.rl_download);
@@ -122,8 +112,6 @@ public class ManagerFragment extends BaseSearchFragment implements View.OnClickL
         rl_disclaimer = (RelativeLayout) view.findViewById(R.id.rl_disclaimer);
         rl_feedback = (RelativeLayout) view.findViewById(R.id.rl_feedback);
         rl_about = (RelativeLayout) view.findViewById(R.id.rl_about);
-        iv_icon.setOnClickListener(this);
-        tv_to_login.setOnClickListener(this);
         rl_my_device.setOnClickListener(this);
         rl_jingling.setOnClickListener(this);
         rl_download.setOnClickListener(this);
@@ -138,15 +126,6 @@ public class ManagerFragment extends BaseSearchFragment implements View.OnClickL
     @Override
     public void onResume() {
         super.onResume();
-        pwd = StoreApplication.passWord;
-        if (pwd != null && !"".endsWith(pwd)) {
-            imageLoader.displayImage(StoreApplication.userHeadUrl, iv_icon, FileUtil.getRoundOptions(R.drawable
-                    .manage_usericon, 360));
-            tv_to_login.setText(StoreApplication.nickName);
-        } else {
-            imageLoader.displayImage("", iv_icon, FileUtil.getRoundOptions(R.drawable.manage_usericon, 360));
-            tv_to_login.setText("点击登录");
-        }
         //下载更新 数目
         fileLoad = FileLoadManager.getInstance(getActivity());
         List<FileLoadInfo> updateList = fileLoad.getLoadedFileInfo();
@@ -269,15 +248,6 @@ public class ManagerFragment extends BaseSearchFragment implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_to_login:
-            case R.id.iv_icon:
-                if (pwd != null && !"".endsWith(pwd)) {
-                    startActivity(new Intent(getActivity(), UserCenterActivity.class));
-                } else {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                }
-                break;
-
             case R.id.rl_my_device:
                 Intent intent0 = new Intent(getActivity(), OtaActivity.class);
                 startActivity(intent0);

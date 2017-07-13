@@ -27,5 +27,8 @@
     <dimen name="sm_top_name_tv_width">63dp</dimen>
     <dimen name="sm_top_name_tv_font">14dp</dimen>
 
+    <dimen name="title_center_text_font">18dp</dimen>
+    <dimen name="title_back_bt_paddingLeft">20dp</dimen>
+
 
 </resources>

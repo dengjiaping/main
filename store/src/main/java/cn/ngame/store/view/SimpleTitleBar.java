@@ -95,7 +95,7 @@ public class SimpleTitleBar extends RelativeLayout{
 		}
 		
 		if(leftDrawableId != -1){
-			leftButton.setBackgroundResource(leftDrawableId);
+			//leftButton.setBackgroundResource(leftDrawableId);
 		}
 		
 		if(rightDrawableId != -1){

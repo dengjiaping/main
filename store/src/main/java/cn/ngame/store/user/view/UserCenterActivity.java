@@ -33,6 +33,7 @@ import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.LoginHelper;
 import cn.ngame.store.core.utils.TextUtil;
+import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.PicassoImageView;
 import cn.ngame.store.view.SimpleTitleBar;
 
@@ -46,7 +47,7 @@ public class UserCenterActivity extends BaseFgActivity {
     private User user;
 
     private PicassoImageView img_photo;
-    private TextView tv_account,tv_nickname;
+    private TextView tv_account, tv_nickname;
 
     private String nickName;
 
@@ -86,12 +87,12 @@ public class UserCenterActivity extends BaseFgActivity {
         } else {
 
             nickName = user.nickName;
-            if(nickName != null){
-                nickName = nickName.length() > 10 ? nickName.substring(0,10) : nickName;
+            if (nickName != null) {
+                nickName = nickName.length() > 10 ? nickName.substring(0, 10) : nickName;
             }
             tv_nickname.setText(nickName);
             tv_account.setText(user.mobile);
-            img_photo.setImageUrl(user.headPhoto,50f,50f,R.drawable.login_photo_big);
+            img_photo.setImageUrl(user.headPhoto, 50f, 50f, R.drawable.login_photo_big);
 
         }
 
@@ -149,7 +150,7 @@ public class UserCenterActivity extends BaseFgActivity {
         finish();
     }
 
-    private void showDialog(){
+    private void showDialog() {
 
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment prev = getSupportFragmentManager().findFragmentByTag("progressDialog");
@@ -164,7 +165,7 @@ public class UserCenterActivity extends BaseFgActivity {
         dialogFragment.setDialogWidth(250);
 
         LayoutInflater inflater = getLayoutInflater();
-        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_edit,null);
+        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_edit, null);
         final EditText editText = (EditText) contentView.findViewById(R.id.et_content);
 
         dialogFragment.setContentView(contentView);
@@ -179,21 +180,19 @@ public class UserCenterActivity extends BaseFgActivity {
         dialogFragment.setNegativeButton(R.string.sure, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 nickName = editText.getText().toString();
-                if(nickName.length() > 0){
-                    if(nickName.length() > 10){
-                        Toast.makeText(UserCenterActivity.this,"亲，您的昵称太长了！",Toast.LENGTH_SHORT).show();
+                if (nickName.length() > 0) {
+                    if (nickName.length() > 10) {
+                        Toast.makeText(UserCenterActivity.this, "亲，您的昵称太长了！", Toast.LENGTH_SHORT).show();
                         return;
-                    }else if(!TextUtil.isLegal(nickName.trim(),"[A-Za-z0-9\\u4e00-\\u9fa5_]+")){
-                        Toast.makeText(UserCenterActivity.this,"亲，只允许中文，英文，数字等字符哦！",Toast.LENGTH_SHORT).show();
+                    } else if (!TextUtil.isLegal(nickName.trim(), "[A-Za-z0-9\\u4e00-\\u9fa5_]+")) {
+                        Toast.makeText(UserCenterActivity.this, "亲，只允许中文，英文，数字等字符哦！", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     dialogFragment.dismiss();
                     changeNickname();
-                }else {
-                    Toast.makeText(UserCenterActivity.this,"昵称不能为空！",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(UserCenterActivity.this, "昵称不能为空哦！", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -207,7 +206,6 @@ public class UserCenterActivity extends BaseFgActivity {
      * 获取用户信息
      */
     private void getUserInfo() {
-
         final String url = Constant.WEB_SITE + Constant.URL_USER_INFO;
         Response.Listener<JsonResult<User>> successListener = new Response.Listener<JsonResult<User>>() {
             @Override
@@ -222,28 +220,27 @@ public class UserCenterActivity extends BaseFgActivity {
                     user = result.data;
                     StoreApplication.user = user;
                     String userHeadPhoto = user.headPhoto;
-                    if(userHeadPhoto != null && StoreApplication.userHeadUrl != null &&
-                            !StoreApplication.userHeadUrl.equals(userHeadPhoto)){
+                    if (userHeadPhoto != null && StoreApplication.userHeadUrl != null &&
+                            !StoreApplication.userHeadUrl.equals(userHeadPhoto)) {
                         StoreApplication.userHeadUrl = userHeadPhoto;
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString(Constant.CONFIG_USER_HEAD, userHeadPhoto);
                         editor.apply();
-                    }else {
+                    } else {
                         StoreApplication.userHeadUrl = userHeadPhoto;
                     }
 
-
                     nickName = user.nickName;
-                    if(nickName != null){
-                        nickName = nickName.length() > 10 ? nickName.substring(0,10) : nickName;
+                    if (nickName != null) {
+                        nickName = nickName.length() > 10 ? nickName.substring(0, 10) : nickName;
                     }
                     tv_nickname.setText(nickName);
                     tv_account.setText(user.mobile);
-                    img_photo.setImageUrl(user.headPhoto,50f,50f,R.drawable.login_photo_big);
+                    img_photo.setImageUrl(user.headPhoto, 50f, 50f, R.drawable.login_photo_big);
 
                 } else {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误: " + result.msg);
-                    Toast.makeText(UserCenterActivity.this,"服务端异常，请重新登录！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserCenterActivity.this, "服务端异常，请重新登录！", Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -258,7 +255,8 @@ public class UserCenterActivity extends BaseFgActivity {
         };
 
         Request<JsonResult<User>> versionRequest = new GsonRequest<JsonResult<User>>(Request.Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult<User>>() {}.getType()) {
+                successListener, errorListener, new TypeToken<JsonResult<User>>() {
+        }.getType()) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
@@ -279,34 +277,29 @@ public class UserCenterActivity extends BaseFgActivity {
         Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
             @Override
             public void onResponse(JsonResult result) {
-
                 if (result == null) {
                     Toast.makeText(UserCenterActivity.this, "服务端异常", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (result.code == 0) {
-
-                    if(nickName != null){
-                        nickName = nickName.length() > 10 ? nickName.substring(0,10) : nickName;
+                    if (nickName != null) {
+                        nickName = nickName.length() > 10 ? nickName.substring(0, 10) : nickName;
                     }
                     tv_nickname.setText(nickName);
-                    if(user != null){
+                    if (user != null) {
                         user.nickName = nickName;
                     }
-                    if(StoreApplication.user != null){
+                    if (StoreApplication.user != null) {
                         StoreApplication.user.nickName = nickName;
                         StoreApplication.nickName = nickName;
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString(Constant.CONFIG_NICK_NAME, nickName);
                         editor.apply();
                     }
-
-
-                    Toast.makeText(UserCenterActivity.this,"修改成功！",Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(UserCenterActivity.this, "修改成功！", Toast.LENGTH_SHORT).show();
                 } else {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误: " + result.msg);
-                    Toast.makeText(UserCenterActivity.this,result.msg,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserCenterActivity.this, result.msg, Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -315,13 +308,14 @@ public class UserCenterActivity extends BaseFgActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                Toast.makeText(UserCenterActivity.this, "修改失败，请检查网络连接!", Toast.LENGTH_SHORT).show();
+                ToastUtil.show(UserCenterActivity.this, "修改失败，请检查网络连接!");
                 Log.d(TAG, "HTTP请求失败：网络连接错误！");
             }
         };
 
         Request<JsonResult> versionRequest = new GsonRequest<JsonResult>(Request.Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult>() {}.getType()) {
+                successListener, errorListener, new TypeToken<JsonResult>() {
+        }.getType()) {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {

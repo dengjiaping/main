@@ -81,6 +81,8 @@ import cn.ngame.store.push.view.MessageDetailActivity;
 import cn.ngame.store.push.view.NotifyMsgDetailActivity;
 import cn.ngame.store.push.view.PushMessageActivity;
 import cn.ngame.store.search.view.SearchActivity;
+import cn.ngame.store.user.view.LoginActivity;
+import cn.ngame.store.user.view.UserCenterActivity;
 import cn.ngame.store.view.DialogModel;
 
 import static cn.ngame.store.StoreApplication.deviceId;
@@ -93,6 +95,7 @@ import static cn.ngame.store.StoreApplication.deviceId;
 public class MainHomeActivity extends BaseFgActivity implements View.OnClickListener {
 
     public static final String TAG = MainHomeActivity.class.getSimpleName();
+    private final MainHomeActivity context = MainHomeActivity.this;
     private boolean isExit = false;     //是否安装后第一次启动
     //    public FooterMenu menu;
 //    public ViewPager viewPager;
@@ -146,6 +149,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private String pwd;
     private SlidingMenu mSlidingMenu;
     private ImageView mSmIconIv;
+    private TextView mSmNicknameTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,7 +216,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             @Override
             public void run() {
                 if (!TextUtil.isEmpty(pwd)) {
-                    LoginHelper loginHelper = new LoginHelper(MainHomeActivity.this);
+                    LoginHelper loginHelper = new LoginHelper(context);
                     loginHelper.reLogin();
                 }
             }
@@ -231,7 +235,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         new Thread(new Runnable() {
             @Override
             public void run() {
-                IWatchRecordModel watchRecordModel = new WatchRecordModel(MainHomeActivity.this);
+                IWatchRecordModel watchRecordModel = new WatchRecordModel(context);
                 watchRecordModel.synchronizeWatchRecord();
             }
         }).start();
@@ -277,6 +281,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         findSMViewById(R.id.sm_ad);
 
         mSmIconIv = (ImageView) findViewById(R.id.sm_top_icon_iv);
+        mSmNicknameTv = (TextView) findViewById(R.id.sm_top_nikename_tv);
+        mSmIconIv.setOnClickListener(mSmClickLstener);
+        mSmNicknameTv.setOnClickListener(mSmClickLstener);
         //int statusBarHeight = ImageUtil.getStatusBarHeight(this);
         /**
          7 设置SlidingMenu滑动的拖拽效果
@@ -310,40 +317,50 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     }
 
     private void findSMViewById(int id) {
-        findViewById(id).setOnClickListener(mLeftMenuClickLstener);
+        findViewById(id).setOnClickListener(mSmClickLstener);
     }
 
-    View.OnClickListener mLeftMenuClickLstener = new View.OnClickListener() {
+    View.OnClickListener mSmClickLstener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            mSlidingMenu.toggle();
+
             int id = v.getId();
-            if (id == R.id.sm_system_settings) {//系统设置
+            if (id == R.id.sm_top_nikename_tv || id == R.id.sm_top_icon_iv) {//系统设置
+                if (pwd != null && !"".endsWith(pwd)) {
+                    startActivity(new Intent(context, UserCenterActivity.class));
+                } else {
+                    startActivity(new Intent(context, LoginActivity.class));
+                }
+            } else if (id == R.id.sm_system_settings) {//系统设置
             } else if (id == R.id.sm_joypad_settings) {//手柄设置
             } else if (id == R.id.sm_about_us) {//手柄设置
             } else if (id == R.id.sm_ad) {//手柄设置
             }
+            mSlidingMenu.toggle();
         }
     };
 
     @Override
-    protected void onResume() {
+    protected void onStart() {
         super.onResume();
         //主界面顶部头像
         pwd = StoreApplication.passWord;
         if (pwd != null && !"".endsWith(pwd)) {
+            DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.color.colorPrimary, 360);
             imageLoader.displayImage(StoreApplication.userHeadUrl, mIconIv, roundOptions);
-            imageLoader.displayImage(StoreApplication.userHeadUrl, mSmIconIv, roundOptions);
+            imageLoader.displayImage(StoreApplication.userHeadUrl, mSmIconIv, this.roundOptions);
             mIconIv.setPadding(0, 0, 0, 0);
+            mSmNicknameTv.setText(StoreApplication.nickName);
         } else {
             imageLoader.displayImage("", mIconIv, roundOptions);
             imageLoader.displayImage("", mSmIconIv, roundOptions);
+            mSmNicknameTv.setText("点击登录");
         }
         //右上角消息状态
         new Thread(new Runnable() {
             @Override
             public void run() {
-                IPushMessageModel pushModel = new PushMessageModel(MainHomeActivity.this);
+                IPushMessageModel pushModel = new PushMessageModel(context);
                 final int count = pushModel.getUnReadMsgCount(0);
 
                 handler.post(new Runnable() {
@@ -408,13 +425,13 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
     public void showCarousel(final AppCarouselBean result) {
         imgUrl = result.getData().get(0).getAdvImageLink();
-        final DialogModel dialogModel = new DialogModel(MainHomeActivity.this, imgUrl);
+        final DialogModel dialogModel = new DialogModel(context, imgUrl);
         dialogModel.show();
         dialogModel.sdv_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialogModel.dismiss();
-                Intent intent = new Intent(MainHomeActivity.this, GameDetailActivity.class);
+                Intent intent = new Intent(context, GameDetailActivity.class);
                 intent.putExtra("id", result.getData().get(0).getGameId());
                 startActivity(intent);
             }
@@ -694,10 +711,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 startActivity(msgIntent);
                 break;*/
             case R.id.im_toSearch:
-                startActivity(new Intent(MainHomeActivity.this, SearchActivity.class));
+                startActivity(new Intent(context, SearchActivity.class));
                 break;
             case R.id.fl_notifi:
-                startActivity(new Intent(MainHomeActivity.this, PushMessageActivity.class));
+                startActivity(new Intent(context, PushMessageActivity.class));
             case R.id.iv_icon_title:
                 if (null != mSlidingMenu) {
                     mSlidingMenu.toggle();
@@ -763,7 +780,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         }
         if (isDownloading) {
             if (isRunningBackground) {
-                Toast.makeText(MainHomeActivity.this, "正在后台为您更新！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "正在后台为您更新！", Toast.LENGTH_SHORT).show();
             } else {
                 showProgressDialog();
             }
@@ -798,11 +815,11 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     }
 
                     //判读是否需要更新
-                    int localVersion = CommonUtil.getVersionCode(MainHomeActivity.this);
+                    int localVersion = CommonUtil.getVersionCode(context);
                     if (localVersion < versionInfo.versionCode) {
 
                         showUpdateDialog();
-                        CommonUtil.verifyStoragePermissions(MainHomeActivity.this); //申请读写SD卡权限
+                        CommonUtil.verifyStoragePermissions(context); //申请读写SD卡权限
                     } else {
                         //Toast.makeText(MainHomeActivity.this,"当前已是最新版本",Toast.LENGTH_SHORT).show();
                     }
@@ -933,7 +950,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 dialogFragment.dismiss();
 
                 remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification_download);
-                notification = new Notification.Builder(MainHomeActivity.this)
+                notification = new Notification.Builder(context)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContent(remoteViews)
                         .build();
@@ -982,10 +999,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                                     intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
 
                                     remoteViews.setTextViewText(R.id.text1, "下载完成");
-                                    notification = new Notification.Builder(MainHomeActivity.this)
+                                    notification = new Notification.Builder(context)
                                             .setSmallIcon(R.mipmap.ic_launcher)
                                             .setContent(remoteViews)
-                                            .setContentIntent(PendingIntent.getActivity(MainHomeActivity.this, 0, intent, 0))
+                                            .setContentIntent(PendingIntent.getActivity(context, 0, intent, 0))
                                             .build();
                                     notification.flags = Notification.FLAG_AUTO_CANCEL;
                                     isRunningBackground = false;
@@ -1007,7 +1024,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                                     }
                                     ft.commit();
                                     isRunningBackground = false;
-                                    AppInstallHelper.installApk(MainHomeActivity.this, versionInfo.fileName);
+                                    AppInstallHelper.installApk(context, versionInfo.fileName);
                                 }
                             }
 
