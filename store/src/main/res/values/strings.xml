@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Common -->
-    <string name="app_name">NGAME娱乐</string>
+    <string name="app_name">乐游地带</string>
 
     <string name="image_des">图片描述信息</string>
 
@@ -16,7 +16,7 @@
 
 
     <!-- 网络请求时的URL地址 -->
-    <string name="url_update">http://192.168.2.252:10004/app/querycurrentappversion</string>
+    <string name="url_update">http://192.168.1.233:10004/app/querycurrentappversion</string>
 
     <!-- 底部菜单-->
     <string name="menu_home">首页</string>

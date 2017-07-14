@@ -15,12 +15,20 @@
             android:id="@+id/iv_icon_title"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:padding="2dp"
-            android:layout_marginLeft="20dp"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
             android:background="@drawable/menu_game_hub_circle"
+            android:padding="2dp"
             android:scaleType="centerInside"
             android:src="@drawable/ic_icon_title"/>
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:id="@+id/title_tv"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_center_text_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <ImageView
             android:id="@+id/im_toSearch"
@@ -68,8 +76,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/ll_bot_tab"
-        android:layout_marginBottom="-20dp"
         android:layout_below="@id/main_home_title_rlay"
+        android:layout_marginBottom="-20dp"
         />
 
     <!--<android.support.v4.view.ViewPager-->

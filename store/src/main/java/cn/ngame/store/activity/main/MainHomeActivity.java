@@ -150,6 +150,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private SlidingMenu mSlidingMenu;
     private ImageView mSmIconIv;
     private TextView mSmNicknameTv;
+    private TextView mTitleTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,6 +199,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         tv_notifi_num = (TextView) findViewById(R.id.tv_notifi_num); //右上角消息数目
 
         mIconIv = (ImageView) findViewById(R.id.iv_icon_title);
+        mTitleTv = (TextView) findViewById(R.id.title_tv);
         im_toSearch.setOnClickListener(this);
         fl_notifi.setOnClickListener(this);
         mIconIv.setOnClickListener(this);
@@ -323,7 +325,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     View.OnClickListener mSmClickLstener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
             int id = v.getId();
             if (id == R.id.sm_top_nikename_tv || id == R.id.sm_top_icon_iv) {//系统设置
                 if (pwd != null && !"".endsWith(pwd)) {
@@ -508,6 +509,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     transaction.show(selectedFragment);
                 }
                 bt_home.setSelected(true);
+                mTitleTv.setText("");
+                fl_notifi.setVisibility(View.VISIBLE);
+                im_toSearch.setVisibility(View.VISIBLE);
                 tv_home.setTextColor(colorDark);
                 break;
             case 1://排行
@@ -518,6 +522,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     transaction.show(rankingFragment);
                 }
                 bt_game.setSelected(true);
+                mTitleTv.setText("排行榜");
+                fl_notifi.setVisibility(View.GONE);
+                im_toSearch.setVisibility(View.VISIBLE);
                 tv_game.setTextColor(colorDark);
                 break;
             case 2://圈子
@@ -528,9 +535,12 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     transaction.show(gameHubFragment);
                 }
                 menu_game_hub_bt.setSelected(true);
+                mTitleTv.setText("圈子");
+                fl_notifi.setVisibility(View.GONE);
+                im_toSearch.setVisibility(View.VISIBLE);
                 menu_gamehub_tv.setTextColor(colorDark);
                 break;
-            case 3:
+            case 3://发现
                 if (null == discoverFragment) {
                     discoverFragment = new DiscoverFragment();
                     transaction.add(R.id.main_list_fragments, discoverFragment);
@@ -538,9 +548,12 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     transaction.show(discoverFragment);
                 }
                 bt_video.setSelected(true);
+                mTitleTv.setText("发现");
+                fl_notifi.setVisibility(View.GONE);
+                im_toSearch.setVisibility(View.VISIBLE);
                 tv_video.setTextColor(colorDark);
                 break;
-            case 4:
+            case 4://管理
                 if (null == administrationFragment) {
                     administrationFragment = new ManagerFragment();
                     transaction.add(R.id.main_list_fragments, administrationFragment);
@@ -548,6 +561,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     transaction.show(administrationFragment);
                 }
                 bt_manager.setSelected(true);
+                mTitleTv.setText("管理");
+                im_toSearch.setVisibility(View.GONE);
+                fl_notifi.setVisibility(View.GONE);
                 tv_manager.setTextColor(colorDark);
                 break;
         }
