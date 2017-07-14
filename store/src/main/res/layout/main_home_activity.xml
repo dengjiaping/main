@@ -23,12 +23,24 @@
             android:src="@drawable/ic_icon_title"/>
 
         <TextView
-            android:layout_centerInParent="true"
             android:id="@+id/title_tv"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/title_center_text_font"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_size"/>
+
+        <ImageView
+            android:id="@+id/title_iv"
+            android:layout_width="102dp"
+            android:layout_height="16dp"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_main_home_title_center"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_size"/>
 
         <ImageView
             android:id="@+id/im_toSearch"

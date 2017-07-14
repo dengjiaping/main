@@ -11,7 +11,19 @@ public class GameHubMainBean {
     /**
      * code : 0
      * msg : null
-     * data : [{"id":3,"userCode":"UC0000000000069","postPublisher":"新用户76920","headPhoto":"http://oss.ngame.cn/upload/userHead/1488614496280.jpg","postTitle":"我不会玩","postTagId":1,"watchNum":0,"postContent":"有哦宽松估摸着下午说GPS咯哦哦","createTime":1488614643000,"updateTime":1488614643000,"appTypeId":0,"commentNum":0,"postImage":"http://oss.ngame.cn/upload/postImage/1488614642772.png,http://oss.ngame.cn/upload/postImage/1488614645034.png,http://oss.ngame.cn/upload/postImage/1488614647262.png","pointNum":0,"voteNum":0,"isDelete":0,"isReport":0,"orderNo":0,"isPoint":null},{"id":2,"userCode":"UC0000000000045","postPublisher":"13035114192","headPhoto":"http://oss.ngame.cn/upload/userHead/1474265729013.jpg","postTitle":"今日头条","postTagId":1,"watchNum":0,"postContent":"挺好的一个头条","createTime":1488595458000,"updateTime":1488595458000,"appTypeId":0,"commentNum":0,"postImage":"http://oss.ngame.cn/upload/postImage/1488595457992.png","pointNum":0,"voteNum":0,"isDelete":0,"isReport":0,"orderNo":0,"isPoint":null},{"id":1,"userCode":"UC0000000000045","postPublisher":"13035114192","headPhoto":"http://oss.ngame.cn/upload/userHead/1474265729013.jpg","postTitle":"今日头条","postTagId":1,"watchNum":0,"postContent":"挺好的一个头条","createTime":1488593747000,"updateTime":1488593747000,"appTypeId":0,"commentNum":0,"postImage":"http://oss.ngame.cn/upload/postImage/1488593746965.png","pointNum":0,"voteNum":0,"isDelete":0,"isReport":1,"orderNo":0,"isPoint":null}]
+     * data : [{"id":3,"userCode":"UC0000000000069","postPublisher":"新用户76920",
+     * "headPhoto":"http://oss.ngame.cn/upload/userHead/1488614496280.jpg","postTitle":"我不会玩","postTagId":1,"watchNum":0,
+     * "postContent":"有哦宽松估摸着下午说GPS咯哦哦","createTime":1488614643000,"updateTime":1488614643000,"appTypeId":0,"commentNum":0,
+     * "postImage":"http://oss.ngame.cn/upload/postImage/1488614642772.png,http://oss.ngame.cn/upload/postImage/1488614645034
+     * .png,http://oss.ngame.cn/upload/postImage/1488614647262.png","pointNum":0,"voteNum":0,"isDelete":0,"isReport":0,
+     * "orderNo":0,"isPoint":null},{"id":2,"userCode":"UC0000000000045","postPublisher":"13035114192","headPhoto":"http://oss
+     * .ngame.cn/upload/userHead/1474265729013.jpg","postTitle":"今日头条","postTagId":1,"watchNum":0,"postContent":"挺好的一个头条",
+     * "createTime":1488595458000,"updateTime":1488595458000,"appTypeId":0,"commentNum":0,"postImage":"http://oss.ngame
+     * .cn/upload/postImage/1488595457992.png","pointNum":0,"voteNum":0,"isDelete":0,"isReport":0,"orderNo":0,"isPoint":null},
+     * {"id":1,"userCode":"UC0000000000045","postPublisher":"13035114192","headPhoto":"http://oss.ngame
+     * .cn/upload/userHead/1474265729013.jpg","postTitle":"今日头条","postTagId":1,"watchNum":0,"postContent":"挺好的一个头条",
+     * "createTime":1488593747000,"updateTime":1488593747000,"appTypeId":0,"commentNum":0,"postImage":"http://oss.ngame
+     * .cn/upload/postImage/1488593746965.png","pointNum":0,"voteNum":0,"isDelete":0,"isReport":1,"orderNo":0,"isPoint":null}]
      * map : null
      * innerResult : null
      * page : 1
@@ -106,7 +118,8 @@ public class GameHubMainBean {
          * updateTime : 1488614643000
          * appTypeId : 0
          * commentNum : 0
-         * postImage : http://oss.ngame.cn/upload/postImage/1488614642772.png,http://oss.ngame.cn/upload/postImage/1488614645034.png,http://oss.ngame.cn/upload/postImage/1488614647262.png
+         * postImage : http://oss.ngame.cn/upload/postImage/1488614642772.png,http://oss.ngame
+         * .cn/upload/postImage/1488614645034.png,http://oss.ngame.cn/upload/postImage/1488614647262.png
          * pointNum : 0
          * voteNum : 0
          * isDelete : 0

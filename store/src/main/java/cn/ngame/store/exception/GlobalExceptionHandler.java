@@ -16,13 +16,12 @@
 
 package cn.ngame.store.exception;
 
-import java.lang.Thread.UncaughtExceptionHandler;
-
 import android.content.Context;
 import android.os.Looper;
-import android.widget.Toast;
 
 import com.umeng.analytics.MobclickAgent;
+
+import java.lang.Thread.UncaughtExceptionHandler;
 
 import cn.ngame.store.core.utils.Log;
 
@@ -76,13 +75,14 @@ public class GlobalExceptionHandler implements UncaughtExceptionHandler {
         if(!handlerException(ex) && defaultExceptionHandler != null){
 
             Log.d(TAG, "自定义的全局异常处理器不处理，交给系统处理！");
+            Log.e(TAG, "处理器异常:"+ex.getMessage());
             defaultExceptionHandler.uncaughtException(thread, ex);
 
         }else {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
-                Log.e(TAG, "error : "+e.getMessage());
+                Log.e(TAG, "全局异常 : "+e.getMessage());
             }
 
             Log.e(TAG,"==============>>>>> 严重，APP异常退出了！！！！！");
@@ -102,6 +102,7 @@ public class GlobalExceptionHandler implements UncaughtExceptionHandler {
     private boolean handlerException(Throwable ex){
 
         Log.e(TAG, "//////////////////////////// 全局异常处理器，处理未捕获异常 ////////////////////");
+        Log.e(TAG, " ============== > 异常:"+ex.toString());
 
         if(ex == null){
             return false;

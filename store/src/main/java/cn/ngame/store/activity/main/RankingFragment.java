@@ -52,7 +52,7 @@ public class RankingFragment extends BaseSearchFragment implements View.OnClickL
         tv_download.setOnClickListener(this);
         tv_comment.setOnClickListener(this);
 
-        viewpager.setOffscreenPageLimit(2);
+        viewpager.setOffscreenPageLimit(2);//预加载  多缓存2个页面
         initViewPager();
 
 //        commentFragment = new RankCommentFragment();

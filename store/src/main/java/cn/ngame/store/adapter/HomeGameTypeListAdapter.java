@@ -108,7 +108,8 @@ public class HomeGameTypeListAdapter extends BaseAdapter {
                 uiHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo.filename, gameInfo.gameLink, gameInfo.packages, ConvUtil.NI(gameInfo.versionCode));
+                        GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo.filename, gameInfo.gameLink,
+                                gameInfo.packages, ConvUtil.NI(gameInfo.versionCode));
                         holder.progressBar.setLoadState(fileStatus);
                     }
                 });
@@ -134,9 +135,11 @@ public class HomeGameTypeListAdapter extends BaseAdapter {
         }
 
         //设置进度条状态
-        holder.progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.filename, gameInfo.gameLink, gameInfo.packages, ConvUtil.NI(gameInfo.versionCode)));
+        holder.progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.filename, gameInfo.gameLink, gameInfo.packages,
+                ConvUtil.NI(gameInfo.versionCode)));
         //必须设置，否则点击进度条后无法进行响应操作
-        FileLoadInfo fileLoadInfo = new FileLoadInfo(gameInfo.filename, gameInfo.gameLink, gameInfo.md5, ConvUtil.NI(gameInfo.versionCode), gameInfo.gameName, gameInfo.gameLogo, gameInfo.id, FileLoadInfo.TYPE_GAME);
+        FileLoadInfo fileLoadInfo = new FileLoadInfo(gameInfo.filename, gameInfo.gameLink, gameInfo.md5, ConvUtil.NI(gameInfo
+                .versionCode), gameInfo.gameName, gameInfo.gameLogo, gameInfo.id, FileLoadInfo.TYPE_GAME);
         fileLoadInfo.setPackageName(gameInfo.packages);
         holder.progressBar.setFileLoadInfo(fileLoadInfo);
         holder.progressBar.setOnStateChangeListener(new ProgressBarStateListener(context, fm));

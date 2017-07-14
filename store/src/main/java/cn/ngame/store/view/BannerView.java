@@ -27,6 +27,7 @@ import cn.ngame.store.R;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.TextUtil;
 
+
 /**
  * 图片轮播控件
  *
@@ -128,7 +129,7 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
             img.setImageDrawable(getResources().getDrawable(R.drawable.selector_dot));
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(CommonUtil.dip2px(context, 4), CommonUtil.dip2px(context, 4));
             if (i > 0) {
-                lp.setMargins(CommonUtil.dip2px(context, 4), 0, 0, 0);
+                lp.setMargins(CommonUtil.dip2px(context, 6), 0, 0, 0);
                 img.setSelected(false);
             } else {
                 img.setSelected(true);
@@ -147,6 +148,7 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
         final List<ImageView> tempViews = views;
         for (final ImageView img : tempViews) {
             if (!TextUtil.isEmpty((String) img.getTag())) {
+                img.setScaleType(ImageView.ScaleType.FIT_XY);
                 Picasso.with(context)
                         .load((String) img.getTag())
                         .placeholder(R.drawable.banner_default)

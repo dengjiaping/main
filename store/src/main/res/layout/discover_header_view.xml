@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray"
-    android:orientation="vertical"
-    android:scrollbars="none">
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/gray"
+              android:orientation="vertical"
+              android:scrollbars="none">
+
+    <cn.ngame.store.view.BannerView
+        android:id="@+id/banner_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/banner_image_height_discover"
+        android:background="@drawable/banner_default"
+        android:clickable="true"
+        custom:auto_scroll="true"
+        custom:current_item="0"
+        custom:scroll_period="7"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_weight="0"
-                android:background="@drawable/classifi_vr_game" />
+                android:background="@drawable/classifi_vr_game"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -38,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_weight="0"
-                android:background="@drawable/classifi_danji" />
+                android:background="@drawable/classifi_danji"/>
         </RelativeLayout>
     </LinearLayout>
 
@@ -59,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_weight="0"
-                android:background="@drawable/classifi_boy" />
+                android:background="@drawable/classifi_boy"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -73,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_weight="0"
-                android:background="@drawable/classifi_girl" />
+                android:background="@drawable/classifi_girl"/>
         </RelativeLayout>
     </LinearLayout>
 
@@ -94,7 +105,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/classifi_remen" />
+                android:background="@drawable/classifi_remen"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -102,7 +113,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="热门网游"
                 android:textColor="@color/font_black_3"
-                android:textSize="13sp" />
+                android:textSize="13sp"/>
         </LinearLayout>
 
         <GridView
@@ -115,7 +126,7 @@
             android:numColumns="3"
             android:scrollbars="none"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp" />
+            android:verticalSpacing="1dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -136,7 +147,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/classifi_qiangzhan" />
+                android:background="@drawable/classifi_qiangzhan"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -144,7 +155,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="枪战射击"
                 android:textColor="@color/font_black_3"
-                android:textSize="13sp" />
+                android:textSize="13sp"/>
         </LinearLayout>
 
         <GridView
@@ -157,7 +168,7 @@
             android:numColumns="3"
             android:scrollbars="none"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp" />
+            android:verticalSpacing="1dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -178,7 +189,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/classifi_maoxian" />
+                android:background="@drawable/classifi_maoxian"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -186,7 +197,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="冒险跑酷"
                 android:textColor="@color/font_black_3"
-                android:textSize="13sp" />
+                android:textSize="13sp"/>
         </LinearLayout>
 
         <GridView
@@ -199,7 +210,7 @@
             android:numColumns="3"
             android:scrollbars="none"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp" />
+            android:verticalSpacing="1dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -220,7 +231,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/classifi_dongzuo" />
+                android:background="@drawable/classifi_dongzuo"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -228,7 +239,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="动作格斗"
                 android:textColor="@color/font_black_3"
-                android:textSize="13sp" />
+                android:textSize="13sp"/>
         </LinearLayout>
 
         <GridView
@@ -241,7 +252,7 @@
             android:numColumns="3"
             android:scrollbars="none"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp" />
+            android:verticalSpacing="1dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -262,7 +273,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/classifi_jiaose" />
+                android:background="@drawable/classifi_jiaose"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -270,7 +281,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="角色扮演"
                 android:textColor="@color/font_black_3"
-                android:textSize="13sp" />
+                android:textSize="13sp"/>
         </LinearLayout>
 
         <GridView
@@ -283,7 +294,7 @@
             android:numColumns="3"
             android:scrollbars="none"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp" />
+            android:verticalSpacing="1dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -304,7 +315,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/classifi_xiuxian" />
+                android:background="@drawable/classifi_xiuxian"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -312,7 +323,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="休闲益智"
                 android:textColor="@color/font_black_3"
-                android:textSize="13sp" />
+                android:textSize="13sp"/>
         </LinearLayout>
 
         <GridView
@@ -325,7 +336,7 @@
             android:numColumns="3"
             android:scrollbars="none"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp" />
+            android:verticalSpacing="1dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -346,7 +357,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/classifi_saiche" />
+                android:background="@drawable/classifi_saiche"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -354,7 +365,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="赛车竞赛"
                 android:textColor="@color/font_black_3"
-                android:textSize="13sp" />
+                android:textSize="13sp"/>
         </LinearLayout>
 
         <GridView
@@ -367,7 +378,7 @@
             android:numColumns="3"
             android:scrollbars="none"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp" />
+            android:verticalSpacing="1dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -389,7 +400,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/classifi_tiyu" />
+                android:background="@drawable/classifi_tiyu"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -397,7 +408,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="体育球类"
                 android:textColor="@color/font_black_3"
-                android:textSize="13sp" />
+                android:textSize="13sp"/>
         </LinearLayout>
 
         <GridView
@@ -410,6 +421,6 @@
             android:numColumns="3"
             android:scrollbars="none"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp" />
+            android:verticalSpacing="1dp"/>
     </LinearLayout>
 </LinearLayout>

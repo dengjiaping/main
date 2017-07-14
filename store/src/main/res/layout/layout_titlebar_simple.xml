@@ -24,7 +24,7 @@
         android:layout_centerVertical="true"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="@dimen/title_center_text_font"
+        android:textSize="@dimen/title_size"
         android:visibility="gone"/>
 
     <TextView

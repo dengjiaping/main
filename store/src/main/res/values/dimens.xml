@@ -13,6 +13,8 @@
     <dimen name="recycle_detail_image_size">160dp</dimen>
     <!-- 轮播图片高度 -->
     <dimen name="banner_image_height">214dp</dimen>
+    <!-- 发现   轮播图片高度 -->
+    <dimen name="banner_image_height_discover">150dp</dimen>
     <!-- 侧滑菜单宽度 -->
     <dimen name="sliding_menu_width">80dp</dimen>
 
@@ -27,8 +29,10 @@
     <dimen name="sm_top_name_tv_width">63dp</dimen>
     <dimen name="sm_top_name_tv_font">14dp</dimen>
 
-    <dimen name="title_center_text_font">18dp</dimen>
+    <dimen name="title_size">18dp</dimen>
     <dimen name="title_back_bt_paddingLeft">20dp</dimen>
+    <dimen name="recommend_item_from_pic">18dp</dimen>
+    <dimen name="recommend_item_game_pic_hight">150dp</dimen>
 
 
 </resources>

@@ -2,12 +2,20 @@ package cn.ngame.store.activity.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.reflect.TypeToken;
 import com.jzt.hol.android.jkda.sdk.bean.classification.ClassifiHomeBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
@@ -15,9 +23,12 @@ import com.jzt.hol.android.jkda.sdk.services.Classification.ClassifiHomeClient;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.ngame.store.R;
+import cn.ngame.store.StoreApplication;
 import cn.ngame.store.adapter.ClassifiDongzuoAdapter;
 import cn.ngame.store.adapter.ClassifiJiaoseAdapter;
 import cn.ngame.store.adapter.ClassifiMaoxianAdapter;
@@ -28,9 +39,20 @@ import cn.ngame.store.adapter.ClassifiTiyuAdapter;
 import cn.ngame.store.adapter.ClassifiXiuxianAdapter;
 import cn.ngame.store.adapter.HomeRaiderAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
+import cn.ngame.store.bean.HotInfo;
+import cn.ngame.store.bean.JsonResult;
+import cn.ngame.store.core.net.GsonRequest;
+import cn.ngame.store.core.utils.Constant;
+import cn.ngame.store.core.utils.Log;
+import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.game.view.SBGameActivity;
+import cn.ngame.store.video.view.VideoDetailActivity;
+import cn.ngame.store.view.BannerView;
+import cn.ngame.store.view.PicassoImageView;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
+
+import static cn.ngame.store.R.id.banner_view;
 
 /**
  * 分类
@@ -44,6 +66,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private static final int SUB_TYPE_ID_BOY = 15;
     private static final int SUB_TYPE_ID_GIRL = 16;
     private static final int SUB_TYPE_ID = 21;
+    private static final String TAG = "777";
     /**
      * 顶部栏
      */
@@ -70,6 +93,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     List<ClassifiHomeBean.DataBean.RaceListBean> saicheList = new ArrayList<>();
     ClassifiTiyuAdapter tiyuAdapter;
     List<ClassifiHomeBean.DataBean.SportListBean> tiyuList = new ArrayList<>();
+    private BannerView bannerView;
 
     public static DiscoverFragment newInstance(String arg) {
         DiscoverFragment fragment = new DiscoverFragment();
@@ -120,8 +144,98 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         pullListView.getRefreshableView().setAdapter(adapter);
 
         getGameList();
+        getBannerData();
     }
+    /**
+     * 获取轮播图片数据
+     */
+    private void getBannerData() {
+        String url = Constant.WEB_SITE + Constant.URL_BANNER;
+        Response.Listener<JsonResult<List<HotInfo>>> successListener = new Response.Listener<JsonResult<List<HotInfo>>>() {
+            @Override
+            public void onResponse(JsonResult<List<HotInfo>> result) {
 
+                if (result == null) {
+//                    Toast.makeText(getActivity(), "服务端异常", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (result.code == 0) {
+
+                    List<ImageView> list = createBannerView(result.data);
+                    bannerView.setData(list);
+
+                } else {
+                    Log.d(TAG, "HTTP请求成功：服务端返回错误！");
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                Log.d(TAG, "HTTP请求失败：网络连接错误！");
+            }
+        };
+
+        Request<JsonResult<List<HotInfo>>> request = new GsonRequest<JsonResult<List<HotInfo>>>(Request.Method.POST, url,
+                successListener, errorListener, new TypeToken<JsonResult<List<HotInfo>>>() {
+        }.getType()) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("type", String.valueOf(42));
+                return params;
+            }
+        };
+        StoreApplication.requestQueue.add(request);
+    }
+    /**
+     * 创建轮播视图
+     */
+    private List<ImageView> createBannerView(List<HotInfo> hotInfoList) {
+
+        if (hotInfoList == null || hotInfoList.size() <= 0) {
+            return null;
+        }
+
+        ArrayList<ImageView> list = new ArrayList<>();
+        for (int i = 0; i < hotInfoList.size(); i++) {
+
+            final HotInfo info = hotInfoList.get(i);
+            PicassoImageView img = new PicassoImageView(getActivity());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            img.setLayoutParams(params);
+            img.setId((int) info.id);
+            img.setTag(info.advImageLink);
+
+            img.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return false;
+                }
+            });
+            img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (info.type == 1) {
+                        Intent intent = new Intent(getActivity(), GameDetailActivity.class);
+                        intent.putExtra("id", info.gameId);
+                        startActivity(intent);
+                    } else if (info.type == 2) {
+                        Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
+                        intent.putExtra("id", info.videoId);
+                        startActivity(intent);
+                    }
+                }
+            });
+            list.add(img);
+        }
+        return list;
+    }
     private void initHeadView(View headView) {
         iv_vr = (ImageView) headView.findViewById(R.id.iv_vr);
         iv_stand_alone = (ImageView) headView.findViewById(R.id.iv_stand_alone);
@@ -147,6 +261,8 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         clickGradView(gridView_xiuxian, 6);
         clickGradView(gridView_saiche, 7);
         clickGradView(gridView_tiyu, 8);
+
+        bannerView = (BannerView) headView.findViewById(banner_view);
     }
 
     //传游戏列表id，不传lab查询id

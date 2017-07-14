@@ -151,6 +151,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private ImageView mSmIconIv;
     private TextView mSmNicknameTv;
     private TextView mTitleTv;
+    private ImageView mTitleBgIv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,6 +200,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         tv_notifi_num = (TextView) findViewById(R.id.tv_notifi_num); //右上角消息数目
 
         mIconIv = (ImageView) findViewById(R.id.iv_icon_title);
+        mTitleBgIv = (ImageView) findViewById(R.id.title_iv);
         mTitleTv = (TextView) findViewById(R.id.title_tv);
         im_toSearch.setOnClickListener(this);
         fl_notifi.setOnClickListener(this);
@@ -343,7 +345,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
     @Override
     protected void onStart() {
-        super.onResume();
+        super.onStart();
         //主界面顶部头像
         pwd = StoreApplication.passWord;
         if (pwd != null && !"".endsWith(pwd)) {
@@ -510,6 +512,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 }
                 bt_home.setSelected(true);
                 mTitleTv.setText("");
+                mTitleBgIv.setVisibility(View.VISIBLE);
                 fl_notifi.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 tv_home.setTextColor(colorDark);
@@ -524,6 +527,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 bt_game.setSelected(true);
                 mTitleTv.setText("排行榜");
                 fl_notifi.setVisibility(View.GONE);
+                mTitleBgIv.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 tv_game.setTextColor(colorDark);
                 break;
@@ -536,6 +540,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 }
                 menu_game_hub_bt.setSelected(true);
                 mTitleTv.setText("圈子");
+                mTitleBgIv.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 menu_gamehub_tv.setTextColor(colorDark);
@@ -550,6 +555,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 bt_video.setSelected(true);
                 mTitleTv.setText("发现");
                 fl_notifi.setVisibility(View.GONE);
+                mTitleBgIv.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 tv_video.setTextColor(colorDark);
                 break;
@@ -563,6 +569,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 bt_manager.setSelected(true);
                 mTitleTv.setText("管理");
                 im_toSearch.setVisibility(View.GONE);
+                mTitleBgIv.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.GONE);
                 tv_manager.setTextColor(colorDark);
                 break;
@@ -739,10 +746,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         }
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
 
     @Override
     protected void onDestroy() {
