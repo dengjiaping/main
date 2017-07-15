@@ -108,7 +108,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="20dp"
                 android:layout_toRightOf="@+id/img_from_2"
                 android:ellipsize="end"
                 android:gravity="center_vertical"

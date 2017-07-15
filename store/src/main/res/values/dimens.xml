@@ -35,4 +35,7 @@
     <dimen name="recommend_item_game_pic_hight">150dp</dimen>
 
 
+    <dimen name="dp_16">16dp</dimen>
+
+
 </resources>

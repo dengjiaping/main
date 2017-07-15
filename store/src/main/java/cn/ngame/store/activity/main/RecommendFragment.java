@@ -45,6 +45,7 @@ import cn.ngame.store.bean.QueryHomeGameBean;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
+import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.util.StringUtil;
@@ -56,7 +57,7 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
  * Created by gp on 2017/3/14 0014.
  */
 
-public class RecommendFragment extends BaseSearchFragment implements View.OnClickListener {
+public class RecommendFragment extends BaseSearchFragment {
     public static final String TAG = RecommendFragment.class.getSimpleName();
     private static final int TYPE_HAND = 21; // 9
     private static final int TYPE_XUNI = 11;
@@ -108,15 +109,16 @@ public class RecommendFragment extends BaseSearchFragment implements View.OnClic
 
     @Override
     protected int getContentViewLayoutID() {
+        Log.d(TAG, "推荐getContentViewLayoutID");
         return R.layout.fragment_recommend;
     }
 
     @Override
     protected void initViewsAndEvents(View view) {
 //        typeValue = getArguments().getInt("", 1);
+        Log.d(TAG, "推荐initViewsAndEvents");
         initListView(view);     //初始化
         //getBannerData();    //轮播图片
-        Log.d(TAG, "初始化");
     }
 
     private void getGameList() {
@@ -146,7 +148,7 @@ public class RecommendFragment extends BaseSearchFragment implements View.OnClic
         if (result.getData() == null) {
             return;
         }
-        if (pageAction.getCurrentPage() == 0) {
+        if (pageAction.getCurrentPage() == 0) {//当前页
             this.list.clear(); //清除数据
             this.topList.clear();
             if (result.getData() == null || result.getData().size() == 0) {
@@ -156,12 +158,18 @@ public class RecommendFragment extends BaseSearchFragment implements View.OnClic
                 return;
             }
         }
-        if (result.getData().size() > 0) {
+        android.util.Log.d(TAG, "lpageAction.getCurrentPage()  " + pageAction.getCurrentPage());
+        android.util.Log.d(TAG, "result.getData().size()  " + result.getData().size());
+        android.util.Log.d(TAG, "result.getTotals()  " + result.getTotals());
+        if (result.getData().size() > 0) {//刷新后进来
+            android.util.Log.d(TAG, "进来  size> 0 ");
             pageAction.setTotal(result.getTotals());
             this.list.addAll(result.getData());
             this.topList.addAll(result.getData());
         }
         if (result.getData().size() > 0 && pageAction.getCurrentPage() == 0) {
+            //第一次进来
+            android.util.Log.d(TAG, "进来size>0   pageAction.getCurrentPage() == 0 ");
             this.list.clear(); //清除数据
             this.topList.clear();
             pageAction.setTotal(result.getTotals());
@@ -202,9 +210,7 @@ public class RecommendFragment extends BaseSearchFragment implements View.OnClic
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
         pullListView = (PullToRefreshListView) view.findViewById(R.id.pullListView);
-
-        pullListView.setPullRefreshEnabled(true); //刷新
-        pullListView.setPullLoadEnabled(true); //false,不允许上拉加载
+        pullListView.setPullLoadEnabled(false); //false,不允许上拉加载
         pullListView.setScrollLoadEnabled(true);
         pullListView.setLastUpdatedLabel(new Date().toLocaleString());
         pullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
@@ -212,14 +218,15 @@ public class RecommendFragment extends BaseSearchFragment implements View.OnClic
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 pullListView.setPullLoadEnabled(true);
                 pageAction.setCurrentPage(0);
+                Log.d(TAG, "下拉: ");
                 getGameList();
-
                 pullListView.setLastUpdatedLabel(new Date().toLocaleString());
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 //少于指定条数不加载
+                Log.d(TAG, "上拉: ");
                 if (pageAction.getTotal() < pageAction.getPageSize()) {
                     pullListView.setHasMoreData(false);
                     pullListView.onPullUpRefreshComplete();
@@ -240,9 +247,11 @@ public class RecommendFragment extends BaseSearchFragment implements View.OnClic
         pullListView.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), GameDetailActivity.class);
-                intent.putExtra("id", list.get(position).getId());//// TODO: 2017/7/15 0015  
-                startActivity(intent);
+                if (position > 0) {//减去头部,不让点击
+                    Intent intent = new Intent(getActivity(), GameDetailActivity.class);
+                    intent.putExtra(KeyConstant.ID, list.get(position - 1).getId());//// TODO: 2017/7/15 0015
+                    startActivity(intent);
+                }
             }
         });
         //滑动事件(搜索栏渐变)
@@ -294,7 +303,6 @@ public class RecommendFragment extends BaseSearchFragment implements View.OnClic
         sdv_img_1 = (SimpleDraweeView) view.findViewById(R.id.img_from_1);//来自 头像
         sdv_img_2 = (SimpleDraweeView) view.findViewById(R.id.img_from_2);
 
-
         from_1 = (TextView) view.findViewById(R.id.text_from_1);//来自 名字
         from_2 = (TextView) view.findViewById(R.id.text_from_2);
 
@@ -307,7 +315,30 @@ public class RecommendFragment extends BaseSearchFragment implements View.OnClic
         summary_1 = (TextView) view.findViewById(R.id.tv_summary1);//游戏摘要
         summary_2 = (TextView) view.findViewById(R.id.tv_summary2);
 
+
+        view.findViewById(R.id.recommend_head_llay_0).setOnClickListener(headClickListener);
+        view.findViewById(R.id.recommend_head_llay_1).setOnClickListener(headClickListener);
+
     }
+
+    //头部点击
+    private View.OnClickListener headClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.recommend_head_llay_0:
+                    Intent intent = new Intent(getActivity(), GameDetailActivity.class);
+                    intent.putExtra(KeyConstant.ID, topList.get(0).getId());
+                    startActivity(intent);
+                    break;
+                case R.id.recommend_head_llay_1:
+                    Intent i2 = new Intent(getActivity(), GameDetailActivity.class);
+                    i2.putExtra(KeyConstant.ID, topList.get(1).getId());
+                    startActivity(i2);
+                    break;
+            }
+        }
+    };
 
     //设置头部数据
     public void setHeaderInfo(List<GameRankListBean.DataBean> list) {
@@ -319,32 +350,14 @@ public class RecommendFragment extends BaseSearchFragment implements View.OnClic
 
         game_pic_1.setImageURI(dataBean0.getGameLogo());
         game_pic_2.setImageURI(dataBean1.getGameLogo());
-
         gamename_1.setText(dataBean0.getGameName());
         gamename_2.setText(dataBean1.getGameName());
 
-        from_1.setText(dataBean0.getGameSelected());
-        from_2.setText(dataBean1.getGameSize());
+        from_1.setText("来自" + dataBean0.getGameName());
+        from_2.setText("来自" + dataBean1.getGameName());
 
         summary_1.setText(dataBean0.getGameDesc());
         summary_2.setText(dataBean1.getGameDesc());
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.sdv_img_1:
-                Intent intent = new Intent(getActivity(), GameDetailActivity.class);
-                intent.putExtra("id", topList.get(0).getId());
-                startActivity(intent);
-                break;
-            case R.id.sdv_img_2:
-                Intent i2 = new Intent(getActivity(), GameDetailActivity.class);
-                i2.putExtra("id", topList.get(1).getId());
-                startActivity(i2);
-                break;
-        }
     }
 
     //每日精选、MOBA精选、枪战精选、新平尝鲜、品牌游戏列表（12个）
@@ -456,6 +469,12 @@ public class RecommendFragment extends BaseSearchFragment implements View.OnClic
     @Override
     protected View getLoadView(View view) {
         return null;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        android.util.Log.d(TAG, "onHiddenChanged: ");
     }
 
     @Override

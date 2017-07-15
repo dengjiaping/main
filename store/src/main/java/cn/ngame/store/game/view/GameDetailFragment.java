@@ -82,6 +82,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
         tv_show_all.setOnClickListener(this);
         if (gameInfo != null && gameInfo.gameDetailsImages != null && gameInfo.gameDetailsImages.size() > 0) {
             img_container.removeAllViews();
+            imgs.clear();
             for (int i = 0; i < gameInfo.gameDetailsImages.size(); i++) {
                 GameImage img = gameInfo.gameDetailsImages.get(i);
                 PicassoImageView imageView = new PicassoImageView(getActivity());
@@ -93,10 +94,11 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                 }
                 imageView.setLayoutParams(params);
                 //imageView.setTag(img.imageLink);
-                imageView.setImageUrl(img.imageLink, 290f, 180f, R.drawable.default_game);
+                String imageLink = img.imageLink;
+                imageView.setImageUrl(imageLink, 290f, 180f, R.drawable.default_game);
                 img_container.addView(imageView);
                 //添加图片，查看大图
-                imgs.add(img.imageLink);
+                imgs.add(imageLink);
             }
         }
         //点击查看大图

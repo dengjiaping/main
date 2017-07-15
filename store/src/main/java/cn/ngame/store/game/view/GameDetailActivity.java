@@ -36,7 +36,7 @@ import cn.ngame.store.core.fileload.GameFileStatus;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
-import cn.ngame.store.core.utils.ConstantKey;
+import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.search.view.SearchActivity;
@@ -158,10 +158,10 @@ public class GameDetailActivity extends BaseFgActivity {
                     initView();
 
                     ArrayList<Fragment> fragments = new ArrayList<>();
-                    fragments.add(GameStrategyFragment.newInstance(gameInfo));
-                    fragments.add(GameDetailFragment.newInstance(gameInfo));
-                    fragments.add(GameReviewFragment.newInstance(gameInfo));
-                    fragments.add(GameKeyFragment.newInstance(gameInfo));
+                    fragments.add(GameDetailFragment.newInstance(gameInfo));//详情
+                    fragments.add(GameReviewFragment.newInstance(gameInfo));//评论
+                    fragments.add(GameStrategyFragment.newInstance(gameInfo));//必读
+                    //fragments.add(GameKeyFragment.newInstance(gameInfo));
 
                     adapter.setDate(fragments);
                     adapter.notifyDataSetChanged();
@@ -189,7 +189,7 @@ public class GameDetailActivity extends BaseFgActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put(ConstantKey.GAME_ID, String.valueOf(gameId));
+                params.put(KeyConstant.GAME_ID, String.valueOf(gameId));
                 return params;
             }
         };

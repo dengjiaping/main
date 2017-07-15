@@ -48,4 +48,5 @@
     <color name="semitransparent">#efff</color>
 
     <color name="game_name">#1a1a1a</color>
+    <color name="game_detail_tab_tv_seleted">#0a82b5</color>
 </resources>

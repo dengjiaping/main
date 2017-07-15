@@ -157,7 +157,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_home_activity);
-        Log.d(TAG, "初始化,当前选中标签");
         //首页弹出广告dialog
         showAdverDialog();
         //得到设备id
@@ -257,7 +256,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         //侧边栏
         initSlidingMenu();
-
     }
 
     DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_icon_title, 360);
@@ -348,7 +346,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG, "初始化,onStart");
+        Log.d(TAG, "MainHomeActivity,onStart");
         //主界面顶部头像
         pwd = StoreApplication.passWord;
         if (pwd != null && !"".endsWith(pwd)) {

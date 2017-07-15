@@ -519,5 +519,54 @@ public class GameRankListBean implements Serializable{
         public void setGameStrategy(Object gameStrategy) {
             this.gameStrategy = gameStrategy;
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "id=" + id +
+                    ", gameName='" + gameName + '\'' +
+                    ", gameLogo='" + gameLogo + '\'' +
+                    ", gameVersion='" + gameVersion + '\'' +
+                    ", gameLink='" + gameLink + '\'' +
+                    ", gameSize=" + gameSize +
+                    ", gameDesc='" + gameDesc + '\'' +
+                    ", gameInfo=" + gameInfo +
+                    ", gameSelected=" + gameSelected +
+                    ", packages='" + packages + '\'' +
+                    ", updateTime=" + updateTime +
+                    ", orderNo=" + orderNo +
+                    ", filename='" + filename + '\'' +
+                    ", md5='" + md5 + '\'' +
+                    ", uploadId=" + uploadId +
+                    ", scoreLevel=" + scoreLevel +
+                    ", downloadCount=" + downloadCount +
+                    ", versionCode=" + versionCode +
+                    ", versionName='" + versionName + '\'' +
+                    ", percentage=" + percentage +
+                    ", isDelete=" + isDelete +
+                    ", createTime=" + createTime +
+                    ", commentPeople=" + commentPeople +
+                    ", appTypeId=" + appTypeId +
+                    ", isHand=" + isHand +
+                    ", isVR=" + isVR +
+                    ", isHeadControl=" + isHeadControl +
+                    ", isTouchScreen=" + isTouchScreen +
+                    ", simpleLabel='" + simpleLabel + '\'' +
+                    ", urlSchema='" + urlSchema + '\'' +
+                    ", iosCompany=" + iosCompany +
+                    ", gameAgentList=" + gameAgentList +
+                    ", gameDetailsImages=" + gameDetailsImages +
+                    ", gameKeyMapsImages=" + gameKeyMapsImages +
+                    ", questionResults=" + questionResults +
+                    ", smallOrderNo=" + smallOrderNo +
+                    ", smallOrderNo1=" + smallOrderNo1 +
+                    ", smallOrderNo2=" + smallOrderNo2 +
+                    ", smallOrderNo3=" + smallOrderNo3 +
+                    ", gameKeyDescList=" + gameKeyDescList +
+                    ", operation=" + operation +
+                    ", gameTypeList=" + gameTypeList +
+                    ", gameStrategy=" + gameStrategy +
+                    '}';
+        }
     }
 }
