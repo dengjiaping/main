@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -43,7 +42,6 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
     private Activity context;
     private LinearLayout ll_detail;
     private GameInfo gameInfo;
-    private HorizontalScrollView horizontalScrollView;
     private TextView tv_summary, tv_version, tv_time, tv_company, tv_show_all;
     private LinearLayout img_container;
     private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -71,7 +69,6 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         context = getActivity();
         ScrollView view = (ScrollView) inflater.inflate(R.layout.fragment_game_detail, null);
-        horizontalScrollView = (HorizontalScrollView) view.findViewById(R.id.horizontalScrollView);
         tv_summary = (TextView) view.findViewById(R.id.tv_summary);
         tv_version = (TextView) view.findViewById(R.id.tv_version);
         tv_time = (TextView) view.findViewById(R.id.text);

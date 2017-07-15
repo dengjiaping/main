@@ -121,19 +121,16 @@ public class GameDetailActivity extends BaseFgActivity {
      * 获取游戏详情
      */
     private void getGameInfo() {
-
         String url = Constant.WEB_SITE + Constant.URL_GAME_DETAIL;
         Response.Listener<JsonResult<GameInfo>> successListener = new Response
                 .Listener<JsonResult<GameInfo>>() {
             @Override
             public void onResponse(JsonResult<GameInfo> result) {
-
                 if (result == null || result.code != 0) {
                     return;
                 }
                 gameInfo = result.data;
                 if (gameInfo != null) {
-
                     //设置进度条状态
                     progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.filename,
                             gameInfo.gameLink, gameInfo.packages, ConvUtil.NI(gameInfo
@@ -187,7 +184,6 @@ public class GameDetailActivity extends BaseFgActivity {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.GAME_ID, String.valueOf(gameId));
                 return params;

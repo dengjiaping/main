@@ -36,6 +36,10 @@
 
 
     <dimen name="dp_16">16dp</dimen>
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="recommend_horizontal_view_height">114dp</dimen>
 
 
 </resources>

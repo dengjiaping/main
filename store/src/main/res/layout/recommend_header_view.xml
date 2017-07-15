@@ -33,11 +33,11 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="6dp"
-                android:paddingRight="20dp"
                 android:layout_toRightOf="@+id/img_from_1"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
+                android:paddingRight="20dp"
                 android:text="来自李国良"
                 android:textColor="@color/font_color_b3"
                 android:textSize="12dp"/>
@@ -78,10 +78,10 @@
             android:text="游戏描述"
             android:textColor="@color/font_black_9"
             android:textSize="12dp"/>
+
+        <include layout="@layout/layout_match_parent_line_height10dp"/>
     </LinearLayout>
-
-    <include layout="@layout/layout_match_parent_line_height10dp"/>
-
+    <!--........................................................................-->
     <LinearLayout
         android:id="@+id/recommend_head_llay_1"
         android:layout_width="match_parent"
@@ -152,8 +152,37 @@
             android:text="游戏描述"
             android:textColor="@color/font_black_9"
             android:textSize="12dp"/>
+
+        <include layout="@layout/layout_match_parent_line_height10dp"/>
     </LinearLayout>
 
-    <include layout="@layout/layout_match_parent_line_height10dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_f5"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_8"
+        android:text="精选"
+        android:textColor="@color/font_black_3"
+        android:textSize="@dimen/dp_16"/>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_f5"
+        android:paddingBottom="@dimen/dp_20"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_20"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/horizontalView_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/recommend_horizontal_view_height"
+            android:focusable="false"
+            android:orientation="horizontal">
+        </LinearLayout>
+    </HorizontalScrollView>
 
 </LinearLayout>

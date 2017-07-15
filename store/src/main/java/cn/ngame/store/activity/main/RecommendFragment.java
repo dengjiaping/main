@@ -3,9 +3,13 @@ package cn.ngame.store.activity.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,24 +37,29 @@ import java.util.Timer;
 
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
-import cn.ngame.store.adapter.HomeGameTypeListAdapter;
 import cn.ngame.store.adapter.MainHomeRaiderAdapter;
 import cn.ngame.store.adapter.RecommendListAdapter;
 import cn.ngame.store.adapter.SelectGameAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
+import cn.ngame.store.bean.GameImage;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.bean.QueryHomeGameBean;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.net.GsonRequest;
+import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.view.GameDetailActivity;
+import cn.ngame.store.gamehub.view.ShowViewActivity;
 import cn.ngame.store.util.StringUtil;
+import cn.ngame.store.view.PicassoImageView;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
+
+import static cn.ngame.store.core.utils.Constant.URL_GAME_DETAIL;
 
 /**
  * 精选
@@ -59,8 +68,6 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 
 public class RecommendFragment extends BaseSearchFragment {
     public static final String TAG = RecommendFragment.class.getSimpleName();
-    private static final int TYPE_HAND = 21; // 9
-    private static final int TYPE_XUNI = 11;
     PullToRefreshListView pullListView;
     private Timer timer = new Timer();
     private static Handler uiHandler = new Handler();
@@ -73,15 +80,12 @@ public class RecommendFragment extends BaseSearchFragment {
     List<GameInfo> dailyRecommendList = new ArrayList<>();
     List<GameInfo> mobaList = new ArrayList<>();
     List<GameInfo> qiangzhanList = new ArrayList<>();
-    List<GameInfo> xinpingList = new ArrayList<>();
-
     List<GameInfo> bTencentList = new ArrayList<>();
     List<GameInfo> allBradnList = new ArrayList<>();
     List<GameHubMainBean.DataBean> homeList = new ArrayList<>();
 
     private ListView listView_tBarnd, listView_allBarnd;
 
-    private HomeGameTypeListAdapter typeListAdapter;
     private SelectGameAdapter gameListAdapter;
     private MainHomeRaiderAdapter raiderAdapter;
     private SimpleDraweeView sdv_img_1, sdv_img_2, game_pic_1, game_pic_2;
@@ -94,9 +98,12 @@ public class RecommendFragment extends BaseSearchFragment {
     private RecommendListAdapter adapter;
 
     private PageAction pageAction;
-    public static int PAGE_SIZE = 10;
+    public static int PAGE_SIZE = 5;
     List<GameRankListBean.DataBean> topList = new ArrayList<>();
     List<GameRankListBean.DataBean> list = new ArrayList<>();
+    private LinearLayout horizontalViewContainer;
+    private GameInfo gameInfo;
+    private FragmentActivity context;
 
     public static RecommendFragment newInstance(int arg) {
         RecommendFragment fragment = new RecommendFragment();
@@ -117,6 +124,7 @@ public class RecommendFragment extends BaseSearchFragment {
     protected void initViewsAndEvents(View view) {
 //        typeValue = getArguments().getInt("", 1);
         Log.d(TAG, "推荐initViewsAndEvents");
+        context = getActivity();
         initListView(view);     //初始化
         //getBannerData();    //轮播图片
     }
@@ -142,6 +150,88 @@ public class RecommendFragment extends BaseSearchFragment {
                         }
                     }
                 });
+        getHorizontalData();
+    }
+
+    private ArrayList<String> imgUrlList = new ArrayList<String>();
+
+    private void getHorizontalData() {
+        String url_game_detail = Constant.WEB_SITE + URL_GAME_DETAIL;
+        //请求失败
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                Log.d(TAG, "HTTP请求失败：网络连接错误！");
+            }
+        };
+        //todo 获取横向滑动的数据
+        Response.Listener<JsonResult<GameInfo>> successListener = new Response.Listener<JsonResult<GameInfo>>() {
+            @Override
+            public void onResponse(JsonResult<GameInfo> result) {
+                //数据为空
+                if (result == null || result.code != 0) {
+                    return;
+                }
+                //GameInfo类  : 请求游戏JSON数据后,封装的javabean
+                gameInfo = result.data;
+                if (null == gameInfo) {
+                    Log.d(TAG, "HTTP请求成功：服务端返回错误！");
+                } else {
+                    List<GameImage> gameImgsList = gameInfo.gameDetailsImages;
+                    if (null != gameImgsList && gameImgsList.size() > 0) {
+                        horizontalViewContainer.removeAllViews();
+                        imgUrlList.clear();
+                        for (int i = 0; i < gameImgsList.size(); i++) {
+                            GameImage gameImage = gameImgsList.get(i);//获取每一张图片
+                            PicassoImageView imageView = new PicassoImageView(getActivity());
+                            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                            //为  PicassoImageView设置属性
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            params.width = CommonUtil.dip2px(context, 240f);
+                            params.height = CommonUtil.dip2px(context, 114f);
+                            //有多个图片的话
+                            if (i > 0) {
+                                params.setMargins(CommonUtil.dip2px(context, 10), 0, 0, 0);
+                            }
+                            imageView.setLayoutParams(params);
+
+                            //加载网络图片
+                            imageView.setImageUrl(gameImage.imageLink, 240f, 114f, R.drawable.default_game);
+                            horizontalViewContainer.addView(imageView);
+                            imgUrlList.add(gameImage.imageLink);
+                        }
+                    }
+                }
+
+                horizontalViewContainer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent gv = new Intent();
+                        gv.setClass(context, ShowViewActivity.class);
+                        gv.putStringArrayListExtra("viewImages", imgUrlList);
+                        gv.putExtra("selectPosition", 0);
+                        startActivity(gv);
+                    }
+                });
+
+            }
+        };
+
+        //------------------------------------------------------------------------------
+        Request<JsonResult<GameInfo>> request = new GsonRequest<JsonResult<GameInfo>>(Request.Method.POST, url_game_detail,
+                successListener, errorListener, new TypeToken<JsonResult<GameInfo>>() {
+        }.getType()) {
+            @Override//填写参数
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("gameId", 638 + "");//146.638
+                return params;
+            }
+        };
+        StoreApplication.requestQueue.add(request);
     }
 
     public void listData(GameRankListBean result) {
@@ -248,7 +338,7 @@ public class RecommendFragment extends BaseSearchFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {//减去头部,不让点击
-                    Intent intent = new Intent(getActivity(), GameDetailActivity.class);
+                    Intent intent = new Intent(context, GameDetailActivity.class);
                     intent.putExtra(KeyConstant.ID, list.get(position - 1).getId());//// TODO: 2017/7/15 0015
                     startActivity(intent);
                 }
@@ -315,10 +405,11 @@ public class RecommendFragment extends BaseSearchFragment {
         summary_1 = (TextView) view.findViewById(R.id.tv_summary1);//游戏摘要
         summary_2 = (TextView) view.findViewById(R.id.tv_summary2);
 
-
         view.findViewById(R.id.recommend_head_llay_0).setOnClickListener(headClickListener);
         view.findViewById(R.id.recommend_head_llay_1).setOnClickListener(headClickListener);
 
+        //横向滑动控件
+        horizontalViewContainer = (LinearLayout) view.findViewById(R.id.horizontalView_container);
     }
 
     //头部点击
