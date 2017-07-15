@@ -157,6 +157,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_home_activity);
+        Log.d(TAG, "初始化,当前选中标签");
         //首页弹出广告dialog
         showAdverDialog();
         //得到设备id
@@ -212,6 +213,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 //        init(viewPager, getSupportFragmentManager());
         fragmentManager = getSupportFragmentManager();
         setCurrentMenu(0);    //当前选中标签
+
         setOnTouchListener(this.new MenuOnTouchListener());
 
         pwd = StoreApplication.passWord;
@@ -346,6 +348,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
+        Log.d(TAG, "初始化,onStart");
         //主界面顶部头像
         pwd = StoreApplication.passWord;
         if (pwd != null && !"".endsWith(pwd)) {
