@@ -19,26 +19,26 @@ import cn.ngame.store.bean.QuestionResult;
  */
 public class ReviewScoreView extends LinearLayout {
 
-    private TextView tv_score,tv_total;
+    private TextView tv_score, tv_total;
     private RatingBar ratingBar;
-    private ProgressBar pb1,pb2,pb3,pb4,pb5;
-    private TextView tv_1,tv_2,tv_3,tv_4,tv_5;
+    private ProgressBar pb1, pb2, pb3, pb4, pb5;
+    private TextView tv_1, tv_2, tv_3, tv_4, tv_5;
 
     private List<QuestionResult> resultList;
 
 
     public ReviewScoreView(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public ReviewScoreView(Context context, AttributeSet attrs) {
-        this(context, attrs,-1);
+        this(context, attrs, -1);
     }
 
     public ReviewScoreView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        inflate(context,R.layout.layout_review_score,this);
+        inflate(context, R.layout.layout_review_score, this);
         tv_score = (TextView) findViewById(R.id.tv_score);
         tv_total = (TextView) findViewById(R.id.tv_total);
         ratingBar = (RatingBar) findViewById(R.id.rating_bar);
@@ -58,64 +58,64 @@ public class ReviewScoreView extends LinearLayout {
 
     }
 
-    public void setData(GameInfo gameInfo){
-
+    public void setData(GameInfo gameInfo) {
         this.resultList = gameInfo.questionResults;
-
         int totalPeople = gameInfo.commentPeople;
-
-        for(QuestionResult qr : resultList){
+        if (null == resultList) {
+            return;
+        }
+        for (QuestionResult qr : resultList) {
 
             double commentPeople = qr.commentPeople;
-            double tempProcess = commentPeople/totalPeople*100;
-            int process = (int)tempProcess;
+            double tempProcess = commentPeople / totalPeople * 100;
+            int process = (int) tempProcess;
 
-            switch (qr.itemId){
+            switch (qr.itemId) {
                 case 5:
-                    if(qr.commentPeople != 0){
-                        if(qr.commentPeople > 0){
-                            tv_5.setText(qr.commentPeople+"");
+                    if (qr.commentPeople != 0) {
+                        if (qr.commentPeople > 0) {
+                            tv_5.setText(qr.commentPeople + "");
                         }
                         pb5.setProgress(process);
-                    }else {
-                        tv_5.setText(0+"");
+                    } else {
+                        tv_5.setText(0 + "");
                         pb5.setProgress(0);
                     }
 
                     break;
                 case 4:
-                    if(qr.commentPeople != 0){
-                        tv_4.setText(qr.commentPeople+"");
+                    if (qr.commentPeople != 0) {
+                        tv_4.setText(qr.commentPeople + "");
                         pb4.setProgress(process);
-                    }else {
-                        tv_4.setText(0+"");
+                    } else {
+                        tv_4.setText(0 + "");
                         pb4.setProgress(0);
                     }
                     break;
                 case 3:
-                    if(qr.commentPeople != 0){
-                        tv_3.setText(qr.commentPeople+"");
+                    if (qr.commentPeople != 0) {
+                        tv_3.setText(qr.commentPeople + "");
                         pb3.setProgress(process);
-                    }else {
-                        tv_3.setText(0+"");
+                    } else {
+                        tv_3.setText(0 + "");
                         pb3.setProgress(0);
                     }
                     break;
                 case 2:
-                    if(qr.commentPeople != 0){
-                        tv_2.setText(qr.commentPeople+"");
+                    if (qr.commentPeople != 0) {
+                        tv_2.setText(qr.commentPeople + "");
                         pb2.setProgress(process);
-                    }else {
-                        tv_2.setText(0+"");
+                    } else {
+                        tv_2.setText(0 + "");
                         pb2.setProgress(0);
                     }
                     break;
                 case 1:
-                    if(qr.commentPeople != 0){
-                        tv_1.setText(qr.commentPeople+"");
+                    if (qr.commentPeople != 0) {
+                        tv_1.setText(qr.commentPeople + "");
                         pb1.setProgress(process);
-                    }else {
-                        tv_1.setText(0+"");
+                    } else {
+                        tv_1.setText(0 + "");
                         pb1.setProgress(0);
                     }
                     break;
@@ -130,7 +130,7 @@ public class ReviewScoreView extends LinearLayout {
         }
 
         ratingBar.setRating(gameInfo.percentage);
-        tv_score.setText(gameInfo.percentage+"分");
+        tv_score.setText(gameInfo.percentage + "分");
 
     }
 

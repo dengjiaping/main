@@ -39,9 +39,9 @@ public class DeviceLvAdapter extends BaseAdapter {
 
     private List<DeviceInfo> deviceInfos;
 
-    private OtaActivity activity;
+    private MyDeviceOtaActivity activity;
 
-    public DeviceLvAdapter(OtaActivity activity) {
+    public DeviceLvAdapter(MyDeviceOtaActivity activity) {
         super();
         this.activity = activity;
     }

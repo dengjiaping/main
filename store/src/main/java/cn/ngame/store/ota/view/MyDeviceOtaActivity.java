@@ -38,9 +38,9 @@ import cn.ngame.store.view.RoundProgressBar;
  * 用于OTA升级，我的设备页面
  * Created by zeng on 2016/8/15.
  */
-public class OtaActivity extends BaseFgActivity implements View.OnClickListener,IOtaView{
+public class MyDeviceOtaActivity extends BaseFgActivity implements View.OnClickListener,IOtaView{
 
-    public static final String TAG = OtaActivity.class.getSimpleName();
+    public static final String TAG = MyDeviceOtaActivity.class.getSimpleName();
 
     public static final int REQUEST_CODE_BLUETOOTH_SETTINGS = 1;
 
@@ -64,7 +64,7 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
             OtaService otaService = otcBinder.getService();
 
             //创建控制层
-            presenter = new OtaPresenter(OtaActivity.this,otaService);
+            presenter = new OtaPresenter(MyDeviceOtaActivity.this,otaService);
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -194,7 +194,7 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
                 break;
             case R.id.right_tv:
 
-                Intent helpIntent = new Intent(OtaActivity.this,OtaHelpActivity.class);
+                Intent helpIntent = new Intent(MyDeviceOtaActivity.this,OtaHelpActivity.class);
                 startActivity(helpIntent);
 
                 break;
@@ -336,15 +336,15 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
             public void run() {
 
                 if (state == -1){
-                    Toast.makeText(OtaActivity.this,"请先连接手柄设备",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyDeviceOtaActivity.this,"请先连接手柄设备",Toast.LENGTH_SHORT).show();
                 }else if (state == -2){
-                    Toast.makeText(OtaActivity.this,"正在检测，请稍后",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyDeviceOtaActivity.this,"正在检测，请稍后",Toast.LENGTH_SHORT).show();
                 }else if (state == -3){
-                    Toast.makeText(OtaActivity.this,"正在进行OTA升级",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyDeviceOtaActivity.this,"正在进行OTA升级",Toast.LENGTH_SHORT).show();
                 }else if (state == 0){
-                    Toast.makeText(OtaActivity.this,"当前设备是最新版本",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyDeviceOtaActivity.this,"当前设备是最新版本",Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(OtaActivity.this,"检测完成",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyDeviceOtaActivity.this,"检测完成",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -353,7 +353,7 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
     public void showUpdateDialog(final DeviceInfo info){
 
         if(isUpdating){
-            Toast.makeText(OtaActivity.this,"正在进行OTA升级",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MyDeviceOtaActivity.this,"正在进行OTA升级",Toast.LENGTH_SHORT).show();
             return;
         }
 

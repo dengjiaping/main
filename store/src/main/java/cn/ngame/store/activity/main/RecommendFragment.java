@@ -324,6 +324,12 @@ public class RecommendFragment extends BaseSearchFragment {
                     ToastUtil.show(context, "无网络连接");
                     pullListView.onPullUpRefreshComplete();
                     pullListView.onPullDownRefreshComplete();
+                    if (0 == pageAction.getCurrentPage()) {
+                        //pullListView.setScrollLoadEnabled(false);
+                        //pullListView.setPullRefreshEnabled(false);
+                        //pullListView.setPullLoadEnabled(false);
+                        pullListView.getRefreshableView().setSelection(0);
+                    }
                 } else {
                     android.util.Log.d(TAG, "onPullDownToRefresh: 下拉请求数据");
                     //下拉请求数据
@@ -359,7 +365,7 @@ public class RecommendFragment extends BaseSearchFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {//减去头部,不让点击
                     Intent intent = new Intent(context, GameDetailActivity.class);
-                    intent.putExtra(KeyConstant.ID, list.get(position - 1).getId());//// TODO: 2017/7/15 0015
+                    intent.putExtra(KeyConstant.ID, list.get(position - 1).getGameId());//// TODO: 2017/7/15 0015
                     startActivity(intent);
                 }
             }
@@ -422,12 +428,12 @@ public class RecommendFragment extends BaseSearchFragment {
             switch (v.getId()) {
                 case R.id.recommend_head_llay_0:
                     Intent intent = new Intent(getActivity(), GameDetailActivity.class);
-                    intent.putExtra(KeyConstant.ID, topList.get(0).getId());
+                    intent.putExtra(KeyConstant.ID, topList.get(0).getGameId());
                     startActivity(intent);
                     break;
                 case R.id.recommend_head_llay_1:
                     Intent i2 = new Intent(getActivity(), GameDetailActivity.class);
-                    i2.putExtra(KeyConstant.ID, topList.get(1).getId());
+                    i2.putExtra(KeyConstant.ID, topList.get(1).getGameId());
                     startActivity(i2);
                     break;
             }

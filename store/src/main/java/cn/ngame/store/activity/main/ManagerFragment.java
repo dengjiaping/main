@@ -24,8 +24,8 @@ import cn.ngame.store.R;
 import cn.ngame.store.activity.PadToolActivity;
 import cn.ngame.store.activity.admin.HelpAndFeedbackActivity;
 import cn.ngame.store.activity.admin.MyGameDownloadActivity;
-import cn.ngame.store.activity.admin.SettingActivity;
 import cn.ngame.store.activity.admin.SystemInfoActivity;
+import cn.ngame.store.activity.sm.ManagerSettingsActivity;
 import cn.ngame.store.adapter.HomeRaiderAdapter;
 import cn.ngame.store.base.activity.AboutActivity;
 import cn.ngame.store.base.activity.DisclaimerActivity;
@@ -35,9 +35,9 @@ import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.local.view.WatchHistoryActivity;
-import cn.ngame.store.ota.view.OtaActivity;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
+
 
 /**
  * 管理
@@ -50,7 +50,7 @@ public class ManagerFragment extends BaseSearchFragment implements View.OnClickL
     /**
      * headerView
      */
-    private RelativeLayout rl_my_device, rl_jingling;
+    private RelativeLayout rl_jingling;
     private RelativeLayout rl_download, rl_history, rl_system_msg, rl_system_set, rl_disclaimer, rl_feedback, rl_about;
     private TextView tv_download_num, tv_system_msg_num;
     private IFileLoad fileLoad;
@@ -101,7 +101,6 @@ public class ManagerFragment extends BaseSearchFragment implements View.OnClickL
     }
 
     private void initHeadView(View view) {
-        rl_my_device = (RelativeLayout) view.findViewById(R.id.rl_my_device);
         rl_jingling = (RelativeLayout) view.findViewById(R.id.rl_jingling);
         rl_download = (RelativeLayout) view.findViewById(R.id.rl_download);
         tv_download_num = (TextView) view.findViewById(R.id.tv_download_num);
@@ -112,7 +111,6 @@ public class ManagerFragment extends BaseSearchFragment implements View.OnClickL
         rl_disclaimer = (RelativeLayout) view.findViewById(R.id.rl_disclaimer);
         rl_feedback = (RelativeLayout) view.findViewById(R.id.rl_feedback);
         rl_about = (RelativeLayout) view.findViewById(R.id.rl_about);
-        rl_my_device.setOnClickListener(this);
         rl_jingling.setOnClickListener(this);
         rl_download.setOnClickListener(this);
         rl_history.setOnClickListener(this);
@@ -248,10 +246,6 @@ public class ManagerFragment extends BaseSearchFragment implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.rl_my_device:
-                Intent intent0 = new Intent(getActivity(), OtaActivity.class);
-                startActivity(intent0);
-                break;
             case R.id.rl_jingling:
                 Intent intent1 = new Intent(getActivity(), PadToolActivity.class);
                 startActivity(intent1);
@@ -273,7 +267,7 @@ public class ManagerFragment extends BaseSearchFragment implements View.OnClickL
                 startActivity(msg);
                 break;
             case R.id.rl_system_set:
-                Intent setIntent = new Intent(getActivity(), SettingActivity.class);
+                Intent setIntent = new Intent(getActivity(), ManagerSettingsActivity.class);
                 startActivity(setIntent);
                 break;
             case R.id.rl_disclaimer:

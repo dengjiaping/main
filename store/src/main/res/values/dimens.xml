@@ -22,7 +22,7 @@
     <dimen name="shadow_width">0dp</dimen><!--两边的中间区域-->
     <dimen name="font_sliding_menu_item">18dp</dimen>
     <dimen name="sliding_menu_item_marginTop">56dp</dimen>
-    <dimen name="sliding_menu_item_paddingLeft">32dp</dimen>
+    <dimen name="sliding_menu_item_paddingLeft">31dp</dimen>
     <dimen name="sm_item_paddingTop">10dp</dimen>
     <dimen name="sm_top_llay_height">150dp</dimen>
     <dimen name="sm_top_icon_height">70dp</dimen>
@@ -35,11 +35,16 @@
     <dimen name="recommend_item_game_pic_hight">150dp</dimen>
 
 
-    <dimen name="dp_16">16dp</dimen>
+    <dimen name="dp_05">0.5dp</dimen>
     <dimen name="dp_10">10dp</dimen>
     <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_16">16dp</dimen>
     <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_30">30dp</dimen>
     <dimen name="recommend_horizontal_view_height">114dp</dimen>
+    <dimen name="dp_14">14dp</dimen>
+    <dimen name="dp_50">50dp</dimen>
+    <dimen name="dp_44">44dp</dimen>
 
 
 </resources>

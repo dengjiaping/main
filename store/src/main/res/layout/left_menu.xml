@@ -49,14 +49,14 @@
             android:layout_width="@dimen/font_sliding_menu_item"
             android:layout_height="@dimen/font_sliding_menu_item"
             android:layout_gravity="center"
-            android:scaleType="center"
-            android:src="@drawable/msg_detail_disagree"
+            android:scaleType="centerInside"
+            android:src="@drawable/left_shezhi"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="@dimen/dp_8"
             android:text="系统基本设置"
             android:textColor="@color/font_black_6"
             android:textSize="@dimen/font_sliding_menu_item"/>
@@ -66,7 +66,7 @@
         android:id="@+id/sm_joypad_settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/sliding_menu_item_marginTop"
+        android:layout_marginTop="@dimen/dp_30"
         android:gravity="center|left"
         android:paddingLeft="@dimen/sliding_menu_item_paddingLeft"
         >
@@ -75,14 +75,14 @@
             android:layout_width="@dimen/font_sliding_menu_item"
             android:layout_height="@dimen/font_sliding_menu_item"
             android:layout_gravity="center"
-            android:scaleType="center"
-            android:src="@drawable/msg_detail_disagree"
+            android:scaleType="centerInside"
+            android:src="@drawable/left_game"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="@dimen/dp_8"
             android:text="游戏手柄设置"
             android:textColor="@color/font_black_6"
             android:textSize="@dimen/font_sliding_menu_item"/>
@@ -92,7 +92,7 @@
         android:id="@+id/sm_about_us"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/sliding_menu_item_marginTop"
+        android:layout_marginTop="@dimen/dp_30"
         android:gravity="center|left"
         android:paddingLeft="@dimen/sliding_menu_item_paddingLeft"
         >
@@ -101,14 +101,14 @@
             android:layout_width="@dimen/font_sliding_menu_item"
             android:layout_height="@dimen/font_sliding_menu_item"
             android:layout_gravity="center"
-            android:scaleType="center"
-            android:src="@drawable/msg_detail_disagree"
+            android:scaleType="centerInside"
+            android:src="@drawable/left_about"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="@dimen/dp_8"
             android:text="关于NgameZone"
             android:textColor="@color/font_black_6"
             android:textSize="@dimen/font_sliding_menu_item"/>
@@ -118,8 +118,7 @@
         android:id="@+id/sm_ad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/sliding_menu_item_marginTop"
-        android:gravity="center|left"
+        android:layout_marginTop="@dimen/dp_30"
         android:paddingLeft="@dimen/sliding_menu_item_paddingLeft"
         >
 
@@ -127,14 +126,14 @@
             android:layout_width="@dimen/font_sliding_menu_item"
             android:layout_height="@dimen/font_sliding_menu_item"
             android:layout_gravity="center"
-            android:scaleType="center"
-            android:src="@drawable/msg_detail_disagree"
+            android:scaleType="centerInside"
+            android:src="@drawable/left_ad"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="@dimen/dp_8"
             android:text="广告合作"
             android:textColor="@color/font_black_6"
             android:textSize="@dimen/font_sliding_menu_item"/>

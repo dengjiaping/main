@@ -132,7 +132,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
-            android:name=".activity.admin.SettingActivity"
+            android:name=".activity.sm.ManagerSettingsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
@@ -218,7 +218,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ota.view.OtaActivity"
+            android:name=".ota.view.MyDeviceOtaActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
