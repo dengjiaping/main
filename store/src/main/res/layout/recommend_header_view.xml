@@ -16,16 +16,18 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="18dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
             >
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/img_from_1"
                 android:layout_width="@dimen/recommend_item_from_pic"
                 android:layout_height="@dimen/recommend_item_from_pic"
-                fresco:actualImageScaleType="fitXY"/>
+                fresco:actualImageScaleType="fitXY"
+                fresco:progressBarImage="@drawable/ic_icon_title"
+                fresco:roundedCornerRadius="4dp"/>
 
             <TextView
                 android:id="@+id/text_from_1"
@@ -48,8 +50,8 @@
             android:id="@+id/tv_gamename_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
             android:clickable="false"
             android:maxLines="1"
             android:paddingRight="20dp"
@@ -62,6 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/recommend_item_game_pic_hight"
             fresco:actualImageScaleType="fitXY"
+            fresco:progressBarImage="@drawable/ic_default_logo_750_300"
+            fresco:progressBarImageScaleType="fitXY"
             />
 
         <TextView
@@ -91,16 +95,19 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="18dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
             >
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/img_from_2"
                 android:layout_width="@dimen/recommend_item_from_pic"
                 android:layout_height="@dimen/recommend_item_from_pic"
-                fresco:actualImageScaleType="fitXY"/>
+                fresco:actualImageScaleType="fitXY"
+                fresco:progressBarImage="@drawable/ic_icon_title"
+                fresco:progressBarImageScaleType="fitXY"
+                fresco:roundedCornerRadius="4dp"/>
 
             <TextView
                 android:id="@+id/text_from_2"
@@ -136,7 +143,9 @@
             android:id="@+id/recommend_game_pic_2"
             android:layout_width="match_parent"
             android:layout_height="@dimen/recommend_item_game_pic_hight"
-            fresco:actualImageScaleType="fitXY"/>
+            fresco:actualImageScaleType="fitXY"
+            fresco:progressBarImage="@drawable/ic_default_logo_750_300"
+            fresco:progressBarImageScaleType="fitXY"/>
 
         <TextView
             android:id="@+id/tv_summary2"

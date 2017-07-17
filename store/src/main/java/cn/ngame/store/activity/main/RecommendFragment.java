@@ -19,14 +19,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
-import com.jzt.hol.android.jkda.sdk.bean.game.GameListBody;
-import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.BrowseHistoryBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameHubMainBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
+import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
+import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBody;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.game.GameListClient;
 import com.jzt.hol.android.jkda.sdk.services.main.HomeHotRaiderClient;
+import com.jzt.hol.android.jkda.sdk.services.recommend.RecommendClient;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,9 +52,11 @@ import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
+import cn.ngame.store.core.utils.NetUtil;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.gamehub.view.ShowViewActivity;
 import cn.ngame.store.util.StringUtil;
+import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.PicassoImageView;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
@@ -67,7 +69,7 @@ import static cn.ngame.store.core.utils.Constant.URL_GAME_DETAIL;
  */
 
 public class RecommendFragment extends BaseSearchFragment {
-    public static final String TAG = RecommendFragment.class.getSimpleName();
+    public static final String TAG = "777";
     PullToRefreshListView pullListView;
     private Timer timer = new Timer();
     private static Handler uiHandler = new Handler();
@@ -99,17 +101,17 @@ public class RecommendFragment extends BaseSearchFragment {
 
     private PageAction pageAction;
     public static int PAGE_SIZE = 5;
-    List<GameRankListBean.DataBean> topList = new ArrayList<>();
-    List<GameRankListBean.DataBean> list = new ArrayList<>();
+    List<RecommendListBean.DataBean> topList = new ArrayList<>();
+    List<RecommendListBean.DataBean> list = new ArrayList<>();
     private LinearLayout horizontalViewContainer;
     private GameInfo gameInfo;
     private FragmentActivity context;
 
     public static RecommendFragment newInstance(int arg) {
+        Log.d(TAG, "初始化newInstance");
         RecommendFragment fragment = new RecommendFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("", arg);
-        Log.d(TAG, "初始化newInstance");
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -126,23 +128,25 @@ public class RecommendFragment extends BaseSearchFragment {
         Log.d(TAG, "推荐initViewsAndEvents");
         context = getActivity();
         initListView(view);     //初始化
-        //getBannerData();    //轮播图片
     }
 
     private void getGameList() {
-        GameListBody bodyBean = new GameListBody();
+        RecommendListBody bodyBean = new RecommendListBody();
         bodyBean.setPageIndex(pageAction.getCurrentPage());
         bodyBean.setPageSize(PAGE_SIZE);
-        new GameListClient(getActivity(), bodyBean).observable()
+        new RecommendClient(getActivity(), bodyBean).observable()
 //                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<GameRankListBean>() {
+                .subscribe(new ObserverWrapper<RecommendListBean>() {
                     @Override
                     public void onError(Throwable e) {
 //                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
+                        Log.d(TAG, "推荐 onError: ");
                     }
 
                     @Override
-                    public void onNext(GameRankListBean result) {
+                    public void onNext(RecommendListBean result) {
+                        android.util.Log.d(TAG, "推荐/:" + result.getCode());
+                        android.util.Log.d(TAG, "推荐:" + result.getMsg());
                         if (result != null && result.getCode() == 0) {
                             listData(result);
                         } else {
@@ -150,7 +154,6 @@ public class RecommendFragment extends BaseSearchFragment {
                         }
                     }
                 });
-        getHorizontalData();
     }
 
     private ArrayList<String> imgUrlList = new ArrayList<String>();
@@ -165,7 +168,7 @@ public class RecommendFragment extends BaseSearchFragment {
                 Log.d(TAG, "HTTP请求失败：网络连接错误！");
             }
         };
-        //todo 获取横向滑动的数据
+        // 获取横向滑动的数据
         Response.Listener<JsonResult<GameInfo>> successListener = new Response.Listener<JsonResult<GameInfo>>() {
             @Override
             public void onResponse(JsonResult<GameInfo> result) {
@@ -198,7 +201,7 @@ public class RecommendFragment extends BaseSearchFragment {
                             imageView.setLayoutParams(params);
 
                             //加载网络图片
-                            imageView.setImageUrl(gameImage.imageLink, 240f, 114f, R.drawable.default_game);
+                            imageView.setImageUrl(gameImage.imageLink, 240f, 114f, R.drawable.ic_default_logo_480_228);
                             horizontalViewContainer.addView(imageView);
                             imgUrlList.add(gameImage.imageLink);
                         }
@@ -234,11 +237,12 @@ public class RecommendFragment extends BaseSearchFragment {
         StoreApplication.requestQueue.add(request);
     }
 
-    public void listData(GameRankListBean result) {
+    public void listData(RecommendListBean result) {
         if (result.getData() == null) {
             return;
         }
         if (pageAction.getCurrentPage() == 0) {//当前页
+            android.util.Log.d(TAG, "listData7:result.getData().size() " + result.getData().size());
             this.list.clear(); //清除数据
             this.topList.clear();
             if (result.getData() == null || result.getData().size() == 0) {
@@ -252,14 +256,12 @@ public class RecommendFragment extends BaseSearchFragment {
         android.util.Log.d(TAG, "result.getData().size()  " + result.getData().size());
         android.util.Log.d(TAG, "result.getTotals()  " + result.getTotals());
         if (result.getData().size() > 0) {//刷新后进来
-            android.util.Log.d(TAG, "进来  size> 0 ");
             pageAction.setTotal(result.getTotals());
             this.list.addAll(result.getData());
             this.topList.addAll(result.getData());
         }
         if (result.getData().size() > 0 && pageAction.getCurrentPage() == 0) {
             //第一次进来
-            android.util.Log.d(TAG, "进来size>0   pageAction.getCurrentPage() == 0 ");
             this.list.clear(); //清除数据
             this.topList.clear();
             pageAction.setTotal(result.getTotals());
@@ -277,13 +279,22 @@ public class RecommendFragment extends BaseSearchFragment {
         } else {
             adapter.setList(list);
         }
-        //设置下位列表
+        //设置下位
         if ((list.size() == 0 && pageAction.getTotal() == 0) || list.size() >= pageAction.getTotal()) {
             pullListView.setPullLoadEnabled(false);
         } else {
             pullListView.setPullLoadEnabled(true);
         }
-        if (pageAction.getCurrentPage() > 0 && result.getData().size() > 0) { //设置上拉刷新后停留的地方
+        //设置上拉刷新后停留的地方  // TODO: 2017/7/17 0017
+        android.util.Log.d(TAG, "list.size(): " + list.size() + ",pageAction.getTotal():" + pageAction.getTotal());
+
+        if (0 == pageAction.getCurrentPage() && result.getData().size() <= 2) {
+            //pullListView.setScrollLoadEnabled(false);
+            //pullListView.setPullRefreshEnabled(false);
+            //pullListView.setPullLoadEnabled(false);
+            pullListView.getRefreshableView().setSelection(0);
+        }
+        if (pageAction.getCurrentPage() > 0 && result.getData().size() > 2) {//// TODO: 2017/7/17 0017
             int index = pullListView.getRefreshableView().getFirstVisiblePosition();
             View v = pullListView.getRefreshableView().getChildAt(0);
             int top = (v == null) ? 0 : (v.getTop() - v.getHeight());
@@ -300,7 +311,8 @@ public class RecommendFragment extends BaseSearchFragment {
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
         pullListView = (PullToRefreshListView) view.findViewById(R.id.pullListView);
-        pullListView.setPullLoadEnabled(false); //false,不允许上拉加载
+        pullListView.setPullLoadEnabled(true);
+        pullListView.setPullRefreshEnabled(true);
         pullListView.setScrollLoadEnabled(true);
         pullListView.setLastUpdatedLabel(new Date().toLocaleString());
         pullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
@@ -308,15 +320,23 @@ public class RecommendFragment extends BaseSearchFragment {
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 pullListView.setPullLoadEnabled(true);
                 pageAction.setCurrentPage(0);
-                Log.d(TAG, "下拉: ");
-                getGameList();
+                if (!NetUtil.isNetworkConnected(context)) {
+                    ToastUtil.show(context, "无网络连接");
+                    pullListView.onPullUpRefreshComplete();
+                    pullListView.onPullDownRefreshComplete();
+                } else {
+                    android.util.Log.d(TAG, "onPullDownToRefresh: 下拉请求数据");
+                    //下拉请求数据
+                    getGameList();//竖着的,游戏位
+                    getHorizontalData();//横着 精选位游戏
+                }
                 pullListView.setLastUpdatedLabel(new Date().toLocaleString());
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 //少于指定条数不加载
-                Log.d(TAG, "上拉: ");
+                Log.d(TAG, "上拉");
                 if (pageAction.getTotal() < pageAction.getPageSize()) {
                     pullListView.setHasMoreData(false);
                     pullListView.onPullUpRefreshComplete();
@@ -325,8 +345,8 @@ public class RecommendFragment extends BaseSearchFragment {
                 if (pageAction.getCurrentPage() * pageAction.getPageSize() < pageAction.getTotal()) {
                     pageAction.setCurrentPage(pageAction.getCurrentPage() == 0 ?
                             pageAction.getCurrentPage() + 2 : pageAction.getCurrentPage() + 1);
+                    //上拉请求数据
                     getGameList();
-//                    getCommentList();
                 } else {
                     pullListView.setHasMoreData(false);
                     pullListView.onPullUpRefreshComplete();
@@ -348,34 +368,15 @@ public class RecommendFragment extends BaseSearchFragment {
         pullListView.getRefreshableView().setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+
+                }
 
             }
 
             //向下头部颜色渐变
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-               /* if (firstVisibleItem == 0 && pullListView.getRefreshableView().getChildAt(0) != null && pullListView
-               .getRefreshableView().getChildAt(0).getTop() != 0) {
-                    float total_height = ll_everyday.getTop() * 3;
-                    int viewScrollHeigh = Math.abs(pullListView.getRefreshableView().getChildAt(0).getTop());
-                    if (viewScrollHeigh < total_height) {
-                        float alpha = (total_height - viewScrollHeigh) / total_height;
-                        tv_top_bar_bg.setAlpha(1 - alpha);
-                        tv_top_bar_bg.setBackgroundColor(1 - alpha > 0 ? getResources().getColor(R.color.colorPrimary) :
-                        getResources().getColor(R.color.white));
-                    } else {
-                        tv_top_bar_bg.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                        tv_top_bar_bg.setAlpha(0.9f);
-                    }
-                } else {
-                    if (firstVisibleItem != 0) {
-                        tv_top_bar_bg.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                        tv_top_bar_bg.setAlpha(0.9f);
-                    } else {
-                        tv_top_bar_bg.setBackgroundColor(getResources().getColor(R.color.white));
-                        tv_top_bar_bg.setAlpha(0.2f);
-                    }
-                }*/
             }
         });
 
@@ -386,7 +387,9 @@ public class RecommendFragment extends BaseSearchFragment {
         if (pullListView.getRefreshableView().getHeaderViewsCount() == 0) {
             pullListView.getRefreshableView().addHeaderView(headView);
         }
+        //第一次进来,请求数据
         getGameList();
+        getHorizontalData();
     }
 
     private void initHeadView(View view) {
@@ -432,23 +435,24 @@ public class RecommendFragment extends BaseSearchFragment {
     };
 
     //设置头部数据
-    public void setHeaderInfo(List<GameRankListBean.DataBean> list) {
-        GameRankListBean.DataBean dataBean0 = list.get(0);
-        GameRankListBean.DataBean dataBean1 = list.get(1);
+    public void setHeaderInfo(List<RecommendListBean.DataBean> list) {
+        RecommendListBean.DataBean dataBean0 = list.get(0);
+        RecommendListBean.DataBean dataBean1 = list.get(1);
 
         sdv_img_1.setImageURI(dataBean0.getGameLogo());
         sdv_img_2.setImageURI(dataBean1.getGameLogo());
 
-        game_pic_1.setImageURI(dataBean0.getGameLogo());
-        game_pic_2.setImageURI(dataBean1.getGameLogo());
+        game_pic_1.setImageURI(dataBean0.getGameRecommendImg());
+        game_pic_2.setImageURI(dataBean1.getGameRecommendImg());
+
         gamename_1.setText(dataBean0.getGameName());
         gamename_2.setText(dataBean1.getGameName());
 
-        from_1.setText("来自" + dataBean0.getGameName());
-        from_2.setText("来自" + dataBean1.getGameName());
+        from_1.setText("来自" + dataBean0.getRecommender());
+        from_2.setText("来自" + dataBean1.getRecommender());
 
-        summary_1.setText(dataBean0.getGameDesc());
-        summary_2.setText(dataBean1.getGameDesc());
+        summary_1.setText(dataBean0.getRecommend());
+        summary_2.setText(dataBean1.getRecommend());
     }
 
     //每日精选、MOBA精选、枪战精选、新平尝鲜、品牌游戏列表（12个）

@@ -30,6 +30,8 @@ import com.jzt.hol.android.jkda.sdk.bean.gamehub.VoteRankBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.MainGameTypeListBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
+import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
+import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBody;
 import com.jzt.hol.android.jkda.sdk.bean.search.RequestSearchBean;
 import com.jzt.hol.android.jkda.sdk.bean.search.SearchBean;
 import com.jzt.hol.android.jkda.sdk.bean.search.SearchBodyBean;
@@ -154,7 +156,6 @@ public interface GameService {
     @POST("game/queryDownloadList")
     Observable<GameRankListBean> rankDownloadList(@Header("content-type") String type,
                                                   @Body GameListBody bean);
-
     // 排行 好评榜游戏列表
     @POST("game/queryGamePraiseList")
     Observable<GameRankListBean> rankCommentList(@Header("content-type") String type,
@@ -214,4 +215,9 @@ public interface GameService {
     @POST("message/querySystemMessList")
     Observable<SystemMsgBean> querySystemMessList(@Header("content-type") String type,
                                                  @Body AdminGameUpdateBody bean);
+
+    // 推荐 游戏列表
+    @POST("gameRecommend/queryGameRecommendList")
+    Observable<RecommendListBean> queryGameRecommendList(@Header("content-type") String type,
+                                                         @Body RecommendListBody bean);
 }

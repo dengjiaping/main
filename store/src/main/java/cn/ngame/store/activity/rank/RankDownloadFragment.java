@@ -160,7 +160,6 @@ public class RankDownloadFragment extends BaseSearchFragment implements View.OnC
         bodyBean.setPageIndex(pageAction.getCurrentPage());
         bodyBean.setPageSize(PAGE_SIZE);
         new GameListClient(getActivity(), bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
                 .subscribe(new ObserverWrapper<GameRankListBean>() {
                     @Override
                     public void onError(Throwable e) {

@@ -77,7 +77,7 @@ public class AdvertisingPageActivity extends BaseFgActivity {
 
     private void getCarousel() {
         BrowseHistoryBodyBean bean = new BrowseHistoryBodyBean();
-        bean.setType(40);
+        bean.setType(0);
         new AppCarouselClient(this, bean).observable()
 //                .compose(this.<DiscountListBean>bindToLifecycle())
                 .subscribe(new ObserverWrapper<AppCarouselBean>() {
@@ -109,6 +109,8 @@ public class AdvertisingPageActivity extends BaseFgActivity {
                             }
                         } else {
                             ToastUtil.show(AdvertisingPageActivity.this, result.getMsg());
+                            //// TODO: 2017/7/17 0017 移除
+                            jumpHome();
                         }
                     }
                 });

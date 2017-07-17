@@ -50,8 +50,8 @@ public class Constant {
 //    public static final String PUSH_API_KEY = "ncoPF1KvUO5CVcbqZkwvlXE1";       //测试key
     public static final String PUSH_API_KEY = "LUQUlTLy7fybX0oZOVeg9Pwh";       //生产key
 
-    //public static final String WEB_SITE = "http://192.168.1.233:10004";      //测试服务器
-    public static final String WEB_SITE = "http://openapi.ngame.cn";            //生产服务器
+    public static final String WEB_SITE = "http://192.168.1.233:10004";      //测试服务器
+    //public static final String WEB_SITE = "http://openapi.ngame.cn";            //生产服务器
     //public static final String WEB_SITE = "http://120.27.200.73:9011";        //预发布数据
     public static final String WEB_SITE2 = "http://192.168.37.252:20004";      //h5测试服务器
     public static final String WEB_SITE3 = "http://files.ngame.cn";      //h5正式服务器

@@ -27,7 +27,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -37,7 +38,6 @@ import cn.ngame.store.R;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.utils.ImageUtil;
-import cn.ngame.store.core.utils.TextUtil;
 
 import static cn.ngame.store.R.id.tv_summary;
 import static cn.ngame.store.R.id.tv_title;
@@ -46,12 +46,12 @@ public class RecommendListAdapter extends BaseAdapter {
 
     private Context context;
     private FragmentManager fm;
-    private List<GameRankListBean.DataBean> list;
+    private List<RecommendListBean.DataBean> list;
     private int type;
 
     private static Handler uiHandler = new Handler();
 
-    public RecommendListAdapter(Context context, FragmentManager fm, List<GameRankListBean.DataBean> list, int type) {
+    public RecommendListAdapter(Context context, FragmentManager fm, List<RecommendListBean.DataBean> list, int type) {
         super();
         this.context = context;
         this.fm = fm;
@@ -59,7 +59,7 @@ public class RecommendListAdapter extends BaseAdapter {
         this.type = type;
     }
 
-    public void setList(List<GameRankListBean.DataBean> list) {
+    public void setList(List<RecommendListBean.DataBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -87,12 +87,12 @@ public class RecommendListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
-        final GameRankListBean.DataBean gameInfo = (list == null) ? null : list.get(position);
+        final RecommendListBean.DataBean gameInfo = (list == null) ? null : list.get(position);
         final ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.recommend_list_item, parent, false);
             holder = new ViewHolder(context, fm);
-            holder.img = (ImageView) convertView.findViewById(R.id.img_1);
+            holder.img = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
             holder.recommend_game_pic = (ImageView) convertView.findViewById(R.id.recommend_game_pic);
             holder.tv_title = (TextView) convertView.findViewById(tv_title);
             holder.tv_summary = (TextView) convertView.findViewById(tv_summary);
@@ -111,8 +111,8 @@ public class RecommendListAdapter extends BaseAdapter {
 
     public static class ViewHolder {
         private Context context;
-        private GameRankListBean.DataBean gameInfo;
-        private ImageView img;
+        private RecommendListBean.DataBean gameInfo;
+        private SimpleDraweeView img;
         private TextView tv_title, tv_summary, tv_size;
         private IFileLoad fileLoad;
         private FragmentManager fm;
@@ -130,7 +130,7 @@ public class RecommendListAdapter extends BaseAdapter {
          *
          * @param gameInfo 游戏信息
          */
-        public void update(final GameRankListBean.DataBean gameInfo, int type, int position) {
+        public void update(final RecommendListBean.DataBean gameInfo, int type, int position) {
             this.gameInfo = gameInfo;
             String imgUrl = gameInfo.getGameLogo();
             if (imgUrl != null && imgUrl.trim().equals("")) {
@@ -138,9 +138,9 @@ public class RecommendListAdapter extends BaseAdapter {
             }
             Picasso with = Picasso.with(context);
             int screenWidth = ImageUtil.getScreenWidth((Activity) context);
-            with.load(imgUrl).placeholder(R.drawable.default_logo_small).error(R.drawable.default_logo_small)
+            with.load(imgUrl)
                     .resizeDimen(R.dimen.recommend_item_from_pic, R.dimen.recommend_item_from_pic).tag(context).into(img);
-            with.load(imgUrl).placeholder(R.drawable.default_logo).error(R.drawable.default_logo)
+            with.load(imgUrl).placeholder(R.drawable.ic_default_logo_750_300).error(R.drawable.ic_default_logo_750_300)
                     //.resize(screenWidth,150)
                     .into(recommend_game_pic);
 
@@ -149,15 +149,15 @@ public class RecommendListAdapter extends BaseAdapter {
                 tv_title.setText(gameName);
             }
 
-            String gameDesc = gameInfo.getGameDesc();
+            String gameDesc = gameInfo.getGameName();
             if (gameDesc != null && !"".equals(gameDesc)) {
                 tv_summary.setText(gameDesc);
             } else {
                 tv_summary.setText("");
             }
 
-            long gameSize = gameInfo.getGameSize();
-            String gameSizeStr = TextUtil.formatFileSize(gameSize);
+            String gameSizeStr = gameInfo.getGameName();
+            //String gameSizeStr = TextUtil.formatFileSize(gameSize);
             tv_size.setText("来自" + gameSizeStr);
         }
     }
