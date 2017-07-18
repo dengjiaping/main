@@ -27,7 +27,7 @@ import cn.ngame.store.util.ToastUtil;
 public class ManagerSettingsActivity extends BaseFgActivity implements CompoundButton.OnCheckedChangeListener {
 
     private ToggleButton but_push, but_load, but_install, but_update;
-    private int delayMillis = 200;
+    private int delayMillis = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +78,7 @@ public class ManagerSettingsActivity extends BaseFgActivity implements CompoundB
                 if (text.endsWith("MB")) {
                     delayMillis = 1000;
                 } else if (text.endsWith("KB")) {
-                    delayMillis = 200;
+                    delayMillis = 100;
                 } else {
                     delayMillis = 1000;
                 }

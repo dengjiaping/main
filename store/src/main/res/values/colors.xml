@@ -38,8 +38,8 @@
 
     <!--<color name="QuickAction_press" >#FFFDF5E6</color>
     <color name="QuickAction_focused" >#FFFAEBD7</color>-->
-    <color name="QuickAction_press" >#94ffeb</color>
-    <color name="QuickAction_focused" >#94ffeb</color>
+    <color name="QuickAction_press">#94ffeb</color>
+    <color name="QuickAction_focused">#94ffeb</color>
     <color name="download_bg">#e6f9f8</color>
     <color name="download_bg2">#93DBDD</color>
 
@@ -52,4 +52,11 @@
     <color name="bg_f2">#f2f2f2</color>
     <color name="bg_f5">#f5f5f5</color>
     <color name="font_1a">#1a1a1a</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="translucent_1affffff">#1affffff</color>
+    <color name="e6">#e6e6e6</color>
+
+    <color name="login_bt_pressed">#4290df</color>
+    <color name="login_bt_nomal">#804290df</color>
 </resources>

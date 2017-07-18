@@ -2,6 +2,7 @@ package cn.ngame.store.user.view;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,11 +34,11 @@ import cn.ngame.store.bean.User;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.DialogHelper;
+import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.local.model.IWatchRecordModel;
 import cn.ngame.store.local.model.WatchRecordModel;
-import cn.ngame.store.view.BaseTitleBar;
 
 /**
  * 用户登录界面
@@ -57,12 +61,35 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+/*
+        View.SYSTEM_UI_FLAG_FULLSCREEN,   //全屏，状态栏和导航栏不显示
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION, //隐藏导航栏
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN, //全屏，状态栏会盖在布局上
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION,
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE,
+                View.SYSTEM_UI_FLAG_LOW_PROFILE,
+                View.SYSTEM_UI_FLAG_VISIBLE,  //显示状态栏和导航栏*/
+/*
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);*/
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(true);
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(R.color.transparent);//通知栏所需颜色
+        }
+
         this.setContentView(R.layout.activity_login);
-
         preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
+        //获取状态栏高度设置给标题栏
+        RelativeLayout titleRlay = (RelativeLayout) findViewById(R.id.title_rlay);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                titleRlay.getLayoutParams());
+        int statusBarHeight = ImageUtil.getStatusBarHeight(this);
+        layoutParams.setMargins(0, statusBarHeight, 0, 0);
+        titleRlay.setLayoutParams(layoutParams);
 
-        BaseTitleBar titleBar = (BaseTitleBar) findViewById(R.id.title_bar);
-        titleBar.setOnLeftClickListener(new View.OnClickListener() {
+        findViewById(R.id.left_bt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

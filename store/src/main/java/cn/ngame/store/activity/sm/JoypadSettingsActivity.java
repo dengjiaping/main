@@ -7,7 +7,8 @@ import android.widget.TextView;
 
 import cn.ngame.store.R;
 import cn.ngame.store.activity.BaseFgActivity;
-import cn.ngame.store.ota.view.MyDeviceOtaActivity;
+import cn.ngame.store.ota.view.DeviceOtaUpdateActivity;
+import cn.ngame.store.util.ToastUtil;
 
 /**
  * App设置页面
@@ -34,7 +35,7 @@ public class JoypadSettingsActivity extends BaseFgActivity {
 
     //手柄连接与更新
     public void onJoypadConnectAndOtaUpdateClick(View view) {
-        Intent intent0 = new Intent(this, MyDeviceOtaActivity.class);
+        Intent intent0 = new Intent(this, DeviceOtaUpdateActivity.class);
         startActivity(intent0);
     }
 
@@ -42,5 +43,10 @@ public class JoypadSettingsActivity extends BaseFgActivity {
     public void onSupportedJoypadListClick(View view) {
         Intent intent0 = new Intent(this, SupportedJoypadListActivity.class);
         startActivity(intent0);
+    }
+
+    //手柄适配申请
+    public void onJoypadPairApplyClick(View view) {
+        ToastUtil.show(this, "暂未开放");
     }
 }

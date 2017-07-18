@@ -52,6 +52,8 @@ import java.util.TimerTask;
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
+import cn.ngame.store.activity.sm.AboutNgameZoneActivity;
+import cn.ngame.store.activity.sm.AdCooperativeActivity;
 import cn.ngame.store.activity.sm.JoypadSettingsActivity;
 import cn.ngame.store.activity.sm.ManagerSettingsActivity;
 import cn.ngame.store.adapter.FragmentViewPagerAdapter;
@@ -342,8 +344,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             } else if (id == R.id.sm_joypad_settings) {//手柄设置
                 startActivity(new Intent(context, JoypadSettingsActivity.class));
             } else if (id == R.id.sm_about_us) {//关于Ngame
-                startActivity(new Intent(context, JoypadSettingsActivity.class));
+                startActivity(new Intent(context, AboutNgameZoneActivity.class));
             } else if (id == R.id.sm_ad) {//广告与合作
+                startActivity(new Intent(context, AdCooperativeActivity.class));
             }
             mSlidingMenu.toggle();
         }

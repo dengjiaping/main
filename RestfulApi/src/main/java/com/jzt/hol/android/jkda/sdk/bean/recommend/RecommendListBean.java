@@ -116,7 +116,7 @@ public class RecommendListBean implements Serializable{
          */
 
         private int id;
-        private int gameId;
+        private long gameId;
         private String gameName;
         private Object gameEnglishName;
         private String gameLogo;
@@ -135,7 +135,7 @@ public class RecommendListBean implements Serializable{
             this.id = id;
         }
 
-        public int getGameId() {
+        public long getGameId() {
             return gameId;
         }
 

@@ -22,6 +22,11 @@ package cn.ngame.store.core.utils;
  */
 public class Constant {
 
+   // public static final String WEB_SITE = "http://192.168.1.233:10004";      //测试服务器
+    public static final String WEB_SITE = "http://openapi.ngame.cn";            //生产服务器
+    //public static final String WEB_SITE = "http://120.27.200.73:9011";        //预发布数据
+    public static final String WEB_SITE2 = "http://192.168.37.252:20004";      //h5测试服务器
+    public static final String WEB_SITE3 = "http://files.ngame.cn";      //h5正式服务器
     /** SharedPreferences 配置文件名 */
     public static final String CONFIG_FILE_NAME = "Store.config";
     /** 配置文件中属性名  是否第一次安装app */
@@ -49,12 +54,6 @@ public class Constant {
     /** 消息推送的API key*/
 //    public static final String PUSH_API_KEY = "ncoPF1KvUO5CVcbqZkwvlXE1";       //测试key
     public static final String PUSH_API_KEY = "LUQUlTLy7fybX0oZOVeg9Pwh";       //生产key
-
-    public static final String WEB_SITE = "http://192.168.1.233:10004";      //测试服务器
-    //public static final String WEB_SITE = "http://openapi.ngame.cn";            //生产服务器
-    //public static final String WEB_SITE = "http://120.27.200.73:9011";        //预发布数据
-    public static final String WEB_SITE2 = "http://192.168.37.252:20004";      //h5测试服务器
-    public static final String WEB_SITE3 = "http://files.ngame.cn";      //h5正式服务器
 
     /** APP首页 游戏总分类 */
     public static final String URL_HOME_GAME_CATEGORY = "/game/gameSubTypeListByParentId";

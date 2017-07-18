@@ -141,6 +141,8 @@ public class RecommendFragment extends BaseSearchFragment {
                     public void onError(Throwable e) {
 //                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
                         Log.d(TAG, "推荐 onError: ");
+                        pullListView.onPullUpRefreshComplete();
+                        pullListView.onPullDownRefreshComplete();
                     }
 
                     @Override
@@ -427,12 +429,13 @@ public class RecommendFragment extends BaseSearchFragment {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.recommend_head_llay_0:
-                    Intent intent = new Intent(getActivity(), GameDetailActivity.class);
+                    Intent intent = new Intent(context, GameDetailActivity.class);
+                    android.util.Log.d(TAG, "游戏id" + topList.get(0).getGameId());
                     intent.putExtra(KeyConstant.ID, topList.get(0).getGameId());
                     startActivity(intent);
                     break;
                 case R.id.recommend_head_llay_1:
-                    Intent i2 = new Intent(getActivity(), GameDetailActivity.class);
+                    Intent i2 = new Intent(context, GameDetailActivity.class);
                     i2.putExtra(KeyConstant.ID, topList.get(1).getGameId());
                     startActivity(i2);
                     break;

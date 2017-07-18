@@ -75,4 +75,6 @@ public class ImageUtil {
         }
         return result;
     }
+
+    //直接调用此方法即可实现对状态栏的控制；
 }

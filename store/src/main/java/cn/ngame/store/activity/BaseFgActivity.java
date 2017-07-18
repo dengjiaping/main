@@ -1,11 +1,14 @@
 package cn.ngame.store.activity;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.umeng.analytics.MobclickAgent;
@@ -74,4 +77,20 @@ public class BaseFgActivity extends FragmentActivity {
         super.onDestroy();
         unregisterReceiver();
     }
+
+
+    //沉浸式状态栏
+    @TargetApi(19)
+    protected void setTranslucentStatus(boolean on) {
+        Window win = getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
+    }
+
 }

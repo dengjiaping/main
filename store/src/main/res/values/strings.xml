@@ -29,8 +29,8 @@
 
     <!-- 注册登录 -->
     <string name="login">立即登录</string>
-    <string name="login_name_hint"><font size="15">手机号</font></string>
-    <string name="login_pwd_hint"><font size="15">密码</font></string>
+    <string name="login_name_hint"><font size="16">请输入账号</font></string>
+    <string name="login_pwd_hint"><font size="16">请输入密码</font></string>
     <string name="login_other">使用更多方式登录</string>
 
     <string name="find_pwd">找回密码</string>
@@ -151,6 +151,9 @@
     <string name="contact_email">zeng@ngame.cn</string>
     <string name="contact_address">武汉市洪山区广八路天宝佳苑C座</string>
 
+    <!--公司信息-->
+    <string name="company_ad_email">yunlong@iningmei.com</string>
+    <string name="company_ad_phone">13035114192</string>
     <!-- 意见反馈相关 -->
     <string name="feedback">意见反馈</string>
     <string name="feedback_content">反馈内容</string>
@@ -194,5 +197,11 @@
     <string name="pull_to_refresh_no_more_data">@string/pushmsg_center_no_more_msg</string>
     <string name="pull_to_refresh_network_error">网络不给力，请检查网络</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="about_text_line_1">NGAMEZONE是一个好玩的游戏下载平台。我们提供Android、iOS两种版本的客户端产品。</string>
+    <string name="about_text_line_2">NGAMEZONE收集全球热门、好玩的游戏，每日推荐一些经过编辑独立评测的游戏，玩家在这里可以交流、分享，
+        独特的圈子功能让游戏玩家更加靠近。</string>
+    <string name="about_text_line_3">NGAMEZONE独有的云端存储功能，让热门大作即使更换手机，也能持续畅玩。</string>
+    <string name="about_text_line_4">NGAMEZONE支持数百款游戏的手柄操作，一个游戏，两种玩法，
+        即使那些游戏原生并不支持手柄，通过我们的云映射功能，也能轻松享受。数十家手柄品牌方官方推荐，值得信赖。</string>
 
 </resources>

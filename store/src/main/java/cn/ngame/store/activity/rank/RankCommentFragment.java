@@ -103,7 +103,8 @@ public class RankCommentFragment extends BaseSearchFragment implements View.OnCl
                     return;
                 }
                 if (pageAction.getCurrentPage() * pageAction.getPageSize() < pageAction.getTotal()) {
-                    pageAction.setCurrentPage(pageAction.getCurrentPage() == 0 ? pageAction.getCurrentPage() + 2 : pageAction.getCurrentPage() + 1);
+                    pageAction.setCurrentPage(pageAction.getCurrentPage() == 0 ? pageAction.getCurrentPage() + 2 : pageAction
+                            .getCurrentPage() + 1);
 //                    getGameList();
                     getCommentList();
                 } else {
@@ -249,13 +250,17 @@ public class RankCommentFragment extends BaseSearchFragment implements View.OnCl
 
     private void getThreeGameinfo(List<GameRankListBean.DataBean> list, final GameLoadProgressBar view, int i) {
         fileLoad = FileLoadManager.getInstance(getActivity());
-        GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(list.get(i).getFilename(), list.get(i).getGameLink(), list.get(i).getPackages(), ConvUtil.NI(list.get(i).getVersionCode()));
+        GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(list.get(i).getFilename(), list.get(i).getGameLink(), list
+                .get(i).getPackages(), ConvUtil.NI(list.get(i).getVersionCode()));
         view.setLoadState(fileStatus);
 
         //设置进度条状态
-        view.setLoadState(fileLoad.getGameFileLoadStatus(list.get(i).getFilename(), list.get(i).getGameLink(), list.get(i).getPackages(), ConvUtil.NI(list.get(i).getVersionCode())));
+        view.setLoadState(fileLoad.getGameFileLoadStatus(list.get(i).getFilename(), list.get(i).getGameLink(), list.get(i)
+                .getPackages(), ConvUtil.NI(list.get(i).getVersionCode())));
         //必须设置，否则点击进度条后无法进行响应操作
-        FileLoadInfo fileLoadInfo = new FileLoadInfo(list.get(i).getFilename(), list.get(i).getGameLink(), list.get(i).getMd5(), list.get(i).getVersionCode(), list.get(i).getGameName(), list.get(i).getGameLogo(), list.get(i).getId(), FileLoadInfo.TYPE_GAME);
+        FileLoadInfo fileLoadInfo = new FileLoadInfo(list.get(i).getFilename(), list.get(i).getGameLink(), list.get(i).getMd5()
+                , list.get(i).getVersionCode(), list.get(i).getGameName(), list.get(i).getGameLogo(), list.get(i).getId(),
+                FileLoadInfo.TYPE_GAME);
         fileLoadInfo.setPackageName(list.get(i).getPackages());
         view.setFileLoadInfo(fileLoadInfo);
         view.setOnStateChangeListener(new ProgressBarStateListener(getActivity(), getSupportFragmentManager()));
@@ -277,7 +282,8 @@ public class RankCommentFragment extends BaseSearchFragment implements View.OnCl
                 break;
             case R.id.sdv_img_2:
                 Intent i2 = new Intent(getActivity(), GameDetailActivity.class);
-                i2.putExtra("id", topList.get(1).getId());
+                i2.putExtra("id",  topList.get(1).getId());
+                android.util.Log.d("777", "游戏id" + topList.get(1).getId());
                 startActivity(i2);
                 break;
             case R.id.sdv_img_3:
