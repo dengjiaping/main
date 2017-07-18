@@ -59,4 +59,9 @@
 
     <color name="login_bt_pressed">#4290df</color>
     <color name="login_bt_nomal">#804290df</color>
+
+    <color name="transparent_light2">#05000000</color>
+    <color name="transparent_light">#15000000</color>
+    <color name="transparent_medium">#55000000</color>
+    <color name="font_logout_red">#ff6666</color>
 </resources>

@@ -144,11 +144,6 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
-            android:name=".user.view.ChangePhotoActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity
             android:name=".activity.VRVideoActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"

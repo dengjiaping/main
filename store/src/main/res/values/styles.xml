@@ -122,4 +122,29 @@
         <item name="textAllCaps">false</item>
     </style>
 
+
+    <!--主界面未绑定对话框-->
+    <style name="Dialog_From_Bottom_Style" parent="@android:style/Theme.Holo.Dialog.MinWidth">
+        <item name="android:windowNoTitle">true</item>
+        <!-- 背景透明 -->
+        <item name="android:windowBackground">@color/transparent_light2</item><!--dilog全屏-->
+        <!--       <item name="android:backgroundDimEnabled">true</item>&lt;!&ndash; dim:模糊的 阴影效果 &ndash;&gt;-->
+        <!-- <item name="android:backgroundDimEnabled">false</item>-->     <!-- Dialog以外的区域模糊效果 -->
+
+        <!-- <item name="android:windowIsFloating">true</item>-->  <!-- 浮于Activity之上 -->
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 半透明 -->
+        <item name="android:colorBackground">@color/transparent_light2</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <!-- Dialog进入及退出动画 -->
+        <item name="android:windowAnimationStyle">@style/Animation_Bottom</item>
+    </style>
+
+    <!-- 底部退出动画 -->
+    <style name="Animation_Bottom" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/anim_bottomdialog_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_bottomdialog_out</item>
+    </style>
 </resources>
