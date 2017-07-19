@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/img_photo"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="94dp"
+        android:layout_height="94dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/menu_game_hub_circle"
@@ -84,7 +84,7 @@
         android:layout_marginTop="134dp"
         android:background="@android:color/white"
         android:gravity="center"
-        android:onClick="onChangePwdClick"
+        android:onClick="onPwdChangeClick"
         android:text="修改密码"
         android:textColor="@color/font_1a"
         android:textSize="@dimen/dp_16"/>

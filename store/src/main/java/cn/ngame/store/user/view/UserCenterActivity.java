@@ -120,9 +120,7 @@ public class UserCenterActivity extends BaseFgActivity {
 
             DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.color.transparent, 360);
             imageLoader.displayImage(StoreApplication.userHeadUrl, img_photo, roundOptions);
-
         }
-
         img_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,7 +132,7 @@ public class UserCenterActivity extends BaseFgActivity {
         tv_nickname.setOnClickListener(new View.OnClickListener() {
                                            @Override
                                            public void onClick(View v) {
-                                               showDialog();
+                                               showChangeNicknameDialog();
                                            }
                                        }
         );
@@ -330,7 +328,7 @@ public class UserCenterActivity extends BaseFgActivity {
         finish();
     }
 
-    private void showDialog() {
+    private void showChangeNicknameDialog() {
 
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment prev = getSupportFragmentManager().findFragmentByTag("progressDialog");
@@ -347,7 +345,6 @@ public class UserCenterActivity extends BaseFgActivity {
         LayoutInflater inflater = getLayoutInflater();
         LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_edit, null);
         final EditText editText = (EditText) contentView.findViewById(R.id.et_content);
-        editText.setMaxEms(13);
         dialogFragment.setContentView(contentView);
 
         dialogFragment.setPositiveButton(R.string.cancel, new View.OnClickListener() {
@@ -506,5 +503,9 @@ public class UserCenterActivity extends BaseFgActivity {
             }
         };
         StoreApplication.requestQueue.add(versionRequest);
+    }
+
+    public void onPwdChangeClick(View view) {
+        ToastUtil.show(UserCenterActivity.this, "修改密码");
     }
 }
