@@ -30,6 +30,7 @@ import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.bean.JsonResult;
+import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.fragment.SimpleDialogFragment;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
@@ -43,7 +44,7 @@ import cn.ngame.store.view.BaseTitleBar;
  */
 public class FindPwdActivity extends BaseFgActivity {
 
-    public static final String TAG = FindPwdActivity.class.getSimpleName();
+    public static final String TAG = "777";
 
     private Button bt_find_pwd;
     private ImageButton bt_show_pwd;
@@ -51,11 +52,9 @@ public class FindPwdActivity extends BaseFgActivity {
     private EditText et_name, et_captcha, et_pwd;
 
     private boolean isShowPwd = false;
-
     private Handler handler = new Handler();
-
-    private static final int WAIT_TIME = 130;
-    private int second = 120;
+    private static final int WAIT_TIME = 61;
+    private int second = 60;
 
     /**
      * 执行倒计时操作
@@ -63,12 +62,13 @@ public class FindPwdActivity extends BaseFgActivity {
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            for(int i=0;i<WAIT_TIME;i++){
-                if (second <= 0) {
+            for (int i = 0; i < WAIT_TIME; i++) {
+                if (second <= 1) {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
                             tv_captcha.setText(getResources().getString(R.string.register_get_captcha));
+                            tv_captcha.setBackgroundResource(R.drawable.shape_bg_verif_code_bt_send);
                             tv_captcha.setClickable(true);
                             return;
                         }
@@ -78,7 +78,8 @@ public class FindPwdActivity extends BaseFgActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            tv_captcha.setText(second + "s");
+                            tv_captcha.setText("重新发送(" + second + "s)");
+                            tv_captcha.setBackgroundResource(R.drawable.shape_bg_verif_code_bt_waiting);
                             tv_captcha.setClickable(false);
                         }
                     });
@@ -115,15 +116,14 @@ public class FindPwdActivity extends BaseFgActivity {
         tv_captcha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String mobile = et_name.getText().toString();
 
                 if (mobile != null && !"".equals(mobile)) {
-                    if(!TextUtil.isMobile(mobile)){
+                    if (!TextUtil.isMobile(mobile)) {
                         Toast.makeText(FindPwdActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    getCaptcha(mobile);
+                    getVerifCode(mobile);
                 } else {
                     Toast.makeText(FindPwdActivity.this, "手机号不能为空", Toast.LENGTH_SHORT).show();
                 }
@@ -142,7 +142,7 @@ public class FindPwdActivity extends BaseFgActivity {
                     Toast.makeText(FindPwdActivity.this, "手机号不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(!TextUtil.isMobile(userName)){
+                if (!TextUtil.isMobile(userName)) {
                     Toast.makeText(FindPwdActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -154,6 +154,10 @@ public class FindPwdActivity extends BaseFgActivity {
                     Toast.makeText(FindPwdActivity.this, "新密码不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if (pwd.length() < 6) {
+                    Toast.makeText(FindPwdActivity.this, "密码要大于六位", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 doFindPwd(userName, pwd, captcha);
             }
@@ -162,12 +166,12 @@ public class FindPwdActivity extends BaseFgActivity {
         bt_show_pwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!isShowPwd){
+                if (!isShowPwd) {
                     isShowPwd = true;
                     bt_show_pwd.setSelected(true);
                     et_pwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     et_pwd.setSelection(et_pwd.getText().length());
-                }else {
+                } else {
                     isShowPwd = false;
                     bt_show_pwd.setSelected(false);
                     et_pwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -181,27 +185,23 @@ public class FindPwdActivity extends BaseFgActivity {
     /**
      * 获取手机验证码
      */
-    private void getCaptcha(final String mobile) {
-
-        String url = Constant.WEB_SITE + Constant.URL_FIND_CAPTCHA;
+    private void getVerifCode(final String mobile) {
+        String url = Constant.WEB_SITE + Constant.URL_FORGOT_REGIST_SMS_CODE;
         Response.Listener<JsonResult<Object>> successListener = new Response.Listener<JsonResult<Object>>() {
             @Override
             public void onResponse(JsonResult<Object> result) {
-
                 if (result == null) {
                     Toast.makeText(FindPwdActivity.this, "服务端异常", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (result.code == 0) {
-
-                    second = 120;
+                    second = 60;
                     new Thread(runnable).start();
-
                     Toast.makeText(FindPwdActivity.this, "验证码已发送，请查收！", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Log.d(TAG, "找回失败：服务端错误：" + result.msg);
+                    Log.d(TAG, "获取验证码失败：服务端错误：" + result.msg);
                     showDialog(false, result.msg);
                 }
             }
@@ -211,18 +211,20 @@ public class FindPwdActivity extends BaseFgActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                Toast.makeText(FindPwdActivity.this, "找回失败，请检查网络连接!", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "HTTP请求失败：网络连接错误！");
+                Toast.makeText(FindPwdActivity.this, "获取手机验证码失败，请检查网络连接!", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "HTTP请求失败：获取手机验证码失败！");
             }
         };
 
         Request<JsonResult<Object>> versionRequest = new GsonRequest<JsonResult<Object>>(Request.Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult<Object>>() {}.getType()) {
+                successListener, errorListener, new TypeToken<JsonResult<Object>>() {
+        }.getType()) {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("mobileNumber", mobile);
+                params.put(KeyConstant.PHONE_NUMBER, mobile);
+                params.put(KeyConstant.TYPE, "2");//type 短信类型（1注册，2忘记密码）
                 return params;
             }
         };
@@ -243,18 +245,17 @@ public class FindPwdActivity extends BaseFgActivity {
                     Toast.makeText(FindPwdActivity.this, "服务端异常", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+                Log.d(TAG, "找回密码:" + result.code);
+                Log.d(TAG, "找回密码:" + result.msg);
                 if (result.code == 0) {
-
                     SharedPreferences preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString(Constant.CONFIG_USER_NAME, userName);
                     editor.commit();
 
-                    showDialog(true,"密码已重置，请重新登录！");
+                    showDialog(true, "密码重置成功！");
                 } else {
-
-                    showDialog(false,result.msg);
+                    showDialog(false, result.msg);
                 }
             }
         };
@@ -264,17 +265,18 @@ public class FindPwdActivity extends BaseFgActivity {
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
                 Toast.makeText(FindPwdActivity.this, "更新失败，请检查网络连接!", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "HTTP请求失败：网络连接错误！");
+                Log.d(TAG, "更新密码失败：网络连接错误！" + volleyError.toString());
             }
         };
 
         Request<JsonResult<String>> versionRequest = new GsonRequest<JsonResult<String>>(Request.Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult<String>>() {}.getType()) {
+                successListener, errorListener, new TypeToken<JsonResult<String>>() {
+        }.getType()) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
-                params.put("mobileNumber", userName);
+                params.put(KeyConstant.LOGIN_NAME, userName);
                 params.put("newPassword", pwd);
                 params.put("smsCode", captcha);
                 return params;
@@ -291,11 +293,12 @@ public class FindPwdActivity extends BaseFgActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
-        dialogFragment.setTitle("提示框");
+        dialogFragment.setTitle("提示");
         dialogFragment.setDialogWidth(250);
 
         TextView tv = new TextView(FindPwdActivity.this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
+                .LayoutParams.MATCH_PARENT);
         params.setMargins(0, 20, 0, 0);
         params.gravity = Gravity.CENTER;
         tv.setLayoutParams(params);
@@ -323,6 +326,6 @@ public class FindPwdActivity extends BaseFgActivity {
                 }
             }
         });
-        dialogFragment.show(ft,"successDialog");
+        dialogFragment.show(ft, "successDialog");
     }
 }

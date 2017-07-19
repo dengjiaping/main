@@ -7,60 +7,62 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/diolg_bottom_height"
         android:gravity="center"
-        android:padding="@dimen/dp_12"
-        android:text="修改头像"
-        android:textColor="@color/gray"
+        android:text="更换头像"
+        android:textColor="@color/gray_7b"
+        android:textSize="@dimen/dp_14"
         />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_05"
-        android:background="@color/gray_1"
-        />
+    <include layout="@layout/layout_line_05dp_f5"/>
 
     <TextView
         android:id="@+id/choose_local_tv"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="@dimen/diolg_bottom_height"
         android:background="@drawable/selector_item_bg"
         android:gravity="center"
-        android:padding="@dimen/dp_12"
         android:text="上传本地头像"
+        android:textColor="@color/font_1a"
         android:textSize="@dimen/dp_18"
         />
 
-    <View
+    <include layout="@layout/layout_line_05dp_f5"/>
+
+    <TextView
+        android:id="@+id/choose_recomend_tv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_05"
-        android:background="@color/gray_1"
+        android:layout_height="@dimen/diolg_bottom_height"
+        android:background="@drawable/selector_item_bg"
+        android:gravity="center"
+        android:text="选择推荐头像"
+        android:textColor="@color/font_1a"
+        android:textSize="@dimen/dp_18"
         />
+
+    <include layout="@layout/layout_line_05dp_f5"/>
 
     <TextView
         android:id="@+id/choose_camera_tv"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="@dimen/diolg_bottom_height"
         android:background="@drawable/selector_item_bg"
         android:gravity="center"
-        android:padding="@dimen/dp_12"
         android:text="拍照"
+        android:textColor="@color/font_1a"
         android:textSize="@dimen/dp_18"
         />
 
-    <include layout="@layout/layout_line_05dp_f2f2f2"/>
+    <include layout="@layout/layout_line_2dp_f5"/>
 
     <TextView
         android:id="@+id/choose_cancel_tv"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="@dimen/diolg_bottom_height"
         android:background="@drawable/selector_item_bg"
         android:gravity="center"
-        android:padding="@dimen/dp_12"
         android:text="取消"
-        android:textSize="@dimen/dp_18"
+        android:textColor="@color/font_black_3"
+        android:textSize="@dimen/dp_16"
         />
 </LinearLayout>

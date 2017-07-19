@@ -56,7 +56,7 @@ public class WatchHistoryActivity extends BaseFgActivity implements IWatchRecord
         //重新登录
         if(StoreApplication.passWord != null && StoreApplication.passWord.length() > 0){
             LoginHelper loginHelper = new LoginHelper(this);
-            loginHelper.reLogin();
+            //loginHelper.reLogin();
         }else {
             StoreApplication.token = null;
         }

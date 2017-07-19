@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -39,6 +38,7 @@ import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.Token;
+import cn.ngame.store.bean.UpLoadBean;
 import cn.ngame.store.bean.User;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.CommonUtil;
@@ -46,12 +46,15 @@ import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.DialogHelper;
 import cn.ngame.store.core.utils.FileUtil;
 import cn.ngame.store.core.utils.ImageUtil;
+import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.LoginHelper;
 import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.exception.NoSDCardException;
 import cn.ngame.store.fragment.SimpleDialogFragment;
 import cn.ngame.store.util.ToastUtil;
+
+import static cn.ngame.store.StoreApplication.user;
 
 
 /**
@@ -60,11 +63,12 @@ import cn.ngame.store.util.ToastUtil;
  */
 public class UserCenterActivity extends BaseFgActivity {
 
-    public static final String TAG = UserCenterActivity.class.getSimpleName();
-    private User user;
+    public static final String TAG = "777";
+    private String pwd;
 
     private ImageView img_photo;
-    private TextView tv_account, tv_nickname;
+    private TextView tv_account;
+    private EditText tv_nickname;
 
     private String nickName;
 
@@ -102,23 +106,22 @@ public class UserCenterActivity extends BaseFgActivity {
         }
         img_photo = (ImageView) findViewById(R.id.img_photo);
         tv_account = (TextView) findViewById(R.id.tv_account);
-        tv_nickname = (TextView) findViewById(R.id.tv_nickname);
+        tv_nickname = (EditText) findViewById(R.id.tv_nickname);
 
-        user = StoreApplication.user;
+        pwd = StoreApplication.passWord;
 
-        if (user == null) {
+        if (pwd == "") {
             LoginHelper loginHelper = new LoginHelper(UserCenterActivity.this);
-            loginHelper.reLogin();
-
+            // loginHelper.reLogin();
         } else {
-            nickName = user.nickName;
+            nickName = StoreApplication.nickName;
             if (nickName != null) {
-                nickName = nickName.length() > 10 ? nickName.substring(0, 10) : nickName;
+                nickName = nickName.length() > 13 ? nickName.substring(0, 13) : nickName;
             }
             tv_nickname.setText(nickName);
-            tv_account.setText(user.mobile);
+            tv_account.setText(StoreApplication.userName);
 
-            DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.color.transparent, 360);
+            DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_icon_title, 360);
             imageLoader.displayImage(StoreApplication.userHeadUrl, img_photo, roundOptions);
         }
         img_photo.setOnClickListener(new View.OnClickListener() {
@@ -132,14 +135,14 @@ public class UserCenterActivity extends BaseFgActivity {
         tv_nickname.setOnClickListener(new View.OnClickListener() {
                                            @Override
                                            public void onClick(View v) {
-                                               showChangeNicknameDialog();
+                                               //showChangeNicknameDialog();
                                            }
                                        }
         );
 
         //重新登录
         LoginHelper loginHelper = new LoginHelper(this);
-        loginHelper.reLogin();
+        //loginHelper.reLogin();
     }
 
     //修改头像
@@ -157,12 +160,13 @@ public class UserCenterActivity extends BaseFgActivity {
                     Crop.pickImage(UserCenterActivity.this);
                 } else if (id == R.id.choose_camera_tv) {//相机
                     getImageFromCamera();
-                } else if (id == R.id.choose_cancel_tv) {//取消
+                } else if (id == R.id.choose_recomend_tv) {//选择推荐头像
                 }
             }
         };
-        inflate.findViewById(R.id.choose_camera_tv).setOnClickListener(mDialogClickLstener);
         inflate.findViewById(R.id.choose_local_tv).setOnClickListener(mDialogClickLstener);
+        inflate.findViewById(R.id.choose_recomend_tv).setOnClickListener(mDialogClickLstener);
+        inflate.findViewById(R.id.choose_camera_tv).setOnClickListener(mDialogClickLstener);
         inflate.findViewById(R.id.choose_cancel_tv).setOnClickListener(mDialogClickLstener);
 
         dialog.setContentView(inflate);//将布局设置给Dialog
@@ -241,30 +245,46 @@ public class UserCenterActivity extends BaseFgActivity {
     private void handleCrop(int resultCode, Intent result) {
         if (resultCode == Activity.RESULT_OK) {
             Uri uri = Crop.getOutput(result);
+            //StoreService.uploadImage(file);
 
-            //StoreService.uploadImage(file); //上传图片
-            uploadImage(uri);
+            // todo 上传图片
+            String nickNameStr = tv_nickname.getText().toString();
+            if (nickNameStr.length() > 0) {
+                nickName = nickNameStr;
+                uploadImage(uri);
+            } else {
+                Toast.makeText(UserCenterActivity.this, "昵称为空哦！", Toast.LENGTH_SHORT).show();
+            }
+
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
+
     private void uploadImage(Uri uri) {
         final String avatarUrl = uri.toString();
         String path = uri.getPath();
+
+
         File file = new File(path);
         DialogHelper.showWaiting(getSupportFragmentManager(), "正在上传图片...");
-        final String imgStr = ImageUtil.getImageStr(file);
-
-        String url = Constant.WEB_SITE + Constant.URL_IMAGE_UPLOAD;
-        Response.Listener<JsonResult<Token>> successListener =
-                new Response.Listener<JsonResult<Token>>() {
+        final String imgStr = ImageUtil.getImageStr(file).replaceAll(" ", "");
+        ;
+        String url = Constant.WEB_SITE + Constant.URL_MODIFY_USER_DATA;
+        Response.Listener<JsonResult<UpLoadBean>> successListener =
+                new Response.Listener<JsonResult<UpLoadBean>>() {
                     @Override
-                    public void onResponse(JsonResult<Token> result) {
+                    public void onResponse(JsonResult<UpLoadBean> result) {
+                        android.util.Log.d(TAG, "头像修改失败: " + result.code);
+                        android.util.Log.d(TAG, "头像修改失败: " + result.data);
                         if (result.code == 0) {
                             DialogHelper.hideWaiting(getSupportFragmentManager());
                             Toast.makeText(UserCenterActivity.this, "头像修改成功！", Toast.LENGTH_SHORT).show();
                             imageLoader.displayImage(avatarUrl, img_photo, roundOptions);
+                            StoreApplication.userHeadUrl = avatarUrl;
+
+                            setNickName();
                         } else {
                             DialogHelper.hideWaiting(getSupportFragmentManager());
                             Toast.makeText(UserCenterActivity.this, "头像修改失败！", Toast.LENGTH_SHORT).show();
@@ -278,27 +298,49 @@ public class UserCenterActivity extends BaseFgActivity {
                 volleyError.printStackTrace();
                 DialogHelper.hideWaiting(getSupportFragmentManager());
                 Toast.makeText(UserCenterActivity.this, "头像修改失败，网络连接错误！", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "HTTP请求失败：网络连接错误！");
+                Log.d(TAG, "HTTP请求失败：网络连接错误！" + volleyError.getMessage());
             }
         };
 
-        Request<JsonResult<Token>> versionRequest = new GsonRequest<JsonResult<Token>>(Request.Method.POST, url,
+        Request<JsonResult<UpLoadBean>> versionRequest = new GsonRequest<JsonResult<UpLoadBean>>(Request.Method.POST, url,
                 successListener, errorListener, new TypeToken<JsonResult<Token>>() {
         }.getType()) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("token", StoreApplication.token);
-                params.put("pictureSuffix", "jpg");
-                params.put("strImg", imgStr);
+                params.put(KeyConstant.USER_CODE, "UC1500108412881");
+                params.put(KeyConstant.PICTURE_STR, imgStr);
+                params.put(KeyConstant.GENDER, "男");
+                params.put(KeyConstant.NICK_NAME, "李国良");
+                params.put(KeyConstant.TOKEN, "c80a753e08fa40d4a8dfa03581ddbd82");
+
+                android.util.Log.d(TAG, "TOKEN" + StoreApplication.user.token);
+                android.util.Log.d(TAG, "userCode" + StoreApplication.userCode);
                 return params;
             }
         };
-        versionRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+   /*     versionRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));*/
 
         StoreApplication.requestQueue.add(versionRequest);
+    }
+
+    private void setNickName() {
+        if (nickName != null) {
+            nickName = nickName.length() > 10 ? nickName.substring(0, 10) : nickName;
+        }
+        tv_nickname.setText(nickName);
+        if (user != null) {
+            user.nickName = nickName;
+        }
+        if (user != null) {
+            user.nickName = nickName;
+            StoreApplication.nickName = nickName;
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString(Constant.CONFIG_NICK_NAME, nickName);
+            editor.apply();
+        }
     }
 
     ImageLoader imageLoader = ImageLoader.getInstance();
@@ -322,7 +364,7 @@ public class UserCenterActivity extends BaseFgActivity {
         StoreApplication.userName = "";
         StoreApplication.passWord = "";
         StoreApplication.token = null;
-        StoreApplication.user = null;
+        user = null;
 
         startActivity(new Intent(this, LoginActivity.class));
         finish();
@@ -392,9 +434,8 @@ public class UserCenterActivity extends BaseFgActivity {
                     return;
                 }
                 if (result.code == 0 && result.data != null) {
-
                     user = result.data;
-                    StoreApplication.user = user;
+                    user = user;
                     String userHeadPhoto = user.headPhoto;
                     if (userHeadPhoto != null && StoreApplication.userHeadUrl != null &&
                             !StoreApplication.userHeadUrl.equals(userHeadPhoto)) {
@@ -464,8 +505,8 @@ public class UserCenterActivity extends BaseFgActivity {
                     if (user != null) {
                         user.nickName = nickName;
                     }
-                    if (StoreApplication.user != null) {
-                        StoreApplication.user.nickName = nickName;
+                    if (user != null) {
+                        user.nickName = nickName;
                         StoreApplication.nickName = nickName;
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString(Constant.CONFIG_NICK_NAME, nickName);

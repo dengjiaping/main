@@ -31,6 +31,7 @@ import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.bean.JsonResult;
+import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.fragment.SimpleDialogFragment;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
@@ -55,8 +56,8 @@ public class RegisterActivity extends BaseFgActivity {
 
     private boolean isShowPwd = false;
 
-    private static final int WAIT_TIME = 130;
-    private int second = 120;
+    private static final int WAIT_TIME = 61;
+    private int second = 60;
 
     /**
      * 执行倒计时操作
@@ -65,7 +66,7 @@ public class RegisterActivity extends BaseFgActivity {
         @Override
         public void run() {
             for(int i=0;i<WAIT_TIME;i++){
-                if (second <= 0) {
+                if (second <= 1) {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -149,7 +150,7 @@ public class RegisterActivity extends BaseFgActivity {
                         Toast.makeText(RegisterActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    getCaptcha(mobile);
+                    getSMSCode(mobile);
                 } else {
                     Toast.makeText(RegisterActivity.this, "手机号不能为空", Toast.LENGTH_SHORT).show();
                 }
@@ -183,9 +184,9 @@ public class RegisterActivity extends BaseFgActivity {
     /**
      * 获取手机验证码
      */
-    private void getCaptcha(final String mobile) {
+    private void getSMSCode(final String mobile) {
 
-        String url = Constant.WEB_SITE + Constant.URL_CAPTCHA;
+        String url = Constant.WEB_SITE + Constant.URL_FORGOT_REGIST_SMS_CODE;
         Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
             @Override
             public void onResponse(JsonResult result) {
@@ -196,7 +197,7 @@ public class RegisterActivity extends BaseFgActivity {
                 }
 
                 if (result.code == 0) {
-                    second = 120;
+                    second = 60;
                     new Thread(runnable).start();
 
                     Toast.makeText(RegisterActivity.this, "验证码已发送，请查收！", Toast.LENGTH_SHORT).show();
@@ -222,8 +223,8 @@ public class RegisterActivity extends BaseFgActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("mobileNumber", mobile);
-                params.put("ip", "192.168.2.250");
+                params.put(KeyConstant.PHONE_NUMBER, mobile);
+                params.put(KeyConstant.TYPE, "1");//type 短信类型（1注册，2忘记密码）
                 return params;
             }
         };

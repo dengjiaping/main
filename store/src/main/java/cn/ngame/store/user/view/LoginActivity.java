@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,6 +38,7 @@ import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.DialogHelper;
 import cn.ngame.store.core.utils.ImageUtil;
+import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.local.model.IWatchRecordModel;
@@ -46,7 +50,7 @@ import cn.ngame.store.local.model.WatchRecordModel;
  */
 public class LoginActivity extends BaseFgActivity implements View.OnClickListener {
 
-    public static final String TAG = LoginActivity.class.getSimpleName();
+    public static final String TAG = "777";
 
     private EditText et_user, et_pwd;
     private String userName, password;
@@ -57,6 +61,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     private boolean isShowPwd = false;
 
     private SharedPreferences preferences;
+    private ImageView deleteIv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,10 +109,38 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         bt_find_pwd = (TextView) findViewById(R.id.tv_find_pwd);
         bt_find_pwd.setOnClickListener(this);
         bt_register = (TextView) findViewById(R.id.tv_register);
+        deleteIv = (ImageView) findViewById(R.id.delete_iv);
+        deleteIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                et_user.setText("");
+            }
+        });
         bt_register.setOnClickListener(this);
         bt_login = (Button) findViewById(R.id.but_login);
         bt_login.setOnClickListener(this);
+        et_user.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) {
+                    deleteIv.setVisibility(View.VISIBLE);
+                } else {
+                    deleteIv.setVisibility(View.GONE);
+                }
+            }
+
+
+        });
     }
 
     @Override
@@ -192,7 +225,84 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     StoreApplication.token = token.token;
                     StoreApplication.passWord = password;
 
-                    getUserInfo();  //加载用户信息
+                    //加载用户信息
+
+                    editor.putString(Constant.CONFIG_USER_HEAD, token.headPhoto);
+                    editor.putString(Constant.CONFIG_NICK_NAME, token.nickName);
+                    editor.apply();
+
+                    //加载用户头像
+                    StoreApplication.userHeadUrl = token.headPhoto;
+                    //StoreApplication.nickName = token.nickName;
+                    StoreApplication.nickName = token.nickName;
+                    StoreApplication.userCode = token.userCode;
+
+//                    //跳转到用户中心
+//                    Intent intent = new Intent(LoginActivity.this,UserCenterActivity.class);
+//                    startActivity(intent);
+                    LoginActivity.this.finish();
+
+                    //同步本地观看记录到服务器
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            IWatchRecordModel watchRecordModel = new WatchRecordModel(LoginActivity.this);
+                            watchRecordModel.synchronizeWatchRecord();
+                        }
+                    }).start();
+
+
+                } else {
+                    Log.d(TAG, "HTTP请求成功：服务端返回错误: " + result.msg);
+                    Toast.makeText(LoginActivity.this, "登录失败，" + result.msg, Toast.LENGTH_SHORT).show();
+                    DialogHelper.hideWaiting(getSupportFragmentManager());
+                }
+            }
+        };
+        Response.Listener<JsonResult<User>> succesListener = new Response.Listener<JsonResult<User>>() {
+            @Override
+            public void onResponse(JsonResult<User> result) {
+                if (result == null) {
+                    Toast.makeText(LoginActivity.this, "服务端异常", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (result.code == 0) {
+                    User user = result.data;
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString(Constant.CONFIG_USER_NAME, userName);
+                    editor.putString(Constant.CONFIG_USER_PWD, password);
+                    editor.apply();
+
+                    StoreApplication.token = user.token;
+                    StoreApplication.passWord = password;
+                    android.util.Log.d(TAG, "user返回: " + user.token);
+
+                    //加载用户信息
+
+                    editor.putString(Constant.CONFIG_USER_HEAD, user.headPhoto);
+                    editor.putString(Constant.CONFIG_NICK_NAME, user.nickName);
+                    editor.apply();
+
+                    //加载用户头像
+                    StoreApplication.userHeadUrl = user.headPhoto;
+                    //StoreApplication.nickName = token.nickName;
+                    StoreApplication.nickName = user.nickName;
+                    StoreApplication.userCode = user.userCode;
+
+//                    //跳转到用户中心
+//                    Intent intent = new Intent(LoginActivity.this,UserCenterActivity.class);
+//                    startActivity(intent);
+                    LoginActivity.this.finish();
+
+                    //同步本地观看记录到服务器
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            IWatchRecordModel watchRecordModel = new WatchRecordModel(LoginActivity.this);
+                            watchRecordModel.synchronizeWatchRecord();
+                        }
+                    }).start();
+
 
                 } else {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误: " + result.msg);
@@ -219,22 +329,46 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             protected Map<String, String> getParams() throws AuthFailureError {
                 //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
-                params.put("userName", userName);
-                params.put("passWord", password);
-                params.put("terminalVersion", "1212121331313"); //设备ID
-                params.put("terminalTypeCode", "3333444");  //系统版本号
+                params.put(KeyConstant.NICK_NAME, nicknameStr);
+                params.put(KeyConstant.LOGIN_NAME, userName);
+                Log.d(TAG, "参数: " + userName);
+                params.put(KeyConstant.pass_word, password);
+                params.put(KeyConstant.TYPE, LOGIN_TYPE); //（1手机，2QQ，3微信，4新浪微博）
+                params.put(KeyConstant.HEAD_PHOTO, URL_HEAD_PHOTO);  //头像
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0);  //
                 return params;
             }
         };
+      /*  Request<JsonResult<User>> versionRequest1 = new GsonRequest<JsonResult<User>>(Request.Method.POST, url,
+                succesListener, errorListener, new TypeToken<JsonResult<User>>() {
+        }.getType()) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                //设置POST请求参数
+                Map<String, String> params = new HashMap<>();
+                params.put(KeyConstant.NICK_NAME, nicknameStr);
+                params.put(KeyConstant.LOGIN_NAME, userName);
+                Log.d(TAG, "参数: " + userName);
+                params.put(KeyConstant.pass_word, password);
+                params.put(KeyConstant.TYPE, LOGIN_TYPE); //（1手机，2QQ，3微信，4新浪微博）
+                params.put(KeyConstant.HEAD_PHOTO, URL_HEAD_PHOTO);  //头像
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0);  //
+                return params;
+            }
+        };
+        StoreApplication.requestQueue.add(versionRequest1);*/
         StoreApplication.requestQueue.add(versionRequest);
 
     }
 
+    private String LOGIN_TYPE = "1";
+    private String nicknameStr = "";
+    private String URL_HEAD_PHOTO = "";
 
     /**
      * 获取用户信息
      */
-    private void getUserInfo() {
+   /* private void getUserInfo() {
 
         final String url = Constant.WEB_SITE + Constant.URL_USER_INFO;
         Response.Listener<JsonResult<User>> successListener = new Response.Listener<JsonResult<User>>() {
@@ -304,6 +438,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             }
         };
         StoreApplication.requestQueue.add(versionRequest);
-    }
+    }*/
 
 }

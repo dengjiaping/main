@@ -46,6 +46,7 @@ public class StoreApplication extends MultiDexApplication {
     public static boolean isDeleteApk = false;
     public static boolean allowAnyNet = false;
     public static boolean isReceiveMsg = false;
+    public static String userCode;
 
     @Override
     public void onCreate() {

@@ -10,4 +10,6 @@ public class Token {
     public long id;
     public String token;
     public String userCode;
+    public String nickName;
+    public String headPhoto;
 }

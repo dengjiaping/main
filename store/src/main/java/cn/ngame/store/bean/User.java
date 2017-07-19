@@ -8,18 +8,40 @@ import java.io.Serializable;
  */
 public class User implements Serializable {
 
-    public long id;
+
+    /**
+     * id : 2
+     * userCode : UC1500108412881
+     * nickName : 4444
+     * loginName : 18621767596
+     * password : 60851f6e7795ca38b6c3be80e5dd951d
+     * type : 1
+     * status : 0
+     * mobile : 18621767596
+     * gender : 男
+     * headPhoto : http://oss.ngame.cn/upload/userHead/1500454650621.png
+     * appTypeId : 2
+     * isDelete : 0
+     * createTime : 1500108331000
+     * updateTime : 1500364165000
+     * token : null
+     */
+
+    public int id;
     public String userCode;
     public String nickName;
+    public String loginName;
+    public String password;
+    public int type;
+    public int status;
     public String mobile;
-    public String email;
-    public String birthday;
     public String gender;
     public String headPhoto;
-    public String idCard;
-
-    public int status;
-
-    public long updateTime;
+    public int appTypeId;
+    public int isDelete;
     public long createTime;
+    public long updateTime;
+    public String token;
+
+
 }

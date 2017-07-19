@@ -38,7 +38,7 @@
     <string name="find_new"><font size="15">新登录密码，至少6位</font></string>
 
     <string name="register_title">注册</string>
-    <string name="register_mobile"><font size="15">手机号</font></string>
+    <string name="register_mobile"><font size="15">请输入手机号</font></string>
     <string name="register_captcha"><font size="15">请输入验证码</font></string>
     <string name="register_get_captcha">获取验证码</string>
     <string name="register_password"><font size="15">输入登录密码，至少6位</font></string>
