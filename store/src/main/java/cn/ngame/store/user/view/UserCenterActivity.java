@@ -7,16 +7,14 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,8 +35,6 @@ import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.bean.JsonResult;
-import cn.ngame.store.bean.Token;
-import cn.ngame.store.bean.UpLoadBean;
 import cn.ngame.store.bean.User;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.CommonUtil;
@@ -48,9 +44,7 @@ import cn.ngame.store.core.utils.FileUtil;
 import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
-import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.exception.NoSDCardException;
-import cn.ngame.store.fragment.SimpleDialogFragment;
 import cn.ngame.store.util.ToastUtil;
 
 
@@ -61,6 +55,7 @@ import cn.ngame.store.util.ToastUtil;
 public class UserCenterActivity extends BaseFgActivity {
 
     public static final String TAG = "777";
+    private UserCenterActivity content;
     private String pwd;
 
     private ImageView img_photo;
@@ -76,16 +71,18 @@ public class UserCenterActivity extends BaseFgActivity {
 
     private File mTempDir;
     private User user;
-    private String imgStrPost;
+    private String imgStrPost = "";
     private String avatarUrl;
+    private String LOGIN_TYPE;
+    private String IMG_TYPE = "0";//1表示用户有图片地址  0表示用户选的新图片，base64字符串。
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_user_center);
-
+        content = UserCenterActivity.this;
         preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
-
         findViewById(R.id.left_bt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +91,22 @@ public class UserCenterActivity extends BaseFgActivity {
         });
         TextView centerTv = (TextView) findViewById(R.id.center_tv);
         centerTv.setText("个人资料设置");
+        LOGIN_TYPE = StoreApplication.loginType;
 
+        Button changePwdBt = (Button) findViewById(R.id.change_pwd_bt);
+        if ("1".equals(LOGIN_TYPE)) {
+            changePwdBt.setVisibility(View.VISIBLE);
+            changePwdBt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(content, FindPwdActivity.class);
+                    intent.putExtra(KeyConstant.IS_FROM_USER_CENTER, true);
+                    startActivity(intent);
+                }
+            });
+        } else {
+            changePwdBt.setVisibility(View.GONE);
+        }
         try {
             mTempDir = new File(CommonUtil.getImageBasePath());
         } catch (NoSDCardException e) {
@@ -114,10 +126,10 @@ public class UserCenterActivity extends BaseFgActivity {
                 showChangeAvatarDialog();
             }
         });
-        user = StoreApplication.user;
+       /* user = StoreApplication.user;*/
         pwd = StoreApplication.passWord;
         imgStrPost = StoreApplication.userHeadUrl;
-        android.util.Log.d(TAG, "imgStrPost: "+imgStrPost);
+        android.util.Log.d(TAG, "imgStrPost: " + imgStrPost);
         setUserInfo();
      /*   if (pwd == null) {
             //getUserInfo();
@@ -251,15 +263,13 @@ public class UserCenterActivity extends BaseFgActivity {
             Uri uri = Crop.getOutput(result);
             //StoreService.uploadImage(file);
             avatarUrl = uri.toString();
-
             imageLoader.displayImage(avatarUrl, img_photo, roundOptions);
-
-            // todo 上传图片
-
+            // 上传图片
+            android.util.Log.d(TAG, "本地url:" + avatarUrl);
             String path = uri.getPath();
             File file = new File(path);
             imgStrPost = ImageUtil.getImageStr(file);
-
+            IMG_TYPE = "1";
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -267,24 +277,26 @@ public class UserCenterActivity extends BaseFgActivity {
 
 
     private void uploadImage() {
-        DialogHelper.showWaiting(getSupportFragmentManager(), "正在上传图片...");
+        DialogHelper.showWaiting(getSupportFragmentManager(), "加载中...");
         String url = Constant.WEB_SITE + Constant.URL_MODIFY_USER_DATA;
-        Response.Listener<JsonResult<UpLoadBean>> successListener =
-                new Response.Listener<JsonResult<UpLoadBean>>() {
+        Response.Listener<JsonResult<User>> successListener =
+                new Response.Listener<JsonResult<User>>() {
                     @Override
-                    public void onResponse(JsonResult<UpLoadBean> result) {
+                    public void onResponse(JsonResult<User> result) {
                         if (result.code == 0) {
-                            StoreApplication.userHeadUrl = avatarUrl;
-                            StoreApplication.nickName = nickName;
+                            User user = result.data;
+
                             SharedPreferences.Editor editor = preferences.edit();
-                            editor.putString(Constant.CONFIG_USER_HEAD, avatarUrl);
+                            editor.putString(Constant.CONFIG_USER_HEAD, user.headPhoto);
                             editor.putString(Constant.CONFIG_NICK_NAME, nickName);
                             editor.apply();
-
-                            Toast.makeText(UserCenterActivity.this, "资料修改成功！", Toast.LENGTH_SHORT).show();
+                            StoreApplication.userHeadUrl = user.headPhoto;
+                            StoreApplication.nickName = nickName;
+                            //Toast.makeText(UserCenterActivity.this, "资料修改成功！", Toast.LENGTH_SHORT).show();
                             UserCenterActivity.this.finish();
                         } else {
                             Toast.makeText(UserCenterActivity.this, "修改失败！", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "HTTP请求成功：修改失败！" + result.code + result.msg);
                         }
                         //隐藏提示框
                         DialogHelper.hideWaiting(getSupportFragmentManager());
@@ -301,20 +313,21 @@ public class UserCenterActivity extends BaseFgActivity {
             }
         };
 
-        Request<JsonResult<UpLoadBean>> versionRequest = new GsonRequest<JsonResult<UpLoadBean>>(Request.Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult<Token>>() {
+        Request<JsonResult<User>> versionRequest = new GsonRequest<JsonResult<User>>(Request.Method.POST, url,
+                successListener, errorListener, new TypeToken<JsonResult<User>>() {
         }.getType()) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.USER_CODE, user.userCode);
+                params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
                 params.put(KeyConstant.PICTURE_STR, imgStrPost);
                 params.put(KeyConstant.GENDER, "男");
+                params.put(KeyConstant.TYPE, IMG_TYPE);//type 0表示用户选的新图片，base64字符串。      1表示用户有图片地址
                 params.put(KeyConstant.NICK_NAME, nickName);
-                params.put(KeyConstant.TOKEN, user.token);
+                params.put(KeyConstant.TOKEN, StoreApplication.token);
 
-                android.util.Log.d(TAG, "userTOKEN" + user.token);
-                android.util.Log.d(TAG, "userCode" + user.userCode);
+                android.util.Log.d(TAG, "userTOKEN" + StoreApplication.token);
+                android.util.Log.d(TAG, "userCode" + StoreApplication.userCode);
                 return params;
             }
         };
@@ -352,7 +365,17 @@ public class UserCenterActivity extends BaseFgActivity {
         finish();
     }
 
-    private void showChangeNicknameDialog() {
+
+    private void setUserInfo() {
+        DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_icon_title, 360);
+        nickName = StoreApplication.nickName;
+        imageLoader.displayImage(StoreApplication.userHeadUrl, img_photo, roundOptions);
+        tv_nickname.setText(nickName);
+        tv_nickname.setSelection(nickName.length());
+        tv_account.setText(StoreApplication.userName);
+    }
+
+/* private void showChangeNicknameDialog() {
 
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment prev = getSupportFragmentManager().findFragmentByTag("progressDialog");
@@ -401,20 +424,72 @@ public class UserCenterActivity extends BaseFgActivity {
         });
         dialogFragment.show(ft, "progressDialog");
 
-    }
-
-    private void setUserInfo() {
-        DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_icon_title, 360);
-        nickName = StoreApplication.nickName;
-        imageLoader.displayImage(StoreApplication.userHeadUrl, img_photo, roundOptions);
-        tv_nickname.setText(nickName);
-        tv_nickname.setSelection(nickName.length());
-        tv_account.setText(user.loginName);
-    }
-
+    }*/
     /**
-     * 获取用户信息
+     * 修改昵称
      */
+   /* private void changeNickname() {
+
+        final String url = Constant.WEB_SITE + Constant.URL_CHANGE_NICKNAME;
+        Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (result == null) {
+                    Toast.makeText(UserCenterActivity.this, "服务端异常", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (result.code == 0) {
+                    if (nickName != null) {
+                        nickName = nickName.length() > 10 ? nickName.substring(0, 10) : nickName;
+                    }
+                    tv_nickname.setText(nickName);
+                    if (user != null) {
+                        user.nickName = nickName;
+                    }
+                    if (user != null) {
+                        user.nickName = nickName;
+                        StoreApplication.nickName = nickName;
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString(Constant.CONFIG_NICK_NAME, nickName);
+                        editor.apply();
+                    }
+                    Toast.makeText(UserCenterActivity.this, "修改成功！", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d(TAG, "HTTP请求成功：服务端返回错误: " + result.msg);
+                    Toast.makeText(UserCenterActivity.this, result.msg, Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                ToastUtil.show(UserCenterActivity.this, "修改失败，请检查网络连接!");
+                Log.d(TAG, "HTTP请求失败：网络连接错误！");
+            }
+        };
+
+        Request<JsonResult> versionRequest = new GsonRequest<JsonResult>(Request.Method.POST, url,
+                successListener, errorListener, new TypeToken<JsonResult>() {
+        }.getType()) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("token", StoreApplication.token);
+                params.put("userCode", StoreApplication.userCode);
+                params.put("newNickName", nickName);
+                return params;
+            }
+        };
+        StoreApplication.requestQueue.add(versionRequest);
+    }*/
+
+    /*   *//**
+     * 获取用户信息
+     *//*
     private void getUserInfo() {
         final String url = Constant.WEB_SITE + Constant.URL_USER_INFO;
         Response.Listener<JsonResult<User>> successListener = new Response.Listener<JsonResult<User>>() {
@@ -473,71 +548,6 @@ public class UserCenterActivity extends BaseFgActivity {
             }
         };
         StoreApplication.requestQueue.add(versionRequest);
-    }
+    }*/
 
-    /**
-     * 修改昵称
-     */
-    private void changeNickname() {
-
-        final String url = Constant.WEB_SITE + Constant.URL_CHANGE_NICKNAME;
-        Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
-            @Override
-            public void onResponse(JsonResult result) {
-                if (result == null) {
-                    Toast.makeText(UserCenterActivity.this, "服务端异常", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (result.code == 0) {
-                    if (nickName != null) {
-                        nickName = nickName.length() > 10 ? nickName.substring(0, 10) : nickName;
-                    }
-                    tv_nickname.setText(nickName);
-                    if (user != null) {
-                        user.nickName = nickName;
-                    }
-                    if (user != null) {
-                        user.nickName = nickName;
-                        StoreApplication.nickName = nickName;
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString(Constant.CONFIG_NICK_NAME, nickName);
-                        editor.apply();
-                    }
-                    Toast.makeText(UserCenterActivity.this, "修改成功！", Toast.LENGTH_SHORT).show();
-                } else {
-                    Log.d(TAG, "HTTP请求成功：服务端返回错误: " + result.msg);
-                    Toast.makeText(UserCenterActivity.this, result.msg, Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
-                ToastUtil.show(UserCenterActivity.this, "修改失败，请检查网络连接!");
-                Log.d(TAG, "HTTP请求失败：网络连接错误！");
-            }
-        };
-
-        Request<JsonResult> versionRequest = new GsonRequest<JsonResult>(Request.Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult>() {
-        }.getType()) {
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new HashMap<>();
-                params.put("token", StoreApplication.token);
-                params.put("userCode", user.userCode);
-                params.put("newNickName", nickName);
-                return params;
-            }
-        };
-        StoreApplication.requestQueue.add(versionRequest);
-    }
-
-    public void onPwdChangeClick(View view) {
-        ToastUtil.show(UserCenterActivity.this, "修改密码");
-    }
 }

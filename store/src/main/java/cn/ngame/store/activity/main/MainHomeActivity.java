@@ -226,7 +226,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             public void run() {
                 if (!TextUtil.isEmpty(pwd)) {
                     LoginHelper loginHelper = new LoginHelper(context);
-                    loginHelper.reLogin();
+                    loginHelper.reLoadSP();
                 }
             }
         }).start();

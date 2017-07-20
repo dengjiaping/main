@@ -133,6 +133,9 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() > 0) {
                     deleteIv.setVisibility(View.VISIBLE);
+                    if (s.length() >= 11) {
+                        et_pwd.requestFocus();
+                    }
                 } else {
                     deleteIv.setVisibility(View.GONE);
                 }
@@ -148,6 +151,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         userName = preferences.getString(Constant.CONFIG_USER_NAME, "");
         if (!userName.equals("")) {
             et_user.setText(userName);
+            et_user.setSelection(userName.length());
         }
     }
 
@@ -174,11 +178,11 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             case R.id.tv_find_pwd:
 
                 Intent fIntent = new Intent(this, FindPwdActivity.class);
+                fIntent.putExtra(KeyConstant.IS_FROM_USER_CENTER, false);
                 startActivity(fIntent);
 
                 break;
             case R.id.tv_register:
-
                 Intent rIntent = new Intent(this, RegisterActivity.class);
                 startActivity(rIntent);
                 break;
@@ -219,13 +223,13 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     StoreApplication.user = user;
 
                     SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString(Constant.CONFIG_USER_HEAD, user.headPhoto);
+                    editor.putString(Constant.CONFIG_TOKEN, user.token);
+                    editor.putString(Constant.CONFIG_USER_HEAD, user.headPhoto);//头像
                     editor.putString(Constant.CONFIG_NICK_NAME, user.nickName);
                     editor.putString(Constant.CONFIG_USER_NAME, userName);
-                    android.util.Log.d(TAG, "登录:" + userName);
                     editor.putString(Constant.CONFIG_USER_PWD, password);
-                    android.util.Log.d(TAG, "登录密码:" + password);
                     editor.putString(Constant.CONFIG_LOGIN_TYPE, LOGIN_TYPE);
+                    editor.putString(Constant.CONFIG_USER_CODE, user.userCode);//userCode
                     editor.apply();
 
                     StoreApplication.token = user.token;
@@ -235,10 +239,12 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     StoreApplication.nickName = user.nickName;
                     StoreApplication.userName = userName;
                     StoreApplication.loginType = LOGIN_TYPE;
+                    StoreApplication.userCode = user.userCode;
 
-                    Log.d(TAG, "StoreApplication.user: " + StoreApplication.user);
-                    Log.d(TAG, "user.loginName: " + user.loginName);
-                    android.util.Log.d(TAG, "userToken:" + user.token);
+                    Log.d(TAG, "userHeadUrl: " + user.headPhoto);
+                    Log.d(TAG, "loginName: " + StoreApplication.userName);
+                    Log.d(TAG, "userCode: " + StoreApplication.userCode);
+                    Log.d(TAG, "Token:" + user.token);
                     LoginActivity.this.finish();
 
                     //同步本地观看记录到服务器

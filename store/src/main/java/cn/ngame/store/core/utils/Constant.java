@@ -188,7 +188,7 @@ public class Constant {
     /**
      * 用户注册
      */
-    public static final String URL_USER_REGISTER = "/user/mobileRegister";
+    public static final String URL_USER_REGISTER = "/user/userRegistration";
     /**
      * 注册时 获取短信验证码
      */
@@ -300,4 +300,5 @@ public class Constant {
     public static final String URL_FORGOT_REGIST_SMS_CODE = "/user/SMSAuthenticationCode";
     public static final String URL_MODIFY_USER_DATA = "/user/modifyUserData";
     public static final String CONFIG_LOGIN_TYPE = "loginType";
+    public static final String CONFIG_USER_CODE = "config_user_code";
 }

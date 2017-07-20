@@ -30,12 +30,13 @@ import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.bean.JsonResult;
-import cn.ngame.store.core.utils.KeyConstant;
-import cn.ngame.store.fragment.SimpleDialogFragment;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
+import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.TextUtil;
+import cn.ngame.store.core.utils.UrlConstant;
+import cn.ngame.store.fragment.SimpleDialogFragment;
 import cn.ngame.store.view.BaseTitleBar;
 
 /**
@@ -92,13 +93,18 @@ public class FindPwdActivity extends BaseFgActivity {
             }
         }
     };
+    private boolean isFromUserCenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_findpwd);
-
+        isFromUserCenter = getIntent().getBooleanExtra(KeyConstant.IS_FROM_USER_CENTER, false);
+        android.util.Log.d(TAG, "onCreate:isFromUserCenter " + isFromUserCenter);
         BaseTitleBar titleBar = (BaseTitleBar) findViewById(R.id.title_bar);
+        if (isFromUserCenter) {
+            titleBar.setTitleText("修改密码");
+        }
         titleBar.setOnLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -236,7 +242,7 @@ public class FindPwdActivity extends BaseFgActivity {
      */
     private void doFindPwd(final String userName, final String pwd, final String captcha) {
 
-        String url = Constant.WEB_SITE + Constant.URL_FIND_PWD;
+        String url = Constant.WEB_SITE + UrlConstant.URL_FORGOT_PASSWORD;
         Response.Listener<JsonResult<String>> successListener = new Response.Listener<JsonResult<String>>() {
             @Override
             public void onResponse(JsonResult<String> result) {
@@ -251,6 +257,9 @@ public class FindPwdActivity extends BaseFgActivity {
                     SharedPreferences preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString(Constant.CONFIG_USER_NAME, userName);
+                    if (isFromUserCenter) {
+                        editor.putString(Constant.CONFIG_USER_PWD, pwd);
+                    }
                     editor.commit();
 
                     showDialog(true, "密码重置成功！");
@@ -277,8 +286,8 @@ public class FindPwdActivity extends BaseFgActivity {
                 //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.LOGIN_NAME, userName);
-                params.put("newPassword", pwd);
-                params.put("smsCode", captcha);
+                params.put(KeyConstant.new_Password, pwd);
+                params.put(KeyConstant.SMS_CODE, captcha);
                 return params;
             }
         };

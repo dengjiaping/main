@@ -37,13 +37,21 @@ public class LoginHelper {
         passWord = preferences.getString(Constant.CONFIG_USER_PWD, "");
     }
 
+    public void reLoadSP() {
+        StoreApplication.userName = preferences.getString(Constant.CONFIG_USER_NAME, "");
+        StoreApplication.passWord = preferences.getString(Constant.CONFIG_USER_PWD, "");
+        StoreApplication.userCode = preferences.getString(Constant.CONFIG_USER_CODE, "");
+        StoreApplication.userHeadUrl = preferences.getString(Constant.CONFIG_USER_HEAD, "");
+        StoreApplication.token = preferences.getString(Constant.CONFIG_TOKEN, "");
+    }
+
     /**
      * 重新登录
      */
     public void reLogin() {
         String url = Constant.WEB_SITE + Constant.URL_USER_LOGIN;
-        android.util.Log.d(TAG, "重新登录1:账号 "+StoreApplication.userName);
-        android.util.Log.d(TAG, "重新登录1密码: "+StoreApplication.passWord);
+        android.util.Log.d(TAG, "重新登录1:账号 " + StoreApplication.userName);
+        android.util.Log.d(TAG, "重新登录1密码: " + StoreApplication.passWord);
         Response.Listener<JsonResult<User>> succesListener = new Response.Listener<JsonResult<User>>() {
             @Override
             public void onResponse(JsonResult<User> result) {
@@ -65,8 +73,8 @@ public class LoginHelper {
                     //加载用户头像
                     Log.d(TAG, "重新登录.昵称: " + user.nickName);
                     Log.d(TAG, "重新登录.账号: " + user.loginName);
-                    Log.d(TAG, "重新登录.密码: " +StoreApplication.passWord);
-                    Log.d(TAG, "重新.User对象密码: " +user.password);
+                    Log.d(TAG, "重新登录.密码: " + StoreApplication.passWord);
+                    Log.d(TAG, "重新.User对象密码: " + user.password);
                     android.util.Log.d(TAG, "userToken:" + user.token);
                 } else {
                     Log.d(TAG, "重新登录 HTTP请求成功：服务端返回错误: " + result.msg);
@@ -91,8 +99,8 @@ public class LoginHelper {
                 params.put(KeyConstant.NICK_NAME, StoreApplication.nickName);
                 params.put(KeyConstant.LOGIN_NAME, StoreApplication.userName);
                 params.put(KeyConstant.pass_word, StoreApplication.passWord);
-                android.util.Log.d(TAG, "重新登录: "+StoreApplication.passWord);
-                android.util.Log.d(TAG, "重新登录: "+StoreApplication.userName);
+                android.util.Log.d(TAG, "重新登录: " + StoreApplication.passWord);
+                android.util.Log.d(TAG, "重新登录: " + StoreApplication.userName);
                 params.put(KeyConstant.TYPE, StoreApplication.loginType); //（1手机，2QQ，3微信，4新浪微博）
                 params.put(KeyConstant.HEAD_PHOTO, StoreApplication.userHeadUrl);  //头像
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0);  //

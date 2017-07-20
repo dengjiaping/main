@@ -59,8 +59,9 @@ public class StoreApplication extends MultiDexApplication {
         userHeadUrl = (String) SPUtils.get(this, Constant.CONFIG_USER_HEAD, "");
         userName = (String) SPUtils.get(this, Constant.CONFIG_USER_NAME, "");
         nickName = (String) SPUtils.get(this, Constant.CONFIG_NICK_NAME, "");
+        userCode = (String) SPUtils.get(this, Constant.CONFIG_USER_CODE, "");
         passWord = (String) SPUtils.get(this, Constant.CONFIG_USER_PWD, "");
-        android.util.Log.d("777", "passWord: " + passWord);
+        android.util.Log.d("777", "StoreApplication onCreate: " );
         loginType = (String) SPUtils.get(this, Constant.CONFIG_LOGIN_TYPE, "1");
 
         isReceiveMsg = (boolean) SPUtils.get(this, Constant.CFG_RECEIVE_MSG, true);

@@ -52,9 +52,9 @@
         android:layout_height="44dp"
         android:layout_marginTop="28dp"
         android:background="@android:color/white"
-        android:gravity="center_vertical"
         android:focusable="true"
         android:focusableInTouchMode="true"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/dp_30">
 
@@ -72,9 +72,9 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/about_iv_logo"
             android:layout_weight="1"
+            android:background="@null"
             android:gravity="center_vertical"
             android:maxLength="13"
-            android:background="@null"
             android:maxLines="1"
             android:paddingLeft="22dp"
             android:textColor="@color/font_black_3"
@@ -82,12 +82,12 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/change_pwd_bt"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
         android:layout_marginTop="134dp"
         android:background="@android:color/white"
         android:gravity="center"
-        android:onClick="onPwdChangeClick"
         android:text="修改密码"
         android:textColor="@color/font_1a"
         android:textSize="@dimen/dp_16"/>
