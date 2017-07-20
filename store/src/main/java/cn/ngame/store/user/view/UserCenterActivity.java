@@ -75,6 +75,7 @@ public class UserCenterActivity extends BaseFgActivity {
     private String avatarUrl;
     private String LOGIN_TYPE;
     private String IMG_TYPE = "0";//1表示用户有图片地址  0表示用户选的新图片，base64字符串。
+    private SharedPreferences.Editor editor;
 
 
     @Override
@@ -83,6 +84,7 @@ public class UserCenterActivity extends BaseFgActivity {
         this.setContentView(R.layout.activity_user_center);
         content = UserCenterActivity.this;
         preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
+        editor = preferences.edit();
         findViewById(R.id.left_bt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,6 +131,7 @@ public class UserCenterActivity extends BaseFgActivity {
        /* user = StoreApplication.user;*/
         pwd = StoreApplication.passWord;
         imgStrPost = StoreApplication.userHeadUrl;
+        nickName = StoreApplication.nickName;
         android.util.Log.d(TAG, "imgStrPost: " + imgStrPost);
         setUserInfo();
      /*   if (pwd == null) {
@@ -155,8 +158,12 @@ public class UserCenterActivity extends BaseFgActivity {
                     ToastUtil.show(UserCenterActivity.this, "昵称为空哦！");
                     return;
                 }
-                nickName = nickNameStr;
-                uploadImage();
+                if (nickNameStr.equals(nickName) && "0".equals(IMG_TYPE)) {
+                    content.finish();
+                } else {
+                    nickName = nickNameStr;
+                    uploadImage();
+                }
             }
         });
     }
@@ -270,6 +277,8 @@ public class UserCenterActivity extends BaseFgActivity {
             File file = new File(path);
             imgStrPost = ImageUtil.getImageStr(file);
             IMG_TYPE = "1";
+
+            editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true).commit();
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -286,7 +295,6 @@ public class UserCenterActivity extends BaseFgActivity {
                         if (result.code == 0) {
                             User user = result.data;
 
-                            SharedPreferences.Editor editor = preferences.edit();
                             editor.putString(Constant.CONFIG_USER_HEAD, user.headPhoto);
                             editor.putString(Constant.CONFIG_NICK_NAME, nickName);
                             editor.apply();
@@ -368,7 +376,6 @@ public class UserCenterActivity extends BaseFgActivity {
 
     private void setUserInfo() {
         DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_icon_title, 360);
-        nickName = StoreApplication.nickName;
         imageLoader.displayImage(StoreApplication.userHeadUrl, img_photo, roundOptions);
         tv_nickname.setText(nickName);
         tv_nickname.setSelection(nickName.length());

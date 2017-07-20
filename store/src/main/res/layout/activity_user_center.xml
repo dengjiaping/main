@@ -8,7 +8,6 @@
 
     <include layout="@layout/layout_title_left_center"/>
 
-
     <ImageView
         android:id="@+id/img_photo"
         android:layout_width="94dp"

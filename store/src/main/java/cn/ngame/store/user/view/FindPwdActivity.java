@@ -2,9 +2,11 @@ package cn.ngame.store.user.view;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
+import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Gravity;
@@ -102,9 +104,6 @@ public class FindPwdActivity extends BaseFgActivity {
         isFromUserCenter = getIntent().getBooleanExtra(KeyConstant.IS_FROM_USER_CENTER, false);
         android.util.Log.d(TAG, "onCreate:isFromUserCenter " + isFromUserCenter);
         BaseTitleBar titleBar = (BaseTitleBar) findViewById(R.id.title_bar);
-        if (isFromUserCenter) {
-            titleBar.setTitleText("修改密码");
-        }
         titleBar.setOnLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,6 +114,7 @@ public class FindPwdActivity extends BaseFgActivity {
         bt_find_pwd = (Button) findViewById(R.id.bt_find_pwd);
         et_name = (EditText) findViewById(R.id.et_login_user);
         et_captcha = (EditText) findViewById(R.id.et_captcha);
+
         bt_show_pwd = (ImageButton) findViewById(R.id.bt_show_pwd);
         et_pwd = (EditText) findViewById(R.id.et_login_pwd);
 
@@ -139,7 +139,6 @@ public class FindPwdActivity extends BaseFgActivity {
         bt_find_pwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String userName = et_name.getText().toString();
                 String pwd = et_pwd.getText().toString();
                 String captcha = et_captcha.getText().toString();
@@ -168,7 +167,14 @@ public class FindPwdActivity extends BaseFgActivity {
                 doFindPwd(userName, pwd, captcha);
             }
         });
-
+        if (isFromUserCenter) {
+            titleBar.setTitleText("修改密码");
+            et_name.setText(StoreApplication.userName);
+            et_name.setTextColor(Color.LTGRAY);
+            et_name.setInputType(InputType.TYPE_NULL);
+            et_captcha.requestFocus();
+            bt_find_pwd.setText("确认修改");
+        }
         bt_show_pwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,7 +198,7 @@ public class FindPwdActivity extends BaseFgActivity {
      * 获取手机验证码
      */
     private void getVerifCode(final String mobile) {
-        String url = Constant.WEB_SITE + Constant.URL_FORGOT_REGIST_SMS_CODE;
+        String url = Constant.WEB_SITE + Constant.URL_FORGOT_REGIST_SMS_CODE;//新接口
         Response.Listener<JsonResult<Object>> successListener = new Response.Listener<JsonResult<Object>>() {
             @Override
             public void onResponse(JsonResult<Object> result) {
@@ -241,7 +247,6 @@ public class FindPwdActivity extends BaseFgActivity {
      * 处理HTTP找回密码操作
      */
     private void doFindPwd(final String userName, final String pwd, final String captcha) {
-
         String url = Constant.WEB_SITE + UrlConstant.URL_FORGOT_PASSWORD;
         Response.Listener<JsonResult<String>> successListener = new Response.Listener<JsonResult<String>>() {
             @Override
@@ -259,10 +264,15 @@ public class FindPwdActivity extends BaseFgActivity {
                     editor.putString(Constant.CONFIG_USER_NAME, userName);
                     if (isFromUserCenter) {
                         editor.putString(Constant.CONFIG_USER_PWD, pwd);
+                        StoreApplication.passWord = pwd;
+                        FindPwdActivity.this.finish();
+                        editor.commit();
+                    } else {
+                        editor.commit();
+                        showDialog(true, "密码重置成功！");
                     }
-                    editor.commit();
 
-                    showDialog(true, "密码重置成功！");
+
                 } else {
                     showDialog(false, result.msg);
                 }

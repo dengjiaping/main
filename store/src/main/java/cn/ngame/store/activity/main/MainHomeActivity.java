@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -68,6 +69,7 @@ import cn.ngame.store.core.utils.AppInstallHelper;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.FileUtil;
+import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.LoginHelper;
 import cn.ngame.store.core.utils.TextUtil;
@@ -156,6 +158,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private TextView mSmNicknameTv;
     private TextView mTitleTv;
     private ImageView mTitleBgIv;
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,7 +172,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         TelephonyManager telephonyManager;
         telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         deviceId = telephonyManager.getDeviceId();
-
+        preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
+        editor = preferences.edit();
 //        mfragmentlist = getFragmentList();
 //        FragmentManager FragmentManager = getSupportFragmentManager();
 //        mTransaction = FragmentManager.beginTransaction();
@@ -357,18 +362,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         super.onStart();
         Log.d(TAG, "MainHomeActivity,onStart");
         //主界面顶部头像
-        pwd = StoreApplication.passWord;
-        if (pwd != null && !"".endsWith(pwd)) {
-            DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.color.colorPrimary, 360);
-            String userHeadUrl = StoreApplication.userHeadUrl;
-            imageLoader.displayImage(userHeadUrl, mIconIv, this.roundOptions);
-            imageLoader.displayImage(userHeadUrl, mSmIconIv, this.roundOptions);
-            mIconIv.setPadding(0, 0, 0, 0);
-            mSmNicknameTv.setText(StoreApplication.nickName);
-        } else {
-            imageLoader.displayImage("", mIconIv, roundOptions);
-            imageLoader.displayImage("", mSmIconIv, roundOptions);
-            mSmNicknameTv.setText("点击登录");
+        boolean isAvatarChanged = preferences.getBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
+        if (isAvatarChanged) {
+            setUserIcon();
+            editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, false).commit();
         }
         //右上角消息状态
         new Thread(new Runnable() {
@@ -390,6 +387,22 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 });
             }
         }).start();
+    }
+
+    private void setUserIcon() {
+        pwd = StoreApplication.passWord;
+        if (pwd != null && !"".endsWith(pwd)) {
+            //DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.color.colorPrimary, 360);
+            String userHeadUrl = StoreApplication.userHeadUrl;
+            imageLoader.displayImage(userHeadUrl, mIconIv, this.roundOptions);
+            imageLoader.displayImage(userHeadUrl, mSmIconIv, this.roundOptions);
+            mIconIv.setPadding(0, 0, 0, 0);
+            mSmNicknameTv.setText(StoreApplication.nickName);
+        } else {
+            imageLoader.displayImage("", mIconIv, roundOptions);
+            imageLoader.displayImage("", mSmIconIv, roundOptions);
+            mSmNicknameTv.setText("点击登录");
+        }
     }
     //    private List<Fragment> getFragmentList() {
 //        List<Fragment> fragmentlist = new ArrayList<>();
