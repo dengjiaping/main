@@ -299,4 +299,5 @@ public class Constant {
     public static final String APP_TYPE_ID_0 = "0";
     public static final String URL_FORGOT_REGIST_SMS_CODE = "/user/SMSAuthenticationCode";
     public static final String URL_MODIFY_USER_DATA = "/user/modifyUserData";
+    public static final String CONFIG_LOGIN_TYPE = "loginType";
 }

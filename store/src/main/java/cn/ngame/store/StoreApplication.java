@@ -47,6 +47,7 @@ public class StoreApplication extends MultiDexApplication {
     public static boolean allowAnyNet = false;
     public static boolean isReceiveMsg = false;
     public static String userCode;
+    public static String loginType;
 
     @Override
     public void onCreate() {
@@ -59,6 +60,8 @@ public class StoreApplication extends MultiDexApplication {
         userName = (String) SPUtils.get(this, Constant.CONFIG_USER_NAME, "");
         nickName = (String) SPUtils.get(this, Constant.CONFIG_NICK_NAME, "");
         passWord = (String) SPUtils.get(this, Constant.CONFIG_USER_PWD, "");
+        android.util.Log.d("777", "passWord: " + passWord);
+        loginType = (String) SPUtils.get(this, Constant.CONFIG_LOGIN_TYPE, "1");
 
         isReceiveMsg = (boolean) SPUtils.get(this, Constant.CFG_RECEIVE_MSG, true);
         allowAnyNet = (boolean) SPUtils.get(this, Constant.CFG_ALLOW_4G_LOAD, false);

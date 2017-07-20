@@ -48,13 +48,10 @@ import cn.ngame.store.core.utils.FileUtil;
 import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
-import cn.ngame.store.core.utils.LoginHelper;
 import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.exception.NoSDCardException;
 import cn.ngame.store.fragment.SimpleDialogFragment;
 import cn.ngame.store.util.ToastUtil;
-
-import static cn.ngame.store.StoreApplication.user;
 
 
 /**
@@ -78,7 +75,9 @@ public class UserCenterActivity extends BaseFgActivity {
     private String mCurrentPhotoPath;
 
     private File mTempDir;
-
+    private User user;
+    private String imgStrPost;
+    private String avatarUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,22 +107,6 @@ public class UserCenterActivity extends BaseFgActivity {
         tv_account = (TextView) findViewById(R.id.tv_account);
         tv_nickname = (EditText) findViewById(R.id.tv_nickname);
 
-        pwd = StoreApplication.passWord;
-
-        if (pwd == "") {
-            LoginHelper loginHelper = new LoginHelper(UserCenterActivity.this);
-            // loginHelper.reLogin();
-        } else {
-            nickName = StoreApplication.nickName;
-            if (nickName != null) {
-                nickName = nickName.length() > 13 ? nickName.substring(0, 13) : nickName;
-            }
-            tv_nickname.setText(nickName);
-            tv_account.setText(StoreApplication.userName);
-
-            DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_icon_title, 360);
-            imageLoader.displayImage(StoreApplication.userHeadUrl, img_photo, roundOptions);
-        }
         img_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,18 +114,39 @@ public class UserCenterActivity extends BaseFgActivity {
                 showChangeAvatarDialog();
             }
         });
+        user = StoreApplication.user;
+        pwd = StoreApplication.passWord;
+        imgStrPost = StoreApplication.userHeadUrl;
+        android.util.Log.d(TAG, "imgStrPost: "+imgStrPost);
+        setUserInfo();
+     /*   if (pwd == null) {
+            //getUserInfo();
+            android.util.Log.d(TAG, "user == null");
+            LoginHelper loginHelper = new LoginHelper(UserCenterActivity.this);
+            loginHelper.reLogin();
+            //setUserInfo();
+        } else {
+            setUserInfo();
+        }*/
 
-        tv_nickname.setOnClickListener(new View.OnClickListener() {
-                                           @Override
-                                           public void onClick(View v) {
-                                               //showChangeNicknameDialog();
-                                           }
-                                       }
-        );
 
-        //重新登录
-        LoginHelper loginHelper = new LoginHelper(this);
-        //loginHelper.reLogin();
+        //*/重新登录
+     /*   LoginHelper loginHelper = new LoginHelper(this);
+        loginHelper.reLogin();*/
+        TextView titleRightBt = (TextView) findViewById(R.id.title_right_tv);
+        titleRightBt.setVisibility(View.VISIBLE);
+        titleRightBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nickNameStr = tv_nickname.getText().toString();
+                if (nickNameStr.length() == 0) {
+                    ToastUtil.show(UserCenterActivity.this, "昵称为空哦！");
+                    return;
+                }
+                nickName = nickNameStr;
+                uploadImage();
+            }
+        });
     }
 
     //修改头像
@@ -246,15 +250,15 @@ public class UserCenterActivity extends BaseFgActivity {
         if (resultCode == Activity.RESULT_OK) {
             Uri uri = Crop.getOutput(result);
             //StoreService.uploadImage(file);
+            avatarUrl = uri.toString();
+
+            imageLoader.displayImage(avatarUrl, img_photo, roundOptions);
 
             // todo 上传图片
-            String nickNameStr = tv_nickname.getText().toString();
-            if (nickNameStr.length() > 0) {
-                nickName = nickNameStr;
-                uploadImage(uri);
-            } else {
-                Toast.makeText(UserCenterActivity.this, "昵称为空哦！", Toast.LENGTH_SHORT).show();
-            }
+
+            String path = uri.getPath();
+            File file = new File(path);
+            imgStrPost = ImageUtil.getImageStr(file);
 
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
@@ -262,33 +266,28 @@ public class UserCenterActivity extends BaseFgActivity {
     }
 
 
-    private void uploadImage(Uri uri) {
-        final String avatarUrl = uri.toString();
-        String path = uri.getPath();
-
-
-        File file = new File(path);
+    private void uploadImage() {
         DialogHelper.showWaiting(getSupportFragmentManager(), "正在上传图片...");
-        final String imgStr = ImageUtil.getImageStr(file).replaceAll(" ", "");
-        ;
         String url = Constant.WEB_SITE + Constant.URL_MODIFY_USER_DATA;
         Response.Listener<JsonResult<UpLoadBean>> successListener =
                 new Response.Listener<JsonResult<UpLoadBean>>() {
                     @Override
                     public void onResponse(JsonResult<UpLoadBean> result) {
-                        android.util.Log.d(TAG, "头像修改失败: " + result.code);
-                        android.util.Log.d(TAG, "头像修改失败: " + result.data);
                         if (result.code == 0) {
-                            DialogHelper.hideWaiting(getSupportFragmentManager());
-                            Toast.makeText(UserCenterActivity.this, "头像修改成功！", Toast.LENGTH_SHORT).show();
-                            imageLoader.displayImage(avatarUrl, img_photo, roundOptions);
                             StoreApplication.userHeadUrl = avatarUrl;
+                            StoreApplication.nickName = nickName;
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString(Constant.CONFIG_USER_HEAD, avatarUrl);
+                            editor.putString(Constant.CONFIG_NICK_NAME, nickName);
+                            editor.apply();
 
-                            setNickName();
+                            Toast.makeText(UserCenterActivity.this, "资料修改成功！", Toast.LENGTH_SHORT).show();
+                            UserCenterActivity.this.finish();
                         } else {
-                            DialogHelper.hideWaiting(getSupportFragmentManager());
-                            Toast.makeText(UserCenterActivity.this, "头像修改失败！", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UserCenterActivity.this, "修改失败！", Toast.LENGTH_SHORT).show();
                         }
+                        //隐藏提示框
+                        DialogHelper.hideWaiting(getSupportFragmentManager());
                     }
                 };
 
@@ -308,14 +307,14 @@ public class UserCenterActivity extends BaseFgActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.USER_CODE, "UC1500108412881");
-                params.put(KeyConstant.PICTURE_STR, imgStr);
+                params.put(KeyConstant.USER_CODE, user.userCode);
+                params.put(KeyConstant.PICTURE_STR, imgStrPost);
                 params.put(KeyConstant.GENDER, "男");
-                params.put(KeyConstant.NICK_NAME, "李国良");
-                params.put(KeyConstant.TOKEN, "c80a753e08fa40d4a8dfa03581ddbd82");
+                params.put(KeyConstant.NICK_NAME, nickName);
+                params.put(KeyConstant.TOKEN, user.token);
 
-                android.util.Log.d(TAG, "TOKEN" + StoreApplication.user.token);
-                android.util.Log.d(TAG, "userCode" + StoreApplication.userCode);
+                android.util.Log.d(TAG, "userTOKEN" + user.token);
+                android.util.Log.d(TAG, "userCode" + user.userCode);
                 return params;
             }
         };
@@ -324,23 +323,6 @@ public class UserCenterActivity extends BaseFgActivity {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));*/
 
         StoreApplication.requestQueue.add(versionRequest);
-    }
-
-    private void setNickName() {
-        if (nickName != null) {
-            nickName = nickName.length() > 10 ? nickName.substring(0, 10) : nickName;
-        }
-        tv_nickname.setText(nickName);
-        if (user != null) {
-            user.nickName = nickName;
-        }
-        if (user != null) {
-            user.nickName = nickName;
-            StoreApplication.nickName = nickName;
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString(Constant.CONFIG_NICK_NAME, nickName);
-            editor.apply();
-        }
     }
 
     ImageLoader imageLoader = ImageLoader.getInstance();
@@ -364,7 +346,7 @@ public class UserCenterActivity extends BaseFgActivity {
         StoreApplication.userName = "";
         StoreApplication.passWord = "";
         StoreApplication.token = null;
-        user = null;
+        StoreApplication.user = null;
 
         startActivity(new Intent(this, LoginActivity.class));
         finish();
@@ -419,6 +401,15 @@ public class UserCenterActivity extends BaseFgActivity {
         });
         dialogFragment.show(ft, "progressDialog");
 
+    }
+
+    private void setUserInfo() {
+        DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_icon_title, 360);
+        nickName = StoreApplication.nickName;
+        imageLoader.displayImage(StoreApplication.userHeadUrl, img_photo, roundOptions);
+        tv_nickname.setText(nickName);
+        tv_nickname.setSelection(nickName.length());
+        tv_account.setText(user.loginName);
     }
 
     /**

@@ -14,7 +14,6 @@ import java.util.Map;
 
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.bean.JsonResult;
-import cn.ngame.store.bean.Token;
 import cn.ngame.store.bean.User;
 import cn.ngame.store.core.net.GsonRequest;
 
@@ -24,7 +23,7 @@ import cn.ngame.store.core.net.GsonRequest;
  */
 public class LoginHelper {
 
-    public static final String TAG = LoginHelper.class.getSimpleName();
+    public static final String TAG = "777";
 
     private Context context;
     private SharedPreferences preferences;
@@ -34,83 +33,43 @@ public class LoginHelper {
     public LoginHelper(Context context) {
         this.context = context;
         preferences = context.getSharedPreferences(Constant.CONFIG_FILE_NAME, Context.MODE_PRIVATE);
-        userName = preferences.getString(Constant.CONFIG_USER_NAME,"");
-        passWord = preferences.getString(Constant.CONFIG_USER_PWD,"");
+        userName = preferences.getString(Constant.CONFIG_USER_NAME, "");
+        passWord = preferences.getString(Constant.CONFIG_USER_PWD, "");
     }
 
     /**
      * 重新登录
      */
-    public void reLogin(){
-
+    public void reLogin() {
         String url = Constant.WEB_SITE + Constant.URL_USER_LOGIN;
-        Response.Listener<JsonResult<Token>> successListener = new Response.Listener<JsonResult<Token>>() {
-
-            @Override
-            public void onResponse(JsonResult<Token> result) {
-
-                if (result == null) {
-                    Log.d(TAG, "HTTP请求成功：服务端返回错误: " + result.msg);
-                    return;
-                }
-
-                if (result.code == 0) {
-
-                    Token token = result.data;
-                    StoreApplication.token = token.token;
-                    //Log.e("LoginHelper","--------------------------------------->>>> 刷新了token");
-                    getUser();
-
-                } else {
-                    Log.d(TAG, "HTTP请求成功：服务端返回错误: " + result.msg);
-                }
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
-                Log.d(TAG, "HTTP请求失败：网络连接错误！");
-            }
-        };
-
-        Request<JsonResult<Token>> versionRequest = new GsonRequest<JsonResult<Token>>(Request.Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult<Token>>() {}.getType()) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("userName", userName);
-                params.put("passWord", passWord);
-                params.put("terminalVersion", "1212121331313"); //设备ID
-                params.put("terminalTypeCode", "3333444");  //系统版本号
-                return params;
-            }
-        };
-        StoreApplication.requestQueue.add(versionRequest);
-    }
-
-    private void getUser(){
-
-        final String url = Constant.WEB_SITE + Constant.URL_USER_INFO;
-        Response.Listener<JsonResult<User>> successListener = new Response.Listener<JsonResult<User>>() {
+        android.util.Log.d(TAG, "重新登录1:账号 "+StoreApplication.userName);
+        android.util.Log.d(TAG, "重新登录1密码: "+StoreApplication.passWord);
+        Response.Listener<JsonResult<User>> succesListener = new Response.Listener<JsonResult<User>>() {
             @Override
             public void onResponse(JsonResult<User> result) {
-
                 if (result == null) {
                     return;
                 }
-                if (result.code == 0 && result.data != null) {
-
+                if (result.code == 0) {
                     User user = result.data;
                     StoreApplication.user = user;
 
-                    //加载用户头像
-                    StoreApplication.userHeadUrl = user.headPhoto;
-                    StoreApplication.nickName = user.nickName;
+                /*    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString(Constant.CONFIG_USER_HEAD, user.headPhoto);
+                    editor.putString(Constant.CONFIG_NICK_NAME, user.nickName);
+                    editor.putString(Constant.CONFIG_USER_NAME, user.loginName);
+                    editor.putString(Constant.CONFIG_USER_PWD, StoreApplication.passWord);
+                    editor.putString(Constant.CONFIG_LOGIN_TYPE, StoreApplication.loginType);
+                    editor.apply();*/
 
+                    //加载用户头像
+                    Log.d(TAG, "重新登录.昵称: " + user.nickName);
+                    Log.d(TAG, "重新登录.账号: " + user.loginName);
+                    Log.d(TAG, "重新登录.密码: " +StoreApplication.passWord);
+                    Log.d(TAG, "重新.User对象密码: " +user.password);
+                    android.util.Log.d(TAG, "userToken:" + user.token);
                 } else {
-                    Log.d(TAG, "HTTP请求成功：服务端返回错误: " + result.msg);
+                    Log.d(TAG, "重新登录 HTTP请求成功：服务端返回错误: " + result.msg);
                 }
             }
         };
@@ -119,21 +78,27 @@ public class LoginHelper {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                Log.d(TAG, "HTTP请求失败：网络连接错误！");
+                Log.d(TAG, "重新登录 HTTP请求失败：网络连接错误！" + volleyError.getMessage());
             }
         };
-
-        Request<JsonResult<User>> versionRequest = new GsonRequest<JsonResult<User>>( Request.Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult<User>>() {}.getType()) {
+        Request<JsonResult<User>> versionRequest1 = new GsonRequest<JsonResult<User>>(Request.Method.POST, url,
+                succesListener, errorListener, new TypeToken<JsonResult<User>>() {
+        }.getType()) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-
+                //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
-                params.put("token", StoreApplication.token);
+                params.put(KeyConstant.NICK_NAME, StoreApplication.nickName);
+                params.put(KeyConstant.LOGIN_NAME, StoreApplication.userName);
+                params.put(KeyConstant.pass_word, StoreApplication.passWord);
+                android.util.Log.d(TAG, "重新登录: "+StoreApplication.passWord);
+                android.util.Log.d(TAG, "重新登录: "+StoreApplication.userName);
+                params.put(KeyConstant.TYPE, StoreApplication.loginType); //（1手机，2QQ，3微信，4新浪微博）
+                params.put(KeyConstant.HEAD_PHOTO, StoreApplication.userHeadUrl);  //头像
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0);  //
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        StoreApplication.requestQueue.add(versionRequest1);
     }
-
 }

@@ -32,7 +32,6 @@ import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.bean.JsonResult;
-import cn.ngame.store.bean.Token;
 import cn.ngame.store.bean.User;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
@@ -207,58 +206,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         }
         DialogHelper.showWaiting(getSupportFragmentManager(), "登录中...");
         String url = Constant.WEB_SITE + Constant.URL_USER_LOGIN;
-        Response.Listener<JsonResult<Token>> successListener = new Response.Listener<JsonResult<Token>>() {
-            @Override
-            public void onResponse(JsonResult<Token> result) {
-                if (result == null) {
-                    Toast.makeText(LoginActivity.this, "服务端异常", Toast.LENGTH_SHORT).show();
-                    return;
-                }
 
-                if (result.code == 0) {
-                    Token token = result.data;
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString(Constant.CONFIG_USER_NAME, userName);
-                    editor.putString(Constant.CONFIG_USER_PWD, password);
-                    editor.apply();
-
-                    StoreApplication.token = token.token;
-                    StoreApplication.passWord = password;
-
-                    //加载用户信息
-
-                    editor.putString(Constant.CONFIG_USER_HEAD, token.headPhoto);
-                    editor.putString(Constant.CONFIG_NICK_NAME, token.nickName);
-                    editor.apply();
-
-                    //加载用户头像
-                    StoreApplication.userHeadUrl = token.headPhoto;
-                    //StoreApplication.nickName = token.nickName;
-                    StoreApplication.nickName = token.nickName;
-                    StoreApplication.userCode = token.userCode;
-
-//                    //跳转到用户中心
-//                    Intent intent = new Intent(LoginActivity.this,UserCenterActivity.class);
-//                    startActivity(intent);
-                    LoginActivity.this.finish();
-
-                    //同步本地观看记录到服务器
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            IWatchRecordModel watchRecordModel = new WatchRecordModel(LoginActivity.this);
-                            watchRecordModel.synchronizeWatchRecord();
-                        }
-                    }).start();
-
-
-                } else {
-                    Log.d(TAG, "HTTP请求成功：服务端返回错误: " + result.msg);
-                    Toast.makeText(LoginActivity.this, "登录失败，" + result.msg, Toast.LENGTH_SHORT).show();
-                    DialogHelper.hideWaiting(getSupportFragmentManager());
-                }
-            }
-        };
         Response.Listener<JsonResult<User>> succesListener = new Response.Listener<JsonResult<User>>() {
             @Override
             public void onResponse(JsonResult<User> result) {
@@ -268,30 +216,29 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 }
                 if (result.code == 0) {
                     User user = result.data;
+                    StoreApplication.user = user;
+
                     SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString(Constant.CONFIG_USER_HEAD, user.headPhoto);
+                    editor.putString(Constant.CONFIG_NICK_NAME, user.nickName);
                     editor.putString(Constant.CONFIG_USER_NAME, userName);
+                    android.util.Log.d(TAG, "登录:" + userName);
                     editor.putString(Constant.CONFIG_USER_PWD, password);
+                    android.util.Log.d(TAG, "登录密码:" + password);
+                    editor.putString(Constant.CONFIG_LOGIN_TYPE, LOGIN_TYPE);
                     editor.apply();
 
                     StoreApplication.token = user.token;
                     StoreApplication.passWord = password;
-                    android.util.Log.d(TAG, "user返回: " + user.token);
-
-                    //加载用户信息
-
-                    editor.putString(Constant.CONFIG_USER_HEAD, user.headPhoto);
-                    editor.putString(Constant.CONFIG_NICK_NAME, user.nickName);
-                    editor.apply();
-
                     //加载用户头像
                     StoreApplication.userHeadUrl = user.headPhoto;
-                    //StoreApplication.nickName = token.nickName;
                     StoreApplication.nickName = user.nickName;
-                    StoreApplication.userCode = user.userCode;
+                    StoreApplication.userName = userName;
+                    StoreApplication.loginType = LOGIN_TYPE;
 
-//                    //跳转到用户中心
-//                    Intent intent = new Intent(LoginActivity.this,UserCenterActivity.class);
-//                    startActivity(intent);
+                    Log.d(TAG, "StoreApplication.user: " + StoreApplication.user);
+                    Log.d(TAG, "user.loginName: " + user.loginName);
+                    android.util.Log.d(TAG, "userToken:" + user.token);
                     LoginActivity.this.finish();
 
                     //同步本地观看记录到服务器
@@ -303,7 +250,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                         }
                     }).start();
 
-
+                    finish();
                 } else {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误: " + result.msg);
                     Toast.makeText(LoginActivity.this, "登录失败，" + result.msg, Toast.LENGTH_SHORT).show();
@@ -317,29 +264,11 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
                 Toast.makeText(LoginActivity.this, "登录失败，请检查网络连接!", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "HTTP请求失败：网络连接错误！");
+                Log.d(TAG, "HTTP请求失败：网络连接错误！" + volleyError.getMessage());
                 DialogHelper.hideWaiting(getSupportFragmentManager());
             }
         };
-
-        Request<JsonResult<Token>> versionRequest = new GsonRequest<JsonResult<Token>>(Request.Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult<Token>>() {
-        }.getType()) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                //设置POST请求参数
-                Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.NICK_NAME, nicknameStr);
-                params.put(KeyConstant.LOGIN_NAME, userName);
-                Log.d(TAG, "参数: " + userName);
-                params.put(KeyConstant.pass_word, password);
-                params.put(KeyConstant.TYPE, LOGIN_TYPE); //（1手机，2QQ，3微信，4新浪微博）
-                params.put(KeyConstant.HEAD_PHOTO, URL_HEAD_PHOTO);  //头像
-                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0);  //
-                return params;
-            }
-        };
-      /*  Request<JsonResult<User>> versionRequest1 = new GsonRequest<JsonResult<User>>(Request.Method.POST, url,
+        Request<JsonResult<User>> versionRequest1 = new GsonRequest<JsonResult<User>>(Request.Method.POST, url,
                 succesListener, errorListener, new TypeToken<JsonResult<User>>() {
         }.getType()) {
             @Override
@@ -348,7 +277,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.NICK_NAME, nicknameStr);
                 params.put(KeyConstant.LOGIN_NAME, userName);
-                Log.d(TAG, "参数: " + userName);
                 params.put(KeyConstant.pass_word, password);
                 params.put(KeyConstant.TYPE, LOGIN_TYPE); //（1手机，2QQ，3微信，4新浪微博）
                 params.put(KeyConstant.HEAD_PHOTO, URL_HEAD_PHOTO);  //头像
@@ -356,8 +284,23 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest1);*/
-        StoreApplication.requestQueue.add(versionRequest);
+        StoreApplication.requestQueue.add(versionRequest1);
+       /* Request<JsonResult<Token>> versionRequest = new GsonRequest<JsonResult<Token>>(Request.Method.POST, url,
+                successListener, errorListener, new TypeToken<JsonResult<Token>>() {
+        }.getType()) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                //设置POST请求参数
+                Map<String, String> params = new HashMap<>();
+                params.put(KeyConstant.NICK_NAME, nicknameStr);
+                params.put(KeyConstant.LOGIN_NAME, userName);
+                params.put(KeyConstant.pass_word, password);
+                params.put(KeyConstant.TYPE, LOGIN_TYPE); //（1手机，2QQ，3微信，4新浪微博）
+                params.put(KeyConstant.HEAD_PHOTO, URL_HEAD_PHOTO);  //头像
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0);  //
+                return params;
+            }
+        };*/
 
     }
 

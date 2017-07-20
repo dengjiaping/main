@@ -69,6 +69,7 @@ import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.FileUtil;
 import cn.ngame.store.core.utils.Log;
+import cn.ngame.store.core.utils.LoginHelper;
 import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.exception.NoSDCardException;
 import cn.ngame.store.fragment.SimpleDialogFragment;
@@ -220,7 +221,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         pwd = StoreApplication.passWord;
         //todo 如果用户没有主动退出，则重新登录
-        /*new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 if (!TextUtil.isEmpty(pwd)) {
@@ -228,7 +229,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     loginHelper.reLogin();
                 }
             }
-        }).start();*/
+        }).start();
 
         //申请SD卡读写权限
         CommonUtil.verifyStoragePermissions(this);
