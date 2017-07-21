@@ -76,7 +76,6 @@ import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.exception.NoSDCardException;
 import cn.ngame.store.fragment.SimpleDialogFragment;
 import cn.ngame.store.game.view.GameDetailActivity;
-import cn.ngame.store.gamehub.view.GameHubFragment;
 import cn.ngame.store.local.model.IWatchRecordModel;
 import cn.ngame.store.local.model.WatchRecordModel;
 import cn.ngame.store.ota.model.OtaService;
@@ -100,7 +99,7 @@ import static cn.ngame.store.StoreApplication.deviceId;
 
 public class MainHomeActivity extends BaseFgActivity implements View.OnClickListener {
 
-    public static final String TAG = MainHomeActivity.class.getSimpleName();
+    public static final String TAG = "777";
     private final MainHomeActivity context = MainHomeActivity.this;
     private boolean isExit = false;     //是否安装后第一次启动
     //    public FooterMenu menu;
@@ -125,7 +124,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
     private RecommendFragment selectedFragment;
     private RankingFragment rankingFragment;
-    private GameHubFragment gameHubFragment;
     private DiscoverFragment discoverFragment;
     private ManagerFragment administrationFragment;
 
@@ -137,10 +135,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private int currentMenu;
     private FragmentViewPagerAdapter adapter;
     private FragmentManager fragmentManager;
-    private LinearLayout home, game, menu_game_hub, video, manager;
+    private LinearLayout home, game, video, manager;
     private Button bt_home, bt_game, bt_video, bt_manager;
-    private TextView tv_home, tv_game, menu_gamehub_tv, tv_video, tv_manager;
-    private ImageView menu_game_hub_bt;
+    private TextView tv_home, tv_game, tv_video, tv_manager;
     private int colorDark;
     private int colorNormal;
     private String imgUrl;
@@ -160,6 +157,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private ImageView mTitleBgIv;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
+    private TextView mEditProfileTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,7 +185,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         //初始化底部菜单控件
         home = (LinearLayout) findViewById(R.id.menu_home);
         game = (LinearLayout) findViewById(R.id.menu_game);
-        menu_game_hub = (LinearLayout) findViewById(R.id.menu_game_hub);
+        //menu_game_hub = (LinearLayout) findViewById(R.id.menu_game_hub);圈子
         video = (LinearLayout) findViewById(R.id.menu_video);
         manager = (LinearLayout) findViewById(R.id.menu_manager);
 
@@ -198,10 +196,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         tv_home = (TextView) findViewById(R.id.menu_home_tv);
         tv_game = (TextView) findViewById(R.id.menu_game_tv);
-        menu_gamehub_tv = (TextView) findViewById(R.id.menu_gamehub_tv);
+        //menu_gamehub_tv = (TextView) findViewById(R.id.menu_gamehub_tv);
         tv_video = (TextView) findViewById(R.id.menu_video_tv);
         tv_manager = (TextView) findViewById(R.id.menu_manager_tv);
-        menu_game_hub_bt = (ImageView) findViewById(R.id.menu_game_hub_bt);
+        // menu_game_hub_bt = (ImageView) findViewById(menu_game_hub_bt);圈子
 
         //标题上面的消息和搜索
         im_toSearch = (ImageView) findViewById(R.id.im_toSearch);
@@ -265,6 +263,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         //侧边栏
         initSlidingMenu();
+        //头像(只能放在最后)
+        setUserIcon();
     }
 
     DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_icon_title, 360);
@@ -295,12 +295,13 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         mSmIconIv = (ImageView) findViewById(R.id.sm_top_icon_iv);
         mSmNicknameTv = (TextView) findViewById(R.id.sm_top_nikename_tv);
+        mEditProfileTv = (TextView) findViewById(R.id.edit_profile_click);
         mSmIconIv.setOnClickListener(mSmClickLstener);
         mSmNicknameTv.setOnClickListener(mSmClickLstener);
+        mEditProfileTv.setOnClickListener(mSmClickLstener);
         //int statusBarHeight = ImageUtil.getStatusBarHeight(this);
         /**
-         7 设置SlidingMenu滑动的拖拽效果
-         slidingMenu.setBehindScrollScale(0);
+         7 设置SlidingMenu滑动的拖拽效果   slidingMenu.setBehindScrollScale(0);
 
          8 设置SlidingMenu判断打开状态 并 自动关闭或开启
          menu.toggle();
@@ -337,7 +338,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         @Override
         public void onClick(View v) {
             int id = v.getId();
-            if (id == R.id.sm_top_nikename_tv || id == R.id.sm_top_icon_iv) {//系统设置
+            if (id == R.id.sm_top_nikename_tv
+                    || id == R.id.sm_top_icon_iv
+                    || id == R.id.edit_profile_click
+                    ) {//系统设置
                 if (pwd != null && !"".endsWith(pwd)) {
                     startActivity(new Intent(context, UserCenterActivity.class));
                 } else {
@@ -360,12 +364,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG, "MainHomeActivity,onStart");
         //主界面顶部头像
         boolean isAvatarChanged = preferences.getBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
         if (isAvatarChanged) {
             setUserIcon();
-            editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, false).commit();
         }
         //右上角消息状态
         new Thread(new Runnable() {
@@ -402,7 +404,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             imageLoader.displayImage("", mIconIv, roundOptions);
             imageLoader.displayImage("", mSmIconIv, roundOptions);
             mSmNicknameTv.setText("点击登录");
+            mEditProfileTv.setVisibility(View.GONE);
         }
+        editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, false).commit();
     }
     //    private List<Fragment> getFragmentList() {
 //        List<Fragment> fragmentlist = new ArrayList<>();
@@ -490,7 +494,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
             list.add(RecommendFragment.newInstance(0));
             list.add(RankingFragment.newInstance(""));
-            list.add(GameHubFragment.newInstance());
+            //list.add(GameHubFragment.newInstance());
             list.add(DiscoverFragment.newInstance(""));
             list.add(ManagerFragment.newInstance());
 
@@ -512,11 +516,11 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         bt_game.setSelected(false);
         bt_video.setSelected(false);
         bt_manager.setSelected(false);
-        menu_game_hub_bt.setSelected(false);
+        //menu_game_hub_bt.setSelected(false);
 
         tv_home.setTextColor(colorNormal);
         tv_game.setTextColor(colorNormal);
-        menu_gamehub_tv.setTextColor(colorNormal);
+        //menu_gamehub_tv.setTextColor(colorNormal);圈子
         tv_video.setTextColor(colorNormal);
         tv_manager.setTextColor(colorNormal);
 
@@ -555,7 +559,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 im_toSearch.setVisibility(View.VISIBLE);
                 tv_game.setTextColor(colorDark);
                 break;
-            case 2://圈子
+        /*    case 2://圈子
                 if (null == gameHubFragment) {
                     gameHubFragment = new GameHubFragment();
                     transaction.add(R.id.main_list_fragments, gameHubFragment);
@@ -568,7 +572,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 fl_notifi.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 menu_gamehub_tv.setTextColor(colorDark);
-                break;
+                break;*/
             case 3://发现
                 if (null == discoverFragment) {
                     discoverFragment = new DiscoverFragment();
@@ -608,9 +612,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         if (null != rankingFragment) {
             transaction.hide(rankingFragment);
         }
-        if (null != gameHubFragment) {
+      /*  if (null != gameHubFragment) {
             transaction.hide(gameHubFragment);
-        }
+        }*/
         if (null != discoverFragment) {
             transaction.hide(discoverFragment);
         }
@@ -627,7 +631,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     public void setOnTouchListener(View.OnTouchListener listener) {
         home.setOnTouchListener(listener);
         game.setOnTouchListener(listener);
-        menu_game_hub.setOnTouchListener(listener);
+        //menu_game_hub.setOnTouchListener(listener);
         video.setOnTouchListener(listener);
         manager.setOnTouchListener(listener);
     }
@@ -651,11 +655,11 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                         setCurrentMenu(1);
                     }
                     break;
-                case R.id.menu_game_hub:
+               /* case R.id.menu_game_hub:
                     if (currentMenu != R.id.menu_game_hub && event.getAction() == MotionEvent.ACTION_UP) {
                         setCurrentMenu(2);
                     }
-                    break;
+                    break;*/
                 case R.id.menu_video:
                     if (currentMenu != R.id.menu_video && event.getAction() == MotionEvent.ACTION_UP) {
                         setCurrentMenu(3);

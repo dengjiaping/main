@@ -176,7 +176,7 @@ public class VideoDetailActivity extends BaseFgActivity {
                     });
 
                     //img_video.setImageUrl(videoInfo.videoImageLink,90f,135f,R.drawable.default_video);
-                    img_video.setImageUrl(videoInfo.videoImageLink,120f,85f,R.drawable.default_video);
+                    img_video.setImageUrl(videoInfo.videoImageLink,120f,85f,R.drawable.ic_def_logo_412_200);
 
                     String title = videoInfo.videoName == null ? "" : videoInfo.videoName;
                     if(title.length() > 9){
@@ -314,7 +314,7 @@ public class VideoDetailActivity extends BaseFgActivity {
                 LinearLayout aboutLayout = (LinearLayout) inflater.inflate(R.layout.item_video_about, null);
                 aboutLayout.setLayoutParams(params);
                 PicassoImageView img = (PicassoImageView) aboutLayout.findViewById(R.id.img_1);
-                img.setImageUrl(aboutInfo.videoImageLink,R.drawable.default_video);
+                img.setImageUrl(aboutInfo.videoImageLink,R.drawable.ic_def_logo_412_200);
 
                 TextView tv = (TextView) aboutLayout.findViewById(R.id.tv_title);
                 String title = aboutInfo.videoName == null ? "" : aboutInfo.videoName;

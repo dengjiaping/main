@@ -39,9 +39,6 @@ import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.utils.ImageUtil;
 
-import static cn.ngame.store.R.id.tv_summary;
-import static cn.ngame.store.R.id.tv_title;
-
 public class RecommendListAdapter extends BaseAdapter {
 
     private Context context;
@@ -94,9 +91,9 @@ public class RecommendListAdapter extends BaseAdapter {
             holder = new ViewHolder(context, fm);
             holder.img = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
             holder.recommend_game_pic = (ImageView) convertView.findViewById(R.id.recommend_game_pic);
-            holder.tv_title = (TextView) convertView.findViewById(tv_title);
-            holder.tv_summary = (TextView) convertView.findViewById(tv_summary);
-            holder.tv_size = (TextView) convertView.findViewById(R.id.text1);
+            holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
+            holder.tv_summary = (TextView) convertView.findViewById(R.id.tv_summary);
+            holder.tv_from = (TextView) convertView.findViewById(R.id.text1);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -113,7 +110,7 @@ public class RecommendListAdapter extends BaseAdapter {
         private Context context;
         private RecommendListBean.DataBean gameInfo;
         private SimpleDraweeView img;
-        private TextView tv_title, tv_summary, tv_size;
+        private TextView tv_title, tv_summary, tv_from;
         private IFileLoad fileLoad;
         private FragmentManager fm;
         private Timer timer = new Timer();
@@ -140,7 +137,7 @@ public class RecommendListAdapter extends BaseAdapter {
             int screenWidth = ImageUtil.getScreenWidth((Activity) context);
             with.load(imgUrl)
                     .resizeDimen(R.dimen.recommend_item_from_pic, R.dimen.recommend_item_from_pic).tag(context).into(img);
-            with.load(imgUrl).placeholder(R.drawable.ic_default_logo_750_300).error(R.drawable.ic_default_logo_750_300)
+            with.load(imgUrl).placeholder(R.drawable.ic_def_logo_750_300).error(R.drawable.ic_def_logo_750_300)
                     //.resize(screenWidth,150)
                     .into(recommend_game_pic);
 
@@ -149,16 +146,16 @@ public class RecommendListAdapter extends BaseAdapter {
                 tv_title.setText(gameName);
             }
 
-            String gameDesc = gameInfo.getGameName();
+            String gameDesc = gameInfo.getRecommend();
             if (gameDesc != null && !"".equals(gameDesc)) {
                 tv_summary.setText(gameDesc);
             } else {
                 tv_summary.setText("");
             }
 
-            String gameSizeStr = gameInfo.getGameName();
+            String gameRecommender = gameInfo.getRecommender();
             //String gameSizeStr = TextUtil.formatFileSize(gameSize);
-            tv_size.setText("来自" + gameSizeStr);
+            tv_from.setText("来自" + gameRecommender);
         }
     }
 }

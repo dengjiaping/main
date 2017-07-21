@@ -95,8 +95,8 @@ public class HomeGameRVAdapter extends RecyclerView.Adapter<HomeGameRVAdapter.My
             }
             Picasso.with(context)
                     .load(imgUrl)
-                    .placeholder(R.drawable.default_video)
-                    .error(R.drawable.default_video)
+                    .placeholder(R.drawable.ic_def_logo_412_200)
+                    .error(R.drawable.ic_def_logo_412_200)
                     .resize(CommonUtil.dip2px(context,50),CommonUtil.dip2px(context,50))
                     .centerCrop()
                     .tag(context)

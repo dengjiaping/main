@@ -146,7 +146,7 @@ public class NoScrollListViewAdapter extends BaseAdapter {
 
 		String imgUrl = record.getVideoImageLink();
 		if(imgUrl != null && !imgUrl.trim().equals("")){
-			holder.img.setImageUrl(imgUrl,100f,70f,R.drawable.default_video);
+			holder.img.setImageUrl(imgUrl,100f,70f,R.drawable.ic_def_logo_412_200);
 		}
 
 		return convertView;

@@ -99,8 +99,8 @@ public class VrVideoRvAdapter extends RecyclerView.Adapter<VrVideoRvAdapter.MyVi
             }
             Picasso.with(context)
                     .load(imgUrl)
-                    .placeholder(R.drawable.default_video)
-                    .error(R.drawable.default_video)
+                    .placeholder(R.drawable.ic_def_logo_412_200)
+                    .error(R.drawable.ic_def_logo_412_200)
                     //.resizeDimen(R.dimen.list_detail_image_size, R.dimen.recycle_detail_image_size)
                     //.resize(640,360)
                     .fit()

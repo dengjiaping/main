@@ -6,10 +6,12 @@
 
     <include layout="@layout/layout_title_left_center"/>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/id_recyclerview_horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:background="@color/bg_f5"
-        />
+        android:layout_centerVertical="true"
+        android:background="@color/gray_f5"
+        android:scrollbars="none"
+        ></android.support.v7.widget.RecyclerView>
 </LinearLayout>

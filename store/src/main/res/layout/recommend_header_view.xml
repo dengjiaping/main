@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/recommend_item_game_pic_hight"
             fresco:actualImageScaleType="fitXY"
-            fresco:progressBarImage="@drawable/ic_default_logo_750_300"
+            fresco:progressBarImage="@drawable/ic_def_logo_750_300"
             fresco:progressBarImageScaleType="fitXY"
             />
 
@@ -144,7 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/recommend_item_game_pic_hight"
             fresco:actualImageScaleType="fitXY"
-            fresco:progressBarImage="@drawable/ic_default_logo_750_300"
+            fresco:progressBarImage="@drawable/ic_def_logo_750_300"
             fresco:progressBarImageScaleType="fitXY"/>
 
         <TextView
@@ -171,7 +171,7 @@
         android:background="@color/gray_f5"
         android:paddingLeft="@dimen/dp_10"
         android:paddingTop="@dimen/dp_8"
-        android:text="精选"
+        android:text="专题"
         android:textColor="@color/font_black_3"
         android:textSize="@dimen/dp_16"/>
 

@@ -42,7 +42,7 @@ public class ImageDialogFragment extends DialogFragment {
         ImageView view = new ImageView(getActivity());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         view.setLayoutParams(params);
-        view.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.default_game));
+        view.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_def_logo_412_200));
         //view.setBackground(getActivity().getResources().getDrawable(R.drawable.temp_game_1));
         view.setOnClickListener(new View.OnClickListener() {
             @Override

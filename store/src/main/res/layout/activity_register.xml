@@ -88,7 +88,7 @@
             android:background="@null"
             android:hint="@string/register_captcha"
             android:inputType="number"
-            android:maxLength="6"
+            android:maxLength="4"
             android:textColor="@color/font_black_3"
             android:textColorHint="@color/font_default"
             android:textSize="@dimen/dp_16"/>
@@ -136,9 +136,9 @@
             android:layout_height="@dimen/dp_44"
             android:layout_toRightOf="@+id/img_2"
             android:background="@null"
-            android:hint="@string/find_new"
+            android:hint="@string/register_password"
             android:inputType="textPassword"
-            android:maxLength="13"
+            android:maxLength="16"
             android:textColor="@color/font_black_3"
             android:textColorHint="@color/font_default"
             android:textSize="@dimen/dp_16"/>

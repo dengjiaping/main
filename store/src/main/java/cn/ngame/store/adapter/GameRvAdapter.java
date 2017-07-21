@@ -18,7 +18,6 @@ import cn.ngame.store.R;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.game.view.GameDetailActivity;
-import cn.ngame.store.video.view.VideoDetailActivity;
 
 /**
  * RecycleView 适配器
@@ -100,8 +99,8 @@ public class GameRvAdapter extends RecyclerView.Adapter<GameRvAdapter.MyViewHold
             }
             Picasso.with(context)
                     .load(imgUrl)
-                    .placeholder(R.drawable.default_video)
-                    .error(R.drawable.default_video)
+                    .placeholder(R.drawable.ic_def_logo_412_200)
+                    .error(R.drawable.ic_def_logo_412_200)
                     //.resizeDimen(R.dimen.game_image_size, R.dimen.game_image_size)
                     //.resize(640,360)
                     .fit()

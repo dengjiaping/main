@@ -4,11 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/gray" />
-
     <LinearLayout
         android:id="@+id/ll_show"
         android:layout_width="match_parent"
@@ -42,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text=""
+                    android:text="tv_date"
                     android:textColor="@color/font_black_9"
                     android:textSize="12sp" />
 
@@ -55,7 +50,7 @@
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
                     android:paddingTop="2dp"
-                    android:text=""
+                    android:text="tv_type"
                     android:textColor="@color/font_black_3"
                     android:textSize="12sp"
                     android:layout_alignParentTop="true"
@@ -69,10 +64,16 @@
                 android:layout_marginTop="2dp"
                 android:lineSpacingExtra="2dp"
                 android:maxLines="3"
-                android:text=""
+                android:text="tv_content"
                 android:textColor="@color/font_black_3"
                 android:textSize="13sp" />
         </LinearLayout>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray" />
+
 </LinearLayout>

@@ -203,7 +203,7 @@ public class RecommendFragment extends BaseSearchFragment {
                             imageView.setLayoutParams(params);
 
                             //加载网络图片
-                            imageView.setImageUrl(gameImage.imageLink, 240f, 114f, R.drawable.ic_default_logo_480_228);
+                            imageView.setImageUrl(gameImage.imageLink, 240f, 114f, R.drawable.ic_def_logo_480_228);
                             horizontalViewContainer.addView(imageView);
                             imgUrlList.add(gameImage.imageLink);
                         }
@@ -309,6 +309,7 @@ public class RecommendFragment extends BaseSearchFragment {
 
     public void initListView(final View view) {
         //tv_top_bar_bg = (TextView) view.findViewById(R.id.tv_top_bar_bg);
+       Log.d(TAG, "initListView:9999 ");
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
@@ -347,6 +348,7 @@ public class RecommendFragment extends BaseSearchFragment {
                 Log.d(TAG, "上拉");
                 if (pageAction.getTotal() < pageAction.getPageSize()) {
                     pullListView.setHasMoreData(false);
+                    ToastUtil.show(context, "没有更多数据了哦!");
                     pullListView.onPullUpRefreshComplete();
                     return;
                 }

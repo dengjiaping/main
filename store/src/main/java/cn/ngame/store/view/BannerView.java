@@ -126,7 +126,7 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
         for (int i = 0; i < views.size(); i++) {
 
             ImageView img = new ImageView(context);
-            img.setImageDrawable(getResources().getDrawable(R.drawable.selector_dot));
+            img.setImageResource(R.drawable.selector_dot);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(CommonUtil.dip2px(context, 4), CommonUtil.dip2px(context, 4));
             if (i > 0) {
                 lp.setMargins(CommonUtil.dip2px(context, 6), 0, 0, 0);
@@ -151,8 +151,8 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
                 img.setScaleType(ImageView.ScaleType.FIT_XY);
                 Picasso.with(context)
                         .load((String) img.getTag())
-                        .placeholder(R.drawable.banner_default)
-                        .error(R.drawable.banner_default)
+                        .placeholder(R.drawable.ic_def_logo_750_300)
+                        .error(R.drawable.ic_def_logo_750_300)
                         .resize(width, CommonUtil.dip2px(context, 214))
                         .centerCrop()
 //                        .fit()

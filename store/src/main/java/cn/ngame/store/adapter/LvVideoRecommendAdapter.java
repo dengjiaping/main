@@ -146,8 +146,8 @@ public class LvVideoRecommendAdapter extends BaseAdapter {
             if(!TextUtil.isEmpty(videoInfo.videoImageLink)){
                 Picasso.with(context)
                         .load(videoInfo.videoImageLink)
-                        .placeholder(R.drawable.default_video)
-                        .error(R.drawable.default_video)
+                        .placeholder(R.drawable.ic_def_logo_412_200)
+                        .error(R.drawable.ic_def_logo_412_200)
                         .fit()
                         .tag(context)
                         .into(img);

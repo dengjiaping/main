@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 填充 -->
+    <solid android:color="@color/colorPrimary"/>
+    <!-- 宽度和高度 -->
+    <size
+        android:width="@dimen/discover_classify_iten_width"
+        android:height="@dimen/discover_classify_iten_hight"/>
+
+    <corners android:radius="10dp"
+        />
+
+</shape>

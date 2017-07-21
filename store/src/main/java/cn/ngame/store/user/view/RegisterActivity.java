@@ -194,20 +194,19 @@ public class RegisterActivity extends BaseFgActivity {
     private void getSMSCode(final String mobile) {
 
         String url = Constant.WEB_SITE + Constant.URL_FORGOT_REGIST_SMS_CODE;
-        Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
+        Response.Listener<JsonResult<Object>> successListener = new Response.Listener<JsonResult<Object>>() {
             @Override
             public void onResponse(JsonResult result) {
-
                 if (result == null) {
                     Toast.makeText(RegisterActivity.this, "服务端异常", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 if (result.code == 0) {
                     second = 60;
                     new Thread(runnable).start();
 
                     Toast.makeText(RegisterActivity.this, "验证码已发送，请查收！", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "HTTP请求成功：服务端返回：" + result.data);
 
                 } else {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误：" + result.msg);
@@ -225,7 +224,7 @@ public class RegisterActivity extends BaseFgActivity {
             }
         };
 
-        Request<JsonResult> versionRequest = new GsonRequest<JsonResult>(Request.Method.POST, url,
+        Request<JsonResult<Object>> versionRequest = new GsonRequest<JsonResult<Object>>(Request.Method.POST, url,
                 successListener, errorListener, new TypeToken<JsonResult>() {
         }.getType()) {
             @Override

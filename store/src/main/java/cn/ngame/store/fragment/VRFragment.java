@@ -216,7 +216,7 @@ public class VRFragment extends Fragment {
                 }
 
                 PicassoImageView img = (PicassoImageView) view.findViewById(R.id.img_1);
-                img.setImageUrl(info.advImageLink,CommonUtil.dip2px(context,115),CommonUtil.dip2px(context,160),R.drawable.default_video);
+                img.setImageUrl(info.advImageLink,CommonUtil.dip2px(context,115),CommonUtil.dip2px(context,160),R.drawable.ic_def_logo_412_200);
 
                 img.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -252,7 +252,7 @@ public class VRFragment extends Fragment {
                 }
 
                 PicassoImageView img = (PicassoImageView) view.findViewById(R.id.img_1);
-                img.setImageUrl(info.advImageLink,CommonUtil.dip2px(context,115),CommonUtil.dip2px(context,160),R.drawable.default_video);
+                img.setImageUrl(info.advImageLink,CommonUtil.dip2px(context,115),CommonUtil.dip2px(context,160),R.drawable.ic_def_logo_412_200);
 
                 img.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -288,7 +288,7 @@ public class VRFragment extends Fragment {
                 }
 
                 PicassoImageView img = (PicassoImageView) view.findViewById(R.id.img_1);
-                img.setImageUrl(info.advImageLink,CommonUtil.dip2px(context,115),CommonUtil.dip2px(context,160),R.drawable.default_video);
+                img.setImageUrl(info.advImageLink,CommonUtil.dip2px(context,115),CommonUtil.dip2px(context,160),R.drawable.ic_def_logo_412_200);
                 img.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

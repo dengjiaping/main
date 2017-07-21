@@ -230,6 +230,8 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     editor.putString(Constant.CONFIG_USER_PWD, password);
                     editor.putString(Constant.CONFIG_LOGIN_TYPE, LOGIN_TYPE);
                     editor.putString(Constant.CONFIG_USER_CODE, user.userCode);//userCode
+
+                    editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
                     editor.apply();
 
                     StoreApplication.token = user.token;

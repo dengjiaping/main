@@ -2,6 +2,9 @@ package cn.ngame.store.activity.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,7 @@ import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.Classification.ClassifiHomeClient;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -33,10 +37,11 @@ import cn.ngame.store.adapter.ClassifiDongzuoAdapter;
 import cn.ngame.store.adapter.ClassifiJiaoseAdapter;
 import cn.ngame.store.adapter.ClassifiMaoxianAdapter;
 import cn.ngame.store.adapter.ClassifiQiangzhanAdapter;
-import cn.ngame.store.adapter.ClassifiRemenAdapter;
 import cn.ngame.store.adapter.ClassifiSaicheAdapter;
 import cn.ngame.store.adapter.ClassifiTiyuAdapter;
 import cn.ngame.store.adapter.ClassifiXiuxianAdapter;
+import cn.ngame.store.adapter.DiscoverClassifyTopAdapter;
+import cn.ngame.store.adapter.DiscoverTvIvAdapter;
 import cn.ngame.store.adapter.HomeRaiderAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.HotInfo;
@@ -46,13 +51,12 @@ import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.game.view.SBGameActivity;
+import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.video.view.VideoDetailActivity;
 import cn.ngame.store.view.BannerView;
 import cn.ngame.store.view.PicassoImageView;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
-
-import static cn.ngame.store.R.id.banner_view;
 
 /**
  * 分类
@@ -66,7 +70,8 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private static final int SUB_TYPE_ID_BOY = 15;
     private static final int SUB_TYPE_ID_GIRL = 16;
     private static final int SUB_TYPE_ID = 21;
-    private static final String TAG = "777";
+    private static final String TAG = "111";
+    private FragmentActivity context;
     /**
      * 顶部栏
      */
@@ -74,10 +79,15 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     /**
      * headerView
      */
-    private ImageView iv_vr, iv_stand_alone, iv_boy, iv_girl;
-    private GridView gridView_remen, gridView_qiangzhan, gridView_maoxian, gridView_dongzuo, gridView_jiaose, gridView_xiuxian, gridView_saiche, gridView_tiyu;
+    private RecyclerView mRVClassifyAll;
+    private GridView gridView_maoxian;
+    private GridView gridView_dongzuo;
+    private GridView gridView_jiaose;
+    private GridView gridView_xiuxian;
+    private GridView gridView_saiche;
+    private GridView gridView_tiyu;
 
-    ClassifiRemenAdapter remenAdapter;
+    DiscoverClassifyTopAdapter remenAdapter;
     List<ClassifiHomeBean.DataBean.OnlineListBean> remenList = new ArrayList<>();
     ClassifiQiangzhanAdapter qiangzhanAdapter;
     List<ClassifiHomeBean.DataBean.GunFireListBean> qiangzhanList = new ArrayList<>();
@@ -94,8 +104,17 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     ClassifiTiyuAdapter tiyuAdapter;
     List<ClassifiHomeBean.DataBean.SportListBean> tiyuList = new ArrayList<>();
     private BannerView bannerView;
+    private List<String> classifyList = new ArrayList<>(Arrays.asList("角色", "动作", "原生", "策略", "模拟", "VR", "枪战", "体育", "格斗"));
+    private List<Integer> urlList = new ArrayList();
+    private DiscoverTvIvAdapter mTvIvAdapter;
+    private RecyclerView mTvIv_everyday_discover_Rv;
+
+    public DiscoverFragment() {
+        android.util.Log.d(TAG, "DiscoverFragment: ()");
+    }
 
     public static DiscoverFragment newInstance(String arg) {
+        android.util.Log.d(TAG, "discover newInstance: ()");
         DiscoverFragment fragment = new DiscoverFragment();
         Bundle bundle = new Bundle();
         bundle.putString("", arg);
@@ -109,20 +128,72 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     }
 
     @Override
-    protected void initViewsAndEvents(View view) {
+    protected void initViewsAndEvents(View view) {//2
         init(view);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {//3
+        super.onActivityCreated(savedInstanceState);
+        context = getActivity();
+        View headView = View.inflate(this.getActivity(), R.layout.discover_header_view, null);//头部
+        initHeadView(headView);
+        if (pullListView.getRefreshableView().getHeaderViewsCount() == 0) {
+            pullListView.getRefreshableView().addHeaderView(headView);
+        }
+    }
+
+    //todo 头部
+    private void initHeadView(View headView) {
+        bannerView = (BannerView) headView.findViewById(R.id.banner_view);
+
+
+        //获取RecyclerView实例
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(
+                this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
+
+        mRVClassifyAll = (RecyclerView) headView.findViewById(R.id.discover_head_rv_classify);//条目
+        mRVClassifyAll.setLayoutManager(linearLayoutManager1);
+        remenAdapter = new DiscoverClassifyTopAdapter(this.getActivity(), classifyList);
+        mRVClassifyAll.setAdapter(remenAdapter);
+        onRecyclerViewItemClick(mRVClassifyAll, 1);
+
+        mTvIv_everyday_discover_Rv = (RecyclerView) headView.findViewById(R.id.everyday_discover_recyclerview);
+
+        for (int i = 0; i < 10; i++) {
+            urlList.add(R.drawable.ic_def_logo_480_228);
+        }
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
+                this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        mTvIv_everyday_discover_Rv.setLayoutManager(linearLayoutManager2);
+        mTvIvAdapter = new DiscoverTvIvAdapter(this.getActivity(), urlList);
+        mTvIv_everyday_discover_Rv.setAdapter(mTvIvAdapter);
+
+        gridView_maoxian = (GridView) headView.findViewById(R.id.gridView_maoxian);
+        gridView_dongzuo = (GridView) headView.findViewById(R.id.gridView_dongzuo);
+        gridView_jiaose = (GridView) headView.findViewById(R.id.gridView_jiaose);
+        gridView_xiuxian = (GridView) headView.findViewById(R.id.gridView_xiuxian);
+        gridView_saiche = (GridView) headView.findViewById(R.id.gridView_saiche);
+        gridView_tiyu = (GridView) headView.findViewById(R.id.gridView_tiyu);
+
+        /* clickGradView(mRvEverydayDiscover, 2);
+        clickGradView(gridView_maoxian, 3);
+        clickGradView(gridView_dongzuo, 4);
+        clickGradView(gridView_jiaose, 5);
+        clickGradView(gridView_xiuxian, 6);
+        clickGradView(gridView_saiche, 7);
+        clickGradView(gridView_tiyu, 8);*/
     }
 
     private void init(View view) {
         pullListView = (PullToRefreshListView) view.findViewById(R.id.pullListView);
-
         pullListView.setPullLoadEnabled(false); //false,不允许上拉加载
         pullListView.setScrollLoadEnabled(false);
         pullListView.setLastUpdatedLabel(new Date().toLocaleString());
         pullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                getGameList();
+                //getGameList();
             }
 
             @Override
@@ -130,22 +201,22 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
 
             }
         });
-        //添加头布局
-        View headView = View.inflate(getActivity(), R.layout.discover_header_view, null);
-        initHeadView(headView);
-        //头布局放入listView中
-        if (pullListView.getRefreshableView().getHeaderViewsCount() == 0) {
-            pullListView.getRefreshableView().addHeaderView(headView);
-        }
+
+
+        //onRecyclerViewItemClick(mRVClassifyAll, 1);
         List<String> list = new ArrayList<>();
         list.add(new String("测试"));
         list.add(new String("测试2"));
-        HomeRaiderAdapter adapter = new HomeRaiderAdapter(getActivity(), list, "0");
+        HomeRaiderAdapter adapter = new HomeRaiderAdapter(context, list, "0");
         pullListView.getRefreshableView().setAdapter(adapter);
 
-        getGameList();
+        //getGameList();
         getBannerData();
+        ClassifiHomeBean result = new ClassifiHomeBean();
+
+        //listData(result);
     }
+
     /**
      * 获取轮播图片数据
      */
@@ -161,7 +232,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                 }
 
                 if (result.code == 0) {
-
                     List<ImageView> list = createBannerView(result.data);
                     bannerView.setData(list);
 
@@ -193,6 +263,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         };
         StoreApplication.requestQueue.add(request);
     }
+
     /**
      * 创建轮播视图
      */
@@ -206,8 +277,9 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         for (int i = 0; i < hotInfoList.size(); i++) {
 
             final HotInfo info = hotInfoList.get(i);
-            PicassoImageView img = new PicassoImageView(getActivity());
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            PicassoImageView img = new PicassoImageView(context);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
+                    .LayoutParams.MATCH_PARENT);
             img.setLayoutParams(params);
             img.setId((int) info.id);
             img.setTag(info.advImageLink);
@@ -222,11 +294,11 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                 @Override
                 public void onClick(View v) {
                     if (info.type == 1) {
-                        Intent intent = new Intent(getActivity(), GameDetailActivity.class);
+                        Intent intent = new Intent(context, GameDetailActivity.class);
                         intent.putExtra("id", info.gameId);
                         startActivity(intent);
                     } else if (info.type == 2) {
-                        Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
+                        Intent intent = new Intent(context, VideoDetailActivity.class);
                         intent.putExtra("id", info.videoId);
                         startActivity(intent);
                     }
@@ -236,33 +308,15 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         }
         return list;
     }
-    private void initHeadView(View headView) {
-        iv_vr = (ImageView) headView.findViewById(R.id.iv_vr);
-        iv_stand_alone = (ImageView) headView.findViewById(R.id.iv_stand_alone);
-        iv_boy = (ImageView) headView.findViewById(R.id.iv_boy);
-        iv_girl = (ImageView) headView.findViewById(R.id.iv_girl);
-        gridView_remen = (GridView) headView.findViewById(R.id.gridView_remen);
-        gridView_qiangzhan = (GridView) headView.findViewById(R.id.gridView_qiangzhan);
-        gridView_maoxian = (GridView) headView.findViewById(R.id.gridView_maoxian);
-        gridView_dongzuo = (GridView) headView.findViewById(R.id.gridView_dongzuo);
-        gridView_jiaose = (GridView) headView.findViewById(R.id.gridView_jiaose);
-        gridView_xiuxian = (GridView) headView.findViewById(R.id.gridView_xiuxian);
-        gridView_saiche = (GridView) headView.findViewById(R.id.gridView_saiche);
-        gridView_tiyu = (GridView) headView.findViewById(R.id.gridView_tiyu);
-        iv_vr.setOnClickListener(this);
-        iv_stand_alone.setOnClickListener(this);
-        iv_boy.setOnClickListener(this);
-        iv_girl.setOnClickListener(this);
-        clickGradView(gridView_remen, 1);
-        clickGradView(gridView_qiangzhan, 2);
-        clickGradView(gridView_maoxian, 3);
-        clickGradView(gridView_dongzuo, 4);
-        clickGradView(gridView_jiaose, 5);
-        clickGradView(gridView_xiuxian, 6);
-        clickGradView(gridView_saiche, 7);
-        clickGradView(gridView_tiyu, 8);
 
-        bannerView = (BannerView) headView.findViewById(banner_view);
+    private void onRecyclerViewItemClick(RecyclerView recyclerView, int i) {
+        remenAdapter.setmOnItemClickListener(new DiscoverClassifyTopAdapter.OnItemClickLitener() {
+
+            @Override
+            public void onItemClick(View view, int position, String text) {
+                ToastUtil.show(context, text);
+            }
+        });
     }
 
     //传游戏列表id，不传lab查询id
@@ -270,7 +324,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent1 = new Intent(getActivity(), SBGameActivity.class);
+                Intent intent1 = new Intent(context, SBGameActivity.class);
                 switch (i) {
                     case 1:
                         if (position < remenList.size()) {
@@ -306,6 +360,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                         break;
                     case 5:
                         if (position < jiaoseList.size()) {
+                            // TODO: 2017/7/20 0020
                             intent1.putExtra("tagPosition", jiaoseList.get(position).getId());
                             intent1.putExtra("title", "角色扮演");
                             intent1.putExtra("labName", jiaoseList.get(position).getTypeName());
@@ -344,7 +399,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private void getGameList() {
         YunduanBodyBean bodyBean = new YunduanBodyBean();
         bodyBean.setMarkId(SUB_TYPE_ID);
-        new ClassifiHomeClient(getActivity(), bodyBean).observable()
+        new ClassifiHomeClient(context, bodyBean).observable()
 //                .compose(this.<DiscountListBean>bindToLifecycle())
                 .subscribe(new ObserverWrapper<ClassifiHomeBean>() {
                     @Override
@@ -355,7 +410,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                     @Override
                     public void onNext(ClassifiHomeBean result) {
                         if (result != null && result.getCode() == 0) {
-                            listData(result);
+                            //listData(result);
                         } else {
 //                            ToastUtil.show(getActivity(), result.getMsg());
                         }
@@ -363,56 +418,60 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                 });
     }
 
+    //// TODO: 2017/7/20 0020  设置横着的列表数据
     private void listData(ClassifiHomeBean result) {
         if (result.getData() == null) {
             return;
         }
+
         if (result.getData().getOnlineList().size() > 0) {
-            remenList.clear();
-            remenList.addAll(result.getData().getOnlineList());
-            remenAdapter = new ClassifiRemenAdapter(getActivity(), remenList);
-            gridView_remen.setAdapter(remenAdapter);
+            urlList.clear();
+            //urlList.addAll();
+            //remenList.addAll(result.getData().getOnlineList());
+            //每日新发现
+            remenAdapter = new DiscoverClassifyTopAdapter(context, classifyList);
+            mRVClassifyAll.setAdapter(remenAdapter);
         }
         if (result.getData().getGunFireList().size() > 0) {
             qiangzhanList.clear();
             qiangzhanList.addAll(result.getData().getGunFireList());
-            qiangzhanAdapter = new ClassifiQiangzhanAdapter(getActivity(), qiangzhanList);
-            gridView_qiangzhan.setAdapter(qiangzhanAdapter);
+            //qiangzhanAdapter = new ClassifiQiangzhanAdapter(context, qiangzhanList);
+            // mRvEverydayDiscover.setAdapter(qiangzhanAdapter);
         }
         if (result.getData().getParkourList().size() > 0) {
             maoxianList.clear();
             maoxianList.addAll(result.getData().getParkourList());
-            maoxianAdapter = new ClassifiMaoxianAdapter(getActivity(), maoxianList);
+            maoxianAdapter = new ClassifiMaoxianAdapter(context, maoxianList);
             gridView_maoxian.setAdapter(maoxianAdapter);
         }
         if (result.getData().getCombatList().size() > 0) {
             dongzuoList.clear();
             dongzuoList.addAll(result.getData().getCombatList());
-            dongzuoAdapter = new ClassifiDongzuoAdapter(getActivity(), dongzuoList);
+            dongzuoAdapter = new ClassifiDongzuoAdapter(context, dongzuoList);
             gridView_dongzuo.setAdapter(dongzuoAdapter);
         }
         if (result.getData().getRoleList().size() > 0) {
             jiaoseList.clear();
             jiaoseList.addAll(result.getData().getRoleList());
-            jiaoseAdapter = new ClassifiJiaoseAdapter(getActivity(), jiaoseList);
+            jiaoseAdapter = new ClassifiJiaoseAdapter(context, jiaoseList);
             gridView_jiaose.setAdapter(jiaoseAdapter);
         }
         if (result.getData().getPuzzleList().size() > 0) {
             xiuxianList.clear();
             xiuxianList.addAll(result.getData().getPuzzleList());
-            xiuxianAdapter = new ClassifiXiuxianAdapter(getActivity(), xiuxianList);
+            xiuxianAdapter = new ClassifiXiuxianAdapter(context, xiuxianList);
             gridView_xiuxian.setAdapter(xiuxianAdapter);
         }
         if (result.getData().getRaceList().size() > 0) {
             saicheList.clear();
             saicheList.addAll(result.getData().getRaceList());
-            saicheAdapter = new ClassifiSaicheAdapter(getActivity(), saicheList);
+            saicheAdapter = new ClassifiSaicheAdapter(context, saicheList);
             gridView_saiche.setAdapter(saicheAdapter);
         }
         if (result.getData().getSportList().size() > 0) {
             tiyuList.clear();
             tiyuList.addAll(result.getData().getSportList());
-            tiyuAdapter = new ClassifiTiyuAdapter(getActivity(), tiyuList);
+            tiyuAdapter = new ClassifiTiyuAdapter(context, tiyuList);
             gridView_tiyu.setAdapter(tiyuAdapter);
         }
         pullListView.onPullUpRefreshComplete();
@@ -423,31 +482,31 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_vr:
-                Intent intent1 = new Intent(getActivity(), SBGameActivity.class);
+         /*   case R.id.iv_vr:
+                Intent intent1 = new Intent(context, SBGameActivity.class);
                 intent1.putExtra("title", "VR游戏");
                 intent1.putExtra("markId", SUB_TYPE_ID_VR);
                 intent1.putExtra("isVr", 1);
                 startActivity(intent1);
-                break;
-            case R.id.iv_stand_alone:
+                break;*/
+           /* case iv_stand_alone:
                 Intent intent2 = new Intent(getActivity(), SBGameActivity.class);
                 intent2.putExtra("title", "精品单机");
                 intent2.putExtra("markId", SUB_TYPE_ID_STADN);
                 startActivity(intent2);
-                break;
-            case R.id.iv_boy:
-                Intent intent3 = new Intent(getActivity(), SBGameActivity.class);
+                break;*/
+         /*   case iv_boy:
+                Intent intent3 = new Intent(context, SBGameActivity.class);
                 intent3.putExtra("title", "男生最爱");
                 intent3.putExtra("markId", SUB_TYPE_ID_BOY);
                 startActivity(intent3);
-                break;
-            case R.id.iv_girl:
-                Intent intent4 = new Intent(getActivity(), SBGameActivity.class);
+                break;*/
+          /*  case R.id.iv_girl:
+                Intent intent4 = new Intent(context, SBGameActivity.class);
                 intent4.putExtra("title", "女生最爱");
                 intent4.putExtra("markId", SUB_TYPE_ID_GIRL);
                 startActivity(intent4);
-                break;
+                break;*/
         }
     }
 

@@ -277,8 +277,6 @@ public class UserCenterActivity extends BaseFgActivity {
             File file = new File(path);
             imgStrPost = ImageUtil.getImageStr(file);
             IMG_TYPE = "1";
-
-            editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true).commit();
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -297,6 +295,7 @@ public class UserCenterActivity extends BaseFgActivity {
 
                             editor.putString(Constant.CONFIG_USER_HEAD, user.headPhoto);
                             editor.putString(Constant.CONFIG_NICK_NAME, nickName);
+                            editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
                             editor.apply();
                             StoreApplication.userHeadUrl = user.headPhoto;
                             StoreApplication.nickName = nickName;
@@ -360,6 +359,7 @@ public class UserCenterActivity extends BaseFgActivity {
         SharedPreferences preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constant.CONFIG_USER_PWD, "");
+        editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
         editor.apply();
 
         StoreApplication.userHeadUrl = "";

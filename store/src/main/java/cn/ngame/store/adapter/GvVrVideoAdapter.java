@@ -17,9 +17,6 @@
 package cn.ngame.store.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +29,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import cn.ngame.store.R;
 import cn.ngame.store.bean.VideoInfo;
@@ -175,8 +171,8 @@ public class GvVrVideoAdapter extends BaseAdapter {
 
             Picasso.with(context)
                     .load(videoInfo.videoImageLink)
-                    .placeholder(R.drawable.default_video)
-                    .error(R.drawable.default_video)
+                    .placeholder(R.drawable.ic_def_logo_412_200)
+                    .error(R.drawable.ic_def_logo_412_200)
                     //.resizeDimen(R.dimen.list_detail_image_size, R.dimen.recycle_detail_image_size)
                     .resize(700,950)
                     .centerCrop()

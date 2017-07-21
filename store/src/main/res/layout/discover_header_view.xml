@@ -3,7 +3,7 @@
               xmlns:custom="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/gray"
+              android:background="@color/white"
               android:orientation="vertical"
               android:scrollbars="none">
 
@@ -11,7 +11,7 @@
         android:id="@+id/banner_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/banner_image_height_discover"
-        android:background="@drawable/banner_default"
+        android:background="@drawable/ic_def_logo_750_300"
         android:clickable="true"
         custom:auto_scroll="true"
         custom:current_item="0"
@@ -20,113 +20,59 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="20dp">
+        android:background="@color/bg_f5"
+        android:paddingBottom="@dimen/dp_20"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_20"
+        >
 
-        <RelativeLayout
-            android:layout_width="0dp"
+        <ImageView
+            android:id="@+id/discover_top_classify_all_bt"
+            android:layout_width="@dimen/dp_36"
+            android:layout_height="@dimen/dp_36"
+            android:layout_marginRight="@dimen/dp_20"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_discover_classify_all_bt"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/discover_head_rv_classify"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_centerVertical="true"
+            android:scrollbars="none"
+            />
 
-            <ImageView
-                android:id="@+id/iv_vr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_weight="0"
-                android:background="@drawable/classifi_vr_game"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <ImageView
-                android:id="@+id/iv_stand_alone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_weight="0"
-                android:background="@drawable/classifi_danji"/>
-        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_20"
+        >
 
-        <RelativeLayout
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/discover_tv_iv_left_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_marginLeft="@dimen/dp_20"
+            android:scaleType="centerInside"
+            android:text="每日新发现"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp_16"/>
 
-            <ImageView
-                android:id="@+id/iv_boy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_weight="0"
-                android:background="@drawable/classifi_boy"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <ImageView
-                android:id="@+id/iv_girl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_weight="0"
-                android:background="@drawable/classifi_girl"/>
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:background="@color/gray">
-
-        <LinearLayout
-            android:layout_width="93dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/classifi_remen"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="热门网游"
-                android:textColor="@color/font_black_3"
-                android:textSize="13sp"/>
-        </LinearLayout>
-
-        <GridView
-            android:id="@+id/gridView_remen"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/everyday_discover_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="1dp"
-            android:background="@color/gray"
-            android:horizontalSpacing="1dp"
-            android:numColumns="3"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dp_20"
+            android:paddingLeft="@dimen/dp_20"
             android:scrollbars="none"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp"/>
+            />
+
     </LinearLayout>
 
     <LinearLayout
