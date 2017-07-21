@@ -358,6 +358,7 @@ public class RecommendFragment extends BaseSearchFragment {
                     //上拉请求数据
                     getGameList();
                 } else {
+                    ToastUtil.show(context, "没有更多数据了哦!");
                     pullListView.setHasMoreData(false);
                     pullListView.onPullUpRefreshComplete();
                 }

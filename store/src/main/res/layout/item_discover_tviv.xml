@@ -11,8 +11,9 @@
         android:id="@+id/tviv_item_iv"
         android:layout_width="@dimen/dp_94"
         android:layout_height="@dimen/dp_94"
+        android:scaleType="fitXY"
         fresco:actualImageScaleType="fitXY"
-        fresco:progressBarImage="@drawable/ic_icon_title"
+        fresco:progressBarImage="@drawable/ic_def_logo_188_188"
         fresco:roundedCornerRadius="@dimen/dp_20"/>
 
     <TextView

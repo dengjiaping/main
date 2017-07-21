@@ -12,7 +12,7 @@ public class JsonResult<T> implements Serializable{
     public String msg;
     public T data;
     public Object map;
-    //public String innerResult;
+    public String innerResult;
     public int page;
     public int pageSize;
     public int totals;

@@ -400,6 +400,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             imageLoader.displayImage(userHeadUrl, mSmIconIv, this.roundOptions);
             mIconIv.setPadding(0, 0, 0, 0);
             mSmNicknameTv.setText(StoreApplication.nickName);
+            mEditProfileTv.setVisibility(View.VISIBLE);
         } else {
             imageLoader.displayImage("", mIconIv, roundOptions);
             imageLoader.displayImage("", mSmIconIv, roundOptions);

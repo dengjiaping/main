@@ -130,14 +130,14 @@ public class RecommendListAdapter extends BaseAdapter {
         public void update(final RecommendListBean.DataBean gameInfo, int type, int position) {
             this.gameInfo = gameInfo;
             String imgUrl = gameInfo.getGameLogo();
+            String fromUrl = gameInfo.getGameRecommendImg();
             if (imgUrl != null && imgUrl.trim().equals("")) {
                 imgUrl = null;
             }
-            Picasso with = Picasso.with(context);
             int screenWidth = ImageUtil.getScreenWidth((Activity) context);
-            with.load(imgUrl)
-                    .resizeDimen(R.dimen.recommend_item_from_pic, R.dimen.recommend_item_from_pic).tag(context).into(img);
-            with.load(imgUrl).placeholder(R.drawable.ic_def_logo_750_300).error(R.drawable.ic_def_logo_750_300)
+            img.setImageURI(fromUrl);
+            Picasso.with(context).load(imgUrl).placeholder(R.drawable.ic_def_logo_750_300)
+                    .error(R.drawable.ic_def_logo_750_300)
                     //.resize(screenWidth,150)
                     .into(recommend_game_pic);
 

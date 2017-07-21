@@ -7,14 +7,17 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +48,7 @@ import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.exception.NoSDCardException;
+import cn.ngame.store.fragment.SimpleDialogFragment;
 import cn.ngame.store.util.ToastUtil;
 
 
@@ -206,7 +210,9 @@ public class UserCenterActivity extends BaseFgActivity {
             @Override
             public void onClick(View v) {
                 dialog.cancel();
-                logout();
+                logoutClearData();
+                startActivity(new Intent(content, LoginActivity.class));
+                content.finish();
             }
         });
         inflate.findViewById(R.id.logout_cancel_bt).setOnClickListener(new View.OnClickListener() {
@@ -290,20 +296,29 @@ public class UserCenterActivity extends BaseFgActivity {
                 new Response.Listener<JsonResult<User>>() {
                     @Override
                     public void onResponse(JsonResult<User> result) {
-                        if (result.code == 0) {
+                        int code = result.code;
+                        if (code == 0) {
                             User user = result.data;
-
+                            editor.putString(Constant.CONFIG_TOKEN, user.token);
                             editor.putString(Constant.CONFIG_USER_HEAD, user.headPhoto);
                             editor.putString(Constant.CONFIG_NICK_NAME, nickName);
                             editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
+                            editor.putString(Constant.CONFIG_USER_CODE, user.userCode);//userCode
                             editor.apply();
+
+                            StoreApplication.token = user.token;
                             StoreApplication.userHeadUrl = user.headPhoto;
                             StoreApplication.nickName = nickName;
-                            //Toast.makeText(UserCenterActivity.this, "资料修改成功！", Toast.LENGTH_SHORT).show();
+                            StoreApplication.userCode = user.userCode;
                             UserCenterActivity.this.finish();
+                        } else if (code >= -4 && code <= -1) {
+                            showReLoginDialog();
+                            //需要重新登录
+                            logoutClearData();
+                            //UserCenterActivity.this.finish();
                         } else {
                             Toast.makeText(UserCenterActivity.this, "修改失败！", Toast.LENGTH_SHORT).show();
-                            Log.d(TAG, "HTTP请求成功：修改失败！" + result.code + result.msg);
+                            Log.d(TAG, "HTTP请求成功：修改失败！" + code + result.msg);
                         }
                         //隐藏提示框
                         DialogHelper.hideWaiting(getSupportFragmentManager());
@@ -345,6 +360,40 @@ public class UserCenterActivity extends BaseFgActivity {
         StoreApplication.requestQueue.add(versionRequest);
     }
 
+    /**
+     * 显示注册结果对话框
+     */
+    private void showReLoginDialog() {
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+        final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
+        dialogFragment.setTitle("提示");
+        dialogFragment.setDialogWidth(250);
+
+        TextView tv = new TextView(content);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
+                .LayoutParams.MATCH_PARENT);
+        params.setMargins(0, 20, 0, 0);
+        params.gravity = Gravity.CENTER;
+        tv.setLayoutParams(params);
+        tv.setGravity(Gravity.CENTER);
+        tv.setText("登录信息已失效");
+        tv.setTextColor(getResources().getColor(R.color.black));
+        dialogFragment.setContentView(tv);
+
+        dialogFragment.setNegativeButton("重新登录", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogFragment.dismiss();
+                Intent intent = new Intent(content, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        dialogFragment.show(ft, "successDialog");
+    }
+
     ImageLoader imageLoader = ImageLoader.getInstance();
 
     /**
@@ -355,7 +404,7 @@ public class UserCenterActivity extends BaseFgActivity {
     }
 
     //退出登录
-    private void logout() {
+    private void logoutClearData() {
         SharedPreferences preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constant.CONFIG_USER_PWD, "");
@@ -364,13 +413,11 @@ public class UserCenterActivity extends BaseFgActivity {
 
         StoreApplication.userHeadUrl = "";
         StoreApplication.nickName = "";
+        StoreApplication.userCode = "";
         StoreApplication.userName = "";
         StoreApplication.passWord = "";
         StoreApplication.token = null;
         StoreApplication.user = null;
-
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
     }
 
 

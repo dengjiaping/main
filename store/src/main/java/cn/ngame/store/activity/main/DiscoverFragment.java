@@ -161,7 +161,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         mTvIv_everyday_discover_Rv = (RecyclerView) headView.findViewById(R.id.everyday_discover_recyclerview);
 
         for (int i = 0; i < 10; i++) {
-            urlList.add(R.drawable.ic_def_logo_480_228);
+            urlList.add(R.drawable.ic_def_logo_188_188);
         }
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
                 this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
