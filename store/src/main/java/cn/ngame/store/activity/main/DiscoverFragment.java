@@ -33,6 +33,8 @@ import java.util.Map;
 
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
+import cn.ngame.store.activity.sm.JoypadSettingsActivity;
+import cn.ngame.store.activity.sm.ManagerSettingsActivity;
 import cn.ngame.store.adapter.ClassifiDongzuoAdapter;
 import cn.ngame.store.adapter.ClassifiJiaoseAdapter;
 import cn.ngame.store.adapter.ClassifiMaoxianAdapter;
@@ -40,9 +42,9 @@ import cn.ngame.store.adapter.ClassifiQiangzhanAdapter;
 import cn.ngame.store.adapter.ClassifiSaicheAdapter;
 import cn.ngame.store.adapter.ClassifiTiyuAdapter;
 import cn.ngame.store.adapter.ClassifiXiuxianAdapter;
-import cn.ngame.store.adapter.DiscoverClassifyTopAdapter;
-import cn.ngame.store.adapter.DiscoverTvIvAdapter;
 import cn.ngame.store.adapter.HomeRaiderAdapter;
+import cn.ngame.store.adapter.discover.DiscoverClassifyTopAdapter;
+import cn.ngame.store.adapter.discover.DiscoverTvIvAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.HotInfo;
 import cn.ngame.store.bean.JsonResult;
@@ -55,6 +57,7 @@ import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.video.view.VideoDetailActivity;
 import cn.ngame.store.view.BannerView;
 import cn.ngame.store.view.PicassoImageView;
+import cn.ngame.store.view.RecyclerViewDivider;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 
@@ -105,7 +108,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     List<ClassifiHomeBean.DataBean.SportListBean> tiyuList = new ArrayList<>();
     private BannerView bannerView;
     private List<String> classifyList = new ArrayList<>(Arrays.asList("角色", "动作", "原生", "策略", "模拟", "VR", "枪战", "体育", "格斗"));
-    private List<Integer> urlList = new ArrayList();
+    private List<String> m2EverydayDiscoverList = new ArrayList();
     private DiscoverTvIvAdapter mTvIvAdapter;
     private RecyclerView mTvIv_everyday_discover_Rv;
 
@@ -137,37 +140,53 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         super.onActivityCreated(savedInstanceState);
         context = getActivity();
         View headView = View.inflate(this.getActivity(), R.layout.discover_header_view, null);//头部
-        initHeadView(headView);
+        //分类
+        init1ClassifyView(headView);
+        //每日新发现
+        init2EverydayDiscoverView(headView);
+
+        //添加头部
         if (pullListView.getRefreshableView().getHeaderViewsCount() == 0) {
             pullListView.getRefreshableView().addHeaderView(headView);
         }
+
+        setOnMoreBtClickListener(headView, R.id.everyday_more_tv1);
     }
 
-    //todo 头部
-    private void initHeadView(View headView) {
+    //分类
+    private void init1ClassifyView(View headView) {
         bannerView = (BannerView) headView.findViewById(R.id.banner_view);
-
-
         //获取RecyclerView实例
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(
-                this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
+                context, LinearLayoutManager.HORIZONTAL, false);
 
         mRVClassifyAll = (RecyclerView) headView.findViewById(R.id.discover_head_rv_classify);//条目
         mRVClassifyAll.setLayoutManager(linearLayoutManager1);
         remenAdapter = new DiscoverClassifyTopAdapter(this.getActivity(), classifyList);
         mRVClassifyAll.setAdapter(remenAdapter);
-        onRecyclerViewItemClick(mRVClassifyAll, 1);
+        remenAdapter.setmOnItemClickListener(new DiscoverClassifyTopAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position, String text) {
+                ToastUtil.show(context, text);
+            }
+        });
+    }
 
-        mTvIv_everyday_discover_Rv = (RecyclerView) headView.findViewById(R.id.everyday_discover_recyclerview);
-
+    //每日新发现
+    private void init2EverydayDiscoverView(View headView) {
         for (int i = 0; i < 10; i++) {
-            urlList.add(R.drawable.ic_def_logo_188_188);
+            m2EverydayDiscoverList.add("http://oss.ngame.cn/upload/userHead/1500626608632.png");
         }
+        mTvIv_everyday_discover_Rv = (RecyclerView) headView.findViewById(R.id.everyday_discover_recyclerview);
+        headView.findViewById(R.id.everyday_more_tv1);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
                 this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mTvIv_everyday_discover_Rv.setLayoutManager(linearLayoutManager2);
-        mTvIvAdapter = new DiscoverTvIvAdapter(this.getActivity(), urlList);
+        mTvIvAdapter = new DiscoverTvIvAdapter(this.getActivity(), m2EverydayDiscoverList);
         mTvIv_everyday_discover_Rv.setAdapter(mTvIvAdapter);
+        mTvIv_everyday_discover_Rv.addItemDecoration(new RecyclerViewDivider(context,
+                20, 18, m2EverydayDiscoverList.size()));
+
 
         gridView_maoxian = (GridView) headView.findViewById(R.id.gridView_maoxian);
         gridView_dongzuo = (GridView) headView.findViewById(R.id.gridView_dongzuo);
@@ -176,14 +195,27 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         gridView_saiche = (GridView) headView.findViewById(R.id.gridView_saiche);
         gridView_tiyu = (GridView) headView.findViewById(R.id.gridView_tiyu);
 
-        /* clickGradView(mRvEverydayDiscover, 2);
-        clickGradView(gridView_maoxian, 3);
-        clickGradView(gridView_dongzuo, 4);
-        clickGradView(gridView_jiaose, 5);
-        clickGradView(gridView_xiuxian, 6);
-        clickGradView(gridView_saiche, 7);
-        clickGradView(gridView_tiyu, 8);*/
     }
+    //更多按钮设置点击监听
+    private void setOnMoreBtClickListener(View headView, int moreBtId) {
+        headView.findViewById(moreBtId).setOnClickListener(mMoreBtClickListener);
+    }
+
+    //查看更多 按钮点击
+    View.OnClickListener mMoreBtClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int id = v.getId();
+            if (id == R.id.everyday_more_tv1) {//每日新发现
+                ToastUtil.show(context, "每日新发现");
+            } else if (id == R.id.sm_system_settings) {//系统设置
+                Intent setIntent = new Intent(context, ManagerSettingsActivity.class);
+                startActivity(setIntent);
+            } else if (id == R.id.sm_joypad_settings) {//手柄设置
+                startActivity(new Intent(context, JoypadSettingsActivity.class));
+            }
+        }
+    };
 
     private void init(View view) {
         pullListView = (PullToRefreshListView) view.findViewById(R.id.pullListView);
@@ -309,16 +341,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         return list;
     }
 
-    private void onRecyclerViewItemClick(RecyclerView recyclerView, int i) {
-        remenAdapter.setmOnItemClickListener(new DiscoverClassifyTopAdapter.OnItemClickLitener() {
-
-            @Override
-            public void onItemClick(View view, int position, String text) {
-                ToastUtil.show(context, text);
-            }
-        });
-    }
-
     //传游戏列表id，不传lab查询id
     public void clickGradView(GridView gridView, final int i) {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -425,8 +447,8 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         }
 
         if (result.getData().getOnlineList().size() > 0) {
-            urlList.clear();
-            //urlList.addAll();
+            m2EverydayDiscoverList.clear();
+            //m2EverydayDiscoverList.addAll();
             //remenList.addAll(result.getData().getOnlineList());
             //每日新发现
             remenAdapter = new DiscoverClassifyTopAdapter(context, classifyList);

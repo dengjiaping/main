@@ -5,12 +5,12 @@
     >
     <TextView
         android:id="@+id/singer_item_tv"
-        android:layout_width="@dimen/discover_classify_iten_width"
-        android:layout_height="@dimen/discover_classify_iten_hight"
-        android:background="@drawable/shape_discover_classify_rv_item_bg_nomal"
+        android:layout_width="@dimen/discover_classify_item_width"
+        android:layout_height="@dimen/discover_classify_item_hight"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="@drawable/selector_classify_top_bt"
         android:gravity="center"
         android:text="分类"
-        android:layout_marginRight="@dimen/dp_20"
         android:textColor="@color/white"
         android:textSize="@dimen/dp_14"/>
 </LinearLayout>

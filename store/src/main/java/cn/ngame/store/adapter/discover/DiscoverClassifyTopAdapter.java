@@ -1,5 +1,5 @@
 
-package cn.ngame.store.adapter;
+package cn.ngame.store.adapter.discover;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

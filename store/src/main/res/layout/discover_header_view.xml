@@ -28,8 +28,8 @@
 
         <ImageView
             android:id="@+id/discover_top_classify_all_bt"
-            android:layout_width="@dimen/dp_36"
-            android:layout_height="@dimen/dp_36"
+            android:layout_width="@dimen/dp_33"
+            android:layout_height="@dimen/dp_33"
             android:layout_marginRight="@dimen/dp_20"
             android:scaleType="centerInside"
             android:src="@drawable/ic_discover_classify_all_bt"/>
@@ -44,7 +44,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -54,7 +54,7 @@
         >
 
         <TextView
-            android:id="@+id/discover_tv_iv_left_title"
+            android:id="@+id/discover_tviv_left_title_tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_20"
@@ -63,17 +63,28 @@
             android:textColor="@color/black"
             android:textSize="@dimen/dp_16"/>
 
+        <TextView
+            android:id="@+id/everyday_more_tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_20"
+            android:text="查看更多"
+            android:layout_alignBottom="@id/discover_tviv_left_title_tv1"
+            android:textColor="@color/font_18b9fe"
+            android:textSize="@dimen/dp_12"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/everyday_discover_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/discover_tviv_left_title_tv1"
             android:layout_centerVertical="true"
             android:layout_marginTop="@dimen/dp_20"
-            android:paddingLeft="@dimen/dp_20"
             android:scrollbars="none"
             />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
