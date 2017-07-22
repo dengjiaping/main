@@ -79,5 +79,8 @@
     <dimen name="dp_subject_iv_height">104dp</dimen>
     <dimen name="dp_subject_iv_corner_8dp">8dp</dimen>
     <dimen name="dp_49">49dp</dimen>
+    <dimen name="download_progressbar_width">48dp</dimen>
+    <dimen name="download_progressbar_height">26dp</dimen>
+    <dimen name="download_progressbar_textsize">14dp</dimen>
 
 </resources>

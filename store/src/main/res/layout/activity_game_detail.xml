@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ngame="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray"
-    android:orientation="vertical">
+              xmlns:ngame="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/gray"
+              android:orientation="vertical">
 
     <cn.ngame.store.view.SimpleTitleBar
         android:id="@+id/title_bar"
@@ -17,7 +17,7 @@
         ngame:left_text_size="@dimen/title_size"
         ngame:left_tv_visable="false"
         ngame:right_but="@drawable/search_title"
-        ngame:right_but_visable="true" />
+        ngame:right_but_visable="true"/>
 
 
     <RelativeLayout
@@ -33,7 +33,7 @@
             android:layout_height="70dp"
             android:layout_centerVertical="true"
             android:layout_margin="10dp"
-            android:src="@drawable/default_logo" />
+            android:src="@drawable/default_logo"/>
 
         <TextView
             android:id="@+id/tv_title"
@@ -47,7 +47,7 @@
             android:singleLine="true"
             android:text=""
             android:textColor="@color/font_333"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <RatingBar
             android:id="@+id/rating_bar"
@@ -59,7 +59,7 @@
             android:layout_toRightOf="@+id/img_1"
             android:isIndicator="true"
             android:numStars="5"
-            android:rating="0" />
+            android:rating="0"/>
 
         <TextView
             android:id="@+id/text5"
@@ -71,7 +71,7 @@
             android:layout_toRightOf="@+id/rating_bar"
             android:text="0分"
             android:textColor="@color/font_black_9"
-            android:textSize="12sp" />
+            android:textSize="12sp"/>
 
         <TableLayout
             android:layout_width="wrap_content"
@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:text="下载："
                     android:textColor="@color/font_black_9"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/text1"
@@ -96,14 +96,14 @@
                     android:lines="1"
                     android:text="0次"
                     android:textColor="@color/font_black_9"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="操作："
                     android:textColor="@color/font_black_9"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/text4"
@@ -112,7 +112,7 @@
                     android:lines="1"
                     android:text=""
                     android:textColor="@color/font_black_9"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
             </TableRow>
 
@@ -123,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:text="大小："
                     android:textColor="@color/font_black_9"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/text2"
@@ -132,14 +132,14 @@
                     android:lines="1"
                     android:text="0k"
                     android:textColor="@color/font_black_9"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="类型："
                     android:textColor="@color/font_black_9"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/text3"
@@ -148,7 +148,7 @@
                     android:lines="1"
                     android:text=""
                     android:textColor="@color/font_black_9"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
             </TableRow>
 
@@ -156,17 +156,16 @@
 
         <cn.ngame.store.view.GameLoadProgressBar
             android:id="@+id/progress_bar"
-            android:layout_width="60dp"
-            android:layout_height="27dp"
+            android:layout_width="48dp"
+            android:layout_height="26dp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="@dimen/dp_20"
             android:layout_marginTop="30dp"
-            android:background="@color/white"
             android:clickable="true"
             android:text="@string/download"
             android:textColor="@color/white"
-            android:textSize="16sp"
-            ngame:progress="0" />
+            android:textSize="14dp"
+            ngame:progress="0"/>
 
         <!--<View
             android:id="@+id/line1"
@@ -183,11 +182,11 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginTop="5dp"
-        ngame:current_index="0" />
+        ngame:current_index="0"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 </LinearLayout>
 
