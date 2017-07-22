@@ -49,10 +49,11 @@ import cn.ngame.store.bean.HotInfo;
 import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
+import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.view.GameDetailActivity;
+import cn.ngame.store.game.view.GameListActivity;
 import cn.ngame.store.game.view.SBGameActivity;
-import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.video.view.VideoDetailActivity;
 import cn.ngame.store.view.BannerView;
 import cn.ngame.store.view.PicassoImageView;
@@ -195,10 +196,14 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         mRVClassifyAll.setLayoutManager(linearLayoutManager1);
         remenAdapter = new DiscoverClassifyTopAdapter(this.getActivity(), classifyList);
         mRVClassifyAll.setAdapter(remenAdapter);
+        //分类条目点击
         remenAdapter.setmOnItemClickListener(new DiscoverClassifyTopAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position, String text) {
-                ToastUtil.show(context, text);
+                Intent classifyIntent = new Intent(context, GameListActivity.class);
+                classifyIntent.putExtra(KeyConstant.category_Id, 367 + "");//原生手柄 id 367
+                classifyIntent.putExtra(KeyConstant.TITLE, "原生手柄");
+                context.startActivity(classifyIntent);
             }
         });
     }
@@ -209,7 +214,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             mEverydayList.add("http://oss.ngame.cn/upload/userHead/1500626608632.png");
         }
         mEverydayRv = (RecyclerView) headView.findViewById(R.id.everyday_discover_recyclerview);
-        setOnMoreBtClickListener(headView, R.id.rv_hot_recent);
+        setOnMoreBtClickListener(headView, R.id.everyday_more_tv1);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
                 this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mEverydayRv.setLayoutManager(linearLayoutManager2);
@@ -292,18 +297,55 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         @Override
         public void onClick(View v) {
             int id = v.getId();
-            if (id == R.id.everyday_more_tv1) {//每日新发现
-                ToastUtil.show(context, "每日新发现");
-            } else if (id == R.id.more_hot_recent_tv) {//近期最热
-                ToastUtil.show(context, "近期最热");
-            } else if (id == R.id.more_subject_tv) {//专题
-                ToastUtil.show(context, "专题");
-            } else if (id == R.id.more_big_chang_tv) {//专题
-                ToastUtil.show(context, "大厂");
-            } else if (id == R.id.more_action_tv) {//专题
-                ToastUtil.show(context, "动作");
-            } else if (id == R.id.more_strategy_tv) {//专题
-                ToastUtil.show(context, "策略");
+            Intent intent = new Intent();
+            //每日新发现
+            if (id == R.id.everyday_more_tv1) {
+                intent.setClass(context, GameListActivity.class);
+                intent.putExtra(KeyConstant.category_Id, 366 + "");//云端适配id 336
+                intent.putExtra(KeyConstant.TITLE, "每日新发现");
+                context.startActivity(intent);
+                //近期最热
+            } else if (id == R.id.more_hot_recent_tv) {
+                intent.setClass(context, GameListActivity.class);
+                intent.putExtra(KeyConstant.category_Id, 380 + "");//原生手柄 id 336   一周新游 380
+                intent.putExtra(KeyConstant.TITLE, "近期最热");
+                context.startActivity(intent);
+
+                //专题
+            } else if (id == R.id.more_subject_tv) {
+                intent.setClass(context, SelectedTopicsActivity.class);
+                intent.putExtra(KeyConstant.TITLE, "专题");
+                context.startActivity(intent);
+
+                //大厂
+            } else if (id == R.id.more_big_chang_tv) {
+                Intent i = new Intent();
+                i.setClass(context, TopicsDetailActivity.class);
+                i.putExtra(KeyConstant.ID, 368 );// 单机游戏精选 getId()==368   long类型
+                i.putExtra(KeyConstant.TITLE, "单机");//list.get(position).getTypeName()
+                i.putExtra(KeyConstant.DESC, "这是单机游戏精选精选的描述内容 getTypeDesc()");//getTypeDesc()
+                i.putExtra(KeyConstant.URL, "http://oss.ngame.cn/upload/1492742489492.png");//getLogoUrl()
+                startActivity(i);
+                //动作
+            } else if (id == R.id.more_action_tv) {
+                Intent i = new Intent();
+                i.setClass(context, GameListActivity.class);
+                i.putExtra(KeyConstant.ID, 369 + "");// 动作游戏精选 getId()==369
+                i.putExtra(KeyConstant.TITLE, "动作");//list.get(position).getTypeName()
+                startActivity(i);
+                //策略
+            } else if (id == R.id.more_strategy_tv) {
+                intent.setClass(context, GameListActivity.class);
+                intent.putExtra(KeyConstant.category_Id, 368 + "");//单机id 336
+                intent.putExtra(KeyConstant.TITLE, "单机");
+                context.startActivity(intent);
+               /* Intent i = new Intent();
+                i.setClass(context, TopicsDetailActivity.class);
+                i.putExtra(KeyConstant.ID, 368 + "");// 单机游戏精选 getId()==368
+                i.putExtra(KeyConstant.TITLE, "单机");//list.get(position).getTypeName()
+                i.putExtra(KeyConstant.DESC, "这是单机游戏精选精选的描述内容 getTypeDesc()");//getTypeDesc()
+                i.putExtra(KeyConstant.URL, "http://oss.ngame.cn/upload/1492742489492.png");//getLogoUrl()
+                startActivity(i);*/
             }
         }
     };

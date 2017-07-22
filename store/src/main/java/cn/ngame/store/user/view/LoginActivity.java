@@ -85,14 +85,15 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
 
         this.setContentView(R.layout.activity_login);
         preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
-        //获取状态栏高度设置给标题栏
+
+        //获取状态栏高度设置给标题栏==========================================
         RelativeLayout titleRlay = (RelativeLayout) findViewById(R.id.title_rlay);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 titleRlay.getLayoutParams());
         int statusBarHeight = ImageUtil.getStatusBarHeight(this);
         layoutParams.setMargins(0, statusBarHeight, 0, 0);
         titleRlay.setLayoutParams(layoutParams);
-
+        //======================================================================
         findViewById(R.id.left_bt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

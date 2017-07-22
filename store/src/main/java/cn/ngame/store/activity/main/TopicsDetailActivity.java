@@ -1,11 +1,15 @@
 package cn.ngame.store.activity.main;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -13,6 +17,7 @@ import com.jzt.hol.android.jkda.sdk.bean.game.GameListBody;
 import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.main.GameSelectClient;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +27,8 @@ import cn.ngame.store.R;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.adapter.TopicsDetailAdapter;
 import cn.ngame.store.bean.PageAction;
+import cn.ngame.store.core.utils.ImageUtil;
+import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
@@ -34,8 +41,6 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 
 public class TopicsDetailActivity extends BaseFgActivity {
 
-    private LinearLayout ll_back;
-    private TextView tv_title;
     private SimpleDraweeView sdv_img;
     private TextView tv_title2, tv_info;
     private PullToRefreshListView pullListView;
@@ -45,11 +50,46 @@ public class TopicsDetailActivity extends BaseFgActivity {
     String title, desc, url;
     private PageAction pageAction;
     public static int PAGE_SIZE = 10;
+    private TopicsDetailActivity content;
+    private long categoryId;
+    private RelativeLayout titleLayout;
+    private RelativeLayout mTitleRlay;
+    private Button leftBt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(true);
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(R.color.transparent);//通知栏所需颜色
+        }
         setContentView(R.layout.topics_detail_activity);
+        content = TopicsDetailActivity.this;
+        String title = getIntent().getStringExtra(KeyConstant.TITLE);
+        categoryId = getIntent().getLongExtra(KeyConstant.category_Id, 0);
+        //获取状态栏高度设置给标题栏==========================================
+        mTitleRlay = (RelativeLayout) findViewById(R.id.ll_title);
+        mTitleRlay.setBackgroundResource(R.color.transparent);
+        int statusBarHeight = ImageUtil.getStatusBarHeight(content);
+       /* RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                mTitleRlay.getLayoutParams());
+        layoutParams.setMargins(0, statusBarHeight, 0, 0);*/
+        // mTitleRlay.setLayoutParams(layoutParams);
+        mTitleRlay.setPadding(0, statusBarHeight, 0, 0);
+        //======================================================================
+        leftBt = (Button) findViewById(R.id.left_bt);
+        leftBt.setPadding(48, statusBarHeight, 0, 0);
+        leftBt.setText(title);
+        leftBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                content.finish();
+            }
+        });
+
         init();
     }
 
@@ -57,15 +97,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
-        ll_back = (LinearLayout) findViewById(R.id.ll_back);
-        tv_title = (TextView) findViewById(R.id.tv_title);
-        tv_title.setText("专题详情");
-        ll_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TopicsDetailActivity.this.finish();
-            }
-        });
+
         pullListView = (PullToRefreshListView) findViewById(R.id.pullListView);
 
         id = getIntent().getLongExtra("id", 0);
@@ -93,7 +125,8 @@ public class TopicsDetailActivity extends BaseFgActivity {
                     return;
                 }
                 if (pageAction.getCurrentPage() * pageAction.getPageSize() < pageAction.getTotal()) {
-                    pageAction.setCurrentPage(pageAction.getCurrentPage() == 0 ? pageAction.getCurrentPage() + 2 : pageAction.getCurrentPage() + 1);
+                    pageAction.setCurrentPage(pageAction.getCurrentPage() == 0 ? pageAction.getCurrentPage() + 2 : pageAction
+                            .getCurrentPage() + 1);
                     runService();
                 } else {
                     pullListView.setHasMoreData(false);
@@ -102,7 +135,8 @@ public class TopicsDetailActivity extends BaseFgActivity {
             }
         });
         //点击事件
-        pullListView.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ListView refreshableView = pullListView.getRefreshableView();
+        refreshableView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
@@ -112,15 +146,60 @@ public class TopicsDetailActivity extends BaseFgActivity {
                     startActivity(i);
                 }
             }
-        });
+        });     //状态栏渐变
+        setTitleBGColor(refreshableView);
         //添加头布局
         View headView = View.inflate(this, R.layout.select_game_header, null);
         initHeadView(headView);
         //头布局放入listView中
-        if (pullListView.getRefreshableView().getHeaderViewsCount() == 0) {
-            pullListView.getRefreshableView().addHeaderView(headView);
+        if (refreshableView.getHeaderViewsCount() == 0) {
+            refreshableView.addHeaderView(headView);
         }
         runService();
+    }
+
+    private void setTitleBGColor(final ListView refreshableView) {
+        //滑动事件(搜索栏渐变)
+        refreshableView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (firstVisibleItem == 0 && refreshableView.getChildAt(0) != null && refreshableView.getChildAt(0).getTop() !=
+                        0) {
+                    float total_height = 400f;
+                    int viewScrollHeigh = Math.abs(refreshableView.getChildAt(0).getTop());
+                    Log.d("777", "onScroll: total_height " + total_height);
+                    Log.d("777", "onScroll: viewScrollHeigh " + viewScrollHeigh);
+                    if (viewScrollHeigh < total_height) {
+                        Log.d("777", "onScroll: <<<<< ");
+                        float alpha = (total_height - viewScrollHeigh) / total_height;
+                        mTitleRlay.setAlpha(1 - alpha);
+                        int color = 1 - alpha > 0 ? R.color.colorPrimary : R.color.transparent;
+                        mTitleRlay.setBackgroundResource(color);
+                    } else {
+                        Log.d("777", "onScroll: viewScrollHeigh < total_height ");
+                        mTitleRlay.setAlpha(1f);
+                        mTitleRlay.setBackgroundResource(R.color.colorPrimary);
+
+                    }
+                } else {
+                    Log.d("777", "onScroll: else " + firstVisibleItem);
+                    if (firstVisibleItem != 0) {
+                        Log.d("777", "onScroll: else " + firstVisibleItem);
+                        mTitleRlay.setBackgroundResource(R.color.colorPrimary);
+                        mTitleRlay.setAlpha(1f);
+
+                    } else {
+                        mTitleRlay.setBackgroundResource(R.color.transparent);
+                        mTitleRlay.setAlpha(1f);
+                    }
+                }
+            }
+        });
     }
 
     private void initHeadView(View headView) {

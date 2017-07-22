@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.volley.AuthFailureError;
@@ -27,8 +28,8 @@ import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
+import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
-import cn.ngame.store.view.BaseTitleBar;
 import cn.ngame.store.view.LoadStateView;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
@@ -51,6 +52,7 @@ public class GameListActivity extends BaseFgActivity {
     private int lastItem;
 
     private long categoryId;
+    private GameListActivity content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,19 +61,20 @@ public class GameListActivity extends BaseFgActivity {
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
-
+        content = GameListActivity.this;
         Intent intent = getIntent();
-        String title = intent.getStringExtra("title");
-        categoryId = intent.getLongExtra("categoryId",0);
+        String title = intent.getStringExtra(KeyConstant.TITLE);
+        categoryId = intent.getLongExtra(KeyConstant.category_Id, 0);
 
-        BaseTitleBar title_bar = (BaseTitleBar) findViewById(R.id.title_bar);
-        title_bar.setOnLeftClickListener(new View.OnClickListener() {
+        Button leftBt = (Button) findViewById(R.id.left_bt);
+        findViewById(R.id.center_tv).setVisibility(View.GONE);
+        leftBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameListActivity.this.finish();
+                content.finish();
             }
         });
-        title_bar.setTitleText(title);
+        leftBt.setText(title);
 
         loadStateView = (LoadStateView) findViewById(R.id.loadStateView);
         loadStateView.setReLoadListener(new View.OnClickListener() {
@@ -103,7 +106,8 @@ public class GameListActivity extends BaseFgActivity {
                     return;
                 }
                 if (pageAction.getCurrentPage() * pageAction.getPageSize() < pageAction.getTotal()) {
-                    pageAction.setCurrentPage(pageAction.getCurrentPage() == 0 ? pageAction.getCurrentPage() + 2 : pageAction.getCurrentPage() + 1);
+                    pageAction.setCurrentPage(pageAction.getCurrentPage() == 0 ? pageAction.getCurrentPage() + 2 : pageAction
+                            .getCurrentPage() + 1);
                     getGameList();
                 } else {
                     pullListView.setHasMoreData(false);
@@ -116,7 +120,7 @@ public class GameListActivity extends BaseFgActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(GameListActivity.this, GameDetailActivity.class);
-                intent.putExtra("id", ((GameInfo)adapter.getItem(position)).id);
+                intent.putExtra("id", ((GameInfo) adapter.getItem(position)).id);
                 startActivity(intent);
             }
         });
@@ -128,7 +132,7 @@ public class GameListActivity extends BaseFgActivity {
 
     private void setListener() {
 
-        adapter = new LvSbGameAdapter(this,getSupportFragmentManager());
+        adapter = new LvSbGameAdapter(this, getSupportFragmentManager());
         pullListView.getRefreshableView().setAdapter(adapter);
 
 //        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -163,7 +167,7 @@ public class GameListActivity extends BaseFgActivity {
             @Override
             public void onResponse(JsonResult<List<GameInfo>> result) {
 
-                if(result == null){
+                if (result == null) {
                     loadStateView.setVisibility(View.VISIBLE);
                     loadStateView.setState(LoadStateView.STATE_END);
                     return;
@@ -177,24 +181,24 @@ public class GameListActivity extends BaseFgActivity {
                         return;
                     }
                 }
-                if(result.code == 0){
+                if (result.code == 0) {
 
                     gameInfoList = result.data;
                     pageAction.setTotal(result.totals);
-                    if(gameInfoList != null && gameInfoList.size() > 0){
+                    if (gameInfoList != null && gameInfoList.size() > 0) {
 
                         loadStateView.setVisibility(View.GONE);
 
                         adapter.setDate(gameInfoList);
                         adapter.notifyDataSetChanged();
-                    }else {
+                    } else {
                         loadStateView.isShowLoadBut(false);
                         loadStateView.setVisibility(View.VISIBLE);
-                        loadStateView.setState(LoadStateView.STATE_END,"没有数据");
+                        loadStateView.setState(LoadStateView.STATE_END, "没有数据");
                     }
 
-                }else {
-                    Log.d(TAG,"HTTP请求成功：服务端返回错误！");
+                } else {
+                    Log.d(TAG, "HTTP请求成功：服务端返回错误！");
                     loadStateView.setState(LoadStateView.STATE_END);
                 }
                 //设置下位列表
@@ -226,7 +230,8 @@ public class GameListActivity extends BaseFgActivity {
 
         Request<JsonResult<List<GameInfo>>> request = new GsonRequest<JsonResult<List<GameInfo>>>(
                 Request.Method.POST, url, successListener,
-                errorListener, new TypeToken<JsonResult<List<GameInfo>>>() {}.getType()) {
+                errorListener, new TypeToken<JsonResult<List<GameInfo>>>() {
+        }.getType()) {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {

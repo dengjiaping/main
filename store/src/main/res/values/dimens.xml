@@ -82,5 +82,6 @@
     <dimen name="download_progressbar_width">48dp</dimen>
     <dimen name="download_progressbar_height">26dp</dimen>
     <dimen name="download_progressbar_textsize">14dp</dimen>
+    <dimen name="title_left_bt_padding_left">20dp</dimen>
 
 </resources>

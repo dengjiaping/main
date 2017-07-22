@@ -19,7 +19,7 @@
         android:background="@null"
         android:drawableLeft="@drawable/back"
         android:drawablePadding="@dimen/dp_10"
-        android:paddingLeft="@dimen/dp_20"
+        android:paddingLeft="@dimen/title_left_bt_padding_left"
         android:paddingRight="@dimen/dp_20"
         android:textColor="@android:color/white"
         android:textSize="@dimen/title_size"
