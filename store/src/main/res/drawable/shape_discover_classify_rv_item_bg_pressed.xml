@@ -4,9 +4,6 @@
     <!-- 填充 -->
     <solid android:color="@color/color_pressed_297acc"/>
     <!-- 宽度和高度 -->
-    <size
-        android:width="@dimen/discover_classify_item_width"
-        android:height="@dimen/discover_classify_item_hight"/>
 
     <corners android:radius="@dimen/discover_classify_item_radius"
         />

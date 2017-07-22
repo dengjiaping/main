@@ -28,7 +28,7 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text=""
-            android:textColor="@color/font_black_3"
+            android:textColor="@color/font_333"
             android:textSize="13sp" />
 
         <ImageView

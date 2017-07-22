@@ -55,7 +55,7 @@ public class DialogHelper {
         params.setMargins(CommonUtil.dip2px(context,10),0,CommonUtil.dip2px(context,10),0);
         contentView.setLayoutParams(params);
         contentView.setText(content);
-        contentView.setTextColor(context.getResources().getColor(R.color.font_black_3));
+        contentView.setTextColor(context.getResources().getColor(R.color.font_333));
 
         dialogFragment.setLeftButText(leftText);
         dialogFragment.setRightButText(rightText);

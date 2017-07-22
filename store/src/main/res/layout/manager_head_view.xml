@@ -43,7 +43,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="10dp"
                             android:text="Ngame精灵"
-                            android:textColor="@color/font_black_3"
+                            android:textColor="@color/font_333"
                             android:textSize="15dp" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -71,7 +71,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/iv_download"
                     android:text="下载更新"
-                    android:textColor="@color/font_black_3"
+                    android:textColor="@color/font_333"
                     android:textSize="14sp" />
 
                 <ImageView
@@ -120,7 +120,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/iv_history"
                     android:text="观看记录"
-                    android:textColor="@color/font_black_3"
+                    android:textColor="@color/font_333"
                     android:textSize="14sp" />
 
                 <ImageView
@@ -154,7 +154,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/iv_msg"
                     android:text="系统消息"
-                    android:textColor="@color/font_black_3"
+                    android:textColor="@color/font_333"
                     android:textSize="14sp" />
 
                 <ImageView
@@ -203,7 +203,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/iv_set"
                     android:text="系统设置"
-                    android:textColor="@color/font_black_3"
+                    android:textColor="@color/font_333"
                     android:textSize="14sp" />
 
                 <ImageView
@@ -237,7 +237,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/iv_disclaimer"
                     android:text="免责声明"
-                    android:textColor="@color/font_black_3"
+                    android:textColor="@color/font_333"
                     android:textSize="14sp" />
 
                 <ImageView
@@ -271,7 +271,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/iv_feedback"
                     android:text="帮助与反馈"
-                    android:textColor="@color/font_black_3"
+                    android:textColor="@color/font_333"
                     android:textSize="14sp" />
 
                 <ImageView
@@ -305,7 +305,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/iv_about"
                     android:text="关于我们"
-                    android:textColor="@color/font_black_3"
+                    android:textColor="@color/font_333"
                     android:textSize="14sp" />
 
                 <ImageView

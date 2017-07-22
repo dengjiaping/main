@@ -337,6 +337,11 @@
             android:theme="@android:style/Theme.NoTitleBar"
             />
         <activity
+            android:name=".activity.sm.JoypadAdaptationApplyActivity"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.NoTitleBar"
+            />
+        <activity
             android:name=".activity.sm.AdCooperativeActivity"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.NoTitleBar"

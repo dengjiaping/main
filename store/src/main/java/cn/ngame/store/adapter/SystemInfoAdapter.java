@@ -95,7 +95,7 @@ public class SystemInfoAdapter extends BaseAdapter {
             holder.iv_select.setVisibility(View.GONE);
         }
         if (readList.contains(item.getId() + "")) {
-            holder.tv_content.setTextColor(context.getResources().getColor(R.color.font_black_3));
+            holder.tv_content.setTextColor(context.getResources().getColor(R.color.font_333));
         } else {
             holder.tv_content.setTextColor(context.getResources().getColor(R.color.font_black_9));
         }

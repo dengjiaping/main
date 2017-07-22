@@ -7,7 +7,7 @@
         android:id="@+id/singer_item_tv"
         android:layout_width="@dimen/discover_classify_item_width"
         android:layout_height="@dimen/discover_classify_item_hight"
-        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_18"
         android:background="@drawable/selector_classify_top_bt"
         android:gravity="center"
         android:text="分类"

@@ -35,7 +35,7 @@
             android:layout_marginLeft="5dp"
             android:singleLine="true"
             android:text="撒大声地"
-            android:textColor="@color/font_black_3"
+            android:textColor="@color/font_333"
             android:textSize="14sp" />
 
         <LinearLayout

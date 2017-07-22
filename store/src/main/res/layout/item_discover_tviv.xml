@@ -11,6 +11,7 @@
         android:layout_width="@dimen/dp_85"
         android:layout_height="@dimen/dp_85"
         android:scaleType="fitXY"
+        fresco:failureImage="@drawable/ic_def_logo_188_188"
         fresco:actualImageScaleType="fitXY"
         fresco:progressBarImage="@drawable/ic_def_logo_188_188"
         fresco:roundedCornerRadius="@dimen/dp_20"/>
@@ -18,7 +19,7 @@
         android:id="@+id/tviv_item_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_10"
         android:gravity="center"
         android:text="游戏名字"
         android:textColor="@color/black"

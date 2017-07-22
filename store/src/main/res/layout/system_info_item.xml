@@ -20,7 +20,7 @@
             android:maxLines="2"
             android:ellipsize="end"
             android:textSize="14sp"
-            android:textColor="@color/font_black_3"
+            android:textColor="@color/font_333"
             android:lineSpacingExtra="3dp"
             android:text="王企鹅二无群二群委屈翁群翁群翁群翁请问请问请问请问请问请问"/>
         <TextView

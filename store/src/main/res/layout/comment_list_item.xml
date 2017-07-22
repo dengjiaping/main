@@ -54,7 +54,7 @@
             android:layout_marginLeft="5dp"
             android:text="撒大声地"
             android:textSize="15sp"
-            android:textColor="@color/font_black_3"/>
+            android:textColor="@color/font_333"/>
     </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"

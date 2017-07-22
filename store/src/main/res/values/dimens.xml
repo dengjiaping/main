@@ -14,7 +14,7 @@
     <!-- 轮播图片高度 -->
     <dimen name="banner_image_height">214dp</dimen>
     <!-- 发现   轮播图片高度 -->
-    <dimen name="banner_image_height_discover">150dp</dimen>
+    <dimen name="banner_image_height_discover">144dp</dimen>
     <!-- 侧滑菜单宽度 -->
     <dimen name="sliding_menu_width">80dp</dimen>
 
@@ -66,13 +66,18 @@
     <dimen name="dp_7">7dp</dimen>
     <dimen name="dp_28">28dp</dimen>
     <dimen name="discover_classify_item_width">50dp</dimen>
-    <dimen name="discover_classify_item_hight">30dp</dimen>
+    <dimen name="discover_classify_item_hight">34dp</dimen>
     <dimen name="dp_36">36dp</dimen>
     <dimen name="dp_94">94dp</dimen>
     <dimen name="dp_90">90dp</dimen>
     <dimen name="dp_85">85dp</dimen>
     <dimen name="dp_35">35dp</dimen>
-    <dimen name="discover_classify_item_radius">20dp</dimen>
+    <dimen name="discover_classify_item_radius">17dp</dimen>
     <dimen name="dp_33">33dp</dimen>
+    <dimen name="dp_19">19dp</dimen>
+    <dimen name="dp_subject_iv_width">215dp</dimen>
+    <dimen name="dp_subject_iv_height">104dp</dimen>
+    <dimen name="dp_subject_iv_corner_8dp">8dp</dimen>
+    <dimen name="dp_49">49dp</dimen>
 
 </resources>

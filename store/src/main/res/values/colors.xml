@@ -29,7 +29,7 @@
     <color name="font_gray">#848484</color>
     <color name="font_gray_2">#CCCCCC</color>
     <color name="font_gray_ccc">#cccccc</color>
-    <color name="font_black_3">#333333</color>
+    <color name="font_333">#333333</color>
     <color name="font_black_6">#666666</color>
     <color name="font_black_9">#999999</color>
 
@@ -72,4 +72,5 @@
     <color name="color_nomal_99ccff">#99ccff</color>
     <color name="fefefe">#fefefe</color>
     <color name="font_18b9fe">#18b9fe</color>
+    <color name="color_18b9fe">#18b9fe</color>
 </resources>

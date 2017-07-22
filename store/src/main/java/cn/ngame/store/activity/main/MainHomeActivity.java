@@ -214,7 +214,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         mIconIv.setOnClickListener(this);
 
         colorDark = getResources().getColor(R.color.colorPrimary);
-        colorNormal = getResources().getColor(R.color.font_black_3);
+        colorNormal = getResources().getColor(R.color.font_333);
 
 //        init(viewPager, getSupportFragmentManager());
         fragmentManager = getSupportFragmentManager();

@@ -69,7 +69,7 @@
             android:gravity="center_vertical"
             android:text="@string/ota_device"
             android:textSize="16sp"
-            android:textColor="@color/font_black_3"/>
+            android:textColor="@color/font_333"/>
 
     </LinearLayout>
 
@@ -101,7 +101,7 @@
             android:gravity="center_vertical"
             android:text="@string/pad_mapping_sprite"
             android:textSize="16sp"
-            android:textColor="@color/font_black_3"/>
+            android:textColor="@color/font_333"/>
 
     </LinearLayout>
 
@@ -133,7 +133,7 @@
             android:gravity="center_vertical"
             android:text="@string/manage_setting"
             android:textSize="16sp"
-            android:textColor="@color/font_black_3"/>
+            android:textColor="@color/font_333"/>
 
     </LinearLayout>
 
@@ -164,7 +164,7 @@
             android:gravity="center_vertical"
             android:text="@string/manage_disclaimer"
             android:textSize="16sp"
-            android:textColor="@color/font_black_3"/>
+            android:textColor="@color/font_333"/>
 
     </LinearLayout>
 
@@ -195,7 +195,7 @@
             android:gravity="center_vertical"
             android:text="@string/sliding_feedback"
             android:textSize="16sp"
-            android:textColor="@color/font_black_3"/>
+            android:textColor="@color/font_333"/>
 
     </LinearLayout>
 
@@ -226,7 +226,7 @@
             android:gravity="center_vertical"
             android:text="@string/sliding_about"
             android:textSize="16sp"
-            android:textColor="@color/font_black_3"/>
+            android:textColor="@color/font_333"/>
 
     </LinearLayout>
 

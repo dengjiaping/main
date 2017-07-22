@@ -19,7 +19,7 @@
             android:layout_toLeftOf="@+id/iv_img"
             android:maxLines="1"
             android:text=""
-            android:textColor="@color/font_black_3"
+            android:textColor="@color/font_333"
             android:textSize="15sp" />
 
         <ImageView

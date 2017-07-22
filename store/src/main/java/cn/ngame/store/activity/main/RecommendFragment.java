@@ -328,9 +328,6 @@ public class RecommendFragment extends BaseSearchFragment {
                     pullListView.onPullUpRefreshComplete();
                     pullListView.onPullDownRefreshComplete();
                     if (0 == pageAction.getCurrentPage()) {
-                        //pullListView.setScrollLoadEnabled(false);
-                        //pullListView.setPullRefreshEnabled(false);
-                        //pullListView.setPullLoadEnabled(false);
                         pullListView.getRefreshableView().setSelection(0);
                     }
                 } else {

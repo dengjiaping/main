@@ -17,6 +17,6 @@
             android:layout_centerInParent="true"
             android:text="点击删除"
             android:textSize="14sp"
-            android:textColor="@color/font_black_3"/>
+            android:textColor="@color/font_333"/>
     </RelativeLayout>
 </RelativeLayout>

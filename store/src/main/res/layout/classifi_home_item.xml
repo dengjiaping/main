@@ -15,7 +15,7 @@
         android:maxLines="1"
         android:text="游戏"
         android:background="@drawable/shape_green_rank_comment"
-        android:textColor="@color/font_black_3"
+        android:textColor="@color/font_333"
         android:textSize="16dp"/>
 
 </LinearLayout>

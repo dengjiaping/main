@@ -33,8 +33,6 @@ import java.util.Map;
 
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
-import cn.ngame.store.activity.sm.JoypadSettingsActivity;
-import cn.ngame.store.activity.sm.ManagerSettingsActivity;
 import cn.ngame.store.adapter.ClassifiDongzuoAdapter;
 import cn.ngame.store.adapter.ClassifiJiaoseAdapter;
 import cn.ngame.store.adapter.ClassifiMaoxianAdapter;
@@ -44,6 +42,7 @@ import cn.ngame.store.adapter.ClassifiTiyuAdapter;
 import cn.ngame.store.adapter.ClassifiXiuxianAdapter;
 import cn.ngame.store.adapter.HomeRaiderAdapter;
 import cn.ngame.store.adapter.discover.DiscoverClassifyTopAdapter;
+import cn.ngame.store.adapter.discover.DiscoverIvAdapter;
 import cn.ngame.store.adapter.discover.DiscoverTvIvAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.HotInfo;
@@ -83,13 +82,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
      * headerView
      */
     private RecyclerView mRVClassifyAll;
-    private GridView gridView_maoxian;
-    private GridView gridView_dongzuo;
-    private GridView gridView_jiaose;
-    private GridView gridView_xiuxian;
-    private GridView gridView_saiche;
-    private GridView gridView_tiyu;
-
     DiscoverClassifyTopAdapter remenAdapter;
     List<ClassifiHomeBean.DataBean.OnlineListBean> remenList = new ArrayList<>();
     ClassifiQiangzhanAdapter qiangzhanAdapter;
@@ -108,9 +100,24 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     List<ClassifiHomeBean.DataBean.SportListBean> tiyuList = new ArrayList<>();
     private BannerView bannerView;
     private List<String> classifyList = new ArrayList<>(Arrays.asList("角色", "动作", "原生", "策略", "模拟", "VR", "枪战", "体育", "格斗"));
-    private List<String> m2EverydayDiscoverList = new ArrayList();
-    private DiscoverTvIvAdapter mTvIvAdapter;
-    private RecyclerView mTvIv_everyday_discover_Rv;
+    private List<String> mEverydayList = new ArrayList();
+    private DiscoverIvAdapter mSubjectAdapter;
+    private RecyclerView mEverydayRv;
+    private RecyclerView mActionRv;
+    private RecyclerView mHotRecentRv;
+    private RecyclerView mSubjectRv;
+    private DiscoverTvIvAdapter mEverydayAdapter;
+    private RecyclerView mBigChang_Rv;
+    private RecyclerView mStrategyRv;
+    private List<String> mHotRecentList = new ArrayList();
+    private List<String> mSubjectList = new ArrayList();
+    private List<String> mBigChangList = new ArrayList();
+    private List<String> mActionList = new ArrayList();
+    private List<String> mStrategyList = new ArrayList();
+    private DiscoverIvAdapter mBigChangAdapter;
+    private DiscoverTvIvAdapter mHotRecentAdapter;
+    private DiscoverTvIvAdapter mActionAdapter;
+    private DiscoverTvIvAdapter mStrategyAdapter;
 
     public DiscoverFragment() {
         android.util.Log.d(TAG, "DiscoverFragment: ()");
@@ -141,20 +148,44 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         context = getActivity();
         View headView = View.inflate(this.getActivity(), R.layout.discover_header_view, null);//头部
         //分类
-        init1ClassifyView(headView);
+        init0ClassifyView(headView);
         //每日新发现
-        init2EverydayDiscoverView(headView);
+        init1EverydayDiscoverView(headView);
+        //近期最热
+        initHotRecentView(headView);
+        //专题
+        initSubjectView(headView);
+        //大厂
+        initBigChangView(headView);
+        //动作
+        initActionView(headView);
+        //策略
+        initStrategyView(headView);
 
         //添加头部
         if (pullListView.getRefreshableView().getHeaderViewsCount() == 0) {
             pullListView.getRefreshableView().addHeaderView(headView);
         }
+    }
 
-        setOnMoreBtClickListener(headView, R.id.everyday_more_tv1);
+    //近期最热
+    private void initHotRecentView(View headView) {
+        for (int i = 0; i < 10; i++) {
+            mHotRecentList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_20.png");
+        }
+        mHotRecentRv = (RecyclerView) headView.findViewById(R.id.rv_hot_recent);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
+                this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        mHotRecentRv.setLayoutManager(linearLayoutManager2);
+        mHotRecentAdapter = new DiscoverTvIvAdapter(context, mHotRecentList);
+        mHotRecentRv.setAdapter(mHotRecentAdapter);
+        mHotRecentRv.addItemDecoration(new RecyclerViewDivider(context,
+                20, 18, mHotRecentList.size()));
+        setOnMoreBtClickListener(headView, R.id.more_hot_recent_tv);
     }
 
     //分类
-    private void init1ClassifyView(View headView) {
+    private void init0ClassifyView(View headView) {
         bannerView = (BannerView) headView.findViewById(R.id.banner_view);
         //获取RecyclerView实例
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(
@@ -173,29 +204,84 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     }
 
     //每日新发现
-    private void init2EverydayDiscoverView(View headView) {
+    private void init1EverydayDiscoverView(View headView) {
         for (int i = 0; i < 10; i++) {
-            m2EverydayDiscoverList.add("http://oss.ngame.cn/upload/userHead/1500626608632.png");
+            mEverydayList.add("http://oss.ngame.cn/upload/userHead/1500626608632.png");
         }
-        mTvIv_everyday_discover_Rv = (RecyclerView) headView.findViewById(R.id.everyday_discover_recyclerview);
-        headView.findViewById(R.id.everyday_more_tv1);
+        mEverydayRv = (RecyclerView) headView.findViewById(R.id.everyday_discover_recyclerview);
+        setOnMoreBtClickListener(headView, R.id.rv_hot_recent);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
                 this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        mTvIv_everyday_discover_Rv.setLayoutManager(linearLayoutManager2);
-        mTvIvAdapter = new DiscoverTvIvAdapter(this.getActivity(), m2EverydayDiscoverList);
-        mTvIv_everyday_discover_Rv.setAdapter(mTvIvAdapter);
-        mTvIv_everyday_discover_Rv.addItemDecoration(new RecyclerViewDivider(context,
-                20, 18, m2EverydayDiscoverList.size()));
-
-
-        gridView_maoxian = (GridView) headView.findViewById(R.id.gridView_maoxian);
-        gridView_dongzuo = (GridView) headView.findViewById(R.id.gridView_dongzuo);
-        gridView_jiaose = (GridView) headView.findViewById(R.id.gridView_jiaose);
-        gridView_xiuxian = (GridView) headView.findViewById(R.id.gridView_xiuxian);
-        gridView_saiche = (GridView) headView.findViewById(R.id.gridView_saiche);
-        gridView_tiyu = (GridView) headView.findViewById(R.id.gridView_tiyu);
-
+        mEverydayRv.setLayoutManager(linearLayoutManager2);
+        mEverydayAdapter = new DiscoverTvIvAdapter(this.getActivity(), mEverydayList);
+        mEverydayRv.setAdapter(mEverydayAdapter);
+        mEverydayRv.addItemDecoration(new RecyclerViewDivider(context,
+                20, 18, mEverydayList.size()));
     }
+
+    //专题
+    private void initSubjectView(View headView) {
+        for (int i = 0; i < 10; i++) {
+            mSubjectList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_19.png");
+        }
+        mSubjectRv = (RecyclerView) headView.findViewById(R.id.rv_subject);
+        setOnMoreBtClickListener(headView, R.id.more_subject_tv);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
+                this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        mSubjectRv.setLayoutManager(linearLayoutManager2);
+        mSubjectAdapter = new DiscoverIvAdapter(context, mSubjectList);
+        mSubjectRv.setAdapter(mSubjectAdapter);
+        mSubjectRv.addItemDecoration(new RecyclerViewDivider(context,
+                20, 18, mSubjectList.size()));
+    }
+
+    //大厂
+    private void initBigChangView(View headView) {
+        for (int i = 0; i < 10; i++) {
+            mBigChangList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_13.png");
+        }
+        mBigChang_Rv = (RecyclerView) headView.findViewById(R.id.rv_big_chang);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
+                this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        mBigChang_Rv.setLayoutManager(linearLayoutManager2);
+        mBigChangAdapter = new DiscoverIvAdapter(context, mBigChangList);
+        mBigChang_Rv.setAdapter(mBigChangAdapter);
+        mBigChang_Rv.addItemDecoration(new RecyclerViewDivider(context,
+                20, 18, mBigChangList.size()));
+        setOnMoreBtClickListener(headView, R.id.more_big_chang_tv);
+    }
+
+    //动作
+    private void initActionView(View headView) {
+        for (int i = 0; i < 10; i++) {
+            mActionList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_14.png");
+        }
+        mActionRv = (RecyclerView) headView.findViewById(R.id.rv_action);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
+                this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        mActionRv.setLayoutManager(linearLayoutManager2);
+        mActionAdapter = new DiscoverTvIvAdapter(context, mActionList);
+        mActionRv.setAdapter(mActionAdapter);
+        mActionRv.addItemDecoration(new RecyclerViewDivider(context,
+                20, 18, mActionList.size()));
+        setOnMoreBtClickListener(headView, R.id.more_action_tv);
+    }
+
+    //策略
+    private void initStrategyView(View headView) {
+        for (int i = 0; i < 10; i++) {
+            mStrategyList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_15.png");
+        }
+        mStrategyRv = (RecyclerView) headView.findViewById(R.id.rv_strategy);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
+                this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        mStrategyRv.setLayoutManager(linearLayoutManager2);
+        mStrategyAdapter = new DiscoverTvIvAdapter(context, mStrategyList);
+        mStrategyRv.setAdapter(mStrategyAdapter);
+        mStrategyRv.addItemDecoration(new RecyclerViewDivider(context, 20, 18, mStrategyList.size()));
+        setOnMoreBtClickListener(headView, R.id.more_strategy_tv);
+    }
+
     //更多按钮设置点击监听
     private void setOnMoreBtClickListener(View headView, int moreBtId) {
         headView.findViewById(moreBtId).setOnClickListener(mMoreBtClickListener);
@@ -208,11 +294,16 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             int id = v.getId();
             if (id == R.id.everyday_more_tv1) {//每日新发现
                 ToastUtil.show(context, "每日新发现");
-            } else if (id == R.id.sm_system_settings) {//系统设置
-                Intent setIntent = new Intent(context, ManagerSettingsActivity.class);
-                startActivity(setIntent);
-            } else if (id == R.id.sm_joypad_settings) {//手柄设置
-                startActivity(new Intent(context, JoypadSettingsActivity.class));
+            } else if (id == R.id.more_hot_recent_tv) {//近期最热
+                ToastUtil.show(context, "近期最热");
+            } else if (id == R.id.more_subject_tv) {//专题
+                ToastUtil.show(context, "专题");
+            } else if (id == R.id.more_big_chang_tv) {//专题
+                ToastUtil.show(context, "大厂");
+            } else if (id == R.id.more_action_tv) {//专题
+                ToastUtil.show(context, "动作");
+            } else if (id == R.id.more_strategy_tv) {//专题
+                ToastUtil.show(context, "策略");
             }
         }
     };
@@ -220,17 +311,20 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private void init(View view) {
         pullListView = (PullToRefreshListView) view.findViewById(R.id.pullListView);
         pullListView.setPullLoadEnabled(false); //false,不允许上拉加载
-        pullListView.setScrollLoadEnabled(false);
+        pullListView.setScrollLoadEnabled(true);
         pullListView.setLastUpdatedLabel(new Date().toLocaleString());
         pullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            //下拉
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 //getGameList();
+                getData();
+                pullListView.onPullDownRefreshComplete();
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-
+                pullListView.onPullUpRefreshComplete();
             }
         });
 
@@ -247,6 +341,36 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         ClassifiHomeBean result = new ClassifiHomeBean();
 
         //listData(result);
+    }
+
+    //请求数据
+    private void getData() {
+        //每日
+        mEverydayList.clear();
+        mActionList.clear();
+        mHotRecentList.clear();
+        mSubjectList.clear();
+        mBigChangList.clear();
+        for (int i = 0; i < 10; i++) {
+            mEverydayList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_16.png");
+            mEverydayAdapter.setList(mEverydayList);
+            //每日
+
+            mHotRecentList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_13.png");
+            mHotRecentAdapter.setList(mHotRecentList);
+            //专题
+
+            mSubjectList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_10.png");
+            mSubjectAdapter.setList(mSubjectList);
+            //大厂
+
+            mBigChangList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_1.png");
+            mBigChangAdapter.setList(mSubjectList);
+
+            //动作
+            mActionList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_2.png");
+            mActionAdapter.setList(mActionList);
+        }
     }
 
     /**
@@ -447,8 +571,8 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         }
 
         if (result.getData().getOnlineList().size() > 0) {
-            m2EverydayDiscoverList.clear();
-            //m2EverydayDiscoverList.addAll();
+            mEverydayList.clear();
+            //mEverydayList.addAll();
             //remenList.addAll(result.getData().getOnlineList());
             //每日新发现
             remenAdapter = new DiscoverClassifyTopAdapter(context, classifyList);
@@ -464,37 +588,37 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             maoxianList.clear();
             maoxianList.addAll(result.getData().getParkourList());
             maoxianAdapter = new ClassifiMaoxianAdapter(context, maoxianList);
-            gridView_maoxian.setAdapter(maoxianAdapter);
+            //gridView_maoxian.setAdapter(maoxianAdapter);
         }
         if (result.getData().getCombatList().size() > 0) {
             dongzuoList.clear();
             dongzuoList.addAll(result.getData().getCombatList());
             dongzuoAdapter = new ClassifiDongzuoAdapter(context, dongzuoList);
-            gridView_dongzuo.setAdapter(dongzuoAdapter);
+            //gridView_dongzuo.setAdapter(dongzuoAdapter);
         }
         if (result.getData().getRoleList().size() > 0) {
             jiaoseList.clear();
             jiaoseList.addAll(result.getData().getRoleList());
             jiaoseAdapter = new ClassifiJiaoseAdapter(context, jiaoseList);
-            gridView_jiaose.setAdapter(jiaoseAdapter);
+            //gridView_jiaose.setAdapter(jiaoseAdapter);
         }
         if (result.getData().getPuzzleList().size() > 0) {
             xiuxianList.clear();
             xiuxianList.addAll(result.getData().getPuzzleList());
             xiuxianAdapter = new ClassifiXiuxianAdapter(context, xiuxianList);
-            gridView_xiuxian.setAdapter(xiuxianAdapter);
+            //gridView_xiuxian.setAdapter(xiuxianAdapter);
         }
         if (result.getData().getRaceList().size() > 0) {
             saicheList.clear();
             saicheList.addAll(result.getData().getRaceList());
             saicheAdapter = new ClassifiSaicheAdapter(context, saicheList);
-            gridView_saiche.setAdapter(saicheAdapter);
+            //gridView_saiche.setAdapter(saicheAdapter);
         }
         if (result.getData().getSportList().size() > 0) {
             tiyuList.clear();
             tiyuList.addAll(result.getData().getSportList());
             tiyuAdapter = new ClassifiTiyuAdapter(context, tiyuList);
-            gridView_tiyu.setAdapter(tiyuAdapter);
+            //gridView_tiyu.setAdapter(tiyuAdapter);
         }
         pullListView.onPullUpRefreshComplete();
         pullListView.onPullDownRefreshComplete();

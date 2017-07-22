@@ -11,7 +11,7 @@
         android:id="@+id/banner_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/banner_image_height_discover"
-        android:background="@drawable/ic_def_logo_750_300"
+        android:background="@drawable/ic_def_logo_720_288"
         android:clickable="true"
         custom:auto_scroll="true"
         custom:current_item="0"
@@ -25,12 +25,13 @@
         android:paddingLeft="@dimen/dp_20"
         android:paddingTop="@dimen/dp_20"
         >
-
+        <!--:1dp*像素密度/160 = 实际像素数-->
         <ImageView
             android:id="@+id/discover_top_classify_all_bt"
-            android:layout_width="@dimen/dp_33"
-            android:layout_height="@dimen/dp_33"
-            android:layout_marginRight="@dimen/dp_20"
+            android:layout_width="@dimen/dp_35"
+            android:layout_height="@dimen/dp_35"
+            android:layout_marginRight="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_2"
             android:scaleType="centerInside"
             android:src="@drawable/ic_discover_classify_all_bt"/>
 
@@ -67,10 +68,10 @@
             android:id="@+id/everyday_more_tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/discover_tviv_left_title_tv1"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_20"
-            android:text="查看更多"
-            android:layout_alignBottom="@id/discover_tviv_left_title_tv1"
+            android:text="@string/see_more"
             android:textColor="@color/font_18b9fe"
             android:textSize="@dimen/dp_12"/>
 
@@ -86,298 +87,222 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <include layout="@layout/layout_line_05dp_b3b3b3"></include>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/gray">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp_19"
+        android:paddingTop="@dimen/dp_20"
+        >
 
-        <LinearLayout
-            android:layout_width="93dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/discover_tviv_left_title_tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:scaleType="centerInside"
+            android:text="近期最热"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp_16"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/classifi_qiangzhan"/>
+        <TextView
+            android:id="@+id/more_hot_recent_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/discover_tviv_left_title_tv2"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_20"
+            android:text="@string/see_more"
+            android:textColor="@color/font_18b9fe"
+            android:textSize="@dimen/dp_12"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="枪战射击"
-                android:textColor="@color/font_black_3"
-                android:textSize="13sp"/>
-        </LinearLayout>
-
-        <GridView
-            android:id="@+id/gridView_qiangzhan"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_hot_recent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="1dp"
-            android:background="@color/gray"
-            android:horizontalSpacing="1dp"
-            android:numColumns="3"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/discover_tviv_left_title_tv2"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dp_20"
             android:scrollbars="none"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp"/>
-    </LinearLayout>
+            />
+    </RelativeLayout>
 
-    <LinearLayout
+    <include layout="@layout/layout_line_05dp_b3b3b3"></include>
+    <!--................................专题...................................................-->
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/gray">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp_19"
+        android:paddingTop="@dimen/dp_20"
+        >
 
-        <LinearLayout
-            android:layout_width="93dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/discover_tviv_left_title_tv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:scaleType="centerInside"
+            android:text="专题"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp_16"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/classifi_maoxian"/>
+        <TextView
+            android:id="@+id/more_subject_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/discover_tviv_left_title_tv3"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_20"
+            android:text="@string/see_more"
+            android:textColor="@color/font_18b9fe"
+            android:textSize="@dimen/dp_12"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="冒险跑酷"
-                android:textColor="@color/font_black_3"
-                android:textSize="13sp"/>
-        </LinearLayout>
-
-        <GridView
-            android:id="@+id/gridView_maoxian"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_subject"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="1dp"
-            android:background="@color/gray"
-            android:horizontalSpacing="1dp"
-            android:numColumns="3"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/discover_tviv_left_title_tv3"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dp_20"
             android:scrollbars="none"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp"/>
-    </LinearLayout>
+            />
+    </RelativeLayout>
+    <!--................................大厂...................................................-->
+    <include layout="@layout/layout_line_05dp_b3b3b3"></include>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/gray">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp_19"
+        android:paddingTop="@dimen/dp_20"
+        >
 
-        <LinearLayout
-            android:layout_width="93dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/discover_tviv_left_title_tv4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:scaleType="centerInside"
+            android:text="大厂"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp_16"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/classifi_dongzuo"/>
+        <TextView
+            android:id="@+id/more_big_chang_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/discover_tviv_left_title_tv4"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_20"
+            android:text="@string/see_more"
+            android:textColor="@color/font_18b9fe"
+            android:textSize="@dimen/dp_12"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="动作格斗"
-                android:textColor="@color/font_black_3"
-                android:textSize="13sp"/>
-        </LinearLayout>
-
-        <GridView
-            android:id="@+id/gridView_dongzuo"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_big_chang"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="1dp"
-            android:background="@color/gray"
-            android:horizontalSpacing="1dp"
-            android:numColumns="3"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/discover_tviv_left_title_tv4"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dp_20"
             android:scrollbars="none"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp"/>
-    </LinearLayout>
+            />
+    </RelativeLayout>
 
-    <LinearLayout
+    <include layout="@layout/layout_line_05dp_b3b3b3"></include>
+    <!--................................动作...................................................-->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/gray">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_20"
+        >
 
-        <LinearLayout
-            android:layout_width="93dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/discover_tviv_left_title_tv5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:scaleType="centerInside"
+            android:text="动作"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp_16"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/classifi_jiaose"/>
+        <TextView
+            android:id="@+id/more_action_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/discover_tviv_left_title_tv5"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_20"
+            android:text="@string/see_more"
+            android:textColor="@color/font_18b9fe"
+            android:textSize="@dimen/dp_12"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="角色扮演"
-                android:textColor="@color/font_black_3"
-                android:textSize="13sp"/>
-        </LinearLayout>
-
-        <GridView
-            android:id="@+id/gridView_jiaose"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_action"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="1dp"
-            android:background="@color/gray"
-            android:horizontalSpacing="1dp"
-            android:numColumns="3"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/discover_tviv_left_title_tv5"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dp_20"
             android:scrollbars="none"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp"/>
-    </LinearLayout>
+            />
 
-    <LinearLayout
+    </RelativeLayout>
+    <!--................................策略...................................................-->
+    <include layout="@layout/layout_line_05dp_b3b3b3"></include>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/gray">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp_30"
+        android:paddingTop="@dimen/dp_20"
+        >
 
-        <LinearLayout
-            android:layout_width="93dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/discover_tviv_left_title_tv6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:scaleType="centerInside"
+            android:text="策略"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp_16"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/classifi_xiuxian"/>
+        <TextView
+            android:id="@+id/more_strategy_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/discover_tviv_left_title_tv6"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_20"
+            android:text="@string/see_more"
+            android:textColor="@color/font_18b9fe"
+            android:textSize="@dimen/dp_12"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="休闲益智"
-                android:textColor="@color/font_black_3"
-                android:textSize="13sp"/>
-        </LinearLayout>
-
-        <GridView
-            android:id="@+id/gridView_xiuxian"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_strategy"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="1dp"
-            android:background="@color/gray"
-            android:horizontalSpacing="1dp"
-            android:numColumns="3"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/discover_tviv_left_title_tv6"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dp_20"
             android:scrollbars="none"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp"/>
-    </LinearLayout>
+            />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/gray">
+    </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="93dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/classifi_saiche"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="赛车竞赛"
-                android:textColor="@color/font_black_3"
-                android:textSize="13sp"/>
-        </LinearLayout>
-
-        <GridView
-            android:id="@+id/gridView_saiche"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="1dp"
-            android:background="@color/gray"
-            android:horizontalSpacing="1dp"
-            android:numColumns="3"
-            android:scrollbars="none"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/gray">
-
-        <LinearLayout
-            android:layout_width="93dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/classifi_tiyu"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="体育球类"
-                android:textColor="@color/font_black_3"
-                android:textSize="13sp"/>
-        </LinearLayout>
-
-        <GridView
-            android:id="@+id/gridView_tiyu"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="1dp"
-            android:background="@color/gray"
-            android:horizontalSpacing="1dp"
-            android:numColumns="3"
-            android:scrollbars="none"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp"/>
-    </LinearLayout>
 </LinearLayout>

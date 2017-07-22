@@ -45,7 +45,7 @@
         android:lineSpacingExtra="2dp"
         android:text="请问请问请问群无我去恶趣味人情味日发售的范德萨的双丰收的范德萨 第三方第三方的首付多少"
         android:textSize="13sp"
-        android:textColor="@color/font_black_3"/>
+        android:textColor="@color/font_333"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"

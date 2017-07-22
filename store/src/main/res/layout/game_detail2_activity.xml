@@ -50,7 +50,7 @@
                 android:tag="sticky"
                 tabs:tabIndicatorColor="@color/colorPrimary"
                 tabs:tabSelectedTextColor="@color/colorPrimary"
-                tabs:tabTextColor="@color/font_black_3" />
+                tabs:tabTextColor="@color/font_333" />
 
             <cn.ngame.store.view.AutoHeightViewPager
                 android:id="@+id/viewpager"
