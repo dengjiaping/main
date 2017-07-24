@@ -34,6 +34,8 @@
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.cn.ngame.store"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 
     <permission
         android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.cn.ngame.store"
@@ -356,6 +358,61 @@
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.NoTitleBar"
             />
+<!--=============================友盟==================================================================-->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="59474c33c62dca28fd000fe6"></meta-data>
+       <!-- <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="ngame_test"/>-->
+      <!--  qq完整版：-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent100424468" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+
+        <!--新浪-->
+        <activity
+            android:name="com.umeng.socialize.media.WBShareCallBackActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:exported="false"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <activity
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+            android:launchMode="singleTask"
+            android:name="com.sina.weibo.sdk.share.WbShareTransActivity">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
+
+       <!-- 微信-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
 
         <!-- 注册后台服务组件 -->
@@ -445,13 +502,6 @@
             android:protectionLevel="signature"
             android:writePermission="baidu.push.permission.WRITE_PUSHINFOPROVIDER.cn.ngame.store"/>
         <!-- baidu push结束 -->
-
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="59474c33c62dca28fd000fe6"></meta-data>
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="ngame_test"/>
     </application>
 
 </manifest>

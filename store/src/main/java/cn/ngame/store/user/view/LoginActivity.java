@@ -1,9 +1,11 @@
 package cn.ngame.store.user.view;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
@@ -24,6 +26,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,10 +66,13 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
 
     private SharedPreferences preferences;
     private ImageView deleteIv;
+    private UMShareAPI mShareAPI;
+    private LoginActivity mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 /*
         View.SYSTEM_UI_FLAG_FULLSCREEN,   //全屏，状态栏和导航栏不显示
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION, //隐藏导航栏
@@ -84,6 +92,8 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         }
 
         this.setContentView(R.layout.activity_login);
+        mContext = this;
+        mShareAPI = UMShareAPI.get(this);
         preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
 
         //获取状态栏高度设置给标题栏==========================================
@@ -119,6 +129,9 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         bt_register.setOnClickListener(this);
         bt_login = (Button) findViewById(R.id.but_login);
         bt_login.setOnClickListener(this);
+        findViewById(R.id.login_qq_bt).setOnClickListener(this);
+        findViewById(R.id.login_wechat_bt).setOnClickListener(this);
+        findViewById(R.id.login_sina_bt).setOnClickListener(this);
         et_user.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -144,7 +157,24 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
 
 
         });
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission
+                    .ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission
+                    .READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest
+                    .permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS};
+            ActivityCompat.requestPermissions(this, mPermissionList, 777);
+        }
+
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        android.util.Log.d(TAG, "onRequestPermissionsResult: " + requestCode);
+
+    }
+
 
     @Override
     protected void onResume() {
@@ -158,7 +188,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
             case R.id.bt_show_pwd:
                 if (!isShowPwd) {
@@ -174,10 +203,23 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 }
                 break;
             case R.id.but_login:
-                doLogin();
+                userName = et_user.getText().toString();
+                password = et_pwd.getText().toString();
+                if (userName == null || "".equals(userName)) {
+                    Toast.makeText(this, "用户名不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!TextUtil.isMobile(userName)) {
+                    Toast.makeText(LoginActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (password == null || "".equals(password)) {
+                    Toast.makeText(this, "密码不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                doLogin(Constant.PHONE, userName, password, nicknameStr, URL_HEAD_PHOTO);
                 break;
             case R.id.tv_find_pwd:
-
                 Intent fIntent = new Intent(this, FindPwdActivity.class);
                 fIntent.putExtra(KeyConstant.IS_FROM_USER_CENTER, false);
                 startActivity(fIntent);
@@ -187,28 +229,95 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 Intent rIntent = new Intent(this, RegisterActivity.class);
                 startActivity(rIntent);
                 break;
+            //微信
+            case R.id.login_wechat_bt://getPlatformInfo
+                mShareAPI.getPlatformInfo(mContext, SHARE_MEDIA.WEIXIN, authListener);
+                break;
+            //qq
+            case R.id.login_qq_bt:
+                mShareAPI.getPlatformInfo(mContext, SHARE_MEDIA.QQ, authListener);
+                break;
+            //新浪
+            case R.id.login_sina_bt:
+                mShareAPI.getPlatformInfo(mContext, SHARE_MEDIA.SINA, authListener);
+                break;
         }
     }
+
+    //第三方登录回调
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+
+    }
+
+    UMAuthListener authListener = new UMAuthListener() {
+        /**
+         * @desc 授权开始的回调
+         * @param platform 平台名称
+         */
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+
+        }
+
+        /**
+         * @desc 授权失败的回调
+         * @param platform 平台名称
+         * @param action 行为序号，开发者用不上
+         * @param t 错误原因
+         */
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            android.util.Log.d(TAG, "第三方登录失败: " + platform + ",信息:" + t.getMessage());
+            android.util.Log.d(TAG, "第三方登录失败: " + platform + ",信息:" + t.getCause());
+            android.util.Log.d(TAG, "第三方登录失败: " + platform + ",信息:" + t.getSuppressed());
+        }
+
+        /**
+         * @desc 授权取消的回调
+         * @param platform 平台名称
+         * @param action 行为序号，开发者用不上
+         */
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+            android.util.Log.d(TAG, "第三方登录取消");
+        }
+        /**
+         * @desc 授权成功的回调
+         * @param platform 平台名称
+         * @param action 行为序号，开发者用不上
+         * @param data 用户资料返回
+         */
+
+        @Override
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            android.util.Log.d(TAG, "第三方登录: " + platform + ",信息:" + data.toString());
+            android.util.Log.d(TAG, "第三方登录: " + platform + ",uid:" + data.get("uid"));
+            android.util.Log.d(TAG, "第三方登录: " + platform + ",name:" + data.get("name"));
+            android.util.Log.d(TAG, "第三方登录: " + platform + ",iconurl:" + data.get("iconurl"));
+            String type = Constant.PHONE;//（1手机，2QQ，3微信，4新浪微博）
+            switch (platform.toString()) {
+                case "WEIXIN":
+                    type = Constant.WEIXIN;
+                    break;
+                case "SINA":
+                    type = Constant.SINA;
+                    break;
+                case "QQ":
+                    type = Constant.QQ;
+                    break;
+            }
+            doLogin(type, data.get("uid"), "", data.get("name"), data.get("iconurl"));
+        }
+    };
 
     /**
      * 执行HTTP登录操作
      */
-    private void doLogin() {
-        userName = et_user.getText().toString();
-        password = et_pwd.getText().toString();
-
-        if (userName == null || "".equals(userName)) {
-            Toast.makeText(this, "用户名不能为空", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (!TextUtil.isMobile(userName)) {
-            Toast.makeText(LoginActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (password == null || "".equals(password)) {
-            Toast.makeText(this, "密码不能为空", Toast.LENGTH_SHORT).show();
-            return;
-        }
+    private void doLogin(final String LOGIN_TYPE, final String userName, final String password,
+                         final String nicknameStr, final String URL_HEAD_PHOTO) {
         DialogHelper.showWaiting(getSupportFragmentManager(), "登录中...");
         String url = Constant.WEB_SITE + Constant.URL_USER_LOGIN;
 
@@ -220,7 +329,10 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     return;
                 }
                 if (result.code == 0) {
+                    android.util.Log.d(TAG, "onResponse: "+result.toString());
+                    android.util.Log.d(TAG, "onResponse: "+result.msg);
                     User user = result.data;
+                    android.util.Log.d(TAG, "onResponse: "+user.toString());
                     StoreApplication.user = user;
 
                     SharedPreferences.Editor editor = preferences.edit();
@@ -284,9 +396,9 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             protected Map<String, String> getParams() throws AuthFailureError {
                 //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.NICK_NAME, nicknameStr);
-                params.put(KeyConstant.LOGIN_NAME, userName);
-                params.put(KeyConstant.pass_word, password);
+                params.put(KeyConstant.LOGIN_NAME, userName);//uid
+                params.put(KeyConstant.NICK_NAME, nicknameStr);//
+                params.put(KeyConstant.pass_word, password);//""
                 params.put(KeyConstant.TYPE, LOGIN_TYPE); //（1手机，2QQ，3微信，4新浪微博）
                 params.put(KeyConstant.HEAD_PHOTO, URL_HEAD_PHOTO);  //头像
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0);  //
@@ -313,7 +425,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
 
     }
 
-    private String LOGIN_TYPE = "1";
     private String nicknameStr = "";
     private String URL_HEAD_PHOTO = "";
 

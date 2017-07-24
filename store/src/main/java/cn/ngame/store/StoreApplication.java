@@ -15,6 +15,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
+import com.umeng.socialize.Config;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 
 import cn.ngame.store.bean.User;
 import cn.ngame.store.core.utils.Constant;
@@ -61,7 +64,7 @@ public class StoreApplication extends MultiDexApplication {
         nickName = (String) SPUtils.get(this, Constant.CONFIG_NICK_NAME, "");
         userCode = (String) SPUtils.get(this, Constant.CONFIG_USER_CODE, "");
         passWord = (String) SPUtils.get(this, Constant.CONFIG_USER_PWD, "");
-        android.util.Log.d("777", "StoreApplication onCreate: " );
+        android.util.Log.d("777", "StoreApplication onCreate: ");
         loginType = (String) SPUtils.get(this, Constant.CONFIG_LOGIN_TYPE, "1");
 
         isReceiveMsg = (boolean) SPUtils.get(this, Constant.CFG_RECEIVE_MSG, true);
@@ -76,6 +79,19 @@ public class StoreApplication extends MultiDexApplication {
         Fresco.initialize(this);
         checkNetState();    //获取当前网络状态
         initGloalData();
+
+
+        Config.DEBUG = true;
+        //配置友盟
+        UMShareAPI.get(this);
+        initUmengKey();
+    }
+
+    private void initUmengKey() {
+        PlatformConfig.setWeixin("wxc3fd944502f63476", "15cc8fe486352fee6aac537f3f033066");
+        PlatformConfig.setQQZone("1105610048", "cRaNEPSsHj95Ay9p");
+        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad", "http://sns.whalecloud.com");
+
     }
 
     @Override

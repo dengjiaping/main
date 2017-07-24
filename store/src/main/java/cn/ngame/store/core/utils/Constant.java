@@ -301,4 +301,8 @@ public class Constant {
     public static final String URL_MODIFY_USER_DATA = "/user/modifyUserData";
     public static final String CONFIG_LOGIN_TYPE = "loginType";
     public static final String CONFIG_USER_CODE = "config_user_code";
+    public static final String PHONE = "1";
+    public static final String QQ = "2";
+    public static final String WEIXIN = "3";
+    public static final String SINA = "4";//（1手机，2QQ，3微信，4新浪微博）
 }

@@ -43,5 +43,24 @@ public class User implements Serializable {
     public long updateTime;
     public String token;
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userCode='" + userCode + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", loginName='" + loginName + '\'' +
+                ", password='" + password + '\'' +
+                ", type=" + type +
+                ", status=" + status +
+                ", mobile='" + mobile + '\'' +
+                ", gender='" + gender + '\'' +
+                ", headPhoto='" + headPhoto + '\'' +
+                ", appTypeId=" + appTypeId +
+                ", isDelete=" + isDelete +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", token='" + token + '\'' +
+                '}';
+    }
 }

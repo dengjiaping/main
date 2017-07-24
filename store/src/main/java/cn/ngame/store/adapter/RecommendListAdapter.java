@@ -129,8 +129,8 @@ public class RecommendListAdapter extends BaseAdapter {
          */
         public void update(final RecommendListBean.DataBean gameInfo, int type, int position) {
             this.gameInfo = gameInfo;
-            String imgUrl = gameInfo.getGameLogo();
-            String fromUrl = gameInfo.getGameRecommendImg();
+            String imgUrl = gameInfo.getGameRecommendImg();
+            String fromUrl = gameInfo.getGameLogo();
             if (imgUrl != null && imgUrl.trim().equals("")) {
                 imgUrl = null;
             }
