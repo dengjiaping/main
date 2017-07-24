@@ -105,9 +105,10 @@ public class UserCenterActivity extends BaseFgActivity {
             changePwdBt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(content, FindPwdActivity.class);
+                    Intent intent = new Intent(content, ChangePwdActivity.class);
                     intent.putExtra(KeyConstant.IS_FROM_USER_CENTER, true);
                     startActivity(intent);
+                    content.finish();
                 }
             });
         } else {
@@ -170,6 +171,9 @@ public class UserCenterActivity extends BaseFgActivity {
                 }
             }
         });
+
+        android.util.Log.d(TAG, "userTOKEN:" + StoreApplication.token);
+        android.util.Log.d(TAG, "userCode:" + StoreApplication.userCode);
     }
 
     //修改头像
@@ -348,8 +352,6 @@ public class UserCenterActivity extends BaseFgActivity {
                 params.put(KeyConstant.NICK_NAME, nickName);
                 params.put(KeyConstant.TOKEN, StoreApplication.token);
 
-                android.util.Log.d(TAG, "userTOKEN" + StoreApplication.token);
-                android.util.Log.d(TAG, "userCode" + StoreApplication.userCode);
                 return params;
             }
         };
@@ -361,7 +363,7 @@ public class UserCenterActivity extends BaseFgActivity {
     }
 
     /**
-     * 显示注册结果对话框
+     * 显示结果对话框
      */
     private void showReLoginDialog() {
 

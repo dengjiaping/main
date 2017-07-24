@@ -6,4 +6,5 @@ package cn.ngame.store.core.utils;
  */
 public class UrlConstant {
     public static final String URL_FORGOT_PASSWORD = "/user/forgotPassword";
+    public static final String URL_MODIFY_PASSWORD = "/user/modifyPassword";
 }
