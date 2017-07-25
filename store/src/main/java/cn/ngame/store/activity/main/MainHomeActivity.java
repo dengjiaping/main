@@ -53,6 +53,7 @@ import java.util.TimerTask;
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
+import cn.ngame.store.activity.discover.DiscoverFragment;
 import cn.ngame.store.activity.sm.AboutNgameZoneActivity;
 import cn.ngame.store.activity.sm.AdCooperativeActivity;
 import cn.ngame.store.activity.sm.JoypadSettingsActivity;
@@ -342,7 +343,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     || id == R.id.sm_top_icon_iv
                     || id == R.id.edit_profile_click
                     ) {//系统设置
-                if (pwd != null && !"".endsWith(pwd)) {
+                if (pwd != null && !"".endsWith(pwd)||!Constant.PHONE.equals(StoreApplication.loginType)) {
                     startActivity(new Intent(context, UserCenterActivity.class));
                 } else {
                     startActivity(new Intent(context, LoginActivity.class));
@@ -393,7 +394,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
     private void setUserIcon() {
         pwd = StoreApplication.passWord;
-        if (pwd != null && !"".endsWith(pwd)) {
+        if ((pwd != null && !"".endsWith(pwd)) || !Constant.PHONE.equals(StoreApplication.loginType)) {
             //DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.color.colorPrimary, 360);
             String userHeadUrl = StoreApplication.userHeadUrl;
             imageLoader.displayImage(userHeadUrl, mIconIv, this.roundOptions);

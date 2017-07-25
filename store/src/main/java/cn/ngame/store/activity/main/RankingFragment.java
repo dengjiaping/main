@@ -77,16 +77,16 @@ public class RankingFragment extends BaseSearchFragment implements View.OnClickL
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        tv_download.setTextColor(getResources().getColor(R.color.colorPrimary));
-                        tv_download.setBackgroundResource(R.drawable.shape_white_rank_download);
-                        tv_comment.setTextColor(getResources().getColor(R.color.white));
-                        tv_comment.setBackgroundResource(R.drawable.shape_green_rank_comment);
-                        break;
-                    case 1:
+                        tv_download.setTextColor(getResources().getColor(R.color.white));
+                        tv_download.setBackgroundResource(R.drawable.shape_blue_rank_download);
                         tv_comment.setTextColor(getResources().getColor(R.color.colorPrimary));
                         tv_comment.setBackgroundResource(R.drawable.shape_white_rank_comment);
-                        tv_download.setTextColor(getResources().getColor(R.color.white));
-                        tv_download.setBackgroundResource(R.drawable.shape_green_rank_download);
+                        break;
+                    case 1:
+                        tv_comment.setTextColor(getResources().getColor(R.color.white));
+                        tv_comment.setBackgroundResource(R.drawable.shape_blue_rank_comment);
+                        tv_download.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        tv_download.setBackgroundResource(R.drawable.shape_white_rank_download);
                         break;
                 }
             }
@@ -103,10 +103,11 @@ public class RankingFragment extends BaseSearchFragment implements View.OnClickL
         switch (v.getId()) {
             case R.id.tv_download:
                 viewpager.setCurrentItem(0);
-                tv_download.setTextColor(getResources().getColor(R.color.colorPrimary));
-                tv_download.setBackgroundResource(R.drawable.shape_white_rank_download);
-                tv_comment.setTextColor(getResources().getColor(R.color.white));
-                tv_comment.setBackgroundResource(R.drawable.shape_green_rank_comment);
+                tv_download.setTextColor(getResources().getColor(R.color.white));
+                tv_download.setBackgroundResource(R.drawable.shape_blue_rank_download);
+                tv_comment.setTextColor(getResources().getColor(R.color.colorPrimary));
+                tv_comment.setBackgroundResource(R.drawable.shape_white_rank_comment);
+
 //                if (downloadFragment.isAdded()) {
 //                    getSupportFragmentManager().beginTransaction().hide(commentFragment).show(downloadFragment).commit();
 //                } else {
@@ -116,10 +117,10 @@ public class RankingFragment extends BaseSearchFragment implements View.OnClickL
                 break;
             case R.id.tv_comment:
                 viewpager.setCurrentItem(1);
-                tv_comment.setTextColor(getResources().getColor(R.color.colorPrimary));
-                tv_comment.setBackgroundResource(R.drawable.shape_white_rank_comment);
-                tv_download.setTextColor(getResources().getColor(R.color.white));
-                tv_download.setBackgroundResource(R.drawable.shape_green_rank_download);
+                tv_comment.setTextColor(getResources().getColor(R.color.white));
+                tv_comment.setBackgroundResource(R.drawable.shape_blue_rank_comment);
+                tv_download.setTextColor(getResources().getColor(R.color.colorPrimary));
+                tv_download.setBackgroundResource(R.drawable.shape_white_rank_download);
 //                if (commentFragment.isAdded()) {
 //                    getSupportFragmentManager().beginTransaction().hide(downloadFragment).show(commentFragment).commit();
 //                } else {

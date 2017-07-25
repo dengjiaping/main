@@ -204,9 +204,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
 
     private void initHeadView(View headView) {
         sdv_img = (SimpleDraweeView) headView.findViewById(R.id.sdv_img);
-        tv_title2 = (TextView) headView.findViewById(R.id.tv_title2);
         tv_info = (TextView) headView.findViewById(R.id.tv_info);
-        tv_title2.setText(title);
         tv_info.setText(desc);
         sdv_img.setImageURI(url);
     }

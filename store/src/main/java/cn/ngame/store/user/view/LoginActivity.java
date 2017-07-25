@@ -68,6 +68,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     private ImageView deleteIv;
     private UMShareAPI mShareAPI;
     private LoginActivity mContext;
+    private String loginloginType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,7 +181,8 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     protected void onResume() {
         super.onResume();
         userName = preferences.getString(Constant.CONFIG_USER_NAME, "");
-        if (!userName.equals("")) {
+        loginloginType = preferences.getString(Constant.CONFIG_LOGIN_TYPE, "1");
+        if (!userName.equals("") && userName.length() <= 11) {
             et_user.setText(userName);
             et_user.setSelection(userName.length());
         }
@@ -249,7 +251,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
-
     }
 
     UMAuthListener authListener = new UMAuthListener() {
@@ -259,7 +260,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
          */
         @Override
         public void onStart(SHARE_MEDIA platform) {
-
+            DialogHelper.showWaiting(getSupportFragmentManager(), "加载中...");
         }
 
         /**
@@ -273,6 +274,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             android.util.Log.d(TAG, "第三方登录失败: " + platform + ",信息:" + t.getMessage());
             android.util.Log.d(TAG, "第三方登录失败: " + platform + ",信息:" + t.getCause());
             android.util.Log.d(TAG, "第三方登录失败: " + platform + ",信息:" + t.getSuppressed());
+            DialogHelper.hideWaiting(getSupportFragmentManager());
         }
 
         /**
@@ -283,7 +285,9 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
             android.util.Log.d(TAG, "第三方登录取消");
+            DialogHelper.hideWaiting(getSupportFragmentManager());
         }
+
         /**
          * @desc 授权成功的回调
          * @param platform 平台名称
@@ -293,6 +297,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
 
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            DialogHelper.hideWaiting(getSupportFragmentManager());
             android.util.Log.d(TAG, "第三方登录: " + platform + ",信息:" + data.toString());
             android.util.Log.d(TAG, "第三方登录: " + platform + ",uid:" + data.get("uid"));
             android.util.Log.d(TAG, "第三方登录: " + platform + ",name:" + data.get("name"));
@@ -329,11 +334,13 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     return;
                 }
                 if (result.code == 0) {
-                    android.util.Log.d(TAG, "onResponse: "+result.toString());
-                    android.util.Log.d(TAG, "onResponse: "+result.msg);
+                    android.util.Log.d(TAG, "onResponse:用户名 " + userName);
+                    android.util.Log.d(TAG, "onResponse:LOGIN_TYPE " + LOGIN_TYPE);
+                    android.util.Log.d(TAG, "onResponse: " + result.msg);
+                    android.util.Log.d(TAG, "onResponse: " + result.msg);
                     User user = result.data;
-                    android.util.Log.d(TAG, "onResponse: "+user.toString());
-                    StoreApplication.user = user;
+                    android.util.Log.d(TAG, "onResponse: " + user.toString());
+                    user = user;
 
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString(Constant.CONFIG_TOKEN, user.token);
@@ -396,12 +403,18 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             protected Map<String, String> getParams() throws AuthFailureError {
                 //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
+                Log.d(TAG, "userHeadUrl: " + URL_HEAD_PHOTO);
+                Log.d(TAG, "userName: " + userName);
+                Log.d(TAG, "userCode: " + StoreApplication.userCode);
+                Log.d(TAG, "nicknameStr:" + nicknameStr);
+                Log.d(TAG, "LOGIN_TYPE:" + LOGIN_TYPE);
                 params.put(KeyConstant.LOGIN_NAME, userName);//uid
                 params.put(KeyConstant.NICK_NAME, nicknameStr);//
                 params.put(KeyConstant.pass_word, password);//""
                 params.put(KeyConstant.TYPE, LOGIN_TYPE); //（1手机，2QQ，3微信，4新浪微博）
                 params.put(KeyConstant.HEAD_PHOTO, URL_HEAD_PHOTO);  //头像
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0);  //
+
                 return params;
             }
         };

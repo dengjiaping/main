@@ -63,7 +63,7 @@ public class ClassifiXiuxianAdapter extends BaseAdapter {
         ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = View.inflate(parent.getContext(), R.layout.classifi_home_item, null);
+            convertView = View.inflate(parent.getContext(), R.layout.classifi_gridview_item, null);
             holder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
             convertView.setTag(holder);
         } else {

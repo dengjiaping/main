@@ -43,6 +43,7 @@ public class LoginHelper {
         StoreApplication.userCode = preferences.getString(Constant.CONFIG_USER_CODE, "");
         StoreApplication.userHeadUrl = preferences.getString(Constant.CONFIG_USER_HEAD, "");
         StoreApplication.token = preferences.getString(Constant.CONFIG_TOKEN, "");
+        StoreApplication.loginType = preferences.getString(Constant.CONFIG_LOGIN_TYPE, Constant.PHONE);
     }
 
     /**

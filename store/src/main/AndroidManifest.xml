@@ -156,7 +156,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
-            android:name=".game.view.SBGameActivity"
+            android:name=".game.view.GameClassifyActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"/>
@@ -355,6 +355,11 @@
             />
         <activity
             android:name=".activity.sm.AboutNgameZoneActivity"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.NoTitleBar"
+            />
+        <activity
+            android:name=".activity.discover.GameAllClassifyActivity"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.NoTitleBar"
             />

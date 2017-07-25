@@ -165,15 +165,35 @@
         <include layout="@layout/layout_match_parent_line_height10dp"/>
     </LinearLayout>
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/gray_f5"
-        android:paddingLeft="@dimen/dp_10"
-        android:paddingTop="@dimen/dp_8"
-        android:text="专题"
-        android:textColor="@color/font_333"
-        android:textSize="@dimen/dp_16"/>
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/recommend_classify_left_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray_f5"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_8"
+            android:text="专题"
+            android:textColor="@color/font_333"
+            android:textSize="@dimen/dp_16"/>
+
+        <TextView
+            android:id="@+id/recommend_topics_more_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/recommend_classify_left_tv"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_20"
+            android:paddingTop="@dimen/dp_10"
+            android:text="@string/see_more"
+            android:textColor="@color/font_18b9fe"
+            android:textSize="@dimen/dp_12"/>
+
+    </RelativeLayout>
+
 
     <HorizontalScrollView
         android:layout_width="match_parent"

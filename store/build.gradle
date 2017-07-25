@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            keyAlias 'ngame android'
+            keyPassword '^fdk%67sd$5'
+            storeFile file('F:/android/trunk/main/key/releasekey.jks')
+            storePassword '^fdk%67sd$5'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion '23.0.2'
-
     packagingOptions {
         exclude 'META-INF/NOTICE' // will not include NOTICE file
         exclude 'META-INF/LICENSE' // will not include LICENSE file
@@ -15,7 +22,6 @@ android {
         exclude 'META-INF/license'
         exclude 'META-INF/license.txt'
     }
-
     defaultConfig {
         applicationId "cn.ngame.store"
         minSdkVersion 19
@@ -30,33 +36,31 @@ android {
         // Enabling multidex support.
         multiDexEnabled true
     }
-  /*  signingConfigs {
-        debug {
-            storeFile file('debug.keystore')
-            storePassword "android"
-            keyAlias "androiddebugkey"
-            keyPassword "android"
-        }
-    }*/
-
+    /*  signingConfigs {
+          debug {
+              storeFile file('debug.keystore')
+              storePassword "android"
+              keyAlias "androiddebugkey"
+              keyPassword "android"
+          }
+      }*/
     buildTypes {
         debug {
             // 显示Log
             buildConfigField "boolean", "LOG_DEBUG", "true"
-           /* //minifyEnabled false
-           // signingConfigs signingConfigs.debug
-           // proguardFiles 'proguard-rules.pro'*/
+            /* //minifyEnabled false
+            // signingConfigs signingConfigs.debug
+            // proguardFiles 'proguard-rules.pro'*/
 //            versionNameSuffix "-debug"
 //            minifyEnabled false
 //            zipAlignEnabled false
 //            shrinkResources false
+            signingConfig signingConfigs.release
         }
-
         release {
             /*minifyEnabled false
             signingConfigs signingConfigs.debug
             proguardFiles 'proguard-rules.pro'*/
-
             // 不显示Log
             //buildConfigField "boolean", "LOG_DEBUG", "false"
             // 是否进行混淆
@@ -65,17 +69,14 @@ android {
             zipAlignEnabled true
             // 移除无用的resource文件
 //            shrinkResources true
-
             //前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
-
     sourceSets {
         main {
             //jni.srcDirs = []                          //设置禁止gradle生成Android.mk

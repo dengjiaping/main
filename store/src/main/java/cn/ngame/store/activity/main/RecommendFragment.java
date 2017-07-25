@@ -309,7 +309,7 @@ public class RecommendFragment extends BaseSearchFragment {
 
     public void initListView(final View view) {
         //tv_top_bar_bg = (TextView) view.findViewById(R.id.tv_top_bar_bg);
-       Log.d(TAG, "initListView:9999 ");
+        Log.d(TAG, "initListView:9999 ");
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
@@ -418,6 +418,7 @@ public class RecommendFragment extends BaseSearchFragment {
 
         view.findViewById(R.id.recommend_head_llay_0).setOnClickListener(headClickListener);
         view.findViewById(R.id.recommend_head_llay_1).setOnClickListener(headClickListener);
+        view.findViewById(R.id.recommend_topics_more_tv).setOnClickListener(headClickListener);
 
         //横向滑动控件
         horizontalViewContainer = (LinearLayout) view.findViewById(R.id.horizontalView_container);
@@ -438,6 +439,9 @@ public class RecommendFragment extends BaseSearchFragment {
                     Intent i2 = new Intent(context, GameDetailActivity.class);
                     i2.putExtra(KeyConstant.ID, topList.get(1).getGameId());
                     startActivity(i2);
+                    break;
+                case R.id.recommend_topics_more_tv://专题
+                    startActivity(new Intent(context, SelectedTopicsActivity.class));
                     break;
             }
         }

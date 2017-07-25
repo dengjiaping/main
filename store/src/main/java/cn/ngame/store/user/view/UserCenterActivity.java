@@ -112,7 +112,7 @@ public class UserCenterActivity extends BaseFgActivity {
                 }
             });
         } else {
-            changePwdBt.setVisibility(View.GONE);
+            changePwdBt.setVisibility(View.INVISIBLE);
         }
         try {
             mTempDir = new File(CommonUtil.getImageBasePath());
@@ -410,10 +410,12 @@ public class UserCenterActivity extends BaseFgActivity {
         SharedPreferences preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constant.CONFIG_USER_PWD, "");
+        editor.putString(Constant.CONFIG_LOGIN_TYPE, Constant.PHONE);
         editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
         editor.apply();
 
         StoreApplication.userHeadUrl = "";
+        StoreApplication.loginType = Constant.PHONE;
         StoreApplication.nickName = "";
         StoreApplication.userCode = "";
         StoreApplication.userName = "";

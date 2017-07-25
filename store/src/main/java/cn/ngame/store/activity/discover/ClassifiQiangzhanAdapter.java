@@ -1,5 +1,5 @@
 
-package cn.ngame.store.adapter;
+package cn.ngame.store.activity.discover;
 
 import android.content.Context;
 import android.view.View;
@@ -14,25 +14,27 @@ import java.util.List;
 
 import cn.ngame.store.R;
 
+import static cn.ngame.store.R.id.tv_content;
+
 /**
- *  首页下方攻略列表
+ * 首页下方攻略列表
+ *
  * @author gp
  */
-public class ClassifiJiaoseAdapter extends BaseAdapter {
+public class ClassifiQiangzhanAdapter extends BaseAdapter {
 
     private Context context;
-    private List<ClassifiHomeBean.DataBean.RoleListBean> list;
+    private List<ClassifiHomeBean.DataBean.GunFireListBean> list;
     String type;
     ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public ClassifiJiaoseAdapter(Context context, List<ClassifiHomeBean.DataBean.RoleListBean> list) {
+    public ClassifiQiangzhanAdapter(Context context, List<ClassifiHomeBean.DataBean.GunFireListBean> list) {
         super();
         this.context = context;
         this.list = list;
-        this.type = type;
     }
 
-    public void setList(List<ClassifiHomeBean.DataBean.RoleListBean> list) {
+    public void setList(List<ClassifiHomeBean.DataBean.GunFireListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -40,7 +42,7 @@ public class ClassifiJiaoseAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         if (list != null) {
-            return list.size() < 6 ? 6 : list.size();
+            return list.size();
         }
         return 0;
     }
@@ -63,8 +65,9 @@ public class ClassifiJiaoseAdapter extends BaseAdapter {
         ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = View.inflate(parent.getContext(), R.layout.classifi_home_item, null);
-            holder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
+            convertView = View.inflate(parent.getContext(), R.layout.classifi_gridview_item, null);
+            holder.tv_content = (TextView) convertView.findViewById(tv_content);
+            holder.tv_content.setBackgroundResource(R.drawable.shape_blue_corner4dp_4ac7fc);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

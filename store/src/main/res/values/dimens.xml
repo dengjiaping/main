@@ -83,5 +83,8 @@
     <dimen name="download_progressbar_height">26dp</dimen>
     <dimen name="download_progressbar_textsize">14dp</dimen>
     <dimen name="title_left_bt_padding_left">20dp</dimen>
+    <dimen name="dp_3">3dp</dimen>
+    <dimen name="classify_grid_item_height">48dp</dimen>
+    <dimen name="all_classify_grid_view_height">156dp</dimen>
 
 </resources>

@@ -1,5 +1,5 @@
 
-package cn.ngame.store.adapter;
+package cn.ngame.store.activity.discover;
 
 import android.content.Context;
 import android.view.View;
@@ -18,21 +18,21 @@ import cn.ngame.store.R;
  *  首页下方攻略列表
  * @author gp
  */
-public class ClassifiQiangzhanAdapter extends BaseAdapter {
+public class ClassifiMaoxianAdapter extends BaseAdapter {
 
     private Context context;
-    private List<ClassifiHomeBean.DataBean.GunFireListBean> list;
+    private List<ClassifiHomeBean.DataBean.ParkourListBean> list;
     String type;
     ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public ClassifiQiangzhanAdapter(Context context, List<ClassifiHomeBean.DataBean.GunFireListBean> list) {
+    public ClassifiMaoxianAdapter(Context context, List<ClassifiHomeBean.DataBean.ParkourListBean> list) {
         super();
         this.context = context;
         this.list = list;
         this.type = type;
     }
 
-    public void setList(List<ClassifiHomeBean.DataBean.GunFireListBean> list) {
+    public void setList(List<ClassifiHomeBean.DataBean.ParkourListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -40,7 +40,7 @@ public class ClassifiQiangzhanAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         if (list != null) {
-            return list.size() < 6 ? 6 : list.size();
+            return  list.size();
         }
         return 0;
     }
@@ -63,7 +63,7 @@ public class ClassifiQiangzhanAdapter extends BaseAdapter {
         ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = View.inflate(parent.getContext(), R.layout.classifi_home_item, null);
+            convertView = View.inflate(parent.getContext(), R.layout.classifi_gridview_item, null);
             holder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
             convertView.setTag(holder);
         } else {

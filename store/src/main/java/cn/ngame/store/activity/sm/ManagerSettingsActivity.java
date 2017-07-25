@@ -78,13 +78,13 @@ public class ManagerSettingsActivity extends BaseFgActivity implements CompoundB
                 if (text.endsWith("MB")) {
                     delayMillis = 1000;
                 } else if (text.endsWith("KB")) {
-                    delayMillis = 100;
+                    delayMillis = 200;
                 } else {
                     delayMillis = 1000;
                 }
                 DataCleanManager.clearAllCache(ManagerSettingsActivity.this);
                 final DialogHelper dialogHelper = new DialogHelper(getSupportFragmentManager(), ManagerSettingsActivity.this);
-                dialogHelper.showAlert("清理中...", true);
+                dialogHelper.showAlert("清理中...", false);
 
                 v.postDelayed(new Runnable() {
                     @Override

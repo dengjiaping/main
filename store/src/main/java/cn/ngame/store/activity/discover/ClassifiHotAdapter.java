@@ -1,5 +1,5 @@
 
-package cn.ngame.store.adapter;
+package cn.ngame.store.activity.discover;
 
 import android.content.Context;
 import android.view.View;
@@ -8,31 +8,26 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jzt.hol.android.jkda.sdk.bean.classification.ClassifiHomeBean;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
 import cn.ngame.store.R;
 
 /**
- *  首页下方攻略列表
  * @author gp
  */
-public class ClassifiMaoxianAdapter extends BaseAdapter {
+public class ClassifiHotAdapter extends BaseAdapter {
 
     private Context context;
-    private List<ClassifiHomeBean.DataBean.ParkourListBean> list;
-    String type;
-    ImageLoader imageLoader = ImageLoader.getInstance();
+    private List<ClassifiHomeBean.DataBean.OnlineListBean> list;
 
-    public ClassifiMaoxianAdapter(Context context, List<ClassifiHomeBean.DataBean.ParkourListBean> list) {
+    public ClassifiHotAdapter(Context context, List<ClassifiHomeBean.DataBean.OnlineListBean> list) {
         super();
         this.context = context;
         this.list = list;
-        this.type = type;
     }
 
-    public void setList(List<ClassifiHomeBean.DataBean.ParkourListBean> list) {
+    public void setList(List<ClassifiHomeBean.DataBean.OnlineListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -40,7 +35,7 @@ public class ClassifiMaoxianAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         if (list != null) {
-            return list.size() < 6 ? 6 : list.size();
+            return list.size();
         }
         return 0;
     }
@@ -63,7 +58,7 @@ public class ClassifiMaoxianAdapter extends BaseAdapter {
         ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = View.inflate(parent.getContext(), R.layout.classifi_home_item, null);
+            convertView = View.inflate(parent.getContext(), R.layout.classifi_gridview_item, null);
             holder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
             convertView.setTag(holder);
         } else {

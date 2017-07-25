@@ -1,5 +1,5 @@
 
-package cn.ngame.store.adapter;
+package cn.ngame.store.activity.discover;
 
 import android.content.Context;
 import android.view.View;
@@ -18,21 +18,21 @@ import cn.ngame.store.R;
  *  首页下方攻略列表
  * @author gp
  */
-public class ClassifiDongzuoAdapter extends BaseAdapter {
+public class ClassifyRoleAdapter extends BaseAdapter {
 
     private Context context;
-    private List<ClassifiHomeBean.DataBean.CombatListBean> list;
+    private List<ClassifiHomeBean.DataBean.RoleListBean> list;
     String type;
     ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public ClassifiDongzuoAdapter(Context context, List<ClassifiHomeBean.DataBean.CombatListBean> list) {
+    public ClassifyRoleAdapter(Context context, List<ClassifiHomeBean.DataBean.RoleListBean> list) {
         super();
         this.context = context;
         this.list = list;
         this.type = type;
     }
 
-    public void setList(List<ClassifiHomeBean.DataBean.CombatListBean> list) {
+    public void setList(List<ClassifiHomeBean.DataBean.RoleListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -40,7 +40,7 @@ public class ClassifiDongzuoAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         if (list != null) {
-            return list.size() ;
+            return list.size();
         }
         return 0;
     }

@@ -204,5 +204,6 @@
     <string name="about_text_line_4">NGAMEZONE支持数百款游戏的手柄操作，一个游戏，两种玩法，
         即使那些游戏原生并不支持手柄，通过我们的云映射功能，也能轻松享受。数十家手柄品牌方官方推荐，值得信赖。</string>
     <string name="see_more">查看更多</string>
+    <string name="ngamezone">NGAMEZONE账号：</string>
 
 </resources>

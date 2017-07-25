@@ -1,4 +1,4 @@
-package cn.ngame.store.activity.main;
+package cn.ngame.store.activity.discover;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,10 +33,9 @@ import java.util.Map;
 
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
+import cn.ngame.store.activity.main.SelectedTopicsActivity;
+import cn.ngame.store.activity.main.TopicsDetailActivity;
 import cn.ngame.store.adapter.ClassifiDongzuoAdapter;
-import cn.ngame.store.adapter.ClassifiJiaoseAdapter;
-import cn.ngame.store.adapter.ClassifiMaoxianAdapter;
-import cn.ngame.store.adapter.ClassifiQiangzhanAdapter;
 import cn.ngame.store.adapter.ClassifiSaicheAdapter;
 import cn.ngame.store.adapter.ClassifiTiyuAdapter;
 import cn.ngame.store.adapter.ClassifiXiuxianAdapter;
@@ -53,7 +52,7 @@ import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.game.view.GameListActivity;
-import cn.ngame.store.game.view.SBGameActivity;
+import cn.ngame.store.game.view.GameClassifyActivity;
 import cn.ngame.store.video.view.VideoDetailActivity;
 import cn.ngame.store.view.BannerView;
 import cn.ngame.store.view.PicassoImageView;
@@ -91,7 +90,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     List<ClassifiHomeBean.DataBean.ParkourListBean> maoxianList = new ArrayList<>();
     ClassifiDongzuoAdapter dongzuoAdapter;
     List<ClassifiHomeBean.DataBean.CombatListBean> dongzuoList = new ArrayList<>();
-    ClassifiJiaoseAdapter jiaoseAdapter;
+    ClassifyRoleAdapter jiaoseAdapter;
     List<ClassifiHomeBean.DataBean.RoleListBean> jiaoseList = new ArrayList<>();
     ClassifiXiuxianAdapter xiuxianAdapter;
     List<ClassifiHomeBean.DataBean.PuzzleListBean> xiuxianList = new ArrayList<>();
@@ -199,11 +198,18 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         //分类条目点击
         remenAdapter.setmOnItemClickListener(new DiscoverClassifyTopAdapter.OnItemClickLitener() {
             @Override
-            public void onItemClick(View view, int position, String text) {
+            public void onItemClick(View view, int position, String itemText) {
                 Intent classifyIntent = new Intent(context, GameListActivity.class);
                 classifyIntent.putExtra(KeyConstant.category_Id, 367 + "");//原生手柄 id 367
-                classifyIntent.putExtra(KeyConstant.TITLE, "原生手柄");
+                classifyIntent.putExtra(KeyConstant.TITLE, itemText);
                 context.startActivity(classifyIntent);
+            }
+        });
+        //分类
+        headView.findViewById(R.id.discover_top_classify_all_bt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, GameAllClassifyActivity.class));
             }
         });
     }
@@ -314,14 +320,12 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                 //专题
             } else if (id == R.id.more_subject_tv) {
                 intent.setClass(context, SelectedTopicsActivity.class);
-                intent.putExtra(KeyConstant.TITLE, "专题");
                 context.startActivity(intent);
-
                 //大厂
             } else if (id == R.id.more_big_chang_tv) {
                 Intent i = new Intent();
                 i.setClass(context, TopicsDetailActivity.class);
-                i.putExtra(KeyConstant.ID, 368 );// 单机游戏精选 getId()==368   long类型
+                i.putExtra(KeyConstant.ID, 368);// 单机游戏精选 getId()==368   long类型
                 i.putExtra(KeyConstant.TITLE, "单机");//list.get(position).getTypeName()
                 i.putExtra(KeyConstant.DESC, "这是单机游戏精选精选的描述内容 getTypeDesc()");//getTypeDesc()
                 i.putExtra(KeyConstant.URL, "http://oss.ngame.cn/upload/1492742489492.png");//getLogoUrl()
@@ -337,7 +341,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             } else if (id == R.id.more_strategy_tv) {
                 intent.setClass(context, GameListActivity.class);
                 intent.putExtra(KeyConstant.category_Id, 368 + "");//单机id 336
-                intent.putExtra(KeyConstant.TITLE, "单机");
+                intent.putExtra(KeyConstant.TITLE, "策略");
                 context.startActivity(intent);
                /* Intent i = new Intent();
                 i.setClass(context, TopicsDetailActivity.class);
@@ -512,7 +516,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent1 = new Intent(context, SBGameActivity.class);
+                Intent intent1 = new Intent(context, GameClassifyActivity.class);
                 switch (i) {
                     case 1:
                         if (position < remenList.size()) {
@@ -641,7 +645,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         if (result.getData().getRoleList().size() > 0) {
             jiaoseList.clear();
             jiaoseList.addAll(result.getData().getRoleList());
-            jiaoseAdapter = new ClassifiJiaoseAdapter(context, jiaoseList);
+            jiaoseAdapter = new ClassifyRoleAdapter(context, jiaoseList);
             //gridView_jiaose.setAdapter(jiaoseAdapter);
         }
         if (result.getData().getPuzzleList().size() > 0) {

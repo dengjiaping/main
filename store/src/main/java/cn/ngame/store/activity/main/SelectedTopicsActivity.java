@@ -40,14 +40,13 @@ public class SelectedTopicsActivity extends BaseFgActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selected_topics_activity);
         content = SelectedTopicsActivity.this;
-        title = getIntent().getStringExtra(KeyConstant.TITLE);
         init();
     }
 
     private void init() {
         tv_title = (Button) findViewById(R.id.left_bt);
+        tv_title.setText("专题");
         listView = (ListView) findViewById(R.id.listView);
-        tv_title.setText(title);
         tv_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,7 +98,7 @@ public class SelectedTopicsActivity extends BaseFgActivity {
             return;
         }
         list.addAll(result.getData());
-        if(adapter == null){
+        if (adapter == null) {
             adapter = new TopicsListAdapter(this, list);
             listView.setAdapter(adapter);
         } else {

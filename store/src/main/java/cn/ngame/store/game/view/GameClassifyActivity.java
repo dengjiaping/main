@@ -41,9 +41,9 @@ import cn.ngame.store.view.ScrollTabView;
  * 显示手柄分类详情
  * Created by zeng on 2016/8/24.
  */
-public class SBGameActivity extends BaseFgActivity {
+public class GameClassifyActivity extends BaseFgActivity {
 
-    public static final String TAG = SBGameActivity.class.getSimpleName();
+    public static final String TAG = GameClassifyActivity.class.getSimpleName();
 
     private ListView listView;
     private LvSbGameAdapter adapter;
@@ -90,7 +90,7 @@ public class SBGameActivity extends BaseFgActivity {
         titleBar.setOnRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SBGameActivity.this, SearchActivity.class);
+                Intent intent = new Intent(GameClassifyActivity.this, SearchActivity.class);
                 startActivity(intent);
             }
         });
@@ -138,7 +138,7 @@ public class SBGameActivity extends BaseFgActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(SBGameActivity.this, GameDetailActivity.class);
+                Intent intent = new Intent(GameClassifyActivity.this, GameDetailActivity.class);
                 intent.putExtra("id", ((GameInfo) adapter.getItem(position)).id);
                 startActivity(intent);
             }
