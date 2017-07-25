@@ -86,5 +86,6 @@
     <dimen name="dp_3">3dp</dimen>
     <dimen name="classify_grid_item_height">48dp</dimen>
     <dimen name="all_classify_grid_view_height">156dp</dimen>
+    <dimen name="dp_11">11dp</dimen>
 
 </resources>

@@ -14,8 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,13 +29,16 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cn.ngame.store.R;
@@ -47,6 +54,7 @@ import cn.ngame.store.core.utils.FileUtil;
 import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
+import cn.ngame.store.core.utils.UrlConstant;
 import cn.ngame.store.exception.NoSDCardException;
 import cn.ngame.store.fragment.SimpleDialogFragment;
 import cn.ngame.store.util.ToastUtil;
@@ -78,8 +86,10 @@ public class UserCenterActivity extends BaseFgActivity {
     private String imgStrPost = "";
     private String avatarUrl;
     private String LOGIN_TYPE;
-    private String IMG_TYPE = "0";//1表示用户有图片地址  0表示用户选的新图片，base64字符串。
+    private String IMG_TYPE = "-1";//0表示用户有图片地址  1 表示用户选的本地，base64字符串。
     private SharedPreferences.Editor editor;
+    private ArrayAdapter<String> mAdapter;
+    private Dialog defAvatarDialog;
 
 
     @Override
@@ -131,6 +141,7 @@ public class UserCenterActivity extends BaseFgActivity {
             public void onClick(View v) {
                 //修改头像
                 showChangeAvatarDialog();
+
             }
         });
        /* user = StoreApplication.user;*/
@@ -163,7 +174,7 @@ public class UserCenterActivity extends BaseFgActivity {
                     ToastUtil.show(UserCenterActivity.this, "昵称为空哦！");
                     return;
                 }
-                if (nickNameStr.equals(nickName) && "0".equals(IMG_TYPE)) {
+                if (nickNameStr.equals(nickName) && "-1".equals(IMG_TYPE)) {
                     content.finish();
                 } else {
                     nickName = nickNameStr;
@@ -174,6 +185,29 @@ public class UserCenterActivity extends BaseFgActivity {
 
         android.util.Log.d(TAG, "userTOKEN:" + StoreApplication.token);
         android.util.Log.d(TAG, "userCode:" + StoreApplication.userCode);
+
+        //默认头像地址
+        for (int i = 1; i < 21; i++) {
+            if (i < 10) {
+                mUrlList.add(UrlConstant.RECOMMED_URL_START + "0" + i + ".png");
+            } else {
+                mUrlList.add(UrlConstant.RECOMMED_URL_START + i + ".png");
+            }
+        }
+        defAvatarDialog = new Dialog(this, R.style.Dialog_From_Bottom_Style);
+        //填充对话框的布局
+        View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_recommend_avatar, null);
+        GridView gridView = (GridView) inflate.findViewById(R.id.recommend_grid_view);
+        gridView.setAdapter(new AvatarAdapter());
+        defAvatarDialog.setContentView(inflate);//将布局设置给Dialog
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                imgStrPost = mUrlList.get(position);
+                imageLoader.displayImage(imgStrPost, img_photo);
+                IMG_TYPE = "0";
+            }
+        });
     }
 
     //修改头像
@@ -191,7 +225,9 @@ public class UserCenterActivity extends BaseFgActivity {
                     Crop.pickImage(UserCenterActivity.this);
                 } else if (id == R.id.choose_camera_tv) {//相机
                     getImageFromCamera();
-                } else if (id == R.id.choose_recomend_tv) {//选择推荐头像
+                } else if (id == R.id.choose_recomend_tv) {
+                    //选择推荐头像
+                    setDialogWindow(defAvatarDialog);
                 }
             }
         };
@@ -204,7 +240,51 @@ public class UserCenterActivity extends BaseFgActivity {
         setDialogWindow(dialog);
     }
 
-    //修改头像
+    private List<String> mUrlList = new ArrayList<>();
+
+
+    //默认头像适配器
+    public class AvatarAdapter extends BaseAdapter {
+        public AvatarAdapter() {
+            super();
+        }
+
+        @Override
+        public int getCount() {
+            return mUrlList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return mUrlList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, final ViewGroup parent) {
+            AvatarAdapter.ViewHolder holder;
+            if (convertView == null) {
+                holder = new AvatarAdapter.ViewHolder();
+                convertView = View.inflate(parent.getContext(), R.layout.gridview_image_view_item, null);
+                holder.mIconIv = (SimpleDraweeView) convertView.findViewById(R.id.recommend_icon_gv_iv);
+                convertView.setTag(holder);
+            } else {
+                holder = (AvatarAdapter.ViewHolder) convertView.getTag();
+            }
+            holder.mIconIv.setImageURI(mUrlList.get(position));
+            return convertView;
+        }
+
+        class ViewHolder {
+            private SimpleDraweeView mIconIv;
+        }
+    }
+
+    //退出登录
     public void showLogoutDialog() {
         final Dialog dialog = new Dialog(this, R.style.Dialog_From_Bottom_Style);
         //填充对话框的布局
@@ -334,7 +414,7 @@ public class UserCenterActivity extends BaseFgActivity {
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
                 DialogHelper.hideWaiting(getSupportFragmentManager());
-                Toast.makeText(UserCenterActivity.this, "头像修改失败，网络连接错误！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserCenterActivity.this, "修改失败，网络连接异常！", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "HTTP请求失败：网络连接错误！" + volleyError.getMessage());
             }
         };
