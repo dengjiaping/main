@@ -3,6 +3,7 @@ package cn.ngame.store.activity.main;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
@@ -106,29 +107,36 @@ public class TopicsDetailActivity extends BaseFgActivity {
         url = getIntent().getStringExtra("url");
 
         pullListView.setPullLoadEnabled(true); //false,不允许上拉加载
-        pullListView.setScrollLoadEnabled(false);
-        pullListView.setLastUpdatedLabel(new Date().toLocaleString());
+        pullListView.setScrollLoadEnabled(true);
+        pullListView.setPullRefreshEnabled(true);
+        pullListView.setLastUpdatedLabel(DateFormat.getTimeFormat(this).format(new Date()));
         pullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                Log.d("888", "onPullDownToRefresh): ");
                 pullListView.setPullLoadEnabled(true);
+                pullListView.setPullRefreshEnabled(true);
                 pageAction.setCurrentPage(0);
-                runService();
+                getDataList();
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 //少于指定条数不加载
                 if (pageAction.getTotal() < pageAction.getPageSize()) {
+                    Log.d("888", "tHasMoreData(false): ");
                     pullListView.setHasMoreData(false);
+                    pullListView.getFooterLoadingLayout().setPullLabel("没有更多数据了");
                     pullListView.onPullUpRefreshComplete();
                     return;
                 }
                 if (pageAction.getCurrentPage() * pageAction.getPageSize() < pageAction.getTotal()) {
                     pageAction.setCurrentPage(pageAction.getCurrentPage() == 0 ? pageAction.getCurrentPage() + 2 : pageAction
                             .getCurrentPage() + 1);
-                    runService();
+                    Log.d("888", "getDataList(false)222222222222222: ");
+                    getDataList();
                 } else {
+                    Log.d("888", "tHasMoreData(false)222222222222222: ");
                     pullListView.setHasMoreData(false);
                     pullListView.onPullUpRefreshComplete();
                 }
@@ -155,7 +163,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
         if (refreshableView.getHeaderViewsCount() == 0) {
             refreshableView.addHeaderView(headView);
         }
-        runService();
+        getDataList();
     }
 
     private void setTitleBGColor(final ListView refreshableView) {
@@ -209,7 +217,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
         sdv_img.setImageURI(url);
     }
 
-    public void runService() {
+    public void getDataList() {
         GameListBody bodyBean = new GameListBody();
         bodyBean.setCategoryId2(ConvUtil.NI(id));
         bodyBean.setPageIndex(pageAction.getCurrentPage());
@@ -221,6 +229,8 @@ public class TopicsDetailActivity extends BaseFgActivity {
                     public void onError(Throwable e) {
 //                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
                         pullListView.getRefreshableView().setAdapter(adapter); //数据位空时，加载头部
+                        pullListView.onPullUpRefreshComplete();
+                        pullListView.onPullDownRefreshComplete();
                     }
 
                     @Override
@@ -257,12 +267,12 @@ public class TopicsDetailActivity extends BaseFgActivity {
         } else {
             adapter.setList(list);
         }
-        //设置下位列表
-        if ((list.size() == 0 && pageAction.getTotal() == 0) || list.size() >= pageAction.getTotal()) {
-            pullListView.setPullLoadEnabled(false);
+        //
+       /* if ((list.size() == 0 && pageAction.getTotal() == 0) || list.size() >= pageAction.getTotal()) {
+            pullListView.setPullLoadEnabled(true);
         } else {
             pullListView.setPullLoadEnabled(true);
-        }
+        }*/
         if (pageAction.getCurrentPage() > 0 && result.getData().size() > 0) { //设置上拉刷新后停留的地方
             int index = pullListView.getRefreshableView().getFirstVisiblePosition();
             View v = pullListView.getRefreshableView().getChildAt(0);
