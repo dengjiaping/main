@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +55,7 @@ import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.UrlConstant;
 import cn.ngame.store.exception.NoSDCardException;
-import cn.ngame.store.fragment.SimpleDialogFragment;
+import cn.ngame.store.fragment.OneBtDialogFragment;
 import cn.ngame.store.util.ToastUtil;
 
 
@@ -449,21 +448,9 @@ public class UserCenterActivity extends BaseFgActivity {
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
-        final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
-        dialogFragment.setTitle("提示");
-        dialogFragment.setDialogWidth(250);
-
-        TextView tv = new TextView(content);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
-                .LayoutParams.MATCH_PARENT);
-        params.setMargins(0, 20, 0, 0);
-        params.gravity = Gravity.CENTER;
-        tv.setLayoutParams(params);
-        tv.setGravity(Gravity.CENTER);
-        tv.setText("登录信息已失效");
-        tv.setTextColor(getResources().getColor(R.color.black));
-        dialogFragment.setContentView(tv);
-
+        final OneBtDialogFragment dialogFragment = new OneBtDialogFragment();
+        dialogFragment.setTitle("您的登录状态已经失效\n请重新登录");
+        dialogFragment.setDialogWidth(220);
         dialogFragment.setNegativeButton("重新登录", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -474,6 +461,18 @@ public class UserCenterActivity extends BaseFgActivity {
             }
         });
         dialogFragment.show(ft, "successDialog");
+
+       /* TextView tv = new TextView(content);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
+                .LayoutParams.MATCH_PARENT);
+        params.setMargins(0, 20, 0, 0);
+        params.gravity = Gravity.CENTER;
+        tv.setLayoutParams(params);
+        tv.setGravity(Gravity.CENTER);
+        tv.setText("登录信息已失效");
+        tv.setTextColor(getResources().getColor(R.color.black));
+        dialogFragment.setContentView(tv);*/
+
     }
 
     ImageLoader imageLoader = ImageLoader.getInstance();
