@@ -124,7 +124,6 @@ public class TopicsDetailActivity extends BaseFgActivity {
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 //少于指定条数不加载
                 if (pageAction.getTotal() < pageAction.getPageSize()) {
-                    Log.d("888", "tHasMoreData(false): ");
                     pullListView.setHasMoreData(false);
                     pullListView.getFooterLoadingLayout().setPullLabel("没有更多数据了");
                     pullListView.onPullUpRefreshComplete();
@@ -133,10 +132,8 @@ public class TopicsDetailActivity extends BaseFgActivity {
                 if (pageAction.getCurrentPage() * pageAction.getPageSize() < pageAction.getTotal()) {
                     pageAction.setCurrentPage(pageAction.getCurrentPage() == 0 ? pageAction.getCurrentPage() + 2 : pageAction
                             .getCurrentPage() + 1);
-                    Log.d("888", "getDataList(false)222222222222222: ");
                     getDataList();
                 } else {
-                    Log.d("888", "tHasMoreData(false)222222222222222: ");
                     pullListView.setHasMoreData(false);
                     pullListView.onPullUpRefreshComplete();
                 }
