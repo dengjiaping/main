@@ -441,7 +441,7 @@ public class RecommendFragment extends BaseSearchFragment {
                     startActivity(i2);
                     break;
                 case R.id.recommend_topics_more_tv://专题
-                    startActivity(new Intent(context, SelectedTopicsActivity.class));
+                    startActivity(new Intent(context, TopicsListActivity.class));
                     break;
             }
         }

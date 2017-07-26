@@ -25,7 +25,7 @@ import cn.ngame.store.core.utils.KeyConstant;
  * Created by gp on 2017/4/13 0013.
  */
 
-public class SelectedTopicsActivity extends BaseFgActivity {
+public class TopicsListActivity extends BaseFgActivity {
 
     private int ID = 22;
     private Button tv_title;
@@ -33,13 +33,13 @@ public class SelectedTopicsActivity extends BaseFgActivity {
     private String title;
     List<YunduanBean.DataBean> list = new ArrayList<>();
     TopicsListAdapter adapter;
-    private SelectedTopicsActivity content;
+    private TopicsListActivity content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selected_topics_activity);
-        content = SelectedTopicsActivity.this;
+        content = TopicsListActivity.this;
         init();
     }
 
@@ -57,7 +57,7 @@ public class SelectedTopicsActivity extends BaseFgActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent();
-                i.setClass(SelectedTopicsActivity.this, TopicsDetailActivity.class);
+                i.setClass(TopicsListActivity.this, TopicsDetailActivity.class);
                 i.putExtra(KeyConstant.ID, list.get(position).getId());
                 i.putExtra(KeyConstant.TITLE, list.get(position).getTypeName());
                 i.putExtra(KeyConstant.DESC, list.get(position).getTypeDesc());

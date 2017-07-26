@@ -154,7 +154,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
         });     //状态栏渐变
         setTitleBGColor(refreshableView);
         //添加头布局
-        View headView = View.inflate(this, R.layout.select_game_header, null);
+        View headView = View.inflate(this, R.layout.topics_detail_header, null);
         initHeadView(headView);
         //头布局放入listView中
         if (refreshableView.getHeaderViewsCount() == 0) {

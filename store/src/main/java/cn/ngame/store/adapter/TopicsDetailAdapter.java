@@ -79,7 +79,7 @@ public class TopicsDetailAdapter extends BaseAdapter {
         final GameRankListBean.DataBean gameInfo = (list == null) ? null : list.get(position);
         final ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.ranking_list_item, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_topics_detail, parent, false);
             holder = new ViewHolder(context, fm);
             holder.img = (ImageView) convertView.findViewById(R.id.img_1);
             holder.tv_position = (TextView) convertView.findViewById(R.id.tv_position);
@@ -89,9 +89,6 @@ public class TopicsDetailAdapter extends BaseAdapter {
             holder.tv_count = (TextView) convertView.findViewById(R.id.text2);
             holder.ratingBar = (RatingBar) convertView.findViewById(R.id.rating_bar);
             holder.progressBar = (GameLoadProgressBar) convertView.findViewById(R.id.progress_bar);
-            holder.tv_shoubing = (TextView) convertView.findViewById(R.id.tv_shoubing);
-            holder.tv_vr = (TextView) convertView.findViewById(R.id.tv_vr);
-            holder.tv_toukong = (TextView) convertView.findViewById(R.id.tv_toukong);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -110,7 +107,6 @@ public class TopicsDetailAdapter extends BaseAdapter {
         private TextView tv_position, tv_title, tv_summary, tv_size, tv_count;
         private RatingBar ratingBar;
         private GameLoadProgressBar progressBar;    //下载进度条
-        private TextView tv_shoubing, tv_vr, tv_toukong;
         private IFileLoad fileLoad;
         private FragmentManager fm;
         private Timer timer = new Timer();
@@ -194,22 +190,7 @@ public class TopicsDetailAdapter extends BaseAdapter {
                     progressBar.toggle();
                 }
             });
-            //是否手柄、vr，头控
-            if (gameInfo.getIsHeadControl() == 1) {
-                tv_toukong.setVisibility(View.VISIBLE);
-            } else {
-                tv_toukong.setVisibility(View.GONE);
-            }
-            if (gameInfo.getIsHand() == 1) {
-                tv_shoubing.setVisibility(View.VISIBLE);
-            } else {
-                tv_shoubing.setVisibility(View.GONE);
-            }
-            if (gameInfo.getIsVR() == 1) {
-                tv_vr.setVisibility(View.VISIBLE);
-            } else {
-                tv_vr.setVisibility(View.GONE);
-            }
+
         }
     }
 }

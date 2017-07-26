@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              xmlns:fresco="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/sdv_img"
         android:layout_width="match_parent"
@@ -12,7 +14,7 @@
         fresco:actualImageScaleType="fitXY"
         fresco:placeholderImage="@drawable/default_logo"
         fresco:placeholderImageScaleType="centerCrop"
-        fresco:viewAspectRatio="2.5" />
+        fresco:viewAspectRatio="2.5"/>
 
     <TextView
         android:id="@+id/tv_info"
@@ -20,13 +22,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/sdv_img"
         android:background="@color/white"
-        android:padding="10dp"
-        android:lineSpacingExtra="2dp"
+        android:paddingBottom="@dimen/dp_12"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingRight="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_12"
         android:text=""
-        android:textSize="13sp"
-        android:textColor="@color/font_333"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/gray"/>
+        android:textColor="@color/font_1a"
+        android:textSize="@dimen/dp_18"/>
+
+    <include layout="@layout/layout_line_dp1_d9d9d9"/>
 </LinearLayout>

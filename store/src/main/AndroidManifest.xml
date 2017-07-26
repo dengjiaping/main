@@ -309,7 +309,7 @@
             android:name=".activity.main.FictitiousActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.main.SelectedTopicsActivity"
+            android:name=".activity.main.TopicsListActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.main.TopicsDetailActivity"

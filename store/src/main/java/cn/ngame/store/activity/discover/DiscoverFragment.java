@@ -33,7 +33,7 @@ import java.util.Map;
 
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
-import cn.ngame.store.activity.main.SelectedTopicsActivity;
+import cn.ngame.store.activity.main.TopicsListActivity;
 import cn.ngame.store.activity.main.TopicsDetailActivity;
 import cn.ngame.store.adapter.ClassifiDongzuoAdapter;
 import cn.ngame.store.adapter.ClassifiSaicheAdapter;
@@ -318,7 +318,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                 context.startActivity(intent);
                 //专题
             } else if (id == R.id.more_subject_tv) {
-                intent.setClass(context, SelectedTopicsActivity.class);
+                intent.setClass(context, TopicsListActivity.class);
                 context.startActivity(intent);
                 //大厂
             } else if (id == R.id.more_big_chang_tv) {
