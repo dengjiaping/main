@@ -24,7 +24,7 @@ import cn.ngame.store.adapter.ClassifiSaicheAdapter;
 import cn.ngame.store.adapter.ClassifiTiyuAdapter;
 import cn.ngame.store.adapter.ClassifiXiuxianAdapter;
 import cn.ngame.store.adapter.HomeRaiderAdapter;
-import cn.ngame.store.adapter.LvSbGameAdapter;
+import cn.ngame.store.adapter.GameListAdapter;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.utils.KeyConstant;
@@ -44,7 +44,7 @@ public class GameAllClassifyActivity extends BaseFgActivity {
     public static final String TAG = GameAllClassifyActivity.class.getSimpleName();
     private PullToRefreshListView pullListView;
     private LoadStateView loadStateView;
-    private LvSbGameAdapter adapter;
+    private GameListAdapter adapter;
     private List<GameInfo> gameInfoList;
 
     private PageAction pageAction;

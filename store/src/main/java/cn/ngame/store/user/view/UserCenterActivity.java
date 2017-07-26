@@ -361,7 +361,6 @@ public class UserCenterActivity extends BaseFgActivity {
             avatarUrl = uri.toString();
             imageLoader.displayImage(avatarUrl, img_photo, roundOptions);
             // 上传图片
-            android.util.Log.d(TAG, "本地url:" + avatarUrl);
             String path = uri.getPath();
             File file = new File(path);
             imgStrPost = ImageUtil.getImageStr(file);
@@ -445,7 +444,6 @@ public class UserCenterActivity extends BaseFgActivity {
      * 显示结果对话框
      */
     private void showReLoginDialog() {
-
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         final OneBtDialogFragment dialogFragment = new OneBtDialogFragment();

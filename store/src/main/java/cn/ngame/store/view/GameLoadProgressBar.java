@@ -321,6 +321,7 @@ public class GameLoadProgressBar extends View {
             //绘制背景色
             Paint paintStoke = new Paint();
             paintStoke.setStyle(Paint.Style.STROKE);
+            paintStoke.setAntiAlias(true);
             paintStoke.setColor(openColor);
             paintStoke.setStrokeWidth(2);
             canvas.drawRoundRect(mRadiusRect, mRadius, mRadius, paintStoke);//圆角

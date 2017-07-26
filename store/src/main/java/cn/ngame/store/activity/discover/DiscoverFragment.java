@@ -316,7 +316,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                 intent.putExtra(KeyConstant.category_Id, 380 + "");//原生手柄 id 336   一周新游 380
                 intent.putExtra(KeyConstant.TITLE, "近期最热");
                 context.startActivity(intent);
-
                 //专题
             } else if (id == R.id.more_subject_tv) {
                 intent.setClass(context, SelectedTopicsActivity.class);

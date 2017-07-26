@@ -23,7 +23,7 @@ import java.util.Map;
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
-import cn.ngame.store.adapter.LvSbGameAdapter;
+import cn.ngame.store.adapter.GameListAdapter;
 import cn.ngame.store.bean.Category;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.JsonResult;
@@ -46,7 +46,7 @@ public class GameClassifyActivity extends BaseFgActivity {
     public static final String TAG = GameClassifyActivity.class.getSimpleName();
 
     private ListView listView;
-    private LvSbGameAdapter adapter;
+    private GameListAdapter adapter;
 
     private ScrollTabView scrollTabView;       //分类标签控件
     private List<Category> categories = null;  //游戏分类标签
@@ -133,7 +133,7 @@ public class GameClassifyActivity extends BaseFgActivity {
                 }
             }
         });
-        adapter = new LvSbGameAdapter(this, getSupportFragmentManager());
+        adapter = new GameListAdapter(this, getSupportFragmentManager());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -22,7 +22,7 @@ import java.util.List;
 
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
-import cn.ngame.store.adapter.LvSbGameAdapter;
+import cn.ngame.store.adapter.GameListAdapter;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.core.net.GsonRequest;
@@ -54,7 +54,7 @@ public class GameRankFragment extends Fragment {
     private Context context;
 
     private ListView listView;
-    private LvSbGameAdapter adapter;
+    private GameListAdapter adapter;
     private LoadStateView loadStateView;       //加载等待控件
 
     @Override
@@ -87,7 +87,7 @@ public class GameRankFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        adapter = new LvSbGameAdapter(context,fragmentManager);
+        adapter = new GameListAdapter(context,fragmentManager);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

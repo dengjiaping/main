@@ -22,7 +22,7 @@ import java.util.Map;
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
-import cn.ngame.store.adapter.LvSbGameAdapter;
+import cn.ngame.store.adapter.ClassifyGameListAdapter;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.PageAction;
@@ -43,11 +43,11 @@ public class GameListActivity extends BaseFgActivity {
     public static final String TAG = GameListActivity.class.getSimpleName();
     private PullToRefreshListView pullListView;
     private LoadStateView loadStateView;
-    private LvSbGameAdapter adapter;
+    private ClassifyGameListAdapter adapter;
     private List<GameInfo> gameInfoList;
 
     private PageAction pageAction;
-    public static int PAGE_SIZE = 20;
+    public static int PAGE_SIZE = 10;
 
     private int lastItem;
 
@@ -127,34 +127,8 @@ public class GameListActivity extends BaseFgActivity {
         gameInfoList = new ArrayList<>();
         //加载游戏分类，默认加载第一个分类
         getGameList();
-        setListener();
-    }
-
-    private void setListener() {
-
-        adapter = new LvSbGameAdapter(this, getSupportFragmentManager());
+        adapter = new ClassifyGameListAdapter(this, getSupportFragmentManager());
         pullListView.getRefreshableView().setAdapter(adapter);
-
-//        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(AbsListView view, int scrollState) {
-//
-//                long count = adapter.getCount();
-//
-//                if (lastItem >= (count - 1) && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE ) {
-//                    if(count < totals){
-//                        pageIndex += 1;
-//                        getGameList();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//                lastItem = firstVisibleItem + visibleItemCount;
-//                Log.d(TAG,"-------------------------lastItem: "+lastItem);
-//            }
-//        });
     }
 
     /**

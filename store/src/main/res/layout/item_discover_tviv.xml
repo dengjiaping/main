@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:fresco="http://schemas.android.com/apk/res-auto"
+
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:orientation="vertical"
     >
 
     <com.facebook.drawee.view.SimpleDraweeView
+        xmlns:fresco="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tviv_item_iv"
         android:layout_width="@dimen/dp_85"
         android:layout_height="@dimen/dp_85"
         android:scaleType="fitXY"
-        fresco:failureImage="@drawable/ic_def_logo_188_188"
         fresco:actualImageScaleType="fitXY"
+        fresco:failureImage="@drawable/ic_def_logo_188_188"
         fresco:progressBarImage="@drawable/ic_def_logo_188_188"
         fresco:roundedCornerRadius="@dimen/dp_20"/>
+
     <TextView
         android:id="@+id/tviv_item_tv"
         android:layout_width="wrap_content"
