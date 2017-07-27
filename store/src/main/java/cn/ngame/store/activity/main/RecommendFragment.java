@@ -41,11 +41,11 @@ import cn.ngame.store.adapter.MainHomeRaiderAdapter;
 import cn.ngame.store.adapter.RecommendListAdapter;
 import cn.ngame.store.adapter.SelectGameAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
-import cn.ngame.store.bean.GameImage;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.bean.QueryHomeGameBean;
+import cn.ngame.store.bean.RecommendTopicsItemInfo;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.CommonUtil;
@@ -61,7 +61,7 @@ import cn.ngame.store.view.PicassoImageView;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 
-import static cn.ngame.store.core.utils.Constant.URL_GAME_DETAIL;
+import static cn.ngame.store.core.utils.Constant.URL_RECOMMEND_TOPICS;
 
 /**
  * 精选
@@ -104,7 +104,7 @@ public class RecommendFragment extends BaseSearchFragment {
     List<RecommendListBean.DataBean> topList = new ArrayList<>();
     List<RecommendListBean.DataBean> list = new ArrayList<>();
     private LinearLayout horizontalViewContainer;
-    private GameInfo gameInfo;
+    private List<RecommendTopicsItemInfo> gameInfo;
     private FragmentActivity context;
 
     public static RecommendFragment newInstance(int arg) {
@@ -152,81 +152,83 @@ public class RecommendFragment extends BaseSearchFragment {
                 });
     }
 
-    private ArrayList<String> imgUrlList = new ArrayList<String>();
 
     private void getHorizontalData() {
-        String url_game_detail = Constant.WEB_SITE + URL_GAME_DETAIL;
+        String url_recommend_topics = Constant.WEB_SITE + URL_RECOMMEND_TOPICS;
         //请求失败
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
+                ToastUtil.show(context, getString(R.string.pull_to_refresh_network_error));
                 Log.d(TAG, "HTTP请求失败：网络连接错误！");
             }
         };
         // 获取横向滑动的数据
-        Response.Listener<JsonResult<GameInfo>> successListener = new Response.Listener<JsonResult<GameInfo>>() {
+        Response.Listener<JsonResult<List<RecommendTopicsItemInfo>>> successListener = new Response
+                .Listener<JsonResult<List<RecommendTopicsItemInfo>>>() {
             @Override
-            public void onResponse(JsonResult<GameInfo> result) {
+            public void onResponse(JsonResult<List<RecommendTopicsItemInfo>> result) {
                 //数据为空
                 if (result == null || result.code != 0) {
+                    ToastUtil.show(context, getString(R.string.requery_failed));
                     return;
                 }
-                //GameInfo类  : 请求游戏JSON数据后,封装的javabean
+                //GameInfo类  : 请求游戏JN数据后,封装的javabean
                 gameInfo = result.data;
-                if (null == gameInfo) {
+                int size = gameInfo.size();
+                if (null == gameInfo || size == 0) {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误！");
                 } else {
-                    List<GameImage> gameImgsList = gameInfo.gameDetailsImages;
-                    if (null != gameImgsList && gameImgsList.size() > 0) {
-                        horizontalViewContainer.removeAllViews();
-                        imgUrlList.clear();
-                        for (int i = 0; i < gameImgsList.size(); i++) {
-                            GameImage gameImage = gameImgsList.get(i);//获取每一张图片
-                            PicassoImageView imageView = new PicassoImageView(getActivity());
-                            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                            //为  PicassoImageView设置属性
-                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            params.width = CommonUtil.dip2px(context, 240f);
-                            params.height = CommonUtil.dip2px(context, 114f);
-                            //有多个图片的话
-                            if (i > 0) {
-                                params.setMargins(CommonUtil.dip2px(context, 10), 0, 0, 0);
-                            }
-                            imageView.setLayoutParams(params);
-
-                            //加载网络图片
-                            imageView.setImageUrl(gameImage.imageLink, 240f, 114f, R.drawable.ic_def_logo_480_228);
-                            horizontalViewContainer.addView(imageView);
-                            imgUrlList.add(gameImage.imageLink);
+                    horizontalViewContainer.removeAllViews();
+                    for (int i = 0; i < size; i++) {
+                        String gameImage = gameInfo.get(i).getSelectImage();//获取每一张图片
+                        PicassoImageView imageView = new PicassoImageView(getActivity());
+                        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        //为  PicassoImageView设置属性
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        params.width = CommonUtil.dip2px(context, 240f);
+                        params.height = CommonUtil.dip2px(context, 114f);
+                        //有多个图片的话
+                        if (i > 0) {
+                            params.setMargins(CommonUtil.dip2px(context, 10), 0, 0, 0);
                         }
+                        imageView.setLayoutParams(params);
+                        //加载网络图片
+                        imageView.setImageUrl(gameImage, 240f, 114f, R.drawable.ic_def_logo_480_228);
+                        imageView.setTag(gameImage);
+                        horizontalViewContainer.addView(imageView);
                     }
                 }
 
-                horizontalViewContainer.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent gv = new Intent();
-                        gv.setClass(context, ShowViewActivity.class);
-                        gv.putStringArrayListExtra("viewImages", imgUrlList);
-                        gv.putExtra("selectPosition", 0);
-                        startActivity(gv);
-                    }
-                });
+                horizontalViewContainer.setOnClickListener(
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent i = new Intent();
+                                i.setClass(context, ShowViewActivity.class);
+                                String tag = (String) v.getTag();
+                                int index = horizontalViewContainer.indexOfChild(v);
+                                android.util.Log.d(TAG, index + "onClick: " + tag);
+                                //startActivity(gv);
+                            }
+                        }
+                );
 
             }
         };
 
         //------------------------------------------------------------------------------
-        Request<JsonResult<GameInfo>> request = new GsonRequest<JsonResult<GameInfo>>(Request.Method.POST, url_game_detail,
-                successListener, errorListener, new TypeToken<JsonResult<GameInfo>>() {
-        }.getType()) {
+        Request<JsonResult<List<RecommendTopicsItemInfo>>> request = new GsonRequest<JsonResult<List<RecommendTopicsItemInfo>>>
+                (Request.Method.POST, url_recommend_topics,
+                        successListener, errorListener, new TypeToken<JsonResult<List<RecommendTopicsItemInfo>>>() {
+                }.getType()) {
             @Override//填写参数
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("gameId", 638 + "");//146.638
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);//安卓
                 return params;
             }
         };
@@ -299,7 +301,6 @@ public class RecommendFragment extends BaseSearchFragment {
 
     public void initListView(final View view) {
         //tv_top_bar_bg = (TextView) view.findViewById(R.id.tv_top_bar_bg);
-        Log.d(TAG, "initListView:9999 ");
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
@@ -462,7 +463,7 @@ public class RecommendFragment extends BaseSearchFragment {
 
     //每日精选、MOBA精选、枪战精选、新平尝鲜、品牌游戏列表（12个）
     private void queryHomeGame() {
-        String url = Constant.WEB_SITE + Constant.URL_HOME_GAME_SELECTION;
+        String url = Constant.WEB_SITE + Constant.URL_RECOMMEND_TOPICS;
         Response.Listener<JsonResult<QueryHomeGameBean>> successListener = new Response.Listener<JsonResult<QueryHomeGameBean>>
                 () {
             @Override

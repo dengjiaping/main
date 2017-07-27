@@ -104,7 +104,7 @@ public class LoginHelper {
                 android.util.Log.d(TAG, "重新登录: " + StoreApplication.userName);
                 params.put(KeyConstant.TYPE, StoreApplication.loginType); //（1手机，2QQ，3微信，4新浪微博）
                 params.put(KeyConstant.HEAD_PHOTO, StoreApplication.userHeadUrl);  //头像
-                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0);  //
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);  //
                 return params;
             }
         };

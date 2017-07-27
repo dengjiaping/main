@@ -33,8 +33,8 @@ import java.util.Map;
 
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
-import cn.ngame.store.activity.main.TopicsListActivity;
 import cn.ngame.store.activity.main.TopicsDetailActivity;
+import cn.ngame.store.activity.main.TopicsListActivity;
 import cn.ngame.store.adapter.ClassifiDongzuoAdapter;
 import cn.ngame.store.adapter.ClassifiSaicheAdapter;
 import cn.ngame.store.adapter.ClassifiTiyuAdapter;
@@ -50,9 +50,10 @@ import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
+import cn.ngame.store.game.view.GameClassifyActivity;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.game.view.GameListActivity;
-import cn.ngame.store.game.view.GameClassifyActivity;
+import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.video.view.VideoDetailActivity;
 import cn.ngame.store.view.BannerView;
 import cn.ngame.store.view.PicassoImageView;
@@ -382,7 +383,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         pullListView.getRefreshableView().setAdapter(adapter);
 
         //getGameList();
-        getBannerData();
+        getBannerData();//轮播图
         ClassifiHomeBean result = new ClassifiHomeBean();
 
         //listData(result);
@@ -422,13 +423,12 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
      * 获取轮播图片数据
      */
     private void getBannerData() {
-        String url = Constant.WEB_SITE + Constant.URL_BANNER;
+        String url = Constant.WEB_SITE + Constant.URL_DISCOVER_BANNER;
         Response.Listener<JsonResult<List<HotInfo>>> successListener = new Response.Listener<JsonResult<List<HotInfo>>>() {
             @Override
             public void onResponse(JsonResult<List<HotInfo>> result) {
-
                 if (result == null) {
-//                    Toast.makeText(getActivity(), "服务端异常", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(context, getString(R.string.requery_failed));
                     return;
                 }
 
@@ -438,6 +438,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
 
                 } else {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误！");
+                    ToastUtil.show(context, getString(R.string.requery_failed));
                 }
             }
         };
@@ -456,9 +457,8 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-
                 Map<String, String> params = new HashMap<>();
-                params.put("type", String.valueOf(42));
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
                 return params;
             }
         };

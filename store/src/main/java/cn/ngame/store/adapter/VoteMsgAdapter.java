@@ -83,12 +83,12 @@ public class VoteMsgAdapter extends BaseAdapter {
         } else {
             holder.iv_content.setVisibility(View.VISIBLE);
             if (item.getPostImage().contains(",")) {
-                imageLoader.displayImage(item.getPostImage().split(",")[0], holder.iv_content, FileUtil.getModelOptions(R.drawable.default_logo, 0));
+                imageLoader.displayImage(item.getPostImage().split(",")[0], holder.iv_content, FileUtil.getModelOptions(R.drawable.ic_def_logo_720_288, 0));
             } else {
-                imageLoader.displayImage(item.getPostImage(), holder.iv_content, FileUtil.getModelOptions(R.drawable.default_logo, 0));
+                imageLoader.displayImage(item.getPostImage(), holder.iv_content, FileUtil.getModelOptions(R.drawable.ic_def_logo_720_288, 0));
             }
         }
-        imageLoader.displayImage(item.getHeadPhoto(), holder.iv_icon, FileUtil.getModelOptions(R.drawable.default_logo, 0));
+        imageLoader.displayImage(item.getHeadPhoto(), holder.iv_icon, FileUtil.getModelOptions(R.drawable.ic_def_logo_720_288, 0));
         holder.tv_name.setText(item.getPostPublisher());
         holder.tv_date.setText(DateUtil.getShowTime(new DateTime(new Timestamp(new Date(item.getCreateTime()).getTime())), DateUtil.getStrTime_ymd(item.getCreateTime())));
         holder.tv_look_num.setText(item.getWatchNum() + "");

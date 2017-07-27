@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.GridView;
 
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
@@ -29,11 +29,16 @@ public class TopicsListActivity extends BaseFgActivity {
 
     private int ID = 22;
     private Button tv_title;
-    private ListView listView;
     private String title;
     List<YunduanBean.DataBean> list = new ArrayList<>();
     TopicsListAdapter adapter;
     private TopicsListActivity content;
+    private int[] iconList = { R.drawable.ic_def_logo_188_188, R.drawable.ic_def_logo_188_188,
+            R.drawable.ic_def_logo_188_188, R.drawable.ic_def_logo_188_188, R.drawable.ic_def_logo_188_188,
+            R.drawable.ic_def_logo_188_188, R.drawable.ic_def_logo_188_188, R.drawable.ic_def_logo_188_188,
+            R.drawable.ic_def_logo_188_188, R.drawable.ic_def_logo_188_188, R.drawable.ic_def_logo_188_188,
+            R.drawable.ic_def_logo_188_188 };
+    private GridView gview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +50,19 @@ public class TopicsListActivity extends BaseFgActivity {
 
     private void init() {
         tv_title = (Button) findViewById(R.id.left_bt);
-        tv_title.setText("专题");
-        listView = (ListView) findViewById(R.id.listView);
+        tv_title.setText("全部专题");
+        gview = (GridView) findViewById(R.id.gview);
         tv_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 content.finish();
             }
         });
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent();
-                i.setClass(TopicsListActivity.this, TopicsDetailActivity.class);
+                i.setClass(content, TopicsDetailActivity.class);
                 i.putExtra(KeyConstant.ID, list.get(position).getId());
                 i.putExtra(KeyConstant.TITLE, list.get(position).getTypeName());
                 i.putExtra(KeyConstant.DESC, list.get(position).getTypeDesc());
@@ -100,7 +105,7 @@ public class TopicsListActivity extends BaseFgActivity {
         list.addAll(result.getData());
         if (adapter == null) {
             adapter = new TopicsListAdapter(this, list);
-            listView.setAdapter(adapter);
+            gview.setAdapter(adapter);
         } else {
             adapter.setList(list);
         }

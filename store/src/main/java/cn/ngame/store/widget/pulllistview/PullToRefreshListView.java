@@ -21,8 +21,7 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
     private LoadingLayout mLoadMoreFooterLayout;
     /**滚动的监听器*/
     private OnScrollListener mScrollListener;
-    
-    
+
     
     /**
      * 构造方法

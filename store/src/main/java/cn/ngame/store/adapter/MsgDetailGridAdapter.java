@@ -69,7 +69,7 @@ public class MsgDetailGridAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        imageLoader.displayImage(list.get(position), holder.iv_img, FileUtil.getModelOptions(R.drawable.default_logo, 0));
+        imageLoader.displayImage(list.get(position), holder.iv_img, FileUtil.getModelOptions(R.drawable.ic_def_logo_720_288, 0));
         return convertView;
     }
 

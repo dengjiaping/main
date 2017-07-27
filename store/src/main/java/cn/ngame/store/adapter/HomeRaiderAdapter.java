@@ -75,7 +75,7 @@ public class HomeRaiderAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.tv_content.setText(list.get(position));
-//        imageLoader.displayImage(list.get(position), holder.iv_img, FileUtil.getModelOptions(R.drawable.default_logo, 0));
+//        imageLoader.displayImage(list.get(position), holder.iv_img, FileUtil.getModelOptions(R.drawable.ic_def_logo_720_288, 0));
         if(type.equals("1")){
             holder.ll_show.setVisibility(View.VISIBLE);
         } else {

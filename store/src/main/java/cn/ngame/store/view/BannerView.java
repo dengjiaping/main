@@ -151,8 +151,8 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
                 img.setScaleType(ImageView.ScaleType.FIT_XY);
                 Picasso.with(context)
                         .load((String) img.getTag())
-                        .placeholder(R.drawable.ic_def_logo_750_300)
-                        .error(R.drawable.ic_def_logo_750_300)
+                        .placeholder(R.drawable.ic_def_logo_720_288)
+                        .error(R.drawable.ic_def_logo_720_288)
                         .resize(width, CommonUtil.dip2px(context, 214))
                         .centerCrop()
 //                        .fit()

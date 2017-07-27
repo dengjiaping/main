@@ -1,39 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                xmlns:fresco="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/sdv_img"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="74dp"
         android:layout_gravity="center_horizontal"
-        fresco:actualImageScaleType="centerCrop"
-        fresco:placeholderImage="@drawable/default_logo"
-        fresco:placeholderImageScaleType="centerCrop"
-        fresco:viewAspectRatio="2.5" />
+        android:scaleType="fitXY"
+        fresco:actualImageScaleType="fitXY"
+        fresco:failureImage="@drawable/ic_def_logo_412_200"
+        fresco:placeholderImage="@drawable/ic_def_logo_412_200"
+        fresco:placeholderImageScaleType="fitXY"
+        fresco:progressBarImage="@drawable/ic_def_logo_412_200"
+        fresco:roundedCornerRadius="@dimen/dp_8"
+        />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_below="@+id/sdv_img"
-        android:layout_marginTop="-30dp"
-        android:alpha="0.3"
-        android:background="@color/black">
-    </LinearLayout>
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_below="@+id/sdv_img"
-        android:layout_marginTop="-30dp"
-        android:gravity="center_vertical"
         android:layout_marginLeft="10dp"
-        android:maxLines="1"
+        android:layout_marginTop="-30dp"
         android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
         android:text=""
-        android:textSize="15dp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textSize="15dp"/>
 
 </RelativeLayout>

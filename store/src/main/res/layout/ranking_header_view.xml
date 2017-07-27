@@ -30,7 +30,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="30dp"
                     fresco:actualImageScaleType="centerCrop"
-                    fresco:placeholderImage="@drawable/default_logo"
+                    fresco:placeholderImage="@drawable/ic_def_logo_720_288"
                     fresco:placeholderImageScaleType="centerCrop" />
                 <!--fresco:viewAspectRatio=""-->/>
                 <!--fresco:placeholderImage="@color/gray_dd"-->
@@ -88,7 +88,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     fresco:actualImageScaleType="centerCrop"
-                    fresco:placeholderImage="@drawable/default_logo"
+                    fresco:placeholderImage="@drawable/ic_def_logo_720_288"
                     fresco:placeholderImageScaleType="centerCrop" />
                 <!--fresco:viewAspectRatio=""-->/>
                 <!--fresco:placeholderImage="@color/gray_dd"-->
@@ -146,7 +146,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="30dp"
                     fresco:actualImageScaleType="centerCrop"
-                    fresco:placeholderImage="@drawable/default_logo"
+                    fresco:placeholderImage="@drawable/ic_def_logo_720_288"
                     fresco:placeholderImageScaleType="centerCrop" />
                 <!--fresco:viewAspectRatio=""-->/>
                 <!--fresco:placeholderImage="@color/gray_dd"-->

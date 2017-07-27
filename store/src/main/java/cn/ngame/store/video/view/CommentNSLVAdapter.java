@@ -197,7 +197,7 @@ public class CommentNSLVAdapter extends BaseAdapter {
 
 			progressBar.setState(DownLoadProgressBar.STATE_UN_INSTALL);
 
-			Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.default_logo);
+			Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.ic_def_logo_720_288);
 			img.setImageBitmap(bitmap);
 
 			String imgUrl = gameInfo.gameLogo;
@@ -206,8 +206,8 @@ public class CommentNSLVAdapter extends BaseAdapter {
 			}
 			Picasso.with(context)
 					.load(imgUrl)
-					.placeholder(R.drawable.default_logo)
-					.error(R.drawable.default_logo)
+					.placeholder(R.drawable.ic_def_logo_720_288)
+					.error(R.drawable.ic_def_logo_720_288)
 					.resizeDimen(R.dimen.list_detail_image_size, R.dimen.list_detail_image_size)
 					.centerInside()
 					.tag(context)

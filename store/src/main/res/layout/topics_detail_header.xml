@@ -12,7 +12,7 @@
         android:layout_below="@+id/ll_title"
         android:layout_gravity="center_horizontal"
         fresco:actualImageScaleType="fitXY"
-        fresco:placeholderImage="@drawable/default_logo"
+        fresco:placeholderImage="@drawable/ic_def_logo_720_288"
         fresco:placeholderImageScaleType="centerCrop"
         fresco:viewAspectRatio="2.5"/>
 

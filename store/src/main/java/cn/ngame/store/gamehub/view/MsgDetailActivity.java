@@ -254,7 +254,7 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
         msgType = result.getData().getPostTagId();
         tv_type.setText(StringUtil.getGameHubMsgType(msgType));
         tv_title.setText(result.getData().getPostTitle());
-        imageLoader.displayImage(result.getData().getHeadPhoto(), iv_icon, FileUtil.getModelOptions(R.drawable.default_logo, 0));
+        imageLoader.displayImage(result.getData().getHeadPhoto(), iv_icon, FileUtil.getModelOptions(R.drawable.ic_def_logo_720_288, 0));
         tv_name.setText(result.getData().getPostPublisher());
         tv_time.setText(DateUtil.getStrTime_ymd_hm(result.getData().getCreateTime()));
         tv_content.setText(result.getData().getPostContent());

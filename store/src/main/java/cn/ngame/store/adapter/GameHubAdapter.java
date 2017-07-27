@@ -144,13 +144,13 @@ public class GameHubAdapter extends BaseAdapter {
     void setImgPicasso(String url, ImageView view) {
 //        Picasso.with(context)
 //                .load(url)
-//                .placeholder(R.drawable.default_logo)
-//                .error(R.drawable.default_logo)
+//                .placeholder(R.drawable.ic_def_logo_720_288)
+//                .error(R.drawable.ic_def_logo_720_288)
 //                .resizeDimen(R.dimen.list_detail_image_size, R.dimen.list_detail_image_size)
 //                .centerInside()
 //                .tag(context)
 //                .into(view);
-        imageLoader.displayImage(url, view, FileUtil.getModelOptions(R.drawable.default_logo, 0));
+        imageLoader.displayImage(url, view, FileUtil.getModelOptions(R.drawable.ic_def_logo_720_288, 0));
     }
 
     class ViewHolder {

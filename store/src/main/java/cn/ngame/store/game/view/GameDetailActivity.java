@@ -226,7 +226,7 @@ public class GameDetailActivity extends BaseFgActivity {
         tv_operation.setText(gameInfo.operation);
 
         img_logo = (PicassoImageView) findViewById(R.id.img_1);
-        img_logo.setImageUrl(gameInfo.gameLogo, 70f, 70f, R.drawable.default_logo);
+        img_logo.setImageUrl(gameInfo.gameLogo, 70f, 70f, R.drawable.ic_def_logo_720_288);
 
         timer.schedule(new TimerTask() {
             @Override

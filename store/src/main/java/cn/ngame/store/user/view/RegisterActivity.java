@@ -285,7 +285,7 @@ public class RegisterActivity extends BaseFgActivity {
                 params.put(KeyConstant.pass_Word, pwd);
                 params.put(KeyConstant.SMS_CODE, captcha);
                 params.put(KeyConstant.TYPE, "1");
-                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0);
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
                 return params;
             }
         };

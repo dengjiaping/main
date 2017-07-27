@@ -23,7 +23,7 @@ package cn.ngame.store.core.utils;
  */
 public class Constant {
 
-    public static final String WEB_SITE = "http://192.168.1.233:10004";      //测试服务器
+    public static final String WEB_SITE = "http://192.168.0.233:10004";      //测试服务器
     //public static final String WEB_SITE = "http://openapi.ngame.cn";            //生产服务器
     //public static final String WEB_SITE = "http://120.27.200.73:9011";        //预发布数据
     public static final String WEB_SITE2 = "http://192.168.37.252:20004";      //h5测试服务器
@@ -128,7 +128,7 @@ public class Constant {
     /**
      * 获取首页游戏集合列表
      */
-    public static final String URL_HOME_GAME_SELECTION = "/game/queryHomeGame";
+    public static final String URL_RECOMMEND_TOPICS = "/app/queryHomeSpecial";
 
     /**
      * 获取游戏精选列表
@@ -230,6 +230,8 @@ public class Constant {
      * 获取轮播广告
      */
     public static final String URL_BANNER = "/app/queryCarousel";
+    //发现页头部轮播图
+    public static final String URL_DISCOVER_BANNER = "/app/querySpecialCarousel";
     /**
      * 获取轮播广告2
      */
@@ -296,7 +298,7 @@ public class Constant {
      * wifi状态连接
      */
     public static final int NET_STATUS_WIFI = 0x0012;
-    public static final String APP_TYPE_ID_0 = "0";
+    public static final String APP_TYPE_ID_0_ANDROID = "0";
     public static final String URL_FORGOT_REGIST_SMS_CODE = "/user/SMSAuthenticationCode";
     public static final String URL_MODIFY_USER_DATA = "/user/modifyUserData";
     public static final String CONFIG_LOGIN_TYPE = "loginType";

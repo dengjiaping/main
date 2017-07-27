@@ -26,7 +26,11 @@
                 android:layout_width="@dimen/recommend_item_from_pic"
                 android:layout_height="@dimen/recommend_item_from_pic"
                 fresco:actualImageScaleType="fitXY"
-                fresco:progressBarImage="@drawable/ic_icon_title"
+                fresco:failureImage="@drawable/ic_def_logo_188_188"
+                fresco:failureImageScaleType="fitXY"
+                fresco:placeholderImage="@drawable/ic_def_logo_188_188"
+                fresco:placeholderImageScaleType="fitXY"
+                fresco:progressBarImage="@drawable/ic_def_logo_188_188"
                 fresco:roundedCornerRadius="4dp"/>
 
             <TextView
@@ -64,7 +68,11 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/recommend_item_game_pic_hight"
             fresco:actualImageScaleType="fitXY"
-            fresco:progressBarImage="@drawable/ic_def_logo_750_300"
+            fresco:failureImage="@drawable/ic_def_logo_720_288"
+            fresco:failureImageScaleType="fitXY"
+            fresco:placeholderImage="@drawable/ic_def_logo_720_288"
+            fresco:placeholderImageScaleType="fitXY"
+            fresco:progressBarImage="@drawable/ic_def_logo_720_288"
             fresco:progressBarImageScaleType="fitXY"
             />
 
@@ -144,7 +152,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/recommend_item_game_pic_hight"
             fresco:actualImageScaleType="fitXY"
-            fresco:progressBarImage="@drawable/ic_def_logo_750_300"
+            fresco:progressBarImage="@drawable/ic_def_logo_720_288"
             fresco:progressBarImageScaleType="fitXY"/>
 
         <TextView
@@ -168,6 +176,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/recommend_classify_left_tv"
             android:layout_width="match_parent"

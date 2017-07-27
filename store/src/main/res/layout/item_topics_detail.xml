@@ -40,7 +40,8 @@
             fresco:placeholderImage="@drawable/ic_def_logo_188_188"
             fresco:placeholderImageScaleType="fitXY"
             fresco:progressBarImage="@drawable/ic_def_logo_188_188"
-            fresco:roundedCornerRadius="@dimen/dp_8"/>
+            fresco:roundedCornerRadius="@dimen/dp_8"
+            />
 
         <TextView
             android:id="@+id/tv_title"

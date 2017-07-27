@@ -85,8 +85,8 @@ public class MainHomeRaiderAdapter extends BaseAdapter {
         try {
             Picasso.with(context)
                     .load(url)
-                    .placeholder(R.drawable.default_logo)
-                    .error(R.drawable.default_logo)
+                    .placeholder(R.drawable.ic_def_logo_720_288)
+                    .error(R.drawable.ic_def_logo_720_288)
                     .resizeDimen(R.dimen.list_detail_image_size_100, R.dimen.list_detail_image_size_80)
                     .centerInside()
                     .tag(context)
