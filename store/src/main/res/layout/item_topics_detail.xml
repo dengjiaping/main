@@ -6,56 +6,59 @@
               android:background="@color/white"
               android:descendantFocusability="blocksDescendants"
               android:orientation="vertical"
-              android:paddingLeft="@dimen/dp_15"
-              android:paddingRight="@dimen/dp_15"
-              android:paddingTop="@dimen/dp_13">
+              android:paddingLeft="@dimen/dp_18"
+              android:paddingRight="@dimen/dp_18"
+              android:paddingTop="@dimen/dp_14">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/game_big_logo"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:layout_marginBottom="@dimen/dp_11"
+        android:scaleType="fitXY"
+        fresco:actualImageScaleType="fitXY"
+        fresco:failureImage="@drawable/ic_def_logo_720_288"
+        fresco:placeholderImage="@drawable/ic_def_logo_720_288"
+        fresco:placeholderImageScaleType="fitXY"
+        fresco:progressBarImage="@drawable/ic_def_logo_720_288"
+        />
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:paddingTop="8dp">
+        android:layout_height="@dimen/dp_42">
 
-        <TextView
-            android:id="@+id/tv_position"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="5dp"
-            android:gravity="center"
-            android:text=""
-            android:textColor="@color/font_333"
-            android:textSize="13sp"/>
-
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
+            xmlns:fresco="http://schemas.android.com/apk/res-auto"
             android:id="@+id/img_1"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/tv_position"/>
+            android:layout_width="@dimen/dp_42"
+            android:layout_height="@dimen/dp_42"
+            android:layout_marginRight="@dimen/dp_10"
+            android:scaleType="fitXY"
+            fresco:actualImageScaleType="fitXY"
+            fresco:failureImage="@drawable/ic_def_logo_188_188"
+            fresco:placeholderImage="@drawable/ic_def_logo_188_188"
+            fresco:placeholderImageScaleType="fitXY"
+            fresco:progressBarImage="@drawable/ic_def_logo_188_188"
+            fresco:roundedCornerRadius="@dimen/dp_8"/>
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/img_1"
             android:clickable="false"
             android:maxLines="1"
-            android:paddingRight="10dp"
-            android:text="qweqwe"
-            android:textColor="@color/font_black_6"
-            android:textSize="16sp"/>
+            android:text="标题"
+            android:textColor="@color/font_1a"
+            android:textSize="@dimen/dp_16"/>
 
         <RatingBar
             android:id="@+id/rating_bar"
             style="@style/RatingBarSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_title"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_alignBottom="@id/img_1"
             android:layout_toRightOf="@+id/img_1"
             android:clickable="false"
             android:isIndicator="true"
@@ -67,50 +70,41 @@
             android:id="@+id/text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_title"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_alignBottom="@id/img_1"
+            android:layout_marginLeft="@dimen/dp_12"
             android:layout_toRightOf="@+id/rating_bar"
             android:clickable="false"
-            android:textSize="10sp"/>
-
-        <TextView
-            android:id="@+id/text2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_title"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@+id/text1"
-            android:textSize="10sp"/>
-
-        <TextView
-            android:id="@+id/tv_summary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rating_bar"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@+id/img_1"
-            android:clickable="false"
-            android:ellipsize="end"
-            android:lines="1"
-            android:paddingRight="20dp"
-            android:text="wqeqweqwe"
-            android:textSize="12sp"/>
+            android:text="4.0"
+            android:textColor="@color/font_333"
+            android:textSize="@dimen/dp_14"/>
 
         <cn.ngame.store.view.GameLoadProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="60dp"
-            android:layout_height="27dp"
+            android:layout_height="25dp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_centerVertical="true"
             android:background="@color/white"
             android:clickable="true"
             android:text="@string/download"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="13dp"
             ngame:progress="0"/>
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/tv_summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_1"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_8"
+        android:clickable="false"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="这是描述"
+        android:textColor="@color/font_black_6"
+        android:textSize="@dimen/dp_14"/>
+
+    <include layout="@layout/layout_line_dp1_d9d9d9"/>
 </LinearLayout>

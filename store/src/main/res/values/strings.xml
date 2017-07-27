@@ -180,7 +180,7 @@
     </string>
 
     <!-- 下拉刷新和上拉加载更多的文本 -->
-    <string name="pushmsg_center_no_more_msg">已经到底啦</string>
+    <string name="pushmsg_center_no_more_msg">没有更多数据了</string>
     <string name="pushmsg_center_pull_up_text">松开加载更多</string>
     <string name="pushmsg_center_pull_down_text">下拉可以刷新</string>
     <string name="pushmsg_center_pull_release_text">松开获取更多</string>
@@ -194,7 +194,7 @@
     <string name="pull_to_refresh_header_last_time">@string/pushmsg_center_pull_down_update_time</string>
     <string name="pull_to_refresh_footer_hint_ready">松开载入更多</string>
     <string name="pull_to_refresh_refreshing_label_fan">@string/pull_to_refresh_header_hint_loading</string>
-    <string name="pull_to_refresh_no_more_data">@string/pushmsg_center_no_more_msg</string>
+    <string name="no_more_data">@string/pushmsg_center_no_more_msg</string>
     <string name="pull_to_refresh_network_error">网络不给力，请检查网络</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="about_text_line_1">NGAMEZONE是一个好玩的游戏下载平台。我们提供Android、iOS两种版本的客户端产品。</string>

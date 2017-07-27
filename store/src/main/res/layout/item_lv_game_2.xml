@@ -130,7 +130,6 @@
             android:layout_marginLeft="@dimen/dp_6"
             android:layout_toRightOf="@id/rating_bar"
             android:clickable="false"
-            android:text="我"
             android:textColor="@color/font_1a"
             android:textSize="@dimen/dp_11"/>
 

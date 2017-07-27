@@ -32,8 +32,10 @@ import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.util.ConvUtil;
+import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
+
 
 /**
  * 专题详情
@@ -125,8 +127,8 @@ public class TopicsDetailActivity extends BaseFgActivity {
                 //少于指定条数不加载
                 if (pageAction.getTotal() < pageAction.getPageSize()) {
                     pullListView.setHasMoreData(false);
-                    pullListView.getFooterLoadingLayout().setPullLabel("没有更多数据了");
                     pullListView.onPullUpRefreshComplete();
+                    ToastUtil.show(content, getString(R.string.no_more_data));
                     return;
                 }
                 if (pageAction.getCurrentPage() * pageAction.getPageSize() < pageAction.getTotal()) {
@@ -134,6 +136,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
                             .getCurrentPage() + 1);
                     getDataList();
                 } else {
+                    ToastUtil.show(content, getString(R.string.no_more_data));
                     pullListView.setHasMoreData(false);
                     pullListView.onPullUpRefreshComplete();
                 }
@@ -147,7 +150,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
                 if (position > 0) {
                     Intent i = new Intent();
                     i.setClass(TopicsDetailActivity.this, GameDetailActivity.class);
-                    i.putExtra("id", list.get(position - 1).getId());
+                    i.putExtra(KeyConstant.ID, list.get(position - 1).getId());
                     startActivity(i);
                 }
             }
@@ -192,9 +195,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
 
                     }
                 } else {
-                    Log.d("777", "onScroll: else " + firstVisibleItem);
                     if (firstVisibleItem != 0) {
-                        Log.d("777", "onScroll: else " + firstVisibleItem);
                         mTitleRlay.setBackgroundResource(R.color.colorPrimary);
                         mTitleRlay.setAlpha(1f);
 

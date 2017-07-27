@@ -7,12 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Timer;
@@ -23,7 +22,6 @@ import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.GameFileStatus;
 import cn.ngame.store.core.fileload.IFileLoad;
-import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.view.GameLoadProgressBar;
 
@@ -81,12 +79,11 @@ public class TopicsDetailAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_topics_detail, parent, false);
             holder = new ViewHolder(context, fm);
-            holder.img = (ImageView) convertView.findViewById(R.id.img_1);
-            holder.tv_position = (TextView) convertView.findViewById(R.id.tv_position);
+            holder.img = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
+            holder.gameBigLogoIv = (SimpleDraweeView) convertView.findViewById(R.id.game_big_logo);
             holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
             holder.tv_summary = (TextView) convertView.findViewById(R.id.tv_summary);
             holder.tv_size = (TextView) convertView.findViewById(R.id.text1);
-            holder.tv_count = (TextView) convertView.findViewById(R.id.text2);
             holder.ratingBar = (RatingBar) convertView.findViewById(R.id.rating_bar);
             holder.progressBar = (GameLoadProgressBar) convertView.findViewById(R.id.progress_bar);
             convertView.setTag(holder);
@@ -103,8 +100,8 @@ public class TopicsDetailAdapter extends BaseAdapter {
     public static class ViewHolder {
         private Context context;
         private GameRankListBean.DataBean gameInfo;
-        private ImageView img;
-        private TextView tv_position, tv_title, tv_summary, tv_size, tv_count;
+        private SimpleDraweeView img, gameBigLogoIv;
+        private TextView tv_title, tv_summary, tv_size;
         private RatingBar ratingBar;
         private GameLoadProgressBar progressBar;    //下载进度条
         private IFileLoad fileLoad;
@@ -127,7 +124,8 @@ public class TopicsDetailAdapter extends BaseAdapter {
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo.getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode()));
+                            GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo
+                                    .getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode()));
                             progressBar.setLoadState(fileStatus);
                         }
                     });
@@ -144,43 +142,28 @@ public class TopicsDetailAdapter extends BaseAdapter {
             this.gameInfo = gameInfo;
 
             String imgUrl = gameInfo.getGameLogo();
-            if (imgUrl != null && imgUrl.trim().equals("")) {
-                imgUrl = null;
-            }
-            Picasso.with(context)
-                    .load(imgUrl)
-                    .placeholder(R.drawable.default_logo)
-                    .error(R.drawable.default_logo)
-                    .resizeDimen(R.dimen.list_detail_image_size, R.dimen.list_detail_image_size)
-                    .centerInside()
-                    .tag(context)
-                    .into(img);
+            img.setImageURI(imgUrl);
+
+            gameBigLogoIv.setImageURI(imgUrl);//游戏大图
+
 
             String gameName = gameInfo.getGameName();
-            if (!"".equals(gameName)) {
-                tv_title.setText(gameName);
-            }
+            tv_title.setText(gameName == null ? "" : gameName);
 
             String gameDesc = gameInfo.getGameDesc();
-            if (gameDesc != null && !"".equals(gameDesc)) {
-                tv_summary.setText(gameDesc);
-            } else {
-                tv_summary.setText("");
-            }
+            tv_summary.setText(gameDesc == null ? "" : gameDesc);
 
-            long gameSize = gameInfo.getGameSize();
-            String gameSizeStr = TextUtil.formatFileSize(gameSize);
-            tv_size.setText(gameSizeStr);
-
-            long gameCount = gameInfo.getDownloadCount();
-            tv_count.setText("/" + gameCount + "次下载");
-
-            ratingBar.setRating(gameInfo.getPercentage());
+            float percentage = gameInfo.getPercentage();
+            tv_size.setText(percentage + "");
+            ratingBar.setRating(percentage);
 
             //设置进度条状态
-            progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo.getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode())));
+            progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo.getGameLink(), gameInfo
+                    .getPackages(), ConvUtil.NI(gameInfo.getVersionCode())));
             //必须设置，否则点击进度条后无法进行响应操作
-            FileLoadInfo fileLoadInfo = new FileLoadInfo(gameInfo.getFilename(), gameInfo.getGameLink(), gameInfo.getMd5(), gameInfo.getVersionCode(), gameInfo.getGameName(), gameInfo.getGameLogo(), gameInfo.getId(), FileLoadInfo.TYPE_GAME);
+            FileLoadInfo fileLoadInfo = new FileLoadInfo(gameInfo.getFilename(), gameInfo.getGameLink(), gameInfo.getMd5(),
+                    gameInfo.getVersionCode(), gameInfo.getGameName(), gameInfo.getGameLogo(), gameInfo.getId(), FileLoadInfo
+                    .TYPE_GAME);
             fileLoadInfo.setPackageName(gameInfo.getPackages());
             progressBar.setFileLoadInfo(fileLoadInfo);
             progressBar.setOnStateChangeListener(new ProgressBarStateListener(context, fm));
