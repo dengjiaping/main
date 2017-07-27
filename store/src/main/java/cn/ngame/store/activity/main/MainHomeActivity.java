@@ -343,7 +343,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     || id == R.id.sm_top_icon_iv
                     || id == R.id.edit_profile_click
                     ) {//系统设置
-                if (pwd != null && !"".endsWith(pwd)||!Constant.PHONE.equals(StoreApplication.loginType)) {
+                if (pwd != null && !"".endsWith(pwd) || !Constant.PHONE.equals(StoreApplication.loginType)) {
                     startActivity(new Intent(context, UserCenterActivity.class));
                 } else {
                     startActivity(new Intent(context, LoginActivity.class));
@@ -358,10 +358,25 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             } else if (id == R.id.sm_ad) {//广告与合作
                 startActivity(new Intent(context, AdCooperativeActivity.class));
             }
-            mSlidingMenu.toggle();
+
+            //右上角消息状态
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mSlidingMenu != null && mSlidingMenu.isMenuShowing()) {
+                                mSlidingMenu.toggle(false);
+                            }
+                        }
+                    }, 300);
+                }
+            }).start();
+
+             //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_right);//左进,右出
         }
     };
-
     @Override
     protected void onStart() {
         super.onStart();

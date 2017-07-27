@@ -7,6 +7,7 @@
 
     <RelativeLayout
         android:id="@+id/title_rlay"
+        android:layout_marginTop="@dimen/dp_30"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_title_height"
         android:layout_alignParentTop="true"

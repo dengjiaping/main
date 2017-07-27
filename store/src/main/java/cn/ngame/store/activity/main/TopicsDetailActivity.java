@@ -180,7 +180,6 @@ public class TopicsDetailActivity extends BaseFgActivity {
                         0) {
                     float total_height = 400f;
                     int viewScrollHeigh = Math.abs(refreshableView.getChildAt(0).getTop());
-                    Log.d("777", "onScroll: total_height " + total_height);
                     Log.d("777", "onScroll: viewScrollHeigh " + viewScrollHeigh);
                     if (viewScrollHeigh < total_height) {
                         Log.d("777", "onScroll: <<<<< ");

@@ -15,8 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +39,6 @@ import cn.ngame.store.bean.User;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.DialogHelper;
-import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.TextUtil;
@@ -73,7 +70,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 /*
         View.SYSTEM_UI_FLAG_FULLSCREEN,   //全屏，状态栏和导航栏不显示
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION, //隐藏导航栏
@@ -85,32 +81,26 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
 /*
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);*/
 
+        //getWindow().setWindowAnimations(R.style.activity_left_in_style);
+        this.setContentView(R.layout.activity_login);
+
+        /*======================================透明标题栏==========================================*/
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintResource(R.color.transparent);//通知栏所需颜色
         }
-
-        this.setContentView(R.layout.activity_login);
-        mContext = this;
-        mShareAPI = UMShareAPI.get(this);
-        preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
-
         //获取状态栏高度设置给标题栏==========================================
-        RelativeLayout titleRlay = (RelativeLayout) findViewById(R.id.title_rlay);
+       /* RelativeLayout titleRlay = (RelativeLayout) findViewById(R.id.title_rlay);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 titleRlay.getLayoutParams());
         int statusBarHeight = ImageUtil.getStatusBarHeight(this);
         layoutParams.setMargins(0, statusBarHeight, 0, 0);
-        titleRlay.setLayoutParams(layoutParams);
+        titleRlay.setLayoutParams(layoutParams);*/
         //======================================================================
-        findViewById(R.id.left_bt).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mContext = this;
+        preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
 
         et_user = (EditText) findViewById(R.id.et_login_user);
         et_pwd = (EditText) findViewById(R.id.et_login_pwd);
@@ -130,9 +120,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         bt_register.setOnClickListener(this);
         bt_login = (Button) findViewById(R.id.but_login);
         bt_login.setOnClickListener(this);
-        findViewById(R.id.login_qq_bt).setOnClickListener(this);
-        findViewById(R.id.login_wechat_bt).setOnClickListener(this);
-        findViewById(R.id.login_sina_bt).setOnClickListener(this);
+
         et_user.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -158,15 +146,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
 
 
         });
-
-        if (Build.VERSION.SDK_INT >= 23) {
-            String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission
-                    .ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission
-                    .READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest
-                    .permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS};
-            ActivityCompat.requestPermissions(this, mPermissionList, 777);
-        }
-
     }
 
     @Override
@@ -180,11 +159,29 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     @Override
     protected void onResume() {
         super.onResume();
+        mShareAPI = UMShareAPI.get(this);
+        findViewById(R.id.left_bt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        findViewById(R.id.login_qq_bt).setOnClickListener(this);
+        findViewById(R.id.login_wechat_bt).setOnClickListener(this);
+        findViewById(R.id.login_sina_bt).setOnClickListener(this);
         userName = preferences.getString(Constant.CONFIG_USER_NAME, "");
         loginloginType = preferences.getString(Constant.CONFIG_LOGIN_TYPE, "1");
         if (!userName.equals("") && userName.length() <= 11) {
             et_user.setText(userName);
             et_user.setSelection(userName.length());
+        }
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission
+                    .ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission
+                    .READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest
+                    .permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS};
+            ActivityCompat.requestPermissions(this, mPermissionList, 777);
         }
     }
 
@@ -253,7 +250,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 
-    UMAuthListener authListener = new UMAuthListener() {
+    private UMAuthListener authListener = new UMAuthListener() {
         /**
          * @desc 授权开始的回调
          * @param platform 平台名称

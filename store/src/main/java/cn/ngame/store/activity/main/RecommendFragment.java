@@ -100,7 +100,7 @@ public class RecommendFragment extends BaseSearchFragment {
     private RecommendListAdapter adapter;
 
     private PageAction pageAction;
-    public static int PAGE_SIZE = 5;
+    public static int PAGE_SIZE = 8;
     List<RecommendListBean.DataBean> topList = new ArrayList<>();
     List<RecommendListBean.DataBean> list = new ArrayList<>();
     private LinearLayout horizontalViewContainer;
@@ -108,7 +108,6 @@ public class RecommendFragment extends BaseSearchFragment {
     private FragmentActivity context;
 
     public static RecommendFragment newInstance(int arg) {
-        Log.d(TAG, "初始化newInstance");
         RecommendFragment fragment = new RecommendFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("", arg);
@@ -118,14 +117,12 @@ public class RecommendFragment extends BaseSearchFragment {
 
     @Override
     protected int getContentViewLayoutID() {
-        Log.d(TAG, "推荐getContentViewLayoutID");
         return R.layout.fragment_recommend;
     }
 
     @Override
     protected void initViewsAndEvents(View view) {
 //        typeValue = getArguments().getInt("", 1);
-        Log.d(TAG, "推荐initViewsAndEvents");
         context = getActivity();
         initListView(view);     //初始化
     }
@@ -140,15 +137,12 @@ public class RecommendFragment extends BaseSearchFragment {
                     @Override
                     public void onError(Throwable e) {
 //                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
-                        Log.d(TAG, "推荐 onError: ");
                         pullListView.onPullUpRefreshComplete();
                         pullListView.onPullDownRefreshComplete();
                     }
 
                     @Override
                     public void onNext(RecommendListBean result) {
-                        android.util.Log.d(TAG, "推荐/:" + result.getCode());
-                        android.util.Log.d(TAG, "推荐:" + result.getMsg());
                         if (result != null && result.getCode() == 0) {
                             listData(result);
                         } else {
@@ -244,7 +238,6 @@ public class RecommendFragment extends BaseSearchFragment {
             return;
         }
         if (pageAction.getCurrentPage() == 0) {//当前页
-            android.util.Log.d(TAG, "listData7:result.getData().size() " + result.getData().size());
             this.list.clear(); //清除数据
             this.topList.clear();
             if (result.getData() == null || result.getData().size() == 0) {
@@ -254,9 +247,6 @@ public class RecommendFragment extends BaseSearchFragment {
                 return;
             }
         }
-        android.util.Log.d(TAG, "lpageAction.getCurrentPage()  " + pageAction.getCurrentPage());
-        android.util.Log.d(TAG, "result.getData().size()  " + result.getData().size());
-        android.util.Log.d(TAG, "result.getTotals()  " + result.getTotals());
         if (result.getData().size() > 0) {//刷新后进来
             pageAction.setTotal(result.getTotals());
             this.list.addAll(result.getData());
@@ -276,17 +266,17 @@ public class RecommendFragment extends BaseSearchFragment {
             list.remove(0);
         }
         if (adapter == null) {
-            adapter = new RecommendListAdapter(getActivity(), getSupportFragmentManager(), list, 0);
+            adapter = new RecommendListAdapter(context, getSupportFragmentManager(), list, 0);
             pullListView.getRefreshableView().setAdapter(adapter);
         } else {
             adapter.setList(list);
         }
         //设置下位
-        if ((list.size() == 0 && pageAction.getTotal() == 0) || list.size() >= pageAction.getTotal()) {
-            pullListView.setPullLoadEnabled(false);
+       /* if ((list.size() == 0 && pageAction.getTotal() == 0) || list.size() >= pageAction.getTotal()) {
+            pullListView.setPullLoadEnabled(true);
         } else {
             pullListView.setPullLoadEnabled(true);
-        }
+        }*/
         //设置上拉刷新后停留的地方  // TODO: 2017/7/17 0017
         android.util.Log.d(TAG, "list.size(): " + list.size() + ",pageAction.getTotal():" + pageAction.getTotal());
 
@@ -342,20 +332,22 @@ public class RecommendFragment extends BaseSearchFragment {
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 //少于指定条数不加载
-                Log.d(TAG, "上拉");
                 if (pageAction.getTotal() < pageAction.getPageSize()) {
                     pullListView.setHasMoreData(false);
-                    ToastUtil.show(context, "没有更多数据了哦!");
+                    ToastUtil.show(context, getString(R.string.no_more_data));
                     pullListView.onPullUpRefreshComplete();
+                    Log.d(TAG, "上拉1");
                     return;
                 }
                 if (pageAction.getCurrentPage() * pageAction.getPageSize() < pageAction.getTotal()) {
                     pageAction.setCurrentPage(pageAction.getCurrentPage() == 0 ?
                             pageAction.getCurrentPage() + 2 : pageAction.getCurrentPage() + 1);
                     //上拉请求数据
+                    Log.d(TAG, "上拉2");
                     getGameList();
                 } else {
-                    ToastUtil.show(context, "没有更多数据了哦!");
+                    Log.d(TAG, "上拉3");
+                    ToastUtil.show(context, getString(R.string.no_more_data));
                     pullListView.setHasMoreData(false);
                     pullListView.onPullUpRefreshComplete();
                 }
