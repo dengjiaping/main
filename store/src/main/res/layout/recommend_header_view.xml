@@ -45,7 +45,7 @@
                 android:maxLines="1"
                 android:paddingRight="20dp"
                 android:text="来自李国良"
-                android:textColor="@color/font_color_b3"
+                android:textColor="@color/b3"
                 android:textSize="12dp"/>
 
         </RelativeLayout>
@@ -129,7 +129,7 @@
                 android:maxLines="1"
                 android:paddingRight="20dp"
                 android:text="来自 李国良"
-                android:textColor="@color/font_color_b3"
+                android:textColor="@color/b3"
                 android:textSize="12dp"/>
 
         </RelativeLayout>
@@ -152,6 +152,10 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/recommend_item_game_pic_hight"
             fresco:actualImageScaleType="fitXY"
+            fresco:failureImage="@drawable/ic_def_logo_720_288"
+            fresco:failureImageScaleType="fitXY"
+            fresco:placeholderImage="@drawable/ic_def_logo_720_288"
+            fresco:placeholderImageScaleType="fitXY"
             fresco:progressBarImage="@drawable/ic_def_logo_720_288"
             fresco:progressBarImageScaleType="fitXY"/>
 
@@ -209,8 +213,6 @@
         android:layout_height="wrap_content"
         android:background="@color/gray_f5"
         android:paddingBottom="@dimen/dp_20"
-        android:paddingLeft="@dimen/dp_10"
-        android:paddingRight="@dimen/dp_10"
         android:paddingTop="@dimen/dp_20"
         android:scrollbars="none">
 

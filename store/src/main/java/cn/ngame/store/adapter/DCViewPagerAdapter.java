@@ -20,6 +20,12 @@ public class DCViewPagerAdapter extends FragmentStatePagerAdapter {
         this.tabList = tabList;
     }
 
+    public void setList(List<Fragment> list, List<String> tabList) {
+        this.list = list;
+        this.tabList = tabList;
+        notifyDataSetChanged();
+    }
+
     @Override
     public Fragment getItem(int position) {
         return list.get(position);

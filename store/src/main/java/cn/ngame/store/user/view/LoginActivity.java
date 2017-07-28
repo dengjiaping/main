@@ -66,6 +66,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     private UMShareAPI mShareAPI;
     private LoginActivity mContext;
     private String loginloginType;
+    private DialogHelper dialogHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +160,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     @Override
     protected void onResume() {
         super.onResume();
+        dialogHelper = new DialogHelper(getSupportFragmentManager(), LoginActivity.this);
         mShareAPI = UMShareAPI.get(this);
         findViewById(R.id.left_bt).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -257,7 +259,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
          */
         @Override
         public void onStart(SHARE_MEDIA platform) {
-            DialogHelper.showWaiting(getSupportFragmentManager(), "加载中...");
+            dialogHelper.showAlert("加载中...", true);
         }
 
         /**
@@ -268,10 +270,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
          */
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
-            android.util.Log.d(TAG, "第三方登录失败: " + platform + ",信息:" + t.getMessage());
-            android.util.Log.d(TAG, "第三方登录失败: " + platform + ",信息:" + t.getCause());
-            android.util.Log.d(TAG, "第三方登录失败: " + platform + ",信息:" + t.getSuppressed());
-            DialogHelper.hideWaiting(getSupportFragmentManager());
+            dialogHelper.hideAlert();
         }
 
         /**
@@ -282,7 +281,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
             android.util.Log.d(TAG, "第三方登录取消");
-            DialogHelper.hideWaiting(getSupportFragmentManager());
+            dialogHelper.hideAlert();
         }
 
         /**
@@ -294,11 +293,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
 
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-            DialogHelper.hideWaiting(getSupportFragmentManager());
-            android.util.Log.d(TAG, "第三方登录: " + platform + ",信息:" + data.toString());
-            android.util.Log.d(TAG, "第三方登录: " + platform + ",uid:" + data.get("uid"));
-            android.util.Log.d(TAG, "第三方登录: " + platform + ",name:" + data.get("name"));
-            android.util.Log.d(TAG, "第三方登录: " + platform + ",iconurl:" + data.get("iconurl"));
+            dialogHelper.hideAlert();
             String type = Constant.PHONE;//（1手机，2QQ，3微信，4新浪微博）
             switch (platform.toString()) {
                 case "WEIXIN":
@@ -320,13 +315,16 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
      */
     private void doLogin(final String LOGIN_TYPE, final String userName, final String password,
                          final String nicknameStr, final String URL_HEAD_PHOTO) {
-        DialogHelper.showWaiting(getSupportFragmentManager(), "登录中...");
+        dialogHelper.showAlert("正在登录...", true);
         String url = Constant.WEB_SITE + Constant.URL_USER_LOGIN;
 
         Response.Listener<JsonResult<User>> succesListener = new Response.Listener<JsonResult<User>>() {
             @Override
             public void onResponse(JsonResult<User> result) {
                 if (result == null) {
+                    if (null != LoginActivity.this && !LoginActivity.this.isFinishing()) {
+                        dialogHelper.hideAlert();
+                    }
                     Toast.makeText(LoginActivity.this, "服务端异常", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -337,7 +335,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     android.util.Log.d(TAG, "onResponse: " + result.msg);
                     User user = result.data;
                     android.util.Log.d(TAG, "onResponse: " + user.toString());
-                    user = user;
 
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString(Constant.CONFIG_TOKEN, user.token);
@@ -374,12 +371,12 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                             watchRecordModel.synchronizeWatchRecord();
                         }
                     }).start();
-
                     finish();
                 } else {
-                    Log.d(TAG, "HTTP请求成功：服务端返回错误: " + result.msg);
                     Toast.makeText(LoginActivity.this, "登录失败，" + result.msg, Toast.LENGTH_SHORT).show();
-                    DialogHelper.hideWaiting(getSupportFragmentManager());
+                    if (null != LoginActivity.this && !LoginActivity.this.isFinishing()) {
+                        dialogHelper.hideAlert();
+                    }
                 }
             }
         };

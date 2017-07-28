@@ -32,7 +32,7 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:text="@string/ngamezone"
-            android:textColor="@color/font_color_b3"
+            android:textColor="@color/b3"
             android:textSize="@dimen/dp_12"/>
 
         <TextView
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:maxLength="11"
-            android:textColor="@color/font_color_b3"
+            android:textColor="@color/b3"
             android:textSize="@dimen/dp_12"/>
     </LinearLayout>
 
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="昵称"
-            android:textColor="@color/font_color_b3"
+            android:textColor="@color/b3"
             android:textSize="@dimen/dp_13"/>
 
         <EditText

@@ -8,7 +8,7 @@ import android.widget.ListView;
 import java.util.List;
 
 import cn.ngame.store.R;
-import cn.ngame.store.adapter.LoadIngLvAdapter;
+import cn.ngame.store.adapter.GameDownload2Adapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.fileload.FileLoadInfo;
@@ -22,7 +22,7 @@ import cn.ngame.store.view.QuickAction;
  * Created by gp on 2017/3/3 0003.
  */
 
-public class LoadingFragment extends BaseSearchFragment {
+public class ManagerInstalledFragment extends BaseSearchFragment {
 
     ListView listView;
     private PageAction pageAction;
@@ -32,15 +32,15 @@ public class LoadingFragment extends BaseSearchFragment {
     protected QuickAction mItemClickQuickAction;
     private IFileLoad fileLoad;
 
-    private LoadIngLvAdapter loadIngLvAdapter;
+    private GameDownload2Adapter alreadyLvAdapter;
     /**
      * 当前点击的列表 1.下载列表 2.完成列表
      */
     private int itemType;
     private int itemPosition;
 
-    public static LoadingFragment newInstance(String type, int arg) {
-        LoadingFragment fragment = new LoadingFragment();
+    public static ManagerInstalledFragment newInstance(String type, int arg) {
+        ManagerInstalledFragment fragment = new ManagerInstalledFragment();
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
         bundle.putInt("typeValue", arg);
@@ -70,23 +70,23 @@ public class LoadingFragment extends BaseSearchFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                itemType = 1;
+                itemType = 2;
                 itemPosition = position;
                 //显示弹出框消失
                 mItemClickQuickAction.show(view);
             }
         });
-        loadIngLvAdapter = new LoadIngLvAdapter(getActivity(), getSupportFragmentManager());
-        listView.setAdapter(loadIngLvAdapter);
+        alreadyLvAdapter = new GameDownload2Adapter(getActivity(), getSupportFragmentManager());
+        listView.setAdapter(alreadyLvAdapter);
         fileLoad = FileLoadManager.getInstance(getActivity());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        List<FileLoadInfo> loadingList = fileLoad.getLoadingFileInfo();
-        loadIngLvAdapter.setDate(loadingList);
-        loadIngLvAdapter.notifyDataSetChanged();
+        List<FileLoadInfo> alreadyList = fileLoad.getLoadedFileInfo();
+        alreadyLvAdapter.setDate(alreadyList);
+        alreadyLvAdapter.notifyDataSetChanged();
     }
 
     private void initPop(final int typeValue) {
@@ -101,7 +101,7 @@ public class LoadingFragment extends BaseSearchFragment {
                 if (pos == 0) {
                     //删除文件下载任务
                     FileLoadInfo fileInfo = null;
-                    fileInfo = (FileLoadInfo) loadIngLvAdapter.getItem(itemPosition);
+                    fileInfo = (FileLoadInfo) alreadyLvAdapter.getItem(itemPosition);
                     //删除下载任务
                     fileLoad.delete(fileInfo.getUrl());
                     try {
@@ -109,9 +109,9 @@ public class LoadingFragment extends BaseSearchFragment {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    List<FileLoadInfo> loadingList = fileLoad.getLoadingFileInfo();
-                    loadIngLvAdapter.setDate(loadingList);
-                    loadIngLvAdapter.notifyDataSetChanged();
+                    List<FileLoadInfo> alreadyList = fileLoad.getLoadedFileInfo();
+                    alreadyLvAdapter.setDate(alreadyList);
+                    alreadyLvAdapter.notifyDataSetChanged();
                 }
                 //取消弹出框
                 mItemClickQuickAction.dismiss();

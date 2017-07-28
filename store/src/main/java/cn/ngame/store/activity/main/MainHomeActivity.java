@@ -99,7 +99,6 @@ import static cn.ngame.store.StoreApplication.deviceId;
  */
 
 public class MainHomeActivity extends BaseFgActivity implements View.OnClickListener {
-
     public static final String TAG = "777";
     private final MainHomeActivity context = MainHomeActivity.this;
     private boolean isExit = false;     //是否安装后第一次启动
@@ -374,9 +373,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 }
             }).start();
 
-             //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_right);//左进,右出
+            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_right);//左进,右出
         }
     };
+
     @Override
     protected void onStart() {
         super.onStart();

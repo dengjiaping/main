@@ -139,7 +139,7 @@
             android:text="0KB"
             android:paddingRight="@dimen/dp_10"
             android:layout_centerVertical="true"
-            android:textColor="@color/font_color_b3"
+            android:textColor="@color/b3"
             android:textSize="@dimen/dp_14"/>
 
     </RelativeLayout>

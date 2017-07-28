@@ -4,5 +4,5 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_05"
-    android:background="@color/font_color_b3"
+    android:background="@color/b3"
     tools:showIn="@layout/layout_dialog_change_avatar"/>

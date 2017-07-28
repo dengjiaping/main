@@ -54,13 +54,13 @@ import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.NetUtil;
 import cn.ngame.store.game.view.GameDetailActivity;
-import cn.ngame.store.gamehub.view.ShowViewActivity;
 import cn.ngame.store.util.StringUtil;
 import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.PicassoImageView;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 
+import static cn.ngame.store.R.drawable.ic_def_logo_480_228;
 import static cn.ngame.store.core.utils.Constant.URL_RECOMMEND_TOPICS;
 
 /**
@@ -106,6 +106,10 @@ public class RecommendFragment extends BaseSearchFragment {
     private LinearLayout horizontalViewContainer;
     private List<RecommendTopicsItemInfo> gameInfo;
     private FragmentActivity context;
+    private Intent singeTopicsDetailIntent = new Intent();
+    private LinearLayout.LayoutParams hParams;
+    private int wrapContent;
+    private PicassoImageView picassoImageView;
 
     public static RecommendFragment newInstance(int arg) {
         RecommendFragment fragment = new RecommendFragment();
@@ -137,16 +141,21 @@ public class RecommendFragment extends BaseSearchFragment {
                     @Override
                     public void onError(Throwable e) {
 //                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
+                        android.util.Log.d(TAG, "getGameListonError: ");
                         pullListView.onPullUpRefreshComplete();
                         pullListView.onPullDownRefreshComplete();
                     }
 
                     @Override
                     public void onNext(RecommendListBean result) {
+                        android.util.Log.d(TAG, "getGameList: " + result);
+                        android.util.Log.d(TAG, "getGameList: " + result.getCode());
+                        android.util.Log.d(TAG, "getGameList: " + result.getData());
                         if (result != null && result.getCode() == 0) {
                             listData(result);
                         } else {
 //                            ToastUtil.show(getActivity(), result.getMsg());
+
                         }
                     }
                 });
@@ -181,40 +190,43 @@ public class RecommendFragment extends BaseSearchFragment {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误！");
                 } else {
                     horizontalViewContainer.removeAllViews();
+                    int dp10 = CommonUtil.dip2px(context, 10);
+                    int width240 = CommonUtil.dip2px(context, 240f);
+                    int heght114 = CommonUtil.dip2px(context, 114f);
+                    int ic_def_logo_480_228 = R.drawable.ic_def_logo_480_228;
                     for (int i = 0; i < size; i++) {
-                        String gameImage = gameInfo.get(i).getSelectImage();//获取每一张图片
-                        PicassoImageView imageView = new PicassoImageView(getActivity());
-                        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        final RecommendTopicsItemInfo info = gameInfo.get(i);
+                        final String gameImage = info.getSelectImage();//获取每一张图片
+                        picassoImageView = new PicassoImageView(context);
+                        picassoImageView.setScaleType(ImageView.ScaleType.FIT_XY);
                         //为  PicassoImageView设置属性
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        params.width = CommonUtil.dip2px(context, 240f);
-                        params.height = CommonUtil.dip2px(context, 114f);
+                        hParams = new LinearLayout.LayoutParams(
+                                wrapContent, wrapContent);
+                        hParams.width = width240;
+                        hParams.height = heght114;
                         //有多个图片的话
-                        if (i > 0) {
-                            params.setMargins(CommonUtil.dip2px(context, 10), 0, 0, 0);
+                        if (0 == i) {
+                            hParams.setMargins(dp10, 0, dp10, 0);
+                        } else {
+                            hParams.setMargins(0, 0, dp10, 0);
                         }
-                        imageView.setLayoutParams(params);
+                        picassoImageView.setLayoutParams(hParams);
                         //加载网络图片
-                        imageView.setImageUrl(gameImage, 240f, 114f, R.drawable.ic_def_logo_480_228);
-                        imageView.setTag(gameImage);
-                        horizontalViewContainer.addView(imageView);
+                        picassoImageView.setImageUrl(gameImage, width240, heght114, ic_def_logo_480_228);
+                        picassoImageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                singeTopicsDetailIntent.putExtra(KeyConstant.ID, info.getId());
+                                singeTopicsDetailIntent.putExtra(KeyConstant.TITLE, info.getTitle());
+                                singeTopicsDetailIntent.putExtra(KeyConstant.DESC, info.getSelectDesc());
+                                singeTopicsDetailIntent.putExtra(KeyConstant.URL, gameImage);
+                                startActivity(singeTopicsDetailIntent);
+                            }
+                        });
+                        horizontalViewContainer.addView(picassoImageView, i);
                     }
                 }
 
-                horizontalViewContainer.setOnClickListener(
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent i = new Intent();
-                                i.setClass(context, ShowViewActivity.class);
-                                String tag = (String) v.getTag();
-                                int index = horizontalViewContainer.indexOfChild(v);
-                                android.util.Log.d(TAG, index + "onClick: " + tag);
-                                //startActivity(gv);
-                            }
-                        }
-                );
 
             }
         };
@@ -236,6 +248,7 @@ public class RecommendFragment extends BaseSearchFragment {
     }
 
     public void listData(RecommendListBean result) {
+        android.util.Log.d(TAG, "listData: " + result.getData());
         if (result.getData() == null) {
             return;
         }
@@ -415,6 +428,8 @@ public class RecommendFragment extends BaseSearchFragment {
 
         //横向滑动控件
         horizontalViewContainer = (LinearLayout) view.findViewById(R.id.horizontalView_container);
+        singeTopicsDetailIntent.setClass(context, TopicsDetailActivity.class);
+        wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
     }
 
     //头部点击

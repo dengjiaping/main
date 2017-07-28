@@ -37,7 +37,7 @@
             android:maxLines="1"
             android:maxWidth="100dp"
             android:text=""
-            android:textColor="@color/font_color_b3"
+            android:textColor="@color/b3"
             android:textSize="12dp"/>
 
     </RelativeLayout>

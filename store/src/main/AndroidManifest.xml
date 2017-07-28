@@ -52,12 +52,14 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:screenOrientation="portrait"
+
         android:supportsRtl="true"
+        android:screenOrientation="portrait"
         android:theme="@style/AppTheme">
+        <!-- android:name=".base.activity.BeginActivity"-->
         <activity
-            android:name=".base.activity.BeginActivity"
-            android:screenOrientation="portrait">
+            android:name=".activity.main.MainHomeActivity"
+             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -65,136 +67,136 @@
         </activity>
         <activity
             android:name=".base.activity.GuideViewActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".base.activity.WelcomeActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".activity.PadToolActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|navigation"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".search.view.SearchActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name=".user.view.LoginActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name=".user.view.RegisterActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name=".user.view.FindPwdActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name=".user.view.ChangePwdActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name=".game.view.GameDetailActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name=".game.view.GameDetail2Activity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".activity.ReviewActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name=".activity.ReviewListActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".base.activity.AboutActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name=".base.activity.FeedbackActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name=".base.activity.DisclaimerActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name=".activity.sm.ManagerSettingsActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".user.view.UserCenterActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name=".activity.VRVideoActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name=".game.view.GameClassifyActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name=".game.view.VRGameActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name=".game.view.CPGameActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name=".game.view.GameSelectionActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name=".game.view.GameRecommendActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name=".game.view.GameListActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".video.view.VideoDetailActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".video.view.VideoRecommendActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
@@ -217,121 +219,121 @@
 
         <activity
             android:name="com.soundcloud.android.crop.CropImageActivity"
-            android:screenOrientation="portrait"/>
+             />
 
         <activity
             android:name=".ota.view.DeviceOtaUpdateActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".ota.view.OtaHelpActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".local.view.MyGameActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".local.view.WatchHistoryActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".push.view.PushMessageActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".push.view.MessageDetailActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".push.view.NotifyMsgDetailActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".gamehub.view.ReportActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".gamehub.view.PostMsgActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".gamehub.view.SubmitGameActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".gamehub.view.StrategyActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".gamehub.view.VoteActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".gamehub.view.ChooseModuleActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".gamehub.view.ChooseGameActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".gamehub.view.NoticeActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".gamehub.view.ShowViewActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".gamehub.view.SearchPostActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".base.activity.AdvertisingPageActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".gamehub.view.MsgDetailActivity"
-            android:screenOrientation="portrait"
+             
             android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".widget.mulpicture.MulPictureActivity"
-            android:screenOrientation="portrait"/>
+             />
 
-        <activity
+   <!--     <activity
             android:name=".activity.main.MainHomeActivity"
-            android:screenOrientation="portrait"/>
+         />-->
         <activity
-            android:name=".activity.main.FictitiousActivity"
-            android:screenOrientation="portrait"/>
+            android:name=".activity.main.VRActivity"
+             />
         <activity
             android:name=".activity.main.TopicsListActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".activity.main.TopicsDetailActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".activity.admin.MyGameDownloadActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".activity.admin.FeedbackSucceedActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".activity.admin.HelpAndFeedbackActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".activity.admin.QuestionListActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".activity.admin.QuestionDetailActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".activity.admin.SystemInfoActivity"
-            android:screenOrientation="portrait"/>
+             />
         <activity
             android:name=".activity.sm.JoypadSettingsActivity"
             android:launchMode="singleTask"
@@ -389,7 +391,7 @@
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
         <!--新浪-->
@@ -397,7 +399,7 @@
             android:name="com.umeng.socialize.media.WBShareCallBackActivity"
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
 
@@ -417,7 +419,7 @@
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait"
+             
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
 

@@ -53,7 +53,6 @@ import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.view.GameClassifyActivity;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.game.view.GameListActivity;
-import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.video.view.VideoDetailActivity;
 import cn.ngame.store.view.BannerView;
 import cn.ngame.store.view.PicassoImageView;
@@ -428,7 +427,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             @Override
             public void onResponse(JsonResult<List<HotInfo>> result) {
                 if (result == null) {
-                    ToastUtil.show(context, getString(R.string.requery_failed));
                     return;
                 }
 
@@ -438,7 +436,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
 
                 } else {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误！");
-                    ToastUtil.show(context, getString(R.string.requery_failed));
+                    //ToastUtil.show(context, getString(R.string.requery_failed));
                 }
             }
         };

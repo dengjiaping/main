@@ -33,11 +33,6 @@ public class TopicsListActivity extends BaseFgActivity {
     List<YunduanBean.DataBean> list = new ArrayList<>();
     TopicsListAdapter adapter;
     private TopicsListActivity content;
-    private int[] iconList = { R.drawable.ic_def_logo_188_188, R.drawable.ic_def_logo_188_188,
-            R.drawable.ic_def_logo_188_188, R.drawable.ic_def_logo_188_188, R.drawable.ic_def_logo_188_188,
-            R.drawable.ic_def_logo_188_188, R.drawable.ic_def_logo_188_188, R.drawable.ic_def_logo_188_188,
-            R.drawable.ic_def_logo_188_188, R.drawable.ic_def_logo_188_188, R.drawable.ic_def_logo_188_188,
-            R.drawable.ic_def_logo_188_188 };
     private GridView gview;
 
     @Override

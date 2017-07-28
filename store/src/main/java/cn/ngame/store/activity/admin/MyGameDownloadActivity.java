@@ -74,11 +74,11 @@ public class MyGameDownloadActivity extends BaseFgActivity {
     private void initViewPager() {
         tabList.add("下载中");
         tabList.add("已下载");
-        tabList.add("可更新" + updateValue);
+        tabList.add("可更新" );
         fragments = new ArrayList<Fragment>();
-        fragments.add(LoadingFragment.newInstance(typeValue, 1));
-        fragments.add(LoadFinishFragment.newInstance(typeValue, 2));
-        fragments.add(UpdateFragment.newInstance(typeValue, bean));
+        fragments.add(ManagerLikeFragment.newInstance(typeValue, 1));
+        fragments.add(ManagerInstalledFragment.newInstance(typeValue, 2));
+        fragments.add(ManagerNecessaryFragment.newInstance(typeValue, 0));
 
         adapter = new DCViewPagerAdapter(getSupportFragmentManager(), fragments, tabList);
         viewpager.setAdapter(adapter);
@@ -109,15 +109,16 @@ public class MyGameDownloadActivity extends BaseFgActivity {
 //        }
         tablayout.setupWithViewPager(viewpager);
         ViewGroup viewGroup = (ViewGroup) tablayout.getChildAt(0);
-        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+        int childCount = viewGroup.getChildCount();
+        for (int i = 0; i < childCount; i++) {
             ViewGroup view = (ViewGroup) viewGroup.getChildAt(i);
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
             TextView textView = (TextView) view.getChildAt(1);
             textView.setTextSize(16);
 
             textView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            int width = textView.getMeasuredWidth();
-            int screenWidth = ImageUtil.getScreenWidth(this);
+            int width = textView.getMeasuredWidth();//每个textView宽度
+            int screenWidth = ImageUtil.getScreenWidth(this);//屏幕宽度
             int margin = (screenWidth / tabList.size() - width) / tabList.size() + 5;
             if (tabList.size() <= 4) {
                 layoutParams.setMargins(30, 0, 30, 0);

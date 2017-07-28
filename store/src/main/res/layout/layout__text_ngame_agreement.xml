@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="注册代表您同意"
-        android:textColor="@color/font_color_b3"
+        android:textColor="@color/b3"
         android:textSize="@dimen/dp_12"/>
 
     <TextView

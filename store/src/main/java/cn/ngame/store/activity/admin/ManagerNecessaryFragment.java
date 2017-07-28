@@ -24,7 +24,7 @@ import cn.ngame.store.view.QuickAction;
  * Created by gp on 2017/3/3 0003.
  */
 
-public class UpdateFragment extends BaseSearchFragment {
+public class ManagerNecessaryFragment extends BaseSearchFragment {
 
     ListView listView;
     private PageAction pageAction;
@@ -43,8 +43,8 @@ public class UpdateFragment extends BaseSearchFragment {
     private int itemPosition;
     GameRankListBean gameInfoBean;
 
-    public static UpdateFragment newInstance(String type, GameRankListBean bean) {
-        UpdateFragment fragment = new UpdateFragment();
+    public static ManagerNecessaryFragment newInstance(String type, int bean) {
+        ManagerNecessaryFragment fragment = new ManagerNecessaryFragment();
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
         bundle.putSerializable("typeValue", bean);
@@ -60,15 +60,14 @@ public class UpdateFragment extends BaseSearchFragment {
     @Override
     protected void initViewsAndEvents(View view) {
         type = getArguments().getString("type");
-        gameInfoBean = (GameRankListBean) getArguments().getSerializable("typeValue");
 
         listView = (ListView) view.findViewById(R.id.listView);
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
-//        initListView();
-//        initPop(typeValue);
-        if (gameInfoBean != null) {
+        if (gameInfoBean == null) {
+            return;
+        } else {
             list = gameInfoBean.getData();
         }
         adapter = new RankingListAdapter(getActivity(), getSupportFragmentManager(), list, 1);
@@ -84,58 +83,12 @@ public class UpdateFragment extends BaseSearchFragment {
         });
     }
 
-//    public void initListView() {
-//        listView.setOnItemClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                itemType = 3;
-//                itemPosition = v.getId();
-//                //显示弹出框消失
-//                mItemClickQuickAction.show(v);
-//            }
-//        });
-//        loadIngLvAdapter = new GameUpdate2Adapter(getActivity(), getSupportFragmentManager());
-//        listView.setAdapter(loadIngLvAdapter);
-//        fileLoad = FileLoadManager.getInstance(getActivity());
-//}
-
     @Override
     public void onResume() {
         super.onResume();
-//        List<FileLoadInfo> loadingList = fileLoad.getUpdateFileInfo();
-//        loadIngLvAdapter.setDate(gameInfoBean.getData());
-//        listView.notifyDataSetChanged();
+
     }
 
-//    private void initPop(final int typeValue) {
-//        // 设置Action
-//        mItemClickQuickAction = new QuickAction(getActivity(), QuickAction.VERTICAL);
-//        ActionItem pointItem = new ActionItem(1, "删除任务", null);
-//        mItemClickQuickAction.addActionItem(pointItem);
-//
-//        mItemClickQuickAction.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
-//            @Override
-//            public void onItemClick(QuickAction source, int pos, int actionId) {
-//                if (pos == 0) {
-//                    //删除文件下载任务
-//                    FileLoadInfo fileInfo = null;
-//                    fileInfo = (FileLoadInfo) loadIngLvAdapter.getItem(itemPosition);
-//                    //删除下载任务
-//                    fileLoad.delete(fileInfo.getUrl());
-//                    try {
-//                        Thread.sleep(500);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                    List<FileLoadInfo> loadingList = fileLoad.getUpdateFileInfo();
-//                    loadIngLvAdapter.setDate(loadingList);
-//                    listView.notifyDataSetChanged();
-//                }
-//                //取消弹出框
-//                mItemClickQuickAction.dismiss();
-//            }
-//        });
-//    }
 
     @Override
     protected void onFirstUserVisible() {

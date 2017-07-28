@@ -36,7 +36,7 @@ import cn.ngame.store.view.VideoTabView;
  * Created by gp on 2017/3/21 0021.
  */
 
-public class FictitiousActivity extends BaseFgActivity{
+public class VRActivity extends BaseFgActivity{
 
     public static final String TAG = VideoFragment.class.getSimpleName();
     private static VideoFragment vrFragment = null;
@@ -71,7 +71,7 @@ public class FictitiousActivity extends BaseFgActivity{
         ll_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FictitiousActivity.this.finish();
+                VRActivity.this.finish();
             }
         });
         videoTabView = (VideoTabView) findViewById(R.id.auto_tab);
