@@ -1,4 +1,4 @@
-package cn.ngame.store.activity.admin;
+package cn.ngame.store.activity.manager;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

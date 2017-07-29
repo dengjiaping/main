@@ -1,4 +1,4 @@
-package cn.ngame.store.activity.main;
+package cn.ngame.store.activity.manager;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -16,9 +16,6 @@ import java.util.List;
 
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
-import cn.ngame.store.activity.admin.ManagerInstalledFragment;
-import cn.ngame.store.activity.admin.ManagerLikeFragment;
-import cn.ngame.store.activity.admin.ManagerNecessaryFragment;
 import cn.ngame.store.adapter.DCViewPagerAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.core.utils.CommonUtil;

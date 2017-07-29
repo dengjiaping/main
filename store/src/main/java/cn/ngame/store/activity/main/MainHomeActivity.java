@@ -54,6 +54,7 @@ import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.activity.discover.DiscoverFragment;
+import cn.ngame.store.activity.manager.ManagerFragment;
 import cn.ngame.store.activity.sm.AboutNgameZoneActivity;
 import cn.ngame.store.activity.sm.AdCooperativeActivity;
 import cn.ngame.store.activity.sm.JoypadSettingsActivity;

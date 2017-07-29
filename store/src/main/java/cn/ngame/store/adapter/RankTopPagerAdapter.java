@@ -12,10 +12,10 @@ import java.util.List;
  */
 public class RankTopPagerAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> list;
-    private List<String> tabList;
+    private String[] tabList;
 
 
-    public RankTopPagerAdapter(FragmentManager fm, List<Fragment> list, List<String> tabList) {
+    public RankTopPagerAdapter(FragmentManager fm, List<Fragment> list, String[] tabList) {
         super(fm);
         this.list = list;
         this.tabList = tabList;
@@ -33,7 +33,7 @@ public class RankTopPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return tabList.get(position);
+        return tabList[position];
     }
 
     //防止fragment自动销毁

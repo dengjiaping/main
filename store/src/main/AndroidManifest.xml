@@ -317,22 +317,22 @@
             android:name=".activity.main.TopicsDetailActivity"
              />
         <activity
-            android:name=".activity.admin.MyGameDownloadActivity"
+            android:name=".activity.manager.MyGameDownloadActivity"
              />
         <activity
-            android:name=".activity.admin.FeedbackSucceedActivity"
+            android:name=".activity.manager.FeedbackSucceedActivity"
              />
         <activity
-            android:name=".activity.admin.HelpAndFeedbackActivity"
+            android:name=".activity.manager.HelpAndFeedbackActivity"
              />
         <activity
-            android:name=".activity.admin.QuestionListActivity"
+            android:name=".activity.manager.QuestionListActivity"
              />
         <activity
-            android:name=".activity.admin.QuestionDetailActivity"
+            android:name=".activity.manager.QuestionDetailActivity"
              />
         <activity
-            android:name=".activity.admin.SystemInfoActivity"
+            android:name=".activity.manager.SystemInfoActivity"
              />
         <activity
             android:name=".activity.sm.JoypadSettingsActivity"

@@ -32,7 +32,7 @@ import java.util.Map;
 
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
-import cn.ngame.store.activity.admin.FeedbackSucceedActivity;
+import cn.ngame.store.activity.manager.FeedbackSucceedActivity;
 import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.UpLoadBean;
 import cn.ngame.store.core.net.GsonRequest;

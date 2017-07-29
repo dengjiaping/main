@@ -146,11 +146,11 @@ public class RankingListAdapter extends BaseAdapter {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo.getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode()));
+                            GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo
+                                    .getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode()));
                             progressBar.setLoadState(fileStatus);
                         }
                     });
@@ -171,7 +171,7 @@ public class RankingListAdapter extends BaseAdapter {
             } else {
                 tv_position.setVisibility(View.INVISIBLE);
             }
-            tv_position.setText(position + 4 + "");
+            tv_position.setText(position + 1 + "");
 
             String imgUrl = gameInfo.getGameLogo();
             if (imgUrl != null && imgUrl.trim().equals("")) {
@@ -208,9 +208,12 @@ public class RankingListAdapter extends BaseAdapter {
             ratingBar.setRating(gameInfo.getPercentage());
 
             //设置进度条状态
-            progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo.getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode())));
+            progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo.getGameLink(), gameInfo
+                    .getPackages(), ConvUtil.NI(gameInfo.getVersionCode())));
             //必须设置，否则点击进度条后无法进行响应操作
-            FileLoadInfo fileLoadInfo = new FileLoadInfo(gameInfo.getFilename(), gameInfo.getGameLink(), gameInfo.getMd5(), gameInfo.getVersionCode(), gameInfo.getGameName(), gameInfo.getGameLogo(), gameInfo.getId(), FileLoadInfo.TYPE_GAME);
+            FileLoadInfo fileLoadInfo = new FileLoadInfo(gameInfo.getFilename(), gameInfo.getGameLink(), gameInfo.getMd5(),
+                    gameInfo.getVersionCode(), gameInfo.getGameName(), gameInfo.getGameLogo(), gameInfo.getId(), FileLoadInfo
+                    .TYPE_GAME);
             fileLoadInfo.setPackageName(gameInfo.getPackages());
             progressBar.setFileLoadInfo(fileLoadInfo);
             progressBar.setOnStateChangeListener(new ProgressBarStateListener(context, fm));

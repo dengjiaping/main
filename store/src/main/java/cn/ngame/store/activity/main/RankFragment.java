@@ -10,11 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cn.ngame.store.R;
-import cn.ngame.store.activity.rank.RankCommentFragment;
-import cn.ngame.store.activity.rank.RankDownloadFragment;
+import cn.ngame.store.activity.rank.Rank01234Fragment;
+import cn.ngame.store.activity.rank.Rank5Fragment;
 import cn.ngame.store.adapter.RankTopPagerAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.core.utils.CommonUtil;
@@ -30,8 +29,8 @@ public class RankFragment extends BaseSearchFragment {
     private ViewPager viewpager;
     private ArrayList<Fragment> fragments;
     private RankTopPagerAdapter adapter;
-    private RankDownloadFragment downloadFragment;
-    private RankCommentFragment commentFragment;
+    private Rank5Fragment downloadFragment;
+    private Rank01234Fragment commentFragment;
     private TabLayout tablayout;
     private TextView textView;
     private LinearLayout.LayoutParams layoutParams;
@@ -63,7 +62,7 @@ public class RankFragment extends BaseSearchFragment {
     }
 
     private void initTabs() {
-        tablayout.setTabMode(TabLayout.MODE_SCROLLABLE); //固定模式
+        tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tablayout.setTabGravity(TabLayout.GRAVITY_CENTER);
         tablayout.setupWithViewPager(viewpager);
         ViewGroup viewGroup = (ViewGroup) tablayout.getChildAt(0);
@@ -88,35 +87,32 @@ public class RankFragment extends BaseSearchFragment {
         }
     }
 
-    private List<String> tabList = new ArrayList<String>();
+    private String tabList[] = new String[]{"全部", "手柄游戏", "破解游戏", "汉化游戏", "特色游戏", "模拟器"};
 
     private void initViewPager() {
-        tabList.add("全部");
-        tabList.add("手柄游戏");
-        tabList.add("破解游戏");
-        tabList.add("汉化游戏");
-        tabList.add("特色游戏");
-        tabList.add("模拟器");
         fragments = new ArrayList<>();
-
-        for (int i = 0; i < tabList.size(); i++) {
-            RankCommentFragment fragment = new RankCommentFragment(curTab);
+        int length = tabList.length;
+        for (int i = 0; i < length - 1; i++) {
+            Rank01234Fragment fragment = new Rank01234Fragment(curTab);
             fragment.setTabPos(i);
             fragments.add(fragment);
         }
+        Rank5Fragment fragment5 = Rank5Fragment.newInstance();
+        fragments.add(fragment5);
         adapter = new RankTopPagerAdapter(getChildFragmentManager(), fragments, tabList);
         viewpager.setAdapter(adapter);
-
+        viewpager.setCurrentItem(curTab);
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             }
-
             @Override
             public void onPageSelected(int position) {
                 //滑动监听加载数据，一次只加载一个标签页
-                ((RankCommentFragment) adapter.getItem(position)).sendMessage();
+                if (position < 5) {
+                    ((Rank01234Fragment) adapter.getItem(position)).sendMessage();
+                }
             }
 
             @Override

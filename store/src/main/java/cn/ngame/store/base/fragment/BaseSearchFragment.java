@@ -19,7 +19,10 @@ import android.view.inputmethod.InputMethodManager;
  */
 public abstract class BaseSearchFragment extends BaseLazyFragment {
     protected abstract int getContentViewLayoutID();
+
     protected abstract View getLoadView(View view);
+
+    protected final static String TAG = "777";
 
 //    private LoadViewHelper loadViewHelper;
 
@@ -31,6 +34,7 @@ public abstract class BaseSearchFragment extends BaseLazyFragment {
             return super.onCreateView(inflater, container, savedInstanceState);
         }
     }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -45,7 +49,7 @@ public abstract class BaseSearchFragment extends BaseLazyFragment {
         intentFilter.addAction("android.intent.action.SEARCHCLICK");//建议把它写一个公共的变量，这里方便阅读就不写了。
         BroadcastReceiver mItemViewListClickReceiver = new BroadcastReceiver() {
             @Override
-            public void onReceive(Context context, Intent intent){
+            public void onReceive(Context context, Intent intent) {
 //                System.out.println("OK");
                 onUIReceive();
             }
@@ -56,19 +60,22 @@ public abstract class BaseSearchFragment extends BaseLazyFragment {
     /**
      * 广播接收封装，子类选择实现
      */
-    public void onUIReceive(){}
-
-    public void initLoadView(View view){
-
+    public void onUIReceive() {
     }
-    public void showError(String errorText, String buttonText, View.OnClickListener onClickListener){
+
+    public void initLoadView(View view) {
 
     }
 
-    public void search(String key){}
+    public void showError(String errorText, String buttonText, View.OnClickListener onClickListener) {
+
+    }
+
+    public void search(String key) {
+    }
 
     //隐藏软键盘
-    public void hideKeyBoard(){
+    public void hideKeyBoard() {
         InputMethodManager imm = (InputMethodManager) getActivity()
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         // imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
@@ -79,10 +86,10 @@ public abstract class BaseSearchFragment extends BaseLazyFragment {
 
     /**
      * 设置添加屏幕的背景透明度
+     *
      * @param bgAlpha
      */
-    public void backgroundAlpha(float bgAlpha)
-    {
+    public void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         getActivity().getWindow().setAttributes(lp);

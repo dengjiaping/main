@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/rank01234_top_llay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TabLayout
+            xmlns:tabs="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/rank01234_tablayout"
+            style="@style/MyCustomTabLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="43dp"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_marginBottom="-3dp"
+            tabs:tabMode="scrollable"
+            tabs:tabGravity="center"
+            tabs:tabMinWidth="@dimen/dp_5"
+            android:background="@drawable/manager_top_tab_bg"
+            tabs:tabBackground="@android:color/white"
+            tabs:tabIndicatorColor="@color/transparent"
+            tabs:tabSelectedTextColor="@color/color_18b9fe"
+            tabs:tabTextColor="@color/font_black_6"/>
+        <!--
+                <include layout="@layout/layout_line_05dp_e6e6e6"/>
+                <include layout="@layout/layout_line_05dp_e6e6e6"/>-->
+    </LinearLayout>
+
+    <cn.ngame.store.widget.pulllistview.PullToRefreshListView
+        android:id="@+id/pullListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="0dp"
+        android:background="@color/white"
+        android:divider="@null"
+        android:scrollbars="none"></cn.ngame.store.widget.pulllistview.PullToRefreshListView>
+
+</LinearLayout>
