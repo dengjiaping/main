@@ -1,8 +1,8 @@
 package cn.ngame.store.activity.rank;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -28,6 +28,7 @@ import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.GameFileStatus;
 import cn.ngame.store.core.fileload.IFileLoad;
+import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.view.GameLoadProgressBar;
@@ -52,26 +53,53 @@ public class RankCommentFragment extends BaseSearchFragment implements View.OnCl
     private Timer timer = new Timer();
     private IFileLoad fileLoad; //文件下载公共类接口
 
-    private Handler handler = new Handler();
     private RankingListAdapter adapter;
 
     private PageAction pageAction;
     public static int PAGE_SIZE = 10;
     List<GameRankListBean.DataBean> topList = new ArrayList<>();
     List<GameRankListBean.DataBean> list = new ArrayList<>();
+    public static final String ARG_PAGE = "ARG_PAGE";
+    private boolean IS_LOADED = false;
+    private static int mSerial = 0;
+    private int mTabPos = 0;
+    private boolean isFirst = true;
 
-    public static RankCommentFragment newInstance(int arg) {
-        RankCommentFragment fragment = new RankCommentFragment();
-        Bundle bundle = new Bundle();
-        fragment.setArguments(bundle);
-        return fragment;
+    private Handler handler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            if (!IS_LOADED) {
+                IS_LOADED = true;
+                //这里执行加载数据的操作
+                getCommentList();
+                Log.d("tag", "我是page" + (mTabPos + 1));
+            }
+            return;
+        }
+    };
+
+    public RankCommentFragment(int serial) {
+        mSerial = serial;
     }
-
+    public void sendMessage(){
+        Message message = handler.obtainMessage();
+        message.sendToTarget();
+    }
     @Override
     protected int getContentViewLayoutID() {
+        if (isFirst && mTabPos == mSerial) {
+            isFirst = false;
+            sendMessage();
+        }
         return R.layout.ranking_download_fragment;
     }
-
+    public void setTabPos(int mTabPos) {
+        this.mTabPos = mTabPos;
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.e("tag","onDestroyView()方法执行");
+    }
     @Override
     protected void initViewsAndEvents(View view) {
         //        typeValue = getArguments().getInt("", 1);
@@ -131,7 +159,7 @@ public class RankCommentFragment extends BaseSearchFragment implements View.OnCl
         if (pullListView.getRefreshableView().getHeaderViewsCount() == 0) {
             pullListView.getRefreshableView().addHeaderView(headView);
         }
-        getCommentList();
+
     }
 
     private void initHeadView(View view) {
@@ -282,7 +310,7 @@ public class RankCommentFragment extends BaseSearchFragment implements View.OnCl
                 break;
             case R.id.sdv_img_2:
                 Intent i2 = new Intent(getActivity(), GameDetailActivity.class);
-                i2.putExtra("id",  topList.get(1).getId());
+                i2.putExtra("id", topList.get(1).getId());
                 android.util.Log.d("777", "游戏id" + topList.get(1).getId());
                 startActivity(i2);
                 break;

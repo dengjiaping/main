@@ -123,7 +123,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private boolean isChecking = false;
 
     private RecommendFragment selectedFragment;
-    private RankingFragment rankingFragment;
+    private RankFragment rankingFragment;
     private DiscoverFragment discoverFragment;
     private ManagerFragment administrationFragment;
 
@@ -510,7 +510,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 //            list.add(LocalFragment.getInstance());
 
             list.add(RecommendFragment.newInstance(0));
-            list.add(RankingFragment.newInstance(""));
+            list.add(RankFragment.newInstance(""));
             //list.add(GameHubFragment.newInstance());
             list.add(DiscoverFragment.newInstance(""));
             list.add(ManagerFragment.newInstance());
@@ -564,7 +564,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 break;
             case 1://排行
                 if (null == rankingFragment) {
-                    rankingFragment = new RankingFragment();
+                    rankingFragment = new RankFragment();
                     transaction.add(R.id.main_list_fragments, rankingFragment);
                 } else {
                     transaction.show(rankingFragment);
