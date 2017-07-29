@@ -10,13 +10,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +22,6 @@ import java.util.TimerTask;
 
 import cn.ngame.store.R;
 import cn.ngame.store.core.utils.CommonUtil;
-import cn.ngame.store.core.utils.TextUtil;
 
 
 /**
@@ -124,10 +120,10 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
             dotLayout.removeAllViews();
         }
         for (int i = 0; i < views.size(); i++) {
-
             ImageView img = new ImageView(context);
             img.setImageResource(R.drawable.selector_dot);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(CommonUtil.dip2px(context, 4), CommonUtil.dip2px(context, 4));
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(CommonUtil.dip2px(context, 4), CommonUtil.dip2px
+                    (context, 4));
             if (i > 0) {
                 lp.setMargins(CommonUtil.dip2px(context, 6), 0, 0, 0);
                 img.setSelected(false);
@@ -143,24 +139,23 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
         } catch (Exception e) {
             e.toString();
         }
-        WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+       /* WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         int width = wm.getDefaultDisplay().getWidth();
         final List<ImageView> tempViews = views;
         for (final ImageView img : tempViews) {
             if (!TextUtil.isEmpty((String) img.getTag())) {
-                img.setScaleType(ImageView.ScaleType.FIT_XY);
                 Picasso.with(context)
                         .load((String) img.getTag())
                         .placeholder(R.drawable.ic_def_logo_720_288)
                         .error(R.drawable.ic_def_logo_720_288)
-                        .resize(width, CommonUtil.dip2px(context, 214))
-                        .centerCrop()
-//                        .fit()
+                       *//* .resize(width, CommonUtil.dip2px(context, 158))
+                        .centerInside()*//*
+                        .fit()
                         .tag(context)
                         .into(img);
             }
 
-        }
+        }*/
     }
 
     /**
@@ -249,7 +244,7 @@ public class BannerView extends RelativeLayout implements ViewPager.OnPageChange
                 startScroll(initImg);
                 break;
         }
-        Log.i("=======================", ev.getAction()+"");
+        Log.i("=======================", ev.getAction() + "");
         return super.onInterceptTouchEvent(ev);
     }
 

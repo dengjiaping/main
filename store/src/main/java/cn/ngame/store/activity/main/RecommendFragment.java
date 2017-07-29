@@ -19,13 +19,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.BrowseHistoryBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameHubMainBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBody;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.main.HomeHotRaiderClient;
 import com.jzt.hol.android.jkda.sdk.services.recommend.RecommendClient;
 
 import java.util.ArrayList;
@@ -44,7 +42,6 @@ import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.PageAction;
-import cn.ngame.store.bean.QueryHomeGameBean;
 import cn.ngame.store.bean.RecommendTopicsItemInfo;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.net.GsonRequest;
@@ -54,13 +51,11 @@ import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.NetUtil;
 import cn.ngame.store.game.view.GameDetailActivity;
-import cn.ngame.store.util.StringUtil;
 import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.PicassoImageView;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 
-import static cn.ngame.store.R.drawable.ic_def_logo_480_228;
 import static cn.ngame.store.core.utils.Constant.URL_RECOMMEND_TOPICS;
 
 /**
@@ -90,7 +85,7 @@ public class RecommendFragment extends BaseSearchFragment {
 
     private SelectGameAdapter gameListAdapter;
     private MainHomeRaiderAdapter raiderAdapter;
-    private SimpleDraweeView sdv_img_1, sdv_img_2, game_pic_1, game_pic_2;
+    private SimpleDraweeView from_img_1, from_img_2, game_big_pic_1, game_big_pic_2;
     private TextView gamename_1, gamename_2, summary_2;
     private TextView from_1, from_2, summary_1;
 
@@ -148,14 +143,10 @@ public class RecommendFragment extends BaseSearchFragment {
 
                     @Override
                     public void onNext(RecommendListBean result) {
-                        android.util.Log.d(TAG, "getGameList: " + result);
-                        android.util.Log.d(TAG, "getGameList: " + result.getCode());
-                        android.util.Log.d(TAG, "getGameList: " + result.getData());
                         if (result != null && result.getCode() == 0) {
                             listData(result);
                         } else {
 //                            ToastUtil.show(getActivity(), result.getMsg());
-
                         }
                     }
                 });
@@ -406,9 +397,10 @@ public class RecommendFragment extends BaseSearchFragment {
         getHorizontalData();
     }
 
+    //顶部2个位置
     private void initHeadView(View view) {
-        sdv_img_1 = (SimpleDraweeView) view.findViewById(R.id.img_from_1);//来自 头像
-        sdv_img_2 = (SimpleDraweeView) view.findViewById(R.id.img_from_2);
+        from_img_1 = (SimpleDraweeView) view.findViewById(R.id.img_from_1);//来自 头像
+        from_img_2 = (SimpleDraweeView) view.findViewById(R.id.img_from_2);
 
         from_1 = (TextView) view.findViewById(R.id.text_from_1);//来自 名字
         from_2 = (TextView) view.findViewById(R.id.text_from_2);
@@ -416,8 +408,8 @@ public class RecommendFragment extends BaseSearchFragment {
         gamename_1 = (TextView) view.findViewById(R.id.tv_gamename_1);//游戏名字
         gamename_2 = (TextView) view.findViewById(R.id.tv_gamename_2);
 
-        game_pic_1 = (SimpleDraweeView) view.findViewById(R.id.recommend_game_pic_1);//游戏图片
-        game_pic_2 = (SimpleDraweeView) view.findViewById(R.id.recommend_game_pic_2);
+        game_big_pic_1 = (SimpleDraweeView) view.findViewById(R.id.recommend_game_pic_1);//游戏图片
+        game_big_pic_2 = (SimpleDraweeView) view.findViewById(R.id.recommend_game_pic_2);
 
         summary_1 = (TextView) view.findViewById(R.id.tv_summary1);//游戏摘要
         summary_2 = (TextView) view.findViewById(R.id.tv_summary2);
@@ -460,12 +452,11 @@ public class RecommendFragment extends BaseSearchFragment {
         RecommendListBean.DataBean dataBean0 = list.get(0);
         RecommendListBean.DataBean dataBean1 = list.get(1);
 
-        sdv_img_1.setImageURI(dataBean0.getGameLogo());
-        sdv_img_2.setImageURI(dataBean1.getGameLogo());
+        from_img_1.setImageURI(dataBean0.getGameLogo());//来自...头像
+        from_img_2.setImageURI(dataBean1.getGameLogo());//来自...头像
 
-        game_pic_1.setImageURI(dataBean0.getGameRecommendImg());
-        game_pic_2.setImageURI(dataBean1.getGameRecommendImg());
-
+        game_big_pic_1.setImageURI(dataBean0.getGameRecommendImg());
+        game_big_pic_2.setImageURI(dataBean1.getGameRecommendImg());
         gamename_1.setText(dataBean0.getGameName());
         gamename_2.setText(dataBean1.getGameName());
 
@@ -474,97 +465,6 @@ public class RecommendFragment extends BaseSearchFragment {
 
         summary_1.setText(dataBean0.getRecommend());
         summary_2.setText(dataBean1.getRecommend());
-    }
-
-    //每日精选、MOBA精选、枪战精选、新平尝鲜、品牌游戏列表（12个）
-    private void queryHomeGame() {
-        String url = Constant.WEB_SITE + Constant.URL_RECOMMEND_TOPICS;
-        Response.Listener<JsonResult<QueryHomeGameBean>> successListener = new Response.Listener<JsonResult<QueryHomeGameBean>>
-                () {
-            @Override
-            public void onResponse(JsonResult<QueryHomeGameBean> result) {
-
-                if (result == null || result.code != 0) {
-                    //  "加载数据失败"
-                    return;
-                }
-
-                QueryHomeGameBean hotInfo = result.data;
-                if (hotInfo != null) {
-                    setHomeAllGame(hotInfo);
-                } else {
-                    Log.d(TAG, "HTTP请求成功：服务端返回错误！");
-                }
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
-                Log.d(TAG, "HTTP请求失败：网络连接错误！");
-            }
-        };
-
-        Request<JsonResult<QueryHomeGameBean>> request = new GsonRequest<JsonResult<QueryHomeGameBean>>(Request.Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult<QueryHomeGameBean>>() {
-        }.getType()) {
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("appTypeId", String.valueOf(0));
-                return params;
-            }
-        };
-        StoreApplication.requestQueue.add(request);
-    }
-
-    //设置首页game数据
-    private void setHomeAllGame(QueryHomeGameBean result) {
-        // 品牌游戏 剩余（10个）
-        allBradnList.clear();
-        if (allBradnList.size() > 0) {
-            gameListAdapter = new SelectGameAdapter(getActivity(), getSupportFragmentManager());
-            listView_allBarnd.setAdapter(gameListAdapter);
-            gameListAdapter.setDate(allBradnList);
-            gameListAdapter.notifyDataSetChanged();
-            StringUtil.setListViewHeightBasedOnChildren(listView_allBarnd, 0);
-        }
-    }
-
-    //请求 热门攻略
-    private void doHotRaider() {
-        BrowseHistoryBodyBean bodyBean = new BrowseHistoryBodyBean();
-        bodyBean.setType(1);
-        new HomeHotRaiderClient(getActivity(), bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<GameHubMainBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-//                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
-                    }
-
-                    @Override
-                    public void onNext(GameHubMainBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            if (result.getData() == null) {
-                                pullListView.getRefreshableView().setAdapter(raiderAdapter); //数据位空时，加载头部
-                                return;
-                            }
-                            if (result.getData().size() <= 0) {
-                                pullListView.getRefreshableView().setAdapter(raiderAdapter); //数据位空时，加载头部
-                                return;
-                            }
-                            homeList.clear();
-                            homeList.addAll(result.getData());
-                            raiderAdapter = new MainHomeRaiderAdapter(getActivity(), homeList);
-                            pullListView.getRefreshableView().setAdapter(raiderAdapter);
-                        } else {
-//                            ToastUtil.show(getActivity(), result.getMsg());
-                        }
-                    }
-                });
     }
 
     @Override

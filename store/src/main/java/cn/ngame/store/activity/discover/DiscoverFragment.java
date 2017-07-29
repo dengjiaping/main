@@ -44,16 +44,15 @@ import cn.ngame.store.adapter.discover.DiscoverClassifyTopAdapter;
 import cn.ngame.store.adapter.discover.DiscoverIvAdapter;
 import cn.ngame.store.adapter.discover.DiscoverTvIvAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
-import cn.ngame.store.bean.HotInfo;
 import cn.ngame.store.bean.JsonResult;
+import cn.ngame.store.bean.RecommendTopicsItemInfo;
 import cn.ngame.store.core.net.GsonRequest;
+import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.view.GameClassifyActivity;
-import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.game.view.GameListActivity;
-import cn.ngame.store.video.view.VideoDetailActivity;
 import cn.ngame.store.view.BannerView;
 import cn.ngame.store.view.PicassoImageView;
 import cn.ngame.store.view.RecyclerViewDivider;
@@ -118,6 +117,10 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private DiscoverTvIvAdapter mHotRecentAdapter;
     private DiscoverTvIvAdapter mActionAdapter;
     private DiscoverTvIvAdapter mStrategyAdapter;
+    private PicassoImageView picassoImageView;
+    private int match_parent;
+    private LinearLayout.LayoutParams hParams;
+    private String selectImage;
 
     public DiscoverFragment() {
         android.util.Log.d(TAG, "DiscoverFragment: ()");
@@ -423,17 +426,16 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
      */
     private void getBannerData() {
         String url = Constant.WEB_SITE + Constant.URL_DISCOVER_BANNER;
-        Response.Listener<JsonResult<List<HotInfo>>> successListener = new Response.Listener<JsonResult<List<HotInfo>>>() {
+        Response.Listener<JsonResult<List<RecommendTopicsItemInfo>>> successListener = new Response
+                .Listener<JsonResult<List<RecommendTopicsItemInfo>>>() {
             @Override
-            public void onResponse(JsonResult<List<HotInfo>> result) {
+            public void onResponse(JsonResult<List<RecommendTopicsItemInfo>> result) {
                 if (result == null) {
                     return;
                 }
-
                 if (result.code == 0) {
                     List<ImageView> list = createBannerView(result.data);
                     bannerView.setData(list);
-
                 } else {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误！");
                     //ToastUtil.show(context, getString(R.string.requery_failed));
@@ -449,9 +451,10 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             }
         };
 
-        Request<JsonResult<List<HotInfo>>> request = new GsonRequest<JsonResult<List<HotInfo>>>(Request.Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult<List<HotInfo>>>() {
-        }.getType()) {
+        Request<JsonResult<List<RecommendTopicsItemInfo>>> request = new GsonRequest<JsonResult<List<RecommendTopicsItemInfo>>>
+                (Request.Method.POST, url,
+                        successListener, errorListener, new TypeToken<JsonResult<List<RecommendTopicsItemInfo>>>() {
+                }.getType()) {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
@@ -466,44 +469,49 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     /**
      * 创建轮播视图
      */
-    private List<ImageView> createBannerView(List<HotInfo> hotInfoList) {
+    private ArrayList<ImageView> list = new ArrayList<>();
+    private Intent singeTopicsDetailIntent = new Intent();
 
-        if (hotInfoList == null || hotInfoList.size() <= 0) {
+    private List<ImageView> createBannerView(List<RecommendTopicsItemInfo> bannerInfoList) {
+
+        int bannerListSize = bannerInfoList.size();
+        if (bannerInfoList == null || bannerListSize <= 0) {
             return null;
         }
+        singeTopicsDetailIntent.setClass(context, TopicsDetailActivity.class);
+        int heght = CommonUtil.dip2px(context, 158f);
+        int ic_def_logo_720_228 = R.drawable.ic_def_logo_720_288;
+        match_parent = ViewGroup.LayoutParams.MATCH_PARENT;
+        for (int i = 0; i < bannerListSize; i++) {
+            final RecommendTopicsItemInfo info = bannerInfoList.get(i);
+            selectImage = info.getSelectImage();
+            picassoImageView = new PicassoImageView(context);
+            picassoImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            hParams = new LinearLayout.LayoutParams(
+                    match_parent, match_parent);
+            hParams.height = heght;
+            picassoImageView.setLayoutParams(hParams);
+            // picassoImageView.setId(info.getId());
+            // picassoImageView.setTag(info.getSelectImage());
 
-        ArrayList<ImageView> list = new ArrayList<>();
-        for (int i = 0; i < hotInfoList.size(); i++) {
-
-            final HotInfo info = hotInfoList.get(i);
-            PicassoImageView img = new PicassoImageView(context);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
-                    .LayoutParams.MATCH_PARENT);
-            img.setLayoutParams(params);
-            img.setId((int) info.id);
-            img.setTag(info.advImageLink);
-
-            img.setOnTouchListener(new View.OnTouchListener() {
+            picassoImageView.setImageUrl(selectImage, ic_def_logo_720_228);
+            picassoImageView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     return false;
                 }
             });
-            img.setOnClickListener(new View.OnClickListener() {
+            picassoImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (info.type == 1) {
-                        Intent intent = new Intent(context, GameDetailActivity.class);
-                        intent.putExtra("id", info.gameId);
-                        startActivity(intent);
-                    } else if (info.type == 2) {
-                        Intent intent = new Intent(context, VideoDetailActivity.class);
-                        intent.putExtra("id", info.videoId);
-                        startActivity(intent);
-                    }
+                    singeTopicsDetailIntent.putExtra(KeyConstant.ID, info.getId());
+                    singeTopicsDetailIntent.putExtra(KeyConstant.TITLE, info.getTitle());
+                    singeTopicsDetailIntent.putExtra(KeyConstant.DESC, info.getSelectDesc());
+                    singeTopicsDetailIntent.putExtra(KeyConstant.URL, selectImage);
+                    startActivity(singeTopicsDetailIntent);
                 }
             });
-            list.add(img);
+            list.add(picassoImageView);
         }
         return list;
     }

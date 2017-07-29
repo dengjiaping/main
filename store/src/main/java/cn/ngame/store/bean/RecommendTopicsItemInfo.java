@@ -7,7 +7,6 @@ import java.io.Serializable;
  * Created by zeng on 2016/5/16.
  */
 public class RecommendTopicsItemInfo implements Serializable {
-    public static final String TAG = GameInfo.class.getSimpleName();
     private int id;//该专题id
     private String title; //该专题名字
     private String selectDesc;//该专题  精选描述
@@ -65,5 +64,13 @@ public class RecommendTopicsItemInfo implements Serializable {
 
     public void setIsCarousel(int isCarousel) {
         this.isCarousel = isCarousel;
+    }
+
+    public int getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(int orderNo) {
+        this.orderNo = orderNo;
     }
 }
