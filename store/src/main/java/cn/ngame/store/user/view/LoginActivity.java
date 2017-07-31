@@ -44,6 +44,7 @@ import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.local.model.IWatchRecordModel;
 import cn.ngame.store.local.model.WatchRecordModel;
+import cn.ngame.store.util.ToastUtil;
 
 /**
  * 用户登录界面
@@ -152,7 +153,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
-        android.util.Log.d(TAG, "onRequestPermissionsResult: " + requestCode);
+        android.util.Log.d(TAG, "onRequest6.0PermissionsResult: " + requestCode);
 
     }
 
@@ -160,7 +161,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     @Override
     protected void onResume() {
         super.onResume();
-        dialogHelper = new DialogHelper(getSupportFragmentManager(), LoginActivity.this);
+        dialogHelper = new DialogHelper(getSupportFragmentManager(),mContext);
         mShareAPI = UMShareAPI.get(this);
         findViewById(R.id.left_bt).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,6 +251,8 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        android.util.Log.d(TAG, requestCode + "第三方登录回调: " + data);
+
     }
 
     private UMAuthListener authListener = new UMAuthListener() {
@@ -271,6 +274,12 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
             dialogHelper.hideAlert();
+            String message = t.getMessage();
+            if (message.contains("错误码：2008")) {
+                ToastUtil.show(mContext, "没有安装该应用");
+            } else {
+                ToastUtil.show(mContext, "授权失败");
+            }
         }
 
         /**

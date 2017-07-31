@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -34,6 +35,7 @@ public class RankFragment extends BaseSearchFragment {
     private TabLayout tablayout;
     private TextView textView;
     private LinearLayout.LayoutParams layoutParams;
+    private Rank01234Fragment fragment01234;
 
     public static RankFragment newInstance(String arg) {
         RankFragment fragment = new RankFragment();
@@ -91,11 +93,12 @@ public class RankFragment extends BaseSearchFragment {
 
     private void initViewPager() {
         fragments = new ArrayList<>();
-        int length = tabList.length;
-        for (int i = 0; i < length - 1; i++) {
-            Rank01234Fragment fragment = new Rank01234Fragment(curTab);
-            fragment.setTabPos(i);
-            fragments.add(fragment);
+        final int length = tabList.length - 1;
+        Log.d(TAG, "onPagelength: " + length);
+        for (int i = 0; i < length; i++) {
+            fragment01234 = new Rank01234Fragment(curTab);
+            fragment01234.setTabPos(i);
+            fragments.add(fragment01234);
         }
         Rank5Fragment fragment5 = Rank5Fragment.newInstance();
         fragments.add(fragment5);
@@ -105,19 +108,20 @@ public class RankFragment extends BaseSearchFragment {
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
+
             @Override
             public void onPageSelected(int position) {
+                Log.d(TAG, "onPageSelected: " + position);
                 //滑动监听加载数据，一次只加载一个标签页
-                if (position < 5) {
+                if (position < length) {
                     ((Rank01234Fragment) adapter.getItem(position)).sendMessage();
                 }
+
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
     }

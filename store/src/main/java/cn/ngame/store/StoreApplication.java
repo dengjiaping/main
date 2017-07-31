@@ -55,7 +55,6 @@ public class StoreApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-
         Log.setLevel(Log.DEBUG);    //设置Log打印级别
 
         token = (String) SPUtils.get(this, Constant.CONFIG_TOKEN, "");
@@ -82,6 +81,7 @@ public class StoreApplication extends MultiDexApplication {
 
 
         Config.DEBUG = true;
+
         //配置友盟
         UMShareAPI.get(this);
         initUmengKey();
