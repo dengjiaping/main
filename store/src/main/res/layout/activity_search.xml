@@ -239,59 +239,5 @@
                 android:stretchMode="columnWidth"
                 android:verticalSpacing="5dp"></GridView>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/shape_search_white"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
-
-                <ImageView
-                    android:id="@+id/iv_video"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:background="@drawable/sousuo_video" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/iv_video"
-                    android:text="热搜视频"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="14sp" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/gray" />
-
-            <GridView
-                android:id="@+id/gridView_video"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="5dp"
-                android:gravity="center_horizontal"
-                android:horizontalSpacing="5dp"
-                android:listSelector="#00000000"
-                android:numColumns="2"
-                android:scrollbars="none"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="5dp"></GridView>
-        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

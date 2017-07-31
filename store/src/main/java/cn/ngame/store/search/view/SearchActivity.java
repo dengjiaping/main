@@ -72,7 +72,6 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
     List<SearchGameVideoBean.DataBean.HotSearchVideoListBean> searchVideotList = new ArrayList<>();
     private GridView gridView_history;
     private GridView gridView_game;
-    private GridView gridView_video;
     private SearchOtherAdapter gameAdapter;
     private SearchVideoAdapter videoAdapter;
 
@@ -102,7 +101,6 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
         tv_clear = (TextView) findViewById(R.id.tv_clear);
         gridView_history = (GridView) findViewById(R.id.gridView_history);
         gridView_game = (GridView) findViewById(R.id.gridView_game);
-        gridView_video = (GridView) findViewById(R.id.gridView_video);
 
         loadStateView.setReLoadListener(this);
         rl_search.setOnClickListener(this);
@@ -191,14 +189,6 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
                 startActivity(intent);
             }
         });
-        gridView_video.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(SearchActivity.this, VideoDetailActivity.class);
-                intent.putExtra("id", searchVideotList.get(position).getVideoId());
-                startActivity(intent);
-            }
-        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -269,12 +259,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
                             } else {
                                 gameAdapter.setList(searchGameList);
                             }
-                            if (videoAdapter == null) {
-                                videoAdapter = new SearchVideoAdapter(SearchActivity.this, searchVideotList);
-                                gridView_video.setAdapter(videoAdapter);
-                            } else {
-                                videoAdapter.setList(searchVideotList);
-                            }
+
                         }
                     }
                 });

@@ -167,6 +167,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
     }
 
     private void setTitleBGColor(final ListView refreshableView) {
+        final float total_height = 400f;
         //滑动事件(搜索栏渐变)
         refreshableView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -178,7 +179,6 @@ public class TopicsDetailActivity extends BaseFgActivity {
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 if (firstVisibleItem == 0 && refreshableView.getChildAt(0) != null && refreshableView.getChildAt(0).getTop() !=
                         0) {
-                    float total_height = 400f;
                     int viewScrollHeigh = Math.abs(refreshableView.getChildAt(0).getTop());
                     Log.d("777", "onScroll: viewScrollHeigh " + viewScrollHeigh);
                     if (viewScrollHeigh < total_height) {
@@ -191,7 +191,6 @@ public class TopicsDetailActivity extends BaseFgActivity {
                         Log.d("777", "onScroll: viewScrollHeigh < total_height ");
                         mTitleRlay.setAlpha(1f);
                         mTitleRlay.setBackgroundResource(R.color.colorPrimary);
-
                     }
                 } else {
                     if (firstVisibleItem != 0) {

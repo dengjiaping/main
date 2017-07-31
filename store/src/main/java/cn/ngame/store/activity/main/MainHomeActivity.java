@@ -784,6 +784,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 break;
             case R.id.fl_notifi:
                 startActivity(new Intent(context, PushMessageActivity.class));
+                break;
             case R.id.iv_icon_title:
                 if (null != mSlidingMenu) {
                     mSlidingMenu.toggle();

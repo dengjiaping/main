@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import cn.ngame.store.R;
-import cn.ngame.store.activity.rank.Rank01234Fragment;
+import cn.ngame.store.activity.rank.Rank012345Fragment;
 import cn.ngame.store.activity.rank.Rank5Fragment;
 import cn.ngame.store.adapter.RankTopPagerAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
@@ -31,11 +31,11 @@ public class RankFragment extends BaseSearchFragment {
     private ArrayList<Fragment> fragments;
     private RankTopPagerAdapter adapter;
     private Rank5Fragment downloadFragment;
-    private Rank01234Fragment commentFragment;
+    private Rank012345Fragment commentFragment;
     private TabLayout tablayout;
     private TextView textView;
     private LinearLayout.LayoutParams layoutParams;
-    private Rank01234Fragment fragment01234;
+    private Rank012345Fragment fragment012345;
 
     public static RankFragment newInstance(String arg) {
         RankFragment fragment = new RankFragment();
@@ -93,15 +93,13 @@ public class RankFragment extends BaseSearchFragment {
 
     private void initViewPager() {
         fragments = new ArrayList<>();
-        final int length = tabList.length - 1;
+        final int length = tabList.length ;
         Log.d(TAG, "onPagelength: " + length);
         for (int i = 0; i < length; i++) {
-            fragment01234 = new Rank01234Fragment(curTab);
-            fragment01234.setTabPos(i);
-            fragments.add(fragment01234);
+            fragment012345 = new Rank012345Fragment(curTab);
+            fragment012345.setTabPos(i);
+            fragments.add(fragment012345);
         }
-        Rank5Fragment fragment5 = Rank5Fragment.newInstance();
-        fragments.add(fragment5);
         adapter = new RankTopPagerAdapter(getChildFragmentManager(), fragments, tabList);
         viewpager.setAdapter(adapter);
         viewpager.setCurrentItem(curTab);
@@ -115,7 +113,7 @@ public class RankFragment extends BaseSearchFragment {
                 Log.d(TAG, "onPageSelected: " + position);
                 //滑动监听加载数据，一次只加载一个标签页
                 if (position < length) {
-                    ((Rank01234Fragment) adapter.getItem(position)).sendMessage();
+                    ((Rank012345Fragment) adapter.getItem(position)).sendMessage();
                 }
 
             }

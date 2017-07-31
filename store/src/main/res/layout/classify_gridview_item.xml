@@ -9,7 +9,7 @@
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="@dimen/classify_grid_item_height"
-        android:background="@drawable/shape_blue_corner4dp_42b3e2"
+        android:background="@drawable/shape_corner4dp_42b3e2"
         android:gravity="center"
         android:maxLines="1"
         android:text="游戏"

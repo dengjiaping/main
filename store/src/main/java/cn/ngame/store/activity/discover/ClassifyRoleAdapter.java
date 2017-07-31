@@ -65,7 +65,7 @@ public class ClassifyRoleAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = View.inflate(parent.getContext(), R.layout.classify_gridview_item, null);
             holder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
-            holder.tv_content.setBackgroundResource(R.drawable.shape_blue_corner4dp_4ac7fc);
+            holder.tv_content.setBackgroundResource(R.drawable.shape_corner4dp_4ac7fc);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
