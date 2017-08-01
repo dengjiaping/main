@@ -22,7 +22,7 @@
             android:textColor="@color/font_gray"
             android:text="@string/game_detail"/>
 
-        <TextView
+      <!--  <TextView
             android:id="@+id/tv_tag1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -30,7 +30,7 @@
             android:textSize="@dimen/dp_16"
             android:gravity="center"
             android:textColor="@color/font_gray"
-            android:text="@string/game_review" />
+            android:text="@string/game_hub" />-->
 
         <TextView
             android:id="@+id/tv_tag2"

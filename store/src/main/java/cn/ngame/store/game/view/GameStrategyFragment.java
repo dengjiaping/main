@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -30,6 +29,7 @@ import cn.ngame.store.game.bean.GameStrategy;
 
 /**
  * 显示游戏攻略的Fragment
+ *
  * @author zeng
  * @since 2016/12/15
  */
@@ -64,14 +64,14 @@ public class GameStrategyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         context = getActivity();
 
-        ScrollView rootLayout = (ScrollView) inflater.inflate(R.layout.fragment_game_strategy,container,false);
+        View rootLayout = inflater.inflate(R.layout.fragment_game_strategy, container, false);
 
         tv_content = (TextView) rootLayout.findViewById(R.id.tv_summary);
 
-        if(gameInfo != null && gameInfo.gameStrategy != null)
+        if (gameInfo != null && gameInfo.gameStrategy != null)
             tv_content.setText(gameInfo.gameStrategy.getStrategyContent());
 
-        //getContent();
+        getContent();
 
         return rootLayout;
     }
@@ -79,22 +79,22 @@ public class GameStrategyFragment extends Fragment {
     /**
      * 获取攻略
      */
-    private void getContent(){
+    private void getContent() {
 
         String url = Constant.WEB_SITE + Constant.URL_GAME_STRATEGY;
         Response.Listener<JsonResult<GameStrategy>> successListener = new Response.Listener<JsonResult<GameStrategy>>() {
             @Override
             public void onResponse(JsonResult<GameStrategy> result) {
 
-                if(result == null || result.code != 0){
+                if (result == null || result.code != 0) {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误！");
                 }
                 GameStrategy strategy = result.data;
-                if(strategy != null){
+                if (strategy != null) {
 
                     tv_content.setText(strategy.getStrategyContent());
 
-                }else {
+                } else {
                     Log.d(TAG, "正在整理中...");
                     tv_content.setText("正在整理中...");
                 }
@@ -110,7 +110,8 @@ public class GameStrategyFragment extends Fragment {
         };
 
         Request<JsonResult<GameStrategy>> request = new GsonRequest<JsonResult<GameStrategy>>(Request.Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult<GameStrategy>>() {}.getType()) {
+                successListener, errorListener, new TypeToken<JsonResult<GameStrategy>>() {
+        }.getType()) {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {

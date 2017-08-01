@@ -22,6 +22,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -41,7 +42,7 @@ public class GameTabView extends RelativeLayout implements OnClickListener {
     //private Context context;
     private ViewPager viewPager;
     private ImageView img_cursor;
-    private TextView tv_tag0, tv_tag1, tv_tag2, tv_tag3;
+    private TextView tv_tag0, tv_tag2, tv_tag3;
 
     private int currentTab = 0;
     private int currentTextColor;
@@ -72,18 +73,18 @@ public class GameTabView extends RelativeLayout implements OnClickListener {
         // img_cursor = (ImageView) this.findViewById(R.id.tag_img_cursor);
 
         tv_tag0 = (TextView) this.findViewById(R.id.tv_tag0);
-        tv_tag1 = (TextView) this.findViewById(R.id.tv_tag1);
+        //tv_tag1 = (TextView) this.findViewById(tv_tag1);
         tv_tag2 = (TextView) this.findViewById(R.id.tv_tag2);
         //tv_tag3 = (TextView) this.findViewById(R.id.tv_tag3);
         paint0 = tv_tag0.getPaint();
-        paint1 = tv_tag1.getPaint();
+        //paint1 = tv_tag1.getPaint();
         paint2 = tv_tag2.getPaint();
         paint0.setAntiAlias(true);//抗锯齿
-        paint1.setAntiAlias(true);//抗锯齿
+       /* paint1.setAntiAlias(true);//抗锯齿*/
         paint2.setAntiAlias(true);//抗锯齿
 
         tv_tag0.setOnClickListener(this);
-        tv_tag1.setOnClickListener(this);
+        //tv_tag1.setOnClickListener(this);
         tv_tag2.setOnClickListener(this);
         //tv_tag3.setOnClickListener(this);
 
@@ -115,6 +116,7 @@ public class GameTabView extends RelativeLayout implements OnClickListener {
 
                 @Override
                 public void onPageSelected(int position) {
+                    Log.d("333", "onPageSelected: "+position);
                     currentTab = position;
                     setCurrentTab(currentTab);
                 }
@@ -131,14 +133,13 @@ public class GameTabView extends RelativeLayout implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
             case R.id.tv_tag0:
                 currentTab = 0;
                 break;
-            case R.id.tv_tag1:
+          /*  case tv_tag1:
                 currentTab = 1;
-                break;
+                break;*/
             case R.id.tv_tag2:
                 currentTab = 2;
                 break;
@@ -166,6 +167,7 @@ public class GameTabView extends RelativeLayout implements OnClickListener {
 
             @Override
             public void onPageSelected(int position) {
+                Log.d("333", "onPageSelected: "+position);
                 currentTab = position;
                 setCurrentTab(currentTab);
             }
@@ -184,11 +186,11 @@ public class GameTabView extends RelativeLayout implements OnClickListener {
      */
     public void setCurrentTab(int position) {
         tv_tag0.setTextColor(normal);
-        tv_tag1.setTextColor(normal);
+        //tv_tag1.setTextColor(normal);
         tv_tag2.setTextColor(normal);
 
         paint0.setUnderlineText(false); //下划线
-        paint1.setUnderlineText(false);
+        //paint1.setUnderlineText(false);
         paint2.setUnderlineText(false);
         switch (position) {
             case 0:
@@ -196,13 +198,12 @@ public class GameTabView extends RelativeLayout implements OnClickListener {
                 paint0.setUnderlineText(true); //下划线
                 break;
             case 1:
-                tv_tag1.setTextColor(currentTextColor);
-                paint1.setUnderlineText(true); //下划线
-                break;
-            case 2:
+             /*   tv_tag1.setTextColor(currentTextColor);
+                paint1.setUnderlineText(true); //下划线*/
                 tv_tag2.setTextColor(currentTextColor);
                 paint2.setUnderlineText(true); //下划线
                 break;
+
           /*  case 3:
                 tv_tag3.setTextSize(16);
                 tv_tag3.setTextColor(currentTextColor);

@@ -86,7 +86,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
     private LinearLayout mTopLlay;
     private TabLayout tablayout2;
     private FragmentActivity content;
-    private int tabPosition2 = 1;
+    private int tabPosition2 = 0;
 
     public static Rank012345Fragment newInstance() {
         Rank012345Fragment fragment = new Rank012345Fragment(0);
@@ -250,7 +250,6 @@ public class Rank012345Fragment extends BaseSearchFragment {
 
     //顶部下面的二级标签
     private void initTabs1234() {
-        tablayout2.getTabAt(1).select();
         ViewGroup viewGroup = (ViewGroup) tablayout2.getChildAt(0);
         int childCount = viewGroup.getChildCount() - 1;
         int dp12 = CommonUtil.dip2px(content, 12);
@@ -270,7 +269,6 @@ public class Rank012345Fragment extends BaseSearchFragment {
 
     //模拟器
     private void initTabs5() {
-        tabPosition2=0;
         tablayout2.setBackgroundColor(Color.WHITE);
         LinearLayout.LayoutParams tab5Params = (LinearLayout.LayoutParams) tablayout2.getLayoutParams();
         tab5Params.setMargins(0, 0, 0, 0);

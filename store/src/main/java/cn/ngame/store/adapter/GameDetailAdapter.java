@@ -37,12 +37,12 @@ public class GameDetailAdapter extends FragmentPagerAdapter {
 
 	public void setDate(ArrayList<Fragment> fragmentList) {
 		this.fragmentList = fragmentList;
+		notifyDataSetChanged();
 	}
 
 	@Override
 	public Fragment getItem(int position) {
 		if(fragmentList != null){
-
 			Fragment fragment = fragmentList.get(position);
 			return fragment;
 		}

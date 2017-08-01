@@ -27,22 +27,22 @@ import java.util.Map;
 
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
-import cn.ngame.store.user.view.LoginActivity;
 import cn.ngame.store.activity.ReviewActivity;
 import cn.ngame.store.activity.ReviewListActivity;
 import cn.ngame.store.adapter.LvCommentAdapter;
 import cn.ngame.store.bean.Comment;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.JsonResult;
-import cn.ngame.store.bean.User;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.Log;
+import cn.ngame.store.user.view.LoginActivity;
 import cn.ngame.store.view.ReviewScoreView;
 
 /**
  * 显示游戏评论的Fragment
+ *
  * @author flan
  * @since 2016/5/17
  */
@@ -65,6 +65,7 @@ public class GameReviewFragment extends Fragment {
     private int pageSize = 5;                 //默认没用加载条数
     private long totals = 0;                   //总记录数
     private int lastItem;
+    private String pwd;
 
     public static GameReviewFragment newInstance(GameInfo gameInfo) {
         GameReviewFragment fragment = new GameReviewFragment();
@@ -87,7 +88,7 @@ public class GameReviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.fragment_game_review,container,false);
+        RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.fragment_game_review, container, false);
         review = (Button) view.findViewById(R.id.but1);
         reviewScoreView = (ReviewScoreView) view.findViewById(R.id.reviewScoreView);
         listView = (ListView) view.findViewById(R.id.listView);
@@ -95,16 +96,14 @@ public class GameReviewFragment extends Fragment {
         review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                User user = ((StoreApplication)getActivity().getApplication()).user;
-                if(user == null){
-                    Intent intent = new Intent(context, LoginActivity.class);
-                    context.startActivity(intent);
-                }else {
+                pwd = StoreApplication.passWord;
+                if (pwd != null && !"".endsWith(pwd) || !Constant.PHONE.equals(StoreApplication.loginType)) {
                     Intent intent = new Intent(context, ReviewActivity.class);
                     intent.putExtra("categoryId", 1);
                     intent.putExtra("targetId", gameInfo.id);
                     context.startActivity(intent);
+                } else {
+                    context.startActivity(new Intent(context, LoginActivity.class));
                 }
 
             }
@@ -119,11 +118,12 @@ public class GameReviewFragment extends Fragment {
         return view;
     }
 
-    private void initListViewFooterView(){
+    private void initListViewFooterView() {
 
         listViewFooterView = new TextView(context);
-        AbsListView.LayoutParams params = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.height = CommonUtil.dip2px(context,35);
+        AbsListView.LayoutParams params = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
+                .LayoutParams.WRAP_CONTENT);
+        params.height = CommonUtil.dip2px(context, 35);
         listViewFooterView.setLayoutParams(params);
         listViewFooterView.setGravity(Gravity.CENTER);
         listViewFooterView.setText("全部评论");
@@ -132,8 +132,8 @@ public class GameReviewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ReviewListActivity.class);
-                intent.putExtra("Id",gameInfo.id);
-                intent.putExtra("Type",1);
+                intent.putExtra("Id", gameInfo.id);
+                intent.putExtra("Type", 1);
                 startActivity(intent);
             }
         });
@@ -148,7 +148,7 @@ public class GameReviewFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if(adapter != null){
+        if (adapter != null) {
             adapter.clean();
         }
         getCommentData();
@@ -170,8 +170,8 @@ public class GameReviewFragment extends Fragment {
 
                     commentList = result.data;
 
-                    if(result.totals > pageSize){
-                        listViewFooterView.setText("全部评论("+result.totals+"条)");
+                    if (result.totals > pageSize) {
+                        listViewFooterView.setText("全部评论(" + result.totals + "条)");
                         listView.removeFooterView(listViewFooterView);
                         listView.addFooterView(listViewFooterView);
                     }
@@ -195,7 +195,8 @@ public class GameReviewFragment extends Fragment {
         };
 
         Request<JsonResult<List<Comment>>> request = new GsonRequest<JsonResult<List<Comment>>>(Request.Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult<List<Comment>>>() {}.getType()) {
+                successListener, errorListener, new TypeToken<JsonResult<List<Comment>>>() {
+        }.getType()) {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {

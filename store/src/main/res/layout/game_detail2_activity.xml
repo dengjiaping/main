@@ -42,16 +42,18 @@
                     android:text="游戏下载专区" />
             </LinearLayout>
 
-            <android.support.design.widget.TabLayout xmlns:tabs="http://schemas.android.com/apk/res-auto"
+            <android.support.design.widget.TabLayout
+                xmlns:tabs="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/tablayout"
                 style="@style/MyCustomTabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:background="@android:color/white"
                 android:tag="sticky"
-                tabs:tabIndicatorColor="@color/colorPrimary"
-                tabs:tabSelectedTextColor="@color/colorPrimary"
-                tabs:tabTextColor="@color/font_333" />
+                tabs:tabIndicatorColor="@color/transparent"
+                tabs:tabIndicatorHeight="2dp"
+                tabs:tabSelectedTextColor="@color/game_detail_tab_tv_seleted"
+                tabs:tabTextColor="@color/font_black_6" />
 
             <cn.ngame.store.view.AutoHeightViewPager
                 android:id="@+id/viewpager"
@@ -62,34 +64,33 @@
         </LinearLayout>
     </cn.ngame.store.view.StickyScrollView>
 
+
+
     <RelativeLayout
         android:id="@+id/rl_top"
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:alpha="0"
-        android:background="@color/colorPrimary"></RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_top2"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="#00000000">
-
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="45dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/back" />
-
-        <TextView
-            android:id="@+id/tv_gameName"
+        android:layout_height="wrap_content"
+      >
+        <Button
+            android:id="@+id/left_bt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/iv_back"
-            android:alpha="0"
-            android:text="游戏名字"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:gravity="center_vertical"
+            android:background="@null"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:drawableLeft="@drawable/fanhui"
+            android:drawablePadding="@dimen/dp_10"
+            android:maxLines="1"
+            android:maxWidth="250dp"
+            android:ellipsize="end"
+            android:paddingLeft="@dimen/title_left_bt_padding_left"
+            android:paddingRight="@dimen/dp_20"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_size"
+            />
     </RelativeLayout>
 </FrameLayout>
