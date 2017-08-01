@@ -33,6 +33,7 @@ import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.utils.CommonUtil;
+import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.view.GameLoadProgressBar;
@@ -171,7 +172,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), GameDetailActivity.class);
-                intent.putExtra("id", list.get(position).getId());
+                intent.putExtra(KeyConstant.ID, list.get(position).getId());
                 startActivity(intent);
             }
         });

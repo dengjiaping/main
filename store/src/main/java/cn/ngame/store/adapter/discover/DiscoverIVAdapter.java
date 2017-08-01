@@ -12,7 +12,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.List;
 
 import cn.ngame.store.R;
-import cn.ngame.store.util.ToastUtil;
+import cn.ngame.store.bean.RecommendTopicsItemInfo;
 
 /**
  * @author liguoliang
@@ -21,26 +21,26 @@ public class DiscoverIvAdapter extends RecyclerView.Adapter<DiscoverIvAdapter.Vi
 
     private final LayoutInflater mInflater;
     private Context context;
-    private List<String> list;
+    private List<RecommendTopicsItemInfo> list;
 
     public interface OnItemClickLitener {
-        void onItemClick(View view, int position, String tag);
+        void onItemClick(View view, int position);
     }
 
     private OnItemClickLitener mOnItemClickLitener;
 
-    public void setmOnItemClickListener(OnItemClickLitener mOnItemClickListener) {
+    public void setOnItemClickListener(OnItemClickLitener mOnItemClickListener) {
         this.mOnItemClickLitener = mOnItemClickListener;
     }
 
-    public DiscoverIvAdapter(Context context, List<String> list) {
+    public DiscoverIvAdapter(Context context, List<RecommendTopicsItemInfo> list) {
         super();
         this.context = context;
         this.list = list;
         mInflater = LayoutInflater.from(context);
     }
 
-    public void setList(List<String> list) {
+    public void setList(List<RecommendTopicsItemInfo> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -54,14 +54,12 @@ public class DiscoverIvAdapter extends RecyclerView.Adapter<DiscoverIvAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.mIV.setImageURI(list.get(position));
+        holder.mIV.setImageURI(list.get(position).getSelectImage());
         //为ItemView设置监听器
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //int position1 = holder.getLayoutPosition();
-                //mOnItemClickLitener.onItemClick(holder.itemView, position, (String) v.getTag()); // 2
-                ToastUtil.show(context, position + ":" + list.get(position).substring(0,5));
+               setOnItemClickListener(mOnItemClickLitener);
             }
         });
     }

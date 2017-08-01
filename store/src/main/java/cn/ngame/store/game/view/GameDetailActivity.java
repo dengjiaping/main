@@ -83,8 +83,7 @@ public class GameDetailActivity extends BaseFgActivity {
         titleBar.setOnRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GameDetailActivity.this, SearchActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(GameDetailActivity.this, SearchActivity.class));
                 GameDetailActivity.this.finish();
             }
         });
@@ -113,7 +112,7 @@ public class GameDetailActivity extends BaseFgActivity {
     protected void onResume() {
         super.onResume();
         //加载数据
-        gameId = getIntent().getLongExtra("id", 0);
+        gameId = getIntent().getLongExtra(KeyConstant.ID, 0);
         getGameInfo();
     }
 
@@ -193,11 +192,10 @@ public class GameDetailActivity extends BaseFgActivity {
     }
 
 
+    //设置数据
     private void initView() {
-
         String gameName = gameInfo.gameName;
         if (!"".equals(gameName)) {
-//            gameName = gameName.length() > 9 ? gameName.substring(0, 9) : gameName;
             tv_title.setText(gameName);
         }
 
@@ -226,7 +224,7 @@ public class GameDetailActivity extends BaseFgActivity {
         tv_operation.setText(gameInfo.operation);
 
         img_logo = (PicassoImageView) findViewById(R.id.img_1);
-        img_logo.setImageUrl(gameInfo.gameLogo, 70f, 70f, R.drawable.ic_def_logo_720_288);
+        img_logo.setImageUrl(gameInfo.gameLogo, 70f, 70f, R.drawable.ic_def_logo_412_200);
 
         timer.schedule(new TimerTask() {
             @Override

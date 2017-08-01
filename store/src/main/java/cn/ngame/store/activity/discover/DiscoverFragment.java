@@ -100,7 +100,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private BannerView bannerView;
     private List<String> classifyList = new ArrayList<>(Arrays.asList("角色", "动作", "原生", "策略", "模拟", "VR", "枪战", "体育", "格斗"));
     private List<String> mEverydayList = new ArrayList();
-    private DiscoverIvAdapter mSubjectAdapter;
+    private DiscoverIvAdapter mTopicsAdapter;
     private RecyclerView mEverydayRv;
     private RecyclerView mActionRv;
     private RecyclerView mHotRecentRv;
@@ -109,8 +109,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private RecyclerView mBigChang_Rv;
     private RecyclerView mStrategyRv;
     private List<String> mHotRecentList = new ArrayList();
-    private List<String> mSubjectList = new ArrayList();
-    private List<String> mBigChangList = new ArrayList();
     private List<String> mActionList = new ArrayList();
     private List<String> mStrategyList = new ArrayList();
     private DiscoverIvAdapter mBigChangAdapter;
@@ -121,6 +119,9 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private int match_parent;
     private LinearLayout.LayoutParams hParams;
     private String selectImage;
+    private List<RecommendTopicsItemInfo> topicsInfoList = new ArrayList<>();
+    private List<RecommendTopicsItemInfo> mBigChangInfoList = new ArrayList<>();
+    private RecommendTopicsItemInfo topicsInfo;
 
     public DiscoverFragment() {
         android.util.Log.d(TAG, "DiscoverFragment: ()");
@@ -157,7 +158,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         //近期最热
         initHotRecentView(headView);
         //专题
-        initSubjectView(headView);
+        initTopicsView(headView);
         //大厂
         initBigChangView(headView);
         //动作
@@ -234,34 +235,56 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     }
 
     //专题
-    private void initSubjectView(View headView) {
-        for (int i = 0; i < 10; i++) {
-            mSubjectList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_19.png");
-        }
+    private void initTopicsView(View headView) {
         mSubjectRv = (RecyclerView) headView.findViewById(R.id.rv_subject);
         setOnMoreBtClickListener(headView, R.id.more_subject_tv);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
                 this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mSubjectRv.setLayoutManager(linearLayoutManager2);
-        mSubjectAdapter = new DiscoverIvAdapter(context, mSubjectList);
-        mSubjectRv.setAdapter(mSubjectAdapter);
+
+        mTopicsAdapter = new DiscoverIvAdapter(context, topicsInfoList);
+        mSubjectRv.setAdapter(mTopicsAdapter);
+        getTopicsInfoList();
+        mTopicsAdapter.setOnItemClickListener(new DiscoverIvAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                RecommendTopicsItemInfo topicsInfo = topicsInfoList.get(position);
+                singeTopicsDetailIntent.putExtra(KeyConstant.ID, topicsInfo.getId());
+                singeTopicsDetailIntent.putExtra(KeyConstant.TITLE, topicsInfo.getTitle());
+                singeTopicsDetailIntent.putExtra(KeyConstant.DESC, topicsInfo.getSelectDesc());
+                singeTopicsDetailIntent.putExtra(KeyConstant.URL, topicsInfo.getSelectImage());
+                startActivity(singeTopicsDetailIntent);
+            }
+        });
+        //条目距离
         mSubjectRv.addItemDecoration(new RecyclerViewDivider(context,
-                20, 18, mSubjectList.size()));
+                20, 18, topicsInfoList.size()));
     }
 
     //大厂
     private void initBigChangView(View headView) {
-        for (int i = 0; i < 10; i++) {
-            mBigChangList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_13.png");
-        }
         mBigChang_Rv = (RecyclerView) headView.findViewById(R.id.rv_big_chang);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
                 this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mBigChang_Rv.setLayoutManager(linearLayoutManager2);
-        mBigChangAdapter = new DiscoverIvAdapter(context, mBigChangList);
+        mBigChangAdapter = new DiscoverIvAdapter(context, mBigChangInfoList);
         mBigChang_Rv.setAdapter(mBigChangAdapter);
+
+        //获取大厂数据
+        getBigChangInfoList();
+        mBigChangAdapter.setOnItemClickListener(new DiscoverIvAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                topicsInfo = mBigChangInfoList.get(position);
+                singeTopicsDetailIntent.putExtra(KeyConstant.ID, topicsInfo.getId());
+                singeTopicsDetailIntent.putExtra(KeyConstant.TITLE, topicsInfo.getTitle());
+                singeTopicsDetailIntent.putExtra(KeyConstant.DESC, topicsInfo.getSelectDesc());
+                singeTopicsDetailIntent.putExtra(KeyConstant.URL, topicsInfo.getSelectImage());
+                startActivity(singeTopicsDetailIntent);
+            }
+        });
         mBigChang_Rv.addItemDecoration(new RecyclerViewDivider(context,
-                20, 18, mBigChangList.size()));
+                20, 18, mBigChangInfoList.size()));
         setOnMoreBtClickListener(headView, R.id.more_big_chang_tv);
     }
 
@@ -325,13 +348,8 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                 context.startActivity(intent);
                 //大厂
             } else if (id == R.id.more_big_chang_tv) {
-                Intent i = new Intent();
-                i.setClass(context, TopicsDetailActivity.class);
-                i.putExtra(KeyConstant.ID, 368);// 单机游戏精选 getId()==368   long类型
-                i.putExtra(KeyConstant.TITLE, "单机");//list.get(position).getTypeName()
-                i.putExtra(KeyConstant.DESC, "这是单机游戏精选精选的描述内容 getTypeDesc()");//getTypeDesc()
-                i.putExtra(KeyConstant.URL, "http://oss.ngame.cn/upload/1492742489492.png");//getLogoUrl()
-                startActivity(i);
+                intent.setClass(context, TopicsListActivity.class);
+                context.startActivity(intent);
                 //动作
             } else if (id == R.id.more_action_tv) {
                 Intent i = new Intent();
@@ -345,13 +363,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                 intent.putExtra(KeyConstant.category_Id, 368 + "");//单机id 336
                 intent.putExtra(KeyConstant.TITLE, "策略");
                 context.startActivity(intent);
-               /* Intent i = new Intent();
-                i.setClass(context, TopicsDetailActivity.class);
-                i.putExtra(KeyConstant.ID, 368 + "");// 单机游戏精选 getId()==368
-                i.putExtra(KeyConstant.TITLE, "单机");//list.get(position).getTypeName()
-                i.putExtra(KeyConstant.DESC, "这是单机游戏精选精选的描述内容 getTypeDesc()");//getTypeDesc()
-                i.putExtra(KeyConstant.URL, "http://oss.ngame.cn/upload/1492742489492.png");//getLogoUrl()
-                startActivity(i);*/
             }
         }
     };
@@ -397,8 +408,8 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         mEverydayList.clear();
         mActionList.clear();
         mHotRecentList.clear();
-        mSubjectList.clear();
-        mBigChangList.clear();
+        //mSubjectList.clear();
+        //mBigChangList.clear();
         for (int i = 0; i < 10; i++) {
             mEverydayList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_16.png");
             mEverydayAdapter.setList(mEverydayList);
@@ -407,18 +418,99 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             mHotRecentList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_13.png");
             mHotRecentAdapter.setList(mHotRecentList);
             //专题
-
-            mSubjectList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_10.png");
-            mSubjectAdapter.setList(mSubjectList);
             //大厂
-
-            mBigChangList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_1.png");
-            mBigChangAdapter.setList(mSubjectList);
-
             //动作
-            mActionList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_2.png");
+            mActionList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_12.png");
             mActionAdapter.setList(mActionList);
         }
+    }
+    /**
+     * 获取专题数据
+     */
+    private void getBigChangInfoList() {//0  专题
+        String url = Constant.WEB_SITE + Constant.URL_DISCOVER_BANNER;
+        Response.Listener<JsonResult<List<RecommendTopicsItemInfo>>> successListener = new Response
+                .Listener<JsonResult<List<RecommendTopicsItemInfo>>>() {
+            @Override
+            public void onResponse(JsonResult<List<RecommendTopicsItemInfo>> result) {
+                if (result == null) {
+                    return;
+                }
+                if (result.code == 0) {
+                    mBigChangInfoList = result.data;
+                    mBigChangAdapter.setList(mBigChangInfoList);
+                } else {
+                    Log.d(TAG, "HTTP请求成功：服务端返回错误！");
+                    //ToastUtil.show(context, getString(R.string.requery_failed));
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                Log.d(TAG, "HTTP请求失败：网络连接错误！");
+            }
+        };
+
+        Request<JsonResult<List<RecommendTopicsItemInfo>>> request = new GsonRequest<JsonResult<List<RecommendTopicsItemInfo>>>
+                (Request.Method.POST, url,
+                        successListener, errorListener, new TypeToken<JsonResult<List<RecommendTopicsItemInfo>>>() {
+                }.getType()) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
+                return params;
+            }
+        };
+        StoreApplication.requestQueue.add(request);
+    }
+    /**
+     * 获取专题数据
+     */
+    private void getTopicsInfoList() {//0  专题
+        String url = Constant.WEB_SITE + Constant.URL_DISCOVER_BANNER;
+        Response.Listener<JsonResult<List<RecommendTopicsItemInfo>>> successListener = new Response
+                .Listener<JsonResult<List<RecommendTopicsItemInfo>>>() {
+            @Override
+            public void onResponse(JsonResult<List<RecommendTopicsItemInfo>> result) {
+                if (result == null) {
+                    return;
+                }
+                if (result.code == 0) {
+                    topicsInfoList = result.data;
+                    mTopicsAdapter.setList(topicsInfoList);
+                } else {
+                    Log.d(TAG, "HTTP请求成功：服务端返回错误！");
+                    //ToastUtil.show(context, getString(R.string.requery_failed));
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                Log.d(TAG, "HTTP请求失败：网络连接错误！");
+            }
+        };
+
+        Request<JsonResult<List<RecommendTopicsItemInfo>>> request = new GsonRequest<JsonResult<List<RecommendTopicsItemInfo>>>
+                (Request.Method.POST, url,
+                        successListener, errorListener, new TypeToken<JsonResult<List<RecommendTopicsItemInfo>>>() {
+                }.getType()) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
+                return params;
+            }
+        };
+        StoreApplication.requestQueue.add(request);
     }
 
     /**
@@ -434,7 +526,10 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                     return;
                 }
                 if (result.code == 0) {
-                    List<ImageView> list = createBannerView(result.data);
+                    List<RecommendTopicsItemInfo> topicsInfoList = result.data;
+
+                    //创建轮播图BannerData
+                    List<ImageView> list = createBannerView(topicsInfoList);
                     bannerView.setData(list);
                 } else {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误！");

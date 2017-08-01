@@ -33,7 +33,7 @@
             android:layout_height="70dp"
             android:layout_centerVertical="true"
             android:layout_margin="10dp"
-            android:src="@drawable/ic_def_logo_720_288"/>
+            android:src="@drawable/ic_def_logo_188_188"/>
 
         <TextView
             android:id="@+id/tv_title"

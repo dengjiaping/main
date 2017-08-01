@@ -2,6 +2,7 @@
 package cn.ngame.store.adapter.discover;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.List;
 
 import cn.ngame.store.R;
-import cn.ngame.store.util.ToastUtil;
+import cn.ngame.store.core.utils.KeyConstant;
+import cn.ngame.store.game.view.GameDetailActivity;
 
 /**
  * @author gp
@@ -61,9 +63,9 @@ public class DiscoverTvIvAdapter extends RecyclerView.Adapter<DiscoverTvIvAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //int position1 = holder.getLayoutPosition();
-                //mOnItemClickLitener.onItemClick(holder.itemView, position, (String) v.getTag()); // 2
-                ToastUtil.show(context, position + ":" + list.get(position).substring(0,5));
+                Intent intent = new Intent(context, GameDetailActivity.class);
+                intent.putExtra(KeyConstant.ID, "254");
+                context.startActivity(intent);
             }
         });
     }
