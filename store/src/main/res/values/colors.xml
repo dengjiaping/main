@@ -13,7 +13,6 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="gray">#f5f5f5</color>
-    <color name="gray_f5">#f5f5f5</color>
     <color name="gray_7b">#7b7b7b</color>
     <color name="gray_dd">#dddddd</color>
     <color name="gray_bb">#bbbbbb</color>
@@ -52,7 +51,7 @@
     <color name="game_name">#1a1a1a</color>
     <color name="game_detail_tab_tv_seleted">#0a82b5</color>
     <color name="bg_f2">#f2f2f2</color>
-    <color name="bg_f5">#f5f5f5</color>
+    <color name="f5f5f5">#f5f5f5</color>
     <color name="font_1a">#1a1a1a</color>
 
     <color name="transparent">#00000000</color>
@@ -84,4 +83,5 @@
     <color name="color_0e6caf">#0e6caf</color>
     <color name="a6a6a6">#a6a6a6</color>
     <color name="color_4cc7fc">#4cc7fc</color>
+    <color name="color_2cbffe">#2cbffe</color>
 </resources>

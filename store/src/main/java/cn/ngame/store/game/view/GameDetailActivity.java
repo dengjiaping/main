@@ -98,7 +98,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         //======================================================================
         //rl_top2 = (RelativeLayout) findViewById(R.id.rl_top2);
         leftBt = (Button) findViewById(R.id.left_bt);
-        leftBt.setPadding(CommonUtil.dip2px(content,20), statusBarHeight, 0, 0);
+        leftBt.setPadding(CommonUtil.dip2px(content, 20), statusBarHeight, 0, 0);
         leftBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,13 +165,13 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         };
         StoreApplication.requestQueue.add(request);
     }
+
     private void setViewPager() {
         fragments = new ArrayList<>();
         fragments.add(GameDetailFragment.newInstance(gameInfo));
-        // fragments.add(GameDetail2Fragment.newInstance());
         fragments.add(GameStrategyFragment.newInstance(gameInfo));
 
-        adapter.setList(fragments,tabList);
+        adapter.setList(fragments, tabList);
         viewpager.setAdapter(adapter);
     }
 
@@ -186,28 +186,34 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     }
 
     private void initTabs() {
-        tablayout.setTabMode(TabLayout.MODE_FIXED); //固定模式
         tablayout.setupWithViewPager(viewpager);
+        tablayout.setTabMode(TabLayout.MODE_FIXED); //固定模式
+        tablayout.setTabGravity(TabLayout.GRAVITY_FILL);
         final ViewGroup viewGroup = (ViewGroup) tablayout.getChildAt(0);
-        paint = new Paint();
-        final int dp16 = CommonUtil.dip2px(content, 16);
-        ViewGroup view = (ViewGroup) viewGroup.getChildAt(0);
-        TextView textView = (TextView) view.getChildAt(1);
-        textView.setTextSize(dp16);
-        paint = textView.getPaint();
-        paint.setAntiAlias(true);//抗锯齿
-        paint.setUnderlineText(true);
-
+        final int dp18 = CommonUtil.dip2px(content,18);
+/*        //中间加分隔线
+        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+            ViewGroup view = (ViewGroup) viewGroup.getChildAt(i);
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
+            TextView textView = (TextView) view.getChildAt(1);
+            textView.setTextSize(dp16);
+            textView.setBackgroundColor(Color.WHITE);
+            textView.measure(View.MeasureSpec.AT_MOST, View.MeasureSpec.AT_MOST);
+            int screenWidth = ImageUtil.getScreenWidth(content);
+            layoutParams.width=screenWidth/2;
+            layoutParams.weight=1;
+            layoutParams.setMargins(0, 0, 2, 0);
+            textView.setLayoutParams(layoutParams);
+        }*/
         tablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 Log.d("666", "onTabSelected: " + position);
                 ViewGroup view = (ViewGroup) viewGroup.getChildAt(position);
                 TextView textView = (TextView) view.getChildAt(1);
-                textView.setTextSize(dp16);
-                paint = textView.getPaint();
+                textView.setTextSize(dp18);
+                Paint paint = textView.getPaint();
                 paint.setAntiAlias(true);//抗锯齿
                 paint.setUnderlineText(true);
                 viewpager.setCurrentItem(position);
@@ -215,11 +221,12 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                Paint paint = new Paint();
                 int position = tab.getPosition();
+                Log.d("666", "onTabSelected: " + position);
                 ViewGroup view = (ViewGroup) viewGroup.getChildAt(position);
                 TextView textView = (TextView) view.getChildAt(1);
-                paint = textView.getPaint();
+                textView.setTextSize(dp18);
+                Paint paint = textView.getPaint();
                 paint.setAntiAlias(true);//抗锯齿
                 paint.setUnderlineText(false);
                 viewpager.setCurrentItem(position);
@@ -234,12 +241,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     @Override
     public void onScrollChanged(int l, int t, int oldl, int oldt) {
         float height = 400f;
-//                float scrollHeigh = Math.abs(scrollView.getScaleY());
-        Log.d("222", "t: " + t);
-        Log.d("222", "oldt: " + oldt);
-
         if (t < height) {
-            Log.d("222", "t < height: ");
             float alpha = (height - t) / height;
             if (t < 4) {
                 rl_top.setBackgroundResource(R.color.transparent);
@@ -252,8 +254,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 leftBt.setText("游戏名字");
             }
         } else {
-            Log.d("222", "else: ");
-            rl_top.setAlpha(1);
+            rl_top.setAlpha(1f);
             leftBt.setText("游戏名字");
             rl_top.setBackgroundResource(R.color.colorPrimary);
         }

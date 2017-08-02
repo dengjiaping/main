@@ -92,5 +92,8 @@
     <dimen name="dp_25">25dp</dimen>
     <dimen name="dp17">17dp</dimen>
     <dimen name="dp_84">84dp</dimen>
+    <dimen name="game_detail_bottom_item_left_width">108dp</dimen>
+    <dimen name="dp_9">9dp</dimen>
+    <dimen name="dp_27">27dp</dimen>
 
 </resources>

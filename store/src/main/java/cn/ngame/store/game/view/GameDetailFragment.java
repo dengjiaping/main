@@ -18,6 +18,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import cn.ngame.store.R;
 import cn.ngame.store.bean.GameImage;
@@ -79,19 +80,22 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
         if (gameInfo != null && gameInfo.gameDetailsImages != null && gameInfo.gameDetailsImages.size() > 0) {
             img_container.removeAllViews();
             imgs.clear();
-            for (int i = 0; i < gameInfo.gameDetailsImages.size(); i++) {
-                GameImage img = gameInfo.gameDetailsImages.get(i);
-                PicassoImageView imageView = new PicassoImageView(getActivity());
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.width = CommonUtil.dip2px(context, 290);
-                params.height = CommonUtil.dip2px(context, 180);
-                if (i > 0) {
-                    params.setMargins(CommonUtil.dip2px(context, 5), 0, 0, 0);
-                }
+            List<GameImage> imagesList = gameInfo.gameDetailsImages;
+            int dp250 = CommonUtil.dip2px(context, 250);
+            int dp160 = CommonUtil.dip2px(context, 160);
+            int dp10 = CommonUtil.dip2px(context, 10);
+            for (int i = 0; i < imagesList.size(); i++) {
+                GameImage img = imagesList.get(i);
+                PicassoImageView imageView = new PicassoImageView(context);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup
+                        .LayoutParams.WRAP_CONTENT);
+                params.width = dp250;
+                params.height = dp160;
+                params.setMargins(0, 0, dp10, 0);
                 imageView.setLayoutParams(params);
                 //imageView.setTag(img.imageLink);
                 String imageLink = img.imageLink;
-                imageView.setImageUrl(imageLink, 290f, 180f, R.drawable.ic_def_logo_412_200);
+                imageView.setImageUrl(imageLink, R.drawable.ic_def_logo_480_228);
                 img_container.addView(imageView);
                 //添加图片，查看大图
                 imgs.add(imageLink);
