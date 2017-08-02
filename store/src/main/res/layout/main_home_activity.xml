@@ -110,7 +110,7 @@
         >
         <!--android:background="@drawable/home_tabshadow"-->
         <LinearLayout
-            android:id="@+id/menu_home"
+            android:id="@+id/menu_home_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -120,7 +120,7 @@
             android:paddingBottom="2dp">
 
             <Button
-                android:id="@+id/menu_home_bt"
+                android:id="@+id/menu_home_bt1"
                 android:layout_width="23dp"
                 android:layout_height="23dp"
                 android:background="@drawable/menu_home"
@@ -139,7 +139,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/menu_game"
+            android:id="@+id/menu_game_ll"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"

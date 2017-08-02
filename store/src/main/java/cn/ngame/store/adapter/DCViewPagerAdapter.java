@@ -38,6 +38,7 @@ public class DCViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
+
         return tabList.get(position);
     }
 }

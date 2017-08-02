@@ -1,11 +1,11 @@
 package cn.ngame.store.game.view;
 
+import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +37,7 @@ import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.net.GsonRequest;
+import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
@@ -54,7 +55,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private StickyScrollView scrollView;
     private SimpleDraweeView sdv_img;
     private Button leftBt;
-    private LinearLayout ll_download;
     private GameDetailActivity content;
     private TabLayout tablayout;
     private AutoHeightViewPager viewpager;
@@ -69,6 +69,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private Timer timer = new Timer();
     private Handler handler = new Handler();
     private IFileLoad fileLoad;
+    private Paint paint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +80,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintResource(R.color.transparent);//通知栏所需颜色
         }
-        setContentView(R.layout.game_detail2_activity);
+        // todo  xml
+        setContentView(R.layout.activity_game_detail);
         content = this;
         gameId = getIntent().getLongExtra("id", 0);
 
@@ -96,7 +98,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         //======================================================================
         //rl_top2 = (RelativeLayout) findViewById(R.id.rl_top2);
         leftBt = (Button) findViewById(R.id.left_bt);
-        leftBt.setPadding(48, statusBarHeight, 0, 0);
+        leftBt.setPadding(CommonUtil.dip2px(content,20), statusBarHeight, 0, 0);
         leftBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,16 +109,19 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     }
 
     private void initView() {
+        tabList.add("详情");
+        tabList.add("必读");
         scrollView = (StickyScrollView) findViewById(R.id.scrollView);
         sdv_img = (SimpleDraweeView) findViewById(R.id.sdv_img);
 
-        ll_download = (LinearLayout) findViewById(R.id.ll_download);
         scrollView.setOnScrollListener(this);
 
 
         tablayout = (TabLayout) findViewById(R.id.tablayout);
         viewpager = (AutoHeightViewPager) findViewById(R.id.viewpager);
-        viewpager.setOffscreenPageLimit(3);
+        viewpager.setOffscreenPageLimit(2);
+        initViewPager();
+        initTabs();
         getGameInfo(); //请求
     }
 
@@ -124,8 +129,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
      * 获取游戏详情
      */
     private void getGameInfo() {
-        tabList.add("详情");
-        tabList.add("必读");
         String url = Constant.WEB_SITE + Constant.URL_GAME_DETAIL;
         Response.Listener<JsonResult<GameInfo>> successListener = new Response.Listener<JsonResult<GameInfo>>() {
             @Override
@@ -135,8 +138,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 }
                 gameInfo = result.data;
                 if (gameInfo != null) {
-                    initViewPager();
-                    initTabs();
+                    setViewPager();
                 } else {
 
                 }
@@ -163,54 +165,70 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         };
         StoreApplication.requestQueue.add(request);
     }
+    private void setViewPager() {
+        fragments = new ArrayList<>();
+        fragments.add(GameDetailFragment.newInstance(gameInfo));
+        // fragments.add(GameDetail2Fragment.newInstance());
+        fragments.add(GameStrategyFragment.newInstance(gameInfo));
 
+        adapter.setList(fragments,tabList);
+        viewpager.setAdapter(adapter);
+    }
 
     private void initViewPager() {
-        fragments = new ArrayList<Fragment>();
+        fragments = new ArrayList<>();
         fragments.add(GameDetailFragment.newInstance(gameInfo));
         // fragments.add(GameDetail2Fragment.newInstance());
         fragments.add(GameStrategyFragment.newInstance(gameInfo));
 
         adapter = new DCViewPagerAdapter(getSupportFragmentManager(), fragments, tabList);
         viewpager.setAdapter(adapter);
-        viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     private void initTabs() {
         tablayout.setTabMode(TabLayout.MODE_FIXED); //固定模式
         tablayout.setupWithViewPager(viewpager);
-        ViewGroup viewGroup = (ViewGroup) tablayout.getChildAt(0);
-        for (int i = 0; i < viewGroup.getChildCount(); i++) {
-            ViewGroup view = (ViewGroup) viewGroup.getChildAt(i);
-            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
-            TextView textView = (TextView) view.getChildAt(1);
-            textView.setTextSize(16);
+        final ViewGroup viewGroup = (ViewGroup) tablayout.getChildAt(0);
+        paint = new Paint();
+        final int dp16 = CommonUtil.dip2px(content, 16);
+        ViewGroup view = (ViewGroup) viewGroup.getChildAt(0);
+        TextView textView = (TextView) view.getChildAt(1);
+        textView.setTextSize(dp16);
+        paint = textView.getPaint();
+        paint.setAntiAlias(true);//抗锯齿
+        paint.setUnderlineText(true);
 
-            textView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            int width = textView.getMeasuredWidth();
-            int screenWidth = ImageUtil.getScreenWidth(this);
-            int margin = (screenWidth / tabList.size() - width) / tabList.size() + 5;
-            if (tabList.size() <= 4) {
-                layoutParams.setMargins(30, 0, 30, 0);
-            } else {
-                layoutParams.setMargins(margin, 0, margin, 0);
+        tablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                Log.d("666", "onTabSelected: " + position);
+                ViewGroup view = (ViewGroup) viewGroup.getChildAt(position);
+                TextView textView = (TextView) view.getChildAt(1);
+                textView.setTextSize(dp16);
+                paint = textView.getPaint();
+                paint.setAntiAlias(true);//抗锯齿
+                paint.setUnderlineText(true);
+                viewpager.setCurrentItem(position);
             }
-        }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                Paint paint = new Paint();
+                int position = tab.getPosition();
+                ViewGroup view = (ViewGroup) viewGroup.getChildAt(position);
+                TextView textView = (TextView) view.getChildAt(1);
+                paint = textView.getPaint();
+                paint.setAntiAlias(true);//抗锯齿
+                paint.setUnderlineText(false);
+                viewpager.setCurrentItem(position);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
     }
 
     @Override

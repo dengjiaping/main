@@ -207,5 +207,6 @@
     <string name="ngamezone">NGAMEZONE账号：</string>
     <string name="requery_failed">请求失败,稍后重试</string>
     <string name="game_hub">圈子</string>
+    <string name="download_count_end">下载</string>
 
 </resources>

@@ -184,13 +184,13 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 //        viewPager.setOffscreenPageLimit(5);
 
         //初始化底部菜单控件
-        home = (LinearLayout) findViewById(R.id.menu_home);
-        game = (LinearLayout) findViewById(R.id.menu_game);
+        home = (LinearLayout) findViewById(R.id.menu_home_layout);
+        game = (LinearLayout) findViewById(R.id.menu_game_ll);
         //menu_game_hub = (LinearLayout) findViewById(R.id.menu_game_hub);圈子
         video = (LinearLayout) findViewById(R.id.menu_video);
         manager = (LinearLayout) findViewById(R.id.menu_manager);
 
-        bt_home = (Button) findViewById(R.id.menu_home_bt);
+        bt_home = (Button) findViewById(R.id.menu_home_bt1);
         bt_game = (Button) findViewById(R.id.menu_game_bt);
         bt_video = (Button) findViewById(R.id.menu_video_bt);
         bt_manager = (Button) findViewById(R.id.menu_manager_bt);
@@ -224,7 +224,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         setOnTouchListener(this.new MenuOnTouchListener());
 
         pwd = StoreApplication.passWord;
-        //todo 如果用户没有主动退出，则重新登录
+        //如果用户没有主动退出，则重新登录
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -663,13 +663,13 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         public boolean onTouch(View v, MotionEvent event) {
 
             switch (v.getId()) {
-                case R.id.menu_home:
-                    if (currentMenu != R.id.menu_home && event.getAction() == MotionEvent.ACTION_UP) {
+                case R.id.menu_home_layout:
+                    if (currentMenu != R.id.menu_home_layout && event.getAction() == MotionEvent.ACTION_UP) {
                         setCurrentMenu(0);
                     }
                     break;
-                case R.id.menu_game:
-                    if (currentMenu != R.id.menu_game && event.getAction() == MotionEvent.ACTION_UP) {
+                case R.id.menu_game_ll:
+                    if (currentMenu != R.id.menu_game_ll && event.getAction() == MotionEvent.ACTION_UP) {
                         setCurrentMenu(1);
                     }
                     break;

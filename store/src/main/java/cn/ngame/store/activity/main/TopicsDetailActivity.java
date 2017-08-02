@@ -177,18 +177,16 @@ public class TopicsDetailActivity extends BaseFgActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem == 0 && refreshableView.getChildAt(0) != null && refreshableView.getChildAt(0).getTop() !=
+                View childAt = refreshableView.getChildAt(0);
+                if (firstVisibleItem == 0 && childAt != null && childAt.getTop() !=
                         0) {
-                    int viewScrollHeigh = Math.abs(refreshableView.getChildAt(0).getTop());
-                    Log.d("777", "onScroll: viewScrollHeigh " + viewScrollHeigh);
+                    int viewScrollHeigh = Math.abs(childAt.getTop());
                     if (viewScrollHeigh < total_height) {
-                        Log.d("777", "onScroll: <<<<< ");
                         float alpha = (total_height - viewScrollHeigh) / total_height;
                         mTitleRlay.setAlpha(1 - alpha);
                         int color = 1 - alpha > 0 ? R.color.colorPrimary : R.color.transparent;
                         mTitleRlay.setBackgroundResource(color);
                     } else {
-                        Log.d("777", "onScroll: viewScrollHeigh < total_height ");
                         mTitleRlay.setAlpha(1f);
                         mTitleRlay.setBackgroundResource(R.color.colorPrimary);
                     }

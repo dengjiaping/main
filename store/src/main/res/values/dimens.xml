@@ -91,5 +91,6 @@
     <dimen name="dp_40">40dp</dimen>
     <dimen name="dp_25">25dp</dimen>
     <dimen name="dp17">17dp</dimen>
+    <dimen name="dp_84">84dp</dimen>
 
 </resources>
