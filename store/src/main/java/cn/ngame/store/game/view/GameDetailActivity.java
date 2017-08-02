@@ -27,23 +27,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.adapter.DCViewPagerAdapter;
+import cn.ngame.store.adapter.ProgressBarStateListener;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.JsonResult;
+import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
+import cn.ngame.store.core.fileload.GameFileStatus;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.ImageUtil;
+import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
+import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.view.AutoHeightViewPager;
 import cn.ngame.store.view.GameLoadProgressBar;
 import cn.ngame.store.view.StickyScrollView;
+
+import static cn.ngame.store.R.id.sdv_img;
 
 /**
  * Created by Administrator on 2017/6/13 0013.
@@ -53,14 +61,14 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         HomeFragmentChangeLayoutListener {
     private RelativeLayout rl_top, rl_top2;
     private StickyScrollView scrollView;
-    private SimpleDraweeView sdv_img;
+    private SimpleDraweeView game_big_img;
     private Button leftBt;
     private GameDetailActivity content;
     private TabLayout tablayout;
     private AutoHeightViewPager viewpager;
     private ArrayList<Fragment> fragments;
     private DCViewPagerAdapter adapter;
-    List<String> tabList = new ArrayList<String>();
+    List<String> tabList = new ArrayList<>();
     //游戏id
     private long gameId = 0;
     private GameInfo gameInfo;
@@ -70,59 +78,80 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private Handler handler = new Handler();
     private IFileLoad fileLoad;
     private Paint paint;
+    private SimpleDraweeView game_logo_img;
+    private TextView gameNameTv;
+    private TextView gamePercentageTv;
+    private TextView downLoadCountTv;
+    private String gameName = "";
+    private TextView changShangTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //........ ....................通知栏...................
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(R.color.transparent);//通知栏所需颜色
+            tintManager.setStatusBarTintResource(R.color.transparent);
         }
-        // todo  xml
+        //-----------------------------------------------------------------------------
+
         setContentView(R.layout.activity_game_detail);
+        gameId = getIntent().getLongExtra(KeyConstant.ID, 0);
         content = this;
-        gameId = getIntent().getLongExtra("id", 0);
 
+        //初始化
         initStatus();
+        initTabViewPager();
         initView();
+        //请求数据
+        getGameInfo();
     }
 
-    private void initStatus() {
-        //获取状态栏高度设置给标题栏==========================================
-        rl_top = (RelativeLayout) findViewById(R.id.rl_top);
-        rl_top.setBackgroundResource(R.color.transparent);
-        int statusBarHeight = ImageUtil.getStatusBarHeight(content);
-        rl_top.setPadding(0, statusBarHeight, 0, 0);
-        //======================================================================
-        //rl_top2 = (RelativeLayout) findViewById(R.id.rl_top2);
-        leftBt = (Button) findViewById(R.id.left_bt);
-        leftBt.setPadding(CommonUtil.dip2px(content, 20), statusBarHeight, 0, 0);
-        leftBt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                content.finish();
-            }
-        });
-        fileLoad = FileLoadManager.getInstance(this);
-    }
-
+    //初始化其他控件
     private void initView() {
-        tabList.add("详情");
-        tabList.add("必读");
-        scrollView = (StickyScrollView) findViewById(R.id.scrollView);
-        sdv_img = (SimpleDraweeView) findViewById(R.id.sdv_img);
+        game_big_img = (SimpleDraweeView) findViewById(sdv_img);
+        game_logo_img = (SimpleDraweeView) findViewById(R.id.img_1);
+        gameNameTv = (TextView) findViewById(R.id.tv_title);//游戏名字
+        gamePercentageTv = (TextView) findViewById(R.id.game_percentage_tv);//评分
+        downLoadCountTv = (TextView) findViewById(R.id.download_count_tv);//下载次数
+        changShangTv = (TextView) findViewById(R.id.game_chang_shang_tv);//下载次数
+        progressBar = (GameLoadProgressBar) findViewById(R.id.game_detail_progress_bar);//下载按钮
 
-        scrollView.setOnScrollListener(this);
+    }
 
+    //设置数据
+    private void setView() {
+        gameName = gameInfo.gameName;
+        gameNameTv.setText(gameName);//名字
+        downLoadCountTv.setText(gameInfo.downloadCount + "");//下载次数
+        gamePercentageTv.setText(gameInfo.percentage + "");//下载次数
 
-        tablayout = (TabLayout) findViewById(R.id.tablayout);
-        viewpager = (AutoHeightViewPager) findViewById(R.id.viewpager);
-        viewpager.setOffscreenPageLimit(2);
-        initViewPager();
-        initTabs();
-        getGameInfo(); //请求
+        game_logo_img.setImageURI(gameInfo.gameLogo);//游戏 -头像
+        game_big_img.setImageURI(gameInfo.gameLogo);//游戏 -大图
+
+        //厂商
+        if (gameInfo.gameAgentList != null && gameInfo.gameAgentList.size() > 0) {
+            changShangTv.setText(gameInfo.gameAgentList.get(0).agentName);
+        } else {
+            changShangTv.setText("");
+        }
+
+        //更新下载按钮
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo.filename, gameInfo.gameLink,
+                                gameInfo.packages, ConvUtil.NI(gameInfo.versionCode));
+                        progressBar.setLoadState(fileStatus);
+                    }
+                });
+            }
+        }, 0, 500);
     }
 
     /**
@@ -138,9 +167,35 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 }
                 gameInfo = result.data;
                 if (gameInfo != null) {
-                    setViewPager();
-                } else {
+                    //设置进度条状态
+                    progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.filename, gameInfo.gameLink, gameInfo
+                            .packages, ConvUtil.NI(gameInfo.versionCode)));
+                    //必须设置，否则点击进度条后无法进行响应操作
+                    FileLoadInfo fileLoadInfo = new FileLoadInfo(gameInfo.filename, gameInfo.gameLink, gameInfo.md5, ConvUtil
+                            .NI(gameInfo.versionCode), gameInfo.gameName, gameInfo.gameLogo, gameInfo.id, FileLoadInfo.TYPE_GAME);
+                    progressBar.setFileLoadInfo(fileLoadInfo);
+                    fileLoadInfo.setPackageName(gameInfo.packages);
+                    fileLoadInfo.setVersionCode(ConvUtil.NI(gameInfo.versionCode));
+                    progressBar.setOnStateChangeListener(new ProgressBarStateListener(GameDetailActivity.this,
+                            GameDetailActivity.this.getSupportFragmentManager()));
+                    progressBar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            progressBar.toggle();
+                        }
+                    });
 
+                    //设置ViewPager
+                    fragments = new ArrayList<>();
+                    fragments.add(GameDetailFragment.newInstance(gameInfo));
+                    fragments.add(GameStrategyFragment.newInstance(gameInfo));
+
+                    adapter.setList(fragments, tabList);
+                    viewpager.setAdapter(adapter);
+
+                    setView();
+                } else {
+                    Log.d(TAG, "HTTP请求成功：服务端返回错误！");
                 }
             }
         };
@@ -159,28 +214,15 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("gameId", String.valueOf(146));
+                params.put(KeyConstant.GAME_ID, String.valueOf(gameId));
                 return params;
             }
         };
         StoreApplication.requestQueue.add(request);
     }
 
-    private void setViewPager() {
-        fragments = new ArrayList<>();
-        fragments.add(GameDetailFragment.newInstance(gameInfo));
-        fragments.add(GameStrategyFragment.newInstance(gameInfo));
-
-        adapter.setList(fragments, tabList);
-        viewpager.setAdapter(adapter);
-    }
-
     private void initViewPager() {
         fragments = new ArrayList<>();
-        fragments.add(GameDetailFragment.newInstance(gameInfo));
-        // fragments.add(GameDetail2Fragment.newInstance());
-        fragments.add(GameStrategyFragment.newInstance(gameInfo));
-
         adapter = new DCViewPagerAdapter(getSupportFragmentManager(), fragments, tabList);
         viewpager.setAdapter(adapter);
     }
@@ -190,7 +232,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         tablayout.setTabMode(TabLayout.MODE_FIXED); //固定模式
         tablayout.setTabGravity(TabLayout.GRAVITY_FILL);
         final ViewGroup viewGroup = (ViewGroup) tablayout.getChildAt(0);
-        final int dp18 = CommonUtil.dip2px(content,18);
+        final int dp18 = CommonUtil.dip2px(content, 18);
 /*        //中间加分隔线
         for (int i = 0; i < viewGroup.getChildCount(); i++) {
             ViewGroup view = (ViewGroup) viewGroup.getChildAt(i);
@@ -251,11 +293,11 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 rl_top.setAlpha(1 - alpha);
                 int color = 1 - alpha > 0 ? R.color.colorPrimary : R.color.transparent;
                 rl_top.setBackgroundResource(color);
-                leftBt.setText("游戏名字");
+                leftBt.setText(gameName);
             }
         } else {
             rl_top.setAlpha(1f);
-            leftBt.setText("游戏名字");
+            leftBt.setText(gameName);
             rl_top.setBackgroundResource(R.color.colorPrimary);
         }
         scrollView.setStickTop(rl_top.getMeasuredHeight());//设置距离多少悬浮
@@ -267,5 +309,37 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 .LayoutParams.MATCH_PARENT);
         layoutParams.height = height;
         viewpager.setLayoutParams(layoutParams);
+    }
+
+
+    private void initStatus() {
+        //获取状态栏高度设置给标题栏==========================================
+        rl_top = (RelativeLayout) findViewById(R.id.rl_top);
+        rl_top.setBackgroundResource(R.color.transparent);
+        int statusBarHeight = ImageUtil.getStatusBarHeight(content);
+        rl_top.setPadding(0, statusBarHeight, 0, 0);
+        //======================================================================
+        leftBt = (Button) findViewById(R.id.left_bt);
+        leftBt.setPadding(CommonUtil.dip2px(content, 20), statusBarHeight, 0, 0);
+        leftBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                content.finish();
+            }
+        });
+        fileLoad = FileLoadManager.getInstance(this);
+    }
+
+    //初始化TabLayout   &   ViewPager
+    private void initTabViewPager() {
+        tabList.add("详情");
+        tabList.add("必读");
+        scrollView = (StickyScrollView) findViewById(R.id.scrollView);
+        scrollView.setOnScrollListener(this);
+        tablayout = (TabLayout) findViewById(R.id.tablayout);
+        viewpager = (AutoHeightViewPager) findViewById(R.id.viewpager);
+        viewpager.setOffscreenPageLimit(2);
+        initViewPager();
+        initTabs();
     }
 }

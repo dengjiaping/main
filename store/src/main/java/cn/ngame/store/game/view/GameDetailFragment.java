@@ -25,6 +25,7 @@ import cn.ngame.store.bean.GameImage;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Log;
+import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.fragment.ImageDialogFragment;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
 import cn.ngame.store.gamehub.view.ShowViewActivity;
@@ -48,6 +49,8 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
     ArrayList<String> imgs = new ArrayList<String>();
     boolean flag1 = true;
     HomeFragmentChangeLayoutListener listener;
+    private TextView tv_download_count;
+    private TextView tv_game_size;
 
     public static GameDetailFragment newInstance(GameInfo gameInfo) {
         GameDetailFragment fragment = new GameDetailFragment();
@@ -71,6 +74,8 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_game_detail, null);
         tv_summary = (TextView) view.findViewById(R.id.tv_summary);
         tv_version = (TextView) view.findViewById(R.id.tv_version);
+        tv_download_count = (TextView) view.findViewById(R.id.download_count_bottom_tv);
+        tv_game_size = (TextView) view.findViewById(R.id.game_size_tv);
         tv_time = (TextView) view.findViewById(R.id.text);
         tv_company = (TextView) view.findViewById(R.id.tv_company);
         tv_show_all = (TextView) view.findViewById(R.id.tv_show_all);
@@ -134,6 +139,8 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                 }
             });
             tv_version.setText(gameInfo.versionName);
+            tv_game_size.setText(TextUtil.formatFileSize(gameInfo.gameSize));
+            tv_download_count.setText(gameInfo.downloadCount + "");
             tv_time.setText(df.format(new Date(gameInfo.updateTime)));
             if (gameInfo.gameAgentList != null && gameInfo.gameAgentList.size() > 0) {
                 tv_company.setText(gameInfo.gameAgentList.get(0).agentName);

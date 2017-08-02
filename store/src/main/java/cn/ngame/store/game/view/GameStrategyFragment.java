@@ -24,6 +24,7 @@ import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
+import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.bean.GameStrategy;
 
@@ -117,7 +118,7 @@ public class GameStrategyFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("gameId", String.valueOf(gameInfo.id));
+                params.put(KeyConstant.GAME_ID, gameInfo.id + "");
                 return params;
             }
         };

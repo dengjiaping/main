@@ -22,7 +22,7 @@ import cn.ngame.store.base.service.ConnectionChangeReceiver;
 public class BaseFgActivity extends FragmentActivity {
 
     public ConnectionChangeReceiver myReceiver;
-
+    protected static final String TAG = "777";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
