@@ -22,7 +22,7 @@
             android:layout_centerVertical="true"
             android:paddingLeft="@dimen/dp_10"
             android:text="自动删除安装包"
-            android:textColor="@color/font_1a"
+            android:textColor="@color/color_1a"
             android:textSize="@dimen/dp_14"/>
 
         <ToggleButton
@@ -57,7 +57,7 @@
             android:layout_centerVertical="true"
             android:paddingLeft="@dimen/dp_10"
             android:text="推送通知设置"
-            android:textColor="@color/font_1a"
+            android:textColor="@color/color_1a"
             android:textSize="@dimen/dp_14"/>
 
         <ToggleButton
@@ -92,7 +92,7 @@
             android:text="允许运营商下载"
             android:layout_centerVertical="true"
             android:paddingLeft="@dimen/dp_10"
-            android:textColor="@color/font_1a"
+            android:textColor="@color/color_1a"
             android:textSize="@dimen/dp_14"/>
 
         <ToggleButton
@@ -128,7 +128,7 @@
             android:layout_centerVertical="true"
             android:text="清理缓存"
             android:paddingLeft="@dimen/dp_10"
-            android:textColor="@color/font_1a"
+            android:textColor="@color/color_1a"
             android:textSize="@dimen/dp_14"/>
 
         <TextView

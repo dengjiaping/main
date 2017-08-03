@@ -89,7 +89,7 @@
         android:background="@android:color/white"
         android:gravity="center"
         android:text="修改密码"
-        android:textColor="@color/font_1a"
+        android:textColor="@color/color_1a"
         android:textSize="@dimen/dp_16"/>
 
     <include

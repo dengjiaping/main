@@ -37,7 +37,7 @@
             android:layout_toRightOf="@+id/img_1"
             android:clickable="false"
             android:maxLines="1"
-            android:textColor="@color/font_1a"
+            android:textColor="@color/color_1a"
             android:textSize="@dimen/dp_16"/>
         <!--=========================   分类tip ====================================== -->
         <LinearLayout
@@ -110,9 +110,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@id/classify_item_llay"
-            android:layout_below="@id/tv_title"
+            android:layout_marginBottom="@dimen/dp_6"
             android:layout_marginLeft="-1.5dp"
-            android:layout_marginTop="@dimen/dp_10"
             android:layout_toRightOf="@+id/img_1"
             android:clickable="false"
             android:isIndicator="true"
@@ -125,13 +124,13 @@
             android:id="@+id/text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/rating_bar"
-            android:layout_below="@+id/tv_title"
+            android:layout_above="@id/classify_item_llay"
+            android:layout_marginBottom="4.5dp"
             android:layout_marginLeft="@dimen/dp_6"
             android:layout_toRightOf="@id/rating_bar"
             android:clickable="false"
-            android:textColor="@color/font_1a"
-            android:textSize="@dimen/dp_11"/>
+            android:textColor="@color/color_1a"
+            android:textSize="@dimen/dp_12"/>
 
         <cn.ngame.store.view.GameLoadProgressBar
             android:id="@+id/progress_bar"

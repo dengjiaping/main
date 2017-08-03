@@ -4,10 +4,9 @@
 
     <!-- 填充 -->
     <solid android:color="@color/white"/>
-    <stroke
-        android:width="@dimen/dp_05"
-        android:color="@color/color_4cc7fc"/>
+    <stroke android:color="@color/color_2abfff"
+        android:width="@dimen/dp_05"/>
     <!--圆角-->
-    <corners android:radius="@dimen/dp_4"/>
+    <corners android:radius="@dimen/dp_8"/>
 
 </shape>

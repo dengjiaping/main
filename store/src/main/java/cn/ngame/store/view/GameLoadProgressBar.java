@@ -5,7 +5,9 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import cn.ngame.store.R;
@@ -23,6 +25,7 @@ public class GameLoadProgressBar extends View {
     private final int mRadius;
     private final int openColor;
     private final int mDownloadHeight;
+    private final int mStrokeWidth;
 
     private GameFileStatus gameFileStatus;
     private FileLoadInfo fileLoadInfo;
@@ -51,6 +54,7 @@ public class GameLoadProgressBar extends View {
 
         downloadedColor = context.getResources().getColor(R.color.download_bg2);
         mRadius = CommonUtil.dip2px(context, 4);
+        mStrokeWidth = CommonUtil.dip2px(context, 0.8f);
         mDownloadHeight = CommonUtil.dip2px(context, 1.5f);
         //获取布局文件中的值
         text = context.getResources().getString(attrs.getAttributeResourceValue("http://schemas.android.com/apk/res/android",
@@ -59,6 +63,7 @@ public class GameLoadProgressBar extends View {
         textSize = CommonUtil.dip2px(context, Float.valueOf(tempSize.substring(0, tempSize.length() - 2)));
         String tempWidth = attrs.getAttributeValue("http://schemas.android.com/apk/res/android", "layout_width");
         width = CommonUtil.dip2px(context, Float.valueOf(tempWidth.substring(0, tempWidth.length() - 3)));
+        Log.d(TAG, "888width=" + width);
         String tempHeight = attrs.getAttributeValue("http://schemas.android.com/apk/res/android", "layout_height");
         height = CommonUtil.dip2px(context, Float.valueOf(tempHeight.substring(0, tempHeight.length() - 3)));
 
@@ -66,8 +71,8 @@ public class GameLoadProgressBar extends View {
                 ".com/apk/res/android", "textColor", -1));
         //nomalColor = context.getResources().getColor(attrs.getAttributeResourceValue("http://schemas.android
         // .com/apk/res/android","background",-1));
-        nomalColor = context.getResources().getColor(R.color.download_bt_nomal);
-        openColor = context.getResources().getColor(R.color.download_bt_nomal);
+        nomalColor = ContextCompat.getColor(context, R.color.download_bt_nomal);
+        openColor = ContextCompat.getColor(context, R.color.download_bt_nomal);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.DownLoadProgressBar);
         //progress = typedArray.getInt(R.styleable.DownLoadProgressBar_progress, 0);
@@ -323,7 +328,7 @@ public class GameLoadProgressBar extends View {
             paintStoke.setStyle(Paint.Style.STROKE);
             paintStoke.setAntiAlias(true);
             paintStoke.setColor(openColor);
-            paintStoke.setStrokeWidth(2);
+            paintStoke.setStrokeWidth(mStrokeWidth);
             canvas.drawRoundRect(mRadiusRect, mRadius, mRadius, paintStoke);//圆角
             //canvas.drawRect(0, 0, width, height, paint);
 

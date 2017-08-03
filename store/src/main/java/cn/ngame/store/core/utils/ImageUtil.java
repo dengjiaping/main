@@ -3,17 +3,22 @@ package cn.ngame.store.core.utils;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ListAdapter;
+import android.widget.PopupWindow;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import cn.ngame.store.R;
 
 /**
  * 获取图片的Base64字符串
@@ -113,5 +118,62 @@ public class ImageUtil {
         //((ViewGroup.MarginLayoutParams) params).setMargins(10, 10, 10, 10);
         // 设置参数
         gridView.setLayoutParams(params);
+    }
+
+    /**
+     * @param
+     * @param attachOnView  显示在这个View的下方
+     * @param popView       被显示在PopupWindow上的View
+     * @param popShowHeight 被显示在PopupWindow上的View的高度，可以传默认值defaultBotom
+     * @param popShowWidth  被显示在PopupWindow上的View的宽度，一般是传attachOnView的getWidth()
+     * @return PopupWindow
+     */
+    public static PopupWindow showPopupWindow(Activity context, View attachOnView, View popView, final int popShowHeight, final
+    int
+            popShowWidth) {
+        final int defaultBotom = -60;//距离底部
+        if (popView != null && popView.getParent() != null) {
+            ((ViewGroup) popView.getParent()).removeAllViews();
+        }
+
+        PopupWindow popupWindow = null;
+        Rect frame = new Rect();
+        context.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+
+        int location[] = new int[2];
+        int x, y;
+        int popHeight = 0, popWidth = 0;
+
+        attachOnView.getLocationOnScreen(location);
+        x = location[0];
+        y = location[1];
+
+        int h = attachOnView.getHeight();
+        int screenHeight = getScreenHeight(context);
+
+        if (popShowHeight == defaultBotom) {
+            popHeight = screenHeight / 6;
+            popHeight = Math.abs(screenHeight - (h + y)) - popHeight;
+        } else if (popHeight == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            popHeight = ViewGroup.LayoutParams.WRAP_CONTENT;
+        } else {
+            popHeight = popShowHeight;
+        }
+
+        if (popShowWidth == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            popWidth = attachOnView.getWidth();
+        } else {
+            popWidth = popShowWidth;
+        }
+
+        popupWindow = new PopupWindow(popView, popWidth, popHeight, true);
+
+        //这行代码时用来让PopupWindow点击区域之外消失的，这个应该是PopupWindow的一个bug。
+        //但是利用这个bug可以做到点击区域外消失
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setAnimationStyle(R.style.anim_rank_list_popup);
+        popupWindow.showAtLocation(attachOnView, Gravity.NO_GRAVITY, x, h + y);
+        popupWindow.update();
+        return popupWindow;
     }
 }

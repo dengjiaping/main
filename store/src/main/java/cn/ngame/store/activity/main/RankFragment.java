@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 import cn.ngame.store.R;
 import cn.ngame.store.activity.rank.Rank012345Fragment;
-import cn.ngame.store.activity.rank.Rank5Fragment;
 import cn.ngame.store.adapter.RankTopPagerAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.core.utils.CommonUtil;
@@ -26,11 +25,9 @@ import cn.ngame.store.core.utils.CommonUtil;
  */
 
 public class RankFragment extends BaseSearchFragment {
-    String typeValue = "";
     private ViewPager viewpager;
     private ArrayList<Fragment> fragments;
     private RankTopPagerAdapter adapter;
-    private Rank5Fragment downloadFragment;
     private Rank012345Fragment commentFragment;
     private TabLayout tablayout;
     private TextView textView;
@@ -93,7 +90,7 @@ public class RankFragment extends BaseSearchFragment {
 
     private void initViewPager() {
         fragments = new ArrayList<>();
-        final int length = tabList.length ;
+        final int length = tabList.length;
         Log.d(TAG, "onPagelength: " + length);
         for (int i = 0; i < length; i++) {
             fragment012345 = new Rank012345Fragment(curTab);

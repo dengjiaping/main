@@ -80,11 +80,11 @@ public class StoreApplication extends MultiDexApplication {
         initGloalData();
 
 
-        Config.DEBUG = true;
 
         //配置友盟
         UMShareAPI.get(this);
         initUmengKey();
+        Config.DEBUG = true;
     }
 
     private void initUmengKey() {

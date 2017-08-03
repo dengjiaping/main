@@ -45,6 +45,7 @@ import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.core.utils.KeyConstant;
+import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.view.AutoHeightViewPager;
@@ -84,6 +85,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private TextView downLoadCountTv;
     private String gameName = "";
     private TextView changShangTv;
+    private TextView gameSizeTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +119,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         gamePercentageTv = (TextView) findViewById(R.id.game_percentage_tv);//评分
         downLoadCountTv = (TextView) findViewById(R.id.download_count_tv);//下载次数
         changShangTv = (TextView) findViewById(R.id.game_chang_shang_tv);//下载次数
+        gameSizeTv = (TextView) findViewById(R.id.game_detail_size);//下载次数
         progressBar = (GameLoadProgressBar) findViewById(R.id.game_detail_progress_bar);//下载按钮
 
     }
@@ -125,8 +128,9 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private void setView() {
         gameName = gameInfo.gameName;
         gameNameTv.setText(gameName);//名字
+        gameSizeTv.setText(TextUtil.formatFileSize(gameInfo.gameSize));//大小
         downLoadCountTv.setText(gameInfo.downloadCount + "");//下载次数
-        gamePercentageTv.setText(gameInfo.percentage + "");//下载次数
+        gamePercentageTv.setText(gameInfo.percentage + "");//评分0
 
         game_logo_img.setImageURI(gameInfo.gameLogo);//游戏 -头像
         game_big_img.setImageURI(gameInfo.gameLogo);//游戏 -大图

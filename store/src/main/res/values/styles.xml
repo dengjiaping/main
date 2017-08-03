@@ -152,4 +152,13 @@
         <item name="android:windowEnterAnimation">@anim/slide_in_anim</item>
         <item name="android:windowExitAnimation">@anim/slide_out_right</item>
     </style>
+    <style name="anim_rank_list_popup">
+        <!--<item name="android:windowEnterAnimation">@anim/anim_popup_show</item>-->
+        <item name="android:windowExitAnimation">@anim/anim_popup_dismiss</item>
+    </style>
+
+    <style name="style_14dp_989999">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/color_989999</item>
+    </style>
 </resources>

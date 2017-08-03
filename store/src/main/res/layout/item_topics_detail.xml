@@ -51,7 +51,7 @@
             android:clickable="false"
             android:maxLines="1"
             android:text="标题"
-            android:textColor="@color/font_1a"
+            android:textColor="@color/color_1a"
             android:textSize="@dimen/dp_16"/>
 
         <RatingBar

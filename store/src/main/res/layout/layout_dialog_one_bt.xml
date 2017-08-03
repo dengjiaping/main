@@ -10,7 +10,7 @@
         android:layout_height="70dp"
         android:gravity="center"
         android:text="@string/update"
-        android:textColor="@color/font_1a"
+        android:textColor="@color/color_1a"
         android:textSize="@dimen/dp_16"
         />
 <!--

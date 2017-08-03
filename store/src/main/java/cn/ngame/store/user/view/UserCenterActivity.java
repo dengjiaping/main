@@ -170,11 +170,12 @@ public class UserCenterActivity extends BaseFgActivity {
             public void onClick(View v) {
                 String nickNameStr = tv_nickname.getText().toString();
                 if (nickNameStr.length() == 0) {
-                    ToastUtil.show(UserCenterActivity.this, "昵称为空哦！");
+                    ToastUtil.show(content, "昵称为空哦！");
                     return;
                 }
                 if (nickNameStr.equals(nickName) && "-1".equals(IMG_TYPE)) {
-                    content.finish();
+                    ToastUtil.show(content, "您未修改任何资料哦");
+                    //content.finish();
                 } else {
                     nickName = nickNameStr;
                     uploadImage();
