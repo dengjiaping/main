@@ -299,20 +299,19 @@ public class FindPwdActivity extends BaseFgActivity {
     }
 
     /**
-     * 显示注册结果对话框
+     * 显示登录对话框
      */
     private void showDialog(final boolean isSuccess, String msg) {
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
-        dialogFragment.setTitle("提示");
-        dialogFragment.setDialogWidth(250);
+        dialogFragment.setDialogWidth(220);
 
         TextView tv = new TextView(FindPwdActivity.this);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
                 .LayoutParams.MATCH_PARENT);
-        params.setMargins(0, 20, 0, 0);
+        params.setMargins(0, 0, 0, 0);
         params.gravity = Gravity.CENTER;
         tv.setLayoutParams(params);
         tv.setGravity(Gravity.CENTER);

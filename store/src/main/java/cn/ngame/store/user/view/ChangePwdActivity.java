@@ -36,6 +36,7 @@ import cn.ngame.store.core.utils.UrlConstant;
 import cn.ngame.store.fragment.SimpleDialogFragment;
 import cn.ngame.store.view.BaseTitleBar;
 
+
 /**
  * 找回密码界面
  * Created by zeng on 2016/5/17.
@@ -178,9 +179,7 @@ public class ChangePwdActivity extends BaseFgActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
-        dialogFragment.setTitle("提示");
-        dialogFragment.setDialogWidth(250);
-
+        dialogFragment.setDialogWidth(220);
         TextView tv = new TextView(ChangePwdActivity.this);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
                 .LayoutParams.MATCH_PARENT);
@@ -188,7 +187,7 @@ public class ChangePwdActivity extends BaseFgActivity {
         params.gravity = Gravity.CENTER;
         tv.setLayoutParams(params);
         tv.setGravity(Gravity.CENTER);
-        tv.setText("当前设备的登录信息已失效,\n需要重新登录后,才能执行修改密码操作");
+        tv.setText("当前设备的登录信息已失效,\n需要重新登录后,才能执行修改操作");
         tv.setTextColor(getResources().getColor(R.color.black));
         dialogFragment.setContentView(tv);
 
@@ -227,13 +226,12 @@ public class ChangePwdActivity extends BaseFgActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
-        dialogFragment.setTitle("提示");
-        dialogFragment.setDialogWidth(250);
+        dialogFragment.setDialogWidth(220);
 
         TextView tv = new TextView(ChangePwdActivity.this);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
                 .LayoutParams.MATCH_PARENT);
-        params.setMargins(0, 20, 0, 0);
+        params.setMargins(0, 0, 0, 0);
         params.gravity = Gravity.CENTER;
         tv.setLayoutParams(params);
         tv.setGravity(Gravity.CENTER);

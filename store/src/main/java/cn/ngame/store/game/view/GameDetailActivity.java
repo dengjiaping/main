@@ -1,5 +1,7 @@
 package cn.ngame.store.game.view;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,8 +9,11 @@ import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -47,7 +52,9 @@ import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.TextUtil;
+import cn.ngame.store.fragment.OneBtDialogFragment;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
+import cn.ngame.store.user.view.LoginActivity;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.AutoHeightViewPager;
@@ -369,10 +376,58 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                     ToastUtil.show(content, "反馈成功");
                     break;
                 case R.id.game_detail_percentage_tv:
-
-                    ToastUtil.show(content, "评分");
+                    String pwd = StoreApplication.passWord;
+                    if ((pwd != null && !"".endsWith(pwd)) ||
+                            !Constant.PHONE.equals(StoreApplication.loginType)) {//已登录
+                        showPercentDialog();
+                    } else {//未登录
+                        showUnLoginDialog();
+                    }
                     break;
             }
         }
     };
+
+    //提示绑定对话框
+    public void showPercentDialog() {
+        //填充对话框的布局
+        View percentView = LayoutInflater.from(content).inflate(R.layout.layout_percentage_dialog, null);
+        TextView toBindBt = (TextView) percentView.findViewById(R.id.title);
+        toBindBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+        Dialog mUnboundDialog = new Dialog(content);
+        mUnboundDialog.setContentView(percentView);//将布局设置给Dialog
+        Window dialogWindow = mUnboundDialog.getWindow(); //获取当前Activity所在的窗体
+        //dialogWindow.setGravity(Gravity.CENTER);//设置Dialog从窗体顶部弹出
+        WindowManager.LayoutParams params = dialogWindow.getAttributes();   //获得窗体的属性
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;//设置Dialog距离底部的距离
+        dialogWindow.setAttributes(params); //将属性设置给窗体
+        if (content != null && !mUnboundDialog.isShowing()) {
+            mUnboundDialog.show();//显示对话框
+        }
+    }
+
+    /**
+     * 未登录对话框
+     */
+    private void showUnLoginDialog() {
+        final OneBtDialogFragment dialogFragment = new OneBtDialogFragment();
+        dialogFragment.setTitle(getString(R.string.to_percent_unlogin_msg));
+        dialogFragment.setDialogWidth(220);
+        dialogFragment.setNegativeButton("立即登录", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogFragment.dismiss();
+                Intent intent = new Intent(content, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+        dialogFragment.show(getSupportFragmentManager().beginTransaction(), "successDialog");
+    }
 }

@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cn.ngame.store.R;
@@ -25,36 +24,30 @@ import cn.ngame.store.core.utils.CommonUtil;
 public class OneBtDialogFragment extends DialogFragment {
 
     private static OneBtDialogFragment fragment = null;
-    private TextView title_tv,positive_tv,negative_tv;
-    private LinearLayout contentWrapper;
-    private View contentView;
+    private TextView title_tv, negative_tv;
     private String title;
-    private String positiveButtonText = null;
     private String negativeButtonText = null;
     private int titleId = 0;
-    private int positiveButtonTextId = 0;
     private int negativeButtonTextId = 0;
 
     private int dialogWidth = 0;
 
     private boolean isShow = false;
 
-    private View.OnClickListener positiveButtonClickListener;
     private View.OnClickListener negativeButtonClickListener;
-    private View center_line;
 
-    public static OneBtDialogFragment newInstance(){
-        if(fragment == null){
+    public static OneBtDialogFragment newInstance() {
+        if (fragment == null) {
             fragment = new OneBtDialogFragment();
         }
         return fragment;
     }
 
-    public boolean isShow(){
+    public boolean isShow() {
         return isShow;
     }
 
-    public void setIsShow(boolean isShow){
+    public void setIsShow(boolean isShow) {
         this.isShow = isShow;
     }
 
@@ -69,13 +62,10 @@ public class OneBtDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         Context context = getActivity();
 
-        if(title == null && titleId > 0){
+        if (title == null && titleId > 0) {
             title = (String) context.getText(titleId);
         }
-        if(positiveButtonText == null && positiveButtonTextId > 0){
-            positiveButtonText = (String) context.getText(positiveButtonTextId);
-        }
-        if(negativeButtonText == null && negativeButtonTextId > 0){
+        if (negativeButtonText == null && negativeButtonTextId > 0) {
             negativeButtonText = (String) context.getText(negativeButtonTextId);
         }
     }
@@ -85,14 +75,11 @@ public class OneBtDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getDialog().setCanceledOnTouchOutside(false);
+        getDialog().setCanceledOnTouchOutside(true);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        View view = inflater.inflate(R.layout.layout_dialog_one_bt,container);
-        positive_tv = (TextView) view.findViewById(R.id.left_tv);
+        View view = inflater.inflate(R.layout.layout_dialog_one_bt, container);
         negative_tv = (TextView) view.findViewById(R.id.right_tv);
         title_tv = (TextView) view.findViewById(R.id.title);
-        center_line = (View) view.findViewById(R.id.bt_center_line);
-        contentWrapper = (LinearLayout) view.findViewById(R.id.content_wrapper);
 
         return view;
     }
@@ -101,8 +88,9 @@ public class OneBtDialogFragment extends DialogFragment {
     public void onResume() {
         super.onResume();
         //设置对话框宽度
-        if(dialogWidth > 0){
-            getDialog().getWindow().setLayout(CommonUtil.dip2px(getActivity(),dialogWidth),WindowManager.LayoutParams.WRAP_CONTENT);
+        if (dialogWidth > 0) {
+            getDialog().getWindow().setLayout(CommonUtil.dip2px(getActivity(), dialogWidth), WindowManager.LayoutParams
+                    .WRAP_CONTENT);
         }
     }
 
@@ -110,33 +98,10 @@ public class OneBtDialogFragment extends DialogFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //将内容布局加入到对话框中
-        if(contentView != null){
-            ViewGroup  parent = (ViewGroup) contentView.getParent();
-            if(parent != null)
-                parent.removeAllViewsInLayout();
-            contentWrapper.addView(contentView);
-        }
-
-        if(title != null){
+        if (title != null) {
             title_tv.setText(title);
-        }else {
+        } else {
             title_tv.setVisibility(View.GONE);
-        }
-
-        //设置左侧监听器
-        if(positiveButtonText != null){
-
-            positive_tv.setText(positiveButtonText);
-            positive_tv.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View v) {
-                    positiveButtonClickListener.onClick(v);
-               }
-            });
-        }else {
-            positive_tv.setVisibility(View.GONE);
-            center_line.setVisibility(View.GONE);
         }
 
         //设置右侧监听器
@@ -150,26 +115,16 @@ public class OneBtDialogFragment extends DialogFragment {
             });
         } else {
             negative_tv.findViewById(R.id.right_tv).setVisibility(View.GONE);
-            center_line.setVisibility(View.GONE);
         }
 
     }
 
     /**
-     * 设置对话框中间的内容
-     * @param v
-     * @return
-     */
-    public OneBtDialogFragment setContentView(View v) {
-        this.contentView = v;
-        return this;
-    }
-
-    /**
      * 设置对话框的宽度 单位dp
+     *
      * @param width
      */
-    public void setDialogWidth(int width){
+    public void setDialogWidth(int width) {
         this.dialogWidth = width;
     }
 
@@ -183,17 +138,6 @@ public class OneBtDialogFragment extends DialogFragment {
         return this;
     }
 
-    public OneBtDialogFragment setPositiveButton(int positiveButtonTextId, View.OnClickListener listener){
-        this.positiveButtonTextId = positiveButtonTextId;
-        this.positiveButtonClickListener = listener;
-        return this;
-    }
-
-    public OneBtDialogFragment setPositiveButton(String positiveButtonText, View.OnClickListener listener) {
-        this.positiveButtonText = positiveButtonText;
-        this.positiveButtonClickListener = listener;
-        return this;
-    }
 
     public OneBtDialogFragment setNegativeButton(int negativeButtonTextId, View.OnClickListener listener) {
         this.negativeButtonTextId = negativeButtonTextId;

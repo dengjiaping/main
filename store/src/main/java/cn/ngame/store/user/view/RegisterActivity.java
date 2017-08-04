@@ -299,9 +299,7 @@ public class RegisterActivity extends BaseFgActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
-        dialogFragment.setTitle("提示");
-        dialogFragment.setDialogWidth(250);
-
+        dialogFragment.setDialogWidth(220);
         TextView tv = new TextView(RegisterActivity.this);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
                 .LayoutParams.MATCH_PARENT);
