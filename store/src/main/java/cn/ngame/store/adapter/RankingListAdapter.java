@@ -183,15 +183,13 @@ public class RankingListAdapter extends BaseAdapter {
                     //===================进度条==========================================
                     progressBar = (GameLoadProgressBar) popView.findViewById(R.id.progress_bar);
                     //设置进度条状态
-                    progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo.getGameLink(),
-                            gameInfo
-                            .getPackages(), ConvUtil.NI(gameInfo.getVersionCode())));
+                    final GameFileStatus fileLoadStatus = fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo
+                            .getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode()));
+                    progressBar.setLoadState(fileLoadStatus);
                     //必须设置，否则点击进度条后无法进行响应操作
                     FileLoadInfo fileLoadInfo = new FileLoadInfo(gameInfo.getFilename(), gameInfo.getGameLink(), gameInfo
-                            .getMd5(),
-                            gameInfo.getVersionCode(), gameInfo.getGameName(), gameInfo.getGameLogo(), gameInfo.getId(),
-                            FileLoadInfo
-                            .TYPE_GAME);
+                            .getMd5(), gameInfo.getVersionCode(), gameInfo.getGameName(), gameInfo.getGameLogo(), gameInfo
+                            .getId(), FileLoadInfo.TYPE_GAME);
                     fileLoadInfo.setPackageName(gameInfo.getPackages());
                     progressBar.setFileLoadInfo(fileLoadInfo);
                     progressBar.setOnStateChangeListener(new ProgressBarStateListener(context, fm));
@@ -208,9 +206,8 @@ public class RankingListAdapter extends BaseAdapter {
                             uiHandler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo
-                                            .getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode()));
-                                    progressBar.setLoadState(fileStatus);
+                                    progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo
+                                            .getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode())));
                                 }
                             });
                         }

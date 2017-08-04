@@ -59,11 +59,9 @@ public class ManagerFragment extends BaseSearchFragment {
         context = getActivity();
         tablayout = (TabLayout) view.findViewById(R.id.tablayout);
         viewpager = (ViewPager) view.findViewById(R.id.viewpager);
-        adapter = new DCViewPagerAdapter(getSupportFragmentManager(), fragments, tabList);
-        viewpager.setAdapter(adapter);
         //viewpager每次切换的时候， 会重新创建当前界面及左右界面三个界面， 每次切换都要重新oncreate,
         // 表示三个界面之间来回切换都不会重新加载
-        viewpager.setOffscreenPageLimit(3);
+        //viewpager.setOffscreenPageLimit(0);
         // setTabViewPagerData();
     }
 
@@ -116,7 +114,8 @@ public class ManagerFragment extends BaseSearchFragment {
     }
 
     private void initViewPagerTabs() {
-        adapter.setList(fragments, tabList);
+        adapter = new DCViewPagerAdapter(getChildFragmentManager(), fragments, tabList);
+        viewpager.setAdapter(adapter);
         tablayout.setupWithViewPager(viewpager);
         tablayout.setTabMode(TabLayout.MODE_FIXED); //固定模式
         tablayout.setTabGravity(TabLayout.GRAVITY_FILL);

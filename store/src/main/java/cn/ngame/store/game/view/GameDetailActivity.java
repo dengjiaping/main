@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
 import cn.ngame.store.util.ConvUtil;
+import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.AutoHeightViewPager;
 import cn.ngame.store.view.GameLoadProgressBar;
 import cn.ngame.store.view.StickyScrollView;
@@ -81,11 +83,13 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private Paint paint;
     private SimpleDraweeView game_logo_img;
     private TextView gameNameTv;
-    private TextView gamePercentageTv;
     private TextView downLoadCountTv;
     private String gameName = "";
     private TextView changShangTv;
     private TextView gameSizeTv;
+    private ImageView likeIv;
+    private TextView feedbackTv;
+    private TextView percentageTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,12 +120,17 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         game_big_img = (SimpleDraweeView) findViewById(sdv_img);
         game_logo_img = (SimpleDraweeView) findViewById(R.id.img_1);
         gameNameTv = (TextView) findViewById(R.id.tv_title);//游戏名字
-        gamePercentageTv = (TextView) findViewById(R.id.game_percentage_tv);//评分
         downLoadCountTv = (TextView) findViewById(R.id.download_count_tv);//下载次数
-        changShangTv = (TextView) findViewById(R.id.game_chang_shang_tv);//下载次数
-        gameSizeTv = (TextView) findViewById(R.id.game_detail_size);//下载次数
+        changShangTv = (TextView) findViewById(R.id.game_chang_shang_tv);//厂商
+        gameSizeTv = (TextView) findViewById(R.id.game_detail_size);//大小
+        feedbackTv = (TextView) findViewById(R.id.game_detail_feedback_bt);//大小
+        percentageTv = (TextView) findViewById(R.id.game_detail_percentage_tv);//大小
+        likeIv = (ImageView) findViewById(R.id.game_detail_like_iv);//喜欢按钮
         progressBar = (GameLoadProgressBar) findViewById(R.id.game_detail_progress_bar);//下载按钮
 
+        likeIv.setOnClickListener(gameDetailClickListener);
+        feedbackTv.setOnClickListener(gameDetailClickListener);
+        percentageTv.setOnClickListener(gameDetailClickListener);
     }
 
     //设置数据
@@ -130,7 +139,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         gameNameTv.setText(gameName);//名字
         gameSizeTv.setText(TextUtil.formatFileSize(gameInfo.gameSize));//大小
         downLoadCountTv.setText(gameInfo.downloadCount + "");//下载次数
-        gamePercentageTv.setText(gameInfo.percentage + "");//评分0
+        percentageTv.setText(gameInfo.percentage + "");//评分0
 
         game_logo_img.setImageURI(gameInfo.gameLogo);//游戏 -头像
         game_big_img.setImageURI(gameInfo.gameLogo);//游戏 -大图
@@ -227,7 +236,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
 
     private void initViewPager() {
         fragments = new ArrayList<>();
-        adapter = new DCViewPagerAdapter(getSupportFragmentManager(), fragments, tabList);
+        adapter = new DCViewPagerAdapter(getSupportFragmentManager(), fragments, tabList);//getChildFragmentManager()
         viewpager.setAdapter(adapter);
     }
 
@@ -346,4 +355,24 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         initViewPager();
         initTabs();
     }
+
+    private View.OnClickListener gameDetailClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.game_detail_like_iv:
+                    boolean isLiked = likeIv.isSelected();
+                    ToastUtil.show(content, isLiked ? "取消成功" : "收藏成功,可在管理界面中查看");
+                    likeIv.setSelected(!isLiked);
+                    break;
+                case R.id.game_detail_feedback_bt:
+                    ToastUtil.show(content, "反馈成功");
+                    break;
+                case R.id.game_detail_percentage_tv:
+
+                    ToastUtil.show(content, "评分");
+                    break;
+            }
+        }
+    };
 }

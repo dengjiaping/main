@@ -98,5 +98,7 @@
     <dimen name="dp_46">46dp</dimen>
     <dimen name="dp_64">64dp</dimen>
     <dimen name="popup_height">44dp</dimen>
+    <dimen name="game_detail_feedback_bt_width">48dp</dimen>
+    <dimen name="game_detail_feedback_bt_height">26dp</dimen>
 
 </resources>

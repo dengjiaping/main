@@ -32,6 +32,7 @@ import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.bean.JsonResult;
+import cn.ngame.store.bean.User;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
@@ -47,7 +48,7 @@ import cn.ngame.store.view.BaseTitleBar;
  */
 public class FindPwdActivity extends BaseFgActivity {
 
-    public static final String TAG = "777";
+    public static final String TAG = "000";
 
     private Button bt_find_pwd;
     private ImageButton bt_show_pwd;
@@ -122,7 +123,7 @@ public class FindPwdActivity extends BaseFgActivity {
         tv_captcha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String mobile = et_name.getText().toString();
+                String mobile = et_name.getText().toString().trim();
 
                 if (mobile != null && !"".equals(mobile)) {
                     if (!TextUtil.isMobile(mobile)) {
@@ -139,9 +140,9 @@ public class FindPwdActivity extends BaseFgActivity {
         bt_find_pwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userName = et_name.getText().toString();
-                String pwd = et_pwd.getText().toString();
-                String captcha = et_captcha.getText().toString();
+                String userName = et_name.getText().toString().trim();
+                String pwd = et_pwd.getText().toString().trim();
+                String captcha = et_captcha.getText().toString().trim();
 
                 if (userName == null || userName.length() <= 0) {
                     Toast.makeText(FindPwdActivity.this, "手机号不能为空", Toast.LENGTH_SHORT).show();
@@ -210,7 +211,7 @@ public class FindPwdActivity extends BaseFgActivity {
                 if (result.code == 0) {
                     second = 60;
                     new Thread(runnable).start();
-                    Toast.makeText(FindPwdActivity.this, "验证码已发送，请查收！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FindPwdActivity.this, "验证码已发送成功，请注意查收", Toast.LENGTH_SHORT).show();
 
                 } else {
                     Log.d(TAG, "获取验证码失败：服务端错误：" + result.msg);
@@ -248,31 +249,19 @@ public class FindPwdActivity extends BaseFgActivity {
      */
     private void doFindPwd(final String userName, final String pwd, final String captcha) {
         String url = Constant.WEB_SITE + UrlConstant.URL_FORGOT_PASSWORD;
-        Response.Listener<JsonResult<String>> successListener = new Response.Listener<JsonResult<String>>() {
+        Response.Listener<JsonResult<User>> successListener = new Response.Listener<JsonResult<User>>() {
             @Override
-            public void onResponse(JsonResult<String> result) {
-
-                if (result == null) {
-                    Toast.makeText(FindPwdActivity.this, "服务端异常", Toast.LENGTH_SHORT).show();
+            public void onResponse(JsonResult<User> result) {
+              if (result == null) {
+                    Toast.makeText(FindPwdActivity.this, "网络异常,请稍后重试", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Log.d(TAG, "找回密码:" + result.code);
-                Log.d(TAG, "找回密码:" + result.msg);
                 if (result.code == 0) {
                     SharedPreferences preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString(Constant.CONFIG_USER_NAME, userName);
-                    if (isFromUserCenter) {
-                        editor.putString(Constant.CONFIG_USER_PWD, pwd);
-                        StoreApplication.passWord = pwd;
-                        FindPwdActivity.this.finish();
-                        editor.commit();
-                    } else {
-                        editor.commit();
-                        showDialog(true, "密码重置成功！");
-                    }
-
-
+                    editor.commit();
+                    showDialog(true, "密码重置成功");
                 } else {
                     showDialog(false, result.msg);
                 }
@@ -283,21 +272,26 @@ public class FindPwdActivity extends BaseFgActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                Toast.makeText(FindPwdActivity.this, "更新失败，请检查网络连接!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FindPwdActivity.this, "网络异常,请稍后重试", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "更新密码失败：网络连接错误！" + volleyError.toString());
             }
         };
 
-        Request<JsonResult<String>> versionRequest = new GsonRequest<JsonResult<String>>(Request.Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult<String>>() {
+        Request<JsonResult<User>> versionRequest = new GsonRequest<JsonResult<User>>(Request.Method.POST, url,
+                successListener, errorListener, new TypeToken<JsonResult<User>>() {
         }.getType()) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.LOGIN_NAME, userName);
-                params.put(KeyConstant.new_Password, pwd);
                 params.put(KeyConstant.SMS_CODE, captcha);
+                params.put(KeyConstant.new_Password, pwd);
+                android.util.Log.d(TAG,KeyConstant.LOGIN_NAME+"getParams: " + userName);
+                android.util.Log.d(TAG,KeyConstant.new_Password+ "getParams: " + captcha);
+                android.util.Log.d(TAG,KeyConstant.SMS_CODE+ "getParams: " + pwd);
+                for (int i = 0; i < params.size(); i++) {
+                }
                 return params;
             }
         };

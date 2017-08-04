@@ -451,7 +451,7 @@ public class UserCenterActivity extends BaseFgActivity {
         final OneBtDialogFragment dialogFragment = new OneBtDialogFragment();
         dialogFragment.setTitle("您的登录状态已经失效\n请重新登录");
         dialogFragment.setDialogWidth(220);
-        dialogFragment.setNegativeButton("重新登录", new View.OnClickListener() {
+        dialogFragment.setNegativeButton("立即登录", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialogFragment.dismiss();
@@ -461,17 +461,6 @@ public class UserCenterActivity extends BaseFgActivity {
             }
         });
         dialogFragment.show(ft, "successDialog");
-
-       /* TextView tv = new TextView(content);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
-                .LayoutParams.MATCH_PARENT);
-        params.setMargins(0, 20, 0, 0);
-        params.gravity = Gravity.CENTER;
-        tv.setLayoutParams(params);
-        tv.setGravity(Gravity.CENTER);
-        tv.setText("登录信息已失效");
-        tv.setTextColor(getResources().getColor(R.color.black));
-        dialogFragment.setContentView(tv);*/
 
     }
 
