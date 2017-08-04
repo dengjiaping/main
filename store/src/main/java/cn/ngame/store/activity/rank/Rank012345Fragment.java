@@ -36,6 +36,7 @@ import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.view.GameDetailActivity;
+import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.GameLoadProgressBar;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
@@ -304,6 +305,9 @@ public class Rank012345Fragment extends BaseSearchFragment {
                     @Override
                     public void onError(Throwable e) {
 //                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
+                        ToastUtil.show(content, getString(R.string.pull_to_refresh_network_error));
+                        pullListView.onPullUpRefreshComplete();
+                        pullListView.onPullDownRefreshComplete();
                     }
 
                     @Override

@@ -195,7 +195,7 @@
     <string name="pull_to_refresh_footer_hint_ready">松开载入更多</string>
     <string name="pull_to_refresh_refreshing_label_fan">@string/pull_to_refresh_header_hint_loading</string>
     <string name="no_more_data">@string/pushmsg_center_no_more_msg</string>
-    <string name="pull_to_refresh_network_error">网络不给力，请检查网络</string>
+    <string name="pull_to_refresh_network_error">网络异常，请稍候重试</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="about_text_line_1">NGAMEZONE是一个好玩的游戏下载平台。我们提供Android、iOS两种版本的客户端产品。</string>
     <string name="about_text_line_2">NGAMEZONE收集全球热门、好玩的游戏，每日推荐一些经过编辑独立评测的游戏，玩家在这里可以交流、分享，

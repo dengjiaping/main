@@ -4,12 +4,12 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <RelativeLayout
+    <cn.ngame.store.view.ReviewScoreView
+        android:id="@+id/review_scoreView"
+        layout="@layout/layout_review_score"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/red">
-
-    </RelativeLayout>
+     />
 
     <com.facebook.drawee.view.SimpleDraweeView
         xmlns:fresco="http://schemas.android.com/apk/res-auto"

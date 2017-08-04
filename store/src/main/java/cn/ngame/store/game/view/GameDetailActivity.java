@@ -59,6 +59,7 @@ import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.AutoHeightViewPager;
 import cn.ngame.store.view.GameLoadProgressBar;
+import cn.ngame.store.view.ReviewScoreView;
 import cn.ngame.store.view.StickyScrollView;
 
 import static cn.ngame.store.R.id.sdv_img;
@@ -97,6 +98,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private ImageView likeIv;
     private TextView feedbackTv;
     private TextView percentageTv;
+    private ReviewScoreView reviewScoreView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -393,6 +395,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         //填充对话框的布局
         View percentView = LayoutInflater.from(content).inflate(R.layout.layout_percentage_dialog, null);
         TextView toBindBt = (TextView) percentView.findViewById(R.id.title);
+        reviewScoreView = (ReviewScoreView) percentView.findViewById(R.id.review_scoreView);
+        reviewScoreView.setData(gameInfo);
         toBindBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -400,8 +404,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             }
         });
 
-
         Dialog mUnboundDialog = new Dialog(content);
+        mUnboundDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mUnboundDialog.setContentView(percentView);//将布局设置给Dialog
         Window dialogWindow = mUnboundDialog.getWindow(); //获取当前Activity所在的窗体
         //dialogWindow.setGravity(Gravity.CENTER);//设置Dialog从窗体顶部弹出
