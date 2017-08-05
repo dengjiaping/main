@@ -19,12 +19,12 @@ import cn.ngame.store.bean.QuestionResult;
  */
 public class ReviewScoreView extends LinearLayout {
 
-    private TextView tv_score, tv_total;
+    private TextView percentTv;
     private RatingBar ratingBar;
     private ProgressBar pb1, pb2, pb3, pb4, pb5;
-    private TextView tv_1, tv_2, tv_3, tv_4, tv_5;
 
     private List<QuestionResult> resultList;
+    private Context context;
 
 
     public ReviewScoreView(Context context) {
@@ -37,101 +37,57 @@ public class ReviewScoreView extends LinearLayout {
 
     public ReviewScoreView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
+        this.context = context;
         inflate(context, R.layout.layout_review_score, this);
-        tv_score = (TextView) findViewById(R.id.tv_score);
-        tv_total = (TextView) findViewById(R.id.tv_total);
-        ratingBar = (RatingBar) findViewById(R.id.rating_bar);
+        percentTv = (TextView) findViewById(R.id.tv_percent);
+        ratingBar = (RatingBar) findViewById(R.id.score_rating_bar);
 
         pb1 = (ProgressBar) findViewById(R.id.progressBar1);
         pb2 = (ProgressBar) findViewById(R.id.progressBar2);
         pb3 = (ProgressBar) findViewById(R.id.progressBar3);
         pb4 = (ProgressBar) findViewById(R.id.progressBar4);
         pb5 = (ProgressBar) findViewById(R.id.progressBar5);
-
-        tv_1 = (TextView) findViewById(R.id.text1);
-        tv_2 = (TextView) findViewById(R.id.text2);
-        tv_3 = (TextView) findViewById(R.id.text3);
-        tv_4 = (TextView) findViewById(R.id.text4);
-        tv_5 = (TextView) findViewById(R.id.text5);
-
-
     }
 
     public void setData(GameInfo gameInfo) {
+        if (null == gameInfo) {
+            return;
+        }
         this.resultList = gameInfo.questionResults;
-        int totalPeople = gameInfo.commentPeople;
+        int totalPeople = gameInfo.commentPeople;//总人数
         if (null == resultList) {
             return;
         }
-        for (QuestionResult qr : resultList) {
-
-            double commentPeople = qr.commentPeople;
-            double tempProcess = commentPeople / totalPeople * 100;
-            int process = (int) tempProcess;
-
-            switch (qr.itemId) {
-                case 5:
-                    if (qr.commentPeople != 0) {
-                        if (qr.commentPeople > 0) {
-                            tv_5.setText(qr.commentPeople + "");
-                        }
-                        pb5.setProgress(process);
-                    } else {
-                        tv_5.setText(0 + "");
-                        pb5.setProgress(0);
-                    }
-
-                    break;
-                case 4:
-                    if (qr.commentPeople != 0) {
-                        tv_4.setText(qr.commentPeople + "");
-                        pb4.setProgress(process);
-                    } else {
-                        tv_4.setText(0 + "");
-                        pb4.setProgress(0);
-                    }
-                    break;
-                case 3:
-                    if (qr.commentPeople != 0) {
-                        tv_3.setText(qr.commentPeople + "");
-                        pb3.setProgress(process);
-                    } else {
-                        tv_3.setText(0 + "");
-                        pb3.setProgress(0);
-                    }
+        int starType;
+        for (QuestionResult starItem : resultList) {
+            starType = starItem.itemId;//对应分数值 1/2/3/4/5
+            double starPeopleNum = starItem.commentPeople;//对应的人数
+            int process = (int) (starPeopleNum / totalPeople * 100);
+            switch (starType) {
+                case 1:
+                    pb1.setProgress(process);
                     break;
                 case 2:
-                    if (qr.commentPeople != 0) {
-                        tv_2.setText(qr.commentPeople + "");
-                        pb2.setProgress(process);
-                    } else {
-                        tv_2.setText(0 + "");
-                        pb2.setProgress(0);
-                    }
+                    pb2.setProgress(process);
                     break;
-                case 1:
-                    if (qr.commentPeople != 0) {
-                        tv_1.setText(qr.commentPeople + "");
-                        pb1.setProgress(process);
-                    } else {
-                        tv_1.setText(0 + "");
-                        pb1.setProgress(0);
-                    }
+                case 3:
+                    pb3.setProgress(process);
                     break;
+                case 4:
+                    pb4.setProgress(process);
+                    break;
+                case 5:  //5星
+                    pb5.setProgress(process);
+                    break;
+
             }
 
 
-            tv_total.setText(String.valueOf(totalPeople));
-
-            /*double tempTotalScore = Math.floor(totalScore/totalPeople);
-            ratingBar.setRating((int)tempTotalScore);
-            tv_score.setText((int)tempTotalScore+"分");*/
+            //总人数:totalPeople
         }
 
         ratingBar.setRating(gameInfo.percentage);
-        tv_score.setText(gameInfo.percentage + "分");
-
+        percentTv.setText(gameInfo.percentage + "");
     }
 
 

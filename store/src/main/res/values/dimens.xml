@@ -100,5 +100,9 @@
     <dimen name="popup_height">44dp</dimen>
     <dimen name="game_detail_feedback_bt_width">48dp</dimen>
     <dimen name="game_detail_feedback_bt_height">26dp</dimen>
+    <dimen name="percent_progress_bar_height">9dp</dimen>
+    <dimen name="percent_tag_tv_width">5dp</dimen>
+    <dimen name="dp_48">48dp</dimen>
 
+    <dimen name="percent_progress_bar_marginTop">2.5dp</dimen>
 </resources>

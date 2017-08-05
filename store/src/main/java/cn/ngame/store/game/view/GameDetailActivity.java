@@ -114,9 +114,9 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         //-----------------------------------------------------------------------------
 
         setContentView(R.layout.activity_game_detail);
-        gameId = getIntent().getLongExtra(KeyConstant.ID, 0);
+        gameId = getIntent().getLongExtra(KeyConstant.ID, 0L);
         content = this;
-        tabTextSize = CommonUtil.dip2px(content,16f);
+        tabTextSize = CommonUtil.dip2px(content, 16f);
 
         //初始化
         initStatus();
@@ -383,7 +383,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 case R.id.game_detail_percentage_tv:
                     String pwd = StoreApplication.passWord;
                     if ((pwd != null && !"".endsWith(pwd)) ||
-                            !Constant.PHONE.equals(StoreApplication.loginType)) {//已登录
+                            !Constant.PHONE.equals(StoreApplication.loginType)) {
+                        //已登录,评分框
                         showPercentDialog();
                     } else {//未登录
                         showUnLoginDialog();
@@ -397,10 +398,19 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     public void showPercentDialog() {
         //填充对话框的布局
         View percentView = LayoutInflater.from(content).inflate(R.layout.layout_percentage_dialog, null);
-        TextView toBindBt = (TextView) percentView.findViewById(R.id.title);
+
+        //用户头像+昵称
+        SimpleDraweeView iconIv = (SimpleDraweeView) percentView.findViewById(R.id.ic_percent_icon);
+        TextView nameTv = (TextView) percentView.findViewById(R.id.ic_percent_user_name);
+        iconIv.setImageURI(StoreApplication.userHeadUrl);
+        nameTv.setText(StoreApplication.nickName);
+
+        //进度条
         reviewScoreView = (ReviewScoreView) percentView.findViewById(R.id.review_scoreView);
         reviewScoreView.setData(gameInfo);
-        toBindBt.setOnClickListener(new View.OnClickListener() {
+
+        TextView sumbitTv = (TextView) percentView.findViewById(R.id.ic_percent_sumbit);
+        sumbitTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -411,9 +421,10 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         mUnboundDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mUnboundDialog.setContentView(percentView);//将布局设置给Dialog
         Window dialogWindow = mUnboundDialog.getWindow(); //获取当前Activity所在的窗体
+        dialogWindow.setBackgroundDrawableResource(R.color.transparent);
         //dialogWindow.setGravity(Gravity.CENTER);//设置Dialog从窗体顶部弹出
-        WindowManager.LayoutParams params = dialogWindow.getAttributes();   //获得窗体的属性
-        params.width = WindowManager.LayoutParams.MATCH_PARENT;//设置Dialog距离底部的距离
+        WindowManager.LayoutParams params = dialogWindow.getAttributes();
+        params.width = CommonUtil.dip2px(content, 250f);
         dialogWindow.setAttributes(params); //将属性设置给窗体
         if (content != null && !mUnboundDialog.isShowing()) {
             mUnboundDialog.show();//显示对话框

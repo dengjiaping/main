@@ -21,15 +21,19 @@
         <item name="android:minHeight">13dp</item>
         <item name="android:maxHeight">30dp</item>
     </style>
+    <style name="RatingBarSmall2" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_bar_small</item>
+        <item name="android:minWidth">5dp</item>
+        <item name="android:minHeight">13dp</item>
+        <item name="android:maxHeight">30dp</item>
+    </style>
 
     <style name="RatingBarBig" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/rating_bar_big</item>
-        <item name="android:minHeight">17dp</item>
-        <item name="android:maxHeight">35dp</item>
     </style>
 
     <!--<style name="CommentDetailRatingCount">-->
-    <!--<item name="android:progressDrawable">@drawable/comment_detail_rating_count</item>-->
+    <!--<item name="android:progressDrawable">@drawable/shape_circle_blue_in_white</item>-->
     <!--<item name="android:minHeight">17dp</item>-->
     <!--<item name="android:maxHeight">36dp</item>-->
     <!--</style>-->

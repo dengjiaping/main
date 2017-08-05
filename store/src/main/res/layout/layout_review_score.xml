@@ -1,256 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal"
+              android:paddingLeft="@dimen/dp_16"
+    >
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_marginBottom="@dimen/dp_6"
+        android:layout_marginTop="@dimen/dp_12"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_score"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:background="@drawable/comment_detail_rating_count"
+            android:id="@+id/tv_percent"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:background="@drawable/ic_percent"
             android:gravity="center"
-            android:layout_marginTop="15dp"
             android:layout_gravity="center"
-            android:text="0分"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_22"/>
 
         <RatingBar
-            android:id="@+id/rating_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:id="@+id/score_rating_bar"
             style="@style/RatingBarSmall"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:rating="0"
-            android:layout_marginTop="8dp"
-            android:layout_gravity="center" />
-
-        <TextView
-            android:id="@+id/tv_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:textSize="12dp"
-            android:textColor="@color/colorPrimary" />
-
+            android:layout_marginTop="@dimen/percent_progress_bar_marginTop"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:rating="0"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/content_wrapper"
         android:layout_width="0dp"
-        android:layout_weight="2"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/percent_progress_bar_height"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_marginTop="@dimen/dp_1"
+                android:layout_width="@dimen/percent_tag_tv_width"
                 android:layout_height="wrap_content"
-                android:textColor="@color/font_gray"
-                android:textSize="12dp"
-                android:text="5分"
-                android:layout_gravity="center"
-                android:gravity="center" />
+                android:text="5"
+                android:textColor="@color/color_808080"
+                android:textSize="@dimen/dp_8"/>
+
+            <ImageView
+                android:layout_width="@dimen/percent_progress_bar_height"
+                android:layout_height="@dimen/percent_progress_bar_height"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerInside"
+                android:src="@drawable/star_small_normal"/>
 
             <ProgressBar
                 android:id="@+id/progressBar5"
+                style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="14dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
+                android:layout_height="@dimen/percent_progress_bar_height"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_4"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:max="100"
                 android:progress="0"
-                android:progressDrawable="@drawable/progressbar_comentitem_color"
-                style="?android:attr/progressBarStyleHorizontal"/>
-
-            <TextView
-                android:id="@+id/text5"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textColor="@color/font_gray"
-                android:textSize="12dp"
-                android:text="0"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"/>
+                android:progressDrawable="@drawable/progressbar_comentitem_color"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_height="@dimen/percent_progress_bar_height"
+            android:layout_marginTop="@dimen/percent_progress_bar_marginTop"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="@dimen/percent_tag_tv_width"
                 android:layout_height="wrap_content"
-                android:textColor="@color/font_gray"
-                android:textSize="12dp"
-                android:text="4分"
-                android:layout_gravity="center"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="4"
+                android:textColor="@color/color_808080"
+                android:textSize="@dimen/dp_8"/>
 
+            <ImageView
+                android:layout_width="@dimen/percent_progress_bar_height"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerInside"
+                android:src="@drawable/star_small_normal"/>
             <ProgressBar
                 android:id="@+id/progressBar4"
+                style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="14dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
+                android:layout_height="@dimen/percent_progress_bar_height"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_4"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:max="100"
                 android:progress="0"
-                android:progressDrawable="@drawable/progressbar_comentitem_color"
-                style="?android:attr/progressBarStyleHorizontal"/>
-
-            <TextView
-                android:id="@+id/text4"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textColor="@color/font_gray"
-                android:textSize="12dp"
-                android:text="0"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"/>
+                android:progressDrawable="@drawable/progressbar_comentitem_color"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_height="@dimen/percent_progress_bar_height"
+            android:layout_marginTop="@dimen/percent_progress_bar_marginTop"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="@dimen/percent_tag_tv_width"
                 android:layout_height="wrap_content"
-                android:textColor="@color/font_gray"
-                android:textSize="12dp"
-                android:text="3分"
-                android:layout_gravity="center"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="3"
+                android:textColor="@color/color_808080"
+                android:textSize="@dimen/dp_8"/>
+
+            <ImageView
+                android:layout_width="@dimen/percent_progress_bar_height"
+                android:layout_height="@dimen/percent_progress_bar_height"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerInside"
+                android:src="@drawable/star_small_normal"/>
 
             <ProgressBar
                 android:id="@+id/progressBar3"
+                style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="14dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
+                android:layout_height="@dimen/percent_progress_bar_height"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_4"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:max="100"
                 android:progress="0"
-                android:progressDrawable="@drawable/progressbar_comentitem_color"
-                style="?android:attr/progressBarStyleHorizontal"/>
-
-            <TextView
-                android:id="@+id/text3"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textColor="@color/font_gray"
-                android:textSize="12dp"
-                android:text="0"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"/>
+                android:progressDrawable="@drawable/progressbar_comentitem_color"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_height="@dimen/percent_progress_bar_height"
+            android:layout_marginTop="@dimen/percent_progress_bar_marginTop"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="@dimen/percent_tag_tv_width"
                 android:layout_height="wrap_content"
-                android:textColor="@color/font_gray"
-                android:textSize="12dp"
-                android:text="2分"
-                android:layout_gravity="center"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="2"
+                android:textColor="@color/color_808080"
+                android:textSize="@dimen/dp_8"/>
+
+            <ImageView
+                android:layout_width="@dimen/percent_progress_bar_height"
+                android:layout_height="@dimen/percent_progress_bar_height"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerInside"
+                android:src="@drawable/star_small_normal"/>
 
             <ProgressBar
                 android:id="@+id/progressBar2"
+                style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="14dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
+                android:layout_height="@dimen/percent_progress_bar_height"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_4"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:max="100"
                 android:progress="0"
-                android:progressDrawable="@drawable/progressbar_comentitem_color"
-                style="?android:attr/progressBarStyleHorizontal"/>
-
-            <TextView
-                android:id="@+id/text2"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textColor="@color/font_gray"
-                android:textSize="12dp"
-                android:text="0"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"/>
+                android:progressDrawable="@drawable/progressbar_comentitem_color"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_height="@dimen/percent_progress_bar_height"
+            android:layout_marginTop="@dimen/percent_progress_bar_marginTop"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="@dimen/percent_tag_tv_width"
                 android:layout_height="wrap_content"
-                android:textColor="@color/font_gray"
-                android:textSize="12dp"
-                android:text="1分"
-                android:layout_gravity="center"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/color_808080"
+                android:textSize="@dimen/dp_8"/>
+
+            <ImageView
+                android:layout_width="@dimen/percent_progress_bar_height"
+                android:layout_height="@dimen/percent_progress_bar_height"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerInside"
+                android:src="@drawable/star_small_normal"/>
 
             <ProgressBar
                 android:id="@+id/progressBar1"
+                style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="14dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
+                android:layout_height="@dimen/percent_progress_bar_height"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_4"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:max="100"
                 android:progress="0"
-                android:progressDrawable="@drawable/progressbar_comentitem_color"
-                style="?android:attr/progressBarStyleHorizontal"/>
-
-            <TextView
-                android:id="@+id/text1"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textColor="@color/font_gray"
-                android:textSize="12dp"
-                android:text="0"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"/>
+                android:progressDrawable="@drawable/progressbar_comentitem_color"/>
         </LinearLayout>
 
     </LinearLayout>

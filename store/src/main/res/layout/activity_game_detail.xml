@@ -264,7 +264,7 @@
                     android:layout_height="@dimen/dp_50"
                     android:layout_alignParentRight="true"
                     android:layout_toRightOf="@+id/rating_bar"
-                    android:background="@drawable/ic_pingfen"
+                    android:background="@drawable/ic_percent"
                     android:gravity="center"
                     android:text=""
                     android:textColor="@color/fefefe"
