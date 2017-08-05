@@ -48,7 +48,8 @@ public class AllTagListActivity extends BaseFgActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_singe_item_list);
-        content=this;
+        content = this;
+        Intent intent = getIntent();
         Button backBt = (Button) findViewById(R.id.left_bt);
         backBt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +57,7 @@ public class AllTagListActivity extends BaseFgActivity {
                 finish();
             }
         });
-        backBt.setText("的标签");
+        backBt.setText(intent.getStringExtra(KeyConstant.game_Name) + "的标签");
         TextView centerTv = (TextView) findViewById(R.id.center_tv);
         centerTv.setVisibility(View.INVISIBLE);
 
@@ -90,6 +91,7 @@ public class AllTagListActivity extends BaseFgActivity {
             public ViewHolder(View arg0) {
                 super(arg0);
             }
+
             TextView mTxt;
         }
 

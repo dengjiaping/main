@@ -148,6 +148,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
 
 
         });
+        dialogHelper = new DialogHelper(getSupportFragmentManager(),mContext);
     }
 
     @Override
@@ -161,7 +162,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     @Override
     protected void onResume() {
         super.onResume();
-        dialogHelper = new DialogHelper(getSupportFragmentManager(),mContext);
         mShareAPI = UMShareAPI.get(this);
         findViewById(R.id.left_bt).setOnClickListener(new View.OnClickListener() {
             @Override

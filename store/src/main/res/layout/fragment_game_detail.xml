@@ -12,86 +12,89 @@
         android:layout_height="@dimen/dp_46"
         android:gravity="center_vertical"
         android:lines="1"
-        android:paddingLeft="@dimen/dp_20"
         android:paddingBottom="@dimen/dp_2"
+        android:paddingLeft="@dimen/dp_20"
         >
 
         <TextView
-            android:id="@+id/classify_item_tip_tv_01"
+            android:id="@+id/tag_tv_01"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_corner4dp_white_4cc7fc"
             android:gravity="center"
             android:maxLines="1"
             android:paddingBottom="@dimen/dp_3"
-            android:paddingLeft="@dimen/dp_9"
-            android:paddingRight="@dimen/dp_9"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
             android:paddingTop="@dimen/dp_3"
             android:text="中文"
             android:textColor="@color/color_128fc4"
             />
 
         <TextView
-            android:id="@+id/classify_item_tip_tv_02"
+            android:id="@+id/tag_tv_02"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_12"
             android:background="@drawable/shape_corner4dp_white_4cc7fc"
             android:gravity="center"
             android:maxLines="1"
-            android:layout_marginLeft="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_3"
-            android:paddingLeft="@dimen/dp_9"
-            android:paddingRight="@dimen/dp_9"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
             android:paddingTop="@dimen/dp_3"
             android:text="角色"
             android:textColor="@color/color_128fc4"
             />
 
         <TextView
-            android:id="@+id/classify_item_tip_tv_03"
+            android:id="@+id/tag_tv_03"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_12"
             android:background="@drawable/shape_corner4dp_white_4cc7fc"
             android:gravity="center"
             android:maxLines="1"
-            android:layout_marginLeft="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_3"
-            android:paddingLeft="@dimen/dp_9"
-            android:paddingRight="@dimen/dp_9"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
             android:paddingTop="@dimen/dp_3"
             android:text="冒险"
             android:textColor="@color/color_128fc4"
             />
 
         <TextView
-            android:id="@+id/classify_item_tip_tv_04"
+            android:id="@+id/tag_tv_04"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_12"
             android:background="@drawable/shape_corner4dp_white_4cc7fc"
             android:gravity="center"
             android:maxLines="1"
-            android:layout_marginLeft="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_3"
-            android:paddingLeft="@dimen/dp_9"
-            android:paddingRight="@dimen/dp_9"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
             android:paddingTop="@dimen/dp_3"
             android:text="动作"
             android:textColor="@color/color_128fc4"
             />
+        <!--
+         <View
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"/>-->
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-
-        <ImageView
+        <Button
             android:id="@+id/game_detail_next_bt"
-            android:scaleType="centerInside"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:paddingLeft="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_weight="1"
+            android:background="@null"
+            android:drawableRight="@drawable/ic_right_next"
+            android:paddingLeft="@dimen/dp_30"
             android:paddingRight="@dimen/dp_20"
-            android:src="@drawable/ic_right_next"/>
+            android:scaleType="centerInside"/>
     </LinearLayout>
 
     <HorizontalScrollView
@@ -144,8 +147,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp_10"
         android:layout_marginLeft="@dimen/dp_20"
-        android:text="暂无"
         android:layout_marginRight="@dimen/dp_28"
+        android:text="暂无"
         android:textColor="@color/font_black_6"
         android:textSize="@dimen/dp_14"/>
 

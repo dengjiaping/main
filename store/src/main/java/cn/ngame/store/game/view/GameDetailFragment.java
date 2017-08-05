@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,6 +25,7 @@ import cn.ngame.store.R;
 import cn.ngame.store.bean.GameImage;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.core.utils.CommonUtil;
+import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.fragment.ImageDialogFragment;
@@ -46,13 +47,15 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
     private GameInfo gameInfo;
     private TextView tv_summary, tv_version, tv_time, tv_company, tv_show_all;
     private LinearLayout img_container;
-    private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    ArrayList<String> imgs = new ArrayList<String>();
+    private DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    private ArrayList<String> imgs = new ArrayList<String>();
+    private ArrayList<TextView> tagTvList = new ArrayList<>();
     boolean flag1 = true;
     HomeFragmentChangeLayoutListener listener;
     private TextView tv_download_count;
     private TextView tv_game_size;
-    private ImageView itemAllNext;
+    private Button itemAllNext;
+    private TextView tagTv01, tagTv02, tagTv03, tagTv04;
 
     public static GameDetailFragment newInstance(GameInfo gameInfo) {
         GameDetailFragment fragment = new GameDetailFragment();
@@ -80,11 +83,23 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
         tv_game_size = (TextView) view.findViewById(R.id.game_size_tv);
         tv_time = (TextView) view.findViewById(R.id.text);
         tv_company = (TextView) view.findViewById(R.id.tv_company);
+
         tv_show_all = (TextView) view.findViewById(R.id.tv_show_all);
-        itemAllNext = (ImageView) view.findViewById(R.id.game_detail_next_bt);
+        itemAllNext = (Button) view.findViewById(R.id.game_detail_next_bt);
         img_container = (LinearLayout) view.findViewById(R.id.img_container);
         ll_detail = (LinearLayout) view.findViewById(R.id.ll_detail);
 
+        tagTv01 = (TextView) view.findViewById(R.id.tag_tv_01);
+        tagTv02 = (TextView) view.findViewById(R.id.tag_tv_02);
+        tagTv03 = (TextView) view.findViewById(R.id.tag_tv_03);
+        tagTv04 = (TextView) view.findViewById(R.id.tag_tv_04);
+        tagTvList.add(tagTv01);
+        tagTvList.add(tagTv02);
+        tagTvList.add(tagTv03);
+        tagTvList.add(tagTv04);
+        for (TextView tagTv : tagTvList) {
+            tagTv.setOnClickListener(this);
+        }
         itemAllNext.setOnClickListener(this);
         tv_show_all.setOnClickListener(this);
         if (gameInfo != null && gameInfo.gameDetailsImages != null && gameInfo.gameDetailsImages.size() > 0) {
@@ -192,6 +207,8 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+        Intent i = new Intent();
+        i.setClass(context, GameListActivity.class);
         switch (v.getId()) {
             case R.id.tv_show_all:
                 if (flag1) {
@@ -204,8 +221,31 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                     tv_summary.setMaxLines(5);
                 }
                 break;
+            //所有标签页面
             case R.id.game_detail_next_bt:
-                startActivity(new Intent(context, AllTagListActivity.class));
+                Intent intent = new Intent(context, AllTagListActivity.class);
+                intent.putExtra(KeyConstant.game_Name, gameInfo.gameName);
+                startActivity(intent);
+                break;
+            case R.id.tag_tv_01:
+                i.putExtra(KeyConstant.ID, 369 + "");
+                i.putExtra(KeyConstant.TITLE, tagTv01.getText().toString());
+                startActivity(i);
+                break;
+            case R.id.tag_tv_02:
+                i.putExtra(KeyConstant.ID, 369 + "");
+                i.putExtra(KeyConstant.TITLE, tagTv02.getText().toString());
+                startActivity(i);
+                break;
+            case R.id.tag_tv_03:
+                i.putExtra(KeyConstant.ID, 369 + "");
+                i.putExtra(KeyConstant.TITLE, tagTv03.getText().toString());
+                startActivity(i);
+                break;
+            case R.id.tag_tv_04:
+                i.putExtra(KeyConstant.ID, 369 + "");
+                i.putExtra(KeyConstant.TITLE, tagTv04.getText().toString());
+                startActivity(i);
                 break;
         }
     }
