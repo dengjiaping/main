@@ -99,6 +99,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private TextView feedbackTv;
     private TextView percentageTv;
     private ReviewScoreView reviewScoreView;
+    private float tabTextSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +116,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         setContentView(R.layout.activity_game_detail);
         gameId = getIntent().getLongExtra(KeyConstant.ID, 0);
         content = this;
+        tabTextSize = CommonUtil.dip2px(content,16f);
 
         //初始化
         initStatus();
@@ -210,7 +212,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                     //设置ViewPager
                     fragments = new ArrayList<>();
                     fragments.add(GameDetailFragment.newInstance(gameInfo));
-                    fragments.add(GameStrategyFragment.newInstance(gameInfo));
+                    fragments.add(GameReadFragment.newInstance(gameInfo));
 
                     adapter.setList(fragments, tabList);
                     viewpager.setAdapter(adapter);
@@ -245,6 +247,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
 
     private void initViewPager() {
         fragments = new ArrayList<>();
+        fragments.add(GameDetailFragment.newInstance(gameInfo));
+        fragments.add(GameReadFragment.newInstance(gameInfo));
         adapter = new DCViewPagerAdapter(getSupportFragmentManager(), fragments, tabList);//getChildFragmentManager()
         viewpager.setAdapter(adapter);
     }
@@ -254,7 +258,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         tablayout.setTabMode(TabLayout.MODE_FIXED); //固定模式
         tablayout.setTabGravity(TabLayout.GRAVITY_FILL);
         final ViewGroup viewGroup = (ViewGroup) tablayout.getChildAt(0);
-        final int dp18 = CommonUtil.dip2px(content, 18);
 /*        //中间加分隔线
         for (int i = 0; i < viewGroup.getChildCount(); i++) {
             ViewGroup view = (ViewGroup) viewGroup.getChildAt(i);
@@ -276,8 +279,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 Log.d("666", "onTabSelected: " + position);
                 ViewGroup view = (ViewGroup) viewGroup.getChildAt(position);
                 TextView textView = (TextView) view.getChildAt(1);
-                textView.setTextSize(dp18);
                 Paint paint = textView.getPaint();
+                //paint.setTextSize(tabTextSize);
                 paint.setAntiAlias(true);//抗锯齿
                 paint.setUnderlineText(true);
                 viewpager.setCurrentItem(position);
@@ -289,8 +292,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 Log.d("666", "onTabSelected: " + position);
                 ViewGroup view = (ViewGroup) viewGroup.getChildAt(position);
                 TextView textView = (TextView) view.getChildAt(1);
-                textView.setTextSize(dp18);
                 Paint paint = textView.getPaint();
+                //paint.setTextSize(tabTextSize);
                 paint.setAntiAlias(true);//抗锯齿
                 paint.setUnderlineText(false);
                 viewpager.setCurrentItem(position);

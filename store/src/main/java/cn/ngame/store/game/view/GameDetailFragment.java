@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -51,6 +52,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
     HomeFragmentChangeLayoutListener listener;
     private TextView tv_download_count;
     private TextView tv_game_size;
+    private ImageView itemAllNext;
 
     public static GameDetailFragment newInstance(GameInfo gameInfo) {
         GameDetailFragment fragment = new GameDetailFragment();
@@ -79,8 +81,11 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
         tv_time = (TextView) view.findViewById(R.id.text);
         tv_company = (TextView) view.findViewById(R.id.tv_company);
         tv_show_all = (TextView) view.findViewById(R.id.tv_show_all);
+        itemAllNext = (ImageView) view.findViewById(R.id.game_detail_next_bt);
         img_container = (LinearLayout) view.findViewById(R.id.img_container);
         ll_detail = (LinearLayout) view.findViewById(R.id.ll_detail);
+
+        itemAllNext.setOnClickListener(this);
         tv_show_all.setOnClickListener(this);
         if (gameInfo != null && gameInfo.gameDetailsImages != null && gameInfo.gameDetailsImages.size() > 0) {
             img_container.removeAllViews();
@@ -173,7 +178,6 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
      * 加载大图片
      */
     private void imageEnlarge() {
-
         FragmentManager fm = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         Fragment prev = fm.findFragmentByTag("imageDialog");
@@ -194,13 +198,14 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                     flag1 = false;
                     tv_show_all.setText("收起");
                     tv_summary.setSingleLine(false);
-//                    listener.changeLayoutHeight(ll_detail.getMeasuredHeight());
                 } else {
                     flag1 = true;
                     tv_show_all.setText("显示全部");
                     tv_summary.setMaxLines(5);
-//                    listener.changeLayoutHeight(ll_detail.getMeasuredHeight());
                 }
+                break;
+            case R.id.game_detail_next_bt:
+                startActivity(new Intent(context, AllTagListActivity.class));
                 break;
         }
     }

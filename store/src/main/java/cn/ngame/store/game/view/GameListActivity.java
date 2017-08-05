@@ -35,7 +35,7 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 
 /**
- * 显示VR游戏列表的页面
+ * 游戏列表
  * Created by zeng on 2016/6/16.
  */
 public class GameListActivity extends BaseFgActivity {

@@ -29,19 +29,19 @@ import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.bean.GameStrategy;
 
 /**
- * 显示游戏攻略的Fragment
+ * 必读
  *
  * @author zeng
  * @since 2016/12/15
  */
-public class GameStrategyFragment extends Fragment {
+public class GameReadFragment extends Fragment {
 
-    public static final String TAG = GameStrategyFragment.class.getSimpleName();
+    public static final String TAG = GameReadFragment.class.getSimpleName();
 
-    private static GameStrategyFragment gameStrategyFragment = null;
+    private static GameReadFragment gameStrategyFragment = null;
 
-    public static GameStrategyFragment newInstance(GameInfo gameInfo) {
-        GameStrategyFragment fragment = new GameStrategyFragment();
+    public static GameReadFragment newInstance(GameInfo gameInfo) {
+        GameReadFragment fragment = new GameReadFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(GameInfo.TAG, gameInfo);
         fragment.setArguments(bundle);
@@ -69,10 +69,11 @@ public class GameStrategyFragment extends Fragment {
 
         tv_content = (TextView) rootLayout.findViewById(R.id.tv_summary);
 
-        if (gameInfo != null && gameInfo.gameStrategy != null)
+        if (gameInfo != null && gameInfo.gameStrategy != null) {
             tv_content.setText(gameInfo.gameStrategy.getStrategyContent());
+            getContent();
+        }
 
-        getContent();
 
         return rootLayout;
     }

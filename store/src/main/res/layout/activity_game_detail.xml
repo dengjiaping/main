@@ -215,7 +215,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/count_end"
                     android:layout_toRightOf="@id/count_end"
-                    android:text=""
+                    android:text="0KB"
                     android:textColor="@color/b3"
                     android:textSize="@dimen/dp_10"/>
                 <!--下载按钮-->

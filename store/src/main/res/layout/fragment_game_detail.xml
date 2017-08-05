@@ -29,7 +29,6 @@
             android:paddingTop="@dimen/dp_3"
             android:text="中文"
             android:textColor="@color/color_128fc4"
-            android:textSize="@dimen/dp_16"
             />
 
         <TextView
@@ -46,7 +45,6 @@
             android:paddingTop="@dimen/dp_3"
             android:text="角色"
             android:textColor="@color/color_128fc4"
-            android:textSize="@dimen/dp_16"
             />
 
         <TextView
@@ -63,7 +61,6 @@
             android:paddingTop="@dimen/dp_3"
             android:text="冒险"
             android:textColor="@color/color_128fc4"
-            android:textSize="@dimen/dp_16"
             />
 
         <TextView
@@ -80,7 +77,6 @@
             android:paddingTop="@dimen/dp_3"
             android:text="动作"
             android:textColor="@color/color_128fc4"
-            android:textSize="@dimen/dp_16"
             />
 
         <View
@@ -91,11 +87,11 @@
         <ImageView
             android:id="@+id/game_detail_next_bt"
             android:scaleType="centerInside"
-            android:layout_width="42dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/dp_10"
             android:paddingRight="@dimen/dp_20"
-            android:src="@drawable/ic_next"/>
+            android:src="@drawable/ic_right_next"/>
     </LinearLayout>
 
     <HorizontalScrollView
@@ -148,6 +144,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp_10"
         android:layout_marginLeft="@dimen/dp_20"
+        android:text="暂无"
         android:layout_marginRight="@dimen/dp_28"
         android:textColor="@color/font_black_6"
         android:textSize="@dimen/dp_14"/>
@@ -300,7 +297,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_10"
-            android:text="1.0"
+            android:text="@string/unkonw"
             android:textColor="@color/font_333"
             android:textSize="@dimen/dp_14"/>
 
@@ -348,7 +345,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_10"
-            android:text="1.0"
+            android:text="@string/unkonw"
             android:textColor="@color/font_333"
             android:textSize="@dimen/dp_14"/>
 
@@ -372,7 +369,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_10"
-            android:text=""
+            android:text="不详"
             android:textColor="@color/color_2cbffe"
             android:textSize="@dimen/dp_14"/>
 
