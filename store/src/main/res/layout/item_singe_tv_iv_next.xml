@@ -23,7 +23,7 @@
         android:layout_centerVertical="true"
         android:paddingLeft="@dimen/dp_20"
         android:text="我"
-        android:textColor="@color/font_333"
+        android:textColor="@color/color_333333"
         android:textSize="16dp"/>
 
     <ImageView

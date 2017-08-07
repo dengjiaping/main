@@ -134,7 +134,7 @@
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
                 android:text="推荐"
-                android:textColor="@color/font_333"
+                android:textColor="@color/color_333333"
                 android:textSize="11sp"/>
         </LinearLayout>
 
@@ -165,7 +165,7 @@
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
                 android:text="排行"
-                android:textColor="@color/font_333"
+                android:textColor="@color/color_333333"
                 android:textSize="11sp"/>
         </LinearLayout>
         <!--
@@ -207,7 +207,7 @@
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
                 android:text="发现"
-                android:textColor="@color/font_333"
+                android:textColor="@color/color_333333"
                 android:textSize="11sp"/>
         </LinearLayout>
 
@@ -238,7 +238,7 @@
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
                 android:text="管理"
-                android:textColor="@color/font_333"
+                android:textColor="@color/color_333333"
                 android:textSize="11sp"/>
         </LinearLayout>
     </LinearLayout>

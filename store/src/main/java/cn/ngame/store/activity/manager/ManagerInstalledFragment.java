@@ -1,6 +1,7 @@
 package cn.ngame.store.activity.manager;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -14,6 +15,7 @@ import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
+import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.view.ActionItem;
 import cn.ngame.store.view.QuickAction;
 
@@ -38,6 +40,7 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
      */
     private int itemType;
     private int itemPosition;
+    private FragmentActivity content;
 
     public static ManagerInstalledFragment newInstance(String type, int arg) {
         ManagerInstalledFragment fragment = new ManagerInstalledFragment();
@@ -55,6 +58,7 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
 
     @Override
     protected void initViewsAndEvents(View view) {
+        content = getActivity();
         typeValue = getArguments().getInt("typeValue", 1);
         type = getArguments().getString("type");
 
@@ -67,6 +71,7 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     }
 
     public void initListView() {
+        final int screenWidth = ImageUtil.getScreenWidth(content);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -76,9 +81,9 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
                 mItemClickQuickAction.show(view);
             }
         });
-        alreadyLvAdapter = new GameDownload2Adapter(getActivity(), getSupportFragmentManager());
+        alreadyLvAdapter = new GameDownload2Adapter(content, getSupportFragmentManager());
         listView.setAdapter(alreadyLvAdapter);
-        fileLoad = FileLoadManager.getInstance(getActivity());
+        fileLoad = FileLoadManager.getInstance(content);
     }
 
     @Override
@@ -91,10 +96,9 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
 
     private void initPop(final int typeValue) {
         // 设置Action
-        mItemClickQuickAction = new QuickAction(getActivity(), QuickAction.VERTICAL);
+        mItemClickQuickAction = new QuickAction(content, QuickAction.VERTICAL);
         ActionItem pointItem = new ActionItem(1, "删除任务", null);
         mItemClickQuickAction.addActionItem(pointItem);
-
         mItemClickQuickAction.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
             @Override
             public void onItemClick(QuickAction source, int pos, int actionId) {

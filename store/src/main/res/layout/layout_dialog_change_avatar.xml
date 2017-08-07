@@ -62,7 +62,7 @@
         android:background="@drawable/selector_item_bg"
         android:gravity="center"
         android:text="取消"
-        android:textColor="@color/font_333"
+        android:textColor="@color/color_333333"
         android:textSize="@dimen/dp_16"
         />
 </LinearLayout>

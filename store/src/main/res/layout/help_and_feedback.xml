@@ -103,7 +103,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="手柄介绍"
-                        android:textColor="@color/font_333"
+                        android:textColor="@color/color_333333"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -127,7 +127,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="设备连接"
-                        android:textColor="@color/font_333"
+                        android:textColor="@color/color_333333"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -151,7 +151,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="APP使用"
-                        android:textColor="@color/font_333"
+                        android:textColor="@color/color_333333"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -176,7 +176,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="其他问题"
-                        android:textColor="@color/font_333"
+                        android:textColor="@color/color_333333"
                         android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>

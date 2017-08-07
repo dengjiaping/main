@@ -62,7 +62,7 @@ public class ManagerFragment extends BaseSearchFragment {
         //viewpager每次切换的时候， 会重新创建当前界面及左右界面三个界面， 每次切换都要重新oncreate,
         // 表示三个界面之间来回切换都不会重新加载
         //viewpager.setOffscreenPageLimit(0);
-        // setTabViewPagerData();
+        setTabViewPagerData();
     }
 
 

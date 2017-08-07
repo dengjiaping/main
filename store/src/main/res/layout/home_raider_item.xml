@@ -51,7 +51,7 @@
                     android:paddingRight="8dp"
                     android:paddingTop="2dp"
                     android:text="tv_type"
-                    android:textColor="@color/font_333"
+                    android:textColor="@color/color_333333"
                     android:textSize="12sp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true" />
@@ -65,7 +65,7 @@
                 android:lineSpacingExtra="2dp"
                 android:maxLines="3"
                 android:text="tv_content"
-                android:textColor="@color/font_333"
+                android:textColor="@color/color_333333"
                 android:textSize="13sp" />
         </LinearLayout>
 

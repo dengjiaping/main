@@ -189,7 +189,7 @@
             android:paddingLeft="@dimen/dp_10"
             android:paddingTop="@dimen/dp_8"
             android:text="专题"
-            android:textColor="@color/font_333"
+            android:textColor="@color/color_333333"
             android:textSize="@dimen/dp_16"/>
 
         <TextView
