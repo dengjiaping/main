@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +43,7 @@ import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.gamehub.AppCarouselClient;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -159,10 +162,19 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private TextView mEditProfileTv;
+    private RelativeLayout rl_top;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //........ ....................通知栏...................
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(true);
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(R.color.colorPrimary);
+        }
+        //-----------------------------------------------------------------------------
         setContentView(R.layout.main_home_activity);
         //首页弹出广告dialog
         showAdverDialog();
@@ -184,6 +196,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 //        viewPager.setOffscreenPageLimit(5);
 
         //初始化底部菜单控件
+   /*     rl_top = (RelativeLayout) findViewById(R.id.main_home_title_rlay);
+        rl_top.setBackgroundResource(R.color.transparent);
+        int statusBarHeight = ImageUtil.getStatusBarHeight(context);
+        rl_top.setPadding(0, statusBarHeight, 0, 0);*/
         home = (LinearLayout) findViewById(R.id.menu_home_layout);
         game = (LinearLayout) findViewById(R.id.menu_game_ll);
         //menu_game_hub = (LinearLayout) findViewById(R.id.menu_game_hub);圈子

@@ -63,10 +63,10 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/dm024"
         android:layout_marginTop="@dimen/dm024"
-        android:clickable="true"
         android:background="@drawable/shape_corner12px_43b9ff"
+        android:clickable="true"
         android:gravity="center"
-        android:text="评分"
+        android:text="@string/to_precent"
         android:textColor="@color/white"
         android:textSize="@dimen/dm027"/>
 </LinearLayout>

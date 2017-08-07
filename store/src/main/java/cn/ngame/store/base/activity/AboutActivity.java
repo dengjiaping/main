@@ -90,7 +90,7 @@ public class AboutActivity extends BaseFgActivity {
         });
 
         tv_version = (TextView) findViewById(R.id.text1);
-        tv_version.setText("Ngame "+CommonUtil.getVersionName(this));
+        tv_version.setText(CommonUtil.getVersionName(this));
 
         fileLoad = FileLoadManager.getInstance(this);
     }
@@ -110,18 +110,19 @@ public class AboutActivity extends BaseFgActivity {
 
     /**
      * 处理检测更新按钮点击事件
+     *
      * @param view 被点击的按钮
      */
-    public void onUpdateClick(View view){
+    public void onUpdateClick(View view) {
 
-        if(isChecking){
+        if (isChecking) {
             return;
         }
 
-        if(isDownloading){
-            if(isRunningBackground){
-                Toast.makeText(AboutActivity.this,"正在后台为您更新！",Toast.LENGTH_SHORT).show();
-            }else {
+        if (isDownloading) {
+            if (isRunningBackground) {
+                Toast.makeText(AboutActivity.this, "正在后台为您更新！", Toast.LENGTH_SHORT).show();
+            } else {
                 showProgressDialog();
             }
             return;
@@ -132,17 +133,19 @@ public class AboutActivity extends BaseFgActivity {
             @Override
             public void onResponse(JsonResult<VersionInfo> result) {
 
-                if(result == null || result.code != 0){
+                if (result == null || result.code != 0) {
                     isChecking = false;
                     return;
                 }
 
                 versionInfo = result.data;
-                if(versionInfo != null){
+                if (versionInfo != null) {
                     //如果后台正在升级，则直接显示进度框
-                    GameFileStatus downloadFileInfo = fileLoad.getGameFileLoadStatus(versionInfo.fileName,versionInfo.url,versionInfo.packageName,versionInfo.versionCode);
-                    if(downloadFileInfo != null){
-                        if(downloadFileInfo.getStatus() == GameFileStatus.STATE_DOWNLOAD || downloadFileInfo.getStatus() == GameFileStatus.STATE_PAUSE){
+                    GameFileStatus downloadFileInfo = fileLoad.getGameFileLoadStatus(versionInfo.fileName, versionInfo.url,
+                            versionInfo.packageName, versionInfo.versionCode);
+                    if (downloadFileInfo != null) {
+                        if (downloadFileInfo.getStatus() == GameFileStatus.STATE_DOWNLOAD || downloadFileInfo.getStatus() ==
+                                GameFileStatus.STATE_PAUSE) {
 
                             showProgressDialog();
                             doUpdateUi();
@@ -153,15 +156,15 @@ public class AboutActivity extends BaseFgActivity {
 
                     //判读是否需要更新
                     int localVersion = CommonUtil.getVersionCode(context);
-                    if(localVersion < versionInfo.versionCode){
+                    if (localVersion < versionInfo.versionCode) {
                         showUpdateDialog();
                         CommonUtil.verifyStoragePermissions(AboutActivity.this); //申请读写SD卡权限
-                    }else {
-                        Toast.makeText(context,"当前已是最新版本",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "当前已是最新版本", Toast.LENGTH_SHORT).show();
                     }
-                }else {
-                    Toast.makeText(context,"检测失败：服务端异常！",Toast.LENGTH_SHORT).show();
-                    Log.d(TAG,"HTTP请求成功：服务端返回错误！");
+                } else {
+                    Toast.makeText(context, "检测失败：服务端异常！", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "HTTP请求成功：服务端返回错误！");
                 }
                 isChecking = false;
             }
@@ -171,18 +174,19 @@ public class AboutActivity extends BaseFgActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                Toast.makeText(context,"检测失败，请检查网络连接!",Toast.LENGTH_SHORT).show();
-                Log.d(TAG,"HTTP请求失败：网络连接错误！");
+                Toast.makeText(context, "检测失败，请检查网络连接!", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "HTTP请求失败：网络连接错误！");
                 isChecking = false;
             }
         };
 
-        Request<JsonResult<VersionInfo>> versionRequest = new GsonRequest<JsonResult<VersionInfo>>(Request.Method.POST,url,
-                successListener,errorListener,new TypeToken<JsonResult<VersionInfo>>(){}.getType()){
+        Request<JsonResult<VersionInfo>> versionRequest = new GsonRequest<JsonResult<VersionInfo>>(Request.Method.POST, url,
+                successListener, errorListener, new TypeToken<JsonResult<VersionInfo>>() {
+        }.getType()) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
-                params.put("appType","0");
+                Map<String, String> params = new HashMap<>();
+                params.put("appType", "0");
                 return params;
             }
         };
@@ -193,7 +197,7 @@ public class AboutActivity extends BaseFgActivity {
     /**
      * 显示更新对话框
      */
-    private void showUpdateDialog(){
+    private void showUpdateDialog() {
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment prev = getSupportFragmentManager().findFragmentByTag("updateDialog");
@@ -208,9 +212,9 @@ public class AboutActivity extends BaseFgActivity {
         dialogFragment.setDialogWidth(250);
 
         LayoutInflater inflater = getLayoutInflater();
-        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_update,null);
+        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_update, null);
         TextView tv_title = (TextView) contentView.findViewById(R.id.tv_title);
-        tv_title.setText("发现新版本："+versionInfo.versionName);
+        tv_title.setText("发现新版本：" + versionInfo.versionName);
         TextView tv_summary = (TextView) contentView.findViewById(R.id.tv_summary);
         tv_summary.setText(versionInfo.content);
 
@@ -227,19 +231,20 @@ public class AboutActivity extends BaseFgActivity {
             public void onClick(View v) {
                 dialogFragment.dismiss();
 
-                fileLoad.load(versionInfo.fileName,versionInfo.url,versionInfo.md5,versionInfo.packageName,versionInfo.versionCode,versionInfo.fileName,versionInfo.url,versionInfo.id,false);
+                fileLoad.load(versionInfo.fileName, versionInfo.url, versionInfo.md5, versionInfo.packageName, versionInfo
+                        .versionCode, versionInfo.fileName, versionInfo.url, versionInfo.id, false);
 
                 showProgressDialog();   //显示进度条对话框
                 doUpdateUi();           //启动更新进度条线程
             }
         });
-        dialogFragment.show(ft,"updateDialog");
+        dialogFragment.show(ft, "updateDialog");
     }
 
     /**
      * 显示下载进度的对话框
      */
-    private void showProgressDialog(){
+    private void showProgressDialog() {
 
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment prev = getSupportFragmentManager().findFragmentByTag("progressDialog");
@@ -255,7 +260,7 @@ public class AboutActivity extends BaseFgActivity {
         dialogFragment.setDialogWidth(250);
 
         LayoutInflater inflater = getLayoutInflater();
-        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_download,null);
+        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_download, null);
         progressBar = (ProgressBar) contentView.findViewById(R.id.progress_bar);
 
         dialogFragment.setContentView(contentView);
@@ -267,7 +272,7 @@ public class AboutActivity extends BaseFgActivity {
 
                 fileLoad.delete(versionInfo.url);
 
-                if(mNotificationManager != null){
+                if (mNotificationManager != null) {
                     mNotificationManager.cancel(1);
                 }
                 isDownloading = false;
@@ -280,7 +285,7 @@ public class AboutActivity extends BaseFgActivity {
 
                 dialogFragment.dismiss();
 
-                remoteViews = new RemoteViews(getPackageName(),R.layout.layout_notification_download);
+                remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification_download);
                 notification = new Notification.Builder(context)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContent(remoteViews)
@@ -295,7 +300,7 @@ public class AboutActivity extends BaseFgActivity {
 
     }
 
-    private void doUpdateUi(){
+    private void doUpdateUi() {
 
         isDownloading = true;
         //执行更新进度条的操作
@@ -309,7 +314,8 @@ public class AboutActivity extends BaseFgActivity {
                     @Override
                     public void run() {
 
-                        GameFileStatus downloadFileInfo = fileLoad.getGameFileLoadStatus(versionInfo.fileName,versionInfo.url,versionInfo.packageName,versionInfo.versionCode);
+                        GameFileStatus downloadFileInfo = fileLoad.getGameFileLoadStatus(versionInfo.fileName, versionInfo.url,
+                                versionInfo.packageName, versionInfo.versionCode);
                         if (downloadFileInfo != null) {
 
                             double finished = downloadFileInfo.getFinished();
@@ -343,15 +349,16 @@ public class AboutActivity extends BaseFgActivity {
                                 mNotificationManager.notify(1, notification);
                             } else {
 
-                                Log.d(TAG,"--------------------------->>>> APP更新进度　"+ (int)process);
-                                if(progressBar != null){
+                                Log.d(TAG, "--------------------------->>>> APP更新进度　" + (int) process);
+                                if (progressBar != null) {
                                     progressBar.setProgress((int) process);
                                 }
 
                                 if (process == 100) {
                                     //处理安装App的操作
                                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                                    SimpleDialogFragment prev = (SimpleDialogFragment) getSupportFragmentManager().findFragmentByTag("downloadDialog");
+                                    SimpleDialogFragment prev = (SimpleDialogFragment) getSupportFragmentManager()
+                                            .findFragmentByTag("downloadDialog");
                                     if (prev != null) {
                                         ft.remove(prev);
                                     }
