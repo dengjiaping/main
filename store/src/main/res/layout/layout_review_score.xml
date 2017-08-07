@@ -3,67 +3,69 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="horizontal"
-              android:paddingLeft="@dimen/dp_16"
+              android:paddingLeft="@dimen/dm024"
     >
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/dp_6"
-        android:layout_marginTop="@dimen/dp_12"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dm008"
+        android:layout_marginTop="@dimen/dm018"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_percent"
-            android:layout_width="@dimen/dp_50"
-            android:layout_height="@dimen/dp_50"
+            android:layout_width="@dimen/dm105"
+            android:layout_height="@dimen/dm105"
             android:background="@drawable/ic_percent"
             android:gravity="center"
-            android:layout_gravity="center"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_22"/>
 
         <RatingBar
-            android:id="@+id/score_rating_bar"
-            style="@style/RatingBarSmall"
+            android:id="@+id/sv_rating_bar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/percent_progress_bar_marginTop"
-            android:isIndicator="true"
+            android:layout_height="@dimen/dm015"
+            android:layout_marginTop="@dimen/dm006"
             android:numStars="5"
-            android:rating="0"/>
+            android:progressDrawable="@drawable/rating_bar_small2"
+            android:rating="0"
+            android:stepSize="0.1"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/content_wrapper"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_16"
-        android:layout_marginRight="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginLeft="@dimen/dm024"
+        android:layout_marginRight="@dimen/dm024"
+        android:layout_marginTop="@dimen/dm030"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/percent_progress_bar_height"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_marginTop="@dimen/dp_1"
-                android:layout_width="@dimen/percent_tag_tv_width"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dm012"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dm_003"
                 android:text="5"
                 android:textColor="@color/color_808080"
-                android:textSize="@dimen/dp_8"/>
+                android:textSize="@dimen/dm018"/>
 
             <ImageView
                 android:layout_width="@dimen/percent_progress_bar_height"
                 android:layout_height="@dimen/percent_progress_bar_height"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dm002"
                 android:scaleType="centerInside"
-                android:src="@drawable/star_small_normal"/>
+                android:src="@drawable/ic_small_start2_gray"/>
 
             <ProgressBar
                 android:id="@+id/progressBar5"
@@ -71,7 +73,7 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/percent_progress_bar_height"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/dp_4"
+                android:layout_marginLeft="@dimen/dp_3"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:max="100"
@@ -87,19 +89,21 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="@dimen/percent_tag_tv_width"
-                android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_width="@dimen/dm012"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dm_003"
                 android:text="4"
                 android:textColor="@color/color_808080"
-                android:textSize="@dimen/dp_8"/>
+                android:textSize="@dimen/dm018"/>
 
             <ImageView
                 android:layout_width="@dimen/percent_progress_bar_height"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/percent_progress_bar_height"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dm002"
                 android:scaleType="centerInside"
-                android:src="@drawable/star_small_normal"/>
+                android:src="@drawable/ic_small_start2_gray"/>
             <ProgressBar
                 android:id="@+id/progressBar4"
                 style="?android:attr/progressBarStyleHorizontal"
@@ -122,19 +126,21 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="@dimen/percent_tag_tv_width"
-                android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_width="@dimen/dm012"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dm_003"
                 android:text="3"
                 android:textColor="@color/color_808080"
-                android:textSize="@dimen/dp_8"/>
+                android:textSize="@dimen/dm018"/>
 
             <ImageView
                 android:layout_width="@dimen/percent_progress_bar_height"
                 android:layout_height="@dimen/percent_progress_bar_height"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dm002"
                 android:scaleType="centerInside"
-                android:src="@drawable/star_small_normal"/>
+                android:src="@drawable/ic_small_start2_gray"/>
 
             <ProgressBar
                 android:id="@+id/progressBar3"
@@ -158,20 +164,21 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="@dimen/percent_tag_tv_width"
-                android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_width="@dimen/dm012"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dm_003"
                 android:text="2"
                 android:textColor="@color/color_808080"
-                android:textSize="@dimen/dp_8"/>
+                android:textSize="@dimen/dm018"/>
 
             <ImageView
                 android:layout_width="@dimen/percent_progress_bar_height"
                 android:layout_height="@dimen/percent_progress_bar_height"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dm002"
                 android:scaleType="centerInside"
-                android:src="@drawable/star_small_normal"/>
-
+                android:src="@drawable/ic_small_start2_gray"/>
             <ProgressBar
                 android:id="@+id/progressBar2"
                 style="?android:attr/progressBarStyleHorizontal"
@@ -192,22 +199,22 @@
             android:layout_marginTop="@dimen/percent_progress_bar_marginTop"
             android:gravity="center_vertical"
             android:orientation="horizontal">
-
             <TextView
-                android:layout_width="@dimen/percent_tag_tv_width"
-                android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_width="@dimen/dm012"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dm_003"
                 android:text="1"
                 android:textColor="@color/color_808080"
-                android:textSize="@dimen/dp_8"/>
+                android:textSize="@dimen/dm018"/>
 
             <ImageView
                 android:layout_width="@dimen/percent_progress_bar_height"
                 android:layout_height="@dimen/percent_progress_bar_height"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dm002"
                 android:scaleType="centerInside"
-                android:src="@drawable/star_small_normal"/>
-
+                android:src="@drawable/ic_small_start2_gray"/>
             <ProgressBar
                 android:id="@+id/progressBar1"
                 style="?android:attr/progressBarStyleHorizontal"

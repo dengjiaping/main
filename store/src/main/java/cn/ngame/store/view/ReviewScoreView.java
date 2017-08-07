@@ -40,7 +40,7 @@ public class ReviewScoreView extends LinearLayout {
         this.context = context;
         inflate(context, R.layout.layout_review_score, this);
         percentTv = (TextView) findViewById(R.id.tv_percent);
-        ratingBar = (RatingBar) findViewById(R.id.score_rating_bar);
+        ratingBar = (RatingBar) findViewById(R.id.sv_rating_bar);
 
         pb1 = (ProgressBar) findViewById(R.id.progressBar1);
         pb2 = (ProgressBar) findViewById(R.id.progressBar2);
