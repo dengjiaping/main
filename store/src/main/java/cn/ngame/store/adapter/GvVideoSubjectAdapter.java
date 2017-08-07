@@ -29,7 +29,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import cn.ngame.store.R;
-import cn.ngame.store.bean.GameType;
 import cn.ngame.store.bean.VideoType;
 
 /**
@@ -113,8 +112,8 @@ public class GvVideoSubjectAdapter extends BaseAdapter {
         }
         Picasso.with(context)
                 .load(imgUrl)
-                .placeholder(R.drawable.type_defalut)
-                .error(R.drawable.type_defalut)
+                .placeholder(R.drawable.ic_def_logo_188_188)
+                .error(R.drawable.ic_def_logo_188_188)
                 .resizeDimen(R.dimen.list_detail_image_size, R.dimen.list_detail_image_size)
                 .centerInside()
                 .tag(context)
