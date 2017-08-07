@@ -9,23 +9,25 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dm008"
+        android:layout_marginBottom="@dimen/dm010"
         android:layout_marginTop="@dimen/dm018"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_percent"
-            android:layout_width="@dimen/dm105"
-            android:layout_height="@dimen/dm105"
+            android:layout_width="@dimen/dm100"
+            android:layout_height="@dimen/dm100"
             android:background="@drawable/ic_percent"
             android:gravity="center"
+            android:text="0"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_22"/>
 
         <RatingBar
             android:id="@+id/sv_rating_bar"
             android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_height="@dimen/dm015"
             android:layout_marginTop="@dimen/dm006"
             android:numStars="5"

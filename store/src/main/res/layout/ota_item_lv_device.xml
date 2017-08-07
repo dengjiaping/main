@@ -53,7 +53,7 @@
         android:text="升级"
         android:textSize="14sp"
         android:textColor="@color/white"
-        android:background="@drawable/selector_yj_blue_but"
+        android:background="@drawable/selector_blue_bt"
         android:visibility="gone"/>
 
 </RelativeLayout>

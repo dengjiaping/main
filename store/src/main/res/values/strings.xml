@@ -210,5 +210,7 @@
     <string name="download_count_end">下载</string>
     <string name="to_percent_unlogin_msg">评分游戏要先登录哦~\n登录后发现更多精彩！</string>
     <string name="unkonw">--</string>
+    <string name="to_precent">评分</string>
+    <string name="precented">已评分</string>
 
 </resources>

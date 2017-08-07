@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -42,6 +43,7 @@ import cn.ngame.store.adapter.DCViewPagerAdapter;
 import cn.ngame.store.adapter.ProgressBarStateListener;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.JsonResult;
+import cn.ngame.store.bean.Token;
 import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.GameFileStatus;
@@ -49,6 +51,7 @@ import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
+import cn.ngame.store.core.utils.DialogHelper;
 import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.TextUtil;
@@ -100,6 +103,10 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private TextView percentageTv;
     private ReviewScoreView reviewScoreView;
     private float tabTextSize;
+    private RatingBar ratingBarBig;
+    private float rate;
+    private TextView sumbitTv;
+    private boolean isPrecented = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -396,6 +403,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
 
     //提示绑定对话框
     public void showPercentDialog() {
+        final Dialog mUnboundDialog = new Dialog(content);
+        mUnboundDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         //填充对话框的布局
         View percentView = LayoutInflater.from(content).inflate(R.layout.layout_percentage_dialog, null);
 
@@ -405,30 +414,92 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         iconIv.setImageURI(StoreApplication.userHeadUrl);
         nameTv.setText(StoreApplication.nickName);
 
-        //进度条
         reviewScoreView = (ReviewScoreView) percentView.findViewById(R.id.review_scoreView);
+        ratingBarBig = (RatingBar) percentView.findViewById(R.id.rating_bar);
         reviewScoreView.setData(gameInfo);
 
-        TextView sumbitTv = (TextView) percentView.findViewById(R.id.ic_percent_sumbit);
+        sumbitTv = (TextView) percentView.findViewById(R.id.ic_percent_sumbit_bt);
+        Log.d(TAG, "showPercentDialog: " + isPrecented);
         sumbitTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //获取评分的值
+                rate = ratingBarBig.getRating();
+                if (rate <= 0) {
+                    ToastUtil.show(content, "请点击星星打分哦!");
+                    return;
+                }
+                //评分成功
+                ToastUtil.show(content, "评分提交成功!");
+                isPrecented = true;
+                mUnboundDialog.dismiss();
+                //提交评分
+                //submitPercent(mUnboundDialog);
             }
         });
-
-        Dialog mUnboundDialog = new Dialog(content);
-        mUnboundDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        if (isPrecented) {
+            sumbitTv.setText(getString(R.string.precented));
+            sumbitTv.setClickable(false);
+            sumbitTv.setBackgroundResource(R.drawable.shape_corner12px_cccccc);
+        }
         mUnboundDialog.setContentView(percentView);//将布局设置给Dialog
         Window dialogWindow = mUnboundDialog.getWindow(); //获取当前Activity所在的窗体
         dialogWindow.setBackgroundDrawableResource(R.color.transparent);
         //dialogWindow.setGravity(Gravity.CENTER);//设置Dialog从窗体顶部弹出
         WindowManager.LayoutParams params = dialogWindow.getAttributes();
-        params.width = CommonUtil.dip2px(content, 250f);
+        params.width = getResources().getDimensionPixelSize(R.dimen.dm445);
         dialogWindow.setAttributes(params); //将属性设置给窗体
         if (content != null && !mUnboundDialog.isShowing()) {
             mUnboundDialog.show();//显示对话框
         }
+    }
+
+    //评论
+    private void submitPercent(final Dialog mUnboundDialog) {
+        String url = Constant.WEB_SITE + Constant.URL_COMMENT_ADD_COMMENT;
+        Response.Listener<JsonResult<Token>> successListener = new Response.Listener<JsonResult<Token>>() {
+            @Override
+            public void onResponse(JsonResult<Token> result) {
+                DialogHelper.hideWaiting(getSupportFragmentManager());
+                if (result == null) {
+                    ToastUtil.show(content, "评分提交失败,服务端异常");
+                    return;
+                }
+
+                if (result.code == 0) {
+                    ToastUtil.show(content, "评分提交成功!");
+                    if (content != null && mUnboundDialog != null && mUnboundDialog.isShowing()) {
+                        mUnboundDialog.dismiss();
+                    }
+                } else {
+                    ToastUtil.show(content, result.msg);
+                    Log.d(TAG, "HTTP请求成功：服务端返回错误: " + result.msg);
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                ToastUtil.show(content, "评论失败，请稍候重试!");
+                Log.d(TAG, "HTTP请求失败：网络连接错误！");
+            }
+        };
+
+        Request<JsonResult<Token>> versionRequest = new GsonRequest<JsonResult<Token>>(Request.Method.POST, url,
+                successListener, errorListener, new TypeToken<JsonResult<Token>>() {
+        }.getType()) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put(KeyConstant.GAME_ID, "gameId");
+                params.put(KeyConstant.VALUE, (int) Math.floor(rate) + ""); //评分值
+                params.put(KeyConstant.TOKEN, StoreApplication.token);
+                return params;
+            }
+        };
+        StoreApplication.requestQueue.add(versionRequest);
     }
 
     /**
