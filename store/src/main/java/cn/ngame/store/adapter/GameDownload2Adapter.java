@@ -24,7 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -39,195 +38,225 @@ import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.GameFileStatus;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.utils.TextUtil;
+import cn.ngame.store.view.ActionItem;
 import cn.ngame.store.view.GameLoadProgressBar;
+import cn.ngame.store.view.QuickAction;
 
 /**
  * 显示正在下载游戏的ListView控件适配器
- * @author  zeng
- * @since   2016-07-4
+ *
+ * @author zeng
+ * @since 2016-07-4
  */
 public class GameDownload2Adapter extends BaseAdapter {
 
-	//private static final String TAG = LoadIngLvAdapter.class.getSimpleName();
+    //private static final String TAG = LoadIngLvAdapter.class.getSimpleName();
 
-	private List<FileLoadInfo> fileInfoList;
+    private List<FileLoadInfo> fileInfoList;
 
-	private Context context;
-	private FragmentManager fm;
-	private static Handler uiHandler = new Handler();
+    private Context context;
+    private FragmentManager fm;
+    private static Handler uiHandler = new Handler();
+    private QuickAction mItemClickQuickAction;
+    private int mPosition;
 
-	public GameDownload2Adapter(Context context, FragmentManager fm) {
-		super();
-		this.context = context;
-		this.fm = fm;
-	}
+    public GameDownload2Adapter(Context context, FragmentManager fm, QuickAction mItemClickQuickAction) {
+        super();
+        this.mItemClickQuickAction = mItemClickQuickAction;
+        this.context = context;
+        this.fm = fm;
+    }
 
-	/**
-	 * 设置ListView中的数据
-	 * @param fileInfoList 下载文件信息
-	 */
-	public void setDate(List<FileLoadInfo> fileInfoList) {
+    /**
+     * 设置ListView中的数据
+     *
+     * @param fileInfoList 下载文件信息
+     */
+    public void setDate(List<FileLoadInfo> fileInfoList) {
 
-		this.fileInfoList = fileInfoList;
+        this.fileInfoList = fileInfoList;
 
-	}
+    }
 
-	@Override
-	public int getCount() {
+    @Override
+    public int getCount() {
 
-		if (fileInfoList != null) {
-			return fileInfoList.size();
-		}
-		return 0;
-	}
+        if (fileInfoList != null) {
+            return fileInfoList.size();
+        }
+        return 0;
+    }
 
-	@Override
-	public Object getItem(int position) {
+    @Override
+    public Object getItem(int position) {
 
-		if (fileInfoList != null) {
-			return fileInfoList.get(position);
-		}
-		return null;
-	}
+        if (fileInfoList != null) {
+            return fileInfoList.get(position);
+        }
+        return null;
+    }
 
-	@Override
-	public long getItemId(int position) {
-		return position;
-	}
-	
-	public void clean(){
-		if (fileInfoList != null)
-			fileInfoList.clear();
-	}
+    public Object getItemInfo() {
+        if (fileInfoList != null) {
+            return fileInfoList.get(mPosition);
+        }
+        return null;
+    }
 
-	@Override
-	public View getView(final int position, View convertView, final ViewGroup parent) {
-		
-		final FileLoadInfo fileInfo = (fileInfoList == null) ? null : fileInfoList.get(position);
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
-		ViewHolder holder;
-		if(convertView == null){
+    public void clean() {
+        if (fileInfoList != null)
+            fileInfoList.clear();
+    }
 
-			holder = new ViewHolder(context,fm);
-			convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_game_loading, parent, false);
-			holder.img = (ImageView) convertView.findViewById(R.id.img_1);
-			holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
-			holder.tv_percent = (TextView) convertView.findViewById(R.id.tv_percent);
-			holder.tv_state = (TextView) convertView.findViewById(R.id.tv_state);
-			holder.tv_finished = (TextView) convertView.findViewById(R.id.tv_finished);
-			holder.tv_size = (TextView) convertView.findViewById(R.id.tv_length);
-			holder.pb = (ProgressBar) convertView.findViewById(R.id.pb);
-			holder.progressBar = (GameLoadProgressBar) convertView.findViewById(R.id.progress_bar);
+    @Override
+    public View getView(final int position, View convertView, final ViewGroup parent) {
 
-			convertView.setTag(holder);
-		} else {
-			holder = (ViewHolder) convertView.getTag();
-		}
+        final FileLoadInfo fileInfo = (fileInfoList == null) ? null : fileInfoList.get(position);
+        mPosition = position;
+        ViewHolder holder;
+        if (convertView == null) {
+            holder = new ViewHolder(context, fm, mItemClickQuickAction);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_game_load_finished, parent, false);
+            holder.img = (ImageView) convertView.findViewById(R.id.img_1);
+            holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
+            holder.tv_state = (TextView) convertView.findViewById(R.id.tv_state);
+            holder.tv_size = (TextView) convertView.findViewById(R.id.tv_length);
+            holder.more_bt = (ImageView) convertView.findViewById(R.id.manager_installed_more_bt);
+            holder.progressBar = (GameLoadProgressBar) convertView.findViewById(R.id.progress_bar);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
 
-		if(fileInfo != null)
-			holder.update(fileInfo);
+        if (fileInfo != null) {
+            holder.update(fileInfo);
+        }
 
-		return convertView;
-	}
+        return convertView;
+    }
 
-	/**
-	 * 用于保存ListView中重用的item视图的引用
-	 * @author flan
-	 * @date 2015年10月28日
-	 */
-	public static class ViewHolder {
+    /**
+     * 用于保存ListView中重用的item视图的引用
+     *
+     * @author flan
+     * @date 2015年10月28日
+     */
+    public static class ViewHolder {
 
-		private Context context;
-		private FragmentManager fm;
-		private FileLoadInfo fileInfo;
+        private Context context;
+        private FragmentManager fm;
+        private FileLoadInfo fileInfo;
 
-		private ImageView img;
-		private TextView tv_title, tv_percent,tv_state,tv_finished,tv_size;
-		private ProgressBar pb;
-		private GameLoadProgressBar progressBar;    //下载进度条
+        private ImageView img;
+        private ImageView more_bt;
+        private TextView tv_title, tv_state, tv_size;
+        private GameLoadProgressBar progressBar;    //下载进度条
 
-		private Timer timer = new Timer();
-		private IFileLoad fileLoad;
+        private Timer timer = new Timer();
+        private IFileLoad fileLoad;
+        private QuickAction mItemClickQuickAction;
 
-		public ViewHolder(Context context, FragmentManager fm) {
-			this.context = context;
-			this.fm = fm;
-			fileLoad = FileLoadManager.getInstance(context);
-			init();
-		}
+        public ViewHolder(Context context, FragmentManager fm, QuickAction mItemClickQuickAction) {
+            this.context = context;
+            this.fm = fm;
+            this.mItemClickQuickAction = mItemClickQuickAction;
+            fileLoad = FileLoadManager.getInstance(context);
+            init();
+        }
 
-		private void init() {
+        private void init() {
+            final ViewGroup viewGroup = mItemClickQuickAction.GetActionItemsGroup();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    uiHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(fileInfo.getName(), fileInfo.getUrl(),
+                                    fileInfo.getPackageName(), fileInfo.getVersionCode());
 
-			timer.schedule(new TimerTask() {
-				@Override
-				public void run() {
+                            progressBar.setLoadState(fileStatus);
 
-					uiHandler.post(new Runnable() {
-						@Override
-						public void run() {
-							GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(fileInfo.getName(),fileInfo.getUrl(),fileInfo.getPackageName(),fileInfo.getVersionCode());
+                            if (fileStatus == null) {
+                                return;
+                            }
+                            int status = fileStatus.getStatus();
+                            if (status == GameFileStatus.STATE_DOWNLOAD) {
+                                tv_state.setText("下载中...");
+                            } else if (status == GameFileStatus.STATE_PAUSE) {
+                                tv_state.setText("暂停中");
+                                //打开
+                            } else if (status == GameFileStatus.STATE_HAS_INSTALL) {
+                                tv_size.setVisibility(View.INVISIBLE);
+                                tv_state.setText("");
+                                if (0 == viewGroup.getChildCount()) {
+                                    ActionItem pointItem = new ActionItem(0, "卸载", null);
+                                    mItemClickQuickAction.addActionItem(pointItem);
+                                }
+                            } else {//安装
+                                tv_state.setText("下载完成");
+                               // viewGroup.removeAllViews();
+                                if (0 == viewGroup.getChildCount()) {
+                                    ActionItem pointItem = new ActionItem(0, "删除安装包", null);
+                                    mItemClickQuickAction.addActionItem(pointItem);
+                                }
+                            }
+                        }
+                    });
+                }
+            }, 0, 500);
+        }
 
-							progressBar.setLoadState(fileStatus);
-							tv_finished.setText(TextUtil.formatFileSize(fileInfo.getFinished()));
+        public void update(final FileLoadInfo fileInfo) {
 
-							if (fileStatus == null){
-								return;
-							}
-							int process = (int)((double)fileStatus.getFinished()/(double)fileStatus.getLength()*100);
-							pb.setProgress(process);
-							tv_percent.setText(process+"%");
-							if(fileStatus.getStatus() == GameFileStatus.STATE_DOWNLOAD ){
-								tv_state.setText("下载中");
-							}else if(fileStatus.getStatus() == GameFileStatus.STATE_PAUSE){
-								tv_state.setText("暂停中");
-							} else {
-								tv_state.setText("已完成");
-							}
-						}
-					});
-				}
-			}, 0, 500);
-		}
+            this.fileInfo = fileInfo;
 
-		public void update(final FileLoadInfo fileInfo) {
+            String gameName = fileInfo.getTitle();
+            if (null != gameName) {
+                tv_title.setText(gameName);
+            } else {
+                tv_title.setText("");
+            }
+            tv_size.setText(TextUtil.formatFileSize(fileInfo.getLength()));
+            more_bt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mItemClickQuickAction.show(v);
+                }
+            });
+            //加载图片
+            if (!TextUtil.isEmpty(fileInfo.getPreviewUrl())) {
+                Picasso.with(context)
+                        .load(fileInfo.getPreviewUrl())
+                        .placeholder(R.drawable.ic_def_logo_720_288)
+                        .error(R.drawable.ic_def_logo_720_288)
+                        .resizeDimen(R.dimen.list_detail_image_size, R.dimen.list_detail_image_size)
+                        .centerInside()
+                        .tag(context)
+                        .into(img);
+            }
 
-			this.fileInfo = fileInfo;
+            //设置进度条状态
+            progressBar.setLoadState(fileLoad.getGameFileLoadStatus(fileInfo.getName(), fileInfo.getPreviewUrl(), fileInfo
+                    .getPackageName(), fileInfo.getVersionCode()));
+            //必须设置，否则点击进度条后无法进行响应操作
+            progressBar.setFileLoadInfo(fileInfo);
+            progressBar.setOnStateChangeListener(new ProgressBarStateListener(context, fm));
+            progressBar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    progressBar.toggle();
+                }
+            });
 
-			String gameName = fileInfo.getTitle();
-			if (!"".equals(gameName)) {
-				gameName = gameName.length() > 8 ? gameName.substring(0, 8) : gameName;
-				tv_title.setText(gameName);
-			}
+        }
 
-			tv_size.setText("/"+TextUtil.formatFileSize(fileInfo.getLength()));
-
-			//加载图片
-			if(!TextUtil.isEmpty(fileInfo.getPreviewUrl())){
-				Picasso.with(context)
-						.load(fileInfo.getPreviewUrl())
-						.placeholder(R.drawable.ic_def_logo_720_288)
-						.error(R.drawable.ic_def_logo_720_288)
-						.resizeDimen(R.dimen.list_detail_image_size, R.dimen.list_detail_image_size)
-						.centerInside()
-						.tag(context)
-						.into(img);
-			}
-
-			//设置进度条状态
-			progressBar.setLoadState(fileLoad.getGameFileLoadStatus(fileInfo.getName(),fileInfo.getPreviewUrl(),fileInfo.getPackageName(),fileInfo.getVersionCode()));
-			//必须设置，否则点击进度条后无法进行响应操作
-			progressBar.setFileLoadInfo(fileInfo);
-			progressBar.setOnStateChangeListener(new ProgressBarStateListener(context,fm));
-			progressBar.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					progressBar.toggle();
-				}
-			});
-
-		}
-
-	}
+    }
 
 }
 

@@ -72,6 +72,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 /*
         View.SYSTEM_UI_FLAG_FULLSCREEN,   //全屏，状态栏和导航栏不显示
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION, //隐藏导航栏
@@ -148,7 +149,8 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
 
 
         });
-        dialogHelper = new DialogHelper(getSupportFragmentManager(),mContext);
+        dialogHelper = new DialogHelper(getSupportFragmentManager(), mContext);
+        mShareAPI = UMShareAPI.get(this);
     }
 
     @Override
@@ -162,7 +164,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     @Override
     protected void onResume() {
         super.onResume();
-        mShareAPI = UMShareAPI.get(this);
         findViewById(R.id.left_bt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -232,15 +233,31 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 startActivity(rIntent);
                 break;
             //微信
-            case R.id.login_wechat_bt://getPlatformInfo
+            case R.id.login_wechat_bt:
+                if (!mShareAPI.isInstall(mContext, SHARE_MEDIA.WEIXIN)) {
+                    ToastUtil.show(mContext, "尚未安装该应用,请先下载安装");
+                    return;
+                }
                 mShareAPI.getPlatformInfo(mContext, SHARE_MEDIA.WEIXIN, authListener);
                 break;
             //qq
             case R.id.login_qq_bt:
-                mShareAPI.getPlatformInfo(mContext, SHARE_MEDIA.QQ, authListener);
+                if (!mShareAPI.isInstall(mContext, SHARE_MEDIA.QQ)) {
+                    ToastUtil.show(mContext, "尚未安装该应用,请先下载安装");
+                    return;
+                }
+                try {
+                    mShareAPI.getPlatformInfo(mContext, SHARE_MEDIA.QQ, authListener);
+                } catch (Exception e) {
+                    android.util.Log.d(TAG, "获取QQ第三方登录信息出现错误: ");
+                }
                 break;
             //新浪
             case R.id.login_sina_bt:
+                if (!mShareAPI.isInstall(mContext, SHARE_MEDIA.SINA)) {
+                    ToastUtil.show(mContext, "尚未安装该应用,请先下载安装");
+                    return;
+                }
                 mShareAPI.getPlatformInfo(mContext, SHARE_MEDIA.SINA, authListener);
                 break;
         }
@@ -249,9 +266,13 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     //第三方登录回调
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
-        android.util.Log.d(TAG, requestCode + "第三方登录回调: " + data);
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+            android.util.Log.d(TAG, requestCode + "resultCode:" + resultCode + "第三方登录回调: " + data);
+            UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        } catch (Exception e) {
+            android.util.Log.d(TAG, requestCode + "第三方登录回调出现错误: ");
+        }
 
     }
 
@@ -273,13 +294,11 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
          */
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
-            dialogHelper.hideAlert();
-            String message = t.getMessage();
-            if (message.contains("错误码：2008")) {
-                ToastUtil.show(mContext, "没有安装该应用");
-            } else {
-                ToastUtil.show(mContext, "授权失败");
+            android.util.Log.d(TAG, "授权失败,onError: " + t.getMessage());
+            if (dialogHelper != null) {
+                dialogHelper.hideAlert();
             }
+            ToastUtil.show(mContext, "授权失败");
         }
 
         /**
@@ -290,7 +309,9 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
             android.util.Log.d(TAG, "第三方登录取消");
-            dialogHelper.hideAlert();
+            if (dialogHelper != null) {
+                dialogHelper.hideAlert();
+            }
         }
 
         /**
@@ -302,7 +323,12 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
 
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-            dialogHelper.hideAlert();
+            if (dialogHelper != null) {
+                dialogHelper.hideAlert();
+            }
+            android.util.Log.d(TAG, "onComplete: " + platform);
+            android.util.Log.d(TAG, "action: " + action);
+            android.util.Log.d(TAG, "data: " + data.get(0).toString());
             String type = Constant.PHONE;//（1手机，2QQ，3微信，4新浪微博）
             switch (platform.toString()) {
                 case "WEIXIN":

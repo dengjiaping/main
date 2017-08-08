@@ -3,7 +3,6 @@ package cn.ngame.store.activity.manager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -16,7 +15,6 @@ import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.utils.ImageUtil;
-import cn.ngame.store.view.ActionItem;
 import cn.ngame.store.view.QuickAction;
 
 /**
@@ -38,8 +36,6 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     /**
      * 当前点击的列表 1.下载列表 2.完成列表
      */
-    private int itemType;
-    private int itemPosition;
     private FragmentActivity content;
 
     public static ManagerInstalledFragment newInstance(String type, int arg) {
@@ -66,22 +62,13 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
+        initPop();
         initListView();
-        initPop(typeValue);
     }
 
     public void initListView() {
         final int screenWidth = ImageUtil.getScreenWidth(content);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                itemType = 2;
-                itemPosition = position;
-                //显示弹出框消失
-                mItemClickQuickAction.show(view);
-            }
-        });
-        alreadyLvAdapter = new GameDownload2Adapter(content, getSupportFragmentManager());
+        alreadyLvAdapter = new GameDownload2Adapter(content, getSupportFragmentManager(),mItemClickQuickAction);
         listView.setAdapter(alreadyLvAdapter);
         fileLoad = FileLoadManager.getInstance(content);
     }
@@ -94,18 +81,16 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
         alreadyLvAdapter.notifyDataSetChanged();
     }
 
-    private void initPop(final int typeValue) {
+    private void initPop() {
         // 设置Action
         mItemClickQuickAction = new QuickAction(content, QuickAction.VERTICAL);
-        ActionItem pointItem = new ActionItem(1, "删除任务", null);
-        mItemClickQuickAction.addActionItem(pointItem);
         mItemClickQuickAction.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
             @Override
             public void onItemClick(QuickAction source, int pos, int actionId) {
                 if (pos == 0) {
                     //删除文件下载任务
                     FileLoadInfo fileInfo = null;
-                    fileInfo = (FileLoadInfo) alreadyLvAdapter.getItem(itemPosition);
+                    fileInfo = (FileLoadInfo) alreadyLvAdapter.getItemInfo();
                     //删除下载任务
                     fileLoad.delete(fileInfo.getUrl());
                     try {

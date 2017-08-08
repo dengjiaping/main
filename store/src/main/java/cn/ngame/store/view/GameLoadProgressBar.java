@@ -92,7 +92,10 @@ public class GameLoadProgressBar extends View {
 
         this.gameFileStatus = status;
 
-        if (gameFileStatus == null || gameFileStatus.getStatus() == GameFileStatus.STATE_UN_INSTALL) {
+        if (gameFileStatus == null) {
+            text = "";
+        }
+        if (gameFileStatus.getStatus() == GameFileStatus.STATE_UN_INSTALL) {
             text = "下载";
         } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_DOWNLOAD) {         //下载中
             text = "暂停";
@@ -262,7 +265,8 @@ public class GameLoadProgressBar extends View {
             float baseline = (height - fontMetrics.bottom - fontMetrics.top) / 2;   //设置字体基线
             canvas.drawText(text, width / 2, baseline, paint);
 
-        } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_DOWNLOAD) {
+        } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_DOWNLOAD || gameFileStatus.getStatus() == GameFileStatus
+                .STATE_HAS_DOWNLOAD ) {
             mRadiusRect = new RectF();
             mRadiusRect.left = 0;                                 //左边
             mRadiusRect.right = (int) width;                       //右边
@@ -318,8 +322,7 @@ public class GameLoadProgressBar extends View {
             float baseline = (height - fontMetrics.bottom - fontMetrics.top) / 2;   //设置字体基线
             canvas.drawText(text, width / 2, baseline, paint);
 
-        } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_HAS_DOWNLOAD || gameFileStatus.getStatus() ==
-                GameFileStatus.STATE_HAS_INSTALL) {  //如以下载完成 或已成功安装
+        } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_HAS_INSTALL) {  //如以下载完成 或已成功安装
           /*  Paint.Style.FILL :填充内部
             Paint.Style.FILL_AND_STROKE ：填充内部和描边
             Paint.Style.STROKE ：仅描边*/
