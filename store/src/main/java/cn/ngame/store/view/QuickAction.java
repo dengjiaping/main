@@ -292,12 +292,15 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 				l.height		= dyBottom;
 			}
 		}
-		
+		int x, y;
+
+		x = location[0];
+		y = location[1];
+		int h = anchor.getHeight();
 		showArrow(((onTop) ? R.id.arrow_down : R.id.arrow_up), arrowPos);
 		
 		setAnimationStyle(screenWidth, anchorRect.centerX(), onTop);
-		
-		mWindow.showAtLocation(anchor, Gravity.NO_GRAVITY, xPos, yPos);
+		mWindow.showAtLocation(anchor, Gravity.NO_GRAVITY, x, h + y);
 	}
 	
 	public void show (View parent, float screenX, float screenY) {
@@ -425,7 +428,7 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 
         final int arrowWidth = mArrowUp.getMeasuredWidth();
 
-        showArrow.setVisibility(View.INVISIBLE);
+        showArrow.setVisibility(View.INVISIBLE);//设置箭头
         
         ViewGroup.MarginLayoutParams param = (ViewGroup.MarginLayoutParams)showArrow.getLayoutParams();
        

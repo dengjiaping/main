@@ -53,12 +53,13 @@
 
             <ImageView
                 android:id="@+id/but_fork"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dm050"
+                android:layout_height="@dimen/dm050"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/fork"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_user_delete"
                 android:visibility="gone" />
 
         </RelativeLayout>

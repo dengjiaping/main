@@ -252,6 +252,12 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         StoreApplication.requestQueue.add(request);
     }
 
+/*    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        viewpager.setAdapter(null);
+    }*/
+
     private void initViewPager() {
         fragments = new ArrayList<>();
         fragments.add(GameDetailFragment.newInstance(gameInfo));
@@ -419,7 +425,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         reviewScoreView.setData(gameInfo);
 
         sumbitTv = (TextView) percentView.findViewById(R.id.ic_percent_sumbit_bt);
-        Log.d(TAG, "showPercentDialog: " + isPrecented);
         sumbitTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

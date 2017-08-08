@@ -129,8 +129,7 @@ public class ImageUtil {
      * @return PopupWindow
      */
     public static PopupWindow showPopupWindow(Activity context, View attachOnView, View popView, final int popShowHeight, final
-    int
-            popShowWidth) {
+    int popShowWidth) {
         final int defaultBotom = -60;//距离底部
         if (popView != null && popView.getParent() != null) {
             ((ViewGroup) popView.getParent()).removeAllViews();
