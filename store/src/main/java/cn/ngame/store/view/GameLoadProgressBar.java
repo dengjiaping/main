@@ -265,7 +265,7 @@ public class GameLoadProgressBar extends View {
             canvas.drawText(text, width / 2, baseline, paint);
 
         } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_DOWNLOAD || gameFileStatus.getStatus() == GameFileStatus
-                .STATE_HAS_DOWNLOAD ) {
+                .STATE_HAS_DOWNLOAD) {
             mRadiusRect = new RectF();
             mRadiusRect.left = 0;                                 //左边
             mRadiusRect.right = (int) width;                       //右边

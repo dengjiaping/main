@@ -38,9 +38,11 @@ public class ManagerFragment extends BaseSearchFragment {
     private FragmentActivity context;
     private String pwd;
     private boolean isNeedLoad = true;
+    private ManagerInstalledFragment installedFragment;
+    private ManagerNecessaryFragment necessaryFragment;
+    private ManagerLikeFragment likeFragment;
 
     public static ManagerFragment newInstance() {
-        Log.d(TAG, "ManagerFragment newInstance: ");
         Bundle args = new Bundle();
         ManagerFragment fragment = new ManagerFragment();
         fragment.setArguments(args);
@@ -49,14 +51,15 @@ public class ManagerFragment extends BaseSearchFragment {
 
     @Override
     protected int getContentViewLayoutID() {
-        Log.d(TAG, "ManagerFragment getContentViewLayoutID: ");
         return R.layout.fragment_manager;
     }
 
     @Override
     protected void initViewsAndEvents(View view) {//初始化
-        Log.d(TAG, "ManagerFragment initViewsAndEvents: ");
         context = getActivity();
+        likeFragment = ManagerLikeFragment.newInstance(typeValue, 1);
+        installedFragment = ManagerInstalledFragment.newInstance(typeValue, 2);
+        necessaryFragment = ManagerNecessaryFragment.newInstance(typeValue, 0);
         tablayout = (TabLayout) view.findViewById(R.id.tablayout);
         viewpager = (ViewPager) view.findViewById(R.id.viewpager);
         //viewpager每次切换的时候， 会重新创建当前界面及左右界面三个界面， 每次切换都要重新oncreate,
@@ -85,6 +88,7 @@ public class ManagerFragment extends BaseSearchFragment {
         if (isNeedLoad) {
             setTabViewPagerData();
         }
+        installedFragment.onHiddenChanged(hidden);
     }
 
     private void setTabViewPagerData() {
@@ -95,20 +99,21 @@ public class ManagerFragment extends BaseSearchFragment {
             tabList.clear();
             fragments.clear();
             tabList.add("已装");
-            fragments.add(ManagerInstalledFragment.newInstance(typeValue, 2));
+            fragments.add(installedFragment);
             tabList.add("喜欢");
-            fragments.add(ManagerLikeFragment.newInstance(typeValue, 1));
+
+            fragments.add(likeFragment);
             tabList.add("必备");
-            fragments.add(ManagerNecessaryFragment.newInstance(typeValue, 0));
+            fragments.add(necessaryFragment);
         } else {
             //未登录
             //已登录
             tabList.clear();
             fragments.clear();
             tabList.add("已装");
-            fragments.add(ManagerInstalledFragment.newInstance(typeValue, 2));
+            fragments.add(installedFragment);
             tabList.add("必备");
-            fragments.add(ManagerNecessaryFragment.newInstance(typeValue, 0));
+            fragments.add(necessaryFragment);
         }
         initViewPagerTabs();
     }

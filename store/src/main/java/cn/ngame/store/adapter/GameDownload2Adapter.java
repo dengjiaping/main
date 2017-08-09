@@ -19,6 +19,7 @@ package cn.ngame.store.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,12 +53,13 @@ public class GameDownload2Adapter extends BaseAdapter {
     //private static final String TAG = LoadIngLvAdapter.class.getSimpleName();
 
     private List<FileLoadInfo> fileInfoList;
-
+    private Timer timer = new Timer();
     private Context context;
     private FragmentManager fm;
-    private static Handler uiHandler = new Handler();
+    private Handler uiHandler = new Handler();
     private QuickAction mItemClickQuickAction;
     private int mPosition;
+    private ViewHolder holder;
 
     public GameDownload2Adapter(Context context, FragmentManager fm, QuickAction mItemClickQuickAction) {
         super();
@@ -105,15 +107,16 @@ public class GameDownload2Adapter extends BaseAdapter {
     }
 
     public void clean() {
-        if (fileInfoList != null)
+        if (fileInfoList != null) {
             fileInfoList.clear();
+            //timer.cancel();
+        }
     }
 
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
         final FileLoadInfo fileInfo = (fileInfoList == null) ? null : fileInfoList.get(position);
-        ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder(context, fm);
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_game_load_finished, parent, false);
@@ -140,7 +143,6 @@ public class GameDownload2Adapter extends BaseAdapter {
                 }
             });
         }
-
         return convertView;
     }
 
@@ -150,7 +152,7 @@ public class GameDownload2Adapter extends BaseAdapter {
      * @author flan
      * @date 2015年10月28日
      */
-    public static class ViewHolder {
+    public class ViewHolder {
 
         private Context context;
         private FragmentManager fm;
@@ -160,15 +162,13 @@ public class GameDownload2Adapter extends BaseAdapter {
         private ImageView more_bt;
         private TextView tv_title, tv_state, tv_size;
         private GameLoadProgressBar progressBar;    //下载进度条
-
-        private Timer timer = new Timer();
         private IFileLoad fileLoad;
 
         public ViewHolder(Context context, FragmentManager fm) {
             this.context = context;
             this.fm = fm;
             fileLoad = FileLoadManager.getInstance(context);
-            init();
+            //init();
         }
 
         private void init() {
@@ -178,41 +178,36 @@ public class GameDownload2Adapter extends BaseAdapter {
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
+                            Log.d("777", "更新.....................................");
                             GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(fileInfo.getName(), fileInfo.getUrl(),
                                     fileInfo.getPackageName(), fileInfo.getVersionCode());
-
-                            progressBar.setLoadState(fileStatus);
-
                             if (fileStatus == null) {
                                 return;
                             }
                             int status = fileStatus.getStatus();
-                            if (status == GameFileStatus.STATE_DOWNLOAD) {
-                                tv_size.setVisibility(View.VISIBLE);
-                                tv_state.setText("下载中...");
-                            } else if (status == GameFileStatus.STATE_PAUSE) {
-                                tv_size.setVisibility(View.VISIBLE);
-                                tv_state.setText("暂停中");
-                                //打开
-                            } else if (status == GameFileStatus.STATE_HAS_INSTALL) {
+                            if (status == GameFileStatus.STATE_HAS_INSTALL) {
                                 tv_size.setVisibility(View.INVISIBLE);
                                 tv_state.setText("");
-                            } else {//安装
+                                progressBar.setLoadState(fileStatus);
+                                progressBar.setVisibility(View.VISIBLE);
+                            } else if (status == GameFileStatus.STATE_HAS_DOWNLOAD) {//安装
                                 tv_size.setVisibility(View.VISIBLE);
                                 tv_state.setText("下载完成");
+                                progressBar.setLoadState(fileStatus);
+                                progressBar.setVisibility(View.VISIBLE);
+                            } else {
+                                tv_size.setVisibility(View.INVISIBLE);
+                                tv_state.setText("");
+                                progressBar.setVisibility(View.INVISIBLE);
                             }
-                            List<FileLoadInfo> loadedFileInfo = fileLoad.getLoadedFileInfo();
-
                         }
                     });
                 }
-            }, 0,500);
+            }, 0, 300);
         }
 
         public void update(final FileLoadInfo fileInfo) {
-
-            this.fileInfo = fileInfo;
-
+            //this.fileInfo = fileInfo;
             String gameName = fileInfo.getTitle();
             if (null != gameName) {
                 tv_title.setText(gameName);
@@ -220,12 +215,27 @@ public class GameDownload2Adapter extends BaseAdapter {
                 tv_title.setText("");
             }
             tv_size.setText(TextUtil.formatFileSize(fileInfo.getLength()));
-            //加载图片
-            img.setImageURI(fileInfo.getPreviewUrl());
 
             //设置进度条状态
-            progressBar.setLoadState(fileLoad.getGameFileLoadStatus(fileInfo.getName(), fileInfo.getPreviewUrl(), fileInfo
-                    .getPackageName(), fileInfo.getVersionCode()));
+            GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(fileInfo.getName(), fileInfo.getUrl(),
+                    fileInfo.getPackageName(), fileInfo.getVersionCode());
+            int status = fileStatus.getStatus();
+            Log.d("777", gameName+"update:status "+status);
+            if (status == GameFileStatus.STATE_HAS_INSTALL) {
+                tv_size.setVisibility(View.INVISIBLE);
+                tv_state.setText("");
+                progressBar.setLoadState(fileStatus);
+                progressBar.setVisibility(View.VISIBLE);
+            } else if (status == GameFileStatus.STATE_HAS_DOWNLOAD) {//安装
+                tv_size.setVisibility(View.VISIBLE);
+                tv_state.setText("下载完成");
+                progressBar.setLoadState(fileStatus);
+                progressBar.setVisibility(View.VISIBLE);
+            } else {
+                tv_size.setVisibility(View.INVISIBLE);
+                tv_state.setText("");
+                progressBar.setVisibility(View.INVISIBLE);
+            }
             //必须设置，否则点击进度条后无法进行响应操作
             progressBar.setFileLoadInfo(fileInfo);
             progressBar.setOnStateChangeListener(new ProgressBarStateListener(context, fm));
@@ -236,7 +246,10 @@ public class GameDownload2Adapter extends BaseAdapter {
                 }
             });
 
+            //加载图片
+            img.setImageURI(fileInfo.getPreviewUrl());
         }
+
 
     }
 

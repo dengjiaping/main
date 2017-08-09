@@ -76,11 +76,20 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "9999onStart: ");
         List<FileLoadInfo> alreadyList = fileLoad.getLoadedFileInfo();
         alreadyLvAdapter.setDate(alreadyList);
         alreadyLvAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+            alreadyLvAdapter.clean();
+        }
     }
 
     private void initPop() {
