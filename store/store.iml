@@ -187,29 +187,5 @@
     <orderEntry type="module" module-name="imagelib" exported="" />
     <orderEntry type="module" module-name="sliding_menu" exported="" />
     <orderEntry type="module" module-name="RestfulApi" exported="" />
-    <orderEntry type="library" exported="" scope="TEST" name="fest-android-1.0.7" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="objenesis-1.0" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="fest-util-1.2.5" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="support-v4-19.1.0" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="dexmaker-1.0" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="dexmaker-mockito-1.0" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.1" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="mockito-core-1.9.5" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="fest-assert-core-2.0M10" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-13.0.0" level="project" />
-    <orderEntry type="library" exported="" name="okio-1.8.0" level="project" />
-    <orderEntry type="library" exported="" name="rxjava-1.1.9" level="project" />
-    <orderEntry type="library" exported="" name="gson-2.6.2" level="project" />
-    <orderEntry type="library" exported="" name="jsr305-3.0.1" level="project" />
-    <orderEntry type="library" exported="" name="retrofit-2.1.0" level="project" />
-    <orderEntry type="library" exported="" name="adapter-rxjava-2.1.0" level="project" />
-    <orderEntry type="library" exported="" name="rxandroid-1.1.0" level="project" />
-    <orderEntry type="library" exported="" name="fastjson-1.2.7" level="project" />
-    <orderEntry type="library" exported="" name="rxlifecycle-components-0.7.0" level="project" />
-    <orderEntry type="library" exported="" name="rxbinding-0.4.0" level="project" />
-    <orderEntry type="library" exported="" name="joda-time-2.7" level="project" />
-    <orderEntry type="library" exported="" name="okhttp-3.3.0" level="project" />
-    <orderEntry type="library" exported="" name="rxlifecycle-android-0.7.0" level="project" />
-    <orderEntry type="library" exported="" name="rxlifecycle-0.7.0" level="project" />
   </component>
 </module>
