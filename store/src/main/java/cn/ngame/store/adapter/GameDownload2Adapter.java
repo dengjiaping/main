@@ -42,6 +42,8 @@ import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.view.GameLoadProgressBar;
 import cn.ngame.store.view.QuickAction;
 
+import static cn.ngame.store.R.id.tv_state;
+
 /**
  * 显示正在下载游戏的ListView控件适配器
  *
@@ -54,9 +56,9 @@ public class GameDownload2Adapter extends BaseAdapter {
 
     private List<FileLoadInfo> fileInfoList;
     private Timer timer = new Timer();
+    private Handler uiHandler = new Handler();
     private Context context;
     private FragmentManager fm;
-    private Handler uiHandler = new Handler();
     private QuickAction mItemClickQuickAction;
     private int mPosition;
     private ViewHolder holder;
@@ -75,6 +77,7 @@ public class GameDownload2Adapter extends BaseAdapter {
      */
     public void setDate(List<FileLoadInfo> fileInfoList) {
         this.fileInfoList = fileInfoList;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -106,10 +109,10 @@ public class GameDownload2Adapter extends BaseAdapter {
         return position;
     }
 
+
     public void clean() {
         if (fileInfoList != null) {
             fileInfoList.clear();
-            //timer.cancel();
         }
     }
 
@@ -122,7 +125,7 @@ public class GameDownload2Adapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_game_load_finished, parent, false);
             holder.img = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
             holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
-            holder.tv_state = (TextView) convertView.findViewById(R.id.tv_state);
+            holder.tv_state = (TextView) convertView.findViewById(tv_state);
             holder.tv_size = (TextView) convertView.findViewById(R.id.tv_length);
             holder.more_bt = (ImageView) convertView.findViewById(R.id.manager_installed_more_bt);
             holder.progressBar = (GameLoadProgressBar) convertView.findViewById(R.id.progress_bar);
@@ -178,7 +181,6 @@ public class GameDownload2Adapter extends BaseAdapter {
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d("777", "更新.....................................");
                             GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(fileInfo.getName(), fileInfo.getUrl(),
                                     fileInfo.getPackageName(), fileInfo.getVersionCode());
                             if (fileStatus == null) {
@@ -220,7 +222,7 @@ public class GameDownload2Adapter extends BaseAdapter {
             GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(fileInfo.getName(), fileInfo.getUrl(),
                     fileInfo.getPackageName(), fileInfo.getVersionCode());
             int status = fileStatus.getStatus();
-            Log.d("777", gameName+"update:status "+status);
+            Log.d("777", gameName + "update:status " + status);
             if (status == GameFileStatus.STATE_HAS_INSTALL) {
                 tv_size.setVisibility(View.INVISIBLE);
                 tv_state.setText("");

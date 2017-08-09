@@ -1,12 +1,15 @@
 package cn.ngame.store.activity.manager;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cn.ngame.store.R;
 import cn.ngame.store.adapter.GameDownload2Adapter;
@@ -79,16 +82,36 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     public void onStart() {
         super.onStart();
         Log.d(TAG, "9999onStart: ");
-        List<FileLoadInfo> alreadyList = fileLoad.getLoadedFileInfo();
-        alreadyLvAdapter.setDate(alreadyList);
-        alreadyLvAdapter.notifyDataSetChanged();
+        if (timer != null) {
+            timer.cancel();
+        }
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                uiHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d(TAG, "onStart:======run=========== ");
+                        alreadyLvAdapter.setDate(fileLoad.getLoadedFileInfo());
+                    }
+                });
+            }
+        }, 0, 2000);
     }
+
+    private Timer timer;
+    private Handler uiHandler = new Handler();
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (hidden) {
             alreadyLvAdapter.clean();
+            Log.d(TAG, "onStart cancel: " + hidden);
+            if (timer != null) {
+                timer.cancel();
+            }
         }
     }
 
@@ -109,6 +132,7 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
                     if (GameFileStatus.STATE_HAS_INSTALL == fileStatus.getStatus()) {
                         //卸载
                         AppInstallHelper.unstallApp(content, fileInfo.getPackageName());
+                        List<FileLoadInfo> loadedFileInfo = fileLoad.getLoadedFileInfo();
                         fileLoad.delete(fileInfo.getUrl());
                     } else {
                         //删除安装包和正在下载的文件
@@ -121,9 +145,7 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    List<FileLoadInfo> alreadyList = fileLoad.getLoadedFileInfo();
-                    alreadyLvAdapter.setDate(alreadyList);
-                    alreadyLvAdapter.notifyDataSetChanged();
+                    alreadyLvAdapter.setDate(fileLoad.getLoadedFileInfo());
                 }
 
             }
