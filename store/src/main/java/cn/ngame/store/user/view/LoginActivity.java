@@ -326,9 +326,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             if (dialogHelper != null) {
                 dialogHelper.hideAlert();
             }
-            android.util.Log.d(TAG, "onComplete: " + platform);
-            android.util.Log.d(TAG, "action: " + action);
-            android.util.Log.d(TAG, "data: " + data.get(0).toString());
             String type = Constant.PHONE;//（1手机，2QQ，3微信，4新浪微博）
             switch (platform.toString()) {
                 case "WEIXIN":
@@ -340,6 +337,10 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 case "QQ":
                     type = Constant.QQ;
                     break;
+            }
+            if (null == data) {
+                ToastUtil.show(mContext, "登录失败");
+                return;
             }
             doLogin(type, data.get("uid"), "", data.get("name"), data.get("iconurl"));
         }
@@ -364,12 +365,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     return;
                 }
                 if (result.code == 0) {
-                    android.util.Log.d(TAG, "onResponse:用户名 " + userName);
-                    android.util.Log.d(TAG, "onResponse:LOGIN_TYPE " + LOGIN_TYPE);
-                    android.util.Log.d(TAG, "onResponse: " + result.msg);
-                    android.util.Log.d(TAG, "onResponse: " + result.msg);
                     User user = result.data;
-                    android.util.Log.d(TAG, "onResponse: " + user.toString());
 
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString(Constant.CONFIG_TOKEN, user.token);
@@ -392,10 +388,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     StoreApplication.loginType = LOGIN_TYPE;
                     StoreApplication.userCode = user.userCode;
 
-                    Log.d(TAG, "userHeadUrl: " + user.headPhoto);
-                    Log.d(TAG, "loginName: " + StoreApplication.userName);
-                    Log.d(TAG, "userCode: " + StoreApplication.userCode);
-                    Log.d(TAG, "Token:" + user.token);
                     LoginActivity.this.finish();
 
                     //同步本地观看记录到服务器
@@ -408,7 +400,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     }).start();
                     finish();
                 } else {
-                    Toast.makeText(LoginActivity.this, "登录失败，" + result.msg, Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(mContext, "登录失败");
                     if (null != LoginActivity.this && !LoginActivity.this.isFinishing()) {
                         dialogHelper.hideAlert();
                     }

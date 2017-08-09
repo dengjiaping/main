@@ -15,6 +15,7 @@ import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.utils.ImageUtil;
+import cn.ngame.store.view.ActionItem;
 import cn.ngame.store.view.QuickAction;
 
 /**
@@ -84,6 +85,8 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     private void initPop() {
         // 设置Action
         mItemClickQuickAction = new QuickAction(content, QuickAction.VERTICAL);
+        ActionItem pointItem = new ActionItem(0, "删除", null);
+        mItemClickQuickAction.addActionItem(pointItem);
         mItemClickQuickAction.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
             @Override
             public void onItemClick(QuickAction source, int pos, int actionId) {

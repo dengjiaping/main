@@ -2,10 +2,10 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android"
     android:dither="true">
     <item
-        android:drawable="@color/red"/>
+        android:drawable="@drawable/ic_uninstall_bt_bg_nomail"/>
     <item 
     	android:state_window_focused="false"
-        android:drawable="@color/red" />
+        android:drawable="@drawable/ic_uninstall_bt_bg_nomail" />
     <item 
     	android:state_pressed="true"
         android:drawable="@color/cccccc"/>

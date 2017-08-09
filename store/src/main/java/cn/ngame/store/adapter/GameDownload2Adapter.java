@@ -38,7 +38,6 @@ import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.GameFileStatus;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.utils.TextUtil;
-import cn.ngame.store.view.ActionItem;
 import cn.ngame.store.view.GameLoadProgressBar;
 import cn.ngame.store.view.QuickAction;
 
@@ -117,7 +116,6 @@ public class GameDownload2Adapter extends BaseAdapter {
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
         final FileLoadInfo fileInfo = (fileInfoList == null) ? null : fileInfoList.get(position);
-        mPosition = position;
         ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder(context, fm, mItemClickQuickAction);
@@ -135,6 +133,13 @@ public class GameDownload2Adapter extends BaseAdapter {
 
         if (fileInfo != null) {
             holder.update(fileInfo);
+            holder.more_bt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mPosition = position;
+                    mItemClickQuickAction.show(v);
+                }
+            });
         }
 
         return convertView;
@@ -194,17 +199,13 @@ public class GameDownload2Adapter extends BaseAdapter {
                             } else if (status == GameFileStatus.STATE_HAS_INSTALL) {
                                 tv_size.setVisibility(View.INVISIBLE);
                                 tv_state.setText("");
-                                if (0 == viewGroup.getChildCount()) {
-                                    ActionItem pointItem = new ActionItem(0, "卸载", null);
-                                    mItemClickQuickAction.addActionItem(pointItem);
-                                }
                             } else {//安装
                                 tv_state.setText("下载完成");
                                // viewGroup.removeAllViews();
-                                if (0 == viewGroup.getChildCount()) {
+                              /*  if (0 == viewGroup.getChildCount()) {
                                     ActionItem pointItem = new ActionItem(0, "删除安装包", null);
                                     mItemClickQuickAction.addActionItem(pointItem);
-                                }
+                                }*/
                             }
                         }
                     });
@@ -223,12 +224,6 @@ public class GameDownload2Adapter extends BaseAdapter {
                 tv_title.setText("");
             }
             tv_size.setText(TextUtil.formatFileSize(fileInfo.getLength()));
-            more_bt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mItemClickQuickAction.show(v);
-                }
-            });
             //加载图片
             if (!TextUtil.isEmpty(fileInfo.getPreviewUrl())) {
                 Picasso.with(context)
