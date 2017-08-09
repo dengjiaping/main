@@ -72,14 +72,11 @@ public class GameDownload2Adapter extends BaseAdapter {
      * @param fileInfoList 下载文件信息
      */
     public void setDate(List<FileLoadInfo> fileInfoList) {
-
         this.fileInfoList = fileInfoList;
-
     }
 
     @Override
     public int getCount() {
-
         if (fileInfoList != null) {
             return fileInfoList.size();
         }
@@ -118,7 +115,7 @@ public class GameDownload2Adapter extends BaseAdapter {
         final FileLoadInfo fileInfo = (fileInfoList == null) ? null : fileInfoList.get(position);
         ViewHolder holder;
         if (convertView == null) {
-            holder = new ViewHolder(context, fm, mItemClickQuickAction);
+            holder = new ViewHolder(context, fm);
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_game_load_finished, parent, false);
             holder.img = (ImageView) convertView.findViewById(R.id.img_1);
             holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
@@ -137,7 +134,9 @@ public class GameDownload2Adapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     mPosition = position;
-                    mItemClickQuickAction.show(v);
+                    if (null != mItemClickQuickAction) {
+                        mItemClickQuickAction.show(v);
+                    }
                 }
             });
         }
@@ -164,18 +163,15 @@ public class GameDownload2Adapter extends BaseAdapter {
 
         private Timer timer = new Timer();
         private IFileLoad fileLoad;
-        private QuickAction mItemClickQuickAction;
 
-        public ViewHolder(Context context, FragmentManager fm, QuickAction mItemClickQuickAction) {
+        public ViewHolder(Context context, FragmentManager fm) {
             this.context = context;
             this.fm = fm;
-            this.mItemClickQuickAction = mItemClickQuickAction;
             fileLoad = FileLoadManager.getInstance(context);
             init();
         }
 
         private void init() {
-            final ViewGroup viewGroup = mItemClickQuickAction.GetActionItemsGroup();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -192,21 +188,26 @@ public class GameDownload2Adapter extends BaseAdapter {
                             }
                             int status = fileStatus.getStatus();
                             if (status == GameFileStatus.STATE_DOWNLOAD) {
+                                tv_size.setVisibility(View.VISIBLE);
                                 tv_state.setText("下载中...");
                             } else if (status == GameFileStatus.STATE_PAUSE) {
+                                tv_size.setVisibility(View.VISIBLE);
                                 tv_state.setText("暂停中");
                                 //打开
                             } else if (status == GameFileStatus.STATE_HAS_INSTALL) {
                                 tv_size.setVisibility(View.INVISIBLE);
                                 tv_state.setText("");
                             } else {//安装
+                                tv_size.setVisibility(View.VISIBLE);
                                 tv_state.setText("下载完成");
-                               // viewGroup.removeAllViews();
+                                // viewGroup.removeAllViews();
                               /*  if (0 == viewGroup.getChildCount()) {
                                     ActionItem pointItem = new ActionItem(0, "删除安装包", null);
                                     mItemClickQuickAction.addActionItem(pointItem);
                                 }*/
                             }
+                            List<FileLoadInfo> loadedFileInfo = fileLoad.getLoadedFileInfo();
+
                         }
                     });
                 }

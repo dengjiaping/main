@@ -15,6 +15,7 @@ import cn.ngame.store.exception.NoSDCardException;
 
 /**
  * APP更新工具
+ *
  * @author flan
  * @since 2016/5/9
  */
@@ -22,12 +23,13 @@ public class AppInstallHelper {
 
     /**
      * 检测是否有新版本
-     * @param remoteVersion    远程服务器上的版本号
+     *
+     * @param remoteVersion 远程服务器上的版本号
      */
-    public static boolean hasNewVersion(Context context, int remoteVersion){
+    public static boolean hasNewVersion(Context context, int remoteVersion) {
 
-       int localVersion = CommonUtil.getVersionCode(context);
-        if(remoteVersion > localVersion){
+        int localVersion = CommonUtil.getVersionCode(context);
+        if (remoteVersion > localVersion) {
             return true;
         }
         return false;
@@ -35,6 +37,7 @@ public class AppInstallHelper {
 
     /**
      * 获取所有已安装的APP的包名
+     *
      * @param context
      * @return
      */
@@ -53,6 +56,7 @@ public class AppInstallHelper {
 
     /**
      * 根据app包名检测App是否安装
+     *
      * @param context
      * @param packageName
      * @return
@@ -73,16 +77,17 @@ public class AppInstallHelper {
 
     /**
      * 安装APK文件
+     *
      * @param apkName apk文件名
      */
-    public static void installApk(Context context,String apkName){
+    public static void installApk(Context context, String apkName) {
 
         try {
-            if(apkName != null && apkName.endsWith(".apk")){
+            if (apkName != null && apkName.endsWith(".apk")) {
 
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                File file = new File(CommonUtil.getFileLoadBasePath(),apkName);
-                intent.setDataAndType(Uri.fromFile(file),"application/vnd.android.package-archive");
+                File file = new File(CommonUtil.getFileLoadBasePath(), apkName);
+                intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -93,13 +98,14 @@ public class AppInstallHelper {
 
     /**
      * 安装APK文件
+     *
      * @param file apk文件
      */
-    public static void installApk(Context context,File file){
+    public static void installApk(Context context, File file) {
 
-        if(file != null){
+        if (file != null) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.fromFile(file),"application/vnd.android.package-archive");
+            intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }
@@ -120,4 +126,15 @@ public class AppInstallHelper {
         }
     }
 
+    //卸载应用程序
+    public static void unstallApp(Context context, String packageName) {
+        try {
+            Intent uninstall_intent = new Intent();
+            uninstall_intent.setAction(Intent.ACTION_DELETE);
+            uninstall_intent.setData(Uri.parse("package:" + packageName));
+            context.startActivity(uninstall_intent);
+        } catch (Exception e) {
+            //Toast.makeText(context, "该应用尚未安装,或可尝试手动卸载哦", Toast.LENGTH_LONG).show();
+        }
+    }
 }

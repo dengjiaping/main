@@ -127,7 +127,7 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
                     return;
                 }
 
-                DialogHelper.showWaiting(fm,"正在解压...");
+                DialogHelper.showWaiting(fm,"Waiting...");//正在解压
                 new Thread(new UnZipFileTask(fm,context,info,handler)).start();
 
             }catch (NoSDCardException e){

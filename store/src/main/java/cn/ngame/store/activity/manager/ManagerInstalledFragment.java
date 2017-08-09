@@ -2,6 +2,7 @@ package cn.ngame.store.activity.manager;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -13,8 +14,9 @@ import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
+import cn.ngame.store.core.fileload.GameFileStatus;
 import cn.ngame.store.core.fileload.IFileLoad;
-import cn.ngame.store.core.utils.ImageUtil;
+import cn.ngame.store.core.utils.AppInstallHelper;
 import cn.ngame.store.view.ActionItem;
 import cn.ngame.store.view.QuickAction;
 
@@ -68,8 +70,7 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     }
 
     public void initListView() {
-        final int screenWidth = ImageUtil.getScreenWidth(content);
-        alreadyLvAdapter = new GameDownload2Adapter(content, getSupportFragmentManager(),mItemClickQuickAction);
+        alreadyLvAdapter = new GameDownload2Adapter(content, getSupportFragmentManager(), mItemClickQuickAction);
         listView.setAdapter(alreadyLvAdapter);
         fileLoad = FileLoadManager.getInstance(content);
     }
@@ -85,17 +86,27 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     private void initPop() {
         // 设置Action
         mItemClickQuickAction = new QuickAction(content, QuickAction.VERTICAL);
-        ActionItem pointItem = new ActionItem(0, "删除", null);
+        ActionItem pointItem = new ActionItem(0, "卸载", null);
         mItemClickQuickAction.addActionItem(pointItem);
         mItemClickQuickAction.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
             @Override
             public void onItemClick(QuickAction source, int pos, int actionId) {
                 if (pos == 0) {
                     //删除文件下载任务
-                    FileLoadInfo fileInfo = null;
-                    fileInfo = (FileLoadInfo) alreadyLvAdapter.getItemInfo();
-                    //删除下载任务
-                    fileLoad.delete(fileInfo.getUrl());
+                    FileLoadInfo fileInfo = (FileLoadInfo) alreadyLvAdapter.getItemInfo();
+                    GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(fileInfo.getName(), fileInfo.getUrl(),
+                            fileInfo.getPackageName(), fileInfo.getVersionCode());
+                    Log.d(TAG, "status: " + fileStatus.getStatus());
+                    if (GameFileStatus.STATE_HAS_INSTALL == fileStatus.getStatus()) {
+                        //卸载
+                        AppInstallHelper.unstallApp(content, fileInfo.getPackageName());
+                        fileLoad.delete(fileInfo.getUrl());
+                    } else {
+                        //删除安装包和正在下载的文件
+                        fileLoad.delete(fileInfo.getUrl());
+                    }
+                    //取消弹出框
+                    mItemClickQuickAction.dismiss();
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
@@ -105,8 +116,7 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
                     alreadyLvAdapter.setDate(alreadyList);
                     alreadyLvAdapter.notifyDataSetChanged();
                 }
-                //取消弹出框
-                mItemClickQuickAction.dismiss();
+
             }
         });
     }

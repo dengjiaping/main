@@ -133,7 +133,6 @@ public class GameLoadProgressBar extends View {
      * @return state 进度条当前的状态
      */
     public void toggle() {
-
         if (gameFileStatus == null || gameFileStatus.getStatus() == GameFileStatus.STATE_UN_INSTALL) {
             startDownload();
         } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_DOWNLOAD) { //下载中，点击后暂停
