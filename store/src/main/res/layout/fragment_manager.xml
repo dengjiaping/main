@@ -11,19 +11,20 @@
         style="@style/MyCustomTabLayout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_marginBottom="-5dp"
         android:background="@drawable/manager_top_tab_bg"
         tabs:tabBackground="@android:color/white"
         tabs:tabGravity="fill"
-        android:layout_marginBottom="-5dp"
         tabs:tabIndicatorColor="@color/transparent"
         tabs:tabMode="fixed"
         tabs:tabSelectedTextColor="@color/color_0e6caf"
         tabs:tabTextColor="@color/b3"/>
 
+    <include layout="@layout/layout_line_05dp_e6e6e6"/>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
-        android:background="@color/gray"/>
+        android:background="@color/f5f5f5"/>
 </LinearLayout>

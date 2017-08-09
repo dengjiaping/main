@@ -110,7 +110,7 @@
         >
         <!--android:background="@drawable/home_tabshadow"-->
         <LinearLayout
-            android:id="@+id/menu_home_layout"
+            android:id="@+id/menu_home_ll"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"

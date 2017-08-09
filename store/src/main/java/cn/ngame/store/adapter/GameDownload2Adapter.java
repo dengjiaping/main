@@ -26,7 +26,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 import java.util.Timer;
@@ -117,7 +117,7 @@ public class GameDownload2Adapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder(context, fm);
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_game_load_finished, parent, false);
-            holder.img = (ImageView) convertView.findViewById(R.id.img_1);
+            holder.img = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
             holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
             holder.tv_state = (TextView) convertView.findViewById(R.id.tv_state);
             holder.tv_size = (TextView) convertView.findViewById(R.id.tv_length);
@@ -156,7 +156,7 @@ public class GameDownload2Adapter extends BaseAdapter {
         private FragmentManager fm;
         private FileLoadInfo fileInfo;
 
-        private ImageView img;
+        private SimpleDraweeView img;
         private ImageView more_bt;
         private TextView tv_title, tv_state, tv_size;
         private GameLoadProgressBar progressBar;    //下载进度条
@@ -200,18 +200,13 @@ public class GameDownload2Adapter extends BaseAdapter {
                             } else {//安装
                                 tv_size.setVisibility(View.VISIBLE);
                                 tv_state.setText("下载完成");
-                                // viewGroup.removeAllViews();
-                              /*  if (0 == viewGroup.getChildCount()) {
-                                    ActionItem pointItem = new ActionItem(0, "删除安装包", null);
-                                    mItemClickQuickAction.addActionItem(pointItem);
-                                }*/
                             }
                             List<FileLoadInfo> loadedFileInfo = fileLoad.getLoadedFileInfo();
 
                         }
                     });
                 }
-            }, 0, 500);
+            }, 0,500);
         }
 
         public void update(final FileLoadInfo fileInfo) {
@@ -226,16 +221,7 @@ public class GameDownload2Adapter extends BaseAdapter {
             }
             tv_size.setText(TextUtil.formatFileSize(fileInfo.getLength()));
             //加载图片
-            if (!TextUtil.isEmpty(fileInfo.getPreviewUrl())) {
-                Picasso.with(context)
-                        .load(fileInfo.getPreviewUrl())
-                        .placeholder(R.drawable.ic_def_logo_720_288)
-                        .error(R.drawable.ic_def_logo_720_288)
-                        .resizeDimen(R.dimen.list_detail_image_size, R.dimen.list_detail_image_size)
-                        .centerInside()
-                        .tag(context)
-                        .into(img);
-            }
+            img.setImageURI(fileInfo.getPreviewUrl());
 
             //设置进度条状态
             progressBar.setLoadState(fileLoad.getGameFileLoadStatus(fileInfo.getName(), fileInfo.getPreviewUrl(), fileInfo

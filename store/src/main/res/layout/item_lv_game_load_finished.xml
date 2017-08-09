@@ -9,17 +9,24 @@
         android:layout_width="match_parent"
         android:layout_height="82dp"
         android:background="@color/white"
-        android:padding="8dp">
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        >
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
+            xmlns:fresco="http://schemas.android.com/apk/res-auto"
             android:id="@+id/img_1"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_alignParentLeft="true"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@color/white"/>
+            android:scaleType="fitXY"
+            fresco:actualImageScaleType="fitXY"
+            fresco:failureImage="@drawable/ic_def_logo_188_188"
+            fresco:placeholderImage="@drawable/ic_def_logo_188_188"
+            fresco:placeholderImageScaleType="centerCrop"
+            fresco:progressBarImage="@drawable/ic_def_logo_188_188"
+            fresco:roundedCornerRadius="@dimen/dp_14"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -53,12 +60,12 @@
 
             <TextView
                 android:id="@+id/tv_length"
-                android:layout_marginBottom="@dimen/dm015"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/tv_state"
-                android:text=""
+                android:layout_marginBottom="@dimen/dm015"
                 android:layout_marginLeft="@dimen/dm004"
+                android:text=""
                 android:textSize="@dimen/dm015"
                 android:visibility="invisible"/>
         </RelativeLayout>
@@ -71,10 +78,11 @@
             android:clickable="true"
             android:paddingBottom="@dimen/dp_10"
             android:paddingLeft="@dimen/dp_15"
-            android:paddingRight="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_5"
             android:paddingTop="@dimen/dp_10"
             android:src="@drawable/selector_rank_more_bt"
             />
+
         <cn.ngame.store.view.GameLoadProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="60dp"
@@ -82,7 +90,6 @@
             android:layout_alignParentRight="true"
             android:layout_below="@id/manager_installed_more_bt"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="@dimen/dm010"
             android:background="@color/white"
             android:clickable="true"

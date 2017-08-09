@@ -50,9 +50,7 @@ import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.view.GameLoadProgressBar;
 
-import static cn.ngame.store.R.id.tv_position;
 import static cn.ngame.store.R.id.tv_shoubing;
-import static cn.ngame.store.R.id.tv_title;
 
 public class RankingListAdapter extends BaseAdapter {
     private Activity context;
@@ -104,8 +102,8 @@ public class RankingListAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.ranking_list_item, parent, false);
             holder = new ViewHolder(context, fm);
             holder.img = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
-            holder.tv_position = (TextView) convertView.findViewById(tv_position);
-            holder.tv_title = (TextView) convertView.findViewById(tv_title);
+            holder.tv_position = (TextView) convertView.findViewById(R.id.tv_position);
+            holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
             holder.tv_percentage = (TextView) convertView.findViewById(R.id.text1);
             holder.tv_yun_duan = (TextView) convertView.findViewById(R.id.tv_yun_duan);
             holder.ratingBar = (RatingBar) convertView.findViewById(R.id.rating_bar);

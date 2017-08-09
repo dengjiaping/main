@@ -200,7 +200,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         rl_top.setBackgroundResource(R.color.transparent);
         int statusBarHeight = ImageUtil.getStatusBarHeight(context);
         rl_top.setPadding(0, statusBarHeight, 0, 0);*/
-        home = (LinearLayout) findViewById(R.id.menu_home_layout);
+        home = (LinearLayout) findViewById(R.id.menu_home_ll);
         game = (LinearLayout) findViewById(R.id.menu_game_ll);
         //menu_game_hub = (LinearLayout) findViewById(R.id.menu_game_hub);圈子
         video = (LinearLayout) findViewById(R.id.menu_video);
@@ -678,14 +678,15 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         @Override
         public boolean onTouch(View v, MotionEvent event) {
 
+            int action = event.getAction();
             switch (v.getId()) {
-                case R.id.menu_home_layout:
-                    if (currentMenu != R.id.menu_home_layout && event.getAction() == MotionEvent.ACTION_UP) {
+                case R.id.menu_home_ll:
+                    if (currentMenu != R.id.menu_home_ll && action == MotionEvent.ACTION_UP) {
                         setCurrentMenu(0);
                     }
                     break;
                 case R.id.menu_game_ll:
-                    if (currentMenu != R.id.menu_game_ll && event.getAction() == MotionEvent.ACTION_UP) {
+                    if (currentMenu != R.id.menu_game_ll && action == MotionEvent.ACTION_UP) {
                         setCurrentMenu(1);
                     }
                     break;
@@ -695,12 +696,12 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     }
                     break;*/
                 case R.id.menu_video:
-                    if (currentMenu != R.id.menu_video && event.getAction() == MotionEvent.ACTION_UP) {
+                    if (currentMenu != R.id.menu_video && action == MotionEvent.ACTION_UP) {
                         setCurrentMenu(3);
                     }
                     break;
                 case R.id.menu_manager:
-                    if (currentMenu != R.id.menu_manager && event.getAction() == MotionEvent.ACTION_UP) {
+                    if (currentMenu != R.id.menu_manager && action == MotionEvent.ACTION_UP) {
                         setCurrentMenu(4);
                     }
                     break;
