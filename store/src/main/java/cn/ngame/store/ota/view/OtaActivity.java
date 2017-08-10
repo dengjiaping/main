@@ -38,9 +38,9 @@ import cn.ngame.store.view.RoundProgressBar;
  * 用于OTA升级，我的设备页面
  * Created by zeng on 2016/8/15.
  */
-public class DeviceOtaUpdateActivity extends BaseFgActivity implements View.OnClickListener,IOtaView{
+public class OtaActivity extends BaseFgActivity implements View.OnClickListener,IOtaView{
 
-    public static final String TAG = DeviceOtaUpdateActivity.class.getSimpleName();
+    public static final String TAG = OtaActivity.class.getSimpleName();
 
     public static final int REQUEST_CODE_BLUETOOTH_SETTINGS = 1;
 
@@ -64,7 +64,7 @@ public class DeviceOtaUpdateActivity extends BaseFgActivity implements View.OnCl
             OtaService otaService = otcBinder.getService();
 
             //创建控制层
-            presenter = new OtaPresenter(DeviceOtaUpdateActivity.this,otaService);
+            presenter = new OtaPresenter(OtaActivity.this,otaService);
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -83,7 +83,7 @@ public class DeviceOtaUpdateActivity extends BaseFgActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.ota_activity_ota);
+        this.setContentView(R.layout.activity_ota);
 
         progressBar = (RoundProgressBar) findViewById(R.id.progress_bar);
         bt_check = (Button) findViewById(R.id.but1);
@@ -100,7 +100,7 @@ public class DeviceOtaUpdateActivity extends BaseFgActivity implements View.OnCl
         progressBar.setState("连接手柄");
         progressBar.setStateDetail("");
 
-        //启动OTA升级服务
+        //启动OTA升级后台服务
         Intent otaIntent = new Intent(this, OtaService.class);
         startService(otaIntent);
 
@@ -194,7 +194,7 @@ public class DeviceOtaUpdateActivity extends BaseFgActivity implements View.OnCl
                 break;
             case R.id.right_tv:
 
-                Intent helpIntent = new Intent(DeviceOtaUpdateActivity.this,OtaHelpActivity.class);
+                Intent helpIntent = new Intent(OtaActivity.this,OtaHelpActivity.class);
                 startActivity(helpIntent);
 
                 break;
@@ -336,15 +336,15 @@ public class DeviceOtaUpdateActivity extends BaseFgActivity implements View.OnCl
             public void run() {
 
                 if (state == -1){
-                    Toast.makeText(DeviceOtaUpdateActivity.this,"请先连接手柄设备",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OtaActivity.this,"请先连接手柄设备",Toast.LENGTH_SHORT).show();
                 }else if (state == -2){
-                    Toast.makeText(DeviceOtaUpdateActivity.this,"正在检测，请稍后",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OtaActivity.this,"正在检测，请稍后",Toast.LENGTH_SHORT).show();
                 }else if (state == -3){
-                    Toast.makeText(DeviceOtaUpdateActivity.this,"正在进行OTA升级",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OtaActivity.this,"正在进行OTA升级",Toast.LENGTH_SHORT).show();
                 }else if (state == 0){
-                    Toast.makeText(DeviceOtaUpdateActivity.this,"当前设备是最新版本",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OtaActivity.this,"当前设备是最新版本",Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(DeviceOtaUpdateActivity.this,"检测完成",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OtaActivity.this,"检测完成",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -353,7 +353,7 @@ public class DeviceOtaUpdateActivity extends BaseFgActivity implements View.OnCl
     public void showUpdateDialog(final DeviceInfo info){
 
         if(isUpdating){
-            Toast.makeText(DeviceOtaUpdateActivity.this,"正在进行OTA升级",Toast.LENGTH_SHORT).show();
+            Toast.makeText(OtaActivity.this,"正在进行OTA升级",Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -363,19 +363,17 @@ public class DeviceOtaUpdateActivity extends BaseFgActivity implements View.OnCl
         if(dialogFragment.isShow()){
             return;
         }
-
-        dialogFragment.setTitle("更新");
         dialogFragment.setDialogWidth(250);
 
         LayoutInflater inflater = getLayoutInflater();
         LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_update,null);
         TextView tv_title = (TextView) contentView.findViewById(R.id.tv_title);
-        tv_title.setText("发现新版本："+info.getNewVersionName());
+        tv_title.setText("确认立即更新到新版本："+info.getNewVersionName()+"吗？");
         TextView tv_summary = (TextView) contentView.findViewById(R.id.tv_summary);
         tv_summary.setText(info.getContent());
         dialogFragment.setContentView(contentView);
 
-        dialogFragment.setPositiveButton(R.string.update_later, new View.OnClickListener() {
+        dialogFragment.setPositiveButton(R.string.cancel ,new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialogFragment.dismiss();
@@ -395,8 +393,6 @@ public class DeviceOtaUpdateActivity extends BaseFgActivity implements View.OnCl
     }
 
     private void showNotify(final DeviceInfo info){
-
-
         final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
         dialogFragment.setTitle("温馨提示");
         dialogFragment.setDialogWidth(250);

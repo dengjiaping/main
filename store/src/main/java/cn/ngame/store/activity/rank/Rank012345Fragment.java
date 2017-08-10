@@ -153,6 +153,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 //少于指定条数不加载
                 if (pageAction.getTotal() < pageAction.getPageSize()) {
+                    ToastUtil.show(content,"已经到底了");
                     pullListView.setHasMoreData(false);
                     pullListView.onPullUpRefreshComplete();
                     return;

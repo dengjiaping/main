@@ -419,11 +419,8 @@ public class OtaService extends Service {
 
             return updateCount;
 
-        } else
-
-        {
+        } else {
             isCheckNewVersioning = false;
-
             return -1; //未搜索到设备
         }
     }

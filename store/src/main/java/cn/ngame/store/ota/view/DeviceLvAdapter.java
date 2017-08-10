@@ -39,9 +39,9 @@ public class DeviceLvAdapter extends BaseAdapter {
 
     private List<DeviceInfo> deviceInfos;
 
-    private DeviceOtaUpdateActivity activity;
+    private OtaActivity activity;
 
-    public DeviceLvAdapter(DeviceOtaUpdateActivity activity) {
+    public DeviceLvAdapter(OtaActivity activity) {
         super();
         this.activity = activity;
     }
@@ -85,12 +85,9 @@ public class DeviceLvAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
         ViewHolder holder;
         if (convertView == null) {
-
             holder = new ViewHolder();
-
             convertView = LayoutInflater.from(activity).inflate(R.layout.ota_item_lv_device, parent, false);
             holder.tv_name = (TextView) convertView.findViewById(R.id.tv_device);
             holder.tv_old = (TextView) convertView.findViewById(R.id.text1);
@@ -101,13 +98,15 @@ public class DeviceLvAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        //获取设备信息
         DeviceInfo info = deviceInfos.get(position);
 
-        holder.tv_name.setText(info.getName());
-        holder.tv_old.setText("当前版本："+info.getCurrentVersionName());
+        holder.tv_name.setText(info.getName());//蓝牙设备的名称
+        holder.tv_old.setText("当前版本:"+info.getCurrentVersionName());//蓝牙当前的版本号
 
+        //获取到的设备的新版本号>蓝牙手柄的当前版本号
         if(info.getNewVersionCode() > info.getCurrentVersionCode()){
-            holder.tv_new.setText("最新版本："+info.getNewVersionName());
+            holder.tv_new.setText("最新版:"+info.getNewVersionName());
             holder.bt_update.setVisibility(View.VISIBLE);
             holder.bt_update.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -115,6 +114,7 @@ public class DeviceLvAdapter extends BaseAdapter {
                     updateDevice(position);
                 }
             });
+            //没有新版本
         }else {
             holder.tv_new.setText("");
             holder.bt_update.setVisibility(View.GONE);
@@ -124,7 +124,8 @@ public class DeviceLvAdapter extends BaseAdapter {
         return convertView;
     }
 
-    void updateDevice(int position){
+    //升级设备
+    private void updateDevice(int position){
         if(activity != null && deviceInfos != null && deviceInfos.size() > position){
             DeviceInfo info = deviceInfos.get(position);
             activity.showUpdateDialog(info);
@@ -137,12 +138,9 @@ public class DeviceLvAdapter extends BaseAdapter {
      * @since 2015年10月28日
      */
     public static class ViewHolder {
-
         TextView tv_name, tv_old,tv_new;
         Button bt_update;
-
     }
-
 }
 
 

@@ -41,6 +41,7 @@ import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.DialogHelper;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
+import cn.ngame.store.core.utils.NetUtil;
 import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.local.model.IWatchRecordModel;
 import cn.ngame.store.local.model.WatchRecordModel;
@@ -234,6 +235,10 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 break;
             //微信
             case R.id.login_wechat_bt:
+                if (!NetUtil.isNetworkConnected(mContext)) {
+                    ToastUtil.show(mContext, getString(R.string.no_network));
+                    return;
+                }
                 if (!mShareAPI.isInstall(mContext, SHARE_MEDIA.WEIXIN)) {
                     ToastUtil.show(mContext, "尚未安装该应用,请先下载安装");
                     return;
@@ -242,6 +247,10 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 break;
             //qq
             case R.id.login_qq_bt:
+                if (!NetUtil.isNetworkConnected(mContext)) {
+                    ToastUtil.show(mContext, getString(R.string.no_network));
+                    return;
+                }
                 if (!mShareAPI.isInstall(mContext, SHARE_MEDIA.QQ)) {
                     ToastUtil.show(mContext, "尚未安装该应用,请先下载安装");
                     return;
@@ -254,6 +263,10 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 break;
             //新浪
             case R.id.login_sina_bt:
+                if (!NetUtil.isNetworkConnected(mContext)) {
+                    ToastUtil.show(mContext, getString(R.string.no_network));
+                    return;
+                }
                 if (!mShareAPI.isInstall(mContext, SHARE_MEDIA.SINA)) {
                     ToastUtil.show(mContext, "尚未安装该应用,请先下载安装");
                     return;
@@ -400,8 +413,8 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     }).start();
                     finish();
                 } else {
-                    ToastUtil.show(mContext, "登录失败");
-                    if (null != LoginActivity.this && !LoginActivity.this.isFinishing()) {
+                    ToastUtil.show(mContext, "登录失败，"+result.msg);
+                    if (null !=mContext && !mContext.isFinishing()) {
                         dialogHelper.hideAlert();
                     }
                 }
@@ -414,7 +427,9 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 volleyError.printStackTrace();
                 Toast.makeText(LoginActivity.this, "登录失败，请检查网络连接!", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "HTTP请求失败：网络连接错误！" + volleyError.getMessage());
-                DialogHelper.hideWaiting(getSupportFragmentManager());
+                if (null != LoginActivity.this && !LoginActivity.this.isFinishing()) {
+                    dialogHelper.hideAlert();
+                }
             }
         };
         Request<JsonResult<User>> versionRequest1 = new GsonRequest<JsonResult<User>>(Request.Method.POST, url,

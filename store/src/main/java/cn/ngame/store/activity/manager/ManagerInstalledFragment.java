@@ -43,6 +43,8 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
      * 当前点击的列表 1.下载列表 2.完成列表
      */
     private FragmentActivity content;
+    private boolean mHidden = false;
+    private long DELAY_TIME = 2000L;
 
     public static ManagerInstalledFragment newInstance(String type, int arg) {
         ManagerInstalledFragment fragment = new ManagerInstalledFragment();
@@ -82,22 +84,30 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     public void onStart() {
         super.onStart();
         Log.d(TAG, "9999onStart: ");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "9999onResume: ");
         if (timer != null) {
             timer.cancel();
         }
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                uiHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d(TAG, "onStart:======run=========== ");
-                        alreadyLvAdapter.setDate(fileLoad.getLoadedFileInfo());
-                    }
-                });
-            }
-        }, 0, 2000);
+        if (!mHidden) {
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    uiHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d(TAG, "onStart:======run=========== ");
+                            alreadyLvAdapter.setDate(fileLoad.getLoadedFileInfo());
+                        }
+                    });
+                }
+            }, 0, DELAY_TIME);
+        }
     }
 
     private Timer timer;
@@ -106,12 +116,27 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        Log.d(TAG, "onHiddenChanged run==cancel: " + hidden);
+        mHidden = hidden;
         if (hidden) {
             alreadyLvAdapter.clean();
-            Log.d(TAG, "onStart cancel: " + hidden);
             if (timer != null) {
                 timer.cancel();
             }
+        } else {
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    uiHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d(TAG, "onStart:======run=========== ");
+                            alreadyLvAdapter.setDate(fileLoad.getLoadedFileInfo());
+                        }
+                    });
+                }
+            }, 0, DELAY_TIME);
         }
     }
 

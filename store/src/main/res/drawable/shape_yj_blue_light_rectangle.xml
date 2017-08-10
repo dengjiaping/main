@@ -4,9 +4,6 @@
 
     <!-- 填充 -->
     <solid android:color="@color/color_nomal_a1cefa"/>
-    <size
-        android:width="330dp"
-        android:height="44dp"/>
     <!--圆角-->
     <corners android:radius="@dimen/dp_10"
         />

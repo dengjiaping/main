@@ -9,12 +9,12 @@ import android.os.Parcelable;
  */
 public class DeviceInfo implements Parcelable {
 
-    /** 蓝牙名称*/
+    /** 蓝牙名称 --手柄*/
     private String name;
     /** mac地址*/
     private String mac;
     /** 蓝牙设备类型 ble、经典蓝牙*/
-    private int    type;
+    private int   type;
 
     /** 设备当前版本号 */
     private int currentVersionCode;

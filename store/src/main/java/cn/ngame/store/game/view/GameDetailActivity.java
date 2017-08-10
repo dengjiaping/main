@@ -386,16 +386,23 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.game_detail_like_iv:
-                    boolean isLiked = likeIv.isSelected();
-                    ToastUtil.show(content, isLiked ? "取消成功" : "收藏成功,可在管理界面中查看");
-                    likeIv.setSelected(!isLiked);
+                    String pwd = StoreApplication.passWord;
+                    if ((pwd != null && !"".endsWith(pwd)) || !Constant.PHONE.equals(StoreApplication.loginType)) {
+                        //已登录,评分框
+                        boolean isLiked = likeIv.isSelected();
+                        ToastUtil.show(content, isLiked ? "取消成功" : "收藏成功,可在管理界面中查看");
+                        likeIv.setSelected(!isLiked);
+                    } else {//未登录
+                        showUnLoginDialog();
+                    }
+
                     break;
                 case R.id.game_detail_feedback_bt:
                     ToastUtil.show(content, "反馈成功");
                     break;
                 case R.id.game_detail_percentage_tv:
-                    String pwd = StoreApplication.passWord;
-                    if ((pwd != null && !"".endsWith(pwd)) ||
+                    String pwd1 = StoreApplication.passWord;
+                    if ((pwd1 != null && !"".endsWith(pwd1)) ||
                             !Constant.PHONE.equals(StoreApplication.loginType)) {
                         //已登录,评分框
                         showPercentDialog();

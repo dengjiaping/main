@@ -61,7 +61,7 @@ import cn.ngame.store.activity.manager.ManagerFragment;
 import cn.ngame.store.activity.sm.AboutNgameZoneActivity;
 import cn.ngame.store.activity.sm.AdCooperativeActivity;
 import cn.ngame.store.activity.sm.JoypadSettingsActivity;
-import cn.ngame.store.activity.sm.ManagerSettingsActivity;
+import cn.ngame.store.activity.sm.SystemSettingsActivity;
 import cn.ngame.store.adapter.FragmentViewPagerAdapter;
 import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.VersionInfo;
@@ -365,7 +365,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     startActivity(new Intent(context, LoginActivity.class));
                 }
             } else if (id == R.id.sm_system_settings) {//系统设置
-                Intent setIntent = new Intent(context, ManagerSettingsActivity.class);
+                Intent setIntent = new Intent(context, SystemSettingsActivity.class);
                 startActivity(setIntent);
             } else if (id == R.id.sm_joypad_settings) {//手柄设置
                 startActivity(new Intent(context, JoypadSettingsActivity.class));

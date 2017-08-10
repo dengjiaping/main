@@ -1,6 +1,7 @@
 package cn.ngame.store.activity.sm;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -24,7 +25,7 @@ import cn.ngame.store.util.ToastUtil;
  * App设置页面
  * Created by zeng on 2016/12/7.
  */
-public class ManagerSettingsActivity extends BaseFgActivity implements CompoundButton.OnCheckedChangeListener {
+public class SystemSettingsActivity extends BaseFgActivity implements CompoundButton.OnCheckedChangeListener {
 
     private ToggleButton but_push, but_load, but_install, but_update;
     private int delayMillis = 100;
@@ -72,7 +73,7 @@ public class ManagerSettingsActivity extends BaseFgActivity implements CompoundB
             public void onClick(View v) {
                 String text = tv_clear.getText().toString();
                 if ("0KB".equals(text)) {
-                    ToastUtil.show(ManagerSettingsActivity.this, "没有缓存了~");
+                    ToastUtil.show(SystemSettingsActivity.this, "没有缓存了~");
                     return;
                 }
                 if (text.endsWith("MB")) {
@@ -82,15 +83,15 @@ public class ManagerSettingsActivity extends BaseFgActivity implements CompoundB
                 } else {
                     delayMillis = 1000;
                 }
-                DataCleanManager.clearAllCache(ManagerSettingsActivity.this);
-                final DialogHelper dialogHelper = new DialogHelper(getSupportFragmentManager(), ManagerSettingsActivity.this);
+                DataCleanManager.clearAllCache(SystemSettingsActivity.this);
+                final DialogHelper dialogHelper = new DialogHelper(getSupportFragmentManager(), SystemSettingsActivity.this);
                 dialogHelper.showAlert("清理中...", false);
 
                 v.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         dialogHelper.hideAlert();
-                        ToastUtil.show(ManagerSettingsActivity.this, "清空缓存成功~");
+                        ToastUtil.show(SystemSettingsActivity.this, "清空缓存成功~");
                         tv_clear.setText("0KB");
                     }
                 }, delayMillis);
@@ -157,9 +158,11 @@ public class ManagerSettingsActivity extends BaseFgActivity implements CompoundB
     }
 
     private void doLoadClick(boolean isChecked) {
+        //允许 isChecked=true, 
+        Log.d(TAG, "isChecked: "+isChecked);
         StoreApplication.allowAnyNet = isChecked;
+        //如果允许
         if (isChecked) {
-
             DialogHelper dialogHelper = new DialogHelper(getSupportFragmentManager(), this);
             dialogHelper.showConfirm("温馨提示", "运营商网络下载可能导致流量超额，确认开启？", "取消", "开启", new View.OnClickListener() {
                 @Override
@@ -169,10 +172,9 @@ public class ManagerSettingsActivity extends BaseFgActivity implements CompoundB
             }, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SPUtils.put(ManagerSettingsActivity.this, Constant.CFG_ALLOW_4G_LOAD, true);
+                    SPUtils.put(SystemSettingsActivity.this, Constant.CFG_ALLOW_4G_LOAD, true);
                 }
             });
-
         } else {
             SPUtils.put(this, Constant.CFG_ALLOW_4G_LOAD, false);
         }

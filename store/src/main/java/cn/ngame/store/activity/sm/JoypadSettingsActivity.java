@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import cn.ngame.store.R;
 import cn.ngame.store.activity.BaseFgActivity;
-import cn.ngame.store.ota.view.DeviceOtaUpdateActivity;
+import cn.ngame.store.ota.view.OtaActivity;
 
 /**
  * App设置页面
@@ -34,7 +34,7 @@ public class JoypadSettingsActivity extends BaseFgActivity {
 
     //手柄连接与更新
     public void onJoypadConnectAndOtaUpdateClick(View view) {
-        Intent intent0 = new Intent(this, DeviceOtaUpdateActivity.class);
+        Intent intent0 = new Intent(this, OtaActivity.class);
         startActivity(intent0);
     }
 
