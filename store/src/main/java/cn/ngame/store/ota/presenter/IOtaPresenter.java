@@ -8,7 +8,7 @@ import cn.ngame.store.ota.model.DeviceInfo;
  */
 public interface IOtaPresenter {
 
-    /** 检测更新按  */
+    /** 检测更新按钮  */
     void checkNewVersion();
 
     /** 扫描可用的设备 */

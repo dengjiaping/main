@@ -339,9 +339,9 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
                 if (state == -1){
                     Toast.makeText(OtaActivity.this,"请先连接手柄设备",Toast.LENGTH_SHORT).show();
                 }else if (state == -2){
-                    Toast.makeText(OtaActivity.this,"正在检测，请稍后",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OtaActivity.this,"正在检测，请稍后...",Toast.LENGTH_SHORT).show();
                 }else if (state == -3){
-                    Toast.makeText(OtaActivity.this,"正在进行OTA升级",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OtaActivity.this,"OTA升级更新中，请勿重复操作",Toast.LENGTH_SHORT).show();
                 }else if (state == 0){
                     Toast.makeText(OtaActivity.this,"当前设备是最新版本",Toast.LENGTH_SHORT).show();
                 }else {
@@ -352,9 +352,8 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
     }
 
     public void showUpdateDialog(final DeviceInfo info){
-
         if(isUpdating){
-            Toast.makeText(OtaActivity.this,"正在进行OTA升级",Toast.LENGTH_SHORT).show();
+            Toast.makeText(OtaActivity.this,"OTA更新升级中...",Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -369,7 +368,7 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
         LayoutInflater inflater = getLayoutInflater();
         LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_update,null);
         TextView tv_title = (TextView) contentView.findViewById(R.id.tv_title);
-        tv_title.setText("确认立即更新到新版本："+info.getNewVersionName()+"吗？");
+        tv_title.setText("是否立即更新到新版本："+info.getNewVersionName()+"吗？");
         TextView tv_summary = (TextView) contentView.findViewById(R.id.tv_summary);
         tv_summary.setText(info.getContent());
         dialogFragment.setContentView(contentView);
@@ -402,8 +401,8 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
         TextView tv_title = (TextView) contentView.findViewById(R.id.tv_title);
         tv_title.setVisibility(View.GONE);
         TextView tv_summary = (TextView) contentView.findViewById(R.id.tv_summary);
-        tv_summary.setText("固件升级过程中请保持手机和手柄设备电量充足，请将手机和手柄放在一起。" +
-                "请勿断开蓝牙连接！请勿退出APP，及其他操作！升级过程中手柄重启是正常情况。");
+        tv_summary.setText("更新过程中请将手机和手柄放在一起。" +
+                "请勿关闭手柄、断开蓝牙连接及退出APP等其他操作！升级过程中手柄重启是正常情况。");
 
         dialogFragment.setContentView(contentView);
 
@@ -417,8 +416,9 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
         dialogFragment.setNegativeButton("知道了", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(dialogFragment.isVisible())
+                if (dialogFragment.isVisible()) {
                     dialogFragment.dismiss();
+                }
                 presenter.updateDevice(info);
             }
         });
@@ -443,19 +443,17 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
     private void showNotifyBack(){
 
         final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
-        dialogFragment.setTitle("温馨提示");
         dialogFragment.setDialogWidth(250);
-
         LayoutInflater inflater = getLayoutInflater();
         LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_update,null);
         TextView tv_title = (TextView) contentView.findViewById(R.id.tv_title);
         tv_title.setVisibility(View.GONE);
         TextView tv_summary = (TextView) contentView.findViewById(R.id.tv_summary);
-        tv_summary.setText("正在进行手柄固件升级，退出后将会导致升级失败！");
+        tv_summary.setText("手柄固件升级中，退出将会导致升级失败!是否退出?");
 
         dialogFragment.setContentView(contentView);
 
-        dialogFragment.setPositiveButton("仍然退出", new View.OnClickListener() {
+        dialogFragment.setPositiveButton("退出", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialogFragment.dismiss();
@@ -469,7 +467,8 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
                     dialogFragment.dismiss();
             }
         });
-        if(dialogFragment != null)
+        if (dialogFragment != null) {
             dialogFragment.show(getSupportFragmentManager(),"notifyBackDialog");
+        }
     }
 }
