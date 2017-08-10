@@ -92,10 +92,7 @@ public class GameLoadProgressBar extends View {
 
         this.gameFileStatus = status;
 
-        if (gameFileStatus == null) {
-            text = "";
-        }
-        if (gameFileStatus.getStatus() == GameFileStatus.STATE_UN_INSTALL) {
+        if (gameFileStatus == null || gameFileStatus.getStatus() == GameFileStatus.STATE_UN_INSTALL){
             text = "下载";
         } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_DOWNLOAD) {         //下载中
             text = "暂停";

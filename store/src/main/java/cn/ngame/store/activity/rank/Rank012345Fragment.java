@@ -79,7 +79,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
                 //这里执行加载数据的操作
                 getRankList();
             } else {
-                Log.d(TAG, tabPosition +"不请求数据," + tabPosition2);
+                Log.d(TAG, tabPosition + "不请求数据," + tabPosition2);
             }
             return;
         }
@@ -153,7 +153,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 //少于指定条数不加载
                 if (pageAction.getTotal() < pageAction.getPageSize()) {
-                    ToastUtil.show(content,"已经到底了");
+                    ToastUtil.show(content, "已经到底了");
                     pullListView.setHasMoreData(false);
                     pullListView.onPullUpRefreshComplete();
                     return;
@@ -277,14 +277,14 @@ public class Rank012345Fragment extends BaseSearchFragment {
         tablayout2.setTabTextColors(ContextCompat.getColor(content, R.color.font_black_9), Color.WHITE);
         ViewGroup viewGroup = (ViewGroup) tablayout2.getChildAt(0);
         int dp20 = CommonUtil.dip2px(getActivity(), 20);
-        int dp44 = CommonUtil.dip2px(getActivity(), 44);
+        int dp45 = CommonUtil.dip2px(getActivity(), 45);
         int dp40 = CommonUtil.dip2px(getActivity(), 40);
-        int dp12 = CommonUtil.dip2px(content, 12);
+        int dp12 = CommonUtil.dip2px(content, 12f);
         for (int i = 0; i < viewGroup.getChildCount(); i++) {
             ViewGroup view = (ViewGroup) viewGroup.getChildAt(i);
             TextView textView = (TextView) view.getChildAt(1);
             textView.setTextSize(dp12);
-            textView.setWidth(dp44);
+            textView.setWidth(dp45);
             textView.setHeight(dp20);
             textView.setBackgroundResource(R.drawable.selector_rank5_tab2_bg);
         }

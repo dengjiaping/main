@@ -1,11 +1,9 @@
 package cn.ngame.store.user.view;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
@@ -152,15 +150,8 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         });
         dialogHelper = new DialogHelper(getSupportFragmentManager(), mContext);
         mShareAPI = UMShareAPI.get(this);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        android.util.Log.d(TAG, "onRequest6.0PermissionsResult: " + requestCode);
 
     }
-
 
     @Override
     protected void onResume() {
@@ -179,14 +170,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         if (!userName.equals("") && userName.length() <= 11) {
             et_user.setText(userName);
             et_user.setSelection(userName.length());
-        }
-
-        if (Build.VERSION.SDK_INT >= 23) {
-            String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission
-                    .ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission
-                    .READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest
-                    .permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS};
-            ActivityCompat.requestPermissions(this, mPermissionList, 777);
         }
     }
 
@@ -393,6 +376,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     editor.apply();
 
                     StoreApplication.token = user.token;
+                    android.util.Log.d(TAG, "user.token: "+user.token);
                     StoreApplication.passWord = password;
                     //加载用户头像
                     StoreApplication.userHeadUrl = user.headPhoto;
@@ -443,7 +427,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 Log.d(TAG, "userName: " + userName);
                 Log.d(TAG, "userCode: " + StoreApplication.userCode);
                 Log.d(TAG, "nicknameStr:" + nicknameStr);
-                Log.d(TAG, "LOGIN_TYPE:" + LOGIN_TYPE);
+                Log.d(TAG, "loginType:" + LOGIN_TYPE);
                 params.put(KeyConstant.LOGIN_NAME, userName);//uid
                 params.put(KeyConstant.NICK_NAME, nicknameStr);//
                 params.put(KeyConstant.pass_word, password);//""

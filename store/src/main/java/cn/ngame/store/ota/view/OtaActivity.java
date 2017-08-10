@@ -34,6 +34,7 @@ import cn.ngame.store.ota.presenter.OtaPresenter;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.view.RoundProgressBar;
 
+
 /**
  * 用于OTA升级，我的设备页面
  * Created by zeng on 2016/8/15.
@@ -394,19 +395,19 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
 
     private void showNotify(final DeviceInfo info){
         final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
-        dialogFragment.setTitle("温馨提示");
-        dialogFragment.setDialogWidth(250);
+        dialogFragment.setDialogWidth(280);
 
         LayoutInflater inflater = getLayoutInflater();
         LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_update,null);
         TextView tv_title = (TextView) contentView.findViewById(R.id.tv_title);
         tv_title.setVisibility(View.GONE);
         TextView tv_summary = (TextView) contentView.findViewById(R.id.tv_summary);
-        tv_summary.setText("固件升级过程中请保持手机和手柄设备电量充足，请将手机和手柄放在一起。请勿断开蓝牙连接！请勿退出APP，及其他操作！升级过程中手柄重启是正常情况。");
+        tv_summary.setText("固件升级过程中请保持手机和手柄设备电量充足，请将手机和手柄放在一起。" +
+                "请勿断开蓝牙连接！请勿退出APP，及其他操作！升级过程中手柄重启是正常情况。");
 
         dialogFragment.setContentView(contentView);
 
-        dialogFragment.setPositiveButton("待会儿再说", new View.OnClickListener() {
+        dialogFragment.setPositiveButton("取消", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(dialogFragment.isVisible())

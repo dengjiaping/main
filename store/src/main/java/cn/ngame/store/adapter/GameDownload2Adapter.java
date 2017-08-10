@@ -199,7 +199,7 @@ public class GameDownload2Adapter extends BaseAdapter {
                                 progressBar.setVisibility(View.VISIBLE);
                             } else {
                                 tv_size.setVisibility(View.INVISIBLE);
-                                tv_state.setText("");
+                                tv_state.setText("已安装");
                                 progressBar.setVisibility(View.INVISIBLE);
                             }
                         }
