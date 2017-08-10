@@ -2,9 +2,9 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:useLevel="false">
     <!-- 填充 -->
-    <solid android:color="@color/color_pressed_297acc"/>
+    <solid android:color="@color/login_bt_pressed"/>
     <size
-        android:width="330dp"
+        android:width="300dp"
         android:height="44dp"/>
     <!--圆角-->
     <corners android:radius="@dimen/dp_10"

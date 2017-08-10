@@ -22,7 +22,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="15dp"
             android:textColor="@color/white"
-            android:background="@drawable/ic_back_one"/>
+            android:background="@drawable/ic_back"/>
 
         <TextView
             android:id="@+id/left_tv"
@@ -86,6 +86,6 @@
         android:background="@drawable/selector_blue_bt"
         android:text="@string/update_check"
         android:textColor="@color/white"
-        android:textSize="20sp"/>
+        android:textSize="@dimen/dm028"/>
 
 </RelativeLayout>

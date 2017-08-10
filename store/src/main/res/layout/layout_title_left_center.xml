@@ -18,7 +18,7 @@
         android:layout_centerVertical="true"
         android:background="@null"
         android:layout_gravity="center_horizontal|center_vertical"
-        android:drawableLeft="@drawable/fanhui"
+        android:drawableLeft="@drawable/ic_back"
         android:drawablePadding="@dimen/dp_10"
         android:paddingLeft="@dimen/title_left_bt_padding_left"
         android:paddingRight="@dimen/dp_20"
