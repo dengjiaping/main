@@ -93,7 +93,7 @@ public class MsgDetailListAdapter extends BaseAdapter {
         holder.tv_item_agreeNum.setText(item.getPointCount() + "");
         if (item.getIsPoint() == 0) {
             holder.iv_agree.setBackgroundResource(R.drawable.msg_detail_agree);
-            holder.tv_item_agreeNum.setTextColor(context.getResources().getColor(R.color.font_black_9));
+            holder.tv_item_agreeNum.setTextColor(context.getResources().getColor(R.color.color999999));
             holder.rl_agree.setEnabled(true);
         } else {
             holder.iv_agree.setBackgroundResource(R.drawable.msg_detail_disagree);

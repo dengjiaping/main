@@ -28,7 +28,7 @@
             android:padding="10dp"
             android:background="@null"
             android:textColor="@color/color_333333"
-            android:textColorHint="@color/font_black_9"
+            android:textColorHint="@color/color999999"
             android:textSize="14sp" />
 
         <TextView
@@ -41,7 +41,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="8dp"
             android:text="可输入400字"
-            android:textColor="@color/font_black_9"
+            android:textColor="@color/color999999"
             android:textSize="13sp" />
     </RelativeLayout>
 
@@ -89,7 +89,7 @@
             android:inputType="number"
             android:minLines="1"
             android:textColor="@color/color_333333"
-            android:textColorHint="@color/font_black_9"
+            android:textColorHint="@color/color999999"
             android:textSize="13sp" />
     </LinearLayout>
 

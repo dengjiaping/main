@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -14,7 +15,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +42,7 @@ import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.util.StringUtil;
+import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.video.view.VideoDetailActivity;
 import cn.ngame.store.view.LoadStateView;
 
@@ -54,11 +55,10 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
 
     public static final int READ_EXTERNAL_STORAGE = 24;
     public static final int WRITE_EXTERNAL_STORAGE = 25;
-    public static final String TAG = SearchActivity.class.getSimpleName();
+    public static final String TAG ="999";
     public int GAMETYPE_ID = 36;
     public int VIDEOTYPE_ID = 37;
     private LoadStateView loadStateView;
-    private RelativeLayout rl_search;
     private TextView tv_search;
     private EditText et_search;
     private String searchName;
@@ -81,17 +81,18 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
     LvSearchAdapter historyAdapter;
     SearchAdapter searchAdapter;
     private String tvSearch;
+    private SearchActivity content;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_search);
+        content=this;
         dbManager = DatabaseManager.getInstance(this);
 
         listView = (ListView) findViewById(R.id.listView);
         loadStateView = (LoadStateView) findViewById(R.id.loadStateView);
-        rl_search = (RelativeLayout) findViewById(R.id.rl_search);
         tv_search = (TextView) findViewById(R.id.tv_search);
         et_search = (EditText) findViewById(R.id.et_search);
         bt_fork = (ImageView) findViewById(R.id.but_fork);
@@ -103,7 +104,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
         gridView_game = (GridView) findViewById(R.id.gridView_game);
 
         loadStateView.setReLoadListener(this);
-        rl_search.setOnClickListener(this);
+        tv_search.setOnClickListener(this);
         tv_clear.setOnClickListener(this);
 
         et_search.addTextChangedListener(new TextWatcher() {
@@ -113,21 +114,21 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.d(TAG, "onTextChanged: "+s);
                 if (s.toString().trim().length() > 0) {
                     searchName = ConvUtil.NS(s);
-                    tv_search.setText("搜索");
                     doSearch();
                 } else {
                     ll_show.setVisibility(View.VISIBLE);
                     listView.setVisibility(View.GONE);
                     loadStateView.setVisibility(View.GONE);
                     selectHistory(); //查询本地数据库列表
-                    tv_search.setText("取消");
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                Log.d(TAG, "afterTextChanged: "+s);
                 String searchText = et_search.getText().toString();
                 if (!TextUtil.isEmpty(searchText)) {
                     bt_fork.setVisibility(View.VISIBLE);
@@ -176,8 +177,10 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
         gridView_history.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                et_search.setText(historyList.get(position).getTitle());
-                searchName = historyList.get(position).getTitle();
+                String historyTitle = historyList.get(position).getTitle();
+                et_search.setText(historyTitle);
+                et_search.setSelection(historyTitle.length());
+                searchName = historyTitle;
                 doSearch();
             }
         });
@@ -328,10 +331,10 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.rl_search:
+            case R.id.tv_search:
                 searchName = et_search.getText().toString().trim();
                     if (StringUtil.isEmpty(searchName)) {
-                        this.finish();
+                        ToastUtil.show(content,"请输入要搜索内容");
                     } else {
 //                        et_search.setText("");
 //                        ll_show.setVisibility(View.VISIBLE);
@@ -365,5 +368,9 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
     public void deleteItemhistory(String title) {
         dbManager.deleteSearchHistoryById(title);
         selectHistory();
+    }
+
+    public void onSeachBackClick(View view) {
+        this.finish();
     }
 }

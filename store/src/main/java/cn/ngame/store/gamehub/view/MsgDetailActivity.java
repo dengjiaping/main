@@ -144,7 +144,7 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
                     tv_send.setTextColor(getResources().getColor(R.color.colorPrimary));
                 } else {
                     tv_send.setEnabled(false);
-                    tv_send.setTextColor(getResources().getColor(R.color.font_black_9));
+                    tv_send.setTextColor(getResources().getColor(R.color.color999999));
                 }
             }
 

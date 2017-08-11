@@ -51,7 +51,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="5dp"
             android:text="上次观看至19分32秒"
-            android:textColor="@color/font_black_9"
+            android:textColor="@color/color999999"
             android:textSize="14sp"
             android:drawableLeft="@drawable/history_lock"
             android:drawablePadding="5dp"

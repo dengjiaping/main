@@ -77,17 +77,19 @@ public class SearchOtherAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.search_other_item, parent, false);
             holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
+            holder.search_position = (TextView) convertView.findViewById(R.id.tv_search_position);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         holder.tv_title.setText(list.get(position).getAdvName());
+        holder.search_position.setText(position + 1 + "");
         return convertView;
     }
 
     static class ViewHolder {
-        private TextView tv_title;
+        private TextView tv_title, search_position;
     }
 }
 

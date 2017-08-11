@@ -174,5 +174,5 @@
 
     </RelativeLayout>
 
-    <include layout="@layout/layout_line_1dp_e6e6e6"></include>
+    <include layout="@layout/layout_line_1px_e6e6e6"></include>
 </LinearLayout>

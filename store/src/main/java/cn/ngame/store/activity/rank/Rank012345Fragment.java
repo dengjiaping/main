@@ -274,7 +274,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
         tablayout2.setBackgroundColor(Color.WHITE);
         LinearLayout.LayoutParams tab5Params = (LinearLayout.LayoutParams) tablayout2.getLayoutParams();
         tab5Params.setMargins(0, 0, 0, 0);
-        tablayout2.setTabTextColors(ContextCompat.getColor(content, R.color.font_black_9), Color.WHITE);
+        tablayout2.setTabTextColors(ContextCompat.getColor(content, R.color.color999999), Color.WHITE);
         ViewGroup viewGroup = (ViewGroup) tablayout2.getChildAt(0);
         int dp20 = CommonUtil.dip2px(getActivity(), 20);
         int dp45 = CommonUtil.dip2px(getActivity(), 45);

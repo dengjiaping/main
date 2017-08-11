@@ -78,7 +78,7 @@
                 android:layout_height="22dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/discover_tongzhi"
+                android:background="@drawable/ic_main_msg_notif"
                 android:scaleType="centerInside"/>
         </FrameLayout>
     </RelativeLayout>

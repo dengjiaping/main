@@ -27,7 +27,7 @@
         android:textSize="12sp"
         android:gravity="left"
         android:text="人类与吸血鬼的斗争一直..."
-        android:textColor="@color/font_black_9"
+        android:textColor="@color/color999999"
         android:visibility="visible"/>
 
 </LinearLayout>

@@ -127,7 +127,7 @@
             android:layout_centerVertical="true"
             android:paddingLeft="8dp"
             android:text=""
-            android:textColor="@color/font_black_9"
+            android:textColor="@color/color999999"
             android:textSize="12sp" />
 
         <RelativeLayout
@@ -153,7 +153,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
                 android:text=""
-                android:textColor="@color/font_black_9"
+                android:textColor="@color/color999999"
                 android:textSize="12sp" />
         </RelativeLayout>
     </RelativeLayout>

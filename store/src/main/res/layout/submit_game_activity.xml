@@ -17,7 +17,7 @@
         android:maxLength="15"
         android:paddingLeft="10dp"
         android:textColor="@color/color_333333"
-        android:textColorHint="@color/font_black_9"
+        android:textColorHint="@color/color999999"
         android:textSize="14sp" />
 
     <EditText
@@ -34,6 +34,6 @@
         android:paddingRight="10dp"
         android:paddingTop="5dp"
         android:textColor="@color/color_333333"
-        android:textColorHint="@color/font_black_9"
+        android:textColorHint="@color/color999999"
         android:textSize="14sp" />
 </LinearLayout>

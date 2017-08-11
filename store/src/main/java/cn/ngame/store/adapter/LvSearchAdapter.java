@@ -21,8 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -92,7 +92,7 @@ public class LvSearchAdapter extends BaseAdapter {
 
             holder = new ViewHolder(context);
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_search, parent, false);
-            holder.rl_delete = (RelativeLayout) convertView.findViewById(R.id.rl_delete);
+            holder.rl_delete = (ImageView) convertView.findViewById(R.id.rl_delete);
             holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
 //			holder.tv_summary = (TextView) convertView.findViewById(R.id.tv_summary);
 //			holder.tv_size = (TextView) convertView.findViewById(R.id.text1);
@@ -125,7 +125,7 @@ public class LvSearchAdapter extends BaseAdapter {
     static class ViewHolder {
 
         private Context context;
-        private RelativeLayout rl_delete;
+        private ImageView rl_delete;
         private TextView tv_title;
         private RatingBar ratingBar;
 

@@ -30,7 +30,7 @@
     <color name="cccccc">#cccccc</color>
     <color name="color_333333">#333333</color>
     <color name="font_black_6">#666666</color>
-    <color name="font_black_9">#999999</color>
+    <color name="color999999">#999999</color>
 
     <color name="progress_bar_background">#94ffeb</color>
 
@@ -56,8 +56,6 @@
 
     <color name="transparent">#00000000</color>
     <color name="translucent_1affffff">#1affffff</color>
-    <color name="e6">#e6e6e6</color>
-
     <color name="login_bt_pressed">#4290df</color>
     <color name="login_bt_nomal">#804290df</color>
 
@@ -91,4 +89,6 @@
     <color name="f6f6f6">#f6f6f6</color>
     <color name="color_43b9ff">#43b9ff</color>
     <color name="color_020202">#020202</color>
+    <color name="e6e6e6">#e6e6e6</color>
+    <color name="color_95dfff">#95dfff</color>
 </resources>

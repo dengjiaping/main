@@ -27,7 +27,7 @@
         android:textSize="14sp"
         android:maxLines="1"
         android:text=""
-        android:textColor="@color/font_black_9"/>
+        android:textColor="@color/color999999"/>
 
 
 </RelativeLayout>

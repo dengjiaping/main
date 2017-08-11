@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_device"
         android:text="当前版本:V5456"
-        android:textColor="@color/font_black_9"
+        android:textColor="@color/color999999"
         android:textSize="@dimen/dm020"/>
 
     <TextView

@@ -46,5 +46,5 @@
         android:layout_marginLeft="6dp"
         android:text="添加图片说明"
         android:textSize="14sp"
-        android:textColor="@color/font_black_9"/>
+        android:textColor="@color/color999999"/>
 </RelativeLayout>

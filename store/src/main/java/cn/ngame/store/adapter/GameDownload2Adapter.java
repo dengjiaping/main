@@ -189,7 +189,7 @@ public class GameDownload2Adapter extends BaseAdapter {
                             int status = fileStatus.getStatus();
                             if (status == GameFileStatus.STATE_HAS_INSTALL) {
                                 tv_size.setVisibility(View.INVISIBLE);
-                                tv_state.setText("");
+                                tv_state.setText("已安装");
                                 progressBar.setLoadState(fileStatus);
                                 progressBar.setVisibility(View.VISIBLE);
                             } else if (status == GameFileStatus.STATE_HAS_DOWNLOAD) {//安装
@@ -199,7 +199,7 @@ public class GameDownload2Adapter extends BaseAdapter {
                                 progressBar.setVisibility(View.VISIBLE);
                             } else {
                                 tv_size.setVisibility(View.INVISIBLE);
-                                tv_state.setText("已安装");
+                                tv_state.setText("");
                                 progressBar.setVisibility(View.INVISIBLE);
                             }
                         }

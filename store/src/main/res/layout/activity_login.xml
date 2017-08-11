@@ -95,7 +95,7 @@
             android:maxLength="11"
             android:singleLine="true"
             android:textColor="@android:color/white"
-            android:textColorHint="@color/e6"
+            android:textColorHint="@color/e6e6e6"
             android:textSize="@dimen/dp_16"
             />
     </RelativeLayout>
@@ -132,7 +132,7 @@
             android:maxLength="16"
             android:singleLine="true"
             android:textColor="@android:color/white"
-            android:textColorHint="@color/e6"
+            android:textColorHint="@color/e6e6e6"
             android:textSize="@dimen/dp_16"/>
 
         <ImageButton
@@ -255,7 +255,7 @@
                 android:layout_centerInParent="true"
                 android:background="@color/transparent"
                 android:text="第三方登录"
-                android:textColor="@color/e6"
+                android:textColor="@color/e6e6e6"
                 android:textSize="@dimen/dp_12"/>
         </RelativeLayout>
     </RelativeLayout>

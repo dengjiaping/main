@@ -88,7 +88,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:text="游戏描述"
-            android:textColor="@color/font_black_9"
+            android:textColor="@color/color999999"
             android:textSize="12dp"/>
 
         <include layout="@layout/layout_match_parent_line_height10dp"/>
@@ -171,7 +171,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:text="游戏描述"
-            android:textColor="@color/font_black_9"
+            android:textColor="@color/color999999"
             android:textSize="12dp"/>
 
         <include layout="@layout/layout_match_parent_line_height10dp"/>

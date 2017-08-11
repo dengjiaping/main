@@ -64,7 +64,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="删除"
-                android:textColor="@color/font_black_9"
+                android:textColor="@color/color999999"
                 android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>

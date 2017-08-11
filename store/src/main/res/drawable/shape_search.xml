@@ -3,19 +3,7 @@
 
     <!-- 填充 -->
     <solid android:color="@color/white" />
-
-   <!-- <stroke
-        android:color="@color/white"
-        android:width="1dp"/>-->
-
-    <!-- 宽度和高度 -->
-    <!--<size
-        android:width="50dp"
-        android:height="50dp"/>-->
-
-    <corners android:topLeftRadius="4dp"
-             android:topRightRadius="4dp"
-             android:bottomRightRadius="4dp"
-             android:bottomLeftRadius="4dp"/>
+    <corners android:radius="@dimen/dm028"
+         />
 
 </shape>

@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="12321"
-                android:textColor="@color/font_black_9"
+                android:textColor="@color/color999999"
                 android:textSize="14dp" />
 
             <TextView
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:text=""
-                android:textColor="@color/font_black_9"
+                android:textColor="@color/color999999"
                 android:textSize="13dp" />
         </LinearLayout>
     </LinearLayout>

@@ -38,7 +38,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:text="tv_date"
-                    android:textColor="@color/font_black_9"
+                    android:textColor="@color/color999999"
                     android:textSize="12sp" />
 
                 <TextView

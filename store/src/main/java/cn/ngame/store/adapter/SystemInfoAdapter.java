@@ -97,7 +97,7 @@ public class SystemInfoAdapter extends BaseAdapter {
         if (readList.contains(item.getId() + "")) {
             holder.tv_content.setTextColor(context.getResources().getColor(R.color.color_333333));
         } else {
-            holder.tv_content.setTextColor(context.getResources().getColor(R.color.font_black_9));
+            holder.tv_content.setTextColor(context.getResources().getColor(R.color.color999999));
         }
         if (selectIds != null && selectIds.contains(position + "")) {
             holder.iv_select.setBackgroundResource(R.drawable.info_select);

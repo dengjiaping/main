@@ -297,7 +297,8 @@ public class DatabaseManager {
      * @return
      */
     public List<SearchHistoryBean> queryAllSearchHistory() throws ParseException {
-        Cursor cursor = db.rawQuery("select * from " + DatabaseHelper.TABLE_NAME_SEARCH_HISTORY + " order by date desc limit 6", new String[]{});
+        Cursor cursor = db.rawQuery("select * from " + DatabaseHelper.TABLE_NAME_SEARCH_HISTORY
+                + " order by date desc limit 5", new String[]{});
         ArrayList<SearchHistoryBean> list = new ArrayList<>();
         while (cursor.moveToNext()) {
             SearchHistoryBean searchHistoryBean = new SearchHistoryBean();

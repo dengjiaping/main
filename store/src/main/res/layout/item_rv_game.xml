@@ -20,7 +20,7 @@
         android:textSize="10sp"
         android:gravity="center"
         android:text="10w次下载"
-        android:textColor="@color/font_black_9"
+        android:textColor="@color/color999999"
         android:visibility="visible"/>
 
     <TextView

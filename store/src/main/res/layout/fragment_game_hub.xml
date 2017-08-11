@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/search" />
+                android:background="@drawable/ic_search_gray" />
 
             <TextView
                 android:id="@+id/et_search"
@@ -59,7 +59,7 @@
                 android:lines="1"
                 android:maxLines="1"
                 android:textColor="@color/font_black_6"
-                android:textColorHint="@color/font_black_9"
+                android:textColorHint="@color/color999999"
                 android:textSize="15sp" />
 
             <ImageView

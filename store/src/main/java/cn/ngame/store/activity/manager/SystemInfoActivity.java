@@ -74,7 +74,7 @@ public class SystemInfoActivity extends BaseFgActivity implements View.OnClickLi
                         tv_delete.setTextColor(getResources().getColor(R.color.colorPrimary));
                         tv_delete.setEnabled(true);
                     } else {
-                        tv_delete.setTextColor(getResources().getColor(R.color.font_black_9));
+                        tv_delete.setTextColor(getResources().getColor(R.color.color999999));
                         tv_delete.setEnabled(false);
                     }
                     if (selectList.size() == msgbean.getData().size()) {

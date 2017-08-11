@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:text="12321"
             android:textSize="14dp"
-            android:textColor="@color/font_black_9"/>
+            android:textColor="@color/color999999"/>
         <TextView
             android:id="@+id/tv_from"
             android:layout_width="wrap_content"
@@ -24,7 +24,7 @@
             android:singleLine="true"
             android:text="来自.."
             android:textSize="13dp"
-            android:textColor="@color/font_black_9"/>
+            android:textColor="@color/color999999"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -78,7 +78,7 @@
             android:gravity="left"
             android:text="啊实啊啊所大所大所大所大所阿斯顿阿斯顿按时打算打扫啊啊所大所大所大所大所阿斯顿阿斯顿按时打算打扫的按啊啊所大所大所大所大所阿斯顿阿斯顿按时打算打扫的按的按时打实大"
             android:textSize="14dp"
-            android:textColor="@color/font_black_9"/>
+            android:textColor="@color/color999999"/>
     </RelativeLayout>
 
     <View

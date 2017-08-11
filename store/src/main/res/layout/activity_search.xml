@@ -1,30 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ngame="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray"
-    android:orientation="vertical">
-
+                xmlns:ngame="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/gray"
+                android:orientation="vertical">
+    <!--头部导航-->
     <LinearLayout
         android:id="@+id/layout_1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_title_height"
         android:background="@color/colorPrimary"
         android:orientation="horizontal"
-        android:paddingLeft="15dp"
-        android:paddingRight="10dp">
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:onClick="onSeachBackClick"
+            android:paddingLeft="@dimen/dm032"
+            android:paddingRight="@dimen/dm044"
+            android:src="@drawable/ic_back"/>
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginBottom="6dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
             android:layout_marginTop="6dp"
             android:layout_weight="1"
             android:background="@drawable/shape_search"
-            android:gravity="center">
+            android:gravity="center"
+            android:paddingLeft="@dimen/dm008">
 
             <ImageView
                 android:id="@+id/img_1"
@@ -32,7 +40,22 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/search" />
+                android:layout_margin="@dimen/dm008"
+                android:padding="@dimen/dm006"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_search_gray"/>
+
+            <ImageView
+                android:id="@+id/but_fork"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingLeft="@dimen/dm016"
+                android:paddingRight="@dimen/dm020"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_search_delete"
+                android:visibility="gone"/>
 
             <EditText
                 android:id="@+id/et_search"
@@ -41,204 +64,132 @@
                 android:layout_toLeftOf="@+id/but_fork"
                 android:layout_toRightOf="@+id/img_1"
                 android:background="@null"
+                android:gravity="center_vertical"
                 android:hint="@string/search"
                 android:imeActionLabel="搜索"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:lines="1"
                 android:maxLines="1"
-                android:textColor="@color/font_black_6"
-                android:textColorHint="@color/font_black_9"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:id="@+id/but_fork"
-                android:layout_width="@dimen/dm050"
-                android:layout_height="@dimen/dm050"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_user_delete"
-                android:visibility="gone" />
+                android:textColor="@color/color_333333"
+                android:textColorHint="@color/cccccc"
+                android:textSize="@dimen/dm028"/>
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rl_search"
-            android:layout_width="40dp"
-            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tv_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="0dp"
-                android:text="取消"
-                android:focusable="false"
-                android:textColor="@color/white"
-                android:textSize="15dp"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:focusable="false"
+            android:paddingLeft="@dimen/dm032"
+            android:paddingRight="@dimen/dm032"
+            android:text="搜索"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dm028"/>
     </LinearLayout>
-
+    <!--提示背景-->
     <cn.ngame.store.view.LoadStateView
         android:id="@+id/loadStateView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
         android:layout_below="@+id/layout_1"
+        android:layout_marginTop="70dp"
         android:visibility="gone"
         ngame:end="@string/search_end"
         ngame:ing="@string/search_ing"
-        ngame:visible="false" />
-
+        ngame:visible="false"/>
+    <!--搜索后的结果列表-->
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout_1"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/shape_search_white"
-        android:divider="@color/gray"
-        android:dividerHeight="0dp"
+        android:background="@color/white"
+        android:divider="@color/e6e6e6"
+        android:dividerHeight="@dimen/dm001"
         android:scrollbars="none"
         android:visibility="gone"></ListView>
 
     <LinearLayout
         android:id="@+id/ll_show"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/gray"
-        android:layout_below="@+id/listView"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
-
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/listView"
+        android:background="@color/gray"
+        android:orientation="vertical">
+        <!--搜索历史-->
         <LinearLayout
             android:id="@+id/ll_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/shape_search_white"
+            android:background="@color/e6e6e6"
             android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
-
-                <ImageView
-                    android:id="@+id/iv_history"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:background="@drawable/sousuo_history" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/iv_history"
-                    android:text="搜索历史"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tv_clear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="15dp"
-                    android:gravity="center_vertical"
-                    android:text="清空搜索历史"
-                    android:textColor="@color/red"
-                    android:textSize="13sp" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/gray" />
 
             <GridView
                 android:id="@+id/gridView_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="5dp"
                 android:gravity="center_horizontal"
-                android:horizontalSpacing="5dp"
                 android:listSelector="#00000000"
-                android:numColumns="2"
+                android:numColumns="1"
                 android:scrollbars="none"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="5dp"></GridView>
-        </LinearLayout>
+                android:verticalSpacing="@dimen/dm001"></GridView>
 
+            <TextView
+                android:id="@+id/tv_clear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dm001"
+                android:background="@color/white"
+                android:gravity="center"
+                android:paddingTop="@dimen/dm024"
+                android:text="清空搜索历史"
+                android:textColor="@color/color999999"
+                android:textSize="@dimen/dm028"/>
+
+        </LinearLayout>
+        <!--热门搜索-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/shape_search_white"
+            android:layout_height="match_parent"
+            android:background="@color/white"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
-
-                <ImageView
-                    android:id="@+id/iv_game"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:background="@drawable/sousuo_game" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/iv_game"
-                    android:text="热搜游戏"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="14sp" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/gray" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="@dimen/dm032"
+                android:layout_marginLeft="@dimen/dm032"
+                android:layout_marginTop="@dimen/dm050"
+                android:text="热门搜索"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dm032"/>
 
             <GridView
                 android:id="@+id/gridView_game"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="5dp"
+                android:background="@color/e6e6e6"
                 android:gravity="center_horizontal"
-                android:horizontalSpacing="5dp"
                 android:listSelector="#00000000"
                 android:numColumns="2"
+                android:paddingBottom="@dimen/dm001"
+                android:paddingRight="@dimen/dm_004"
+                android:paddingTop="@dimen/dm001"
                 android:scrollbars="none"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="5dp"></GridView>
+                android:verticalSpacing="@dimen/dm001"></GridView>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

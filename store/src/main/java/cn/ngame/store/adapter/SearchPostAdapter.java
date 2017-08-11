@@ -81,7 +81,7 @@ public class SearchPostAdapter extends BaseAdapter {
         ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_search_item, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_search_result, parent, false);
             holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
             convertView.setTag(holder);
         } else {
