@@ -287,7 +287,7 @@ public class AboutActivity extends BaseFgActivity {
 
                 remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification_download);
                 notification = new Notification.Builder(context)
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSmallIcon(R.drawable.ic_launcher)
                         .setContent(remoteViews)
                         .build();
                 mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -337,7 +337,7 @@ public class AboutActivity extends BaseFgActivity {
 
                                     remoteViews.setTextViewText(R.id.text1, "下载完成");
                                     notification = new Notification.Builder(context)
-                                            .setSmallIcon(R.mipmap.ic_launcher)
+                                            .setSmallIcon(R.drawable.ic_launcher)
                                             .setContent(remoteViews)
                                             .setContentIntent(PendingIntent.getActivity(AboutActivity.this, 0, intent, 0))
                                             .build();

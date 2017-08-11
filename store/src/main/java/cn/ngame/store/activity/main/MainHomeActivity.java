@@ -1044,7 +1044,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
                 remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification_download);
                 notification = new Notification.Builder(context)
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSmallIcon(R.drawable.ic_launcher)
                         .setContent(remoteViews)
                         .build();
                 mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -1093,7 +1093,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
                                     remoteViews.setTextViewText(R.id.text1, "下载完成");
                                     notification = new Notification.Builder(context)
-                                            .setSmallIcon(R.mipmap.ic_launcher)
+                                            .setSmallIcon(R.drawable.ic_launcher)
                                             .setContent(remoteViews)
                                             .setContentIntent(PendingIntent.getActivity(context, 0, intent, 0))
                                             .build();

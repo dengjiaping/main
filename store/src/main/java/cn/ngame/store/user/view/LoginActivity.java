@@ -150,12 +150,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         });
         dialogHelper = new DialogHelper(getSupportFragmentManager(), mContext);
         mShareAPI = UMShareAPI.get(this);
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         findViewById(R.id.left_bt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,6 +159,11 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         findViewById(R.id.login_qq_bt).setOnClickListener(this);
         findViewById(R.id.login_wechat_bt).setOnClickListener(this);
         findViewById(R.id.login_sina_bt).setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         userName = preferences.getString(Constant.CONFIG_USER_NAME, "");
         loginloginType = preferences.getString(Constant.CONFIG_LOGIN_TYPE, "1");
         if (!userName.equals("") && userName.length() <= 11) {
