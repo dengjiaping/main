@@ -259,6 +259,9 @@ public class DatabaseManager {
      * @param title 搜索信息
      */
     public void addSearchHistory(String title) {
+        if (null==title) {
+            return;
+        }
         Cursor cursor = db.rawQuery("select * from " + DatabaseHelper.TABLE_NAME_SEARCH_HISTORY + " where title = ?", new String[]{title});
         if (cursor.moveToFirst()) {
             //存在搜索记录

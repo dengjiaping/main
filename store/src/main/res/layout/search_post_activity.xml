@@ -64,7 +64,7 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/tv_search"
+            android:id="@+id/search_bt"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical"

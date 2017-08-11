@@ -65,7 +65,7 @@
                 android:layout_toRightOf="@+id/img_1"
                 android:background="@null"
                 android:gravity="center_vertical"
-                android:hint="@string/search"
+                android:hint="输入游戏名字"
                 android:imeActionLabel="搜索"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
@@ -79,13 +79,13 @@
 
 
         <TextView
-            android:id="@+id/tv_search"
+            android:id="@+id/search_bt"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:focusable="false"
+            android:gravity="center"
             android:paddingLeft="@dimen/dm032"
             android:paddingRight="@dimen/dm032"
             android:text="搜索"

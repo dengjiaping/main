@@ -57,7 +57,7 @@ public class SearchPostActivity extends BaseFgActivity implements View.OnClickLi
 
     private void init() {
         loadStateView = (LoadStateView) findViewById(R.id.loadStateView);
-        tv_search = (TextView) findViewById(R.id.tv_search);
+        tv_search = (TextView) findViewById(R.id.search_bt);
         et_search = (EditText) findViewById(R.id.et_search);
         bt_fork = (ImageView) findViewById(R.id.but_fork);
         listView = (ListView) findViewById(R.id.listView);
@@ -177,7 +177,7 @@ public class SearchPostActivity extends BaseFgActivity implements View.OnClickLi
 
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_search:
+            case R.id.search_bt:
                 if (StringUtil.isEmpty(et_search.getText().toString().trim())) {
                     this.finish();
                 } else {
