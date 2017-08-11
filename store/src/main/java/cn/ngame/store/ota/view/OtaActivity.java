@@ -368,7 +368,7 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
         LayoutInflater inflater = getLayoutInflater();
         LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_update,null);
         TextView tv_title = (TextView) contentView.findViewById(R.id.tv_title);
-        tv_title.setText("是否立即更新到新版本："+info.getNewVersionName()+"吗？");
+        tv_title.setText("确定立即更新："+info.getNewVersionName()+"吗？");
         TextView tv_summary = (TextView) contentView.findViewById(R.id.tv_summary);
         tv_summary.setText(info.getContent());
         dialogFragment.setContentView(contentView);

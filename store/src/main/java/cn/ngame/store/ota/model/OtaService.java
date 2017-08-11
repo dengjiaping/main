@@ -55,7 +55,7 @@ import cn.ngame.store.exception.NoSDCardException;
  */
 public class OtaService extends Service {
 
-    public final static String TAG = OtaService.class.getSimpleName();
+    public final static String TAG = "777";
 
     public final static String ACTION_BLUETOOTH_NONSUPPORT = "cn.ngame.bluetooth.le.ACTION_BLUETOOTH_NONSUPPORT"; //手机不支持蓝牙
     public final static String ACTION_BLUETOOTH_DISABLE = "cn.ngame.bluetooth.le.ACTION_BLUETOOTH_DISABLE";  //蓝牙未开启
@@ -130,7 +130,6 @@ public class OtaService extends Service {
 
     private void initOutPutLogFile() {
         try {
-
             file = new File(CommonUtil.getFileLoadBasePath());
             if (!file.exists()) {
                 file.mkdirs();
@@ -230,7 +229,8 @@ public class OtaService extends Service {
                 deviceInfoList.clear(); //清空已扫描到的设备
                 for (BluetoothDevice d : pairDevice) {
 
-                    Log.d(TAG, "----------------->>>> " + d.getName() + " " + d.getAddress() + " " + d.getBondState() + "  " + d.getType());
+                    Log.d(TAG, "----------------->>>> " + d.getName() + " " + d.getAddress() + " " + d.getBondState() + "  " +
+                            d.getType());
                     if (d.getType() == BluetoothDevice.DEVICE_TYPE_LE) { //	Bluetooth device type, Low Energy - LE-only
                         Log.d(TAG, "-------------->>>　　我是BLE设备");
 
@@ -244,7 +244,8 @@ public class OtaService extends Service {
                             deviceInfoList.add(deviceInfo);
                         }
 
-                    } else if (d.getType() == BluetoothDevice.DEVICE_TYPE_CLASSIC) { //Bluetooth device type, Classic - BR/EDR devices
+                    } else if (d.getType() == BluetoothDevice.DEVICE_TYPE_CLASSIC) { //Bluetooth device type, Classic - BR/EDR
+                        // devices
                         Log.d(TAG, "-------------->>>　　我是经典蓝牙3.0设备");
 
                         int versionCode = classicService.queryVersionCode(d);
@@ -353,7 +354,8 @@ public class OtaService extends Service {
 //                    }
 //                };
 //
-//                Request<JsonResult<VersionInfo>> versionRequest = new GsonRequest<JsonResult<VersionInfo>>(Request.Method.POST, url,
+//                Request<JsonResult<VersionInfo>> versionRequest = new GsonRequest<JsonResult<VersionInfo>>(Request.Method
+// .POST, url,
 //                        successListener, errorListener, new TypeToken<JsonResult<VersionInfo>>() {
 //                }.getType()) {
 //                    @Override
@@ -371,7 +373,8 @@ public class OtaService extends Service {
 //                StoreApplication.requestQueue.add(versionRequest);
 
                 RequestFuture<JsonResult<VersionInfo>> future = RequestFuture.newFuture();
-                Request<JsonResult<VersionInfo>> versionRequest = new GsonRequest<JsonResult<VersionInfo>>(Request.Method.POST, url,
+                Request<JsonResult<VersionInfo>> versionRequest = new GsonRequest<JsonResult<VersionInfo>>(Request.Method.POST,
+                        url,
                         future, future, new TypeToken<JsonResult<VersionInfo>>() {
                 }.getType()) {
                     @Override
@@ -431,23 +434,20 @@ public class OtaService extends Service {
      * @param deviceInfo 可更新设备的信息
      */
     public void updateDevice(DeviceInfo deviceInfo) {
-
         if (isUpdating) {
             return;
         }
-
         Set<BluetoothDevice> pairDevice = bluetoothAdapter.getBondedDevices();
         if (pairDevice.size() > 0) {
 
             for (BluetoothDevice device : pairDevice) {
                 if (device.getAddress().equals(deviceInfo.getMac())) {
 
-                    if (device.getType() == BluetoothDevice.DEVICE_TYPE_LE) {
-
+                    if (device.getType() == BluetoothDevice.DEVICE_TYPE_LE) {//ble蓝牙-
+                        android.util.Log.d(TAG, "ble蓝牙升级: ");
                         bleService.update(device, deviceInfo);
-
-                    } else if (device.getType() == BluetoothDevice.DEVICE_TYPE_CLASSIC) {
-
+                    } else if (device.getType() == BluetoothDevice.DEVICE_TYPE_CLASSIC) {//经典蓝牙
+                        android.util.Log.d(TAG, "经典蓝牙升级: ");
                         classicService.update(device, deviceInfo);
                     }
                 } else {
@@ -771,7 +771,8 @@ public class OtaService extends Service {
                     byte[] fileBuffer = new byte[fileSize];
                     int offset = 0;
                     int numRead;
-                    while (offset < fileBuffer.length && (numRead = fis.read(fileBuffer, offset, fileBuffer.length - offset)) >= 0) {
+                    while (offset < fileBuffer.length && (numRead = fis.read(fileBuffer, offset, fileBuffer.length - offset))
+                            >= 0) {
                         offset += numRead;
                     }
 
@@ -787,7 +788,8 @@ public class OtaService extends Service {
                     Log.e(TAG, "----------------------------------------------->>> CRC值 ： " + crcByte);
 
                     //4.创建指令消息
-                    byte[] msgBytes = {0x20, 0x0b, (byte) 0x82, 0x04, 0x00, 0x00, 0x00, 0x00, crcByte, 0x00, DATA_PACKAGE_COUNT}; //0x0a每收到10个数据包发送一个notify
+                    byte[] msgBytes = {0x20, 0x0b, (byte) 0x82, 0x04, 0x00, 0x00, 0x00, 0x00, crcByte, 0x00,
+                            DATA_PACKAGE_COUNT}; //0x0a每收到10个数据包发送一个notify
 
                     byte[] fileLength = int2byte((int) length);
                     if (fileLength.length == 4) {
@@ -953,7 +955,8 @@ public class OtaService extends Service {
             isSendSuccess = false;
 
             byte[] buffer;
-            int end = (offset + DATA_PACKAGE_SIZE > OtaFileBuffer.length) ? OtaFileBuffer.length : offset + DATA_PACKAGE_SIZE;//每次向外写20个字节数据
+            int end = (offset + DATA_PACKAGE_SIZE > OtaFileBuffer.length) ? OtaFileBuffer.length : offset + DATA_PACKAGE_SIZE;
+            //每次向外写20个字节数据
             buffer = Arrays.copyOfRange(OtaFileBuffer, offset, end);
 
             for (int i = 0; i < buffer.length; i++) {
@@ -962,7 +965,8 @@ public class OtaService extends Service {
 
             packageSize = buffer.length;
             writeDataCharacteristic(buffer);
-            //Log.e(TAG,"-------->>>>> 发送包的次数 packageCount ："+ (++packageCount)+" offset: "+ offset + " packageSize: "+buffer.length);
+            //Log.e(TAG,"-------->>>>> 发送包的次数 packageCount ："+ (++packageCount)+" offset: "+ offset + " packageSize: "+buffer
+            // .length);
 
             if (isWriteLogFile) {
                 writeLogData(buffer); //写日志数据到文件
@@ -1127,7 +1131,8 @@ public class OtaService extends Service {
                             byte[] received = {bytes[3], bytes[4], bytes[5], bytes[6]};
                             int receivedOffset = byte2int(received);
 
-                            //Log.d(TAG,"-------->>>>>>>> 已接收的字节数 84 : receivedOffset " + receivedOffset + " fileSize  "+fileSize);
+                            //Log.d(TAG,"-------->>>>>>>> 已接收的字节数 84 : receivedOffset " + receivedOffset + " fileSize
+                            // "+fileSize);
                             int progress = (int) ((float) receivedOffset / (float) fileSize * 100);
 
                             intent.putExtra("title", "升级中");
@@ -1319,7 +1324,6 @@ public class OtaService extends Service {
          * @param device 被升级的设备
          */
         public void update(BluetoothDevice device, DeviceInfo deviceInfo) {
-
             if (isWriteLogFile) {
                 initOutPutLogFile();
             }
@@ -1374,7 +1378,8 @@ public class OtaService extends Service {
                     byte[] fileBuffer = new byte[fileSize];
                     int offset = 0;
                     int numRead;
-                    while (offset < fileBuffer.length && (numRead = fis.read(fileBuffer, offset, fileBuffer.length - offset)) >= 0) {
+                    while (offset < fileBuffer.length && (numRead = fis.read(fileBuffer, offset, fileBuffer.length - offset))
+                            >= 0) {
                         offset += numRead;
                     }
 
@@ -1442,7 +1447,8 @@ public class OtaService extends Service {
 
                         isUpdating = true;
                         byte[] tempData;
-                        int end = (position + DATA_PACKAGE_SIZE > fileBuffer.length) ? fileBuffer.length : position + DATA_PACKAGE_SIZE;
+                        int end = (position + DATA_PACKAGE_SIZE > fileBuffer.length) ? fileBuffer.length : position +
+                                DATA_PACKAGE_SIZE;
                         tempData = Arrays.copyOfRange(fileBuffer, position, end);
 
                         byte[] dataPackage = new byte[dataPackageHead.length + (end - position)];
