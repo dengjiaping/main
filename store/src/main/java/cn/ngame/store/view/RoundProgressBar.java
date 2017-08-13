@@ -150,11 +150,6 @@ public class RoundProgressBar extends View {
             paint.setTypeface(Typeface.DEFAULT_BOLD); //设置字体
             canvas.drawText(state, centre, height, paint); //画出进度百分比
 
-
-
-
-
-
             //canvas.drawText(percent + "%", centre - textWidth / 2, centre + textSize/2, paint); //画出进度百分比
         }
 

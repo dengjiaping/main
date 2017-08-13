@@ -175,7 +175,7 @@ public class OtaService extends Service {
      *
      * @return 如果手机支持蓝牙设备则返回true
      */
-    private boolean initialize() {
+    private boolean checkBlueToothSupportable() {
 
         if (bluetoothAdapter != null) {
             return true;
@@ -209,28 +209,29 @@ public class OtaService extends Service {
             }
         }
 
-        boolean isSupportBt = initialize();
+        //检查设备是否支持蓝牙
+        boolean isSupportBt = checkBlueToothSupportable();
         if (!isSupportBt) {
-            broadcastUpdate(ACTION_BLUETOOTH_NONSUPPORT);    //设备不支持蓝牙
+            broadcastUpdate(ACTION_BLUETOOTH_NONSUPPORT);
             return;
         }
 
         int btState = bluetoothAdapter.getState();
-        //蓝牙未开启
+        //蓝牙未开启  正在关闭蓝牙
         if (btState == BluetoothAdapter.STATE_OFF || btState == BluetoothAdapter.STATE_TURNING_OFF) {
             broadcastUpdate(ACTION_BLUETOOTH_DISABLE);
         } else {  //蓝牙已开启
             Set<BluetoothDevice> pairDevice = bluetoothAdapter.getBondedDevices();
             if (pairDevice.size() > 0) {
                 deviceInfoList.clear(); //清空已扫描到的设备
-
                 //======================================循环  已配对设备===========================================
                 for (BluetoothDevice device : pairDevice) {
                     int type = device.getType();
-                    Log.d(TAG, "循环 已配对的设备> " + device.getName() + "," + device.getAddress() + " " + device.getBondState() + "  " + type);
+                    Log.d(TAG, "循环 已配对的设备名字: " + device.getName() + ",地址" + device.getAddress() + " 配对状态:" + device
+                            .getBondState() + "类型:"+ type);
                     if (type == BluetoothDevice.DEVICE_TYPE_LE) { //	 type, Low Energy - LE-only
                         int versionCode = bleService.queryVersionCode(device);
-                        Log.d(TAG, "-------------->>>　　我是BLE设备,版本:"+versionCode);
+                        Log.d(TAG, "-------------->>>　　我是BLE设备,版本号:" + versionCode);
                         if (versionCode > 0) {
                             DeviceInfo deviceInfo = new DeviceInfo(device.getName(), device.getAddress(), type);
                             deviceInfo.setCurrentVersionCode(versionCode);
@@ -240,7 +241,7 @@ public class OtaService extends Service {
 
                     } else if (type == BluetoothDevice.DEVICE_TYPE_CLASSIC) { // type, Classic - BR/EDR
                         int versionCode = classicService.queryVersionCode(device);//查询版本号
-                        Log.d(TAG, "-------------->>>　我是经典蓝牙3.0设备,版本"+versionCode);
+                        Log.d(TAG, "-------------->>>　我是经典蓝牙3.0设备,版本号" + versionCode);
                         if (versionCode != -1) {
                             DeviceInfo deviceInfo = new DeviceInfo(device.getName(), device.getAddress(), type);
                             deviceInfo.setCurrentVersionCode(versionCode);
@@ -261,6 +262,7 @@ public class OtaService extends Service {
 
                 //如果上面的循环,查到的设备个数大于0
                 if (deviceInfoList.size() > 0) {
+                    android.util.Log.d(TAG, "查询到的设备个数大于0,发送广播");
                     Intent intent = new Intent(ACTION_BLUETOOTH_FIND_DEVICE);
                     intent.putExtra("title", "连接成功");
                     intent.putExtra("subtitle", "");
@@ -268,6 +270,7 @@ public class OtaService extends Service {
                     sendBroadcast(intent);
                     //未查到设备,个数==0
                 } else {
+                    android.util.Log.d(TAG, "查询到的设备小于0,发送广播");
                     //发送广播,更新界面
                     Intent intent = new Intent(ACTION_BLUETOOTH_FIND_DEVICE);
                     intent.putExtra("title", "连接失败");
@@ -277,7 +280,7 @@ public class OtaService extends Service {
                 }
 
             } else {
-                android.util.Log.d(TAG, "配对设备列表为空");
+                Log.d(TAG, "配对设备列表为空");
                 Intent intent = new Intent(ACTION_BLUETOOTH_FIND_DEVICE);
                 intent.putExtra("title", "连接失败");
                 intent.putExtra("subtitle", "未搜索到设备");
@@ -1575,7 +1578,7 @@ public class OtaService extends Service {
                 int alreadyRead = 0;
                 int buffer_size = 1024;
                 byte[] bytes = new byte[buffer_size];
-                for (; ; ) {
+                for (; ; ) {//死循环
                     int count = is.read(bytes, 0, buffer_size);
                     if (count == -1)
                         break;

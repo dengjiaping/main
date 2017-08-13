@@ -57,12 +57,12 @@
         android:layout_marginTop="25dp"
         android:layout_marginBottom="25dp"
         android:layout_below="@+id/title_bar"
-        ngame:roundColor="@color/font_gray"
+        ngame:roundColor="@color/e5e5e5"
         ngame:roundProgressColor="@color/colorPrimary"
         ngame:textColor="@color/font_black_6"
         ngame:textSize="18sp"
         ngame:textIsDisplayable="true"
-        ngame:roundWidth="5dp"/>
+        ngame:roundWidth="@dimen/dm003"/>
 
 
     <ListView

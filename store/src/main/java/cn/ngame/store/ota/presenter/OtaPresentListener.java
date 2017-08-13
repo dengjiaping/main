@@ -6,7 +6,7 @@ import cn.ngame.store.ota.model.DeviceInfo;
  * 控制层接口
  * Created by zeng on 2016/8/15.
  */
-public interface IOtaPresenter {
+public interface OtaPresentListener {
 
     /** 检测更新按钮  */
     void checkNewVersion();

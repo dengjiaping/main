@@ -8,7 +8,7 @@ import cn.ngame.store.ota.view.OtaUpdateListener;
  * 控制层接口实现类
  * Created by zeng on 2016/8/15.
  */
-public class OtaPresenter implements IOtaPresenter{
+public class OtaPresenter implements OtaPresentListener {
 
     private OtaUpdateListener otaView;
     private OtaService service;
