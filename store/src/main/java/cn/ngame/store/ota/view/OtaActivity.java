@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,12 +27,12 @@ import java.util.TimerTask;
 
 import cn.ngame.store.R;
 import cn.ngame.store.activity.BaseFgActivity;
+import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.fragment.SimpleDialogFragment;
 import cn.ngame.store.ota.model.DeviceInfo;
 import cn.ngame.store.ota.model.OtaService;
 import cn.ngame.store.ota.presenter.IOtaPresenter;
 import cn.ngame.store.ota.presenter.OtaPresenter;
-import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.view.RoundProgressBar;
 
 
@@ -39,10 +40,10 @@ import cn.ngame.store.view.RoundProgressBar;
  * 用于OTA升级，我的设备页面
  * Created by zeng on 2016/8/15.
  */
-public class OtaActivity extends BaseFgActivity implements View.OnClickListener,IOtaView{
+public class OtaActivity extends BaseFgActivity implements View.OnClickListener, OtaUpdateListener {
 
-    public static final String TAG = OtaActivity.class.getSimpleName();
-
+    public static final String TAG = "777";
+    private OtaActivity context;
     public static final int REQUEST_CODE_BLUETOOTH_SETTINGS = 1;
 
     private IOtaPresenter presenter;
@@ -51,41 +52,53 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
     private DeviceLvAdapter adapter;
 
     private RoundProgressBar progressBar;
-    private Button bt_check,bt_back;
-    private TextView tv_title_left,tv_title_right;
+    private Button bt_check, bt_back;
+    private TextView tv_title_left, tv_title_right;
 
     private boolean isUpdating = false;
     private Timer timer = new Timer();
-
-
-    private ServiceConnection conn = new ServiceConnection() {
+    //OtaService绑定监听
+    private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            OtaService.OtcBinder otcBinder = (OtaService.OtcBinder) service;
-            OtaService otaService = otcBinder.getService();
+            Log.d(TAG, "OtaService连接成功 ");
+            OtaService.MyBinder myBinder = (OtaService.MyBinder) service;
+            OtaService otaService = myBinder.getService();
 
             //创建控制层
-            presenter = new OtaPresenter(OtaActivity.this,otaService);
+            presenter = new OtaPresenter(context, otaService);
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if(isUpdating){
+                    if (isUpdating) {
                         presenter.scanDevice();
                         timer.cancel();
                     }
                 }
-            },0,1000);
+            }, 0, 1000);
         }
 
         @Override
-        public void onServiceDisconnected(ComponentName name) {}
+        public void onServiceDisconnected(ComponentName name) {
+        }
     };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_ota);
+        context =this;
+        initView();
+        //启动OTA升级后台服务
+        Intent otaService = new Intent(this, OtaService.class);
+        startService(otaService);
 
+        bindService(otaService, serviceConnection, Context.BIND_AUTO_CREATE);
+        //bindService(intent,conn,flag)->Service:onCreate()->Service:onBind()->Activity:onServiceConnected()
+        //申请下载权限
+        CommonUtil.verifyStoragePermissions(this);
+    }
+
+    private void initView() {
         progressBar = (RoundProgressBar) findViewById(R.id.progress_bar);
         bt_check = (Button) findViewById(R.id.but1);
         bt_back = (Button) findViewById(R.id.left_but);
@@ -101,24 +114,9 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
         progressBar.setState("连接手柄");
         progressBar.setStateDetail("");
 
-        //启动OTA升级后台服务
-        Intent otaIntent = new Intent(this, OtaService.class);
-        startService(otaIntent);
-
-        bindService(otaIntent,conn, Context.BIND_AUTO_CREATE);
-
-        setListener();
-
-        //申请下载权限
-        CommonUtil.verifyStoragePermissions(this);
-    }
-
-    private void setListener(){
-
         bt_back.setOnClickListener(this);
         tv_title_left.setOnClickListener(this);
         tv_title_right.setOnClickListener(this);
-
         progressBar.setOnClickListener(this);
         bt_check.setOnClickListener(this);
     }
@@ -127,7 +125,7 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
     protected void onStart() {
         super.onStart();
 
-        registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter());
+        registerReceiver(mBleConnectUpdateReceiver, makeGattUpdateIntentFilter());
     }
 
     @Override
@@ -138,7 +136,7 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
     @Override
     protected void onStop() {
         super.onStop();
-        if(presenter != null){
+        if (presenter != null) {
 
         }
     }
@@ -146,27 +144,26 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(presenter != null){
+        if (presenter != null) {
             //presenter.clear();
             presenter = null;
         }
         listView = null;
         adapter = null;
 
-        unbindService(conn);
-        unregisterReceiver(gattUpdateReceiver);
+        unbindService(serviceConnection);
+        unregisterReceiver(mBleConnectUpdateReceiver);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_BLUETOOTH_SETTINGS) {
 
-        if(requestCode == REQUEST_CODE_BLUETOOTH_SETTINGS){
-
-            if(presenter != null){
-                progressBar.setState("正在连接手柄");
-                progressBar.setStateDetail("正在创建连接...");
+            if (presenter != null) {
+                progressBar.setState("手柄连接状态:");
+                progressBar.setStateDetail("查询中...");
                 presenter.scanDevice();
-            }else {
+            } else {
                 progressBar.setState("绑定服务失败");
                 progressBar.setStateDetail("退出页面重新进入");
             }
@@ -176,33 +173,33 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.left_but:
 
-                if(isUpdating){
+                if (isUpdating) {
                     showNotifyBack();
-                }else {
+                } else {
                     finish();
                 }
 
                 break;
             case R.id.left_tv:
-                if(isUpdating){
+                if (isUpdating) {
                     showNotifyBack();
-                }else {
+                } else {
                     finish();
                 }
                 break;
             case R.id.right_tv:
 
-                Intent helpIntent = new Intent(OtaActivity.this,OtaHelpActivity.class);
+                Intent helpIntent = new Intent(OtaActivity.this, OtaHelpActivity.class);
                 startActivity(helpIntent);
 
                 break;
             case R.id.progress_bar:
 
                 Intent bluetoothIntent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
-                startActivityForResult(bluetoothIntent,REQUEST_CODE_BLUETOOTH_SETTINGS);
+                startActivityForResult(bluetoothIntent, REQUEST_CODE_BLUETOOTH_SETTINGS);
 
                 break;
             case R.id.but1:
@@ -225,12 +222,14 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
         return intentFilter;
     }
 
-    private final BroadcastReceiver gattUpdateReceiver = new BroadcastReceiver() {
+    //监听蓝牙连接,更新广播
+    private final BroadcastReceiver mBleConnectUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
-
-            if(OtaService.ACTION_BLUETOOTH_NONSUPPORT.equals(action)){
+            Log.d(TAG, "收到广播: " + action);
+            //不支持蓝牙设备
+            if (OtaService.ACTION_BLUETOOTH_NONSUPPORT.equals(action)) {
 
                 isUpdating = false;
                 listView.setVisibility(View.GONE);
@@ -244,17 +243,18 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
                 if (updateDialog != null) {
                     ft.remove(updateDialog);
                 }
-                if(notifyBackDialog != null){
+                if (notifyBackDialog != null) {
                     ft.remove(notifyBackDialog);
                 }
                 ft.commit();
 
-            }else if(OtaService.ACTION_BLUETOOTH_DISABLE.equals(action)){
-
+                //未开启蓝牙功能
+            } else if (OtaService.ACTION_BLUETOOTH_DISABLE.equals(action)) {
+                Log.d(TAG, "未开启蓝牙功能: " + action);
                 isUpdating = false;
                 listView.setVisibility(View.GONE);
                 progressBar.setState("连接失败");
-                progressBar.setStateDetail("未开启蓝牙功能");
+                progressBar.setStateDetail("蓝牙功能未开启");
                 progressBar.setProgress(100);
 
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -263,33 +263,33 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
                 if (updateDialog != null) {
                     ft.remove(updateDialog);
                 }
-                if(notifyBackDialog != null){
+                if (notifyBackDialog != null) {
                     ft.remove(notifyBackDialog);
                 }
                 ft.commit();
 
-            }else if(OtaService.ACTION_BLUETOOTH_FIND_DEVICE.equals(action)){
-
+                //找到设备
+            } else if (OtaService.ACTION_BLUETOOTH_FIND_DEVICE.equals(action)) {
+                Log.d(TAG, "找到设备: " + action);
                 isUpdating = false;
                 String title = intent.getStringExtra("title");
                 String subtitle = intent.getStringExtra("subtitle");
                 ArrayList<DeviceInfo> deviceInfos = intent.getParcelableArrayListExtra("devices");
 
-                if(deviceInfos != null && deviceInfos.size() > 0){
+                if (deviceInfos != null && deviceInfos.size() > 0) {
                     listView.setVisibility(View.VISIBLE);
                     adapter.setData(deviceInfos);
                     adapter.notifyDataSetChanged();
-                }else {
+                } else {
                     listView.setVisibility(View.GONE);
                 }
 
                 progressBar.setState(title);
                 progressBar.setStateDetail(subtitle);
                 progressBar.setProgress(100);
-
-
-            }else if(OtaService.ACTION_BLUETOOTH_CHECK_UPDATE.equals(action)){
-
+                //检查更新
+            } else if (OtaService.ACTION_BLUETOOTH_CHECK_UPDATE.equals(action)) {
+                Log.d(TAG, "检查更新: " + action);
                 isUpdating = false;
                 String title = intent.getStringExtra("title");
                 String subtitle = intent.getStringExtra("subtitle");
@@ -304,19 +304,19 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
                 progressBar.setProgress(100);
 
 
-            }else if(OtaService.ACTION_OTA_UPDATING.equals(action)){
-
+            } else if (OtaService.ACTION_OTA_UPDATING.equals(action)) {
+                Log.d(TAG, "正在更新: " + action);
                 String title = intent.getStringExtra("title");
                 String subtitle = intent.getStringExtra("subtitle");
-                int progress = intent.getIntExtra("progress",100);
-                isUpdating = intent.getBooleanExtra("isUpdating",false);
-                boolean isFinished = intent.getBooleanExtra("isFinished",false);
+                int progress = intent.getIntExtra("progress", 100);
+                isUpdating = intent.getBooleanExtra("isUpdating", false);
+                boolean isFinished = intent.getBooleanExtra("isFinished", false);
 
-                if(progress >= 100 && isFinished){
+                if (progress >= 100 && isFinished) {
                     adapter.setData(null);
                     adapter.notifyDataSetChanged();
                     listView.setVisibility(View.GONE);
-                }else {
+                } else {
                     listView.setVisibility(View.VISIBLE);
                 }
 
@@ -324,6 +324,8 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
                 progressBar.setStateDetail(subtitle);
                 progressBar.setProgress(progress);
 
+            } else {
+                Log.d(TAG, "其他: " + action);
             }
 
         }
@@ -336,44 +338,44 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
             @Override
             public void run() {
 
-                if (state == -1){
-                    Toast.makeText(OtaActivity.this,"请先连接手柄设备",Toast.LENGTH_SHORT).show();
-                }else if (state == -2){
-                    Toast.makeText(OtaActivity.this,"正在检测，请稍后...",Toast.LENGTH_SHORT).show();
-                }else if (state == -3){
-                    Toast.makeText(OtaActivity.this,"OTA升级更新中，请勿重复操作",Toast.LENGTH_SHORT).show();
-                }else if (state == 0){
-                    Toast.makeText(OtaActivity.this,"当前设备是最新版本",Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(OtaActivity.this,"检测完成",Toast.LENGTH_SHORT).show();
+                if (state == -1) {
+                    Toast.makeText(OtaActivity.this, "请先连接手柄设备", Toast.LENGTH_SHORT).show();
+                } else if (state == -2) {
+                    Toast.makeText(OtaActivity.this, "正在检测，请稍后...", Toast.LENGTH_SHORT).show();
+                } else if (state == -3) {
+                    Toast.makeText(OtaActivity.this, "OTA升级更新中，请勿重复操作", Toast.LENGTH_SHORT).show();
+                } else if (state == 0) {
+                    Toast.makeText(OtaActivity.this, "当前设备是最新版本", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(OtaActivity.this, "检测完成", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    public void showUpdateDialog(final DeviceInfo info){
-        if(isUpdating){
-            Toast.makeText(OtaActivity.this,"OTA更新升级中...",Toast.LENGTH_SHORT).show();
+    public void showUpdateDialog(final DeviceInfo info) {
+        if (isUpdating) {
+            Toast.makeText(OtaActivity.this, "OTA更新升级中...", Toast.LENGTH_SHORT).show();
             return;
         }
 
         //final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
         final SimpleDialogFragment dialogFragment = SimpleDialogFragment.newInstance();
 
-        if(dialogFragment.isShow()){
+        if (dialogFragment.isShow()) {
             return;
         }
         dialogFragment.setDialogWidth(250);
 
         LayoutInflater inflater = getLayoutInflater();
-        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_update,null);
+        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_update, null);
         TextView tv_title = (TextView) contentView.findViewById(R.id.tv_title);
-        tv_title.setText("确定立即更新："+info.getNewVersionName()+"吗？");
+        tv_title.setText("确定立即更新：" + info.getNewVersionName() + "吗？");
         TextView tv_summary = (TextView) contentView.findViewById(R.id.tv_summary);
         tv_summary.setText(info.getContent());
         dialogFragment.setContentView(contentView);
 
-        dialogFragment.setPositiveButton(R.string.cancel ,new View.OnClickListener() {
+        dialogFragment.setPositiveButton(R.string.cancel, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialogFragment.dismiss();
@@ -386,18 +388,18 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
                 showNotify(info);
             }
         });
-        if(!dialogFragment.isAdded()){
-            dialogFragment.show(getSupportFragmentManager(),"updateDialog");
+        if (!dialogFragment.isAdded()) {
+            dialogFragment.show(getSupportFragmentManager(), "updateDialog");
             dialogFragment.setIsShow(true);
         }
     }
 
-    private void showNotify(final DeviceInfo info){
+    private void showNotify(final DeviceInfo info) {
         final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
         dialogFragment.setDialogWidth(280);
 
         LayoutInflater inflater = getLayoutInflater();
-        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_update,null);
+        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_update, null);
         TextView tv_title = (TextView) contentView.findViewById(R.id.tv_title);
         tv_title.setVisibility(View.GONE);
         TextView tv_summary = (TextView) contentView.findViewById(R.id.tv_summary);
@@ -409,7 +411,7 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
         dialogFragment.setPositiveButton("取消", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(dialogFragment.isVisible())
+                if (dialogFragment.isVisible())
                     dialogFragment.dismiss();
             }
         });
@@ -422,30 +424,30 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
                 presenter.updateDevice(info);
             }
         });
-        if(dialogFragment != null)
-            dialogFragment.show(getSupportFragmentManager(),"notifyDialog");
+        if (dialogFragment != null)
+            dialogFragment.show(getSupportFragmentManager(), "notifyDialog");
     }
 
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            if(isUpdating){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (isUpdating) {
                 showNotifyBack();
-            }else {
+            } else {
                 finish();
             }
         }
         return false;
     }
 
-    private void showNotifyBack(){
+    private void showNotifyBack() {
 
         final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
         dialogFragment.setDialogWidth(250);
         LayoutInflater inflater = getLayoutInflater();
-        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_update,null);
+        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_update, null);
         TextView tv_title = (TextView) contentView.findViewById(R.id.tv_title);
         tv_title.setVisibility(View.GONE);
         TextView tv_summary = (TextView) contentView.findViewById(R.id.tv_summary);
@@ -463,12 +465,12 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
         dialogFragment.setNegativeButton("继续升级", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(dialogFragment.isVisible())
+                if (dialogFragment.isVisible())
                     dialogFragment.dismiss();
             }
         });
         if (dialogFragment != null) {
-            dialogFragment.show(getSupportFragmentManager(),"notifyBackDialog");
+            dialogFragment.show(getSupportFragmentManager(), "notifyBackDialog");
         }
     }
 }

@@ -4,7 +4,7 @@ package cn.ngame.store.ota.view;
  * 视图层接口
  * Created by zeng on 2016/8/15.
  */
-public interface IOtaView {
+public interface OtaUpdateListener {
 
     /**
      * 检测手柄是否需要升级

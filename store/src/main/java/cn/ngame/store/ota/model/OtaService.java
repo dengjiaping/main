@@ -73,7 +73,7 @@ public class OtaService extends Service {
     private boolean isWriteLogFile = false;
 
 
-    private OtcBinder otcBinder = new OtcBinder();
+    private MyBinder myBinder = new MyBinder();
     private ClassicService classicService;
     private BLEService bleService;
     private ArrayList<DeviceInfo> deviceInfoList;
@@ -92,7 +92,7 @@ public class OtaService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return otcBinder;
+        return myBinder;
     }
 
     @Override
@@ -173,7 +173,7 @@ public class OtaService extends Service {
     /**
      * 初始化本地蓝牙适配器
      *
-     * @return 如果成功则返回true
+     * @return 如果手机支持蓝牙设备则返回true
      */
     private boolean initialize() {
 
@@ -181,6 +181,7 @@ public class OtaService extends Service {
             return true;
         }
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        //手机不支持蓝牙设备
         if (bluetoothAdapter == null) {
             final Intent intent = new Intent(ACTION_BLUETOOTH_NONSUPPORT);
             sendBroadcast(intent);
@@ -196,68 +197,59 @@ public class OtaService extends Service {
     public void scanDevice() {
 
         if (isUpdating) {
-
             if (deviceInfoList != null && deviceInfoList.size() > 0) {
                 Intent intent = new Intent(ACTION_BLUETOOTH_CHECK_UPDATE);
                 intent.putExtra("title", "升级中");
                 intent.putExtra("subtitle", "正在复制文件...");
                 intent.putParcelableArrayListExtra("devices", deviceInfoList);
                 sendBroadcast(intent);
-
                 return; //如果正在升级，忽略该操作
             } else {
                 isUpdating = false;
             }
         }
 
-        boolean b = initialize();
-        if (!b) {
+        boolean isSupportBt = initialize();
+        if (!isSupportBt) {
             broadcastUpdate(ACTION_BLUETOOTH_NONSUPPORT);    //设备不支持蓝牙
             return;
         }
 
-        int st = bluetoothAdapter.getState();
-
-        if (st == BluetoothAdapter.STATE_OFF || st == BluetoothAdapter.STATE_TURNING_OFF) {   //蓝牙未开启
-
+        int btState = bluetoothAdapter.getState();
+        //蓝牙未开启
+        if (btState == BluetoothAdapter.STATE_OFF || btState == BluetoothAdapter.STATE_TURNING_OFF) {
             broadcastUpdate(ACTION_BLUETOOTH_DISABLE);
-
         } else {  //蓝牙已开启
-
             Set<BluetoothDevice> pairDevice = bluetoothAdapter.getBondedDevices();
             if (pairDevice.size() > 0) {
                 deviceInfoList.clear(); //清空已扫描到的设备
-                for (BluetoothDevice d : pairDevice) {
 
-                    Log.d(TAG, "----------------->>>> " + d.getName() + " " + d.getAddress() + " " + d.getBondState() + "  " +
-                            d.getType());
-                    if (d.getType() == BluetoothDevice.DEVICE_TYPE_LE) { //	Bluetooth device type, Low Energy - LE-only
-                        Log.d(TAG, "-------------->>>　　我是BLE设备");
-
-                        int versionCode = bleService.queryVersionCode(d);
-
+                //======================================循环  已配对设备===========================================
+                for (BluetoothDevice device : pairDevice) {
+                    int type = device.getType();
+                    Log.d(TAG, "循环 已配对的设备> " + device.getName() + "," + device.getAddress() + " " + device.getBondState() + "  " + type);
+                    if (type == BluetoothDevice.DEVICE_TYPE_LE) { //	 type, Low Energy - LE-only
+                        int versionCode = bleService.queryVersionCode(device);
+                        Log.d(TAG, "-------------->>>　　我是BLE设备,版本:"+versionCode);
                         if (versionCode > 0) {
-
-                            DeviceInfo deviceInfo = new DeviceInfo(d.getName(), d.getAddress(), d.getType());
+                            DeviceInfo deviceInfo = new DeviceInfo(device.getName(), device.getAddress(), type);
                             deviceInfo.setCurrentVersionCode(versionCode);
                             deviceInfo.setCurrentVersionName("V" + versionCode);
                             deviceInfoList.add(deviceInfo);
                         }
 
-                    } else if (d.getType() == BluetoothDevice.DEVICE_TYPE_CLASSIC) { //Bluetooth device type, Classic - BR/EDR
-                        // devices
-                        Log.d(TAG, "-------------->>>　　我是经典蓝牙3.0设备");
-
-                        int versionCode = classicService.queryVersionCode(d);
+                    } else if (type == BluetoothDevice.DEVICE_TYPE_CLASSIC) { // type, Classic - BR/EDR
+                        int versionCode = classicService.queryVersionCode(device);//查询版本号
+                        Log.d(TAG, "-------------->>>　我是经典蓝牙3.0设备,版本"+versionCode);
                         if (versionCode != -1) {
-
-                            DeviceInfo deviceInfo = new DeviceInfo(d.getName(), d.getAddress(), d.getType());
+                            DeviceInfo deviceInfo = new DeviceInfo(device.getName(), device.getAddress(), type);
                             deviceInfo.setCurrentVersionCode(versionCode);
                             deviceInfo.setCurrentVersionName("V" + versionCode);
                             deviceInfoList.add(deviceInfo);
                         }
-
                     } else {
+                        Log.d(TAG, "未知设备");
+                        //未知设备  未搜索到设备
                         Intent intent = new Intent(ACTION_BLUETOOTH_FIND_DEVICE);
                         intent.putExtra("title", "连接失败");
                         intent.putExtra("subtitle", "未搜索到设备");
@@ -265,22 +257,27 @@ public class OtaService extends Service {
                         sendBroadcast(intent);
                     }
                 }
+                //==========循环  end ============
 
+                //如果上面的循环,查到的设备个数大于0
                 if (deviceInfoList.size() > 0) {
                     Intent intent = new Intent(ACTION_BLUETOOTH_FIND_DEVICE);
                     intent.putExtra("title", "连接成功");
                     intent.putExtra("subtitle", "");
                     intent.putParcelableArrayListExtra("devices", deviceInfoList);
                     sendBroadcast(intent);
+                    //未查到设备,个数==0
                 } else {
+                    //发送广播,更新界面
                     Intent intent = new Intent(ACTION_BLUETOOTH_FIND_DEVICE);
                     intent.putExtra("title", "连接失败");
-                    intent.putExtra("subtitle", "未搜索到设备");
+                    intent.putExtra("subtitle", "无设备连接");
                     intent.putParcelableArrayListExtra("devices", null);
                     sendBroadcast(intent);
                 }
 
             } else {
+                android.util.Log.d(TAG, "配对设备列表为空");
                 Intent intent = new Intent(ACTION_BLUETOOTH_FIND_DEVICE);
                 intent.putExtra("title", "连接失败");
                 intent.putExtra("subtitle", "未搜索到设备");
@@ -468,7 +465,7 @@ public class OtaService extends Service {
     }
 
 
-    public class OtcBinder extends Binder {
+    public class MyBinder extends Binder {
         public OtaService getService() {
             return OtaService.this;
         }

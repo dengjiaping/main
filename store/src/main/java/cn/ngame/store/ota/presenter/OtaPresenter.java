@@ -2,7 +2,7 @@ package cn.ngame.store.ota.presenter;
 
 import cn.ngame.store.ota.model.DeviceInfo;
 import cn.ngame.store.ota.model.OtaService;
-import cn.ngame.store.ota.view.IOtaView;
+import cn.ngame.store.ota.view.OtaUpdateListener;
 
 /**
  * 控制层接口实现类
@@ -10,10 +10,10 @@ import cn.ngame.store.ota.view.IOtaView;
  */
 public class OtaPresenter implements IOtaPresenter{
 
-    private IOtaView otaView;
+    private OtaUpdateListener otaView;
     private OtaService service;
 
-    public OtaPresenter(IOtaView otaView,OtaService service) {
+    public OtaPresenter(OtaUpdateListener otaView, OtaService service) {
         this.otaView = otaView;
         this.service = service;
     }
