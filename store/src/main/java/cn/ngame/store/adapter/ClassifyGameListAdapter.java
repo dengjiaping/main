@@ -170,7 +170,6 @@ public class ClassifyGameListAdapter extends BaseAdapter {
         }
 
         private void init() {
-            Log.d("777", "游戏列表init ");
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {

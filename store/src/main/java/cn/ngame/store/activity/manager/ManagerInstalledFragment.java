@@ -80,16 +80,10 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
         fileLoad = FileLoadManager.getInstance(content);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "9999onStart: ");
-    }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "9999onResume: ");
         if (timer != null) {
             timer.cancel();
         }
@@ -101,7 +95,6 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d(TAG, "onStart:======run=========== ");
                             alreadyLvAdapter.setDate(fileLoad.getLoadedFileInfo());
                         }
                     });
@@ -116,7 +109,6 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        Log.d(TAG, "onHiddenChanged run==cancel: " + hidden);
         mHidden = hidden;
         if (hidden) {
             alreadyLvAdapter.clean();
@@ -131,7 +123,6 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d(TAG, "onStart:======run=========== ");
                             alreadyLvAdapter.setDate(fileLoad.getLoadedFileInfo());
                         }
                     });

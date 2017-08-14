@@ -221,6 +221,9 @@ public class GameDownload2Adapter extends BaseAdapter {
             //设置进度条状态
             GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(fileInfo.getName(), fileInfo.getUrl(),
                     fileInfo.getPackageName(), fileInfo.getVersionCode());
+            if (fileStatus == null){
+                return;
+            }
             int status = fileStatus.getStatus();
             Log.d("777", gameName + "update:status " + status);
             if (status == GameFileStatus.STATE_HAS_INSTALL) {
