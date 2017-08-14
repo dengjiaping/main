@@ -19,6 +19,7 @@ package cn.ngame.store.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,10 +53,11 @@ public class ClassifyGameListAdapter extends BaseAdapter {
     //private static final String TAG = LvSbGameAdapter.class.getSimpleName();
 
     private List<GameInfo> gameInfoList;
+    private ViewHolder holder;
+    private Handler uiHandler = new Handler();
 
     private Context context;
     private FragmentManager fm;
-    private static Handler uiHandler = new Handler();
 
     public ClassifyGameListAdapter(Context context, FragmentManager fm) {
         super();
@@ -106,13 +108,16 @@ public class ClassifyGameListAdapter extends BaseAdapter {
             gameInfoList.clear();
     }
 
+    public void stopTimer() {
+        if (null != holder) {
+            uiHandler = null;
+        }
+    }
 
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
         final GameInfo gameInfo = (gameInfoList == null) ? null : gameInfoList.get(position);
-
-        ViewHolder holder;
         if (convertView == null) {
 
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_game_2, parent, false);
@@ -129,8 +134,9 @@ public class ClassifyGameListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if (gameInfo != null)
+        if (gameInfo != null) {
             holder.update(gameInfo);
+        }
 
         return convertView;
     }
@@ -141,7 +147,7 @@ public class ClassifyGameListAdapter extends BaseAdapter {
      * @author flan
      * @since 2015年10月28日
      */
-    public static class ViewHolder {
+    public class ViewHolder {
 
         private Context context;
         private GameInfo gameInfo;
@@ -164,9 +170,15 @@ public class ClassifyGameListAdapter extends BaseAdapter {
         }
 
         private void init() {
+            Log.d("777", "游戏列表init ");
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
+                    if (null == uiHandler) {
+                        this.cancel();
+                        timer.cancel();
+                        return;
+                    }
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -219,7 +231,6 @@ public class ClassifyGameListAdapter extends BaseAdapter {
                 }
             });
         }
-
     }
 
 }

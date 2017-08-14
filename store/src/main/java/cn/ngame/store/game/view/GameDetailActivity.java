@@ -121,7 +121,10 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         //-----------------------------------------------------------------------------
 
         setContentView(R.layout.activity_game_detail);
-        gameId = getIntent().getLongExtra(KeyConstant.ID, 0L);
+        try {
+            gameId = getIntent().getLongExtra(KeyConstant.ID, 0L);
+        } catch (Exception e) {
+        }
         content = this;
         tabTextSize = CommonUtil.dip2px(content, 16f);
 
@@ -302,7 +305,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
-                Log.d("666", "onTabSelected: " + position);
                 ViewGroup view = (ViewGroup) viewGroup.getChildAt(position);
                 TextView textView = (TextView) view.getChildAt(1);
                 Paint paint = textView.getPaint();
@@ -530,5 +532,14 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             }
         });
         dialogFragment.show(getSupportFragmentManager().beginTransaction(), "successDialog");
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != timer) {
+            timer.cancel();
+        }
     }
 }

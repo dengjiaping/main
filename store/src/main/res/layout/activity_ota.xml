@@ -43,7 +43,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
             android:gravity="center_vertical"
-            android:text="刷新"
+            android:text="@string/help"
             android:textColor="@color/white"
             android:textSize="18sp"/>
 

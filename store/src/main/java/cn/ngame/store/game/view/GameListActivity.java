@@ -222,4 +222,12 @@ public class GameListActivity extends BaseFgActivity {
         };
         StoreApplication.requestQueue.add(request);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != adapter) {
+            adapter.stopTimer();
+        }
+    }
 }

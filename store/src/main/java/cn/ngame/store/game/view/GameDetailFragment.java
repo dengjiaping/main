@@ -223,9 +223,11 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                 break;
             //所有标签页面
             case R.id.game_detail_next_bt:
-                Intent intent = new Intent(context, AllTagListActivity.class);
-                intent.putExtra(KeyConstant.game_Name, gameInfo.gameName);
-                startActivity(intent);
+                if (null != gameInfo) {
+                    Intent intent = new Intent(context, AllTagListActivity.class);
+                    intent.putExtra(KeyConstant.game_Name, gameInfo.gameName);
+                    startActivity(intent);
+                }
                 break;
             case R.id.tag_tv_01:
                 i.putExtra(KeyConstant.ID, 369 + "");

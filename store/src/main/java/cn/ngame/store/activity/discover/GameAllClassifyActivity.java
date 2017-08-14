@@ -194,6 +194,7 @@ public class GameAllClassifyActivity extends BaseFgActivity {
 
                     @Override
                     public void onNext(ClassifiHomeBean result) {
+
                         if (result != null && result.getCode() == 0) {
                             listData(result);//更新数据
                         } else {
