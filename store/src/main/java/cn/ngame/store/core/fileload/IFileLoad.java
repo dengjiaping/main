@@ -74,6 +74,11 @@ public interface IFileLoad {
      * @return
      */
     List<FileLoadInfo> getLoadedFileInfo();
+    /**
+     * 获取下载完成的文件信息
+     * @return
+     */
+    List<FileLoadInfo> getOpenFileInfo();
 
 //    /**
 //     * 获取下载完成后 是否需要更新

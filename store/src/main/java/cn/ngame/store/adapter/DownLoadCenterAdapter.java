@@ -46,7 +46,7 @@ import cn.ngame.store.view.GameLoadProgressBar;
  * @author  zeng
  * @since   2016-07-4
  */
-public class LoadIngLvAdapter extends BaseAdapter {
+public class DownLoadCenterAdapter extends BaseAdapter {
 
 	//private static final String TAG = LoadIngLvAdapter.class.getSimpleName();
 
@@ -56,7 +56,7 @@ public class LoadIngLvAdapter extends BaseAdapter {
 	private FragmentManager fm;
 	private static Handler uiHandler = new Handler();
 
-	public LoadIngLvAdapter(Context context,FragmentManager fm) {
+	public DownLoadCenterAdapter(Context context, FragmentManager fm) {
 		super();
 		this.context = context;
 		this.fm = fm;

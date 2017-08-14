@@ -1,15 +1,12 @@
 package cn.ngame.store.activity.manager;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import cn.ngame.store.R;
 import cn.ngame.store.adapter.GameDownload2Adapter;
@@ -80,54 +77,21 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
         fileLoad = FileLoadManager.getInstance(content);
     }
 
-
     @Override
-    public void onResume() {
-        super.onResume();
-        if (timer != null) {
-            timer.cancel();
-        }
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "====: onStart==" + mHidden);
         if (!mHidden) {
-            timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    uiHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            alreadyLvAdapter.setDate(fileLoad.getLoadedFileInfo());
-                        }
-                    });
-                }
-            }, 0, DELAY_TIME);
+            alreadyLvAdapter.setDate(fileLoad.getOpenFileInfo());
         }
     }
-
-    private Timer timer;
-    private Handler uiHandler = new Handler();
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         mHidden = hidden;
-        if (hidden) {
-            alreadyLvAdapter.clean();
-            if (timer != null) {
-                timer.cancel();
-            }
-        } else {
-            timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    uiHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            alreadyLvAdapter.setDate(fileLoad.getLoadedFileInfo());
-                        }
-                    });
-                }
-            }, 0, DELAY_TIME);
+        if (!mHidden) {
+            alreadyLvAdapter.setDate(fileLoad.getOpenFileInfo());
         }
     }
 
@@ -161,7 +125,7 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    alreadyLvAdapter.setDate(fileLoad.getLoadedFileInfo());
+                    alreadyLvAdapter.setDate(fileLoad.getOpenFileInfo());
                 }
 
             }

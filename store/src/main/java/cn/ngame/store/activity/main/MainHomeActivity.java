@@ -58,6 +58,7 @@ import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.activity.discover.DiscoverFragment;
 import cn.ngame.store.activity.manager.ManagerFragment;
+import cn.ngame.store.activity.manager.DownloadCenterActivity;
 import cn.ngame.store.activity.sm.AboutNgameZoneActivity;
 import cn.ngame.store.activity.sm.AdCooperativeActivity;
 import cn.ngame.store.activity.sm.JoypadSettingsActivity;
@@ -95,6 +96,7 @@ import cn.ngame.store.user.view.LoginActivity;
 import cn.ngame.store.user.view.UserCenterActivity;
 import cn.ngame.store.view.DialogModel;
 
+import static cn.ngame.store.R.id.main_download_bt;
 import static cn.ngame.store.StoreApplication.deviceId;
 
 /**
@@ -163,6 +165,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private SharedPreferences.Editor editor;
     private TextView mEditProfileTv;
     private RelativeLayout rl_top;
+    private Button mDownloadBt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -226,9 +229,11 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         mIconIv = (ImageView) findViewById(R.id.iv_icon_title);
         mTitleBgIv = (ImageView) findViewById(R.id.title_iv);
         mTitleTv = (TextView) findViewById(R.id.title_tv);
+        mDownloadBt = (Button) findViewById(main_download_bt);
         im_toSearch.setOnClickListener(this);
         fl_notifi.setOnClickListener(this);
         mIconIv.setOnClickListener(this);
+        mDownloadBt.setOnClickListener(this);
 
         colorDark = getResources().getColor(R.color.colorPrimary);
         colorNormal = getResources().getColor(R.color.color_333333);
@@ -284,16 +289,18 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         setUserIcon();
 
      /*   if (Build.VERSION.SDK_INT >= 23) {
-            String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,  Manifest.permission.READ_LOGS, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest
+            String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,  Manifest.permission.READ_LOGS,
+             Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest
                     .permission.SYSTEM_ALERT_WINDOW, Manifest.permission.WRITE_APN_SETTINGS};
             ActivityCompat.requestPermissions(this, mPermissionList, 777);
         }*/
     }
-  /*  @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        android.util.Log.d(TAG, "onRequest6.0PermissionsResult: " + requestCode);
 
-    }*/
+    /*  @Override
+      public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+          android.util.Log.d(TAG, "onRequest6.0PermissionsResult: " + requestCode);
+
+      }*/
     DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_icon_title, 360);
 
     //侧边栏
@@ -587,6 +594,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mTitleBgIv.setVisibility(View.VISIBLE);
                 fl_notifi.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.VISIBLE);
+                mDownloadBt.setVisibility(View.GONE);
                 tv_home.setTextColor(colorDark);
                 break;
             case 1://排行
@@ -601,6 +609,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 fl_notifi.setVisibility(View.GONE);
                 mTitleBgIv.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.VISIBLE);
+                mDownloadBt.setVisibility(View.GONE);
                 tv_game.setTextColor(colorDark);
                 break;
         /*    case 2://圈子
@@ -626,6 +635,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 }
                 bt_video.setSelected(true);
                 mTitleTv.setText("发现");
+                mDownloadBt.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.GONE);
                 mTitleBgIv.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.VISIBLE);
@@ -640,6 +650,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 }
                 bt_manager.setSelected(true);
                 mTitleTv.setText("管理");
+                mDownloadBt.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.GONE);
                 mTitleBgIv.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.GONE);
@@ -811,6 +822,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 break;
             case R.id.fl_notifi:
                 startActivity(new Intent(context, PushMessageActivity.class));
+                break;
+            case R.id.main_download_bt:
+                startActivity(new Intent(context, DownloadCenterActivity.class));
                 break;
             case R.id.iv_icon_title:
                 if (null != mSlidingMenu) {

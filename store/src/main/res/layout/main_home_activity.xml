@@ -46,8 +46,8 @@
             android:id="@+id/im_toSearch"
             android:layout_width="44.5dp"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
             android:paddingLeft="8dp"
             android:paddingRight="15dp"
             android:scaleType="centerInside"
@@ -81,6 +81,20 @@
                 android:background="@drawable/ic_main_msg_notif"
                 android:scaleType="centerInside"/>
         </FrameLayout>
+
+
+        <Button
+            android:id="@+id/main_download_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:gravity="center"
+            android:paddingRight="@dimen/dm025"
+            android:text="下载中心"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dm028"
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <FrameLayout

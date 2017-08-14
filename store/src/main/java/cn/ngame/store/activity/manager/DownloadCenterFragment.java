@@ -1,6 +1,5 @@
 package cn.ngame.store.activity.manager;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,7 +21,7 @@ import cn.ngame.store.view.QuickAction;
  * Created by gp on 2017/3/3 0003.
  */
 
-public class ManagerLikeFragment extends BaseSearchFragment {
+public class DownloadCenterFragment extends BaseSearchFragment {
 
     ListView listView;
     private PageAction pageAction;
@@ -32,21 +31,12 @@ public class ManagerLikeFragment extends BaseSearchFragment {
     protected QuickAction mItemClickQuickAction;
     private IFileLoad fileLoad;
 
-    private DownLoadCenterAdapter downLoadCenterAdapter;
+    private DownLoadCenterAdapter alreadyLvAdapter;
     /**
      * 当前点击的列表 1.下载列表 2.完成列表
      */
     private int itemType;
     private int itemPosition;
-
-    public static ManagerLikeFragment newInstance(String type, int arg) {
-        ManagerLikeFragment fragment = new ManagerLikeFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("type", type);
-        bundle.putInt("typeValue", arg);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
 
     @Override
     protected int getContentViewLayoutID() {
@@ -55,13 +45,7 @@ public class ManagerLikeFragment extends BaseSearchFragment {
 
     @Override
     protected void initViewsAndEvents(View view) {
-        typeValue = getArguments().getInt("typeValue", 1);
-        type = getArguments().getString("type");
-
         listView = (ListView) view.findViewById(R.id.listView);
-        pageAction = new PageAction();
-        pageAction.setCurrentPage(0);
-        pageAction.setPageSize(PAGE_SIZE);
         initListView();
         initPop(typeValue);
     }
@@ -70,23 +54,23 @@ public class ManagerLikeFragment extends BaseSearchFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                itemType = 1;
+                itemType = 2;
                 itemPosition = position;
                 //显示弹出框消失
                 mItemClickQuickAction.show(view);
             }
         });
-        downLoadCenterAdapter = new DownLoadCenterAdapter(getActivity(), getSupportFragmentManager());
-        listView.setAdapter(downLoadCenterAdapter);
+        alreadyLvAdapter = new DownLoadCenterAdapter(getActivity(), getSupportFragmentManager());
+        listView.setAdapter(alreadyLvAdapter);
         fileLoad = FileLoadManager.getInstance(getActivity());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        List<FileLoadInfo> loadingList = fileLoad.getLoadingFileInfo();
-        downLoadCenterAdapter.setDate(loadingList);
-        downLoadCenterAdapter.notifyDataSetChanged();
+        List<FileLoadInfo> alreadyList = fileLoad.getLoadedFileInfo();
+        alreadyLvAdapter.setDate(alreadyList);
+        alreadyLvAdapter.notifyDataSetChanged();
     }
 
     private void initPop(final int typeValue) {
@@ -101,7 +85,7 @@ public class ManagerLikeFragment extends BaseSearchFragment {
                 if (pos == 0) {
                     //删除文件下载任务
                     FileLoadInfo fileInfo = null;
-                    fileInfo = (FileLoadInfo) downLoadCenterAdapter.getItem(itemPosition);
+                    fileInfo = (FileLoadInfo) alreadyLvAdapter.getItem(itemPosition);
                     //删除下载任务
                     fileLoad.delete(fileInfo.getUrl());
                     try {
@@ -109,9 +93,9 @@ public class ManagerLikeFragment extends BaseSearchFragment {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    List<FileLoadInfo> loadingList = fileLoad.getLoadingFileInfo();
-                    downLoadCenterAdapter.setDate(loadingList);
-                    downLoadCenterAdapter.notifyDataSetChanged();
+                    List<FileLoadInfo> alreadyList = fileLoad.getLoadedFileInfo();
+                    alreadyLvAdapter.setDate(alreadyList);
+                    alreadyLvAdapter.notifyDataSetChanged();
                 }
                 //取消弹出框
                 mItemClickQuickAction.dismiss();

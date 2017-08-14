@@ -8,7 +8,7 @@ import java.util.List;
 
 import cn.ngame.store.R;
 import cn.ngame.store.activity.BaseFgActivity;
-import cn.ngame.store.adapter.LoadIngLvAdapter;
+import cn.ngame.store.adapter.DownLoadCenterAdapter;
 import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
@@ -29,8 +29,8 @@ public class MyGameActivity extends BaseFgActivity {
     private NoScrollListView listView_ing;
     private NoScrollListView listView_already;
 
-    private LoadIngLvAdapter loadIngLvAdapter;
-    private LoadIngLvAdapter alreadyLvAdapter;
+    private DownLoadCenterAdapter downLoadCenterAdapter;
+    private DownLoadCenterAdapter alreadyLvAdapter;
 
     protected QuickAction mItemClickQuickAction;
 
@@ -51,9 +51,9 @@ public class MyGameActivity extends BaseFgActivity {
         listView_ing = (NoScrollListView) findViewById(R.id.listView_ing);
         listView_already = (NoScrollListView) findViewById(R.id.listView_already);
 
-        loadIngLvAdapter = new LoadIngLvAdapter(this,getSupportFragmentManager());
-        listView_ing.setAdapter(loadIngLvAdapter);
-        alreadyLvAdapter = new LoadIngLvAdapter(this,getSupportFragmentManager());
+        downLoadCenterAdapter = new DownLoadCenterAdapter(this,getSupportFragmentManager());
+        listView_ing.setAdapter(downLoadCenterAdapter);
+        alreadyLvAdapter = new DownLoadCenterAdapter(this,getSupportFragmentManager());
         listView_already.setAdapter(alreadyLvAdapter);
 
         fileLoad = FileLoadManager.getInstance(this);
@@ -96,7 +96,7 @@ public class MyGameActivity extends BaseFgActivity {
                     FileLoadInfo fileInfo = null;
                     if(itemType == 1){
 
-                        fileInfo = (FileLoadInfo)loadIngLvAdapter.getItem(itemPosition);
+                        fileInfo = (FileLoadInfo) downLoadCenterAdapter.getItem(itemPosition);
 
                     }else if(itemType == 2){
                         fileInfo = (FileLoadInfo) alreadyLvAdapter.getItem(itemPosition);
@@ -112,7 +112,7 @@ public class MyGameActivity extends BaseFgActivity {
                     }
                     //重新加载未下载完成的
                     List<FileLoadInfo> loadingList = fileLoad.getLoadingFileInfo();
-                    loadIngLvAdapter.setDate(loadingList);
+                    downLoadCenterAdapter.setDate(loadingList);
                     listView_ing.notifyDataSetChanged();
 
                     //重新加载已下载完成的
@@ -161,7 +161,7 @@ public class MyGameActivity extends BaseFgActivity {
         });
 
         List<FileLoadInfo> loadingList = fileLoad.getLoadingFileInfo();
-        loadIngLvAdapter.setDate(loadingList);
+        downLoadCenterAdapter.setDate(loadingList);
         listView_ing.notifyDataSetChanged();
         List<FileLoadInfo> alreadyList = fileLoad.getLoadedFileInfo();
         alreadyLvAdapter.setDate(alreadyList);

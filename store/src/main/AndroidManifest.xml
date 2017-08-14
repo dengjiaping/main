@@ -315,7 +315,7 @@
             android:name=".activity.main.TopicsDetailActivity"
             />
         <activity
-            android:name=".activity.manager.MyGameDownloadActivity"
+            android:name=".activity.manager.DownloadCenterActivity"
             />
         <activity
             android:name=".activity.manager.FeedbackSucceedActivity"
