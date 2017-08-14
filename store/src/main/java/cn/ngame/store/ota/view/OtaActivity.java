@@ -52,8 +52,8 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
     private DeviceLvAdapter adapter;
 
     private RoundProgressBar progressBar;
-    private Button bt_check, bt_back;
-    private TextView tv_title_left, tv_title_right;
+    private Button checkBt, bt_back;
+    private TextView tv_title_left, refreshBt;
 
     private boolean isUpdating = false;
     private Timer timer = new Timer();
@@ -111,10 +111,10 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
 
     private void initView() {
         progressBar = (RoundProgressBar) findViewById(R.id.progress_bar);
-        bt_check = (Button) findViewById(R.id.but1);
+        checkBt = (Button) findViewById(R.id.but1);
         bt_back = (Button) findViewById(R.id.left_but);
         tv_title_left = (TextView) findViewById(R.id.left_tv);
-        tv_title_right = (TextView) findViewById(R.id.right_tv);
+        refreshBt = (TextView) findViewById(R.id.right_tv);
 
         listView = (ListView) findViewById(R.id.listView);
         adapter = new DeviceLvAdapter(this);
@@ -127,9 +127,9 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
 
         bt_back.setOnClickListener(this);
         tv_title_left.setOnClickListener(this);
-        tv_title_right.setOnClickListener(this);
+        refreshBt.setOnClickListener(this);
         progressBar.setOnClickListener(this);
-        bt_check.setOnClickListener(this);
+        checkBt.setOnClickListener(this);
         registerReceiver(mBleConnectUpdateReceiver, makeGattUpdateIntentFilter());
     }
 
@@ -170,7 +170,7 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
         if (requestCode == REQUEST_CODE_BLUETOOTH_SETTINGS) {
 
             if (presenter != null) {
-                progressBar.setState("手柄连接状态:");
+                progressBar.setState("手柄连接状态");
                 progressBar.setStateDetail("查询中...");
                 presenter.scanDevice();
             } else {
@@ -202,10 +202,13 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
                 }
                 break;
             case R.id.right_tv:
+            /*    if (presenter != null) {
+                    //progressBar.setState("手柄连接状态:");
+                    presenter.scanDevice();
+                    progressBar.setStateDetail("连接状态查询中...");
+                }*/
 
-                Intent helpIntent = new Intent(OtaActivity.this, OtaHelpActivity.class);
-                startActivity(helpIntent);
-
+                startActivity(new Intent(context, OtaHelpActivity.class));
                 break;
             case R.id.progress_bar:
 
@@ -213,16 +216,16 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
                 startActivityForResult(bluetoothIntent, REQUEST_CODE_BLUETOOTH_SETTINGS);
 
                 break;
+            //刷新
             case R.id.but1:
                 if (null != presenter) {
                     presenter.checkNewVersion();
                 }
-
                 break;
         }
     }
 
-    //HID协议 指 系统蓝牙
+    //HID协议 指 系统的蓝牙是hid协议
     private static IntentFilter makeGattUpdateIntentFilter() {
 
         final IntentFilter intentFilter = new IntentFilter();
@@ -328,7 +331,7 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
                 isUpdating = intent.getBooleanExtra("isUpdating", false);
                 boolean isFinished = intent.getBooleanExtra("isFinished", false);
 
-                if (progress >= 100 && isFinished) {
+                if (progress >= 100 && isFinished) {//升级完成
                     adapter.setData(null);
                     adapter.notifyDataSetChanged();
                     listView.setVisibility(View.GONE);
@@ -361,7 +364,7 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
                 } else if (state == -3) {
                     Toast.makeText(OtaActivity.this, "OTA正在升级更新，请勿重复操作", Toast.LENGTH_SHORT).show();
                 } else if (state == 0) {
-                    Toast.makeText(OtaActivity.this, "当前设备已是最新版本", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OtaActivity.this, "手柄已是最新版本", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(OtaActivity.this, "检测完成", Toast.LENGTH_SHORT).show();
                 }
@@ -386,7 +389,7 @@ public class OtaActivity extends BaseFgActivity implements View.OnClickListener,
         LayoutInflater inflater = getLayoutInflater();
         LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_update, null);
         TextView tv_title = (TextView) contentView.findViewById(R.id.tv_title);
-        tv_title.setText("确定立即更新：" + info.getNewVersionName() + "吗？");
+        tv_title.setText("确定立即更新：" + info.getNewVersionName() + "版本吗？");
         TextView tv_summary = (TextView) contentView.findViewById(R.id.tv_summary);
         tv_summary.setText(info.getContent());
         dialogFragment.setContentView(contentView);

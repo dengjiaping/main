@@ -228,16 +228,16 @@ public class OtaService extends Service {
                 for (BluetoothDevice device : pairDevice) {
                     int type = device.getType();
                     Log.d(TAG, "循环 已配对的设备名字: " + device.getName() + ",地址" + device.getAddress() + " 配对状态:" + device
-                            .getBondState() + "类型:"+ type);
+                            .getBondState() + "类型:" + type);
                     if (type == BluetoothDevice.DEVICE_TYPE_LE) { //	 type, Low Energy - LE-only
                         int versionCode = bleService.queryVersionCode(device);
                         Log.d(TAG, "-------------->>>　　我是BLE设备,版本号:" + versionCode);
-                        if (versionCode > 0) {
-                            DeviceInfo deviceInfo = new DeviceInfo(device.getName(), device.getAddress(), type);
-                            deviceInfo.setCurrentVersionCode(versionCode);
-                            deviceInfo.setCurrentVersionName("V" + versionCode);
-                            deviceInfoList.add(deviceInfo);
-                        }
+                        //if (versionCode > 0) {
+                        DeviceInfo deviceInfo = new DeviceInfo(device.getName(), device.getAddress(), type);
+                        deviceInfo.setCurrentVersionCode(versionCode);
+                        deviceInfo.setCurrentVersionName("V" + versionCode);
+                        deviceInfoList.add(deviceInfo);
+                        //}
 
                     } else if (type == BluetoothDevice.DEVICE_TYPE_CLASSIC) { // type, Classic - BR/EDR
                         int versionCode = classicService.queryVersionCode(device);//查询版本号
@@ -371,11 +371,9 @@ public class OtaService extends Service {
 //                    }
 //                };
 //                StoreApplication.requestQueue.add(versionRequest);
-
                 RequestFuture<JsonResult<VersionInfo>> future = RequestFuture.newFuture();
                 Request<JsonResult<VersionInfo>> versionRequest = new GsonRequest<JsonResult<VersionInfo>>(Request.Method.POST,
-                        url,
-                        future, future, new TypeToken<JsonResult<VersionInfo>>() {
+                        url, future, future, new TypeToken<JsonResult<VersionInfo>>() {
                 }.getType()) {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
@@ -439,11 +437,14 @@ public class OtaService extends Service {
         }
         Set<BluetoothDevice> pairDevice = bluetoothAdapter.getBondedDevices();
         if (pairDevice.size() > 0) {
-
+            String mac = deviceInfo.getMac();
+            Intent intent = new Intent(ACTION_GATT_DISCONNECTED);
+            intent.putExtra("state", "升级失败");
+            intent.putExtra("stateMsg", "设备连接断开");
             for (BluetoothDevice device : pairDevice) {
-                if (device.getAddress().equals(deviceInfo.getMac())) {
+                if (device.getAddress().equals(mac)) {
 
-                    if (device.getType() == BluetoothDevice.DEVICE_TYPE_LE) {//ble蓝牙-
+                    if (device.getType() == BluetoothDevice.DEVICE_TYPE_LE) {//Ble蓝牙-
                         android.util.Log.d(TAG, "ble蓝牙升级: ");
                         bleService.update(device, deviceInfo);
                     } else if (device.getType() == BluetoothDevice.DEVICE_TYPE_CLASSIC) {//经典蓝牙
@@ -451,14 +452,11 @@ public class OtaService extends Service {
                         classicService.update(device, deviceInfo);
                     }
                 } else {
-                    Intent intent = new Intent(ACTION_GATT_DISCONNECTED);
-                    intent.putExtra("state", "升级失败");
-                    intent.putExtra("stateMsg", "设备连接断开");
+                   //升级失败
                     sendBroadcast(intent);
                 }
             }
         } else {
-
             Intent intent = new Intent(ACTION_GATT_DISCONNECTED);
             intent.putExtra("state", "连接失败");
             intent.putExtra("stateMsg", "未搜索到设备");
@@ -586,12 +584,11 @@ public class OtaService extends Service {
         }
 
         /**
-         * 升级手柄设备
+         * BLE 手柄升级
          *
          * @param device 被升级的设备
          */
         public void update(BluetoothDevice device, DeviceInfo deviceInfo) {
-
             isUpdating = true;
             isConnecting = true;
 
@@ -599,6 +596,7 @@ public class OtaService extends Service {
             //1.打开GATT连接
             if (bluetoothGatt != null) {
                 bluetoothGatt.disconnect();
+                bluetoothGatt.discoverServices();
             }
             device.connectGatt(OtaService.this, false, gattCallback);
 
@@ -612,7 +610,6 @@ public class OtaService extends Service {
             //2.等待连接成功
             int connectCount = 0;
             while (isConnecting) {
-
                 if (connectState == STATE_CONNECT_FAIL) {
                     isUpdating = false;
                     intent.putExtra("title", "升级失败");
@@ -1136,7 +1133,7 @@ public class OtaService extends Service {
                             int progress = (int) ((float) receivedOffset / (float) fileSize * 100);
 
                             intent.putExtra("title", "升级中");
-                            intent.putExtra("subtitle", "正在复制文件: " + progress + "%");
+                            intent.putExtra("subtitle", "正在下载文件: " + progress + "%");
                             intent.putExtra("isUpdating", true);
                             intent.putExtra("progress", progress);
                             sendBroadcast(intent);
@@ -1484,7 +1481,7 @@ public class OtaService extends Service {
 
                         double progress = (double) position / (double) fileSize * 100;
                         intent.putExtra("title", "升级中");
-                        intent.putExtra("subtitle", "正在复制文件...");
+                        intent.putExtra("subtitle", "正在更新文件...");
                         intent.putExtra("isUpdating", true);
                         intent.putExtra("progress", (int) progress);
                         sendBroadcast(intent);
