@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ngame="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-   >
+              xmlns:ngame="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+    >
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="82dp"
         android:background="@color/white"
         android:padding="8dp">
-
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
+            xmlns:fresco="http://schemas.android.com/apk/res-auto"
             android:id="@+id/img_1"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_alignParentLeft="true"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@color/white" />
+            android:scaleType="fitXY"
+            fresco:actualImageScaleType="fitXY"
+            fresco:failureImage="@drawable/ic_def_logo_188_188"
+            fresco:placeholderImage="@drawable/ic_def_logo_188_188"
+            fresco:placeholderImageScaleType="centerCrop"
+            fresco:progressBarImage="@drawable/ic_def_logo_188_188"
+            fresco:roundedCornerRadius="@dimen/dp_14"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginBottom="0dp"
             android:layout_marginTop="5dp"
             android:layout_toLeftOf="@+id/progress_bar"
             android:layout_toRightOf="@+id/img_1">
@@ -35,19 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/tv_percent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="5dp"
-                android:text="0%"
-                android:textColor="@color/colorPrimary"
-                android:textSize="12sp" />
-
+                android:maxLines="1"
+                android:textSize="16sp"/>
 
             <ProgressBar
                 android:id="@+id/pb"
@@ -61,8 +54,7 @@
                 android:indeterminate="false"
                 android:indeterminateOnly="false"
                 android:progress="12"
-                android:progressDrawable="@drawable/progressbar_horizontal" />
-
+                android:progressDrawable="@drawable/progressbar_horizontal"/>
 
             <TextView
                 android:id="@+id/tv_state"
@@ -70,19 +62,28 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/pb"
                 android:text="已下载"
-                android:textSize="10sp" />
+                android:textSize="10sp"/>
+
+            <TextView
+                android:id="@+id/tv_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/dm010"
+                android:layout_toRightOf="@id/tv_state"
+                android:text="0%"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"/>
 
             <TextView
                 android:id="@+id/tv_finished"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_below="@+id/pb"
                 android:layout_toLeftOf="@+id/tv_length"
                 android:text="0"
-                android:textSize="10sp" />
+                android:textSize="10sp"/>
 
             <TextView
                 android:id="@+id/tv_length"
@@ -90,28 +91,39 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/pb"
                 android:layout_marginRight="5dp"
                 android:text="/0"
-                android:textSize="10sp" />
+                android:textSize="10sp"/>
 
 
         </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/manager_installed_more_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:clickable="true"
+            android:paddingBottom="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_15"
+            android:paddingRight="@dimen/dp_5"
+            android:paddingTop="@dimen/dp_10"
+            android:src="@drawable/selector_rank_more_bt"
+            />
 
         <cn.ngame.store.view.GameLoadProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="60dp"
             android:layout_height="27dp"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_below="@id/manager_installed_more_bt"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:background="@color/white"
             android:clickable="true"
             android:text="@string/download"
             android:textColor="@color/white"
             android:textSize="16sp"
-            ngame:progress="0" />
+            ngame:progress="0"/>
     </RelativeLayout>
 </LinearLayout>

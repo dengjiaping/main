@@ -11,7 +11,7 @@
         android:layout_height="@dimen/app_title_height"
         android:layout_alignParentTop="true"
         ngame:left_but_visable="true"
-        ngame:left_but="@drawable/back"
+        ngame:left_but="@drawable/ic_back"
         ngame:left_tv_visable="true"
         ngame:left_text="@string/disclaimer"
         ngame:left_text_size="18sp"

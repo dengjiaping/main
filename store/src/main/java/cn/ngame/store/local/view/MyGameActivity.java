@@ -51,9 +51,9 @@ public class MyGameActivity extends BaseFgActivity {
         listView_ing = (NoScrollListView) findViewById(R.id.listView_ing);
         listView_already = (NoScrollListView) findViewById(R.id.listView_already);
 
-        downLoadCenterAdapter = new DownLoadCenterAdapter(this,getSupportFragmentManager());
+        downLoadCenterAdapter = new DownLoadCenterAdapter(this,getSupportFragmentManager(), mItemClickQuickAction);
         listView_ing.setAdapter(downLoadCenterAdapter);
-        alreadyLvAdapter = new DownLoadCenterAdapter(this,getSupportFragmentManager());
+        alreadyLvAdapter = new DownLoadCenterAdapter(this,getSupportFragmentManager(), mItemClickQuickAction);
         listView_already.setAdapter(alreadyLvAdapter);
 
         fileLoad = FileLoadManager.getInstance(this);

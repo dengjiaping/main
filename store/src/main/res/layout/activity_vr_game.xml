@@ -12,7 +12,7 @@
         ngame:title_text="@string/vr_game"
         ngame:title_size="22sp"
         ngame:left_but_visible="true"
-        ngame:left_but_img="@drawable/back"
+        ngame:left_but_img="@drawable/ic_back"
         ngame:right_but_visible="true"
         ngame:right_but_img="@drawable/search_title" />
 

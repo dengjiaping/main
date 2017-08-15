@@ -76,7 +76,7 @@ public class ManagerLikeFragment extends BaseSearchFragment {
                 mItemClickQuickAction.show(view);
             }
         });
-        downLoadCenterAdapter = new DownLoadCenterAdapter(getActivity(), getSupportFragmentManager());
+        downLoadCenterAdapter = new DownLoadCenterAdapter(getActivity(), getSupportFragmentManager(), mItemClickQuickAction);
         listView.setAdapter(downLoadCenterAdapter);
         fileLoad = FileLoadManager.getInstance(getActivity());
     }

@@ -9,7 +9,7 @@ import android.widget.ListView;
 import java.util.List;
 
 import cn.ngame.store.R;
-import cn.ngame.store.adapter.GameDownload2Adapter;
+import cn.ngame.store.adapter.InstalledGameAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.fileload.FileLoadInfo;
@@ -35,7 +35,7 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     protected QuickAction mItemClickQuickAction;
     private IFileLoad fileLoad;
 
-    private GameDownload2Adapter alreadyLvAdapter;
+    private InstalledGameAdapter alreadyLvAdapter;
     /**
      * 当前点击的列表 1.下载列表 2.完成列表
      */
@@ -72,7 +72,7 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     }
 
     public void initListView() {
-        alreadyLvAdapter = new GameDownload2Adapter(content, getSupportFragmentManager(), mItemClickQuickAction);
+        alreadyLvAdapter = new InstalledGameAdapter(content, getSupportFragmentManager(), mItemClickQuickAction);
         listView.setAdapter(alreadyLvAdapter);
         fileLoad = FileLoadManager.getInstance(content);
     }

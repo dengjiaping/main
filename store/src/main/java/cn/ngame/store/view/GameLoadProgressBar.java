@@ -52,7 +52,7 @@ public class GameLoadProgressBar extends View {
     public GameLoadProgressBar(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        downloadedColor = context.getResources().getColor(R.color.download_bg2);
+        downloadedColor =  ContextCompat.getColor(context, R.color.download_bg2);
         mRadius = CommonUtil.dip2px(context, 4);
         mStrokeWidth = CommonUtil.dip2px(context, 0.8f);
         mDownloadHeight = CommonUtil.dip2px(context, 1.5f);

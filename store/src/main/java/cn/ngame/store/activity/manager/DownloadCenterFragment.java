@@ -1,7 +1,7 @@
 package cn.ngame.store.activity.manager;
 
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -37,6 +37,7 @@ public class DownloadCenterFragment extends BaseSearchFragment {
      */
     private int itemType;
     private int itemPosition;
+    private FragmentActivity content;
 
     @Override
     protected int getContentViewLayoutID() {
@@ -45,38 +46,34 @@ public class DownloadCenterFragment extends BaseSearchFragment {
 
     @Override
     protected void initViewsAndEvents(View view) {
+        content = getActivity();
         listView = (ListView) view.findViewById(R.id.listView);
-        initListView();
-        initPop(typeValue);
+        fileLoad = FileLoadManager.getInstance(content);
+        initPop();
+
+        alreadyLvAdapter = new DownLoadCenterAdapter(content, getSupportFragmentManager(), mItemClickQuickAction);
+        listView.setAdapter(alreadyLvAdapter);
     }
 
-    public void initListView() {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                itemType = 2;
-                itemPosition = position;
-                //显示弹出框消失
-                mItemClickQuickAction.show(view);
-            }
-        });
-        alreadyLvAdapter = new DownLoadCenterAdapter(getActivity(), getSupportFragmentManager());
-        listView.setAdapter(alreadyLvAdapter);
-        fileLoad = FileLoadManager.getInstance(getActivity());
-    }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        List<FileLoadInfo> alreadyList = fileLoad.getLoadedFileInfo();
-        alreadyLvAdapter.setDate(alreadyList);
-        alreadyLvAdapter.notifyDataSetChanged();
+    public void onStart() {
+        super.onStart();
+        reLoadFileInfo();
     }
 
-    private void initPop(final int typeValue) {
+    /*
+     重新加载
+     */
+    private void reLoadFileInfo() {
+        List<FileLoadInfo> alreadyList = fileLoad.getLoadedFileInfo();
+        alreadyLvAdapter.setDate(alreadyList);
+    }
+
+    private void initPop() {
         // 设置Action
         mItemClickQuickAction = new QuickAction(getActivity(), QuickAction.VERTICAL);
-        ActionItem pointItem = new ActionItem(1, "删除任务", null);
+        ActionItem pointItem = new ActionItem(1, "删除安装包", null);
         mItemClickQuickAction.addActionItem(pointItem);
 
         mItemClickQuickAction.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
@@ -84,21 +81,20 @@ public class DownloadCenterFragment extends BaseSearchFragment {
             public void onItemClick(QuickAction source, int pos, int actionId) {
                 if (pos == 0) {
                     //删除文件下载任务
-                    FileLoadInfo fileInfo = null;
-                    fileInfo = (FileLoadInfo) alreadyLvAdapter.getItem(itemPosition);
+                    FileLoadInfo fileInfo = (FileLoadInfo) alreadyLvAdapter.getItem(itemPosition);
                     //删除下载任务
                     fileLoad.delete(fileInfo.getUrl());
+                    //取消弹出框
+                    mItemClickQuickAction.dismiss();
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    List<FileLoadInfo> alreadyList = fileLoad.getLoadedFileInfo();
-                    alreadyLvAdapter.setDate(alreadyList);
-                    alreadyLvAdapter.notifyDataSetChanged();
+
+                    reLoadFileInfo();
                 }
-                //取消弹出框
-                mItemClickQuickAction.dismiss();
+
             }
         });
     }

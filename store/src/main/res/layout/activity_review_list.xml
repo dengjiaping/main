@@ -22,7 +22,7 @@
             android:layout_marginRight="10dp"
             android:onClick="onBackClick"
             android:textColor="@color/white"
-            android:background="@drawable/back" />
+            android:background="@drawable/ic_back" />
 
         <TextView
             android:id="@+id/left_tv"

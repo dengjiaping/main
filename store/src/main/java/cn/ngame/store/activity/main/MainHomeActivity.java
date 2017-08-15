@@ -35,6 +35,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.AppCarouselBean;
@@ -57,8 +58,8 @@ import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.activity.discover.DiscoverFragment;
-import cn.ngame.store.activity.manager.ManagerFragment;
 import cn.ngame.store.activity.manager.DownloadCenterActivity;
+import cn.ngame.store.activity.manager.ManagerFragment;
 import cn.ngame.store.activity.sm.AboutNgameZoneActivity;
 import cn.ngame.store.activity.sm.AdCooperativeActivity;
 import cn.ngame.store.activity.sm.JoypadSettingsActivity;
@@ -154,10 +155,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private ImageView im_toSearch;
     private FrameLayout fl_notifi;
     private TextView tv_notifi_num;
-    private ImageView mIconIv;
+    private SimpleDraweeView mIconIv;
     private String pwd;
     private SlidingMenu mSlidingMenu;
-    private ImageView mSmIconIv;
+    private SimpleDraweeView mSmIconIv;
     private TextView mSmNicknameTv;
     private TextView mTitleTv;
     private ImageView mTitleBgIv;
@@ -178,7 +179,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             tintManager.setStatusBarTintResource(R.color.colorPrimary);
         }
         //-----------------------------------------------------------------------------
-        setContentView(R.layout.main_home_activity);
+        setContentView(R.layout.activity_main_home);
         //首页弹出广告dialog
         showAdverDialog();
         //得到设备id
@@ -226,7 +227,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         fl_notifi = (FrameLayout) findViewById(R.id.fl_notifi);
         tv_notifi_num = (TextView) findViewById(R.id.tv_notifi_num); //右上角消息数目
 
-        mIconIv = (ImageView) findViewById(R.id.iv_icon_title);
+        mIconIv = (SimpleDraweeView) findViewById(R.id.iv_icon_title);
         mTitleBgIv = (ImageView) findViewById(R.id.title_iv);
         mTitleTv = (TextView) findViewById(R.id.title_tv);
         mDownloadBt = (Button) findViewById(main_download_bt);
@@ -301,7 +302,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
           android.util.Log.d(TAG, "onRequest6.0PermissionsResult: " + requestCode);
 
       }*/
-    DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_icon_title, 360);
+    DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_def_logo_188_188, 360);
 
     //侧边栏
     private void initSlidingMenu() {
@@ -327,7 +328,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         findSMViewById(R.id.sm_about_us);
         findSMViewById(R.id.sm_ad);
 
-        mSmIconIv = (ImageView) findViewById(R.id.sm_top_icon_iv);
+        mSmIconIv = (SimpleDraweeView) findViewById(R.id.sm_top_icon_iv);
         mSmNicknameTv = (TextView) findViewById(R.id.sm_top_nikename_tv);
         mEditProfileTv = (TextView) findViewById(R.id.edit_profile_click);
         mSmIconIv.setOnClickListener(mSmClickLstener);
@@ -446,16 +447,15 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         if ((pwd != null && !"".endsWith(pwd)) || !Constant.PHONE.equals(StoreApplication.loginType)) {
             //DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.color.colorPrimary, 360);
             String userHeadUrl = StoreApplication.userHeadUrl;
-            imageLoader.displayImage(userHeadUrl, mIconIv, this.roundOptions);
-            imageLoader.displayImage(userHeadUrl, mSmIconIv, this.roundOptions);
-            mIconIv.setPadding(0, 0, 0, 0);
+            mIconIv.setImageURI(userHeadUrl);
+            mSmIconIv.setImageURI(userHeadUrl);
             mSmNicknameTv.setText(StoreApplication.nickName);
             mEditProfileTv.setVisibility(View.VISIBLE);
         } else {
-            imageLoader.displayImage("", mIconIv, roundOptions);
-            imageLoader.displayImage("", mSmIconIv, roundOptions);
+            mIconIv.setImageURI("");
+            mSmIconIv.setImageURI("");
             mSmNicknameTv.setText("点击登录");
-            mEditProfileTv.setVisibility(View.GONE);
+            mEditProfileTv.setVisibility(View.INVISIBLE);
         }
         editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, false).commit();
     }

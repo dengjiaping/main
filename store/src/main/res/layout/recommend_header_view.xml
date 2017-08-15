@@ -113,7 +113,9 @@
                 android:layout_width="@dimen/recommend_item_from_pic"
                 android:layout_height="@dimen/recommend_item_from_pic"
                 fresco:actualImageScaleType="fitXY"
-                fresco:progressBarImage="@drawable/ic_icon_title"
+                fresco:placeholderImage="@drawable/ic_def_logo_188_188"
+                fresco:placeholderImageScaleType="centerCrop"
+                fresco:progressBarImage="@drawable/ic_def_logo_188_188"
                 fresco:progressBarImageScaleType="fitXY"
                 fresco:roundedCornerRadius="4dp"/>
 

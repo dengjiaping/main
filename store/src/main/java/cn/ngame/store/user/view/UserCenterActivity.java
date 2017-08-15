@@ -494,7 +494,7 @@ public class UserCenterActivity extends BaseFgActivity {
 
 
     private void setUserInfo() {
-        DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_icon_title, 360);
+        DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_def_logo_188_188, 360);
         imageLoader.displayImage(StoreApplication.userHeadUrl, img_photo, roundOptions);
         tv_nickname.setText(nickName);
         tv_nickname.setSelection(nickName.length());

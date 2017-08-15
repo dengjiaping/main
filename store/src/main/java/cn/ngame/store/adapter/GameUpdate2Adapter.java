@@ -109,7 +109,7 @@ public class GameUpdate2Adapter extends BaseAdapter {
 		if(convertView == null){
 
 			holder = new ViewHolder(context,fm);
-			convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_game_loading, parent, false);
+			convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_download_center, parent, false);
 			holder.img = (ImageView) convertView.findViewById(R.id.img_1);
 			holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
 			holder.tv_percent = (TextView) convertView.findViewById(R.id.tv_percent);

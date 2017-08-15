@@ -13,7 +13,7 @@
         android:layout_height="@dimen/app_title_height"
         android:layout_alignParentTop="true"
         ngame:left_but_visable="true"
-        ngame:left_but="@drawable/back"
+        ngame:left_but="@drawable/ic_back"
         ngame:left_tv_visable="true"
         ngame:left_text="手柄精选"
         ngame:left_text_size="18sp"
@@ -26,7 +26,7 @@
         ngame:title_text="手柄精选"
         ngame:title_size="22sp"
         ngame:left_but_visible="true"
-        ngame:left_but_img="@drawable/back"/>
+        custom:left_but_img="@drawable/ic_back"/>
 
 
     <cn.ngame.store.view.LoadStateView

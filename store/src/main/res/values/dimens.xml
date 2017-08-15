@@ -20,14 +20,10 @@
 
     <dimen name="sliding_menu_offset">303dp</dimen>
     <dimen name="shadow_width">0dp</dimen><!--两边的中间区域-->
-    <dimen name="font_sliding_menu_item">18dp</dimen>
-    <dimen name="sliding_menu_item_marginTop">56dp</dimen>
-    <dimen name="sliding_menu_item_paddingLeft">31dp</dimen>
     <dimen name="sm_item_paddingTop">10dp</dimen>
     <dimen name="sm_top_llay_height">150dp</dimen>
-    <dimen name="sm_top_icon_height">70dp</dimen>
+    <dimen name="sm_top_icon_height">@dimen/dm120</dimen>
     <dimen name="sm_top_name_tv_width">63dp</dimen>
-    <dimen name="sm_top_name_tv_font">14dp</dimen>
 
     <dimen name="title_size">18dp</dimen>
     <dimen name="title_back_bt_paddingLeft">20dp</dimen>
@@ -105,4 +101,7 @@
     <dimen name="dp_48">48dp</dimen>
 
     <dimen name="percent_progress_bar_marginTop">@dimen/dm003</dimen>
+    <dimen name="font_sliding_menu_item">@dimen/dm032</dimen>
+    <dimen name="dp_45">45dp</dimen>
+    <dimen name="dp_55">55dp</dimen>
 </resources>

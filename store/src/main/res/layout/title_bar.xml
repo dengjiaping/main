@@ -17,7 +17,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
-                android:background="@drawable/back" />
+                android:background="@drawable/ic_back" />
         </LinearLayout>
 
         <TextView
@@ -27,7 +27,7 @@
             android:layout_centerInParent="true"
             android:text=""
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="@dimen/title_size" />
 
         <RelativeLayout
             android:layout_width="60dp"

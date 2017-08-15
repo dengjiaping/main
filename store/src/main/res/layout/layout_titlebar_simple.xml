@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@null"
-        android:drawableLeft="@drawable/back"
+        android:drawableLeft="@drawable/ic_back"
         android:paddingLeft="@dimen/title_back_bt_paddingLeft"
         android:paddingRight="12dp"
         android:textColor="@color/white"

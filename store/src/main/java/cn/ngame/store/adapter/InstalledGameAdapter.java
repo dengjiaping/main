@@ -50,7 +50,7 @@ import static cn.ngame.store.R.id.tv_state;
  * @author zeng
  * @since 2016-07-4
  */
-public class GameDownload2Adapter extends BaseAdapter {
+public class InstalledGameAdapter extends BaseAdapter {
 
     //private static final String TAG = LoadIngLvAdapter.class.getSimpleName();
 
@@ -63,7 +63,7 @@ public class GameDownload2Adapter extends BaseAdapter {
     private int mPosition;
     private ViewHolder holder;
 
-    public GameDownload2Adapter(Context context, FragmentManager fm, QuickAction mItemClickQuickAction) {
+    public InstalledGameAdapter(Context context, FragmentManager fm, QuickAction mItemClickQuickAction) {
         super();
         this.mItemClickQuickAction = mItemClickQuickAction;
         this.context = context;

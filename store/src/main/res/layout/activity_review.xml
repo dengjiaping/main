@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         ngame:left_but_visable="true"
-        ngame:left_but="@drawable/back"
+        ngame:left_but="@drawable/ic_back"
         ngame:left_tv_visable="true"
         ngame:left_text="发表评论"
         ngame:left_text_size="18sp"
