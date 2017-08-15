@@ -50,7 +50,7 @@ public class ManagerLikeFragment extends BaseSearchFragment {
 
     @Override
     protected int getContentViewLayoutID() {
-        return R.layout.loadint_fragment;
+        return R.layout.fragment_installed;
     }
 
     @Override

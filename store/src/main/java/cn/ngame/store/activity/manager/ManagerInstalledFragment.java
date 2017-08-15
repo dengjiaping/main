@@ -6,13 +6,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
-import cn.ngame.store.R;
+import java.util.List;
+
+import cn.ngame.store. R;
 import cn.ngame.store.adapter.InstalledGameAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
-import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
-import cn.ngame.store.core.fileload.GameFileStatus;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.utils.AppInstallHelper;
 import cn.ngame.store.view.ActionItem;
@@ -26,7 +26,6 @@ import cn.ngame.store.view.QuickAction;
 public class ManagerInstalledFragment extends BaseSearchFragment {
 
     ListView listView;
-    private PageAction pageAction;
     public static int PAGE_SIZE = 10;
     private int typeValue;
     private String type;
@@ -39,7 +38,7 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
      */
     private FragmentActivity content;
     private boolean mHidden = false;
-    private long DELAY_TIME = 2000L;
+    private FileLoadInfo mfileUnstalledInfo;
 
     public static ManagerInstalledFragment newInstance(String type, int arg) {
         ManagerInstalledFragment fragment = new ManagerInstalledFragment();
@@ -52,7 +51,7 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
 
     @Override
     protected int getContentViewLayoutID() {
-        return R.layout.loadint_fragment;
+        return R.layout.fragment_installed;
     }
 
     @Override
@@ -60,11 +59,8 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
         content = getActivity();
         typeValue = getArguments().getInt("typeValue", 1);
         type = getArguments().getString("type");
-
         listView = (ListView) view.findViewById(R.id.listView);
-        pageAction = new PageAction();
-        pageAction.setCurrentPage(0);
-        pageAction.setPageSize(PAGE_SIZE);
+
         initPop();
         initListView();
     }
@@ -76,24 +72,37 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        if (!mHidden) {
-            alreadyLvAdapter.setDate(fileLoad.getOpenFileInfo());
+    public void onResume() {
+        super.onResume();
+        if (!mHidden && null != alreadyLvAdapter && null != fileLoad) {
+            List<FileLoadInfo> openFileInfo = fileLoad.getOpenFileInfo();
+            alreadyLvAdapter.setDate(openFileInfo);
+            if (null != mfileUnstalledInfo) {
+                boolean containInfo = openFileInfo.contains(mfileUnstalledInfo);
+                if (!containInfo) {
+                    //删除安装包
+                    fileLoad.delete(mfileUnstalledInfo.getUrl());
+                }
+
+            }
         }
     }
+
+    protected final static String TAG = "2222";
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        Log.d(TAG, "onHiddenChanged: ");
         mHidden = hidden;
-        if (!mHidden) {
+        if (!mHidden && null != alreadyLvAdapter && null != fileLoad) {
             alreadyLvAdapter.setDate(fileLoad.getOpenFileInfo());
         }
     }
 
     private void initPop() {
         // 设置Action
+        Log.d(TAG, "initPop: ");
         mItemClickQuickAction = new QuickAction(content, QuickAction.VERTICAL);
         ActionItem pointItem = new ActionItem(0, "卸载", null);
         mItemClickQuickAction.addActionItem(pointItem);
@@ -102,25 +111,15 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
             public void onItemClick(QuickAction source, int pos, int actionId) {
                 if (pos == 0) {
                     //删除文件下载任务
-                    FileLoadInfo fileInfo = (FileLoadInfo) alreadyLvAdapter.getItemInfo();
-                    GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(fileInfo.getName(), fileInfo.getUrl(),
-                            fileInfo.getPackageName(), fileInfo.getVersionCode());
-                    Log.d(TAG, "status: " + fileStatus.getStatus());
-                    if (GameFileStatus.STATE_HAS_INSTALL == fileStatus.getStatus()) {
-                        //卸载
-                        AppInstallHelper.unstallApp(content, fileInfo.getPackageName());
-                    } else {
-                        //删除安装包和正在下载的文件
-                        fileLoad.delete(fileInfo.getUrl());
-                    }
+                    mfileUnstalledInfo = (FileLoadInfo) alreadyLvAdapter.getItemInfo();
+                    //卸载
+                    AppInstallHelper.unstallApp(content, mfileUnstalledInfo.getPackageName());
+
+                    //删除安装包和正在下载的文件
+                    //fileLoad.delete(fileInfo.getUrl());
                     //取消弹出框
                     mItemClickQuickAction.dismiss();
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    alreadyLvAdapter.setDate(fileLoad.getOpenFileInfo());
+                    source.dismiss();
                 }
 
             }
