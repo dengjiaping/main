@@ -19,6 +19,7 @@ package cn.ngame.store.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
+import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +39,10 @@ import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.GameFileStatus;
 import cn.ngame.store.core.fileload.IFileLoad;
-import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.view.GameLoadProgressBar;
 import cn.ngame.store.view.QuickAction;
+
+import static cn.ngame.store.R.id.tv_title;
 
 
 /**
@@ -58,7 +60,7 @@ public class DownLoadCenterAdapter extends BaseAdapter {
 
     private Context context;
     private FragmentManager fm;
-    private static Handler uiHandler = new Handler();
+    private Handler uiHandler = new Handler();
     private int mPosition;
 
     public DownLoadCenterAdapter(Context context, FragmentManager fm, QuickAction mItemClickQuickAction) {
@@ -89,9 +91,8 @@ public class DownLoadCenterAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-
         if (fileInfoList != null) {
-            return fileInfoList.get(position);
+            return fileInfoList.get(mPosition);
         }
         return null;
     }
@@ -102,8 +103,10 @@ public class DownLoadCenterAdapter extends BaseAdapter {
     }
 
     public void clean() {
-        if (fileInfoList != null)
+        if (fileInfoList != null) {
             fileInfoList.clear();
+            uiHandler = null;
+        }
     }
 
     @Override
@@ -117,7 +120,7 @@ public class DownLoadCenterAdapter extends BaseAdapter {
             holder = new ViewHolder(context, fm);
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_download_center, parent, false);
             holder.img = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
-            holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
+            holder.tv_title = (TextView) convertView.findViewById(tv_title);
             holder.tv_percent = (TextView) convertView.findViewById(R.id.tv_percent);
             holder.tv_state = (TextView) convertView.findViewById(R.id.tv_state);
             holder.tv_finished = (TextView) convertView.findViewById(R.id.tv_finished);
@@ -152,7 +155,7 @@ public class DownLoadCenterAdapter extends BaseAdapter {
      * @author flan
      * @date 2015年10月28日
      */
-    public static class ViewHolder {
+    public class ViewHolder {
 
         private Context context;
         private FragmentManager fm;
@@ -177,6 +180,10 @@ public class DownLoadCenterAdapter extends BaseAdapter {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
+                    if (uiHandler == null) {
+                        this.cancel();
+                        return;
+                    }
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -184,16 +191,22 @@ public class DownLoadCenterAdapter extends BaseAdapter {
                                     fileInfo.getPackageName(), fileInfo.getVersionCode());
 
                             progressBar.setLoadState(fileStatus);
-                            tv_finished.setText(TextUtil.formatFileSize(fileInfo.getFinished()));
+                            long finished = fileInfo.getFinished();
+                            long total = fileInfo.getLength();
+                            if (finished == total) {
+                                tv_finished.setText("");
+                            } else {
+                                tv_finished.setText(Formatter.formatFileSize(context, finished) + "/");
+                            }
 
                             if (fileStatus == null) {
                                 return;
                             }
                             int process = (int) ((double) fileStatus.getFinished() / (double) fileStatus.getLength() * 100);
                             pb.setProgress(process);
-                            tv_percent.setText(process + "%");
+                            tv_percent.setText(100 == process ? "" : process + "%");
                             if (fileStatus.getStatus() == GameFileStatus.STATE_DOWNLOAD) {
-                                tv_state.setText("下载中");
+                                tv_state.setText("下载中:");
                             } else if (fileStatus.getStatus() == GameFileStatus.STATE_PAUSE) {
                                 tv_state.setText("暂停中");
                             } else {
@@ -211,12 +224,11 @@ public class DownLoadCenterAdapter extends BaseAdapter {
             if (null != gameName) {
                 tv_title.setText(gameName);
             }
-
-            tv_size.setText("/" + TextUtil.formatFileSize(fileInfo.getLength()));
-
+            tv_size.setText(Formatter.formatFileSize(context, fileInfo.getLength()));
 
             //设置进度条状态
-            progressBar.setLoadState(fileLoad.getGameFileLoadStatus(fileInfo.getName(), fileInfo.getPreviewUrl(), fileInfo.getPackageName(), fileInfo.getVersionCode()));
+            progressBar.setLoadState(fileLoad.getGameFileLoadStatus(fileInfo.getName(), fileInfo.getPreviewUrl(), fileInfo
+                    .getPackageName(), fileInfo.getVersionCode()));
             //必须设置，否则点击进度条后无法进行响应操作
             progressBar.setFileLoadInfo(fileInfo);
             progressBar.setOnStateChangeListener(new ProgressBarStateListener(context, fm));

@@ -3,7 +3,7 @@
     android:shape="oval"
     android:useLevel="false">
 
-    <solid android:color="@color/colorPrimary" />
+    <solid android:color="@color/mainColor" />
     <padding
         android:left="2dp"
         android:top="1dp"
@@ -13,7 +13,7 @@
         android:color="@android:color/white" />
     <stroke
         android:width="2dp"
-        android:color="@color/colorPrimary" />
+        android:color="@color/mainColor" />
     <size android:width="15dp"
         android:height="15dp" />
 </shape>

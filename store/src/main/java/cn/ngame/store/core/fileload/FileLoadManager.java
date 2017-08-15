@@ -311,11 +311,7 @@ public class FileLoadManager implements IFileLoad {
         if (FileLoadService.gameFileStatusMap != null) {
             Collection<FileLoadInfo> values = FileLoadService.gameFileStatusMap.values();
             for (FileLoadInfo info : values) {
-                int status = info.getStatus();
-                if (status != FileLoadInfo.STATUS_LOADING && status != FileLoadInfo.STATUS_PAUSE
-                        && status != FileLoadInfo.STATUS_PAUSE_TEMP) {
-                    infoList.add(info);
-                }
+                infoList.add(info);
             }
         }
         return infoList;
@@ -330,7 +326,7 @@ public class FileLoadManager implements IFileLoad {
             for (FileLoadInfo info : loadInfos) {
                 String packageName = info.getPackageName();
                 int status = info.getStatus();
-                Log.d("777", info.getName()+"app: "+ info.getType());
+                Log.d("777", info.getName() + "app: " + info.getType());
                 boolean hasInstalled = AppInstallHelper.isAppInstalled(context, packageName);
                 if (hasInstalled) {// status== GameFileStatus.STATE_HAS_INSTALL
                     infoList.add(info);

@@ -19,7 +19,6 @@ package cn.ngame.store.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,11 +37,8 @@ import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.GameFileStatus;
 import cn.ngame.store.core.fileload.IFileLoad;
-import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.view.GameLoadProgressBar;
 import cn.ngame.store.view.QuickAction;
-
-import static cn.ngame.store.R.id.tv_state;
 
 /**
  * 显示正在下载游戏的ListView控件适配器
@@ -124,9 +120,7 @@ public class InstalledGameAdapter extends BaseAdapter {
             holder = new ViewHolder(context, fm);
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_game_load_finished, parent, false);
             holder.img = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
-            holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
-            holder.tv_state = (TextView) convertView.findViewById(tv_state);
-            holder.tv_size = (TextView) convertView.findViewById(R.id.tv_length);
+            holder.tv_title = (TextView) convertView.findViewById(R.id.tv_install_title);
             holder.more_bt = (ImageView) convertView.findViewById(R.id.manager_installed_more_bt);
             holder.progressBar = (GameLoadProgressBar) convertView.findViewById(R.id.progress_bar);
             convertView.setTag(holder);
@@ -216,31 +210,14 @@ public class InstalledGameAdapter extends BaseAdapter {
             } else {
                 tv_title.setText("");
             }
-            tv_size.setText(TextUtil.formatFileSize(fileInfo.getLength()));
 
             //设置进度条状态
             GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(fileInfo.getName(), fileInfo.getUrl(),
                     fileInfo.getPackageName(), fileInfo.getVersionCode());
-            if (fileStatus == null){
+            if (fileStatus == null) {
                 return;
             }
-            int status = fileStatus.getStatus();
-            Log.d("777", gameName + "update:status " + status);
-            if (status == GameFileStatus.STATE_HAS_INSTALL) {
-                tv_size.setVisibility(View.INVISIBLE);
-                tv_state.setText("");
-                progressBar.setLoadState(fileStatus);
-                progressBar.setVisibility(View.VISIBLE);
-            } else if (status == GameFileStatus.STATE_HAS_DOWNLOAD) {//安装
-                tv_size.setVisibility(View.VISIBLE);
-                tv_state.setText("下载完成");
-                progressBar.setLoadState(fileStatus);
-                progressBar.setVisibility(View.VISIBLE);
-            } else {
-                tv_size.setVisibility(View.INVISIBLE);
-                tv_state.setText("");
-                progressBar.setVisibility(View.INVISIBLE);
-            }
+            progressBar.setLoadState(fileStatus);
             //必须设置，否则点击进度条后无法进行响应操作
             progressBar.setFileLoadInfo(fileInfo);
             progressBar.setOnStateChangeListener(new ProgressBarStateListener(context, fm));
@@ -250,14 +227,10 @@ public class InstalledGameAdapter extends BaseAdapter {
                     progressBar.toggle();
                 }
             });
-
             //加载图片
             img.setImageURI(fileInfo.getPreviewUrl());
         }
-
-
     }
-
 }
 
 

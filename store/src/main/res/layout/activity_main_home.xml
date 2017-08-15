@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_title_height"
         android:layout_marginTop="0dp"
-        android:background="@color/colorPrimary">
+        android:background="@color/mainColor">
         <com.facebook.drawee.view.SimpleDraweeView
             xmlns:fresco="http://schemas.android.com/apk/res-auto"
             android:id="@+id/iv_icon_title"

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
-        android:background="@color/gray">
+        android:background="@color/f5f5f5">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
                     android:padding="6dp"
                     android:text="MOBA类游戏"
                     android:textSize="16sp"
-                    android:textColor="@color/colorPrimary"/>
+                    android:textColor="@color/mainColor"/>
                 <GridView
                     android:id="@+id/gridView_network"
                     android:layout_width="match_parent"
@@ -62,7 +62,7 @@
                     android:padding="6dp"
                     android:text="FPS类游戏"
                     android:textSize="16sp"
-                    android:textColor="@color/colorPrimary"/>
+                    android:textColor="@color/mainColor"/>
                 <GridView
                     android:id="@+id/gridView_alone"
                     android:layout_width="match_parent"
@@ -92,7 +92,7 @@
                     android:padding="6dp"
                     android:text="其它类游戏"
                     android:textSize="16sp"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/mainColor"
                     android:id="@+id/textView3" />
 
                 <GridView
@@ -126,7 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/game_hub_click_hear"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/mainColor"
                         android:textSize="12sp"/>
                     <TextView
                         android:layout_width="wrap_content"

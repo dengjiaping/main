@@ -6,7 +6,7 @@
     <solid android:color="@color/white" />
 
     <stroke 
-        android:color="@color/colorPrimary"
+        android:color="@color/mainColor"
         android:width="0.5dp"/>
 
     <!-- 宽度和高度 -->

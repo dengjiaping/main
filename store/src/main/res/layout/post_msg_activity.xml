@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
+    android:background="@color/f5f5f5"
     android:orientation="vertical">
 
     <include layout="@layout/title_bar" />
@@ -18,7 +18,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="选择板块 >>"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/mainColor"
             android:textSize="14sp"
             android:visibility="visible" />
 
@@ -46,7 +46,7 @@
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
             android:text="选择游戏 >>"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/mainColor"
             android:textSize="14sp"
             android:visibility="gone" />
     </LinearLayout>

@@ -92,7 +92,7 @@ public class GvHomeAdapter extends BaseAdapter {
         params.height = CommonUtil.dip2px(context,50);
 
         tv.setLayoutParams(params);
-        tv.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+        tv.setBackgroundColor(context.getResources().getColor(R.color.mainColor));
         tv.setTextColor(context.getResources().getColor(R.color.white));
         tv.setGravity(Gravity.CENTER);
         tv.setTextSize(12);

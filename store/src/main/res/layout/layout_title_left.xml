@@ -4,7 +4,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:background="@color/colorPrimary">
+                android:background="@color/mainColor">
     <Button
         android:id="@+id/left_bt"
         android:layout_width="wrap_content"

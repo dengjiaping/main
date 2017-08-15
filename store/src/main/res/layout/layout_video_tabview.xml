@@ -22,7 +22,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="1dp"
         android:layout_marginTop="3dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/mainColor"
         android:contentDescription="@string/image_des" />
 
 </RelativeLayout>

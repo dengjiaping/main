@@ -5,8 +5,8 @@
     <item  android:id="@android:id/background" >
         <shape>
             <corners android:radius="5dip" />
-            <gradient android:startColor="@color/gray"
-                android:endColor="@color/gray" />
+            <gradient android:startColor="@color/f5f5f5"
+                android:endColor="@color/f5f5f5" />
         </shape>
     </item>
 
@@ -15,8 +15,8 @@
         <clip>
             <shape>
                 <corners android:radius="5dip" />
-                <gradient  android:startColor="@color/colorPrimaryLight"
-                    android:endColor="@color/colorPrimaryLight" />
+                <gradient  android:startColor="@color/mainColor"
+                    android:endColor="@color/mainColor" />
             </shape>
         </clip>
     </item>
@@ -26,8 +26,8 @@
         <clip>
             <shape>
                 <corners android:radius="5dip" />
-                <gradient  android:startColor="@color/colorPrimary"
-                    android:endColor="@color/colorPrimary" />
+                <gradient  android:startColor="@color/mainColor"
+                    android:endColor="@color/mainColor" />
             </shape>
         </clip>
     </item>

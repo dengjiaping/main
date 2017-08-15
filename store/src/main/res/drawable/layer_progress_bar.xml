@@ -19,7 +19,7 @@
             <shape>
                 <corners android:radius="0dip" />
                 <!-- 填充 -->
-                <solid android:color="@color/colorPrimary" />
+                <solid android:color="@color/mainColor" />
                 <!--<gradient
                     android:angle="0"
                     android:endColor="#8000ff00"

@@ -112,14 +112,14 @@ public class GameKeyFragment extends Fragment implements View.OnClickListener{
                 bt_classic.setBackgroundResource(R.drawable.shape_yj_right_blue_rectangle);
                 bt_classic.setTextColor(getResources().getColor(R.color.white));
                 bt_slim.setBackgroundResource(R.drawable.shape_yj_left_white_rectangle);
-                bt_slim.setTextColor(getResources().getColor(R.color.colorPrimary));
+                bt_slim.setTextColor(getResources().getColor(R.color.mainColor));
                 imageView.setImageDrawable(getResources().getDrawable(R.drawable.default_key_classic));
                 getKeyDescList(1);
                 break;
             case R.id.bt_slim:
 
                 bt_classic.setBackgroundResource(R.drawable.shape_yj_right_white_rectangle);
-                bt_classic.setTextColor(getResources().getColor(R.color.colorPrimary));
+                bt_classic.setTextColor(getResources().getColor(R.color.mainColor));
                 bt_slim.setBackgroundResource(R.drawable.shape_yj_left_blue_rectangle);
                 bt_slim.setTextColor(getResources().getColor(R.color.white));
                 imageView.setImageDrawable(getResources().getDrawable(R.drawable.default_key_slim));

@@ -2,7 +2,7 @@
 <resources>
 
     <!-- APP 基础色 -->
-    <color name="colorPrimary">#33ccff</color>
+    <color name="mainColor">#33ccff</color>
     <!--<color name="colorPrimary">#0fc7c0</color>-->
     <color name="colorPrimaryLight">#6BFFFF</color>
     <color name="colorPrimaryDark">#000000</color>
@@ -12,7 +12,6 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="gray">#f5f5f5</color>
     <color name="gray_7b">#7b7b7b</color>
     <color name="gray_dd">#dddddd</color>
     <color name="gray_bb">#bbbbbb</color>

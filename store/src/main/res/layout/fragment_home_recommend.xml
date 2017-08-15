@@ -3,7 +3,7 @@
                 xmlns:custom="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/gray"
+                android:background="@color/f5f5f5"
                 android:orientation="vertical"
                 android:scrollbars="none">
 
@@ -28,7 +28,7 @@
                 android:id="@+id/listView_allBarnd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:divider="@color/gray"
+                android:divider="@color/f5f5f5"
                 android:dividerHeight="1dp"
                 android:scrollbars="none"></ListView>
         </LinearLayout>
@@ -36,6 +36,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:background="@color/gray"/>
+            android:background="@color/f5f5f5"/>
     </LinearLayout>
 </RelativeLayout>

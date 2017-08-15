@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +55,6 @@ import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.DialogHelper;
 import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.core.utils.KeyConstant;
-import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.fragment.OneBtDialogFragment;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
 import cn.ngame.store.user.view.LoginActivity;
@@ -158,7 +158,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private void setView() {
         gameName = gameInfo.gameName;
         gameNameTv.setText(gameName);//名字
-        gameSizeTv.setText(TextUtil.formatFileSize(gameInfo.gameSize));//大小
+        gameSizeTv.setText(Formatter.formatFileSize(content, gameInfo.gameSize));//大小
         downLoadCountTv.setText(gameInfo.downloadCount + "");//下载次数
         percentageTv.setText(gameInfo.percentage + "");//评分0
 
@@ -331,14 +331,14 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 leftBt.setText("");
             } else {
                 rl_top.setAlpha(1 - alpha);
-                int color = 1 - alpha > 0 ? R.color.colorPrimary : R.color.transparent;
+                int color = 1 - alpha > 0 ? R.color.mainColor : R.color.transparent;
                 rl_top.setBackgroundResource(color);
                 leftBt.setText(gameName);
             }
         } else {
             rl_top.setAlpha(1f);
             leftBt.setText(gameName);
-            rl_top.setBackgroundResource(R.color.colorPrimary);
+            rl_top.setBackgroundResource(R.color.mainColor);
         }
         scrollView.setStickTop(rl_top.getMeasuredHeight());//设置距离多少悬浮
     }

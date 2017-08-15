@@ -141,7 +141,7 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
                 if (et_content.getText().toString().trim().length() > 0) {
                     tv_send.setEnabled(true);
                     tv_send.setFocusableInTouchMode(false);
-                    tv_send.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    tv_send.setTextColor(getResources().getColor(R.color.mainColor));
                 } else {
                     tv_send.setEnabled(false);
                     tv_send.setTextColor(getResources().getColor(R.color.color999999));
@@ -281,7 +281,7 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
         }
         tv_msg_agreeNum.setText(result.getData().getPointCount() + "");
         if (result.getData().getIsPoint() == 1) { //已经点赞
-            tv_msg_agreeNum.setTextColor(getResources().getColor(R.color.colorPrimary));
+            tv_msg_agreeNum.setTextColor(getResources().getColor(R.color.mainColor));
             iv_msg_agree.setBackgroundResource(R.drawable.msg_detail_disagree);
             tv_msg_agreeNum.setEnabled(false);
             iv_msg_agree.setEnabled(false);
@@ -485,7 +485,7 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
                         if (result != null && result.getCode() == 0) {
                             if (type == 1) { //区分帖子点赞和评论点赞
                                 tv_msg_agreeNum.setText(ConvUtil.NI(tv_msg_agreeNum.getText().toString()) + 1 + "");
-                                tv_msg_agreeNum.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                tv_msg_agreeNum.setTextColor(getResources().getColor(R.color.mainColor));
                                 iv_msg_agree.setBackgroundResource(R.drawable.msg_detail_disagree);
                                 rl_clickAgree.setEnabled(false);
                             } else {

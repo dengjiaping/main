@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="@color/gray"
+             android:background="@color/f5f5f5"
              android:orientation="vertical">
 
     <cn.ngame.store.widget.pulllistview.PullToRefreshListView
@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="0dp"
-        android:background="@color/gray"
+        android:background="@color/f5f5f5"
         android:divider="@null"
         android:scrollbars="none"></cn.ngame.store.widget.pulllistview.PullToRefreshListView>
 

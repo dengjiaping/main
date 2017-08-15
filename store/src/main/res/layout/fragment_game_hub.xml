@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_title_height"
         android:layout_below="@+id/title"
-        android:background="@color/colorPrimary">
+        android:background="@color/mainColor">
 
         <RelativeLayout
             android:id="@+id/rl_notifi"
@@ -92,6 +92,6 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="2dp"
         android:divider="@null"
-        android:background="@color/gray"
+        android:background="@color/f5f5f5"
         android:scrollbars="none"></cn.ngame.store.widget.pulllistview.PullToRefreshListView>
 </LinearLayout>

@@ -19,8 +19,6 @@ package cn.ngame.store.view;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -63,7 +61,7 @@ public class AutoTabView extends HorizontalScrollView implements View.OnClickLis
 		typedArray.recycle();*/
 		
 		//currentTabBackgroundColor = context.getResources().getColor(R.color.gray);
-		currentTabColor = context.getResources().getColor(R.color.colorPrimary);
+		currentTabColor = context.getResources().getColor(R.color.mainColor);
 
 		inflate(context, R.layout.layout_auto_tabview, this);
 		

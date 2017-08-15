@@ -3,7 +3,7 @@
     android:useLevel="false">
 
     <!-- 填充 -->
-    <solid android:color="@color/colorPrimary" />
+    <solid android:color="@color/mainColor" />
 
     <!--<stroke
         android:color="@color/gray_1"

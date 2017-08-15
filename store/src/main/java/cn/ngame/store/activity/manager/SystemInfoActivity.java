@@ -71,7 +71,7 @@ public class SystemInfoActivity extends BaseFgActivity implements View.OnClickLi
                     adapter.setSelectIds(selectList);
                     adapter.notifyDataSetChanged();
                     if (selectList.size() > 0) { //下方删除按钮
-                        tv_delete.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        tv_delete.setTextColor(getResources().getColor(R.color.mainColor));
                         tv_delete.setEnabled(true);
                     } else {
                         tv_delete.setTextColor(getResources().getColor(R.color.color999999));
@@ -82,7 +82,7 @@ public class SystemInfoActivity extends BaseFgActivity implements View.OnClickLi
                         tv_select.setTextColor(getResources().getColor(R.color.orange_2));
                     } else {
                         tv_select.setText("全选");
-                        tv_select.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        tv_select.setTextColor(getResources().getColor(R.color.mainColor));
                     }
                 } else {
                     //跳转详情

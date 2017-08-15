@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/gray">
+    android:background="@color/f5f5f5">
 
     <LinearLayout
         android:id="@+id/layout_1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_title_height"
-        android:background="@color/colorPrimary"
+        android:background="@color/mainColor"
         android:orientation="horizontal"
         android:paddingLeft="15dp"
         android:paddingRight="10dp">
@@ -83,7 +83,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/shape_search_white"
-        android:divider="@color/gray"
+        android:divider="@color/f5f5f5"
         android:dividerHeight="0dp"
         android:scrollbars="none"></ListView>
 

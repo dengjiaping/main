@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
+    android:background="@color/f5f5f5"
     android:orientation="vertical">
 
     <include
@@ -101,7 +101,7 @@
         android:background="@color/white"
         android:gravity="center"
         android:text="@string/feedback_submit"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/mainColor"
         android:textSize="14sp" />
 
 </RelativeLayout>

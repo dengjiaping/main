@@ -4,7 +4,7 @@
     <!--  设置背景色  -->
     <item  android:id="@android:id/background" >
         <shape>
-            <solid android:color="@color/gray"></solid>
+            <solid android:color="@color/f5f5f5"></solid>
         </shape>
     </item>
 
@@ -21,7 +21,7 @@
     <item  android:id="@android:id/progress" >
         <clip>
             <shape>
-                <solid android:color="@color/colorPrimary"></solid>
+                <solid android:color="@color/mainColor"></solid>
             </shape>
         </clip>
     </item>

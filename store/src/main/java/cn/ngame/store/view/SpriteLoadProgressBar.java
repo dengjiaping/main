@@ -56,7 +56,7 @@ public class SpriteLoadProgressBar extends View {
 
         textColor = context.getResources().getColor(attrs.getAttributeResourceValue("http://schemas.android.com/apk/res/android","textColor",-1));
         //frontColor = context.getResources().getColor(attrs.getAttributeResourceValue("http://schemas.android.com/apk/res/android","background",-1));
-        frontColor = context.getResources().getColor(R.color.colorPrimary);
+        frontColor = context.getResources().getColor(R.color.mainColor);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.DownLoadProgressBar);
         //progress = typedArray.getInt(R.styleable.DownLoadProgressBar_progress, 0);

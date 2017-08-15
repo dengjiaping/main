@@ -15,9 +15,9 @@
             <shape>
                 <corners android:radius="2dp" />
                 <gradient
-                    android:centerColor="@color/colorPrimary"
-                    android:endColor="@color/colorPrimary"
-                    android:startColor="@color/colorPrimary" />
+                    android:centerColor="@color/mainColor"
+                    android:endColor="@color/mainColor"
+                    android:startColor="@color/mainColor" />
 
             </shape>
         </clip>

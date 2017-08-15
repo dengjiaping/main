@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_title_height"
         android:layout_alignParentTop="true"
-        android:background="@color/colorPrimary" >
+        android:background="@color/mainColor" >
 
         <Button
             android:id="@+id/left_but"

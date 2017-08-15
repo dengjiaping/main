@@ -184,15 +184,15 @@ public class TopicsDetailActivity extends BaseFgActivity {
                     if (viewScrollHeigh < total_height) {
                         float alpha = (total_height - viewScrollHeigh) / total_height;
                         mTitleRlay.setAlpha(1 - alpha);
-                        int color = 1 - alpha > 0 ? R.color.colorPrimary : R.color.transparent;
+                        int color = 1 - alpha > 0 ? R.color.mainColor : R.color.transparent;
                         mTitleRlay.setBackgroundResource(color);
                     } else {
                         mTitleRlay.setAlpha(1f);
-                        mTitleRlay.setBackgroundResource(R.color.colorPrimary);
+                        mTitleRlay.setBackgroundResource(R.color.mainColor);
                     }
                 } else {
                     if (firstVisibleItem != 0) {
-                        mTitleRlay.setBackgroundResource(R.color.colorPrimary);
+                        mTitleRlay.setBackgroundResource(R.color.mainColor);
                         mTitleRlay.setAlpha(1f);
 
                     } else {

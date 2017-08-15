@@ -101,7 +101,7 @@ public class GameClassifyActivity extends BaseFgActivity {
         View ft = new View(this);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.height = CommonUtil.dip2px(this, 4);
-        ft.setBackgroundColor(getResources().getColor(R.color.gray));
+        ft.setBackgroundColor(getResources().getColor(R.color.f5f5f5));
         listView.addFooterView(ft);
 
         scrollTabView = (ScrollTabView) findViewById(R.id.auto_tab);

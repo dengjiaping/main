@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.telephony.TelephonyManager;
+import android.text.format.Formatter;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -176,7 +177,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             setTranslucentStatus(true);
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(R.color.colorPrimary);
+            tintManager.setStatusBarTintResource(R.color.mainColor);
         }
         //-----------------------------------------------------------------------------
         setContentView(R.layout.activity_main_home);
@@ -236,7 +237,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         mIconIv.setOnClickListener(this);
         mDownloadBt.setOnClickListener(this);
 
-        colorDark = getResources().getColor(R.color.colorPrimary);
+        colorDark = getResources().getColor(R.color.mainColor);
         colorNormal = getResources().getColor(R.color.color_333333);
 
 //        init(viewPager, getSupportFragmentManager());
@@ -983,8 +984,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_update, null);
         TextView tv_title = (TextView) contentView.findViewById(R.id.tv_title);
 
-        long fileSize = versionInfo.fileSize;
-        String fileSizeStr = TextUtil.formatFileSize(fileSize);
+        String fileSizeStr = Formatter.formatFileSize(context,versionInfo.fileSize);
 
         tv_title.setText("新版本：" + versionInfo.versionName + "\r\n大小：" + fileSizeStr);
         TextView tv_summary = (TextView) contentView.findViewById(R.id.tv_summary);

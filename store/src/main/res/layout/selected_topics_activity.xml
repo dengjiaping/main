@@ -11,7 +11,7 @@
         android:id="@+id/gview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray"
+        android:background="@color/f5f5f5"
         android:divider="@color/white"
         android:horizontalSpacing="@dimen/dp_12"
         android:listSelector="@color/transparent"

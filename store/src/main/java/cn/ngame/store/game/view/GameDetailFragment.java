@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,6 @@ import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
-import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.fragment.ImageDialogFragment;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
 import cn.ngame.store.gamehub.view.ShowViewActivity;
@@ -159,7 +159,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                 }
             });
             tv_version.setText(gameInfo.versionName);
-            tv_game_size.setText(TextUtil.formatFileSize(gameInfo.gameSize));
+            tv_game_size.setText(Formatter.formatFileSize(context,gameInfo.gameSize));
             tv_download_count.setText(gameInfo.downloadCount + "");
             tv_time.setText(df.format(new Date(gameInfo.updateTime)));
             if (gameInfo.gameAgentList != null && gameInfo.gameAgentList.size() > 0) {

@@ -82,8 +82,8 @@ public class VideoLabelScrollTabView extends HorizontalScrollView {
         this.removeAllViews();
         this.addView(container);
 
-        currentTabBackgroundColor = context.getResources().getColor(R.color.gray);
-        currentTabTextColor = context.getResources().getColor(R.color.colorPrimary);
+        currentTabBackgroundColor = context.getResources().getColor(R.color.f5f5f5);
+        currentTabTextColor = context.getResources().getColor(R.color.mainColor);
         currentTabTextSize = 20;
 
         defaultTextColor = context.getResources().getColor(R.color.font_default);

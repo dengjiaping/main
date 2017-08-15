@@ -206,7 +206,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@id/download_count_tv"
                     android:layout_toRightOf="@id/download_count_tv"
-                    android:text="人下载/"
+                    android:text=" 人下载/"
                     android:textColor="@color/b3"
                     android:textSize="@dimen/dp_10"/>
                 <TextView
@@ -303,7 +303,7 @@
         android:id="@+id/rl_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/mainColor"
         >
 
         <Button

@@ -97,7 +97,7 @@ public class MsgDetailListAdapter extends BaseAdapter {
             holder.rl_agree.setEnabled(true);
         } else {
             holder.iv_agree.setBackgroundResource(R.drawable.msg_detail_disagree);
-            holder.tv_item_agreeNum.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+            holder.tv_item_agreeNum.setTextColor(context.getResources().getColor(R.color.mainColor));
             holder.rl_agree.setEnabled(false);
         }
         holder.rl_agree.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +113,7 @@ public class MsgDetailListAdapter extends BaseAdapter {
                     holder.rl_agree.setEnabled(false);
                     holder.tv_item_agreeNum.setText(item.getPointCount() + 1 + "");
                     holder.iv_agree.setBackgroundResource(R.drawable.msg_detail_disagree);
-                    holder.tv_item_agreeNum.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+                    holder.tv_item_agreeNum.setTextColor(context.getResources().getColor(R.color.mainColor));
                 }
             }
         }

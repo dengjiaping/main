@@ -1,5 +1,6 @@
 package cn.ngame.store.activity.manager;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ListView;
@@ -55,10 +56,17 @@ public class DownloadCenterFragment extends BaseSearchFragment {
         listView.setAdapter(alreadyLvAdapter);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (alreadyLvAdapter != null) {
+            alreadyLvAdapter.clean();
+        }
+    }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         reLoadFileInfo();
     }
 

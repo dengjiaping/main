@@ -3,7 +3,7 @@
     android:useLevel="false">
 
     <!-- 填充 -->
-    <solid android:color="@color/colorPrimary" />
+    <solid android:color="@color/mainColor" />
     <corners
         android:bottomRightRadius="5dp"
         android:topRightRadius="5dp" />

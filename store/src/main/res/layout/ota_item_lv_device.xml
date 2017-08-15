@@ -35,7 +35,7 @@
         android:layout_toRightOf="@id/text1"
         android:layout_marginLeft="@dimen/dm015"
         android:maxLines="1"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/mainColor"
         android:textSize="@dimen/dm020"/>
 
     <Button
