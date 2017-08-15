@@ -1,6 +1,5 @@
 package cn.ngame.store.activity.manager;
 
-import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ListView;
@@ -39,6 +38,7 @@ public class DownloadCenterFragment extends BaseSearchFragment {
     private int itemType;
     private int itemPosition;
     private FragmentActivity content;
+    private List<FileLoadInfo> alreadyList;
 
     @Override
     protected int getContentViewLayoutID() {
@@ -65,16 +65,17 @@ public class DownloadCenterFragment extends BaseSearchFragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onStart() {
+        super.onStart();
         reLoadFileInfo();
     }
 
+
     /*
-     重新加载
-     */
+             重新加载
+             */
     private void reLoadFileInfo() {
-        List<FileLoadInfo> alreadyList = fileLoad.getLoadedFileInfo();
+        alreadyList = fileLoad.getLoadedFileInfo();
         alreadyLvAdapter.setDate(alreadyList);
     }
 

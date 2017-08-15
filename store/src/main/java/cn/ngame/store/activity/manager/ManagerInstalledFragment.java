@@ -6,8 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
-import java.util.List;
-
 import cn.ngame.store.R;
 import cn.ngame.store.adapter.InstalledGameAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
@@ -80,7 +78,6 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(TAG, "====: onStart==" + mHidden);
         if (!mHidden) {
             alreadyLvAdapter.setDate(fileLoad.getOpenFileInfo());
         }
@@ -112,8 +109,6 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
                     if (GameFileStatus.STATE_HAS_INSTALL == fileStatus.getStatus()) {
                         //卸载
                         AppInstallHelper.unstallApp(content, fileInfo.getPackageName());
-                        List<FileLoadInfo> loadedFileInfo = fileLoad.getLoadedFileInfo();
-                        fileLoad.delete(fileInfo.getUrl());
                     } else {
                         //删除安装包和正在下载的文件
                         fileLoad.delete(fileInfo.getUrl());

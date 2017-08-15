@@ -308,10 +308,15 @@ public class FileLoadManager implements IFileLoad {
     @Override
     public List<FileLoadInfo> getLoadedFileInfo() {
         ArrayList<FileLoadInfo> infoList = new ArrayList<>();
-        if (FileLoadService.gameFileStatusMap != null) {
-            Collection<FileLoadInfo> values = FileLoadService.gameFileStatusMap.values();
+        ConcurrentHashMap<String, FileLoadInfo> gameFileStatusMap = FileLoadService.gameFileStatusMap;
+        if (gameFileStatusMap != null) {
+            Collection<FileLoadInfo> values = gameFileStatusMap.values();
             for (FileLoadInfo info : values) {
-                infoList.add(info);
+                String packageName = info.getPackageName();
+                boolean hasInstalled = AppInstallHelper.isAppInstalled(context, packageName);
+                if (!hasInstalled) {// status== GameFileStatus.STATE_HAS_INSTALL
+                    infoList.add(info);
+                }
             }
         }
         return infoList;

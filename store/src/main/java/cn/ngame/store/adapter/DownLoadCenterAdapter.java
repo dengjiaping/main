@@ -20,6 +20,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.text.format.Formatter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -205,27 +206,36 @@ public class DownLoadCenterAdapter extends BaseAdapter {
                             int process = (int) ((double) fileStatus.getFinished() / (double) fileStatus.getLength() * 100);
                             pb.setProgress(process);
                             tv_percent.setText(100 == process ? "" : process + "%");
+                            progressBar.setVisibility(View.VISIBLE);
                             if (fileStatus.getStatus() == GameFileStatus.STATE_DOWNLOAD) {
                                 tv_state.setText("下载中:");
+                                pb.setVisibility(View.VISIBLE);
                             } else if (fileStatus.getStatus() == GameFileStatus.STATE_PAUSE) {
                                 tv_state.setText("暂停中");
+                                pb.setVisibility(View.VISIBLE);
                             } else {
+                                pb.setVisibility(View.INVISIBLE);
                                 tv_state.setText("已完成");
                             }
                         }
                     });
                 }
-            }, 0, 500);
+            }, 0, 300);
         }
 
         public void update(final FileLoadInfo fileInfo) {
             this.fileInfo = fileInfo;
             String gameName = fileInfo.getTitle();
+            Log.d("555", "update " + gameName);
             if (null != gameName) {
                 tv_title.setText(gameName);
             }
+            tv_finished.setText("");
+            tv_percent.setText("");
+            tv_state.setText("");
+            pb.setVisibility(View.INVISIBLE);
             tv_size.setText(Formatter.formatFileSize(context, fileInfo.getLength()));
-
+            progressBar.setVisibility(View.INVISIBLE);
             //设置进度条状态
             progressBar.setLoadState(fileLoad.getGameFileLoadStatus(fileInfo.getName(), fileInfo.getPreviewUrl(), fileInfo
                     .getPackageName(), fileInfo.getVersionCode()));
