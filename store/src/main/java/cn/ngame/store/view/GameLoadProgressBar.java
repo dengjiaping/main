@@ -1,6 +1,8 @@
 package cn.ngame.store.view;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -8,12 +10,18 @@ import android.graphics.RectF;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
 
 import cn.ngame.store.R;
 import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.GameFileStatus;
 import cn.ngame.store.core.utils.CommonUtil;
+import cn.ngame.store.user.view.LoginActivity;
 
 /**
  * 自定义下载进度条
@@ -26,6 +34,7 @@ public class GameLoadProgressBar extends View {
     private final int openColor;
     private final int mDownloadHeight;
     private final int mStrokeWidth;
+    private final Context context;
 
     private GameFileStatus gameFileStatus;
     private FileLoadInfo fileLoadInfo;
@@ -51,8 +60,9 @@ public class GameLoadProgressBar extends View {
 
     public GameLoadProgressBar(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
 
-        downloadedColor =  ContextCompat.getColor(context, R.color.download_bg2);
+        downloadedColor = ContextCompat.getColor(context, R.color.download_bg2);
         mRadius = CommonUtil.dip2px(context, 4);
         mStrokeWidth = CommonUtil.dip2px(context, 0.8f);
         mDownloadHeight = CommonUtil.dip2px(context, 1.5f);
@@ -74,7 +84,7 @@ public class GameLoadProgressBar extends View {
         nomalColor = ContextCompat.getColor(context, R.color.download_bt_nomal);
         openColor = ContextCompat.getColor(context, R.color.download_bt_nomal);
 
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.DownLoadProgressBar);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.GameLoadProgressBar2);
         //progress = typedArray.getInt(R.styleable.DownLoadProgressBar_progress, 0);
         typedArray.recycle();
 
@@ -91,8 +101,7 @@ public class GameLoadProgressBar extends View {
     public void setLoadState(GameFileStatus status) {
 
         this.gameFileStatus = status;
-
-        if (gameFileStatus == null || gameFileStatus.getStatus() == GameFileStatus.STATE_UN_INSTALL){
+        if (gameFileStatus == null || gameFileStatus.getStatus() == GameFileStatus.STATE_UN_INSTALL) {
             text = "下载";
         } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_DOWNLOAD) {         //下载中
             text = "暂停";
@@ -130,8 +139,13 @@ public class GameLoadProgressBar extends View {
      * @return state 进度条当前的状态
      */
     public void toggle() {
+        Log.d(TAG, "toggle: " + gameFileStatus.getStatus());
         if (gameFileStatus == null || gameFileStatus.getStatus() == GameFileStatus.STATE_UN_INSTALL) {
-            startDownload();
+            if (CommonUtil.isLogined()) {
+                startDownload();
+            } else {
+                showUnLoginDialog();
+            }
         } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_DOWNLOAD) { //下载中，点击后暂停
             pauseDownload();
         } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_PAUSE) {    //暂停中，点击后下载
@@ -146,6 +160,34 @@ public class GameLoadProgressBar extends View {
 //            updateApp();
 //        }
 
+    }
+
+    private void showUnLoginDialog() {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //填充对话框的布局
+        View inflate = LayoutInflater.from(context).inflate(R.layout.layout_dialog_one_bt, null);
+
+        TextView sureBt = (TextView) inflate.findViewById(R.id.right_tv);
+        sureBt.setText(R.string.login);
+        sureBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+                context.startActivity(new Intent(context, LoginActivity.class));
+            }
+        });
+        ((TextView) inflate.findViewById(R.id.title)).setText(getResources().getString(R.string.unlogin_msg));
+        dialog.setContentView(inflate);//将布局设置给Dialog
+
+        Window dialogWindow = dialog.getWindow(); //获取当前Activity所在的窗体
+        dialogWindow.setBackgroundDrawableResource(R.color.transparent);
+        dialogWindow.setGravity(Gravity.CENTER_HORIZONTAL);//设置Dialog从窗体底部弹出
+        WindowManager.LayoutParams params = dialogWindow.getAttributes();   //获得窗体的属性
+        //params.y = 20;  Dialog距离底部的距离
+        params.width = getResources().getDimensionPixelSize(R.dimen.unlogin_dialog_width);//设置Dialog距离底部的距离
+        dialogWindow.setAttributes(params); //将属性设置给窗体
+        dialog.show();//显示对话框
     }
 
     /**

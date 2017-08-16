@@ -104,4 +104,5 @@
     <dimen name="font_sliding_menu_item">@dimen/dm032</dimen>
     <dimen name="dp_45">45dp</dimen>
     <dimen name="dp_55">55dp</dimen>
+    <dimen name="unlogin_dialog_width">@dimen/dm376</dimen>
 </resources>

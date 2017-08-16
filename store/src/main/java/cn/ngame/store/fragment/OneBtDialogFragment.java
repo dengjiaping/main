@@ -1,5 +1,6 @@
 package cn.ngame.store.fragment;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -15,7 +16,6 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import cn.ngame.store.R;
-import cn.ngame.store.core.utils.CommonUtil;
 
 /**
  * Fragment类型的对话框
@@ -74,24 +74,18 @@ public class OneBtDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getDialog().setCanceledOnTouchOutside(true);
-        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Dialog dialog = getDialog();
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(true);
+        Window window = dialog.getWindow();
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        window.setLayout(getResources().getDimensionPixelSize(R.dimen.unlogin_dialog_width), WindowManager
+                .LayoutParams.WRAP_CONTENT);
         View view = inflater.inflate(R.layout.layout_dialog_one_bt, container);
         negative_tv = (TextView) view.findViewById(R.id.right_tv);
         title_tv = (TextView) view.findViewById(R.id.title);
 
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        //设置对话框宽度
-        if (dialogWidth > 0) {
-            getDialog().getWindow().setLayout(CommonUtil.dip2px(getActivity(), dialogWidth), WindowManager.LayoutParams
-                    .WRAP_CONTENT);
-        }
     }
 
     @Override

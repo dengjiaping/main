@@ -14,9 +14,8 @@ import cn.ngame.store.core.utils.CommonUtil;
  * 自定义下载进度条
  * Created by zeng on 2016/5/18.
  */
-public class DownLoadProgressBar extends View {
+public class GameLoadProgressBar2 extends View {
 
-    private static final String TAG = DownLoadProgressBar.class.getSimpleName();
     /**
      * 未安装
      */
@@ -66,11 +65,11 @@ public class DownLoadProgressBar extends View {
     private Paint paint;
 
 
-    public DownLoadProgressBar(Context context) {
+    public GameLoadProgressBar2(Context context) {
         this(context, null);
     }
 
-    public DownLoadProgressBar(Context context, AttributeSet attrs) {
+    public GameLoadProgressBar2(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         backgroundColor = context.getResources().getColor(R.color.progress_bar_background);
@@ -90,8 +89,8 @@ public class DownLoadProgressBar extends View {
         frontColor = context.getResources().getColor(attrs.getAttributeResourceValue("http://schemas.android" +
                 ".com/apk/res/android", "background", -1));
 
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.DownLoadProgressBar);
-        progress = typedArray.getInt(R.styleable.DownLoadProgressBar_progress, 0);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.GameLoadProgressBar2);
+        progress = typedArray.getInt(R.styleable.GameLoadProgressBar2_progress, 0);
         typedArray.recycle();
 
         paint = new Paint();

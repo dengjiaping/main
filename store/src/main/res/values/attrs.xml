@@ -46,7 +46,7 @@
     </declare-styleable>
 
     <!-- 自定义进度条控件的属性 -->
-    <declare-styleable name="DownLoadProgressBar">
+    <declare-styleable name="GameLoadProgressBar2">
         <attr name="progress" format="integer"></attr>
     </declare-styleable>
 

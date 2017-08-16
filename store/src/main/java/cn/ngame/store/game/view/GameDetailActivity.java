@@ -1,13 +1,13 @@
 package cn.ngame.store.game.view;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,9 +55,7 @@ import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.DialogHelper;
 import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.core.utils.KeyConstant;
-import cn.ngame.store.fragment.OneBtDialogFragment;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
-import cn.ngame.store.user.view.LoginActivity;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.AutoHeightViewPager;
@@ -107,6 +105,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private float rate;
     private TextView sumbitTv;
     private boolean isPrecented = false;
+    private FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +125,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         } catch (Exception e) {
         }
         content = this;
+        fm = getSupportFragmentManager();
         tabTextSize = CommonUtil.dip2px(content, 16f);
 
         //初始化
@@ -265,7 +265,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         fragments = new ArrayList<>();
         fragments.add(GameDetailFragment.newInstance(gameInfo));
         fragments.add(GameReadFragment.newInstance(gameInfo));
-        adapter = new DCViewPagerAdapter(getSupportFragmentManager(), fragments, tabList);//getChildFragmentManager()
+        adapter = new DCViewPagerAdapter(fm, fragments, tabList);//getChildFragmentManager()
         viewpager.setAdapter(adapter);
     }
 
@@ -388,28 +388,29 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.game_detail_like_iv:
-                    String pwd = StoreApplication.passWord;
-                    if ((pwd != null && !"".endsWith(pwd)) || !Constant.PHONE.equals(StoreApplication.loginType)) {
+                    if (CommonUtil.isLogined()) {
                         //已登录,评分框
                         boolean isLiked = likeIv.isSelected();
                         ToastUtil.show(content, isLiked ? "取消成功" : "收藏成功,可在管理界面中查看");
                         likeIv.setSelected(!isLiked);
                     } else {//未登录
-                        showUnLoginDialog();
+                        CommonUtil.showUnLoginDialog(fm, content);
                     }
 
                     break;
                 case R.id.game_detail_feedback_bt:
-                    ToastUtil.show(content, "反馈成功");
+                    if (CommonUtil.isLogined()) {
+                        ToastUtil.show(content, "反馈成功");
+                    } else {
+                        CommonUtil.showUnLoginDialog(fm, content);
+                    }
                     break;
                 case R.id.game_detail_percentage_tv:
-                    String pwd1 = StoreApplication.passWord;
-                    if ((pwd1 != null && !"".endsWith(pwd1)) ||
-                            !Constant.PHONE.equals(StoreApplication.loginType)) {
+                    if (CommonUtil.isLogined()) {
                         //已登录,评分框
                         showPercentDialog();
                     } else {//未登录
-                        showUnLoginDialog();
+                        CommonUtil.showUnLoginDialog(fm, content);
                     }
                     break;
             }
@@ -515,25 +516,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         };
         StoreApplication.requestQueue.add(versionRequest);
     }
-
-    /**
-     * 未登录对话框
-     */
-    private void showUnLoginDialog() {
-        final OneBtDialogFragment dialogFragment = new OneBtDialogFragment();
-        dialogFragment.setTitle(getString(R.string.to_percent_unlogin_msg));
-        dialogFragment.setDialogWidth(220);
-        dialogFragment.setNegativeButton("立即登录", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogFragment.dismiss();
-                Intent intent = new Intent(content, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-        dialogFragment.show(getSupportFragmentManager().beginTransaction(), "successDialog");
-    }
-
 
     @Override
     protected void onDestroy() {

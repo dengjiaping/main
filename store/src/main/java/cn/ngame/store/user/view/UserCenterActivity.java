@@ -381,7 +381,7 @@ public class UserCenterActivity extends BaseFgActivity {
                     public void onResponse(JsonResult<User> result) {
                         int code = result.code;
                         if (code == 0) {
-                            ToastUtil.show(content,"资料修改成功!");
+                            ToastUtil.show(content, "资料修改成功!");
                             User user = result.data;
                             editor.putString(Constant.CONFIG_TOKEN, user.token);
                             editor.putString(Constant.CONFIG_USER_HEAD, user.headPhoto);
@@ -450,7 +450,6 @@ public class UserCenterActivity extends BaseFgActivity {
 
         final OneBtDialogFragment dialogFragment = new OneBtDialogFragment();
         dialogFragment.setTitle("您的登录状态已经失效\n请重新登录");
-        dialogFragment.setDialogWidth(220);
         dialogFragment.setNegativeButton("立即登录", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -461,7 +460,6 @@ public class UserCenterActivity extends BaseFgActivity {
             }
         });
         dialogFragment.show(ft, "successDialog");
-
     }
 
     ImageLoader imageLoader = ImageLoader.getInstance();

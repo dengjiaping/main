@@ -19,19 +19,28 @@ package cn.ngame.store.core.utils;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
 
 import java.io.File;
 
+import cn.ngame.store.R;
+import cn.ngame.store.StoreApplication;
 import cn.ngame.store.exception.NoSDCardException;
+import cn.ngame.store.fragment.OneBtDialogFragment;
+import cn.ngame.store.user.view.LoginActivity;
 
 /**
  * 常用工具类
+ *
  * @author flan
- * @date   2015年11月11日
+ * @date 2015年11月11日
  */
 public class CommonUtil {
 
@@ -39,13 +48,14 @@ public class CommonUtil {
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
-                         Manifest.permission.READ_EXTERNAL_STORAGE,
-                         Manifest.permission.WRITE_EXTERNAL_STORAGE };
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private static String[] READ_PHONE_STATE = {
             Manifest.permission.READ_PHONE_STATE};
 
     /**
      * 坚持系统是否有读写SDCard的权限
+     *
      * @param activity
      */
     public static void verifyStoragePermissions(Activity activity) {
@@ -62,6 +72,7 @@ public class CommonUtil {
 
     /**
      * 是否有读写手机硬件信息 如设备id，手机版本
+     *
      * @param activity
      */
     public static void verifyStatePermissions(Activity activity) {
@@ -78,6 +89,7 @@ public class CommonUtil {
 
     /**
      * 获取文件下载存放基础路径
+     *
      * @return
      */
     public static String getFileLoadBasePath() throws NoSDCardException {
@@ -85,8 +97,9 @@ public class CommonUtil {
         String path;
         boolean sdCardExist = Environment.getExternalStorageState()
                 .equals(android.os.Environment.MEDIA_MOUNTED); //判断sd卡是否存在
-        if(sdCardExist){
-            path = Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator+"ngame"+File.separator+"download"+File.separator;
+        if (sdCardExist) {
+            path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ngame" + File.separator +
+                    "download" + File.separator;
         } else {
             throw new NoSDCardException("设备上没有找到SDCard");
         }
@@ -95,6 +108,7 @@ public class CommonUtil {
 
     /**
      * 获取SD卡上的Android/文件夹路径
+     *
      * @return
      */
     public static String getSystemAndroidPath() throws NoSDCardException {
@@ -102,8 +116,8 @@ public class CommonUtil {
         String path;
         boolean sdCardExist = Environment.getExternalStorageState()
                 .equals(android.os.Environment.MEDIA_MOUNTED); //判断sd卡是否存在
-        if(sdCardExist){
-            path = Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator+"Android"+File.separator;
+        if (sdCardExist) {
+            path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "Android" + File.separator;
         } else {
             throw new NoSDCardException("设备上没有找到SDCard");
         }
@@ -112,6 +126,7 @@ public class CommonUtil {
 
     /**
      * 获取图片存放基础路径
+     *
      * @return
      */
     public static String getImageBasePath() throws NoSDCardException {
@@ -120,8 +135,9 @@ public class CommonUtil {
         boolean sdCardExist = Environment.getExternalStorageState()
                 .equals(android.os.Environment.MEDIA_MOUNTED); //判断sd卡是否存在
         if (sdCardExist) {
-            path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ngame" + File.separator + "image" + File.separator;
-        }else {
+            path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ngame" + File.separator +
+                    "image" + File.separator;
+        } else {
             throw new NoSDCardException("设备上没有找到SDCard");
         }
         return path;
@@ -129,28 +145,29 @@ public class CommonUtil {
 
     /**
      * 将文件的尺寸，由字节单位转为相应单位表示
-     * @param size      文件的尺寸，单位为字节
-     * @param decimal  保留小数位数，0表示取整
+     *
+     * @param size    文件的尺寸，单位为字节
+     * @param decimal 保留小数位数，0表示取整
      * @return
      */
-    public static String formatFileSize(double size,int decimal){
+    public static String formatFileSize(double size, int decimal) {
 
         String sizeStr;
-        size = size/1024;
-        if(size > 1024){
-            size = size/1024;
-            if(size > 1024){
+        size = size / 1024;
+        if (size > 1024) {
+            size = size / 1024;
+            if (size > 1024) {
 
-                sizeStr = String.valueOf(size/1024);
-                sizeStr = sizeStr.format("%."+decimal+"f")+"G";
-            }else {
+                sizeStr = String.valueOf(size / 1024);
+                sizeStr = sizeStr.format("%." + decimal + "f") + "G";
+            } else {
                 sizeStr = String.valueOf(size);
-                sizeStr = sizeStr.format("%."+decimal+"f")+"M";
+                sizeStr = sizeStr.format("%." + decimal + "f") + "M";
             }
 
-        }else {
+        } else {
             sizeStr = String.valueOf(size);
-            sizeStr = sizeStr.format("%."+decimal+"f")+"K";
+            sizeStr = sizeStr.format("%." + decimal + "f") + "K";
         }
 
         return sizeStr;
@@ -158,16 +175,17 @@ public class CommonUtil {
 
     /**
      * 获取APP的版本号
+     *
      * @param context
      * @return
      */
-    public static int getVersionCode(Context context){
+    public static int getVersionCode(Context context) {
 
         int versionCode = -1;
         try {
             versionCode = context.getPackageManager().getPackageInfo("cn.ngame.store", 0).versionCode;
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG,e.getMessage());
+            Log.e(TAG, e.getMessage());
             e.printStackTrace();
         }
         return versionCode;
@@ -175,10 +193,11 @@ public class CommonUtil {
 
     /**
      * 获取APP的版本名称
+     *
      * @param context
      * @return
      */
-    public static String getVersionName(Context context){
+    public static String getVersionName(Context context) {
         String verName = "";
         try {
             verName = context.getPackageManager().getPackageInfo("cn.ngame.store", 0).versionName;
@@ -190,6 +209,7 @@ public class CommonUtil {
 
     /**
      * 将px值转换为dip或dp值，保证尺寸大小不变
+     *
      * @param pxValue
      * @return
      */
@@ -200,6 +220,7 @@ public class CommonUtil {
 
     /**
      * 将dip或dp值转换为px值，保证尺寸大小不变
+     *
      * @param dipValue
      * @return
      */
@@ -230,4 +251,29 @@ public class CommonUtil {
         return (int) (spValue * fontScale + 0.5f);
     }
 
+    ;
+
+    /**
+     * 是否登录
+     *
+     * @return
+     */
+
+    public static boolean isLogined() {
+        String pwd = StoreApplication.passWord;
+        return (pwd != null && !"".endsWith(pwd)) || !Constant.PHONE.equals(StoreApplication.loginType);
+    }
+
+    public static void showUnLoginDialog(FragmentManager fm, final Context content) {
+        final OneBtDialogFragment dialogFragment = new OneBtDialogFragment();
+        dialogFragment.setTitle(Resources.getSystem().getString(R.string.unlogin_msg));
+        dialogFragment.setNegativeButton("立即登录", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogFragment.dismiss();
+                content.startActivity(new Intent(content, LoginActivity.class));
+            }
+        });
+        dialogFragment.show(fm.beginTransaction(), "successDialog");
+    }
 }

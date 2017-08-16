@@ -38,7 +38,7 @@ import java.util.TimerTask;
 import cn.ngame.store.R;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.core.utils.TextUtil;
-import cn.ngame.store.view.DownLoadProgressBar;
+import cn.ngame.store.view.GameLoadProgressBar2;
 
 /**
  * 手柄游戏的ListView控件适配器
@@ -117,7 +117,7 @@ public class CommentNSLVAdapter extends BaseAdapter {
 			holder.tv_size = (TextView) convertView.findViewById(R.id.text1);
 			holder.tv_count = (TextView) convertView.findViewById(R.id.text2);
 			holder.ratingBar = (RatingBar) convertView.findViewById(R.id.rating_bar);
-			holder.progressBar = (DownLoadProgressBar) convertView.findViewById(R.id.progress_bar);
+			holder.progressBar = (GameLoadProgressBar2) convertView.findViewById(R.id.progress_bar);
 
 			convertView.setTag(holder);
 		} else {
@@ -143,7 +143,7 @@ public class CommentNSLVAdapter extends BaseAdapter {
 		private ImageView img;
 		private TextView tv_title, tv_summary,tv_size,tv_count;
 		private RatingBar ratingBar;
-		private DownLoadProgressBar progressBar;    //下载进度条
+		private GameLoadProgressBar2 progressBar;    //下载进度条
 		private FragmentManager fragmentManager;
 
 		private Timer timer = new Timer();
@@ -195,7 +195,7 @@ public class CommentNSLVAdapter extends BaseAdapter {
 
 			ratingBar.setRating(gameInfo.percentage);
 
-			progressBar.setState(DownLoadProgressBar.STATE_UN_INSTALL);
+			progressBar.setState(GameLoadProgressBar2.STATE_UN_INSTALL);
 
 			Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.ic_def_logo_720_288);
 			img.setImageBitmap(bitmap);
