@@ -95,7 +95,7 @@
             android:layout_alignParentRight="true"
             android:background="@null"
             android:gravity="center"
-            android:paddingRight="@dimen/dm025"
+            android:paddingRight="@dimen/dm018"
             android:text="下载中心"
             android:textColor="@color/white"
             android:textSize="@dimen/dm028"

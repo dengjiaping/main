@@ -170,7 +170,6 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
 
         final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
         dialogFragment.setCancelable(false);
-        dialogFragment.setTitle("温馨提示");
         dialogFragment.setDialogWidth(250);
 
 
@@ -180,11 +179,11 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
         tv_title.setVisibility(View.GONE);
 
         TextView tv_summary = (TextView) contentView.findViewById(R.id.tv_summary);
-        tv_summary.setText("当前非WIFI网络，继续继续下载将使用运营商流量！");
+        tv_summary.setText("当前非WIFI网络，继续下载将使用运营商流量！");
 
         dialogFragment.setContentView(contentView);
 
-        dialogFragment.setPositiveButton("继续下载", new View.OnClickListener() {
+        dialogFragment.setNegativeButton("继续下载", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialogFragment.dismiss();
@@ -192,7 +191,7 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
                 manager.load(info.getName(),info.getUrl(),info.getMd5(),info.getPackageName(),info.getVersionCode(),info.getTitle(),info.getPreviewUrl(),info.getServerId(),true);
             }
         });
-        dialogFragment.setNegativeButton("取消下载", new View.OnClickListener() {
+        dialogFragment.setPositiveButton("取消", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialogFragment.dismiss();

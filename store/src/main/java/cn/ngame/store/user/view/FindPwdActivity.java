@@ -103,7 +103,6 @@ public class FindPwdActivity extends BaseFgActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_findpwd);
         isFromUserCenter = getIntent().getBooleanExtra(KeyConstant.IS_FROM_USER_CENTER, false);
-        android.util.Log.d(TAG, "onCreate:isFromUserCenter " + isFromUserCenter);
         BaseTitleBar titleBar = (BaseTitleBar) findViewById(R.id.title_bar);
         titleBar.setOnLeftClickListener(new View.OnClickListener() {
             @Override

@@ -291,9 +291,7 @@ public class FileLoadManager implements IFileLoad {
 
     @Override
     public List<FileLoadInfo> getLoadingFileInfo() {
-
         ArrayList<FileLoadInfo> infoList = new ArrayList<>();
-
         if (FileLoadService.gameFileStatusMap != null) {
             for (FileLoadInfo info : FileLoadService.gameFileStatusMap.values()) {
                 if (info.getStatus() == FileLoadInfo.STATUS_LOADING || info.getStatus() == FileLoadInfo.STATUS_PAUSE

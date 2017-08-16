@@ -139,7 +139,6 @@ public class GameLoadProgressBar extends View {
      * @return state 进度条当前的状态
      */
     public void toggle() {
-        Log.d(TAG, "toggle: " + gameFileStatus.getStatus());
         if (gameFileStatus == null || gameFileStatus.getStatus() == GameFileStatus.STATE_UN_INSTALL) {
             if (CommonUtil.isLogined()) {
                 startDownload();

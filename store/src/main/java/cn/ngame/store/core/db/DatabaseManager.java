@@ -26,7 +26,6 @@ public class DatabaseManager {
 
     public static final String TAG = DatabaseManager.class.getSimpleName();
 
-
     private static DatabaseManager manager = null;
     private SQLiteDatabase db;
 
@@ -177,6 +176,7 @@ public class DatabaseManager {
                     " | packageName "+info.packageName+" | length "+info.length +" | finished "+info.finished+" | status "+info.status);*/
         }
         cursor.close();
+
 
         return fileInfoList;
     }

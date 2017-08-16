@@ -1,11 +1,16 @@
 package cn.ngame.store.activity.manager;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.ngame.store.R;
@@ -40,6 +45,7 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     private FragmentActivity content;
     private boolean mHidden = false;
     private FileLoadInfo mfileUnstalledInfo;
+    private PackageManager packageManager;
 
     public static ManagerInstalledFragment newInstance(String type, int arg) {
         ManagerInstalledFragment fragment = new ManagerInstalledFragment();
@@ -58,6 +64,7 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     @Override
     protected void initViewsAndEvents(View view) {
         content = getActivity();
+        packageManager = content.getPackageManager();
         typeValue = getArguments().getInt("typeValue", 1);
         type = getArguments().getString("type");
         listView = (ListView) view.findViewById(R.id.listView);
@@ -72,21 +79,16 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
         fileLoad = FileLoadManager.getInstance(content);
     }
 
+    private List<PackageInfo> localAppList = new ArrayList<>();
+
     @Override
     public void onResume() {
         super.onResume();
+        List<PackageInfo> appList = getLocalApp();
 
-        DatabaseManager dbManager = DatabaseManager.getInstance(content);
-        List<FileLoadInfo> fileLoadInfos0 = dbManager.queryAllFileLoadInfo(0);
-        List<FileLoadInfo> fileLoadInfos1 = dbManager.queryAllFileLoadInfo(1);
-        List<FileLoadInfo> fileLoadInfos2 = dbManager.queryAllFileLoadInfo(2);
-        if (!mHidden && null != alreadyLvAdapter && null != fileLoad) {
-            List<FileLoadInfo> openFileInfo = fileLoad.getOpenFileInfo();
-            Log.d(TAG, "onResume: " + fileLoadInfos1.size());
-            Log.d(TAG, "onResume:fileLoadInfos0 " + fileLoadInfos0.size());
-            Log.d(TAG, "onResume:openFileInfo1 " + openFileInfo.size());
-            Log.d(TAG, "onResume:fileLoadInfos2 " + fileLoadInfos2.size());
-            alreadyLvAdapter.setDate(fileLoadInfos1);
+      /*  if (!mHidden && null != alreadyLvAdapter && null != fileLoad) {
+
+            alreadyLvAdapter.setDate();
             if (null != mfileUnstalledInfo) {
                 boolean containInfo = openFileInfo.contains(mfileUnstalledInfo);
                 if (!containInfo) {
@@ -95,7 +97,25 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
                 }
 
             }
+        }*/
+    }
+
+    private List<PackageInfo> getLocalApp() {
+        final List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
+        localAppList.clear();
+        PackageInfo packageInfo;
+        for (int i = 0; i < packageInfos.size(); i++) {
+            packageInfo = packageInfos.get(i);
+            // 获取 非系统的应用
+            ApplicationInfo applicationInfo = packageInfo.applicationInfo;
+            if ((applicationInfo.flags & applicationInfo.FLAG_SYSTEM) <= 0) {
+                String appName = applicationInfo.loadLabel(packageManager).toString();
+                Drawable drawable = applicationInfo.loadIcon(packageManager);
+                Log.d(TAG, appName + "getLocalApp" + packageInfo.packageName);
+                localAppList.add(packageInfo);
+            }
         }
+        return localAppList;
     }
 
     protected final static String TAG = "2222";
