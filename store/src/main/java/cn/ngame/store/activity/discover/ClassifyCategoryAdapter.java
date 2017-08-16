@@ -7,32 +7,34 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.jzt.hol.android.jkda.sdk.bean.classification.ClassifiHomeBean;
+import com.jzt.hol.android.jkda.sdk.bean.classification.AllClassifyBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
 import cn.ngame.store.R;
 
+import static cn.ngame.store.R.id.tv_content;
+
 /**
- *  首页下方攻略列表
+ * 首页下方攻略列表
+ *
  * @author gp
  */
-public class ClassifiMaoxianAdapter extends BaseAdapter {
+public class ClassifyCategoryAdapter extends BaseAdapter {
 
     private Context context;
-    private List<ClassifiHomeBean.DataBean.ParkourListBean> list;
+    private List<AllClassifyBean.DataBean.GameCategoryListBean> list;
     String type;
     ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public ClassifiMaoxianAdapter(Context context, List<ClassifiHomeBean.DataBean.ParkourListBean> list) {
+    public ClassifyCategoryAdapter(Context context, List<AllClassifyBean.DataBean.GameCategoryListBean> list) {
         super();
         this.context = context;
         this.list = list;
-        this.type = type;
     }
 
-    public void setList(List<ClassifiHomeBean.DataBean.ParkourListBean> list) {
+    public void setList(List<AllClassifyBean.DataBean.GameCategoryListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -40,7 +42,7 @@ public class ClassifiMaoxianAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         if (list != null) {
-            return  list.size();
+            return list.size();
         }
         return 0;
     }
@@ -64,7 +66,8 @@ public class ClassifiMaoxianAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = View.inflate(parent.getContext(), R.layout.classify_gridview_item, null);
-            holder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
+            holder.tv_content = (TextView) convertView.findViewById(tv_content);
+            holder.tv_content.setBackgroundResource(R.drawable.shape_corner4dp_4ac7fc);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -72,7 +75,7 @@ public class ClassifiMaoxianAdapter extends BaseAdapter {
         if (position > (list.size() - 1)) {
             holder.tv_content.setText("");
         } else {
-            holder.tv_content.setText(list.get(position).getTypeName());
+            holder.tv_content.setText(list.get(position).getCName());
         }
         return convertView;
     }

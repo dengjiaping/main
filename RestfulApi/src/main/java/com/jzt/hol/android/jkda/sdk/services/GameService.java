@@ -4,7 +4,7 @@ package com.jzt.hol.android.jkda.sdk.services;
 import com.jzt.hol.android.jkda.sdk.bean.admin.AdminGameUpdateBody;
 import com.jzt.hol.android.jkda.sdk.bean.admin.QuestionListBean;
 import com.jzt.hol.android.jkda.sdk.bean.admin.SystemMsgBean;
-import com.jzt.hol.android.jkda.sdk.bean.classification.ClassifiHomeBean;
+import com.jzt.hol.android.jkda.sdk.bean.classification.AllClassifyBean;
 import com.jzt.hol.android.jkda.sdk.bean.game.GameListBody;
 import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.AddCommentBodyBean;
@@ -187,9 +187,9 @@ public interface GameService {
                                                 @Body BrowseHistoryBodyBean bean);
 
     // 分类首页
-    @POST("game/queryCategoryHome")
-    Observable<ClassifiHomeBean> queryClassifiHome(@Header("content-type") String type,
-                                                   @Body YunduanBodyBean bean);
+    @POST("gameDiscovery/queryDiscoveryGameCategoryList")
+    Observable<AllClassifyBean> queryClassifiHome(@Header("content-type") String type,
+                                                  @Body YunduanBodyBean bean);
 
     // 管理-游戏是否需要更新
     @POST("game/queryGameISUpdate")

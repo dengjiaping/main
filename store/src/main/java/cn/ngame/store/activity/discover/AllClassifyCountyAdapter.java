@@ -7,34 +7,27 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.jzt.hol.android.jkda.sdk.bean.classification.ClassifiHomeBean;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.jzt.hol.android.jkda.sdk.bean.classification.AllClassifyBean;
 
 import java.util.List;
 
 import cn.ngame.store.R;
 
-import static cn.ngame.store.R.id.tv_content;
-
 /**
- * 首页下方攻略列表
- *
  * @author gp
  */
-public class ClassifiQiangzhanAdapter extends BaseAdapter {
+public class AllClassifyCountyAdapter extends BaseAdapter {
 
     private Context context;
-    private List<ClassifiHomeBean.DataBean.GunFireListBean> list;
-    String type;
-    ImageLoader imageLoader = ImageLoader.getInstance();
+    private List<AllClassifyBean.DataBean.GameCountyListBean> list;
 
-    public ClassifiQiangzhanAdapter(Context context, List<ClassifiHomeBean.DataBean.GunFireListBean> list) {
+    public AllClassifyCountyAdapter(Context context, List<AllClassifyBean.DataBean.GameCountyListBean> list) {
         super();
         this.context = context;
         this.list = list;
     }
 
-    public void setList(List<ClassifiHomeBean.DataBean.GunFireListBean> list) {
+    public void setList(List<AllClassifyBean.DataBean.GameCountyListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -66,8 +59,7 @@ public class ClassifiQiangzhanAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = View.inflate(parent.getContext(), R.layout.classify_gridview_item, null);
-            holder.tv_content = (TextView) convertView.findViewById(tv_content);
-            holder.tv_content.setBackgroundResource(R.drawable.shape_corner4dp_4ac7fc);
+            holder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -75,7 +67,7 @@ public class ClassifiQiangzhanAdapter extends BaseAdapter {
         if (position > (list.size() - 1)) {
             holder.tv_content.setText("");
         } else {
-            holder.tv_content.setText(list.get(position).getTypeName());
+            holder.tv_content.setText(list.get(position).getCName());
         }
         return convertView;
     }

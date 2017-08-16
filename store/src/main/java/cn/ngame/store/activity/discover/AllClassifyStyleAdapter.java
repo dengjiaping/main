@@ -7,32 +7,29 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.jzt.hol.android.jkda.sdk.bean.classification.ClassifiHomeBean;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.jzt.hol.android.jkda.sdk.bean.classification.AllClassifyBean;
 
 import java.util.List;
 
 import cn.ngame.store.R;
 
 /**
- *  首页下方攻略列表
+ * 首页下方攻略列表
+ *
  * @author gp
  */
-public class ClassifyRoleAdapter extends BaseAdapter {
+public class AllClassifyStyleAdapter extends BaseAdapter {
 
     private Context context;
-    private List<ClassifiHomeBean.DataBean.RoleListBean> list;
-    String type;
-    ImageLoader imageLoader = ImageLoader.getInstance();
+    private List<AllClassifyBean.DataBean.GameStyleListBean> list;
 
-    public ClassifyRoleAdapter(Context context, List<ClassifiHomeBean.DataBean.RoleListBean> list) {
+    public AllClassifyStyleAdapter(Context context, List<AllClassifyBean.DataBean.GameStyleListBean> list) {
         super();
         this.context = context;
         this.list = list;
-        this.type = type;
     }
 
-    public void setList(List<ClassifiHomeBean.DataBean.RoleListBean> list) {
+    public void setList(List<AllClassifyBean.DataBean.GameStyleListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -73,7 +70,7 @@ public class ClassifyRoleAdapter extends BaseAdapter {
         if (position > (list.size() - 1)) {
             holder.tv_content.setText("");
         } else {
-            holder.tv_content.setText(list.get(position).getTypeName());
+            holder.tv_content.setText(list.get(position).getCName());
         }
         return convertView;
     }

@@ -7,27 +7,29 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.jzt.hol.android.jkda.sdk.bean.classification.ClassifiHomeBean;
+import com.jzt.hol.android.jkda.sdk.bean.classification.AllClassifyBean;
 
 import java.util.List;
 
 import cn.ngame.store.R;
 
 /**
+ *  首页下方攻略列表
  * @author gp
  */
-public class ClassifiHotAdapter extends BaseAdapter {
+public class AllClassifyManufacturerAdapter extends BaseAdapter {
 
     private Context context;
-    private List<ClassifiHomeBean.DataBean.OnlineListBean> list;
+    private List<AllClassifyBean.DataBean.GameManufacturerListBean> list;
+    String type;
 
-    public ClassifiHotAdapter(Context context, List<ClassifiHomeBean.DataBean.OnlineListBean> list) {
+    public AllClassifyManufacturerAdapter(Context context, List<AllClassifyBean.DataBean.GameManufacturerListBean> list) {
         super();
         this.context = context;
         this.list = list;
     }
 
-    public void setList(List<ClassifiHomeBean.DataBean.OnlineListBean> list) {
+    public void setList(List<AllClassifyBean.DataBean.GameManufacturerListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -35,7 +37,7 @@ public class ClassifiHotAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         if (list != null) {
-            return list.size();
+            return  list.size();
         }
         return 0;
     }
@@ -67,7 +69,7 @@ public class ClassifiHotAdapter extends BaseAdapter {
         if (position > (list.size() - 1)) {
             holder.tv_content.setText("");
         } else {
-            holder.tv_content.setText(list.get(position).getTypeName());
+            holder.tv_content.setText(list.get(position).getCName());
         }
         return convertView;
     }

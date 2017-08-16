@@ -8,8 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -20,9 +18,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
 import com.jzt.hol.android.jkda.sdk.bean.classification.ClassifiHomeBean;
-import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.Classification.ClassifiHomeClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,10 +30,6 @@ import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.main.TopicsDetailActivity;
 import cn.ngame.store.activity.main.TopicsListActivity;
-import cn.ngame.store.adapter.ClassifiDongzuoAdapter;
-import cn.ngame.store.adapter.ClassifiSaicheAdapter;
-import cn.ngame.store.adapter.ClassifiTiyuAdapter;
-import cn.ngame.store.adapter.ClassifiXiuxianAdapter;
 import cn.ngame.store.adapter.HomeRaiderAdapter;
 import cn.ngame.store.adapter.discover.DiscoverClassifyTopAdapter;
 import cn.ngame.store.adapter.discover.DiscoverIvAdapter;
@@ -51,7 +42,6 @@ import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
-import cn.ngame.store.game.view.GameClassifyActivity;
 import cn.ngame.store.game.view.GameListActivity;
 import cn.ngame.store.view.BannerView;
 import cn.ngame.store.view.PicassoImageView;
@@ -65,38 +55,10 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
  */
 
 public class DiscoverFragment extends BaseSearchFragment implements View.OnClickListener {
-
-    private static final int SUB_TYPE_ID_VR = 13;
-    private static final int SUB_TYPE_ID_STADN = 14;
-    private static final int SUB_TYPE_ID_BOY = 15;
-    private static final int SUB_TYPE_ID_GIRL = 16;
-    private static final int SUB_TYPE_ID = 21;
-    private static final String TAG = "111";
     private FragmentActivity context;
-    /**
-     * 顶部栏
-     */
     private PullToRefreshListView pullListView;
-    /**
-     * headerView
-     */
     private RecyclerView mRVClassifyAll;
     DiscoverClassifyTopAdapter remenAdapter;
-    List<ClassifiHomeBean.DataBean.OnlineListBean> remenList = new ArrayList<>();
-    ClassifiQiangzhanAdapter qiangzhanAdapter;
-    List<ClassifiHomeBean.DataBean.GunFireListBean> qiangzhanList = new ArrayList<>();
-    ClassifiMaoxianAdapter maoxianAdapter;
-    List<ClassifiHomeBean.DataBean.ParkourListBean> maoxianList = new ArrayList<>();
-    ClassifiDongzuoAdapter dongzuoAdapter;
-    List<ClassifiHomeBean.DataBean.CombatListBean> dongzuoList = new ArrayList<>();
-    ClassifyRoleAdapter jiaoseAdapter;
-    List<ClassifiHomeBean.DataBean.RoleListBean> jiaoseList = new ArrayList<>();
-    ClassifiXiuxianAdapter xiuxianAdapter;
-    List<ClassifiHomeBean.DataBean.PuzzleListBean> xiuxianList = new ArrayList<>();
-    ClassifiSaicheAdapter saicheAdapter;
-    List<ClassifiHomeBean.DataBean.RaceListBean> saicheList = new ArrayList<>();
-    ClassifiTiyuAdapter tiyuAdapter;
-    List<ClassifiHomeBean.DataBean.SportListBean> tiyuList = new ArrayList<>();
     private BannerView bannerView;
     private List<String> classifyList = new ArrayList<>(Arrays.asList("角色", "动作", "原生", "策略", "模拟", "VR", "枪战", "体育", "格斗"));
     private List<String> mEverydayList = new ArrayList();
@@ -611,216 +573,15 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         return list;
     }
 
-    //传游戏列表id，不传lab查询id
-    public void clickGradView(GridView gridView, final int i) {
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent1 = new Intent(context, GameClassifyActivity.class);
-                switch (i) {
-                    case 1:
-                        if (position < remenList.size()) {
-                            intent1.putExtra("tagPosition", remenList.get(position).getId());
-                            intent1.putExtra("title", "热门网游");
-                            intent1.putExtra("labName", remenList.get(position).getTypeName());
-                            startActivity(intent1);
-                        }
-                        break;
-                    case 2:
-                        if (position < qiangzhanList.size()) {
-                            intent1.putExtra("tagPosition", qiangzhanList.get(position).getId());
-                            intent1.putExtra("title", "枪战射击");
-                            intent1.putExtra("labName", qiangzhanList.get(position).getTypeName());
-                            startActivity(intent1);
-                        }
-                        break;
-                    case 3:
-                        if (position < maoxianList.size()) {
-                            intent1.putExtra("tagPosition", maoxianList.get(position).getId());
-                            intent1.putExtra("title", "冒险酷跑");
-                            intent1.putExtra("labName", maoxianList.get(position).getTypeName());
-                            startActivity(intent1);
-                        }
-                        break;
-                    case 4:
-                        if (position < dongzuoList.size()) {
-                            intent1.putExtra("tagPosition", dongzuoList.get(position).getId());
-                            intent1.putExtra("title", "动作格斗");
-                            intent1.putExtra("labName", dongzuoList.get(position).getTypeName());
-                            startActivity(intent1);
-                        }
-                        break;
-                    case 5:
-                        if (position < jiaoseList.size()) {
-                            // TODO: 2017/7/20 0020
-                            intent1.putExtra("tagPosition", jiaoseList.get(position).getId());
-                            intent1.putExtra("title", "角色扮演");
-                            intent1.putExtra("labName", jiaoseList.get(position).getTypeName());
-                            startActivity(intent1);
-                        }
-                        break;
-                    case 6:
-                        if (position < xiuxianList.size()) {
-                            intent1.putExtra("tagPosition", xiuxianList.get(position).getId());
-                            intent1.putExtra("title", "休闲益智");
-                            intent1.putExtra("labName", xiuxianList.get(position).getTypeName());
-                            startActivity(intent1);
-                        }
-                        break;
-                    case 7:
-                        if (position < saicheList.size()) {
-                            intent1.putExtra("tagPosition", saicheList.get(position).getId());
-                            intent1.putExtra("title", "赛车竞赛");
-                            intent1.putExtra("labName", saicheList.get(position).getTypeName());
-                            startActivity(intent1);
-                        }
-                        break;
-                    case 8:
-                        if (position < tiyuList.size()) {
-                            intent1.putExtra("tagPosition", tiyuList.get(position).getId());
-                            intent1.putExtra("title", "体育球类");
-                            intent1.putExtra("labName", tiyuList.get(position).getTypeName());
-                            startActivity(intent1);
-                        }
-                        break;
-                }
-            }
-        });
-    }
-
-    private void getGameList() {
-        YunduanBodyBean bodyBean = new YunduanBodyBean();
-        bodyBean.setMarkId(SUB_TYPE_ID);
-        new ClassifiHomeClient(context, bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<ClassifiHomeBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-//                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
-                    }
-
-                    @Override
-                    public void onNext(ClassifiHomeBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            //listData(result);
-                        } else {
-//                            ToastUtil.show(getActivity(), result.getMsg());
-                        }
-                    }
-                });
-    }
-
-    //// TODO: 2017/7/20 0020  设置横着的列表数据
-    private void listData(ClassifiHomeBean result) {
-        if (result.getData() == null) {
-            return;
-        }
-
-        if (result.getData().getOnlineList().size() > 0) {
-            mEverydayList.clear();
-            //mEverydayList.addAll();
-            //remenList.addAll(result.getData().getOnlineList());
-            //每日新发现
-            remenAdapter = new DiscoverClassifyTopAdapter(context, classifyList);
-            mRVClassifyAll.setAdapter(remenAdapter);
-        }
-        if (result.getData().getGunFireList().size() > 0) {
-            qiangzhanList.clear();
-            qiangzhanList.addAll(result.getData().getGunFireList());
-            //qiangzhanAdapter = new ClassifiQiangzhanAdapter(context, qiangzhanList);
-            // mRvEverydayDiscover.setAdapter(qiangzhanAdapter);
-        }
-        if (result.getData().getParkourList().size() > 0) {
-            maoxianList.clear();
-            maoxianList.addAll(result.getData().getParkourList());
-            maoxianAdapter = new ClassifiMaoxianAdapter(context, maoxianList);
-            //gridView_maoxian.setAdapter(maoxianAdapter);
-        }
-        if (result.getData().getCombatList().size() > 0) {
-            dongzuoList.clear();
-            dongzuoList.addAll(result.getData().getCombatList());
-            dongzuoAdapter = new ClassifiDongzuoAdapter(context, dongzuoList);
-            //gridView_dongzuo.setAdapter(dongzuoAdapter);
-        }
-        if (result.getData().getRoleList().size() > 0) {
-            jiaoseList.clear();
-            jiaoseList.addAll(result.getData().getRoleList());
-            jiaoseAdapter = new ClassifyRoleAdapter(context, jiaoseList);
-            //gridView_jiaose.setAdapter(jiaoseAdapter);
-        }
-        if (result.getData().getPuzzleList().size() > 0) {
-            xiuxianList.clear();
-            xiuxianList.addAll(result.getData().getPuzzleList());
-            xiuxianAdapter = new ClassifiXiuxianAdapter(context, xiuxianList);
-            //gridView_xiuxian.setAdapter(xiuxianAdapter);
-        }
-        if (result.getData().getRaceList().size() > 0) {
-            saicheList.clear();
-            saicheList.addAll(result.getData().getRaceList());
-            saicheAdapter = new ClassifiSaicheAdapter(context, saicheList);
-            //gridView_saiche.setAdapter(saicheAdapter);
-        }
-        if (result.getData().getSportList().size() > 0) {
-            tiyuList.clear();
-            tiyuList.addAll(result.getData().getSportList());
-            tiyuAdapter = new ClassifiTiyuAdapter(context, tiyuList);
-            //gridView_tiyu.setAdapter(tiyuAdapter);
-        }
-        pullListView.onPullUpRefreshComplete();
-        pullListView.onPullDownRefreshComplete();
-        pullListView.setLastUpdatedLabel(new Date().toLocaleString());
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-         /*   case R.id.iv_vr:
-                Intent intent1 = new Intent(context, SBGameActivity.class);
-                intent1.putExtra("title", "VR游戏");
-                intent1.putExtra("markId", SUB_TYPE_ID_VR);
-                intent1.putExtra("isVr", 1);
-                startActivity(intent1);
-                break;*/
-           /* case iv_stand_alone:
-                Intent intent2 = new Intent(getActivity(), SBGameActivity.class);
-                intent2.putExtra("title", "精品单机");
-                intent2.putExtra("markId", SUB_TYPE_ID_STADN);
-                startActivity(intent2);
-                break;*/
-         /*   case iv_boy:
-                Intent intent3 = new Intent(context, SBGameActivity.class);
-                intent3.putExtra("title", "男生最爱");
-                intent3.putExtra("markId", SUB_TYPE_ID_BOY);
-                startActivity(intent3);
-                break;*/
-          /*  case R.id.iv_girl:
-                Intent intent4 = new Intent(context, SBGameActivity.class);
-                intent4.putExtra("title", "女生最爱");
-                intent4.putExtra("markId", SUB_TYPE_ID_GIRL);
-                startActivity(intent4);
-                break;*/
         }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        remenAdapter = null;
-        remenList = null;
-        qiangzhanAdapter = null;
-        qiangzhanList = null;
-        maoxianAdapter = null;
-        maoxianList = null;
-        dongzuoAdapter = null;
-        dongzuoList = null;
-        jiaoseAdapter = null;
-        jiaoseList = null;
-        xiuxianAdapter = null;
-        xiuxianList = null;
-        saicheAdapter = null;
-        saicheList = null;
-        tiyuAdapter = null;
-        tiyuList = null;
     }
 
     @Override

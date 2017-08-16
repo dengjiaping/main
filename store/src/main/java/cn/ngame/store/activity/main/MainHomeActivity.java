@@ -179,6 +179,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintResource(R.color.mainColor);
         }
+        Intent serviceIntent = new Intent(this, FileLoadService.class);
+        startService(serviceIntent);
         //-----------------------------------------------------------------------------
         setContentView(R.layout.activity_main_home);
         //首页弹出广告dialog

@@ -8,9 +8,10 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import cn.ngame.store. R;
+import cn.ngame.store.R;
 import cn.ngame.store.adapter.InstalledGameAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
+import cn.ngame.store.core.db.DatabaseManager;
 import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
@@ -74,9 +75,18 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        DatabaseManager dbManager = DatabaseManager.getInstance(content);
+        List<FileLoadInfo> fileLoadInfos0 = dbManager.queryAllFileLoadInfo(0);
+        List<FileLoadInfo> fileLoadInfos1 = dbManager.queryAllFileLoadInfo(1);
+        List<FileLoadInfo> fileLoadInfos2 = dbManager.queryAllFileLoadInfo(2);
         if (!mHidden && null != alreadyLvAdapter && null != fileLoad) {
             List<FileLoadInfo> openFileInfo = fileLoad.getOpenFileInfo();
-            alreadyLvAdapter.setDate(openFileInfo);
+            Log.d(TAG, "onResume: " + fileLoadInfos1.size());
+            Log.d(TAG, "onResume:fileLoadInfos0 " + fileLoadInfos0.size());
+            Log.d(TAG, "onResume:openFileInfo1 " + openFileInfo.size());
+            Log.d(TAG, "onResume:fileLoadInfos2 " + fileLoadInfos2.size());
+            alreadyLvAdapter.setDate(fileLoadInfos1);
             if (null != mfileUnstalledInfo) {
                 boolean containInfo = openFileInfo.contains(mfileUnstalledInfo);
                 if (!containInfo) {
@@ -96,7 +106,9 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
         Log.d(TAG, "onHiddenChanged: ");
         mHidden = hidden;
         if (!mHidden && null != alreadyLvAdapter && null != fileLoad) {
-            alreadyLvAdapter.setDate(fileLoad.getOpenFileInfo());
+            DatabaseManager dbManager = DatabaseManager.getInstance(content);
+            List<FileLoadInfo> fileLoadInfos = dbManager.queryAllFileLoadInfo(1);
+            alreadyLvAdapter.setDate(fileLoadInfos);
         }
     }
 
