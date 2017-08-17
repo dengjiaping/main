@@ -69,11 +69,6 @@ public class DownloadCenterFragment extends BaseSearchFragment {
         super.onStart();
         reLoadFileInfo();
     }
-
-
-    /*
-             重新加载
-             */
     private void reLoadFileInfo() {
         alreadyList = fileLoad.getLoadedFileInfo();
         alreadyLvAdapter.setDate(alreadyList);

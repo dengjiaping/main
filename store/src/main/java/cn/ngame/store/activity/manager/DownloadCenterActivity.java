@@ -15,7 +15,6 @@ import java.util.List;
 
 import cn.ngame.store.R;
 import cn.ngame.store.activity.BaseFgActivity;
-import cn.ngame.store.adapter.DCViewPagerAdapter;
 
 /**
  * 管理-下载更新
@@ -28,7 +27,6 @@ public class DownloadCenterActivity extends BaseFgActivity {
     private TextView tv_title;
     private ViewPager viewpager;
     private ArrayList<Fragment> fragments;
-    private DCViewPagerAdapter adapter;
     List<String> tabList = new ArrayList<String>();
     String typeValue = "";
     GameRankListBean bean;

@@ -22,7 +22,7 @@
             <TextView
                 android:layout_width="65dp"
                 android:layout_height="34dp"
-                android:background="@drawable/shape_blue_hub"
+                android:background="@drawable/shape_app_open_bt_nomal"
                 android:gravity="center"
                 android:text="攻略"
                 android:textColor="@color/white"
@@ -39,7 +39,7 @@
             <TextView
                 android:layout_width="65dp"
                 android:layout_height="34dp"
-                android:background="@drawable/shape_blue_hub"
+                android:background="@drawable/shape_app_open_bt_nomal"
                 android:gravity="center"
                 android:text="求助"
                 android:textColor="@color/white"
@@ -56,7 +56,7 @@
             <TextView
                 android:layout_width="65dp"
                 android:layout_height="34dp"
-                android:background="@drawable/shape_blue_hub"
+                android:background="@drawable/shape_app_open_bt_nomal"
                 android:gravity="center"
                 android:text="投票"
                 android:textColor="@color/white"

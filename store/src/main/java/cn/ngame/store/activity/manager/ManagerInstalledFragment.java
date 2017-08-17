@@ -3,12 +3,13 @@ package cn.ngame.store.activity.manager;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,11 @@ import java.util.List;
 import cn.ngame.store.R;
 import cn.ngame.store.adapter.InstalledGameAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
-import cn.ngame.store.core.db.DatabaseManager;
 import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.utils.AppInstallHelper;
+import cn.ngame.store.core.utils.FileUtil;
 import cn.ngame.store.view.ActionItem;
 import cn.ngame.store.view.QuickAction;
 
@@ -44,8 +45,13 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
      */
     private FragmentActivity content;
     private boolean mHidden = false;
-    private FileLoadInfo mfileUnstalledInfo;
+    private PackageInfo mfileUnstalledInfo;
     private PackageManager packageManager;
+    private String pkgNameListStr = "";
+    private List<FileLoadInfo> openFileInfoList;
+    private List<PackageInfo> packageInfos = new ArrayList<>();
+    private PackageInfo packageInfo = new PackageInfo();
+    private ApplicationInfo applicationInfo;
 
     public static ManagerInstalledFragment newInstance(String type, int arg) {
         ManagerInstalledFragment fragment = new ManagerInstalledFragment();
@@ -81,38 +87,53 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
 
     private List<PackageInfo> localAppList = new ArrayList<>();
 
+    private JSONArray jsonArray = new JSONArray();
+
     @Override
     public void onResume() {
         super.onResume();
-        List<PackageInfo> appList = getLocalApp();
 
-      /*  if (!mHidden && null != alreadyLvAdapter && null != fileLoad) {
-
-            alreadyLvAdapter.setDate();
-            if (null != mfileUnstalledInfo) {
-                boolean containInfo = openFileInfo.contains(mfileUnstalledInfo);
-                if (!containInfo) {
-                    //删除安装包
-                    fileLoad.delete(mfileUnstalledInfo.getUrl());
-                }
-
+        //获取本地
+        try {
+            pkgNameListStr = FileUtil.readFile();
+            jsonArray = new JSONArray(pkgNameListStr);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d(TAG, "onResume: JSONException" + e);
+        }
+        //获取数据库 =>  添加
+        openFileInfoList = fileLoad.getOpenFileInfo();
+        for (FileLoadInfo openFileInfo : openFileInfoList) {
+            String gameName = openFileInfo.getName();
+            String gamePackageName = openFileInfo.getPackageName();
+            if (!pkgNameListStr.contains(gamePackageName)) {
+                jsonArray.put(gamePackageName);
             }
-        }*/
+        }
+        Log.d(TAG, "app onResume: " + jsonArray.toString());
+        FileUtil.writeFile2SDCard(jsonArray.toString());
+
+        pkgNameListStr = FileUtil.readFile();
+
+        if (!mHidden && null != alreadyLvAdapter) {
+            alreadyLvAdapter.setDate(getLocalApp());
+        }
     }
 
     private List<PackageInfo> getLocalApp() {
-        final List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
+        packageInfos = packageManager.getInstalledPackages(0);
         localAppList.clear();
-        PackageInfo packageInfo;
         for (int i = 0; i < packageInfos.size(); i++) {
             packageInfo = packageInfos.get(i);
-            // 获取 非系统的应用
-            ApplicationInfo applicationInfo = packageInfo.applicationInfo;
+            applicationInfo = packageInfo.applicationInfo;
+            //非系统应用
             if ((applicationInfo.flags & applicationInfo.FLAG_SYSTEM) <= 0) {
-                String appName = applicationInfo.loadLabel(packageManager).toString();
-                Drawable drawable = applicationInfo.loadIcon(packageManager);
-                Log.d(TAG, appName + "getLocalApp" + packageInfo.packageName);
-                localAppList.add(packageInfo);
+                //String appName = applicationInfo.loadLabel(packageManager).toString();
+                String packageName = applicationInfo.packageName;
+                //如果包名   包含在SD文件里
+                if (pkgNameListStr.contains(packageName)) {
+                    localAppList.add(packageInfo);
+                }
             }
         }
         return localAppList;
@@ -126,15 +147,38 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
         Log.d(TAG, "onHiddenChanged: ");
         mHidden = hidden;
         if (!mHidden && null != alreadyLvAdapter && null != fileLoad) {
-            DatabaseManager dbManager = DatabaseManager.getInstance(content);
-            List<FileLoadInfo> fileLoadInfos = dbManager.queryAllFileLoadInfo(1);
-            alreadyLvAdapter.setDate(fileLoadInfos);
+            alreadyLvAdapter.setDate(getLocalApp());
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+      /*  if (null == jsonArray) {
+            return;
+        }
+        try {
+            boolean has;
+            for (int i = 0; i < jsonArray.length(); i++) {
+                has = false;
+                String sdPkgName = (String) jsonArray.get(i);
+                for (PackageInfo info : localAppList) {
+                    if (sdPkgName.equals(info.packageName)) {
+                        has = true;
+                    }
+                }
+                if (!has) {
+                    jsonArray.remove(i);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+
     }
 
     private void initPop() {
         // 设置Action
-        Log.d(TAG, "initPop: ");
         mItemClickQuickAction = new QuickAction(content, QuickAction.VERTICAL);
         ActionItem pointItem = new ActionItem(0, "卸载", null);
         mItemClickQuickAction.addActionItem(pointItem);
@@ -143,12 +187,18 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
             public void onItemClick(QuickAction source, int pos, int actionId) {
                 if (pos == 0) {
                     //删除文件下载任务
-                    mfileUnstalledInfo = (FileLoadInfo) alreadyLvAdapter.getItemInfo();
+                    mfileUnstalledInfo = alreadyLvAdapter.getItemInfo();
                     //卸载
-                    AppInstallHelper.unstallApp(content, mfileUnstalledInfo.getPackageName());
+                    String packageName = mfileUnstalledInfo.applicationInfo.packageName;
+                    AppInstallHelper.unstallApp(content, packageName);
+                    List<FileLoadInfo> loadingFileInfo = fileLoad.getLoadedFileInfo();
+                    for (FileLoadInfo fileLoadInfo : loadingFileInfo) {
+                        if (packageName.equals(fileLoadInfo.getPackageName())) {
+                            fileLoad.delete(fileLoadInfo.getUrl());
+                        }
 
+                    }
                     //删除安装包和正在下载的文件
-                    //fileLoad.delete(fileInfo.getUrl());
                     //取消弹出框
                     mItemClickQuickAction.dismiss();
                     source.dismiss();

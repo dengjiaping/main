@@ -17,6 +17,10 @@
 package cn.ngame.store.adapter;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -30,14 +34,12 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import cn.ngame.store.R;
 import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
-import cn.ngame.store.core.fileload.GameFileStatus;
 import cn.ngame.store.core.fileload.IFileLoad;
-import cn.ngame.store.view.GameLoadProgressBar;
+import cn.ngame.store.core.utils.AppInstallHelper;
 import cn.ngame.store.view.QuickAction;
 
 /**
@@ -50,7 +52,7 @@ public class InstalledGameAdapter extends BaseAdapter {
 
     //private static final String TAG = LoadIngLvAdapter.class.getSimpleName();
 
-    private List<FileLoadInfo> fileInfoList;
+    private List<PackageInfo> fileInfoList;
     private Timer timer = new Timer();
     private Handler uiHandler = new Handler();
     private Context context;
@@ -71,7 +73,7 @@ public class InstalledGameAdapter extends BaseAdapter {
      *
      * @param fileInfoList 下载文件信息
      */
-    public void setDate(List<FileLoadInfo> fileInfoList) {
+    public void setDate(List<PackageInfo> fileInfoList) {
         this.fileInfoList = fileInfoList;
         notifyDataSetChanged();
     }
@@ -93,7 +95,7 @@ public class InstalledGameAdapter extends BaseAdapter {
         return null;
     }
 
-    public Object getItemInfo() {
+    public PackageInfo getItemInfo() {
         if (fileInfoList != null) {
             return fileInfoList.get(mPosition);
         }
@@ -115,14 +117,14 @@ public class InstalledGameAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
-        final FileLoadInfo fileInfo = (fileInfoList == null) ? null : fileInfoList.get(position);
+        final PackageInfo fileInfo = (fileInfoList == null) ? null : fileInfoList.get(position);
         if (convertView == null) {
             holder = new ViewHolder(context, fm);
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_game_load_finished, parent, false);
             holder.img = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
             holder.tv_title = (TextView) convertView.findViewById(R.id.tv_install_title);
             holder.more_bt = (ImageView) convertView.findViewById(R.id.manager_installed_more_bt);
-            holder.progressBar = (GameLoadProgressBar) convertView.findViewById(R.id.progress_bar);
+            holder.openBt = (TextView) convertView.findViewById(R.id.installed_open_bt);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -151,24 +153,47 @@ public class InstalledGameAdapter extends BaseAdapter {
      */
     public class ViewHolder {
 
-        private Context context;
         private FragmentManager fm;
         private FileLoadInfo fileInfo;
 
         private SimpleDraweeView img;
         private ImageView more_bt;
-        private TextView tv_title, tv_state, tv_size;
-        private GameLoadProgressBar progressBar;    //下载进度条
+        private TextView tv_title, openBt, tv_size;
         private IFileLoad fileLoad;
+        private PackageManager packageManager;
 
         public ViewHolder(Context context, FragmentManager fm) {
-            this.context = context;
+            packageManager = context.getPackageManager();
             this.fm = fm;
             fileLoad = FileLoadManager.getInstance(context);
             //init();
         }
 
-        private void init() {
+        public void update(final PackageInfo packageInfo) {
+            //this.fileInfo = fileInfo;
+            final ApplicationInfo applicationInfo = packageInfo.applicationInfo;
+            if (null == applicationInfo) {
+                return;
+            }
+
+            String appName = applicationInfo.loadLabel(packageManager).toString();
+            Drawable drawable = applicationInfo.loadIcon(packageManager);
+            if (null != appName) {
+                tv_title.setText(appName);
+            } else {
+                tv_title.setText("");
+            }
+            //加载图片
+            img.getHierarchy().setPlaceholderImage(drawable);
+            openBt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppInstallHelper.openApp(context, applicationInfo.packageName);
+                }
+            });
+        }
+
+        /*private void init() {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -200,36 +225,7 @@ public class InstalledGameAdapter extends BaseAdapter {
                     });
                 }
             }, 0, 300);
-        }
-
-        public void update(final FileLoadInfo fileInfo) {
-            //this.fileInfo = fileInfo;
-            String gameName = fileInfo.getTitle();
-            if (null != gameName) {
-                tv_title.setText(gameName);
-            } else {
-                tv_title.setText("");
-            }
-
-            //设置进度条状态
-            GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(fileInfo.getName(), fileInfo.getUrl(),
-                    fileInfo.getPackageName(), fileInfo.getVersionCode());
-            if (fileStatus == null) {
-                return;
-            }
-            progressBar.setLoadState(fileStatus);
-            //必须设置，否则点击进度条后无法进行响应操作
-            progressBar.setFileLoadInfo(fileInfo);
-            progressBar.setOnStateChangeListener(new ProgressBarStateListener(context, fm));
-            progressBar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    progressBar.toggle();
-                }
-            });
-            //加载图片
-            img.setImageURI(fileInfo.getPreviewUrl());
-        }
+        }*/
     }
 }
 

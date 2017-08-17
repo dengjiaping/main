@@ -85,7 +85,7 @@ public class FileLoadService extends Service {
     @Override
     public void onDestroy() {
 
-        clear();
+       // clear();
         super.onDestroy();
     }
 

@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/shape_blue_hub"
+            android:background="@drawable/shape_app_open_bt_nomal"
             android:gravity="center_vertical"
             android:paddingBottom="4dp"
             android:paddingLeft="8dp"

@@ -213,5 +213,6 @@
     <string name="unkonw">--</string>
     <string name="to_precent">评分</string>
     <string name="precented">已评分</string>
+    <string name="open">打开</string>
 
 </resources>

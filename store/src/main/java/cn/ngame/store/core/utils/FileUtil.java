@@ -21,8 +21,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import cn.ngame.store.exception.NoSDCardException;
 
@@ -557,5 +559,61 @@ public class FileUtil {
                 return true;
             }
         });
+    }
+    /**
+     * 读取文件内容
+     *
+     * @return 文件内容
+     */
+    public static String readFile() {
+        String str = "";
+        try {
+            File readFile = new File(Environment.getExternalStorageDirectory(), Constant.FILE_NAME_SD_CRAD_APP_PKGNAME);
+            if (!readFile.exists()) {
+                return null;
+            }
+            FileInputStream inStream = new FileInputStream(readFile);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int length = -1;
+            while ((length = inStream.read(buffer)) != -1) {
+                stream.write(buffer, 0, length);
+            }
+            str = stream.toString();
+            stream.close();
+            inStream.close();
+            return str;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return "";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    /**
+     * 向sdcard中写入文件
+     *
+     * @param content  文件内容
+     */
+    public static void writeFile2SDCard( String content) {
+        String en = Environment.getExternalStorageState();
+        //获取SDCard状态,如果SDCard插入了手机且为非写保护状态
+        if (en.equals(Environment.MEDIA_MOUNTED)) {
+            try {
+                File file = new File(Environment.getExternalStorageDirectory(), Constant.FILE_NAME_SD_CRAD_APP_PKGNAME);
+                OutputStream out = new FileOutputStream(file);
+                out.write(content.getBytes());
+                out.close();
+                android.util.Log.d(TAG, "saveToSDCard: 保存成功");
+            } catch (Exception e) {
+                android.util.Log.d(TAG, "saveToSDCard: 保存失败");
+            }
+        } else {
+            //提示用户SDCard不存在或者为写保护状态
+            android.util.Log.d(TAG, "saveToSDCard: SDCard不存在或者为写保护状态");
+        }
+
     }
 }

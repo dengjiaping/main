@@ -72,7 +72,7 @@ public class OrderMagListAdapter extends BaseAdapter {
         holder.tv_order_num.setText(item.getVoteCount() + "");
         holder.tv_name.setText(item.getPostTitle());
         if (item.getIsPoint() == 0) {
-            holder.tv_click.setBackgroundResource(R.drawable.shape_blue_hub);
+            holder.tv_click.setBackgroundResource(R.drawable.shape_app_open_bt_nomal);
             holder.tv_click.setEnabled(true);
         } else {
             holder.tv_click.setBackgroundResource(R.drawable.shape_gray_vote);

@@ -54,7 +54,7 @@
             android:layout_height="45dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:background="@drawable/shape_blue_hub"
+            android:background="@drawable/shape_app_open_bt_nomal"
             android:visibility="visible"
             android:textColor="@color/white"
             android:text="发送(1/9)"
