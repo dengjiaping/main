@@ -111,7 +111,7 @@ public class MyGameActivity extends BaseFgActivity {
                         e.printStackTrace();
                     }
                     //重新加载未下载完成的
-                    List<FileLoadInfo> loadingList = fileLoad.getLoadingFileInfo();
+                    List<FileLoadInfo> loadingList = fileLoad.getAllFileInfo();
                     downLoadCenterAdapter.setDate(loadingList);
                     listView_ing.notifyDataSetChanged();
 
@@ -160,7 +160,7 @@ public class MyGameActivity extends BaseFgActivity {
             }
         });
 
-        List<FileLoadInfo> loadingList = fileLoad.getLoadingFileInfo();
+        List<FileLoadInfo> loadingList = fileLoad.getAllFileInfo();
         downLoadCenterAdapter.setDate(loadingList);
         listView_ing.notifyDataSetChanged();
         List<FileLoadInfo> alreadyList = fileLoad.getLoadedFileInfo();

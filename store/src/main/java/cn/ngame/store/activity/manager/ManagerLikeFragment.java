@@ -84,7 +84,7 @@ public class ManagerLikeFragment extends BaseSearchFragment {
     @Override
     public void onResume() {
         super.onResume();
-        List<FileLoadInfo> loadingList = fileLoad.getLoadingFileInfo();
+        List<FileLoadInfo> loadingList = fileLoad.getAllFileInfo();
         downLoadCenterAdapter.setDate(loadingList);
         downLoadCenterAdapter.notifyDataSetChanged();
     }
@@ -109,7 +109,7 @@ public class ManagerLikeFragment extends BaseSearchFragment {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    List<FileLoadInfo> loadingList = fileLoad.getLoadingFileInfo();
+                    List<FileLoadInfo> loadingList = fileLoad.getAllFileInfo();
                     downLoadCenterAdapter.setDate(loadingList);
                     downLoadCenterAdapter.notifyDataSetChanged();
                 }

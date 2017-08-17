@@ -52,6 +52,7 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     private List<PackageInfo> packageInfos = new ArrayList<>();
     private PackageInfo packageInfo = new PackageInfo();
     private ApplicationInfo applicationInfo;
+    private int oldLength;
 
     public static ManagerInstalledFragment newInstance(String type, int arg) {
         ManagerInstalledFragment fragment = new ManagerInstalledFragment();
@@ -101,6 +102,7 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
             e.printStackTrace();
             Log.d(TAG, "onResume: JSONException" + e);
         }
+        oldLength = jsonArray.length();
         //获取数据库 =>  添加
         openFileInfoList = fileLoad.getOpenFileInfo();
         for (FileLoadInfo openFileInfo : openFileInfoList) {
@@ -110,10 +112,11 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
                 jsonArray.put(gamePackageName);
             }
         }
+        if (jsonArray.length() > oldLength) {
+            FileUtil.writeFile2SDCard(jsonArray.toString());
+            pkgNameListStr = FileUtil.readFile();
+        }
         Log.d(TAG, "app onResume: " + jsonArray.toString());
-        FileUtil.writeFile2SDCard(jsonArray.toString());
-
-        pkgNameListStr = FileUtil.readFile();
 
         if (!mHidden && null != alreadyLvAdapter) {
             alreadyLvAdapter.setDate(getLocalApp());
@@ -190,16 +193,34 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
                     mfileUnstalledInfo = alreadyLvAdapter.getItemInfo();
                     //卸载
                     String packageName = mfileUnstalledInfo.applicationInfo.packageName;
+
                     AppInstallHelper.unstallApp(content, packageName);
-                    List<FileLoadInfo> loadingFileInfo = fileLoad.getLoadedFileInfo();
+
+                    if (null == packageName) {
+                        return;
+                    }
+                    //删除安装包和正在下载的文件
+                    List<FileLoadInfo> loadingFileInfo = fileLoad.getOpenFileInfo();
                     for (FileLoadInfo fileLoadInfo : loadingFileInfo) {
                         if (packageName.equals(fileLoadInfo.getPackageName())) {
                             fileLoad.delete(fileLoadInfo.getUrl());
                         }
 
                     }
-                    //删除安装包和正在下载的文件
-                    //取消弹出框
+
+                   /* try {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            String pkgName = (String) jsonArray.get(i);
+                            if (packageName.equals(pkgName)) {
+                                jsonArray.remove(i);
+                            }
+                        }
+
+                        FileUtil.writeFile2SDCard(jsonArray.toString());
+                        pkgNameListStr = FileUtil.readFile();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }*/
                     mItemClickQuickAction.dismiss();
                     source.dismiss();
                 }

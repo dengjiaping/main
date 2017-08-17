@@ -290,7 +290,18 @@ public class FileLoadManager implements IFileLoad {
     }
 
     @Override
-    public List<FileLoadInfo> getLoadingFileInfo() {
+    public List<FileLoadInfo> getAllFileInfo() {
+        ArrayList<FileLoadInfo> infoList = new ArrayList<>();
+        ConcurrentHashMap<String, FileLoadInfo> gameFileStatusMap = FileLoadService.gameFileStatusMap;
+        if (gameFileStatusMap != null) {
+            for (FileLoadInfo info : gameFileStatusMap.values()) {
+                infoList.add(info);
+            }
+        }
+        return infoList;
+    }
+   /* @Override
+    public List<FileLoadInfo> getAllFileInfo() {
         ArrayList<FileLoadInfo> infoList = new ArrayList<>();
         if (FileLoadService.gameFileStatusMap != null) {
             for (FileLoadInfo info : FileLoadService.gameFileStatusMap.values()) {
@@ -301,7 +312,7 @@ public class FileLoadManager implements IFileLoad {
             }
         }
         return infoList;
-    }
+    }*/
 
     @Override
     public List<FileLoadInfo> getLoadedFileInfo() {
