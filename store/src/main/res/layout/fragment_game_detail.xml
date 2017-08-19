@@ -28,6 +28,7 @@
             android:paddingRight="@dimen/dp_10"
             android:paddingTop="@dimen/dp_3"
             android:text="中文"
+            android:visibility="invisible"
             android:textColor="@color/color_128fc4"
             />
 
@@ -44,6 +45,7 @@
             android:paddingRight="@dimen/dp_10"
             android:paddingTop="@dimen/dp_3"
             android:text="角色"
+            android:visibility="invisible"
             android:textColor="@color/color_128fc4"
             />
 
@@ -60,6 +62,7 @@
             android:paddingRight="@dimen/dp_10"
             android:paddingTop="@dimen/dp_3"
             android:text="冒险"
+            android:visibility="invisible"
             android:textColor="@color/color_128fc4"
             />
 
@@ -76,6 +79,7 @@
             android:paddingRight="@dimen/dp_10"
             android:paddingTop="@dimen/dp_3"
             android:text="动作"
+            android:visibility="invisible"
             android:textColor="@color/color_128fc4"
             />
         <!--

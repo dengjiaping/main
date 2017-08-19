@@ -31,4 +31,5 @@ public class KeyConstant {
     public static final String old_Password="oldPassword";
     public static final String game_Name="game_Name";
     public static final String VALUE = "value";
+    public static final String GAME_LABELS="game_labels";
 }

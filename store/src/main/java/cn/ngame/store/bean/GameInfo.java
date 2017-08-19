@@ -106,7 +106,7 @@ public class GameInfo implements Serializable {
     /**
      * 游戏键位图片
      */
-    public List<GameImage> gameKeyMapsImages;
+    public List<GameLabels> gameLabels;
     /**
      * 游戏键位描述
      */

@@ -101,92 +101,100 @@
                     android:textSize="@dimen/dp_10"/>
 
                 <!--标签 item-->
-                <LinearLayout
+                <HorizontalScrollView
                     android:id="@+id/game_detail_item_llay"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/img_1"
                     android:layout_toRightOf="@id/img_1"
-                    android:clickable="false"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:lines="1"
-                    >
+                    android:scrollbars="none"
+                    android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/game_detail_classify_item_01"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dp_16"
-                        android:background="@drawable/shape_game_detail_item_white_blue"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
                         android:gravity="center"
-                        android:maxLines="1"
-                        android:paddingLeft="@dimen/dp_6"
-                        android:paddingRight="@dimen/dp_6"
-                        android:text="原生手柄"
-                        android:textColor="@color/color_2abfff"
-                        android:textSize="@dimen/dp_10"/>
+                        android:lines="1"
+                        >
 
-                    <TextView
-                        android:id="@+id/game_detail_classify_item_02"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dp_16"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:background="@drawable/shape_game_detail_item_white_blue"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:paddingLeft="@dimen/dp_6"
-                        android:paddingRight="@dimen/dp_6"
-                        android:text="云存档"
-                        android:textColor="@color/color_2abfff"
-                        android:textSize="@dimen/dp_10"
-                        />
+                        <TextView
+                            android:id="@+id/game_detail_type0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_16"
+                            android:background="@drawable/shape_game_detail_item_white_blue"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:paddingLeft="@dimen/dp_6"
+                            android:paddingRight="@dimen/dp_6"
+                            android:text="原生手柄"
+                            android:textColor="@color/color_2abfff"
+                            android:textSize="@dimen/dp_10"
+                            android:visibility="invisible"/>
 
-                    <TextView
-                        android:id="@+id/game_detail_classify_item_03"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dp_16"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:background="@drawable/shape_game_detail_item_white_blue"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:paddingLeft="@dimen/dp_6"
-                        android:paddingRight="@dimen/dp_6"
-                        android:text="汉化"
-                        android:textColor="@color/color_2abfff"
-                        android:textSize="@dimen/dp_10"
-                        />
+                        <TextView
+                            android:id="@+id/game_detail_type1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_16"
+                            android:layout_marginLeft="@dimen/dm010"
+                            android:background="@drawable/shape_game_detail_item_white_blue"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:paddingLeft="@dimen/dp_6"
+                            android:paddingRight="@dimen/dp_6"
+                            android:text="云存档"
+                            android:textColor="@color/color_2abfff"
+                            android:textSize="@dimen/dp_10"
+                            android:visibility="invisible"
+                            />
 
-                    <TextView
-                        android:id="@+id/game_detail_classify_item_04"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dp_16"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:background="@drawable/shape_game_detail_item_white_blue"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:paddingLeft="@dimen/dp_6"
-                        android:paddingRight="@dimen/dp_6"
-                        android:text="破解"
-                        android:textColor="@color/color_2abfff"
-                        android:textSize="@dimen/dp_10"
-                        />
+                        <TextView
+                            android:id="@+id/game_detail_type2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_16"
+                            android:layout_marginLeft="@dimen/dm010"
+                            android:background="@drawable/shape_game_detail_item_white_blue"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:paddingLeft="@dimen/dp_6"
+                            android:paddingRight="@dimen/dp_6"
+                            android:text="汉化"
+                            android:textColor="@color/color_2abfff"
+                            android:textSize="@dimen/dp_10"
+                            android:visibility="invisible"
+                            />
 
-                    <TextView
-                        android:id="@+id/game_detail_classify_item_05"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dp_16"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:background="@drawable/shape_game_detail_item_white_blue"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:paddingLeft="@dimen/dp_6"
-                        android:paddingRight="@dimen/dp_6"
-                        android:text="云适配"
-                        android:textColor="@color/color_2abfff"
-                        android:textSize="@dimen/dp_10"
-                        />
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/game_detail_type3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_16"
+                            android:layout_marginLeft="@dimen/dm010"
+                            android:background="@drawable/shape_game_detail_item_white_blue"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:paddingLeft="@dimen/dp_6"
+                            android:paddingRight="@dimen/dp_6"
+                            android:text="破解"
+                            android:textColor="@color/color_2abfff"
+                            android:textSize="@dimen/dp_10"
+                            android:visibility="invisible"
+                            />
 
+                        <!--    <TextView
+                                android:id="@+id/game_detail_classify_item_05"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/dp_16"
+                                android:layout_marginLeft="@dimen/dp_10"
+                                android:background="@drawable/shape_game_detail_item_white_blue"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:paddingLeft="@dimen/dp_6"
+                                android:paddingRight="@dimen/dp_6"
+                                android:text="云适配"
+                                android:textColor="@color/color_2abfff"
+                                android:textSize="@dimen/dp_10"
+                                />-->
+                    </LinearLayout>
+                </HorizontalScrollView>
                 <!--下载次数-->
                 <TextView
                     android:id="@+id/download_count_tv"
@@ -209,6 +217,7 @@
                     android:text=" 人下载/"
                     android:textColor="@color/b3"
                     android:textSize="@dimen/dp_10"/>
+
                 <TextView
                     android:id="@+id/game_detail_size"
                     android:layout_width="wrap_content"

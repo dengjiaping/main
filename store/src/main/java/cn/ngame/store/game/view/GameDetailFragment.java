@@ -13,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,15 +25,18 @@ import java.util.Date;
 import java.util.List;
 
 import cn.ngame.store.R;
+import cn.ngame.store.bean.GameAgent;
 import cn.ngame.store.bean.GameImage;
 import cn.ngame.store.bean.GameInfo;
+import cn.ngame.store.bean.GameLabels;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.KeyConstant;
-import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.fragment.ImageDialogFragment;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
 import cn.ngame.store.gamehub.view.ShowViewActivity;
 import cn.ngame.store.view.PicassoImageView;
+
+import static cn.ngame.store.R.id.tag_tv_01;
 
 /**
  * 显示游戏详情的Fragment
@@ -55,7 +60,8 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
     private TextView tv_download_count;
     private TextView tv_game_size;
     private Button itemAllNext;
-    private TextView tagTv01, tagTv02, tagTv03, tagTv04;
+    private TextView labelTv0, labelTv1, labelTv2, labelTv3;
+    private List<GameLabels> gameLabels;
 
     public static GameDetailFragment newInstance(GameInfo gameInfo) {
         GameDetailFragment fragment = new GameDetailFragment();
@@ -89,19 +95,19 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
         img_container = (LinearLayout) view.findViewById(R.id.img_container);
         ll_detail = (LinearLayout) view.findViewById(R.id.ll_detail);
 
-        tagTv01 = (TextView) view.findViewById(R.id.tag_tv_01);
-        tagTv02 = (TextView) view.findViewById(R.id.tag_tv_02);
-        tagTv03 = (TextView) view.findViewById(R.id.tag_tv_03);
-        tagTv04 = (TextView) view.findViewById(R.id.tag_tv_04);
-        tagTvList.add(tagTv01);
-        tagTvList.add(tagTv02);
-        tagTvList.add(tagTv03);
-        tagTvList.add(tagTv04);
-        for (TextView tagTv : tagTvList) {
-            tagTv.setOnClickListener(this);
-        }
+        labelTv0 = (TextView) view.findViewById(tag_tv_01);
+        labelTv1 = (TextView) view.findViewById(R.id.tag_tv_02);
+        labelTv2 = (TextView) view.findViewById(R.id.tag_tv_03);
+        labelTv3 = (TextView) view.findViewById(R.id.tag_tv_04);
+        tagTvList.add(labelTv0);
+        tagTvList.add(labelTv1);
+        tagTvList.add(labelTv2);
+        tagTvList.add(labelTv3);
+
         itemAllNext.setOnClickListener(this);
+        img_container.setOnClickListener(this);
         tv_show_all.setOnClickListener(this);
+
         if (gameInfo != null && gameInfo.gameDetailsImages != null && gameInfo.gameDetailsImages.size() > 0) {
             img_container.removeAllViews();
             imgs.clear();
@@ -120,23 +126,13 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                 imageView.setLayoutParams(params);
                 //imageView.setTag(img.imageLink);
                 String imageLink = img.imageLink;
+                imageView.setScaleType(ImageView.ScaleType.CENTER);
                 imageView.setImageUrl(imageLink, R.drawable.ic_def_logo_480_228);
                 img_container.addView(imageView);
                 //添加图片，查看大图
                 imgs.add(imageLink);
             }
         }
-        //点击查看大图
-        img_container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gv = new Intent();
-                gv.setClass(getActivity(), ShowViewActivity.class);
-                gv.putStringArrayListExtra("viewImages", imgs);
-                gv.putExtra("selectPosition", 0);
-                startActivity(gv);
-            }
-        });
         return view;
     }
 
@@ -144,6 +140,31 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (gameInfo != null) {
+            //标签
+            gameLabels = gameInfo.gameLabels;
+            if (gameLabels != null) {
+                int labelSize = gameLabels.size();
+                int tvSize = tagTvList.size();
+                int size = labelSize > tvSize ? tvSize : labelSize;
+                final Intent intent = new Intent();
+                intent.setClass(context, GameListActivity.class);
+                for (int i = 0; i < size; i++) {
+                    TextView labelTv = tagTvList.get(i);
+                    final GameLabels gameLabel = this.gameLabels.get(i);
+                    final String labelName = gameLabel.labelName;
+                    labelTv.setText(labelName);
+                    labelTv.setVisibility(View.VISIBLE);
+                    labelTv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            intent.putExtra(KeyConstant.ID, String.valueOf(gameLabel.id));
+                            intent.putExtra(KeyConstant.TITLE, labelName);
+                            startActivity(intent);
+                        }
+                    });
+
+                }
+            }
             tv_summary.setText(gameInfo.gameDesc);
             tv_summary.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
@@ -159,19 +180,14 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                 }
             });
             tv_version.setText(gameInfo.versionName);
-            tv_game_size.setText(Formatter.formatFileSize(context,gameInfo.gameSize));
+            tv_game_size.setText(Formatter.formatFileSize(context, gameInfo.gameSize));
             tv_download_count.setText(gameInfo.downloadCount + "");
             tv_time.setText(df.format(new Date(gameInfo.updateTime)));
-            if (gameInfo.gameAgentList != null && gameInfo.gameAgentList.size() > 0) {
-                tv_company.setText(gameInfo.gameAgentList.get(0).agentName);
+            List<GameAgent> gameAgentList = gameInfo.gameAgentList;
+            if (gameAgentList != null && gameAgentList.size() > 0) {
+                tv_company.setText(gameAgentList.get(0).agentName);
             }
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "我被调用了GameDetailFragment");
     }
 
     @Override
@@ -207,8 +223,6 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        Intent i = new Intent();
-        i.setClass(context, GameListActivity.class);
         switch (v.getId()) {
             case R.id.tv_show_all:
                 if (flag1) {
@@ -224,31 +238,20 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
             //所有标签页面
             case R.id.game_detail_next_bt:
                 if (null != gameInfo) {
-                    Intent intent = new Intent(context, AllTagListActivity.class);
+                    Intent intent = new Intent(context, LabelsActivity.class);
                     intent.putExtra(KeyConstant.game_Name, gameInfo.gameName);
+                    intent.putExtra(KeyConstant.GAME_LABELS, (Serializable) gameLabels);
                     startActivity(intent);
                 }
                 break;
-            case R.id.tag_tv_01:
-                i.putExtra(KeyConstant.ID, 369 + "");
-                i.putExtra(KeyConstant.TITLE, tagTv01.getText().toString());
-                startActivity(i);
+            case R.id.img_container:
+                Intent gv = new Intent();
+                gv.setClass(getActivity(), ShowViewActivity.class);
+                gv.putStringArrayListExtra("viewImages", imgs);
+                gv.putExtra("selectPosition", 0);
+                startActivity(gv);
                 break;
-            case R.id.tag_tv_02:
-                i.putExtra(KeyConstant.ID, 369 + "");
-                i.putExtra(KeyConstant.TITLE, tagTv02.getText().toString());
-                startActivity(i);
-                break;
-            case R.id.tag_tv_03:
-                i.putExtra(KeyConstant.ID, 369 + "");
-                i.putExtra(KeyConstant.TITLE, tagTv03.getText().toString());
-                startActivity(i);
-                break;
-            case R.id.tag_tv_04:
-                i.putExtra(KeyConstant.ID, 369 + "");
-                i.putExtra(KeyConstant.TITLE, tagTv04.getText().toString());
-                startActivity(i);
-                break;
+
         }
     }
 }

@@ -42,7 +42,9 @@ import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.adapter.DCViewPagerAdapter;
 import cn.ngame.store.adapter.ProgressBarStateListener;
+import cn.ngame.store.bean.GameAgent;
 import cn.ngame.store.bean.GameInfo;
+import cn.ngame.store.bean.GameType;
 import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.Token;
 import cn.ngame.store.core.fileload.FileLoadInfo;
@@ -106,6 +108,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private TextView sumbitTv;
     private boolean isPrecented = false;
     private FragmentManager fm;
+    private TextView gameType0, gameType1, gameType2, gameType3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,7 +148,11 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         changShangTv = (TextView) findViewById(R.id.game_chang_shang_tv);//厂商
         gameSizeTv = (TextView) findViewById(R.id.game_detail_size);//大小
         feedbackTv = (TextView) findViewById(R.id.game_detail_feedback_bt);//大小
-        percentageTv = (TextView) findViewById(R.id.game_detail_percentage_tv);//大小
+        percentageTv = (TextView) findViewById(R.id.game_detail_percentage_tv);
+        gameType0 = (TextView) findViewById(R.id.game_detail_type0);
+        gameType1 = (TextView) findViewById(R.id.game_detail_type1);
+        gameType2 = (TextView) findViewById(R.id.game_detail_type2);
+        gameType3 = (TextView) findViewById(R.id.game_detail_type3);
         likeIv = (ImageView) findViewById(R.id.game_detail_like_iv);//喜欢按钮
         progressBar = (GameLoadProgressBar) findViewById(R.id.game_detail_progress_bar);//下载按钮
 
@@ -156,8 +163,32 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
 
     //设置数据
     private void setView() {
+        if (gameInfo == null) {
+            return;
+        }
         gameName = gameInfo.gameName;
         gameNameTv.setText(gameName);//名字
+        //类型
+        List<GameType> typeList = gameInfo.gameTypeList;
+        if (typeList != null) {
+            int typeSize = typeList.size();
+            if (typeSize >= 0) {
+                gameType0.setText(typeList.get(0).typeName);
+                gameType0.setVisibility(View.VISIBLE);
+            }
+            if (typeSize >= 1) {
+                gameType1.setText(typeList.get(1).typeName);
+                gameType1.setVisibility(View.VISIBLE);
+            }
+            if (typeSize >= 2) {
+                gameType2.setText(typeList.get(2).typeName);
+                gameType2.setVisibility(View.VISIBLE);
+            }
+            if (typeSize >= 3) {
+                gameType3.setText(typeList.get(3).typeName);
+                gameType3.setVisibility(View.VISIBLE);
+            }
+        }
         gameSizeTv.setText(Formatter.formatFileSize(content, gameInfo.gameSize));//大小
         downLoadCountTv.setText(gameInfo.downloadCount + "");//下载次数
         percentageTv.setText(gameInfo.percentage + "");//评分0
@@ -166,8 +197,9 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         game_big_img.setImageURI(gameInfo.gameLogo);//游戏 -大图
 
         //厂商
-        if (gameInfo.gameAgentList != null && gameInfo.gameAgentList.size() > 0) {
-            changShangTv.setText(gameInfo.gameAgentList.get(0).agentName);
+        List<GameAgent> gameAgentList = gameInfo.gameAgentList;
+        if (gameAgentList != null && gameAgentList.size() > 0) {
+            changShangTv.setText(gameAgentList.get(0).agentName);
         } else {
             changShangTv.setText("");
         }
@@ -186,6 +218,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 });
             }
         }, 0, 500);
+
     }
 
     /**
@@ -255,12 +288,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         StoreApplication.requestQueue.add(request);
     }
 
-/*    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        viewpager.setAdapter(null);
-    }*/
-
     private void initViewPager() {
         fragments = new ArrayList<>();
         fragments.add(GameDetailFragment.newInstance(gameInfo));
@@ -292,7 +319,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
-                Log.d("666", "onTabSelected: " + position);
                 ViewGroup view = (ViewGroup) viewGroup.getChildAt(position);
                 TextView textView = (TextView) view.getChildAt(1);
                 Paint paint = textView.getPaint();
@@ -480,7 +506,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                     ToastUtil.show(content, "评分提交失败,服务端异常");
                     return;
                 }
-
                 if (result.code == 0) {
                     ToastUtil.show(content, "评分提交成功!");
                     if (content != null && mUnboundDialog != null && mUnboundDialog.isShowing()) {

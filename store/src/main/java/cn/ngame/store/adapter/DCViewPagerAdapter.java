@@ -3,8 +3,6 @@ package cn.ngame.store.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
-import android.view.ViewGroup;
 
 import java.util.List;
 
@@ -43,12 +41,12 @@ public class DCViewPagerAdapter extends FragmentStatePagerAdapter {
 
         return tabList.get(position);
     }
-    @Override
+   /* @Override
     public void finishUpdate(ViewGroup container) {
         try{
             super.finishUpdate(container);
-        } catch (NullPointerException nullPointerException){
+        } catch (Exception nullPointerException){
             Log.d("777", "游戏详情界面异常:Catch the NullPointerException in FragmentPagerAdapter.finishUpdate");
         }
-    }
+    }*/
 }
