@@ -42,7 +42,7 @@ import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
-import cn.ngame.store.game.view.GameListActivity;
+import cn.ngame.store.game.view.LabelGameListActivity;
 import cn.ngame.store.view.BannerView;
 import cn.ngame.store.view.PicassoImageView;
 import cn.ngame.store.view.RecyclerViewDivider;
@@ -165,7 +165,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         remenAdapter.setmOnItemClickListener(new DiscoverClassifyTopAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position, String itemText) {
-                Intent classifyIntent = new Intent(context, GameListActivity.class);
+                Intent classifyIntent = new Intent(context, LabelGameListActivity.class);
                 classifyIntent.putExtra(KeyConstant.category_Id, 367 + "");//原生手柄 id 367
                 classifyIntent.putExtra(KeyConstant.TITLE, itemText);
                 context.startActivity(classifyIntent);
@@ -294,13 +294,13 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             Intent intent = new Intent();
             //每日新发现
             if (id == R.id.everyday_more_tv1) {
-                intent.setClass(context, GameListActivity.class);
+                intent.setClass(context, LabelGameListActivity.class);
                 intent.putExtra(KeyConstant.category_Id, 366 + "");//云端适配id 336
                 intent.putExtra(KeyConstant.TITLE, "每日新发现");
                 context.startActivity(intent);
                 //近期最热
             } else if (id == R.id.more_hot_recent_tv) {
-                intent.setClass(context, GameListActivity.class);
+                intent.setClass(context, LabelGameListActivity.class);
                 intent.putExtra(KeyConstant.category_Id, 380 + "");//原生手柄 id 336   一周新游 380
                 intent.putExtra(KeyConstant.TITLE, "近期最热");
                 context.startActivity(intent);
@@ -315,13 +315,13 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                 //动作
             } else if (id == R.id.more_action_tv) {
                 Intent i = new Intent();
-                i.setClass(context, GameListActivity.class);
+                i.setClass(context, LabelGameListActivity.class);
                 i.putExtra(KeyConstant.ID, 369 + "");// 动作游戏精选 getId()==369
                 i.putExtra(KeyConstant.TITLE, "动作");//list.get(position).getTypeName()
                 startActivity(i);
                 //策略
             } else if (id == R.id.more_strategy_tv) {
-                intent.setClass(context, GameListActivity.class);
+                intent.setClass(context, LabelGameListActivity.class);
                 intent.putExtra(KeyConstant.category_Id, 368 + "");//单机id 336
                 intent.putExtra(KeyConstant.TITLE, "策略");
                 context.startActivity(intent);

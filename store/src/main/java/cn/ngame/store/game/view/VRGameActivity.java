@@ -111,7 +111,7 @@ public class VRGameActivity extends BaseFgActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(gameTypeList != null){
                     GameType gameType = gameTypeList.get(position);
-                    Intent intent = new Intent(VRGameActivity.this,GameListActivity.class);
+                    Intent intent = new Intent(VRGameActivity.this,LabelGameListActivity.class);
                     intent.putExtra("categoryId",gameType.id);
                     intent.putExtra("title",gameType.typeName);
                     VRGameActivity.this.startActivity(intent);

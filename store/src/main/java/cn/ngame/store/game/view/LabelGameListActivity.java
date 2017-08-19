@@ -38,9 +38,9 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
  * 游戏列表
  * Created by zeng on 2016/6/16.
  */
-public class GameListActivity extends BaseFgActivity {
+public class LabelGameListActivity extends BaseFgActivity {
 
-    public static final String TAG = GameListActivity.class.getSimpleName();
+    public static final String TAG = LabelGameListActivity.class.getSimpleName();
     private PullToRefreshListView pullListView;
     private LoadStateView loadStateView;
     private ClassifyGameListAdapter adapter;
@@ -51,8 +51,8 @@ public class GameListActivity extends BaseFgActivity {
 
     private int lastItem;
 
-    private long categoryId;
-    private GameListActivity content;
+    private long mLabelId;
+    private LabelGameListActivity content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +61,10 @@ public class GameListActivity extends BaseFgActivity {
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
-        content = GameListActivity.this;
+        content = LabelGameListActivity.this;
         Intent intent = getIntent();
         String title = intent.getStringExtra(KeyConstant.TITLE);
-        categoryId = intent.getLongExtra(KeyConstant.category_Id, 0);
+        mLabelId = intent.getLongExtra(KeyConstant.category_Id, 0);
 
         Button leftBt = (Button) findViewById(R.id.left_bt);
         findViewById(R.id.center_tv).setVisibility(View.GONE);
@@ -80,7 +80,7 @@ public class GameListActivity extends BaseFgActivity {
         loadStateView.setReLoadListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getGameList(); //重新加载
+                getGameListByLabel(); //重新加载
             }
         });
 
@@ -94,7 +94,7 @@ public class GameListActivity extends BaseFgActivity {
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 pullListView.setPullLoadEnabled(true);
                 pageAction.setCurrentPage(0);
-                getGameList();
+                getGameListByLabel();
             }
 
             @Override
@@ -108,7 +108,7 @@ public class GameListActivity extends BaseFgActivity {
                 if (pageAction.getCurrentPage() * pageAction.getPageSize() < pageAction.getTotal()) {
                     pageAction.setCurrentPage(pageAction.getCurrentPage() == 0 ? pageAction.getCurrentPage() + 2 : pageAction
                             .getCurrentPage() + 1);
-                    getGameList();
+                    getGameListByLabel();
                 } else {
                     pullListView.setHasMoreData(false);
                     pullListView.onPullUpRefreshComplete();
@@ -119,14 +119,14 @@ public class GameListActivity extends BaseFgActivity {
         pullListView.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(GameListActivity.this, GameDetailActivity.class);
-                intent.putExtra("id", ((GameInfo) adapter.getItem(position)).id);
+                Intent intent = new Intent(LabelGameListActivity.this, GameDetailActivity.class);
+                intent.putExtra(KeyConstant.ID, ((GameInfo) adapter.getItem(position)).id);
                 startActivity(intent);
             }
         });
         gameInfoList = new ArrayList<>();
         //加载游戏分类，默认加载第一个分类
-        getGameList();
+        getGameListByLabel();
         adapter = new ClassifyGameListAdapter(this, getSupportFragmentManager());
         pullListView.getRefreshableView().setAdapter(adapter);
     }
@@ -134,9 +134,9 @@ public class GameListActivity extends BaseFgActivity {
     /**
      * 获取制定分类下的游戏列表
      */
-    private void getGameList() {
+    private void getGameListByLabel() {
 
-        String url = Constant.WEB_SITE + Constant.URL_GAME_LIST;
+        String url = Constant.WEB_SITE + Constant.URL_LABEL_GAME_LIST;
         Response.Listener<JsonResult<List<GameInfo>>> successListener = new Response.Listener<JsonResult<List<GameInfo>>>() {
             @Override
             public void onResponse(JsonResult<List<GameInfo>> result) {
@@ -156,13 +156,10 @@ public class GameListActivity extends BaseFgActivity {
                     }
                 }
                 if (result.code == 0) {
-
                     gameInfoList = result.data;
                     pageAction.setTotal(result.totals);
                     if (gameInfoList != null && gameInfoList.size() > 0) {
-
                         loadStateView.setVisibility(View.GONE);
-
                         adapter.setDate(gameInfoList);
                         adapter.notifyDataSetChanged();
                     } else {
@@ -209,14 +206,11 @@ public class GameListActivity extends BaseFgActivity {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-
-
                 Map<String, String> params = new HashMap<>();
-                params.put("categoryId", String.valueOf(categoryId));
-                params.put("gameLabelId", String.valueOf(0));
-                params.put("pageIndex", String.valueOf(pageAction.getCurrentPage()));
-                params.put("pageSize", String.valueOf(PAGE_SIZE));
-
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
+                params.put(KeyConstant.GAME_LABEL_ID, String.valueOf(mLabelId));
+                params.put(KeyConstant.START_INDEX, String.valueOf(pageAction.getCurrentPage()));
+                params.put(KeyConstant.PAGE_SIZE, String.valueOf(PAGE_SIZE));
                 return params;
             }
         };

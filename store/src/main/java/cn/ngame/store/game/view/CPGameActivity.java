@@ -111,7 +111,7 @@ public class CPGameActivity extends BaseFgActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(gameTypeList != null){
                     GameType gameType = gameTypeList.get(position);
-                    Intent intent = new Intent(CPGameActivity.this,GameListActivity.class);
+                    Intent intent = new Intent(CPGameActivity.this,LabelGameListActivity.class);
                     intent.putExtra("categoryId",gameType.id);
                     intent.putExtra("title",gameType.typeName);
                     CPGameActivity.this.startActivity(intent);

@@ -129,10 +129,7 @@ public class LoadStateView extends FrameLayout {
      */
     public void setState(int state) {
         this.state = state;
-
         if (state == STATE_END) {
-
-
             lay_load_bad.setVisibility(VISIBLE);
             if(isShowReload){
                 bt_reload.setVisibility(VISIBLE);
@@ -150,7 +147,6 @@ public class LoadStateView extends FrameLayout {
             img_smoke.startAnimation(animation);
 
         } else {
-
             lay_load_bad.setVisibility(GONE);
             lay_loading.setVisibility(VISIBLE);
             bt_reload.setVisibility(GONE);
@@ -174,8 +170,6 @@ public class LoadStateView extends FrameLayout {
         this.state = state;
 
         if (state == STATE_END) {
-
-
             lay_load_bad.setVisibility(VISIBLE);
             if(isShowReload){
                 bt_reload.setVisibility(VISIBLE);

@@ -77,7 +77,7 @@ public class GameInfo implements Serializable {
     /**
      * 操作类型
      */
-    public String operation;
+    public String simpleLabel;
 
     /**
      * 游戏所属类型

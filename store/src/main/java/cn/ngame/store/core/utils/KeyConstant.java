@@ -26,10 +26,13 @@ public class KeyConstant {
     public static final String AVATAR_HAS_CHANGED = "avatar_has_changed";
     public static final String category_Id = "categoryId";
     public static final String TITLE = "title";
-    public static final String DESC="desc";
-    public static final String URL="url";
-    public static final String old_Password="oldPassword";
-    public static final String game_Name="game_Name";
+    public static final String DESC = "desc";
+    public static final String URL = "url";
+    public static final String old_Password = "oldPassword";
+    public static final String game_Name = "game_Name";
     public static final String VALUE = "value";
-    public static final String GAME_LABELS="game_labels";
+    public static final String GAME_LABELS = "game_labels";
+    public static final String GAME_LABEL_ID = "gameLabelId";
+    public static final String START_INDEX = "startIndex";
+    public static final String PAGE_SIZE = "pageSize";
 }

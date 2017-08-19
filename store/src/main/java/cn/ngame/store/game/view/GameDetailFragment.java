@@ -147,7 +147,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                 int tvSize = tagTvList.size();
                 int size = labelSize > tvSize ? tvSize : labelSize;
                 final Intent intent = new Intent();
-                intent.setClass(context, GameListActivity.class);
+                intent.setClass(context, LabelGameListActivity.class);
                 for (int i = 0; i < size; i++) {
                     TextView labelTv = tagTvList.get(i);
                     final GameLabels gameLabel = this.gameLabels.get(i);
@@ -157,7 +157,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                     labelTv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            intent.putExtra(KeyConstant.ID, String.valueOf(gameLabel.id));
+                            intent.putExtra(KeyConstant.category_Id, String.valueOf(gameLabel.id));
                             intent.putExtra(KeyConstant.TITLE, labelName);
                             startActivity(intent);
                         }
