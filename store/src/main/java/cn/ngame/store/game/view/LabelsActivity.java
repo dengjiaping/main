@@ -120,7 +120,7 @@ public class LabelsActivity extends BaseFgActivity {
                 public void onClick(View v) {
                     Intent i = new Intent();
                     i.setClass(content, LabelGameListActivity.class);
-                    i.putExtra(KeyConstant.category_Id, gameLabels.id);// 动作游戏精选 getId()==369
+                    i.putExtra(KeyConstant.category_Id, String.valueOf(gameLabels.id));// 动作游戏精选 getId()==369
                     i.putExtra(KeyConstant.TITLE, itemLabelName);//list.get(position).getTypeName()
                     startActivity(i);
                 }

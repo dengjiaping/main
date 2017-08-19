@@ -51,7 +51,7 @@ public class LabelGameListActivity extends BaseFgActivity {
 
     private int lastItem;
 
-    private long mLabelId;
+    private String mLabelId;
     private LabelGameListActivity content;
 
     @Override
@@ -64,7 +64,7 @@ public class LabelGameListActivity extends BaseFgActivity {
         content = LabelGameListActivity.this;
         Intent intent = getIntent();
         String title = intent.getStringExtra(KeyConstant.TITLE);
-        mLabelId = intent.getLongExtra(KeyConstant.category_Id, 0);
+        mLabelId = intent.getStringExtra(KeyConstant.category_Id);
 
         Button leftBt = (Button) findViewById(R.id.left_bt);
         findViewById(R.id.center_tv).setVisibility(View.GONE);
@@ -149,15 +149,24 @@ public class LabelGameListActivity extends BaseFgActivity {
                 if (pageAction.getCurrentPage() == 0) {
                     gameInfoList.clear(); //清除数据
                     if (result.data == null || result.data.size() == 0) {
+                        android.util.Log.d(TAG, "onResponse: " + result.code);
                         pullListView.onPullUpRefreshComplete();
                         pullListView.onPullDownRefreshComplete();
                         pullListView.setLastUpdatedLabel(new Date().toLocaleString());
+
+                        loadStateView.isShowLoadBut(false);
+                        loadStateView.setVisibility(View.VISIBLE);
+                        loadStateView.setState(LoadStateView.STATE_END, "数据为空");
                         return;
                     }
                 }
+                android.util.Log.d(TAG, "onResponse5555: " );
+
                 if (result.code == 0) {
+                    android.util.Log.d(TAG, "onResponse: " + result.code);
                     gameInfoList = result.data;
                     pageAction.setTotal(result.totals);
+                    Log.d(TAG, gameInfoList.size() + "返回" + gameInfoList);
                     if (gameInfoList != null && gameInfoList.size() > 0) {
                         loadStateView.setVisibility(View.GONE);
                         adapter.setDate(gameInfoList);
@@ -165,7 +174,7 @@ public class LabelGameListActivity extends BaseFgActivity {
                     } else {
                         loadStateView.isShowLoadBut(false);
                         loadStateView.setVisibility(View.VISIBLE);
-                        loadStateView.setState(LoadStateView.STATE_END, "没有数据");
+                        loadStateView.setState(LoadStateView.STATE_END, "数据为空");
                     }
 
                 } else {
@@ -208,7 +217,7 @@ public class LabelGameListActivity extends BaseFgActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
-                params.put(KeyConstant.GAME_LABEL_ID, String.valueOf(mLabelId));
+                params.put(KeyConstant.GAME_LABEL_ID, mLabelId);
                 params.put(KeyConstant.START_INDEX, String.valueOf(pageAction.getCurrentPage()));
                 params.put(KeyConstant.PAGE_SIZE, String.valueOf(PAGE_SIZE));
                 return params;
