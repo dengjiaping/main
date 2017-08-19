@@ -17,10 +17,16 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
+
+import java.util.HashMap;
+
 import cn.ngame.store.R;
 import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.GameFileStatus;
 import cn.ngame.store.core.utils.CommonUtil;
+import cn.ngame.store.core.utils.KeyConstant;
+import cn.ngame.store.core.utils.UMEventNameConstant;
 import cn.ngame.store.user.view.LoginActivity;
 
 /**
@@ -201,6 +207,11 @@ public class GameLoadProgressBar extends View {
         this.invalidate();
         if (listener != null) {
             listener.onStartDownload(fileLoadInfo);
+            //埋点
+
+            MobclickAgent.onEvent(context, UMEventNameConstant.gameDownloadBTClickCount,
+                    new HashMap<String, String>().put(KeyConstant.game_Name, fileLoadInfo.getTitle()))
+            ;
         }
     }
 

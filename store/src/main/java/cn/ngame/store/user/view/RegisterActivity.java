@@ -22,6 +22,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -260,6 +261,7 @@ public class RegisterActivity extends BaseFgActivity {
                     editor.apply();
 
                     showDialog(true, "恭喜您，注册成功！");
+                    MobclickAgent.onProfileSignIn(userName);
                 } else {
                     showDialog(false, result.msg);
                 }

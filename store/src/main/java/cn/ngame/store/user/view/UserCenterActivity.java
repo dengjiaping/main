@@ -147,7 +147,6 @@ public class UserCenterActivity extends BaseFgActivity {
         pwd = StoreApplication.passWord;
         imgStrPost = StoreApplication.userHeadUrl;
         nickName = StoreApplication.nickName;
-        android.util.Log.d(TAG, "imgStrPost: " + imgStrPost);
         setUserInfo();
      /*   if (pwd == null) {
             //getUserInfo();

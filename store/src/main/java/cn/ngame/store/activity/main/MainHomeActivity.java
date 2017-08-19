@@ -46,6 +46,7 @@ import com.jzt.hol.android.jkda.sdk.services.gamehub.AppCarouselClient;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -81,6 +82,7 @@ import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.LoginHelper;
 import cn.ngame.store.core.utils.TextUtil;
+import cn.ngame.store.core.utils.UMEventNameConstant;
 import cn.ngame.store.exception.NoSDCardException;
 import cn.ngame.store.fragment.SimpleDialogFragment;
 import cn.ngame.store.game.view.GameDetailActivity;
@@ -306,6 +308,18 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
       }*/
     DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_def_logo_188_188, 360);
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
     //侧边栏
     private void initSlidingMenu() {
@@ -599,6 +613,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 im_toSearch.setVisibility(View.VISIBLE);
                 mDownloadBt.setVisibility(View.GONE);
                 tv_home.setTextColor(colorDark);
+
+                //埋点
+                MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendButtonClickCount);
+
                 break;
             case 1://排行
                 if (null == rankingFragment) {
@@ -614,6 +632,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 im_toSearch.setVisibility(View.VISIBLE);
                 mDownloadBt.setVisibility(View.GONE);
                 tv_game.setTextColor(colorDark);
+                MobclickAgent.onEvent(context, UMEventNameConstant.mainRankButtonClickCount);
                 break;
         /*    case 2://圈子
                 if (null == gameHubFragment) {
@@ -643,6 +662,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mTitleBgIv.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 tv_video.setTextColor(colorDark);
+                MobclickAgent.onEvent(context, UMEventNameConstant.mainDiscoverButtonClickCount);
                 break;
             case 4://管理
                 if (null == administrationFragment) {
@@ -658,6 +678,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mTitleBgIv.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.GONE);
                 tv_manager.setTextColor(colorDark);
+                MobclickAgent.onEvent(context, UMEventNameConstant.mainManagerButtonClickCount);
                 break;
         }
         transaction.commitAllowingStateLoss();
@@ -845,6 +866,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         //关闭OTA升级服务
         stopService(new Intent(this, OtaService.class));
         super.onDestroy();
+        MobclickAgent.onKillProcess(context);
     }
 
     @Override
@@ -986,7 +1008,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_update, null);
         TextView tv_title = (TextView) contentView.findViewById(R.id.tv_title);
 
-        String fileSizeStr = Formatter.formatFileSize(context,versionInfo.fileSize);
+        String fileSizeStr = Formatter.formatFileSize(context, versionInfo.fileSize);
 
         tv_title.setText("新版本：" + versionInfo.versionName + "\r\n大小：" + fileSizeStr);
         TextView tv_summary = (TextView) contentView.findViewById(R.id.tv_summary);
@@ -1146,4 +1168,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             }
         }, 0, 500);
     }
+
+
 }

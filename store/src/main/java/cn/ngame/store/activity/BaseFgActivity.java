@@ -12,8 +12,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.umeng.analytics.MobclickAgent;
-
 import cn.ngame.store.base.service.ConnectionChangeReceiver;
 
 /**
@@ -28,18 +26,6 @@ public class BaseFgActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//强制竖屏
         registerReceiver();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
     }
 
     /* 注册广播，监听网络异常 */

@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -375,7 +376,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     editor.apply();
 
                     StoreApplication.token = user.token;
-                    android.util.Log.d(TAG, "user.token: "+user.token);
+                    android.util.Log.d(TAG, "user.token: " + user.token);
                     StoreApplication.passWord = password;
                     //加载用户头像
                     StoreApplication.userHeadUrl = user.headPhoto;
@@ -384,6 +385,9 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     StoreApplication.loginType = LOGIN_TYPE;
                     StoreApplication.userCode = user.userCode;
 
+                    if (!LOGIN_TYPE.equals(Constant.PHONE)) {
+                        MobclickAgent.onProfileSignIn(LOGIN_TYPE, userName);
+                    }
                     LoginActivity.this.finish();
 
                     //同步本地观看记录到服务器
@@ -396,8 +400,8 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     }).start();
                     finish();
                 } else {
-                    ToastUtil.show(mContext, "登录失败，"+result.msg);
-                    if (null !=mContext && !mContext.isFinishing()) {
+                    ToastUtil.show(mContext, "登录失败，" + result.msg);
+                    if (null != mContext && !mContext.isFinishing()) {
                         dialogHelper.hideAlert();
                     }
                 }
