@@ -174,7 +174,7 @@ public class GameLoadProgressBar extends View {
         View inflate = LayoutInflater.from(context).inflate(R.layout.layout_dialog_one_bt, null);
 
         TextView sureBt = (TextView) inflate.findViewById(R.id.right_tv);
-        sureBt.setText(R.string.login);
+        sureBt.setText(R.string.login_now);
         sureBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

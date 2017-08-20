@@ -264,7 +264,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             super.onActivityResult(requestCode, resultCode, data);
-            android.util.Log.d(TAG, requestCode + "resultCode:" + resultCode + "第三方登录回调: " + data);
             UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
         } catch (Exception e) {
             android.util.Log.d(TAG, requestCode + "第三方登录回调出现错误: ");
@@ -290,7 +289,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
          */
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
-            android.util.Log.d(TAG, "授权失败,onError: " + t.getMessage());
             if (dialogHelper != null) {
                 dialogHelper.hideAlert();
             }
@@ -304,7 +302,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
          */
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
-            android.util.Log.d(TAG, "第三方登录取消");
             if (dialogHelper != null) {
                 dialogHelper.hideAlert();
             }
@@ -362,32 +359,35 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 }
                 if (result.code == 0) {
                     User user = result.data;
+                    String token = user.token;
+                    String userCode = user.userCode;
+                    String headPhoto = user.headPhoto;
+                    String nickName = user.nickName;
 
                     SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString(Constant.CONFIG_TOKEN, user.token);
-                    editor.putString(Constant.CONFIG_USER_HEAD, user.headPhoto);//头像
-                    editor.putString(Constant.CONFIG_NICK_NAME, user.nickName);
+                    editor.putString(Constant.CONFIG_TOKEN, token);
+                    editor.putString(Constant.CONFIG_USER_HEAD, headPhoto);//头像
+                    editor.putString(Constant.CONFIG_NICK_NAME, nickName);
                     editor.putString(Constant.CONFIG_USER_NAME, userName);
                     editor.putString(Constant.CONFIG_USER_PWD, password);
                     editor.putString(Constant.CONFIG_LOGIN_TYPE, LOGIN_TYPE);
-                    editor.putString(Constant.CONFIG_USER_CODE, user.userCode);//userCode
+                    editor.putString(Constant.CONFIG_USER_CODE, userCode);//userCode
 
                     editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
                     editor.apply();
 
-                    StoreApplication.token = user.token;
-                    android.util.Log.d(TAG, "user.userName: " + userName);
-                    android.util.Log.d(TAG, "user.userCode: " + user.userCode);
+                    StoreApplication.token = token;
                     StoreApplication.passWord = password;
-                    //加载用户头像
-                    StoreApplication.userHeadUrl = user.headPhoto;
-                    StoreApplication.nickName = user.nickName;
+                    StoreApplication.userHeadUrl = headPhoto;
+                    StoreApplication.nickName = nickName;
                     StoreApplication.userName = userName;
                     StoreApplication.loginType = LOGIN_TYPE;
-                    StoreApplication.userCode = user.userCode;
+                    StoreApplication.userCode = userCode;
 
-                    if (LOGIN_TYPE.equals(Constant.PHONE)) {
-                        MobclickAgent.onProfileSignIn(LOGIN_TYPE, userName);
+                    if (LOGIN_TYPE.equals(Constant.QQ)) {
+                        MobclickAgent.onProfileSignIn("QQ", userCode);
+                    } else if (LOGIN_TYPE.equals(Constant.WEIXIN)) {
+                        MobclickAgent.onProfileSignIn("WEIXIN", userCode);
                     } else {
                         MobclickAgent.onProfileSignIn(userName);
                     }

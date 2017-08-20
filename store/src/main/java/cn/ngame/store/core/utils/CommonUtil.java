@@ -21,7 +21,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
@@ -264,10 +263,11 @@ public class CommonUtil {
         return (pwd != null && !"".endsWith(pwd)) || !Constant.PHONE.equals(StoreApplication.loginType);
     }
 
-    public static void showUnLoginDialog(FragmentManager fm, final Context content) {
+    public static void showUnLoginDialog(FragmentManager fm, final Context content, final int showMsgId) {
         final OneBtDialogFragment dialogFragment = new OneBtDialogFragment();
-        dialogFragment.setTitle(Resources.getSystem().getString(R.string.unlogin_msg));
-        dialogFragment.setNegativeButton("立即登录", new View.OnClickListener() {
+        dialogFragment.setTitle(showMsgId);
+        dialogFragment.setDialogWidth(content.getResources().getDimensionPixelSize(R.dimen.unlogin_dialog_width));
+        dialogFragment.setNegativeButton(R.string.login_now, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialogFragment.dismiss();

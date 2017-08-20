@@ -79,8 +79,6 @@ public class OneBtDialogFragment extends DialogFragment {
         dialog.setCanceledOnTouchOutside(true);
         Window window = dialog.getWindow();
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        window.setLayout(getResources().getDimensionPixelSize(R.dimen.unlogin_dialog_width), WindowManager
-                .LayoutParams.WRAP_CONTENT);
         View view = inflater.inflate(R.layout.layout_dialog_one_bt, container);
         negative_tv = (TextView) view.findViewById(R.id.right_tv);
         title_tv = (TextView) view.findViewById(R.id.title);
@@ -112,7 +110,14 @@ public class OneBtDialogFragment extends DialogFragment {
         }
 
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        //设置对话框宽度
+        if(dialogWidth > 0){
+            getDialog().getWindow().setLayout(dialogWidth,WindowManager.LayoutParams.WRAP_CONTENT);
+        }
+    }
     /**
      * 设置对话框的宽度 单位dp
      *

@@ -320,7 +320,7 @@ public class FindPwdActivity extends BaseFgActivity {
 
         int stringId;
         if (isSuccess) {
-            stringId = R.string.login;
+            stringId = R.string.login_now;
         } else {
             stringId = R.string.sure;
         }

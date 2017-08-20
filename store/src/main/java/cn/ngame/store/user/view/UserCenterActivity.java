@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +54,6 @@ import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.UrlConstant;
 import cn.ngame.store.exception.NoSDCardException;
-import cn.ngame.store.fragment.OneBtDialogFragment;
 import cn.ngame.store.util.ToastUtil;
 
 
@@ -109,7 +107,7 @@ public class UserCenterActivity extends BaseFgActivity {
         LOGIN_TYPE = StoreApplication.loginType;
 
         Button changePwdBt = (Button) findViewById(R.id.change_pwd_bt);
-        if ("1".equals(LOGIN_TYPE)) {
+        if (Constant.PHONE.equals(LOGIN_TYPE)) {
             changePwdBt.setVisibility(View.VISIBLE);
             changePwdBt.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -445,20 +443,7 @@ public class UserCenterActivity extends BaseFgActivity {
      * 显示结果对话框
      */
     private void showReLoginDialog() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-
-        final OneBtDialogFragment dialogFragment = new OneBtDialogFragment();
-        dialogFragment.setTitle("您的登录状态已经失效\n请重新登录");
-        dialogFragment.setNegativeButton("立即登录", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogFragment.dismiss();
-                Intent intent = new Intent(content, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        dialogFragment.show(ft, "successDialog");
+        CommonUtil.showUnLoginDialog(getSupportFragmentManager(), content, R.string.relogin_msg);
     }
 
     ImageLoader imageLoader = ImageLoader.getInstance();

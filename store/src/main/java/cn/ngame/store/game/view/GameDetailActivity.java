@@ -420,7 +420,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                         ToastUtil.show(content, isLiked ? "取消成功" : "收藏成功,可在管理界面中查看");
                         likeIv.setSelected(!isLiked);
                     } else {//未登录
-                        CommonUtil.showUnLoginDialog(fm, content);
+                        CommonUtil.showUnLoginDialog(fm, content,R.string.unlogin_msg);
                     }
 
                     break;
@@ -428,7 +428,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                     if (CommonUtil.isLogined()) {
                         ToastUtil.show(content, "反馈成功");
                     } else {
-                        CommonUtil.showUnLoginDialog(fm, content);
+                        CommonUtil.showUnLoginDialog(fm,content, R.string.unlogin_msg);
                     }
                     break;
                 case R.id.game_detail_percentage_tv:
@@ -436,7 +436,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                         //已登录,评分框
                         showPercentDialog();
                     } else {//未登录
-                        CommonUtil.showUnLoginDialog(fm, content);
+                        CommonUtil.showUnLoginDialog(fm, content,R.string.unlogin_msg);
                     }
                     break;
             }

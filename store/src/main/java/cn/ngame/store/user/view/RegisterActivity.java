@@ -22,7 +22,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,12 +31,12 @@ import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.bean.JsonResult;
-import cn.ngame.store.core.utils.KeyConstant;
-import cn.ngame.store.fragment.SimpleDialogFragment;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
+import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.TextUtil;
+import cn.ngame.store.fragment.SimpleDialogFragment;
 import cn.ngame.store.view.BaseTitleBar;
 
 /**
@@ -261,7 +260,6 @@ public class RegisterActivity extends BaseFgActivity {
                     editor.apply();
 
                     showDialog(true, "恭喜您，注册成功！");
-                    MobclickAgent.onProfileSignIn(userName);
                 } else {
                     showDialog(false, result.msg);
                 }
@@ -315,7 +313,7 @@ public class RegisterActivity extends BaseFgActivity {
 
         int stringId;
         if (isSuccess) {
-            stringId = R.string.login;
+            stringId = R.string.login_now;
         } else {
             stringId = R.string.sure;
         }
