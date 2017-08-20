@@ -376,7 +376,8 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     editor.apply();
 
                     StoreApplication.token = user.token;
-                    android.util.Log.d(TAG, "user.token: " + user.token);
+                    android.util.Log.d(TAG, "user.userName: " + userName);
+                    android.util.Log.d(TAG, "user.userCode: " + user.userCode);
                     StoreApplication.passWord = password;
                     //加载用户头像
                     StoreApplication.userHeadUrl = user.headPhoto;
@@ -390,7 +391,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     } else {
                         MobclickAgent.onProfileSignIn(userName);
                     }
-                    LoginActivity.this.finish();
 
                     //同步本地观看记录到服务器
                     new Thread(new Runnable() {
@@ -400,7 +400,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                             watchRecordModel.synchronizeWatchRecord();
                         }
                     }).start();
-                    finish();
+                    mContext.finish();
                 } else {
                     ToastUtil.show(mContext, "登录失败，" + result.msg);
                     if (null != mContext && !mContext.isFinishing()) {
@@ -416,7 +416,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 volleyError.printStackTrace();
                 Toast.makeText(LoginActivity.this, "登录失败，请检查网络连接!", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "HTTP请求失败：网络连接错误！" + volleyError.getMessage());
-                if (null != LoginActivity.this && !LoginActivity.this.isFinishing()) {
+                if (null != mContext && !mContext.isFinishing()) {
                     dialogHelper.hideAlert();
                 }
             }

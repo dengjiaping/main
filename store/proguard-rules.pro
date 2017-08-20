@@ -170,5 +170,7 @@
 #-keep class cn.ngame.store.push.model.ExtraDataBean
 -keep class cn.ngame.store.push.model.** { *; }
 
-
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
 ##---------------End: proguard configuration for Gson  ----------
