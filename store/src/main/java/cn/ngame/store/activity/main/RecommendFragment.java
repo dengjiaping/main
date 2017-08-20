@@ -443,7 +443,7 @@ public class RecommendFragment extends BaseSearchFragment {
                     RecommendListBean.DataBean dataBean = topList.get(0);
                     //埋点
                     HashMap<String, String> map = new HashMap<>();
-                    map.put("Index", 0 + "");
+                    map.put(KeyConstant.index, 0 + "");
                     map.put(KeyConstant.game_Name, dataBean.getGameName());
                     MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPosition, map);
 

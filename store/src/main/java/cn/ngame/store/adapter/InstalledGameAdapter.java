@@ -31,7 +31,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.umeng.analytics.MobclickAgent;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 
@@ -40,6 +42,8 @@ import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.utils.AppInstallHelper;
+import cn.ngame.store.core.utils.KeyConstant;
+import cn.ngame.store.core.utils.UMEventNameConstant;
 import cn.ngame.store.view.QuickAction;
 
 /**
@@ -176,7 +180,7 @@ public class InstalledGameAdapter extends BaseAdapter {
                 return;
             }
 
-            String appName = applicationInfo.loadLabel(packageManager).toString();
+            final String appName = applicationInfo.loadLabel(packageManager).toString();
             Drawable drawable = applicationInfo.loadIcon(packageManager);
             if (null != appName) {
                 tv_title.setText(appName);
@@ -189,6 +193,9 @@ public class InstalledGameAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     AppInstallHelper.openApp(context, applicationInfo.packageName);
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put(KeyConstant.game_Name, appName);
+                    MobclickAgent.onEvent(context, UMEventNameConstant.gameOpenButton, map);
                 }
             });
         }

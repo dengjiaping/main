@@ -127,7 +127,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                 //imageView.setTag(img.imageLink);
                 String imageLink = img.imageLink;
                 imageView.setScaleType(ImageView.ScaleType.CENTER);
-                imageView.setImageUrl(imageLink, R.drawable.ic_def_logo_480_228);
+                imageView.setImageUrl(imageLink, R.drawable.ic_def_logo_720_288);
                 img_container.addView(imageView);
                 //添加图片，查看大图
                 imgs.add(imageLink);

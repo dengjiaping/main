@@ -199,6 +199,10 @@ public class GameLoadProgressBar extends View {
      * 进入下载状态
      */
     private void startDownload() {
+        //埋点
+        HashMap<String, String> map = new HashMap<>();
+        map.put(KeyConstant.game_Name, fileLoadInfo.getTitle());
+        MobclickAgent.onEvent(context, UMEventNameConstant.gameDownloadButton, map);
         if (gameFileStatus == null) {
             return;
         }
@@ -207,9 +211,6 @@ public class GameLoadProgressBar extends View {
         this.invalidate();
         if (listener != null) {
             listener.onStartDownload(fileLoadInfo);
-            //埋点
-            MobclickAgent.onEvent(context, UMEventNameConstant.gameDownloadButton,
-                    new HashMap<String, String>().put(KeyConstant.game_Name, fileLoadInfo.getTitle()));
         }
     }
 
@@ -262,13 +263,16 @@ public class GameLoadProgressBar extends View {
     }
 
     private void openApp() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put(KeyConstant.game_Name, fileLoadInfo.getTitle());
+        MobclickAgent.onEvent(context, UMEventNameConstant.gameOpenButton,
+                map);
         gameFileStatus.setStatus(GameFileStatus.STATE_HAS_INSTALL);
         text = "打开";
         if (listener != null) {
             listener.onOpenApp(fileLoadInfo);
             invalidate();
-            MobclickAgent.onEvent(context, UMEventNameConstant.gameOpenButton,
-                    new HashMap<String, String>().put(KeyConstant.game_Name, fileLoadInfo.getTitle()));
+
         }
     }
 

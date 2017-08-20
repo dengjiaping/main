@@ -354,10 +354,10 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             @Override
             public void onResponse(JsonResult<User> result) {
                 if (result == null) {
-                    if (null != LoginActivity.this && !LoginActivity.this.isFinishing()) {
+                    if (null != mContext && !mContext.isFinishing()) {
                         dialogHelper.hideAlert();
                     }
-                    Toast.makeText(LoginActivity.this, "服务端异常", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "服务端异常", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (result.code == 0) {
@@ -385,8 +385,10 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     StoreApplication.loginType = LOGIN_TYPE;
                     StoreApplication.userCode = user.userCode;
 
-                    if (!LOGIN_TYPE.equals(Constant.PHONE)) {
+                    if (LOGIN_TYPE.equals(Constant.PHONE)) {
                         MobclickAgent.onProfileSignIn(LOGIN_TYPE, userName);
+                    } else {
+                        MobclickAgent.onProfileSignIn(userName);
                     }
                     LoginActivity.this.finish();
 

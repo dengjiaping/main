@@ -882,7 +882,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
      * 双击退出程序
      */
     private void exitBy2Click() {
-
         if (!isExit) {
             isExit = true;
             Toast.makeText(this, "再点一次退出", Toast.LENGTH_SHORT).show();
