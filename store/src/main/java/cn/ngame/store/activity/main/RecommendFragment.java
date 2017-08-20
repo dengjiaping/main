@@ -306,7 +306,6 @@ public class RecommendFragment extends BaseSearchFragment {
     }
 
     public void initListView(final View view) {
-        //tv_top_bar_bg = (TextView) view.findViewById(R.id.tv_top_bar_bg);
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
@@ -343,17 +342,14 @@ public class RecommendFragment extends BaseSearchFragment {
                     pullListView.setHasMoreData(false);
                     ToastUtil.show(context, getString(R.string.no_more_data));
                     pullListView.onPullUpRefreshComplete();
-                    Log.d(TAG, "上拉1");
                     return;
                 }
                 if (pageAction.getCurrentPage() * pageAction.getPageSize() < pageAction.getTotal()) {
                     pageAction.setCurrentPage(pageAction.getCurrentPage() == 0 ?
                             pageAction.getCurrentPage() + 2 : pageAction.getCurrentPage() + 1);
                     //上拉请求数据
-                    Log.d(TAG, "上拉2");
                     getGameList();
                 } else {
-                    Log.d(TAG, "上拉3");
                     ToastUtil.show(context, getString(R.string.no_more_data));
                     pullListView.setHasMoreData(false);
                     pullListView.onPullUpRefreshComplete();
@@ -361,24 +357,29 @@ public class RecommendFragment extends BaseSearchFragment {
             }
         });
         //点击事件
-        pullListView.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ListView refreshableView = pullListView.getRefreshableView();
+        refreshableView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0) {//减去头部,不让点击
-                    Intent intent = new Intent(context, GameDetailActivity.class);
-                    RecommendListBean.DataBean dataBean = list.get(position - 1);
+                if (position > 0) {
+                    int i = position - 1;
+                    /**   pullListView的头部position是0  第一个item 索引是 1
+                     1-1= 0(所以position是1时,要拿list里的0处数据, position是2时,拿1处数据)   */
+                    RecommendListBean.DataBean dataBean = list.get(i);
                     //埋点
                     HashMap<String, String> map = new HashMap<>();
-                    map.put(KeyConstant.index, 1 + "");
+                    map.put(KeyConstant.index, i + 2 + "");
                     map.put(KeyConstant.game_Name, dataBean.getGameName());
                     MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPosition, map);
+
+                    Intent intent = new Intent(context, GameDetailActivity.class);
                     intent.putExtra(KeyConstant.ID, dataBean.getGameId());
                     startActivity(intent);
                 }
             }
         });
         //滑动事件(搜索栏渐变)
-        pullListView.getRefreshableView().setOnScrollListener(new AbsListView.OnScrollListener() {
+        refreshableView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
@@ -397,8 +398,8 @@ public class RecommendFragment extends BaseSearchFragment {
         View headView = View.inflate(getActivity(), R.layout.recommend_header_view, null);
         initHeadView(headView);
         //头布局放入listView中
-        if (pullListView.getRefreshableView().getHeaderViewsCount() == 0) {
-            pullListView.getRefreshableView().addHeaderView(headView);
+        if (refreshableView.getHeaderViewsCount() == 0) {
+            refreshableView.addHeaderView(headView);
         }
         //第一次进来,请求数据
         getGameList();
