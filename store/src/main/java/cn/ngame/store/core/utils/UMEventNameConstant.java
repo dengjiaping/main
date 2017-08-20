@@ -10,6 +10,8 @@ public class UMEventNameConstant {
     public static final String mainDiscoverButtonClickCount = "mainDiscoverButtonClickCount";
     public static final String mainManagerButtonClickCount = "mainManagerButtonClickCount";
 
-    public static final String gameDownloadBTClickCount= "gameDownloadBTClickCount";
-    public static final String gameOpenBTClickCount= "gameOpenBTClickCount";
+    public static final String gameDownloadButton= "gameDownloadButton";
+    public static final String gameOpenButton= "gameOpenButton";
+
+    public static final String mainRecommendPosition= "mainRecommendPosition";
 }

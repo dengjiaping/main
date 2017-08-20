@@ -25,6 +25,7 @@ import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBody;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.recommend.RecommendClient;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,6 +51,7 @@ import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.NetUtil;
+import cn.ngame.store.core.utils.UMEventNameConstant;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.PicassoImageView;
@@ -364,7 +366,13 @@ public class RecommendFragment extends BaseSearchFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {//减去头部,不让点击
                     Intent intent = new Intent(context, GameDetailActivity.class);
-                    intent.putExtra(KeyConstant.ID, list.get(position - 1).getGameId());//// TODO: 2017/7/15 0015
+                    RecommendListBean.DataBean dataBean = list.get(position - 1);
+                    //埋点
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put(KeyConstant.index, 1 + "");
+                    map.put(KeyConstant.game_Name, dataBean.getGameName());
+                    MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPosition, map);
+                    intent.putExtra(KeyConstant.ID, dataBean.getGameId());
                     startActivity(intent);
                 }
             }
@@ -428,17 +436,28 @@ public class RecommendFragment extends BaseSearchFragment {
     private View.OnClickListener headClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Intent intent = new Intent(context, GameDetailActivity.class);
             switch (v.getId()) {
                 case R.id.recommend_head_llay_0:
-                    Intent intent = new Intent(context, GameDetailActivity.class);
-                    android.util.Log.d(TAG, "游戏id" + topList.get(0).getGameId());
-                    intent.putExtra(KeyConstant.ID, topList.get(0).getGameId());
+                    RecommendListBean.DataBean dataBean = topList.get(0);
+                    //埋点
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("Index", 0 + "");
+                    map.put(KeyConstant.game_Name, dataBean.getGameName());
+                    MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPosition, map);
+
+                    intent.putExtra(KeyConstant.ID, dataBean.getGameId());
                     startActivity(intent);
                     break;
                 case R.id.recommend_head_llay_1:
-                    Intent i2 = new Intent(context, GameDetailActivity.class);
-                    i2.putExtra(KeyConstant.ID, topList.get(1).getGameId());
-                    startActivity(i2);
+                    RecommendListBean.DataBean dataBean1 = topList.get(1);
+                    //埋点
+                    HashMap<String, String> map1 = new HashMap<>();
+                    map1.put(KeyConstant.index, 1 + "");
+                    map1.put(KeyConstant.game_Name, dataBean1.getGameName());
+                    MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPosition, map1);
+                    intent.putExtra(KeyConstant.ID, dataBean1.getGameId());
+                    startActivity(intent);
                     break;
                 case R.id.recommend_topics_more_tv://专题
                     startActivity(new Intent(context, TopicsListActivity.class));

@@ -208,10 +208,8 @@ public class GameLoadProgressBar extends View {
         if (listener != null) {
             listener.onStartDownload(fileLoadInfo);
             //埋点
-
-            MobclickAgent.onEvent(context, UMEventNameConstant.gameDownloadBTClickCount,
-                    new HashMap<String, String>().put(KeyConstant.game_Name, fileLoadInfo.getTitle()))
-            ;
+            MobclickAgent.onEvent(context, UMEventNameConstant.gameDownloadButton,
+                    new HashMap<String, String>().put(KeyConstant.game_Name, fileLoadInfo.getTitle()));
         }
     }
 
@@ -219,7 +217,6 @@ public class GameLoadProgressBar extends View {
      * 更新App
      */
     private void updateApp() {
-
         gameFileStatus.setStatus(GameFileStatus.STATE_DOWNLOAD);
         this.text = "暂停";
         this.invalidate();
@@ -270,6 +267,8 @@ public class GameLoadProgressBar extends View {
         if (listener != null) {
             listener.onOpenApp(fileLoadInfo);
             invalidate();
+            MobclickAgent.onEvent(context, UMEventNameConstant.gameOpenButton,
+                    new HashMap<String, String>().put(KeyConstant.game_Name, fileLoadInfo.getTitle()));
         }
     }
 

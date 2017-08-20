@@ -35,4 +35,5 @@ public class KeyConstant {
     public static final String GAME_LABEL_ID = "gameLabelId";
     public static final String START_INDEX = "startIndex";
     public static final String PAGE_SIZE = "pageSize";
+    public static final String index = "index";
 }
