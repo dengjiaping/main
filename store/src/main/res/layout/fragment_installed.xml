@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/f5f5f5"
-              android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/f5f5f5"
+                android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:divider="@color/e5e5e5"
-        android:dividerHeight="@dimen/dp_05"
-        android:paddingLeft="@dimen/dm025"
-        android:paddingRight="@dimen/dm025"
-        android:scrollbars="none"></ListView>
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:divider="@color/e5e5e5"
+            android:dividerHeight="@dimen/dp_05"
+            android:paddingLeft="@dimen/dm025"
+            android:paddingRight="@dimen/dm025"
+            android:scrollbars="none"></ListView>
 </RelativeLayout>

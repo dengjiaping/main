@@ -295,8 +295,6 @@ public class Rank012345Fragment extends BaseSearchFragment {
      */
     private void getRankList() {
         //tabPosition :0=全部   1=手柄   2=破解   3=汉化  4=特色
-        android.util.Log.d(TAG, "请求数据,当前一级标签:" + tabPosition);
-        android.util.Log.d(TAG, "             二级标签: " + tabPosition2);
         GameListBody bodyBean = new GameListBody();
         bodyBean.setPageIndex(pageAction.getCurrentPage());
         bodyBean.setPageSize(PAGE_SIZE);

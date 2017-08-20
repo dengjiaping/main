@@ -116,7 +116,6 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
             FileUtil.writeFile2SDCard(jsonArray.toString());
             pkgNameListStr = FileUtil.readFile();
         }
-        Log.d(TAG, "app onResume: " + jsonArray.toString());
 
         if (!mHidden && null != alreadyLvAdapter) {
             alreadyLvAdapter.setDate(getLocalApp());

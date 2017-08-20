@@ -89,6 +89,7 @@ public class ManagerFragment extends BaseSearchFragment {
             setTabViewPagerData();
         }
         installedFragment.onHiddenChanged(hidden);
+        likeFragment.onHiddenChanged(hidden);
     }
 
     private void setTabViewPagerData() {
