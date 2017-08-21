@@ -370,7 +370,7 @@ public class RecommendFragment extends BaseSearchFragment {
                     HashMap<String, String> map = new HashMap<>();
                     map.put(KeyConstant.index, i + 2 + "");
                     map.put(KeyConstant.game_Name, dataBean.getGameName());
-                    MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPosition, map);
+                    MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPositionClickCount, map);
 
                     Intent intent = new Intent(context, GameDetailActivity.class);
                     intent.putExtra(KeyConstant.ID, dataBean.getGameId());
@@ -445,7 +445,7 @@ public class RecommendFragment extends BaseSearchFragment {
                     HashMap<String, String> map = new HashMap<>();
                     map.put(KeyConstant.index, 0 + "");
                     map.put(KeyConstant.game_Name, dataBean.getGameName());
-                    MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPosition, map);
+                    MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPositionClickCount, map);
 
                     intent.putExtra(KeyConstant.ID, dataBean.getGameId());
                     startActivity(intent);
@@ -456,7 +456,7 @@ public class RecommendFragment extends BaseSearchFragment {
                     HashMap<String, String> map1 = new HashMap<>();
                     map1.put(KeyConstant.index, 1 + "");
                     map1.put(KeyConstant.game_Name, dataBean1.getGameName());
-                    MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPosition, map1);
+                    MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPositionClickCount, map1);
                     intent.putExtra(KeyConstant.ID, dataBean1.getGameId());
                     startActivity(intent);
                     break;

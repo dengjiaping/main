@@ -13,5 +13,5 @@ public class UMEventNameConstant {
     public static final String gameDownloadButton= "gameDownloadButton";
     public static final String gameOpenButton= "gameOpenButton";
 
-    public static final String mainRecommendPosition= "mainRecommendPosition";
+    public static final String mainRecommendPositionClickCount = "mainRecommendPositionClickCount";
 }

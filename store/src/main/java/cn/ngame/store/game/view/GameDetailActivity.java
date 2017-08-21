@@ -172,19 +172,19 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         List<GameType> typeList = gameInfo.gameTypeList;
         if (typeList != null) {
             int typeSize = typeList.size();
-            if (typeSize >= 0) {
+            if (typeSize > 0) {
                 gameType0.setText(typeList.get(0).typeName);
                 gameType0.setVisibility(View.VISIBLE);
             }
-            if (typeSize >= 1) {
+            if (typeSize > 1) {
                 gameType1.setText(typeList.get(1).typeName);
                 gameType1.setVisibility(View.VISIBLE);
             }
-            if (typeSize >= 2) {
+            if (typeSize > 2) {
                 gameType2.setText(typeList.get(2).typeName);
                 gameType2.setVisibility(View.VISIBLE);
             }
-            if (typeSize >= 3) {
+            if (typeSize > 3) {
                 gameType3.setText(typeList.get(3).typeName);
                 gameType3.setVisibility(View.VISIBLE);
             }

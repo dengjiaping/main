@@ -42,6 +42,7 @@ public class ManagerLikeFragment extends BaseSearchFragment {
      * 当前点击的列表 1.下载列表 2.完成列表
      */
     private FragmentActivity content;
+    private boolean isShow = true;
 
     public static ManagerLikeFragment newInstance(String type, int arg) {
         ManagerLikeFragment fragment = new ManagerLikeFragment();
@@ -73,14 +74,6 @@ public class ManagerLikeFragment extends BaseSearchFragment {
         initPop();
     }
 
-    @Override
-    protected void onFirstUserVisible() {
-        Log.d(TAG, "**********onFirstUserVisible: ");
-        getLikeList();
-    }
-    @Override
-    protected void onUserVisible() {
-    }
     private void getLikeList() {
         //tabPosition :0=全部   1=手柄   2=破解   3=汉化  4=特色
         GameListBody bodyBean = new GameListBody();
@@ -133,13 +126,36 @@ public class ManagerLikeFragment extends BaseSearchFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (hidden) {
+        if (hidden && null != likeAdapter) {
             likeAdapter.clean();
         }
     }
 
+
+    @Override
+    protected void onFirstUserVisible() {
+        if (null != likeAdapter) {
+            likeAdapter.clean();
+        }
+        getLikeList();
+    }
+
+    protected final static String TAG = ManagerLikeFragment.class.getSimpleName();
+
+    @Override
+    protected void onUserVisible() {
+        if (null != likeAdapter) {
+            likeAdapter.clean();
+        }
+        getLikeList();
+    }
+
+
     @Override
     protected void onUserInvisible() {
+        if (null != likeAdapter) {
+            likeAdapter.clean();
+        }
     }
 
     @Override

@@ -20,7 +20,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.text.format.Formatter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +38,7 @@ import cn.ngame.store.R;
 import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
+import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.view.GameLoadProgressBar;
 import cn.ngame.store.view.QuickAction;
@@ -77,6 +77,7 @@ public class LikeFragmentAdapter extends BaseAdapter {
      * @param fileInfoList 下载文件信息
      */
     public void setDate(List<GameRankListBean.DataBean> fileInfoList) {
+        uiHandler = new Handler();
         this.fileInfoList = fileInfoList;
         notifyDataSetChanged();
     }
@@ -187,7 +188,7 @@ public class LikeFragmentAdapter extends BaseAdapter {
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d("777", "run:********* ");
+                            Log.d("777", "喜欢界面请求数据:");
                             progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo
                                     .getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode())));
                             progressBar.setVisibility(View.VISIBLE);

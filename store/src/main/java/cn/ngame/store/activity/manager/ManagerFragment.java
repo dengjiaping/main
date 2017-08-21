@@ -28,7 +28,6 @@ import cn.ngame.store.core.utils.Constant;
  */
 
 public class ManagerFragment extends BaseSearchFragment {
-    public static final String TAG = "777";
     private TabLayout tablayout;
     private ViewPager viewpager;
     private ArrayList<Fragment> fragments = new ArrayList<>();

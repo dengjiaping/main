@@ -11,26 +11,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cn.ngame.store.R;
-import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
-import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.GameLabels;
-import cn.ngame.store.bean.JsonResult;
-import cn.ngame.store.core.net.GsonRequest;
-import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
-import cn.ngame.store.core.utils.Log;
+import cn.ngame.store.util.ToastUtil;
 
 /**
  * 游戏精选列表的页面
@@ -70,6 +57,9 @@ public class LabelsActivity extends BaseFgActivity {
         //设置适配器
         mAdapter = new LabelsItemAdapter(this, mDatas);
         mRecyclerView.setAdapter(mAdapter);
+        if (mDatas == null || mDatas.size() == 0) {
+            ToastUtil.show(content, "暂无标签");
+        }
     }
 
     public class LabelsItemAdapter extends RecyclerView.Adapter<LabelsItemAdapter.ViewHolder> {
@@ -127,48 +117,5 @@ public class LabelsActivity extends BaseFgActivity {
             });
         }
 
-    }
-
-    /**
-     * 标签列表,,可以从服务器,也可能从详情带过来(不用做请求)
-     */
-    private void getGameList() {
-
-        String url = Constant.WEB_SITE + Constant.URL_GAME_SELECTION_MORE;
-        Response.Listener<JsonResult<List<GameInfo>>> successListener = new Response.Listener<JsonResult<List<GameInfo>>>() {
-            @Override
-            public void onResponse(JsonResult<List<GameInfo>> result) {
-                if (result == null) {
-                    return;
-                }
-
-                if (result.code == 0) {
-
-                } else {
-                    Log.d(TAG, "HTTP请求成功：服务端返回错误！");
-                }
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
-                Log.d(TAG, "HTTP请求失败：网络连接错误！");
-            }
-        };
-
-        Request<JsonResult<List<GameInfo>>> request = new GsonRequest<JsonResult<List<GameInfo>>>(
-                Request.Method.POST, url, successListener,
-                errorListener, new TypeToken<JsonResult<List<GameInfo>>>() {
-        }.getType()) {
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                return params;
-            }
-        };
-        StoreApplication.requestQueue.add(request);
     }
 }

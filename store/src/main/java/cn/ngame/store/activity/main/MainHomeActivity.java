@@ -101,7 +101,6 @@ import cn.ngame.store.user.view.UserCenterActivity;
 import cn.ngame.store.view.DialogModel;
 
 import static cn.ngame.store.R.id.main_download_bt;
-import static cn.ngame.store.StoreApplication.deviceId;
 
 /**
  * 首页底部tab栏
@@ -191,7 +190,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         CommonUtil.verifyStatePermissions(this);
         TelephonyManager telephonyManager;
         telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        deviceId = telephonyManager.getDeviceId();
         preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
         editor = preferences.edit();
 //        mfragmentlist = getFragmentList();
