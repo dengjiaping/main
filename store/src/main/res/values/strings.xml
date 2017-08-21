@@ -130,7 +130,7 @@
     <string name="search">搜索</string>
     <string name="search_hot">热门搜索</string>
     <string name="search_ing">正在搜索...</string>
-    <string name="search_end">未搜索到相关内容...</string>
+    <string name="search_end">未搜索到相关内容</string>
 
     <!-- 网络加载相关 -->
     <string name="loading">正在加载...</string>
@@ -215,5 +215,6 @@
     <string name="to_precent">评分</string>
     <string name="precented">已评分</string>
     <string name="open">打开</string>
+    <string name="no_data">查询无结果</string>
 
 </resources>

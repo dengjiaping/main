@@ -16,13 +16,7 @@
             android:id="@+id/img_1"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/loading_head"/>
-
-        <ImageView
-            android:id="@id/img_2"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/loading_hand"/>
+            android:src="@drawable/ic_loading_bg"/>
 
     </FrameLayout>
 
@@ -33,7 +27,7 @@
         android:layout_marginLeft="@dimen/dp_3"
         android:layout_marginTop="@dimen/dp_10"
         android:text="@string/loading"
-        android:textColor="@color/waiting_dialog_26BFB9"
+        android:textColor="@color/color999999"
         android:textSize="@dimen/dp_10"/>
 
 </LinearLayout>

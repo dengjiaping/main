@@ -12,7 +12,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -87,12 +88,10 @@ public class WaitingDialogFragment extends DialogFragment {
 
         tv_summary.setText(msg);
 
-        Animation animation = new TranslateAnimation(0, 0, 0, 20);
-        animation.setFillAfter(false); //True:图片停在动画结束位置
-        animation.setDuration(100);    //设置动画完成时间
-        animation.setRepeatMode(Animation.REVERSE);
-        animation.setRepeatCount(Integer.MAX_VALUE);
-        img_hand.startAnimation(animation);
+        Animation operatingAnim = AnimationUtils.loadAnimation(context, R.anim.tip);
+        LinearInterpolator lin = new LinearInterpolator();
+        operatingAnim.setInterpolator(lin);
+        img_hand.startAnimation(operatingAnim);
     }
 
     /**

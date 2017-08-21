@@ -222,7 +222,8 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
 //        transaction.replace(content_wrapper, fragment);
 //        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 //        transaction.commit();
-
+        gameAdapter = new SearchOtherAdapter(content, searchGameList);
+        gridView_game.setAdapter(gameAdapter);
         getResultList(); //请求热搜游戏，视频
     }
 
@@ -265,14 +266,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
                     public void onNext(SearchGameVideoBean result) {
                         if (result != null && result.getCode() == 0) {
                             searchGameList.addAll(result.getData().getHotSearchGameList());
-                            searchVideotList.addAll(result.getData().getHotSearchVideoList());
-                            if (gameAdapter == null) {
-                                gameAdapter = new SearchOtherAdapter(SearchActivity.this, searchGameList);
-                                gridView_game.setAdapter(gameAdapter);
-                            } else {
-                                gameAdapter.setList(searchGameList);
-                            }
-
+                            gameAdapter.setList(searchGameList);
                         }
                     }
                 });
@@ -292,6 +286,10 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
 
     //搜索
     private void doSearch() {
+        resultListView.setVisibility(View.VISIBLE);
+        ll_show.setVisibility(View.GONE);
+        loadStateView.setVisibility(View.VISIBLE);
+        loadStateView.setState(LoadStateView.STATE_ING);
         if (null != searchName) {
             dbManager.addSearchHistory(searchName);
         }
@@ -313,9 +311,6 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
                     @Override
                     public void onNext(SearchBean result) {
                         if (result != null && result.getCode() == 0) {
-                            resultListView.setVisibility(View.VISIBLE);
-                            ll_show.setVisibility(View.GONE);
-                            loadStateView.setVisibility(View.GONE);
                             searchList.clear();
                             searchList.addAll(result.getData());
                             if (searchAdapter == null) {

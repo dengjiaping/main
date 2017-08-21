@@ -37,6 +37,7 @@ import cn.ngame.store.gamehub.view.ShowViewActivity;
 import cn.ngame.store.view.PicassoImageView;
 
 import static cn.ngame.store.R.id.tag_tv_01;
+import static cn.ngame.store.R.id.tv_show_all2;
 
 /**
  * 显示游戏详情的Fragment
@@ -50,12 +51,13 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
     private Activity context;
     private LinearLayout ll_detail;
     private GameInfo gameInfo;
-    private TextView tv_summary, tv_version, tv_time, tv_company, tv_show_all;
+    private TextView tv_summary, updateMsgTv, tv_version, tv_time, tv_company, tv_show_all,tv_show_all_2;
     private LinearLayout img_container;
     private DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     private ArrayList<String> imgs = new ArrayList<String>();
     private ArrayList<TextView> tagTvList = new ArrayList<>();
-    boolean flag1 = true;
+    private boolean flag1 = true;
+    private boolean flag2 = true;
     HomeFragmentChangeLayoutListener listener;
     private TextView tv_download_count;
     private TextView tv_game_size;
@@ -84,6 +86,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
         context = getActivity();
         View view = inflater.inflate(R.layout.fragment_game_detail, null);
         tv_summary = (TextView) view.findViewById(R.id.tv_summary);
+        updateMsgTv = (TextView) view.findViewById(R.id.tv_update_content);
         tv_version = (TextView) view.findViewById(R.id.tv_version);
         tv_download_count = (TextView) view.findViewById(R.id.download_count_bottom_tv);
         tv_game_size = (TextView) view.findViewById(R.id.game_size_tv);
@@ -91,6 +94,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
         tv_company = (TextView) view.findViewById(R.id.tv_company);
 
         tv_show_all = (TextView) view.findViewById(R.id.tv_show_all);
+        tv_show_all_2 = (TextView) view.findViewById(tv_show_all2);
         itemAllNext = (Button) view.findViewById(R.id.game_detail_next_bt);
         img_container = (LinearLayout) view.findViewById(R.id.img_container);
         ll_detail = (LinearLayout) view.findViewById(R.id.ll_detail);
@@ -107,6 +111,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
         itemAllNext.setOnClickListener(this);
         img_container.setOnClickListener(this);
         tv_show_all.setOnClickListener(this);
+        tv_show_all_2.setOnClickListener(this);
 
         if (gameInfo != null && gameInfo.gameDetailsImages != null && gameInfo.gameDetailsImages.size() > 0) {
             img_container.removeAllViews();
@@ -166,6 +171,24 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                 }
             }
             tv_summary.setText(gameInfo.gameDesc);
+            String s = "";
+            for (int i = 0; i < 100; i++) {
+                s = s + "更新内容";
+            }
+            updateMsgTv.setText(s);
+            updateMsgTv.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    //这个回调会调用多次，获取完行数记得注销监听
+                    updateMsgTv.getViewTreeObserver().removeOnPreDrawListener(this);
+                    if (updateMsgTv.getLineCount() > 5) {
+                        tv_show_all_2.setVisibility(View.VISIBLE);
+                        updateMsgTv.setMaxLines(5);
+                    }
+//                    listener.changeLayoutHeight(ll_detail.getMeasuredHeight());
+                    return false;
+                }
+            });
             tv_summary.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
                 public boolean onPreDraw() {
@@ -233,6 +256,17 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                     flag1 = true;
                     tv_show_all.setText("显示全部");
                     tv_summary.setMaxLines(5);
+                }
+                break;
+            case R.id.tv_show_all2:
+                if (flag2) {
+                    flag2 = false;
+                    tv_show_all_2.setText("收起");
+                    updateMsgTv.setSingleLine(false);
+                } else {
+                    flag2 = true;
+                    tv_show_all_2.setText("显示全部");
+                    updateMsgTv.setMaxLines(5);
                 }
                 break;
             //所有标签页面

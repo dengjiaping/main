@@ -156,7 +156,7 @@ public class LabelGameListActivity extends BaseFgActivity {
 
                         loadStateView.isShowLoadBut(false);
                         loadStateView.setVisibility(View.VISIBLE);
-                        loadStateView.setState(LoadStateView.STATE_END, "数据为空");
+                        loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_data));
                         return;
                     }
                 }
@@ -174,7 +174,7 @@ public class LabelGameListActivity extends BaseFgActivity {
                     } else {
                         loadStateView.isShowLoadBut(false);
                         loadStateView.setVisibility(View.VISIBLE);
-                        loadStateView.setState(LoadStateView.STATE_END, "数据为空");
+                        loadStateView.setState(LoadStateView.STATE_END,getString(R.string.no_data));
                     }
 
                 } else {
