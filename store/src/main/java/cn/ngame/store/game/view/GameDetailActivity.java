@@ -124,7 +124,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
 
         setContentView(R.layout.activity_game_detail);
         try {
-            gameId = getIntent().getLongExtra(KeyConstant.ID, 0L);
+            gameId = getIntent().getLongExtra(KeyConstant.ID, 0l);
         } catch (Exception e) {
         }
         content = this;

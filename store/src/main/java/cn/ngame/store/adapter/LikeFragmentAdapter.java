@@ -20,6 +20,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.text.format.Formatter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -38,7 +41,6 @@ import cn.ngame.store.R;
 import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
-import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.view.GameLoadProgressBar;
 import cn.ngame.store.view.QuickAction;
@@ -54,21 +56,23 @@ import static cn.ngame.store.R.id.tv_title;
  */
 public class LikeFragmentAdapter extends BaseAdapter {
     private final QuickAction mItemClickQuickAction;
+    private Timer timer = new Timer();
 
-    //private static final String TAG = LoadIngLvAdapter.class.getSimpleName();
+    private List<TimerTask> timerTasks;
 
     private List<GameRankListBean.DataBean> fileInfoList;
-
     private Context context;
     private FragmentManager fm;
     private Handler uiHandler = new Handler();
     private String mPositionGameId = "";
 
-    public LikeFragmentAdapter(Context context, FragmentManager fm, QuickAction mItemClickQuickAction) {
+    public LikeFragmentAdapter(Context context, FragmentManager fm,
+                               QuickAction mItemClickQuickAction, List<TimerTask> timerTasks) {
         super();
         this.context = context;
         this.mItemClickQuickAction = mItemClickQuickAction;
         this.fm = fm;
+        this.timerTasks = timerTasks;
     }
 
     /**
@@ -77,14 +81,13 @@ public class LikeFragmentAdapter extends BaseAdapter {
      * @param fileInfoList 下载文件信息
      */
     public void setDate(List<GameRankListBean.DataBean> fileInfoList) {
-        uiHandler = new Handler();
+        //uiHandler = new Handler();
         this.fileInfoList = fileInfoList;
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-
         if (fileInfoList != null) {
             return fileInfoList.size();
         }
@@ -112,6 +115,8 @@ public class LikeFragmentAdapter extends BaseAdapter {
         if (fileInfoList != null) {
             fileInfoList.clear();
             uiHandler = null;
+            timer.cancel();
+            timer = null;
         }
     }
 
@@ -167,8 +172,6 @@ public class LikeFragmentAdapter extends BaseAdapter {
         private SimpleDraweeView img;
         private TextView tv_title, tv_size, versionTv;
         private GameLoadProgressBar progressBar;    //下载进度条
-
-        private Timer timer = new Timer();
         private IFileLoad fileLoad;
 
         public ViewHolder(Context context, FragmentManager fm) {
@@ -179,7 +182,8 @@ public class LikeFragmentAdapter extends BaseAdapter {
         }
 
         private void init() {
-            timer.schedule(new TimerTask() {
+
+            TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
                     if (uiHandler == null) {
@@ -196,7 +200,9 @@ public class LikeFragmentAdapter extends BaseAdapter {
                         }
                     });
                 }
-            }, 0, 300);
+            };
+            timerTasks.add(task);
+            timer.schedule(task, 0, 200);
         }
 
         public void update(final GameRankListBean.DataBean gameInfo) {
@@ -206,7 +212,9 @@ public class LikeFragmentAdapter extends BaseAdapter {
                 tv_title.setText(gameName);
             }
             tv_size.setText(Formatter.formatFileSize(context, gameInfo.getGameSize()));
-            versionTv.setText("V"+gameInfo.getVersionName());
+            String timeLike = new SimpleDateFormat("yyyy-MM-dd").format(new Date(gameInfo
+                    .getUpdateTime()));
+            versionTv.setText("V" + gameInfo.getVersionName() + " / " + timeLike);
             progressBar.setVisibility(View.INVISIBLE);
             //设置进度条状态
             progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo

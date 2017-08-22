@@ -30,7 +30,7 @@ import cn.ngame.store.view.QuickAction;
  * Created by gp on 2017/3/3 0003.
  */
 
-public class ManagerInstalledFragment extends BaseSearchFragment {
+public class InstalledFragment extends BaseSearchFragment {
 
     ListView listView;
     public static int PAGE_SIZE = 10;
@@ -54,8 +54,8 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     private ApplicationInfo applicationInfo;
     private int oldLength;
 
-    public static ManagerInstalledFragment newInstance(String type, int arg) {
-        ManagerInstalledFragment fragment = new ManagerInstalledFragment();
+    public static InstalledFragment newInstance(String type, int arg) {
+        InstalledFragment fragment = new InstalledFragment();
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
         bundle.putInt("typeValue", arg);
@@ -97,28 +97,27 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
         //获取本地
         try {
             pkgNameListStr = FileUtil.readFile();
-            jsonArray = new JSONArray(pkgNameListStr);
+            if (null != pkgNameListStr) {
+                jsonArray = new JSONArray(pkgNameListStr);
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d(TAG, "onResume: JSONException" + e);
         }
+        Log.d(TAG, "已装" + pkgNameListStr);
         oldLength = jsonArray.length();
         //获取数据库 =>  添加
         openFileInfoList = fileLoad.getOpenFileInfo();
-        if (null != pkgNameListStr) {
-            for (FileLoadInfo openFileInfo : openFileInfoList) {
-                //String gameName = openFileInfo.getName();
-                String gamePackageName = openFileInfo.getPackageName();
-                if (!pkgNameListStr.contains(gamePackageName)) {
-                    jsonArray.put(gamePackageName);
-                }
+        for (FileLoadInfo openFileInfo : openFileInfoList) {
+            //String gameName = openFileInfo.getName();
+            String gamePackageName = openFileInfo.getPackageName();
+            if (pkgNameListStr == null || !pkgNameListStr.contains(gamePackageName)) {
+                jsonArray.put(gamePackageName);
             }
         }
         if (jsonArray.length() > oldLength) {
             FileUtil.writeFile2SDCard(jsonArray.toString());
             pkgNameListStr = FileUtil.readFile();
         }
-
         if (!mHidden && null != alreadyLvAdapter) {
             alreadyLvAdapter.setDate(getLocalApp());
         }

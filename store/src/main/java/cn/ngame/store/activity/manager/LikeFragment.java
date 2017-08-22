@@ -11,7 +11,9 @@ import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.game.GameCommentListClient;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 
 import cn.ngame.store.R;
 import cn.ngame.store.adapter.LikeFragmentAdapter;
@@ -27,7 +29,7 @@ import cn.ngame.store.view.QuickAction;
  * Created by gp on 2017/3/3 0003.
  */
 
-public class ManagerLikeFragment extends BaseSearchFragment {
+public class LikeFragment extends BaseSearchFragment {
 
     ListView listView;
     private PageAction pageAction;
@@ -44,8 +46,8 @@ public class ManagerLikeFragment extends BaseSearchFragment {
     private FragmentActivity content;
     private boolean isShow = true;
 
-    public static ManagerLikeFragment newInstance(String type, int arg) {
-        ManagerLikeFragment fragment = new ManagerLikeFragment();
+    public static LikeFragment newInstance(String type, int arg) {
+        LikeFragment fragment = new LikeFragment();
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
         bundle.putInt("typeValue", arg);
@@ -58,6 +60,8 @@ public class ManagerLikeFragment extends BaseSearchFragment {
         return R.layout.fragment_installed;
     }
 
+    private List<TimerTask> timerTasks = new ArrayList<>();
+
     @Override
     protected void initViewsAndEvents(View view) {
         content = getActivity();
@@ -68,7 +72,7 @@ public class ManagerLikeFragment extends BaseSearchFragment {
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
 
-        likeAdapter = new LikeFragmentAdapter(getActivity(), getSupportFragmentManager(), mItemClickQuickAction);
+        likeAdapter = new LikeFragmentAdapter(getActivity(), getSupportFragmentManager(), mItemClickQuickAction, timerTasks);
         listView.setAdapter(likeAdapter);
 
         initPop();
@@ -124,38 +128,55 @@ public class ManagerLikeFragment extends BaseSearchFragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (hidden && null != likeAdapter) {
             likeAdapter.clean();
+            likeAdapter = null;
+            for (TimerTask timerTask : timerTasks) {
+                timerTask.cancel();
+            }
+            timerTasks.clear();
         }
     }
 
 
     @Override
     protected void onFirstUserVisible() {
-        if (null != likeAdapter) {
+        /*if (null != likeAdapter) {
             likeAdapter.clean();
-        }
+        }*/
+        Log.d(TAG, "onFirstUserVisible: ");
         getLikeList();
     }
 
-    protected final static String TAG = ManagerLikeFragment.class.getSimpleName();
+    protected final static String TAG = LikeFragment.class.getSimpleName();
 
     @Override
     protected void onUserVisible() {
-        if (null != likeAdapter) {
+      /*  if (null != likeAdapter) {
             likeAdapter.clean();
-        }
+        }*/
+        Log.d(TAG, "onUserVisible: ");
         getLikeList();
     }
 
 
     @Override
     protected void onUserInvisible() {
-        if (null != likeAdapter) {
+      /*  if (null != likeAdapter) {
             likeAdapter.clean();
-        }
+        }*/
     }
 
     @Override

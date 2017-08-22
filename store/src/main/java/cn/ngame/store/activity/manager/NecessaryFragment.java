@@ -13,6 +13,7 @@ import com.jzt.hol.android.jkda.sdk.services.game.GameCommentListClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 
 import cn.ngame.store.R;
 import cn.ngame.store.adapter.NeccssaryFragmentAdapter;
@@ -62,15 +63,18 @@ public class NecessaryFragment extends BaseSearchFragment {
         return R.layout.fragment_necessary;
     }
 
+    private List<TimerTask> timerTasks = new ArrayList<>();
+
     @Override
     protected void initViewsAndEvents(View view) {
         type = getArguments().getString("type");
-        content= getActivity();
+        content = getActivity();
         listView = (ListView) view.findViewById(R.id.listView);
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
-        neccssaryAdapter = new NeccssaryFragmentAdapter(getActivity(), getSupportFragmentManager(), mItemClickQuickAction);
+        neccssaryAdapter = new NeccssaryFragmentAdapter(getActivity(), getSupportFragmentManager(), mItemClickQuickAction,
+                timerTasks);
         listView.setAdapter(neccssaryAdapter);
 
         initPop();
@@ -128,37 +132,32 @@ public class NecessaryFragment extends BaseSearchFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        Log.d(TAG, "onHiddenChanged88: ");
         if (hidden && null != neccssaryAdapter) {
             neccssaryAdapter.clean();
+            neccssaryAdapter = null;
+            for (TimerTask timerTask : timerTasks) {
+                timerTask.cancel();
+            }
+            timerTasks.clear();
         }
     }
 
 
     @Override
     protected void onFirstUserVisible() {
-       /* if (null != neccssaryAdapter) {
-            neccssaryAdapter.clean();
-        }*/
         getLikeList();
     }
 
-    protected final static String TAG = ManagerLikeFragment.class.getSimpleName();
+    protected final static String TAG = NecessaryFragment.class.getSimpleName();
 
     @Override
     protected void onUserVisible() {
-       /* if (null != neccssaryAdapter) {
-            neccssaryAdapter.clean();
-        }*/
         getLikeList();
     }
 
 
     @Override
     protected void onUserInvisible() {
-      /*  if (null != neccssaryAdapter) {
-            neccssaryAdapter.clean();
-        }*/
     }
 
     @Override

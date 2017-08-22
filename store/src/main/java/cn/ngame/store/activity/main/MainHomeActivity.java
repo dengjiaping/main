@@ -677,6 +677,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 fl_notifi.setVisibility(View.GONE);
                 tv_manager.setTextColor(colorDark);
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainManagerButtonClickCount);
+
                 break;
         }
         transaction.commitAllowingStateLoss();

@@ -54,17 +54,22 @@ import static cn.ngame.store.R.id.tv_title;
  */
 public class NeccssaryFragmentAdapter extends BaseAdapter {
     private final QuickAction mItemClickQuickAction;
+    private Timer timer = new Timer();
+    private final List<TimerTask> timerTasks;
     private List<GameRankListBean.DataBean> fileInfoList;
     private Context context;
     private FragmentManager fm;
     private Handler uiHandler = new Handler();
     private String mPositionGameId = "";
 
-    public NeccssaryFragmentAdapter(Context context, FragmentManager fm, QuickAction mItemClickQuickAction) {
+    public NeccssaryFragmentAdapter(Context context, FragmentManager fm, QuickAction mItemClickQuickAction, List<TimerTask>
+            timerTasks) {
         super();
         this.context = context;
         this.mItemClickQuickAction = mItemClickQuickAction;
         this.fm = fm;
+        this.timerTasks = timerTasks;
+
     }
 
     /**
@@ -108,6 +113,8 @@ public class NeccssaryFragmentAdapter extends BaseAdapter {
         if (fileInfoList != null) {
             fileInfoList.clear();
             uiHandler = null;
+            timer.cancel();
+            timer=null;
         }
     }
 
@@ -163,8 +170,6 @@ public class NeccssaryFragmentAdapter extends BaseAdapter {
         private SimpleDraweeView img;
         private TextView tv_title, tv_size, versionTv;
         private GameLoadProgressBar progressBar;    //下载进度条
-
-        private Timer timer = new Timer();
         private IFileLoad fileLoad;
 
         public ViewHolder(Context context, FragmentManager fm) {
@@ -175,7 +180,7 @@ public class NeccssaryFragmentAdapter extends BaseAdapter {
         }
 
         private void init() {
-            timer.schedule(new TimerTask() {
+            TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
                     if (uiHandler == null) {
@@ -192,7 +197,9 @@ public class NeccssaryFragmentAdapter extends BaseAdapter {
                         }
                     });
                 }
-            }, 0, 300);
+            };
+            timerTasks.add(task);
+            timer.schedule(task, 0, 200);
         }
 
         public void update(final GameRankListBean.DataBean gameInfo) {

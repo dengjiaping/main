@@ -37,9 +37,9 @@ public class ManagerFragment extends BaseSearchFragment {
     private FragmentActivity context;
     private String pwd;
     private boolean isNeedLoad = true;
-    private ManagerInstalledFragment installedFragment;
+    private InstalledFragment installedFragment;
     private NecessaryFragment necessaryFragment;
-    private ManagerLikeFragment likeFragment;
+    private LikeFragment likeFragment;
 
     public static ManagerFragment newInstance() {
         Bundle args = new Bundle();
@@ -56,8 +56,8 @@ public class ManagerFragment extends BaseSearchFragment {
     @Override
     protected void initViewsAndEvents(View view) {//初始化
         context = getActivity();
-        likeFragment = ManagerLikeFragment.newInstance(typeValue, 1);
-        installedFragment = ManagerInstalledFragment.newInstance(typeValue, 2);
+        likeFragment = LikeFragment.newInstance(typeValue, 1);
+        installedFragment = InstalledFragment.newInstance(typeValue, 2);
         necessaryFragment = NecessaryFragment.newInstance(typeValue, 0);
         tablayout = (TabLayout) view.findViewById(R.id.tablayout);
         viewpager = (ViewPager) view.findViewById(R.id.viewpager);
