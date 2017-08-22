@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -53,6 +54,7 @@ public class InstalledFragment extends BaseSearchFragment {
     private PackageInfo packageInfo = new PackageInfo();
     private ApplicationInfo applicationInfo;
     private int oldLength;
+    private ImageView emptyIv;
 
     public static InstalledFragment newInstance(String type, int arg) {
         InstalledFragment fragment = new InstalledFragment();
@@ -75,6 +77,7 @@ public class InstalledFragment extends BaseSearchFragment {
         typeValue = getArguments().getInt("typeValue", 1);
         type = getArguments().getString("type");
         listView = (ListView) view.findViewById(R.id.listView);
+        emptyIv = (ImageView) view.findViewById(R.id.empty_iv);
 
         initPop();
         initListView();
@@ -143,6 +146,11 @@ public class InstalledFragment extends BaseSearchFragment {
                         }
                     }
                 }
+            }
+            if (localAppList == null || localAppList.size() == 0) {
+                emptyIv.setVisibility(View.VISIBLE);
+            } else {
+                emptyIv.setVisibility(View.GONE);
             }
         }
         return localAppList;

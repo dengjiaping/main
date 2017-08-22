@@ -37,7 +37,7 @@
             android:paddingBottom="@dimen/dp_10"
             android:paddingLeft="@dimen/dp_15"
             android:paddingRight="@dimen/dm020"
-            android:paddingTop="@dimen/dm015"
+            android:paddingTop="@dimen/dm013"
             android:src="@drawable/selector_rank_more_bt"
             />
 
@@ -94,8 +94,6 @@
                 android:textColor="@color/color_020202"
                 android:textSize="@dimen/dm016"
                 />
-
-
         </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>
