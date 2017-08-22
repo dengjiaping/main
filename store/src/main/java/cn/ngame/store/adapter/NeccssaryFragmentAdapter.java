@@ -52,19 +52,15 @@ import static cn.ngame.store.R.id.tv_title;
  * @author zeng
  * @since 2016-07-4
  */
-public class LikeFragmentAdapter extends BaseAdapter {
+public class NeccssaryFragmentAdapter extends BaseAdapter {
     private final QuickAction mItemClickQuickAction;
-
-    //private static final String TAG = LoadIngLvAdapter.class.getSimpleName();
-
     private List<GameRankListBean.DataBean> fileInfoList;
-
     private Context context;
     private FragmentManager fm;
     private Handler uiHandler = new Handler();
     private String mPositionGameId = "";
 
-    public LikeFragmentAdapter(Context context, FragmentManager fm, QuickAction mItemClickQuickAction) {
+    public NeccssaryFragmentAdapter(Context context, FragmentManager fm, QuickAction mItemClickQuickAction) {
         super();
         this.context = context;
         this.mItemClickQuickAction = mItemClickQuickAction;
@@ -77,7 +73,7 @@ public class LikeFragmentAdapter extends BaseAdapter {
      * @param fileInfoList 下载文件信息
      */
     public void setDate(List<GameRankListBean.DataBean> fileInfoList) {
-        uiHandler = new Handler();
+        //uiHandler = new Handler();
         this.fileInfoList = fileInfoList;
         notifyDataSetChanged();
     }
@@ -124,7 +120,7 @@ public class LikeFragmentAdapter extends BaseAdapter {
         if (convertView == null) {
 
             holder = new ViewHolder(context, fm);
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_like, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_necessary, parent, false);
             holder.img = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
             holder.tv_title = (TextView) convertView.findViewById(tv_title);
             holder.versionTv = (TextView) convertView.findViewById(R.id.tv_version_time);
@@ -189,7 +185,7 @@ public class LikeFragmentAdapter extends BaseAdapter {
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d("777", "喜欢界面请求数据:");
+                            Log.d("777", "必备  ---   请求数据");
                             progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo
                                     .getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode())));
                             progressBar.setVisibility(View.VISIBLE);

@@ -38,7 +38,7 @@ public class ManagerFragment extends BaseSearchFragment {
     private String pwd;
     private boolean isNeedLoad = true;
     private ManagerInstalledFragment installedFragment;
-    private ManagerNecessaryFragment necessaryFragment;
+    private NecessaryFragment necessaryFragment;
     private ManagerLikeFragment likeFragment;
 
     public static ManagerFragment newInstance() {
@@ -58,7 +58,7 @@ public class ManagerFragment extends BaseSearchFragment {
         context = getActivity();
         likeFragment = ManagerLikeFragment.newInstance(typeValue, 1);
         installedFragment = ManagerInstalledFragment.newInstance(typeValue, 2);
-        necessaryFragment = ManagerNecessaryFragment.newInstance(typeValue, 0);
+        necessaryFragment = NecessaryFragment.newInstance(typeValue, 0);
         tablayout = (TabLayout) view.findViewById(R.id.tablayout);
         viewpager = (ViewPager) view.findViewById(R.id.viewpager);
         //viewpager每次切换的时候， 会重新创建当前界面及左右界面三个界面， 每次切换都要重新oncreate,
@@ -89,6 +89,7 @@ public class ManagerFragment extends BaseSearchFragment {
         }
         installedFragment.onHiddenChanged(hidden);
         likeFragment.onHiddenChanged(hidden);
+        necessaryFragment.onHiddenChanged(hidden);
     }
 
     private void setTabViewPagerData() {

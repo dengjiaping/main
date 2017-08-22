@@ -105,11 +105,13 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
         oldLength = jsonArray.length();
         //获取数据库 =>  添加
         openFileInfoList = fileLoad.getOpenFileInfo();
-        for (FileLoadInfo openFileInfo : openFileInfoList) {
-            String gameName = openFileInfo.getName();
-            String gamePackageName = openFileInfo.getPackageName();
-            if (!pkgNameListStr.contains(gamePackageName)) {
-                jsonArray.put(gamePackageName);
+        if (null != pkgNameListStr) {
+            for (FileLoadInfo openFileInfo : openFileInfoList) {
+                //String gameName = openFileInfo.getName();
+                String gamePackageName = openFileInfo.getPackageName();
+                if (!pkgNameListStr.contains(gamePackageName)) {
+                    jsonArray.put(gamePackageName);
+                }
             }
         }
         if (jsonArray.length() > oldLength) {
@@ -125,23 +127,29 @@ public class ManagerInstalledFragment extends BaseSearchFragment {
     private List<PackageInfo> getLocalApp() {
         packageInfos = packageManager.getInstalledPackages(0);
         localAppList.clear();
-        for (int i = 0; i < packageInfos.size(); i++) {
-            packageInfo = packageInfos.get(i);
-            applicationInfo = packageInfo.applicationInfo;
-            //非系统应用
-            if ((applicationInfo.flags & applicationInfo.FLAG_SYSTEM) <= 0) {
-                //String appName = applicationInfo.loadLabel(packageManager).toString();
-                String packageName = applicationInfo.packageName;
-                //如果包名   包含在SD文件里
-                if (pkgNameListStr.contains(packageName)) {
-                    localAppList.add(packageInfo);
+        Log.d(TAG, packageInfos + "getLocalApp: " + packageInfos.size());
+        if (pkgNameListStr != null) {
+            for (int i = 0; i < packageInfos.size(); i++) {
+                packageInfo = packageInfos.get(i);
+                applicationInfo = packageInfo.applicationInfo;
+                Log.d(TAG, packageInfo + "/applicationInfo " + applicationInfo);
+                //非系统应用
+                if (null != applicationInfo) {
+                    if ((applicationInfo.flags & applicationInfo.FLAG_SYSTEM) <= 0) {
+                        //String appName = applicationInfo.loadLabel(packageManager).toString();
+                        String packageName = applicationInfo.packageName;
+                        //如果包名   包含在SD文件里
+                        if (pkgNameListStr.contains(packageName)) {
+                            localAppList.add(packageInfo);
+                        }
+                    }
                 }
             }
         }
         return localAppList;
     }
 
-    protected final static String TAG = "2222";
+    protected final static String TAG = "22222";
 
     @Override
     public void onHiddenChanged(boolean hidden) {

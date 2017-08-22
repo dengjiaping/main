@@ -11,10 +11,12 @@ import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.game.GameCommentListClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.ngame.store.R;
-import cn.ngame.store.adapter.LikeFragmentAdapter;
+import cn.ngame.store.adapter.NeccssaryFragmentAdapter;
+import cn.ngame.store.adapter.RankingListAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.fileload.IFileLoad;
@@ -27,7 +29,7 @@ import cn.ngame.store.view.QuickAction;
  * Created by gp on 2017/3/3 0003.
  */
 
-public class ManagerLikeFragment extends BaseSearchFragment {
+public class NecessaryFragment extends BaseSearchFragment {
 
     ListView listView;
     private PageAction pageAction;
@@ -36,40 +38,40 @@ public class ManagerLikeFragment extends BaseSearchFragment {
     private String type;
     protected QuickAction mItemClickQuickAction;
     private IFileLoad fileLoad;
-
-    private LikeFragmentAdapter likeAdapter;
+    private RankingListAdapter adapter;
+    List<GameRankListBean.DataBean> list = new ArrayList<>();
+//    private GameUpdate2Adapter loadIngLvAdapter;
     /**
      * 当前点击的列表 1.下载列表 2.完成列表
      */
+    private GameRankListBean gameInfoBean;
+    private NeccssaryFragmentAdapter neccssaryAdapter;
     private FragmentActivity content;
-    private boolean isShow = true;
 
-    public static ManagerLikeFragment newInstance(String type, int arg) {
-        ManagerLikeFragment fragment = new ManagerLikeFragment();
+    public static NecessaryFragment newInstance(String type, int bean) {
+        NecessaryFragment fragment = new NecessaryFragment();
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
-        bundle.putInt("typeValue", arg);
+        bundle.putSerializable("typeValue", bean);
         fragment.setArguments(bundle);
         return fragment;
     }
 
     @Override
     protected int getContentViewLayoutID() {
-        return R.layout.fragment_installed;
+        return R.layout.fragment_necessary;
     }
 
     @Override
     protected void initViewsAndEvents(View view) {
-        content = getActivity();
-        typeValue = getArguments().getInt("typeValue", 1);
         type = getArguments().getString("type");
+        content= getActivity();
         listView = (ListView) view.findViewById(R.id.listView);
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
-
-        likeAdapter = new LikeFragmentAdapter(getActivity(), getSupportFragmentManager(), mItemClickQuickAction);
-        listView.setAdapter(likeAdapter);
+        neccssaryAdapter = new NeccssaryFragmentAdapter(getActivity(), getSupportFragmentManager(), mItemClickQuickAction);
+        listView.setAdapter(neccssaryAdapter);
 
         initPop();
     }
@@ -92,8 +94,8 @@ public class ManagerLikeFragment extends BaseSearchFragment {
                     public void onNext(GameRankListBean result) {
                         if (result != null && result.getCode() == 0) {
                             List<GameRankListBean.DataBean> data = result.getData();
-                            if (null != likeAdapter) {
-                                likeAdapter.setDate(data);
+                            if (null != neccssaryAdapter) {
+                                neccssaryAdapter.setDate(data);
                             }
                         } else {
                             //ToastUtil.show(getActivity(), result.getMsg());
@@ -105,20 +107,20 @@ public class ManagerLikeFragment extends BaseSearchFragment {
 
     private void initPop() {
         // 设置Action
-        mItemClickQuickAction = new QuickAction(content, QuickAction.VERTICAL);
+        mItemClickQuickAction = new QuickAction(getActivity(), QuickAction.VERTICAL);
         ActionItem pointItem = new ActionItem(1, "不再喜欢", null);
         mItemClickQuickAction.addActionItem(pointItem);
 
         mItemClickQuickAction.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
             @Override
             public void onItemClick(QuickAction source, int pos, int actionId) {
-                if (pos == 0 && null != likeAdapter) {
+                if (pos == 0) {
                     //获取gameId  传给服务器 不再喜欢
-                    String currentGameId = likeAdapter.getItemGameId();
-                    ToastUtil.show(content, "不再喜欢" + currentGameId);
+                    String currentGameId = neccssaryAdapter.getItemGameId();
+
                 }
                 //取消弹出框
-                source.dismiss();
+                mItemClickQuickAction.dismiss();
             }
         });
     }
@@ -126,17 +128,18 @@ public class ManagerLikeFragment extends BaseSearchFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (hidden && null != likeAdapter) {
-            likeAdapter.clean();
+        Log.d(TAG, "onHiddenChanged88: ");
+        if (hidden && null != neccssaryAdapter) {
+            neccssaryAdapter.clean();
         }
     }
 
 
     @Override
     protected void onFirstUserVisible() {
-        if (null != likeAdapter) {
-            likeAdapter.clean();
-        }
+       /* if (null != neccssaryAdapter) {
+            neccssaryAdapter.clean();
+        }*/
         getLikeList();
     }
 
@@ -144,18 +147,18 @@ public class ManagerLikeFragment extends BaseSearchFragment {
 
     @Override
     protected void onUserVisible() {
-        if (null != likeAdapter) {
-            likeAdapter.clean();
-        }
+       /* if (null != neccssaryAdapter) {
+            neccssaryAdapter.clean();
+        }*/
         getLikeList();
     }
 
 
     @Override
     protected void onUserInvisible() {
-        if (null != likeAdapter) {
-            likeAdapter.clean();
-        }
+      /*  if (null != neccssaryAdapter) {
+            neccssaryAdapter.clean();
+        }*/
     }
 
     @Override

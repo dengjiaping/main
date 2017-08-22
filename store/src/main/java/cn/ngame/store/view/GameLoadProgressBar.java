@@ -69,7 +69,6 @@ public class GameLoadProgressBar extends View {
         this.context = context;
 
         downloadedColor = ContextCompat.getColor(context, R.color.download_bg2);
-        mRadius = CommonUtil.dip2px(context, 4);
         mStrokeWidth = CommonUtil.dip2px(context, 0.8f);
         mDownloadHeight = CommonUtil.dip2px(context, 1.5f);
         //获取布局文件中的值
@@ -80,6 +79,12 @@ public class GameLoadProgressBar extends View {
         String tempWidth = attrs.getAttributeValue("http://schemas.android.com/apk/res/android", "layout_width");
         width = CommonUtil.dip2px(context, Float.valueOf(tempWidth.substring(0, tempWidth.length() - 3)));
         Log.d(TAG, "888width=" + width);
+        //圆角
+        mRadius = CommonUtil.dip2px(context, 4);
+        if (240==width) {
+
+        }
+
         String tempHeight = attrs.getAttributeValue("http://schemas.android.com/apk/res/android", "layout_height");
         height = CommonUtil.dip2px(context, Float.valueOf(tempHeight.substring(0, tempHeight.length() - 3)));
 

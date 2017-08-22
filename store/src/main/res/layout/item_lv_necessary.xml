@@ -36,14 +36,14 @@
             android:clickable="true"
             android:paddingBottom="@dimen/dp_10"
             android:paddingLeft="@dimen/dp_15"
-            android:paddingRight="@dimen/dm020"
-            android:paddingTop="@dimen/dm015"
+            android:paddingRight="@dimen/dm022"
+            android:paddingTop="@dimen/dm012"
             android:src="@drawable/selector_rank_more_bt"
             />
 
         <cn.ngame.store.view.GameLoadProgressBar
             android:id="@+id/progress_bar"
-            android:layout_width="60dp"
+            android:layout_width="60sp"
             android:layout_height="28dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
@@ -54,7 +54,8 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:visibility="invisible"
-            ngame:progress="0"/>
+            ngame:progress="0"
+            />
 
         <RelativeLayout
             android:layout_width="wrap_content"
