@@ -226,6 +226,7 @@
     <dimen name="dm023">41px</dimen>
     <dimen name="dm024">43px</dimen>
     <dimen name="dm025">45px</dimen>
+    <dimen name="dmTabPadding">45px</dimen>
     <dimen name="dm026">47px</dimen>
     <dimen name="dm027">49px</dimen>
     <dimen name="dm028">50px</dimen>
