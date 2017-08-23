@@ -23,7 +23,7 @@ import cn.ngame.store.R;
 
 
 /**
- * QuickAction dialog, shows action list as icon and text like the one in Gallery3D app. Currently supports vertical 
+ * QuickAction dialog, shows action mStickyLV as icon and text like the one in Gallery3D app. Currently supports vertical
  * and horizontal layout.
  * 
  * @author Lorensius W. L. T <lorenz@londatiga.net>

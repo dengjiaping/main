@@ -30,18 +30,20 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import cn.ngame.store.R;
+import cn.ngame.store.bean.NecessaryItemData;
 import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.view.GameLoadProgressBar;
-import cn.ngame.store.view.QuickAction;
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 import static cn.ngame.store.R.id.tv_title;
 
@@ -52,21 +54,19 @@ import static cn.ngame.store.R.id.tv_title;
  * @author zeng
  * @since 2016-07-4
  */
-public class NeccssaryFragmentAdapter extends BaseAdapter {
-    private final QuickAction mItemClickQuickAction;
+public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListHeadersAdapter {
     private Timer timer = new Timer();
-    private final List<TimerTask> timerTasks;
-    private List<GameRankListBean.DataBean> fileInfoList;
+    private List<TimerTask> timerTasks=new ArrayList<>();
+    private List<NecessaryItemData> mPlanDetails;
     private Context context;
     private FragmentManager fm;
     private Handler uiHandler = new Handler();
     private String mPositionGameId = "";
 
-    public NeccssaryFragmentAdapter(Context context, FragmentManager fm, QuickAction mItemClickQuickAction, List<TimerTask>
+    public NeccssaryFragmentAdapter(Context context, FragmentManager fm, List<TimerTask>
             timerTasks) {
         super();
         this.context = context;
-        this.mItemClickQuickAction = mItemClickQuickAction;
         this.fm = fm;
         this.timerTasks = timerTasks;
 
@@ -77,17 +77,16 @@ public class NeccssaryFragmentAdapter extends BaseAdapter {
      *
      * @param fileInfoList 下载文件信息
      */
-    public void setDate(List<GameRankListBean.DataBean> fileInfoList) {
+    public void setDate(List<NecessaryItemData> fileInfoList) {
         //uiHandler = new Handler();
-        this.fileInfoList = fileInfoList;
+        this.mPlanDetails = fileInfoList;
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-
-        if (fileInfoList != null) {
-            return fileInfoList.size();
+        if (mPlanDetails != null) {
+            return mPlanDetails.size();
         }
         return 0;
     }
@@ -98,8 +97,8 @@ public class NeccssaryFragmentAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        if (fileInfoList != null) {
-            return fileInfoList.get(position);
+        if (mPlanDetails != null) {
+            return mPlanDetails.get(position);
         }
         return null;
     }
@@ -110,8 +109,8 @@ public class NeccssaryFragmentAdapter extends BaseAdapter {
     }
 
     public void clean() {
-        if (fileInfoList != null) {
-            fileInfoList.clear();
+        if (mPlanDetails != null) {
+            mPlanDetails.clear();
             uiHandler = null;
             timer.cancel();
             timer=null;
@@ -121,38 +120,62 @@ public class NeccssaryFragmentAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
-        final GameRankListBean.DataBean fileInfo = (fileInfoList == null) ? null : fileInfoList.get(position);
-
         ViewHolder holder;
         if (convertView == null) {
 
             holder = new ViewHolder(context, fm);
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_necessary, parent, false);
             holder.img = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
-            holder.tv_title = (TextView) convertView.findViewById(tv_title);
+            holder.itemTitle = (TextView) convertView.findViewById(tv_title);
             holder.versionTv = (TextView) convertView.findViewById(R.id.tv_version_time);
             holder.tv_size = (TextView) convertView.findViewById(R.id.tv_length);
             holder.progressBar = (GameLoadProgressBar) convertView.findViewById(R.id.progress_bar);
-            holder.more_bt = (ImageView) convertView.findViewById(R.id.manager_installed_more_bt);
+            holder.show_more_disc_bt = (ImageView) convertView.findViewById(R.id.show_more_disc_bt);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-        if (fileInfo != null) {
-            holder.update(fileInfo);
-            holder.more_bt.setOnClickListener(new View.OnClickListener() {
+        final NecessaryItemData planDetail = (mPlanDetails == null) ? null : mPlanDetails.get(position);
+        if (planDetail != null) {
+            //holder.update(fileInfo);
+            holder.itemTitle.setText(planDetail.getItemTitle());
+            holder.versionTv.setText(planDetail.getItemPosition());
+            holder.tv_size.setText(planDetail.getItemDesc());
+            holder.show_more_disc_bt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mPositionGameId = fileInfo.getId() + "";
-                    if (null != mItemClickQuickAction) {
-                        mItemClickQuickAction.show(v);
-                    }
                 }
             });
         }
 
         return convertView;
+    }
+
+    @Override
+    public View getHeaderView(int position, View convertView, ViewGroup parent) {
+        //指定了Header的View的显示
+        HeaderViewHolder holder;
+        if (convertView == null) {
+            holder = new HeaderViewHolder();
+            convertView = LayoutInflater.from(context).inflate(R.layout.necessary_list_item_header, parent, false);
+            holder.itemParentTv = (TextView) convertView.findViewById(R.id.necessary_list_header_item_tv);
+            convertView.setTag(holder);
+        } else {
+            holder = (HeaderViewHolder) convertView.getTag();
+        }
+        //set proj_plans_header itemParentTv as first char in name
+        String parentText = this.mPlanDetails.get(position).getParentText();
+        holder.itemParentTv.setText(parentText);
+        return convertView;
+    }
+
+    @Override
+    public long getHeaderId(int position) {
+        // getHeaderId决定header出现的时机，如果当前的headerid和前一个headerid不同时，就会显示
+        return Long.parseLong(this.mPlanDetails.get(position).getParentId());
+    }
+    class HeaderViewHolder {
+        TextView itemParentTv;
     }
 
     /**
@@ -166,9 +189,9 @@ public class NeccssaryFragmentAdapter extends BaseAdapter {
         private Context context;
         private FragmentManager fm;
         private GameRankListBean.DataBean gameInfo;
-        private ImageView more_bt;
+        private ImageView show_more_disc_bt;
         private SimpleDraweeView img;
-        private TextView tv_title, tv_size, versionTv;
+        private TextView itemTitle, tv_size, versionTv;
         private GameLoadProgressBar progressBar;    //下载进度条
         private IFileLoad fileLoad;
 
@@ -176,7 +199,7 @@ public class NeccssaryFragmentAdapter extends BaseAdapter {
             this.context = context;
             this.fm = fm;
             fileLoad = FileLoadManager.getInstance(context);
-            init();
+            //init();
         }
 
         private void init() {
@@ -206,7 +229,7 @@ public class NeccssaryFragmentAdapter extends BaseAdapter {
             this.gameInfo = gameInfo;
             String gameName = gameInfo.getGameName();
             if (null != gameName) {
-                tv_title.setText(gameName);
+                itemTitle.setText(gameName);
             }
             tv_size.setText(Formatter.formatFileSize(context, gameInfo.getGameSize()));
             versionTv.setText("V"+gameInfo.getVersionName());

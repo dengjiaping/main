@@ -262,7 +262,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
             adapter.setList(list);
         }
         //
-       /* if ((list.size() == 0 && pageAction.getTotal() == 0) || list.size() >= pageAction.getTotal()) {
+       /* if ((mStickyLV.size() == 0 && pageAction.getTotal() == 0) || mStickyLV.size() >= pageAction.getTotal()) {
             pullListView.setPullLoadEnabled(true);
         } else {
             pullListView.setPullLoadEnabled(true);

@@ -552,15 +552,15 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         if (viewPager != null) {
 //            this.viewPager = viewPager;
             ArrayList<Fragment> list = new ArrayList<>();
-//            list.add(SelectedFragment.newInstance(0));
-//            list.add(GameFragment.getInstance(manager));
-//            list.add(GameHubFragment.getInstance());
-//            list.add(VideoFragment.getInstance());
-//            list.add(LocalFragment.getInstance());
+//            mStickyLV.add(SelectedFragment.newInstance(0));
+//            mStickyLV.add(GameFragment.getInstance(manager));
+//            mStickyLV.add(GameHubFragment.getInstance());
+//            mStickyLV.add(VideoFragment.getInstance());
+//            mStickyLV.add(LocalFragment.getInstance());
 
             list.add(RecommendFragment.newInstance(0));
             list.add(RankFragment.newInstance(""));
-            //list.add(GameHubFragment.newInstance());
+            //mStickyLV.add(GameHubFragment.newInstance());
             list.add(DiscoverFragment.newInstance(""));
             list.add(ManagerFragment.newInstance());
 

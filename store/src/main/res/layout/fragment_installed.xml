@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:divider="@color/e5e5e5"
-        android:dividerHeight="@dimen/dp_05"
+        android:dividerHeight="@dimen/dm001"
         android:paddingLeft="@dimen/dm025"
         android:paddingRight="@dimen/dm025"
         android:scrollbars="none"></ListView>

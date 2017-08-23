@@ -140,12 +140,12 @@ public class SystemInfoActivity extends BaseFgActivity implements View.OnClickLi
                 break;
             case R.id.tv_rightTxt:
 //                if (deleteFlag) {
-//                    adapter.setList(list, 0);
+//                    adapter.setList(mStickyLV, 0);
 //                    deleteFlag = false;
 //                    tv_rightTxt.setText("删除");
 //                    ll_bottom.setVisibility(View.GONE);
 //                } else {
-//                    adapter.setList(list, 1);
+//                    adapter.setList(mStickyLV, 1);
 //                    deleteFlag = true;
 //                    tv_rightTxt.setText("取消");
 //                    ll_bottom.setVisibility(View.VISIBLE);

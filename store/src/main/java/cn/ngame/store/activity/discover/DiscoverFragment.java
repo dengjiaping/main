@@ -317,7 +317,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                 Intent i = new Intent();
                 i.setClass(context, LabelGameListActivity.class);
                 i.putExtra(KeyConstant.ID, 369 + "");// 动作游戏精选 getId()==369
-                i.putExtra(KeyConstant.TITLE, "动作");//list.get(position).getTypeName()
+                i.putExtra(KeyConstant.TITLE, "动作");//mStickyLV.get(position).getTypeName()
                 startActivity(i);
                 //策略
             } else if (id == R.id.more_strategy_tv) {

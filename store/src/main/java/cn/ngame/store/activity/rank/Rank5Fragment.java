@@ -161,7 +161,7 @@ public class Rank5Fragment extends BaseSearchFragment {
             adapter.setList(list);
         }
         //设置下位列表
-    /*    if ((list.size() == 0 && pageAction.getTotal() == 0) || list.size() >= pageAction.getTotal()) {
+    /*    if ((mStickyLV.size() == 0 && pageAction.getTotal() == 0) || mStickyLV.size() >= pageAction.getTotal()) {
             pullListView.setPullLoadEnabled(false);
         } else {
             pullListView.setPullLoadEnabled(true);

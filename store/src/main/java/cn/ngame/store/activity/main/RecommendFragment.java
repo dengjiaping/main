@@ -280,13 +280,13 @@ public class RecommendFragment extends BaseSearchFragment {
             adapter.setList(list);
         }
         //设置下位
-       /* if ((list.size() == 0 && pageAction.getTotal() == 0) || list.size() >= pageAction.getTotal()) {
+       /* if ((mStickyLV.size() == 0 && pageAction.getTotal() == 0) || mStickyLV.size() >= pageAction.getTotal()) {
             pullListView.setPullLoadEnabled(true);
         } else {
             pullListView.setPullLoadEnabled(true);
         }*/
         //设置上拉刷新后停留的地方  // TODO: 2017/7/17 0017
-        android.util.Log.d(TAG, "list.size(): " + list.size() + ",pageAction.getTotal():" + pageAction.getTotal());
+        android.util.Log.d(TAG, "mStickyLV.size(): " + list.size() + ",pageAction.getTotal():" + pageAction.getTotal());
 
         if (0 == pageAction.getCurrentPage() && result.getData().size() <= 2) {
             //pullListView.setScrollLoadEnabled(false);

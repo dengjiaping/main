@@ -86,7 +86,7 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mul_picture);
-        // list = getAllPictureUrl();
+        // mStickyLV = getAllPictureUrl();
         getBundle();
         initViews();
     }
@@ -360,7 +360,7 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
         outState.putInt("type", android.R.attr.type);
 //        outState.putSerializable("allPictures", (Serializable) allPictures);
         outState.putSerializable("pictures", (Serializable) pictures);
-        outState.putSerializable("list", (Serializable) list);
+        outState.putSerializable("mStickyLV", (Serializable) list);
         outState.putSerializable("selectList", (Serializable) selectList);
         outState.putSerializable("allPicturesTemp", (Serializable) allPicturesTemp);
         outState.putSerializable("picturesTemp", (Serializable) picturesTemp);
@@ -382,7 +382,7 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
             allPicturesTemp = (List<PictureBean>) savedInstanceState.getSerializable("allPicturesTemp");
             picturesTemp = (List<PictureBean>) savedInstanceState.getSerializable("picturesTemp");
             selectList = (List<PictureBean>) savedInstanceState.getSerializable("selectList");
-            list = (List<PictureBean>) savedInstanceState.getSerializable("list");
+            list = (List<PictureBean>) savedInstanceState.getSerializable("mStickyLV");
 
             imageNum = savedInstanceState.getInt("imageNum");
             path = savedInstanceState.getString("path");
