@@ -3,6 +3,7 @@ package cn.ngame.store.activity.manager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -42,13 +43,17 @@ public class DownloadCenterActivity extends BaseFgActivity {
     }
 
     private void init() {
+        //必需继承FragmentActivity,嵌套fragment只需要这行代码
+        final FragmentManager fm = getSupportFragmentManager();
+        final DownloadCenterFragment fragment = new DownloadCenterFragment();
+        fm.beginTransaction().replace(R.id.download_center_fl, fragment).commitAllowingStateLoss();
         ll_back = (LinearLayout) findViewById(R.id.ll_back);
         tv_title = (TextView) findViewById(R.id.tv_title);
         tv_title.setText("下载中心");
         ll_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.finish();
+                finish();
             }
         });
     }

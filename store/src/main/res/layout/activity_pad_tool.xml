@@ -35,7 +35,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:background="@drawable/download_arrow" />
+            android:background="@drawable/ic_right_next" />
 
         <TextView
             android:id="@+id/textView"
