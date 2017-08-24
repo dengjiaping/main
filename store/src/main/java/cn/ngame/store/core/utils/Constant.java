@@ -88,10 +88,8 @@ public class Constant {
      * APP首页 视频总分类
      */
     public static final String URL_HOME_VIDEO_CATEGORY = "/video/videoSubTypeListByParentId";
-    /**
-     * APP首页 获取游戏推荐
-     */
-    public static final String URL_HOME_GAME_LIST = "/game/queryGameByTypeAndLabel";
+    public static final String URL_DEL_FAVORITE = "/user/delFavorite";
+    public static final String URL_ADD_FAVORITE = "/user/addFavorite";
     /**
      * VR页面列表数据
      */

@@ -39,7 +39,7 @@ public class GameInfo implements Serializable {
     /**
      * 是否是精选
      */
-    public int gameSelected;
+    public int isFavoriteGame;
     /**
      * 简介
      */

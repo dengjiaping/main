@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -47,6 +48,7 @@ import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.GameType;
 import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.Token;
+import cn.ngame.store.bean.UpLoadBean;
 import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.GameFileStatus;
@@ -57,6 +59,7 @@ import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.DialogHelper;
 import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.core.utils.KeyConstant;
+import cn.ngame.store.core.utils.NetUtil;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.util.ToastUtil;
@@ -125,6 +128,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         setContentView(R.layout.activity_game_detail);
         try {
             gameId = getIntent().getLongExtra(KeyConstant.ID, 0l);
+            Log.d(TAG, "游戏详情" + gameId);
         } catch (Exception e) {
         }
         content = this;
@@ -161,6 +165,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         percentageTv.setOnClickListener(gameDetailClickListener);
     }
 
+    protected static final String TAG = GameDetailActivity.class.getSimpleName();
+
     //设置数据
     private void setView() {
         if (gameInfo == null) {
@@ -168,6 +174,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         }
         gameName = gameInfo.gameName;
         gameNameTv.setText(gameName);//名字
+        Log.d(TAG, "是否是喜欢" + gameInfo.isFavoriteGame);//1为收藏，0为未收藏
+        likeIv.setSelected(1 == gameInfo.isFavoriteGame ? true : false);
         //类型
         List<GameType> typeList = gameInfo.gameTypeList;
         if (typeList != null) {
@@ -282,6 +290,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.GAME_ID, String.valueOf(gameId));
+                params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
                 return params;
             }
         };
@@ -409,18 +419,113 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         initTabs();
     }
 
+    private void cancelFavorite() {
+        String url = Constant.WEB_SITE + Constant.URL_DEL_FAVORITE;
+        Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (result == null) {
+                    Toast.makeText(content, "服务端异常", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (result.code == 0) {
+                    likeIv.setSelected(false);
+                    ToastUtil.show(content, "收藏取消成功");
+                } else {
+                    ToastUtil.show(content, "收藏取消失败");
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                Log.d(TAG, "取消喜欢失败：网络连接错误！" + volleyError.getMessage());
+            }
+        };
+
+        Request<JsonResult> versionRequest = new GsonRequest<JsonResult>(Request.Method.POST, url,
+                successListener, errorListener, new TypeToken<JsonResult>() {
+        }.getType()) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                //{"userCode":"UC1500609205627","gameId":146,"appTypeId":0}
+                Map<String, String> params = new HashMap<>();
+                params.put(KeyConstant.GAME_ID, String.valueOf(gameId));
+                params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
+                return params;
+            }
+        };
+        StoreApplication.requestQueue.add(versionRequest);
+    }
+
+    private void addFavorite() {
+        String url = Constant.WEB_SITE + Constant.URL_ADD_FAVORITE;
+        Response.Listener<UpLoadBean> successListener = new Response.Listener<UpLoadBean>() {
+            @Override
+            public void onResponse(UpLoadBean result) {
+                if (result == null) {
+                    Toast.makeText(content, "服务端异常", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (result.getCode() == 0) {
+                    likeIv.setSelected(true);
+                    ToastUtil.show(content, "收藏成功");
+                } else {
+                    ToastUtil.show(content, "收藏失败");
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                Log.d(TAG, "添加喜欢失败：网络连接错误！" + volleyError.getMessage());
+            }
+        };
+
+        Request<UpLoadBean> versionRequest = new GsonRequest<UpLoadBean>(Request.Method.POST, url,
+                successListener, errorListener, new TypeToken<UpLoadBean>() {
+        }.getType()) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                //{"userCode":"UC1500609205627","gameId":146,"appTypeId":0}
+                Map<String, String> params = new HashMap<>();
+                params.put(KeyConstant.GAME_ID, String.valueOf(gameId));
+                params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
+                params.put(KeyConstant.TOKEN, StoreApplication.token);
+                Log.d(TAG, "getParams: " + StoreApplication.token);
+                return params;
+            }
+        };
+        StoreApplication.requestQueue.add(versionRequest);
+    }
+
     private View.OnClickListener gameDetailClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.game_detail_like_iv:
                     if (CommonUtil.isLogined()) {
+                        if (!NetUtil.isNetworkConnected(content)) {
+                            ToastUtil.show(content, getString(R.string.no_network));
+                            return;
+                        }
                         //已登录,评分框
                         boolean isLiked = likeIv.isSelected();
-                        ToastUtil.show(content, isLiked ? "取消成功" : "收藏成功,可在管理界面中查看");
-                        likeIv.setSelected(!isLiked);
+                        if (isLiked) {
+                            //喜欢==>取消
+                            cancelFavorite();
+                        } else {//喜欢
+                            addFavorite();
+                        }
+
                     } else {//未登录
-                        CommonUtil.showUnLoginDialog(fm, content,R.string.unlogin_msg);
+                        CommonUtil.showUnLoginDialog(fm, content, R.string.unlogin_msg);
                     }
 
                     break;
@@ -428,7 +533,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                     if (CommonUtil.isLogined()) {
                         ToastUtil.show(content, "反馈成功");
                     } else {
-                        CommonUtil.showUnLoginDialog(fm,content, R.string.unlogin_msg);
+                        CommonUtil.showUnLoginDialog(fm, content, R.string.unlogin_msg);
                     }
                     break;
                 case R.id.game_detail_percentage_tv:
@@ -436,7 +541,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                         //已登录,评分框
                         showPercentDialog();
                     } else {//未登录
-                        CommonUtil.showUnLoginDialog(fm, content,R.string.unlogin_msg);
+                        CommonUtil.showUnLoginDialog(fm, content, R.string.unlogin_msg);
                     }
                     break;
             }

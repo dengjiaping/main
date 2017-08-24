@@ -188,7 +188,7 @@ public class RegisterActivity extends BaseFgActivity {
         timer.cancel();
     }
 
-    /**
+      /**
      * 获取手机验证码
      */
     private void getSMSCode(final String mobile) {
