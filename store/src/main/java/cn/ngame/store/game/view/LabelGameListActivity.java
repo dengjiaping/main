@@ -140,7 +140,6 @@ public class LabelGameListActivity extends BaseFgActivity {
         Response.Listener<JsonResult<List<GameInfo>>> successListener = new Response.Listener<JsonResult<List<GameInfo>>>() {
             @Override
             public void onResponse(JsonResult<List<GameInfo>> result) {
-
                 if (result == null) {
                     loadStateView.setVisibility(View.VISIBLE);
                     loadStateView.setState(LoadStateView.STATE_END);
@@ -160,10 +159,7 @@ public class LabelGameListActivity extends BaseFgActivity {
                         return;
                     }
                 }
-                android.util.Log.d(TAG, "onResponse5555: " );
-
                 if (result.code == 0) {
-                    android.util.Log.d(TAG, "onResponse: " + result.code);
                     gameInfoList = result.data;
                     pageAction.setTotal(result.totals);
                     Log.d(TAG, gameInfoList.size() + "返回" + gameInfoList);

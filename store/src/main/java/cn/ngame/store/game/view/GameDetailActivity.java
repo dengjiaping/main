@@ -174,7 +174,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         }
         gameName = gameInfo.gameName;
         gameNameTv.setText(gameName);//名字
-        Log.d(TAG, "是否是喜欢" + gameInfo.isFavoriteGame);//1为收藏，0为未收藏
         likeIv.setSelected(1 == gameInfo.isFavoriteGame ? true : false);
         //类型
         List<GameType> typeList = gameInfo.gameTypeList;
@@ -498,7 +497,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
                 params.put(KeyConstant.TOKEN, StoreApplication.token);
-                Log.d(TAG, "getParams: " + StoreApplication.token);
+                Log.d(TAG, "getParams: " + StoreApplication.userCode);
                 return params;
             }
         };

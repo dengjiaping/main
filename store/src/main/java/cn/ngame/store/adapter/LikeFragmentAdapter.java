@@ -202,7 +202,7 @@ public class LikeFragmentAdapter extends BaseAdapter {
                 }
             };
             timerTasks.add(task);
-            timer.schedule(task, 0, 200);
+            timer.schedule(task, 0, 300);
         }
 
         public void update(final GameRankListBean.DataBean gameInfo) {
@@ -212,7 +212,7 @@ public class LikeFragmentAdapter extends BaseAdapter {
                 tv_title.setText(gameName);
             }
             tv_size.setText(Formatter.formatFileSize(context, gameInfo.getGameSize()));
-            String timeLike = new SimpleDateFormat("yyyy-MM-dd").format(new Date(gameInfo
+            String timeLike = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date(gameInfo
                     .getUpdateTime()));
             versionTv.setText("V" + gameInfo.getVersionName() + " / " + timeLike);
             progressBar.setVisibility(View.INVISIBLE);

@@ -171,10 +171,10 @@ public interface GameService {
     Observable<YunduanBean> gameType(@Header("content-type") String type,
                                      @Body YunduanBodyBean bean);
 
-    // 首页-虚拟现实
-    @POST("video/videoSubTypeListByParentId")
-    Observable<YunduanBean> videoType(@Header("content-type") String type,
-                                      @Body YunduanBodyBean bean);
+    //
+    @POST("user/listFavorite")
+    Observable<GameRankListBean> listFavorite(@Header("content-type") String type,
+                                              @Body GameListBody bean);
 
     // 首页-每日精选、MOBA精选、枪战精选、新平尝鲜、品牌游戏列表（12个）
     @POST("game/queryHomeGame")

@@ -9,7 +9,7 @@ import android.widget.ListView;
 import com.jzt.hol.android.jkda.sdk.bean.game.GameListBody;
 import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.game.GameCommentListClient;
+import com.jzt.hol.android.jkda.sdk.services.main.LikeListClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +83,7 @@ public class LikeFragment extends BaseSearchFragment {
         GameListBody bodyBean = new GameListBody();
         bodyBean.setPageIndex(pageAction.getCurrentPage());
         bodyBean.setPageSize(PAGE_SIZE);
-        new GameCommentListClient(content, bodyBean).observable()
+        new LikeListClient(content, bodyBean).observable()
 //                .compose(this.<DiscountListBean>bindToLifecycle())
                 .subscribe(new ObserverWrapper<GameRankListBean>() {
                     @Override
