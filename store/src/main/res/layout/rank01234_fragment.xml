@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/f5f5f5"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/f5f5f5"
+                android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/rank01234_top_llay"
@@ -18,17 +18,17 @@
             style="@style/MyCustomTabLayout"
             android:layout_width="wrap_content"
             android:layout_height="43dp"
+            android:layout_marginBottom="-3dp"
             android:layout_marginLeft="@dimen/dm040"
             android:layout_marginRight="@dimen/dm040"
-            android:layout_marginBottom="-3dp"
-            tabs:tabPaddingEnd="@dimen/dmTabPadding"
-            tabs:tabPaddingStart="@dimen/dmTabPadding"
-            tabs:tabMode="scrollable"
-            tabs:tabGravity="center"
-            tabs:tabMinWidth="@dimen/dp_10"
             android:background="@drawable/manager_top_tab_bg"
             tabs:tabBackground="@android:color/white"
+            tabs:tabGravity="center"
             tabs:tabIndicatorColor="@color/transparent"
+            tabs:tabMinWidth="@dimen/dp_10"
+            tabs:tabMode="scrollable"
+            tabs:tabPaddingEnd="@dimen/dmTabPadding"
+            tabs:tabPaddingStart="@dimen/dmTabPadding"
             tabs:tabSelectedTextColor="@color/color_18b9fe"
             tabs:tabTextColor="@color/font_black_6"/>
         <!--
@@ -37,12 +37,22 @@
     </LinearLayout>
 
     <cn.ngame.store.widget.pulllistview.PullToRefreshListView
-        android:layout_marginTop="@dimen/dm001"
         android:id="@+id/pullListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/rank01234_top_llay"
+        android:layout_marginTop="@dimen/dm001"
         android:background="@color/white"
         android:divider="@null"
-        android:scrollbars="none"></cn.ngame.store.widget.pulllistview.PullToRefreshListView>
+        android:scrollbars="none"/>
 
-</LinearLayout>
+    <cn.ngame.store.view.LoadStateView
+        xmlns:ngame="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/load_state_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingBottom="@dimen/dm200"
+        ngame:end="@string/load_end"
+        ngame:ing=""/>
+</RelativeLayout>

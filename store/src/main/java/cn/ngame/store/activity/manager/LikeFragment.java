@@ -148,7 +148,7 @@ public class LikeFragment extends BaseSearchFragment {
     }
 
     private void cancelFavorite(final int position) {
-        final int gameId = gameList.get(position).getId();
+        final long gameId = gameList.get(position).getId();
         Log.d(TAG, "cancelFavorite: "+gameId);
         String url = Constant.WEB_SITE + Constant.URL_DEL_FAVORITE;
         Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {

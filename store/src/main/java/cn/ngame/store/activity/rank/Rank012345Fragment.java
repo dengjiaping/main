@@ -39,9 +39,9 @@ import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.GameLoadProgressBar;
+import cn.ngame.store.view.LoadStateView;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
-
 
 /**
  * 下载榜
@@ -50,9 +50,6 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 
 public class Rank012345Fragment extends BaseSearchFragment {
     private PullToRefreshListView pullListView;
-    /**
-     * headerView
-     */
     private GameLoadProgressBar day_progress_bar_one, day_progress_bar_two, day_progress_bar_three;
     private SimpleDraweeView sdv_img_1, sdv_img_2, sdv_img_3;
     private TextView tv_rank_name_one, tv_rank_name_two, tv_rank_name_three;
@@ -69,7 +66,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
     public static final String ARG_PAGE = "ARG_PAGE";
     private boolean IS_LOADED = false;
     private static int mSerial = 0;
-    private int tabPosition = 0;
+    private int tab_position = 0;
     private boolean isFirst = true;
 
     private Handler handler = new Handler() {
@@ -79,7 +76,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
                 //这里执行加载数据的操作
                 getRankList();
             } else {
-                Log.d(TAG, tabPosition + "不请求数据," + tabPosition2);
+                Log.d(TAG, tab_position + "不请求数据," + tab2_position);
             }
             return;
         }
@@ -87,8 +84,9 @@ public class Rank012345Fragment extends BaseSearchFragment {
     private LinearLayout mTopLlay;
     private TabLayout tablayout2;
     private FragmentActivity content;
-    private int tabPosition2 = 0;
+    private int tab2_position = 0;
     private FragmentManager fm;
+    private LoadStateView loadStateView;
 
     public static Rank012345Fragment newInstance() {
         Rank012345Fragment fragment = new Rank012345Fragment(0);
@@ -109,7 +107,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
     @Override
     protected int getContentViewLayoutID() {
         android.util.Log.d(TAG, "0123getContentViewLayoutID: ");
-        if (isFirst && tabPosition == mSerial) {
+        if (isFirst && tab_position == mSerial) {
             isFirst = false;
             sendMessage();
         }
@@ -117,7 +115,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
     }
 
     public void setTabPos(int mTabPos) {
-        this.tabPosition = mTabPos;
+        this.tab_position = mTabPos;
     }
 
     @Override
@@ -135,6 +133,8 @@ public class Rank012345Fragment extends BaseSearchFragment {
         pullListView = (PullToRefreshListView) view.findViewById(R.id.pullListView);
         mTopLlay = (LinearLayout) view.findViewById(R.id.rank01234_top_llay);
 
+        loadStateView = (LoadStateView) view.findViewById(R.id.load_state_view);
+        loadStateView.isShowLoadBut(false);
         pullListView.setPullRefreshEnabled(true); //刷新
         pullListView.setPullLoadEnabled(true); //false,不允许上拉加载
         pullListView.setScrollLoadEnabled(false);
@@ -169,7 +169,10 @@ public class Rank012345Fragment extends BaseSearchFragment {
             }
         });
         //点击事件
-        pullListView.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        final ListView refreshableView = pullListView.getRefreshableView();
+        adapter = new RankingListAdapter(content,fm , list, 0);
+        refreshableView.setAdapter(adapter);
+        refreshableView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), GameDetailActivity.class);
@@ -178,11 +181,11 @@ public class Rank012345Fragment extends BaseSearchFragment {
             }
         });
 
-        if (0 == tabPosition) {
+        if (0 == tab_position) {
             mTopLlay.setVisibility(View.GONE);
         } else {
             tablayout2 = (TabLayout) view.findViewById(R.id.rank01234_tablayout);
-            if (5 == tabPosition) {
+            if (5 == tab_position) {
                 int length = tabList5.length;
                 for (int i = 0; i < length; i++) {
                     tablayout2.addTab(tablayout2.newTab().setText(tabList5[i]));
@@ -201,22 +204,20 @@ public class Rank012345Fragment extends BaseSearchFragment {
             pullListView.setOnScrollListener(new AbsListView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(AbsListView view, int scrollState) {
-                    android.util.Log.d("onScroll", "StateChanged " + scrollState);
                 }
 
                 @Override
                 public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                    View childAt0 = pullListView.getRefreshableView().getChildAt(0);
+                    View childAt0 = refreshableView.getChildAt(0);
                     if (firstVisibleItem == 0 && childAt0 != null && childAt0.getTop() !=
                             0) {
                         int viewScrollHeigh = Math.abs(childAt0.getTop());
                         if (viewScrollHeigh > 2 * topLLayHeight) {//滑动超过头部高度
-                            android.util.Log.d("onScroll", "超过: ");
                         } else {//滑动没有超过头部高度
                         }
                     } else {
-                        android.util.Log.d("onScroll", "else " + firstVisibleItem);
-                        if (firstVisibleItem == 0) {//第一个条目
+                        //第一个条目
+                        if (firstVisibleItem == 0) {
                         } else {//下滑
                         }
                     }
@@ -228,7 +229,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     //0=全部   1=大陆   2=美国   3=韩国   4=日本   5=港澳台
-                    tabPosition2 = tab.getPosition();
+                    tab2_position = tab.getPosition();
                     //请求数据
                     getRankList();
                 }
@@ -290,23 +291,26 @@ public class Rank012345Fragment extends BaseSearchFragment {
     }
 
     /**
-     * todo 排行榜列表
+     * 获取排行榜列表数据
      */
     private void getRankList() {
-        //tabPosition :0=全部   1=手柄   2=破解   3=汉化  4=特色
+        Log.d(TAG, tab_position + "当前索引:" + tab2_position);
+        //tab_position :0=全部   1=手柄   2=破解   3=汉化  4=特色
+        loadStateView.setVisibility(View.VISIBLE);
         RankListBody bodyBean = new RankListBody();
         bodyBean.setStartRecord(pageAction.getCurrentPage());
         bodyBean.setRecords(PAGE_SIZE);
-        bodyBean.setCategoryId(0);
+        bodyBean.setCategoryId(tab_position);
         new GameCommentListClient(content, bodyBean).observable()
 //                .compose(this.<DiscountListBean>bindToLifecycle())
                 .subscribe(new ObserverWrapper<LikeListBean>() {
                     @Override
                     public void onError(Throwable e) {
 //                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
-                        ToastUtil.show(content, getString(R.string.pull_to_refresh_network_error));
                         pullListView.onPullUpRefreshComplete();
                         pullListView.onPullDownRefreshComplete();
+
+                        loadStateView.setState(LoadStateView.STATE_END, getString(R.string.requery_failed));
                     }
 
                     @Override
@@ -314,7 +318,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
                         if (result != null && result.getCode() == 0) {
                             listData(result);
                         } else {
-//                            ToastUtil.show(getActivity(), result.getMsg());
+                            loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_data));
                         }
                     }
                 });
@@ -322,13 +326,11 @@ public class Rank012345Fragment extends BaseSearchFragment {
 
     public void listData(LikeListBean dataBean) {
         LikeListBean.DataBean result = dataBean.getData();
-        if (result == null) {
+        if (result == null || result.getGameList() == null) {
+            loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_data));
             return;
         }
         List<LikeListBean.DataBean.GameListBean> gameList = result.getGameList();
-        if (null==gameList) {
-            return;
-        }
         int size = gameList.size();
         if (pageAction.getCurrentPage() == 0) {
             this.list.clear(); //清除数据
@@ -336,9 +338,11 @@ public class Rank012345Fragment extends BaseSearchFragment {
                 pullListView.onPullUpRefreshComplete();
                 pullListView.onPullDownRefreshComplete();
                 pullListView.setLastUpdatedLabel(new Date().toLocaleString());
+                loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_data));
                 return;
             }
         }
+        loadStateView.setVisibility(View.GONE);
         if (size > 0) {
             pageAction.setTotal(result.getTotals());
             this.list.addAll(gameList);
@@ -349,14 +353,9 @@ public class Rank012345Fragment extends BaseSearchFragment {
             this.list.addAll(gameList);
         }
         ListView refreshableView = pullListView.getRefreshableView();
-        //todo ------------------优化---------------
-        if (adapter == null) {
-            adapter = new RankingListAdapter(content,fm , list, 0);
-            refreshableView.setAdapter(adapter);
-        } else {
-            adapter.setList(list);
-        }
-        if (pageAction.getCurrentPage() > 0 &&size > 0) { //设置上拉刷新后停留的地方
+        //设置适配器
+        adapter.setList(list);
+        if (pageAction.getCurrentPage() > 0 && size > 0) { //设置上拉刷新后停留的地方
             int index = refreshableView.getFirstVisiblePosition();
             View v = refreshableView.getChildAt(0);
             int top = (v == null) ? 0 : (v.getTop() - v.getHeight());

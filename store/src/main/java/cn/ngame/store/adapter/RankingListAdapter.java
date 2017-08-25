@@ -238,11 +238,6 @@ public class RankingListAdapter extends BaseAdapter {
 
                 }
             });
-            if (type == 0) {
-                tv_position.setVisibility(View.VISIBLE);
-            } else {
-                tv_position.setVisibility(View.INVISIBLE);
-            }
             tv_position.setText(position + 1 + "");
 
             String imgUrl = gameInfo.getGameLogo();

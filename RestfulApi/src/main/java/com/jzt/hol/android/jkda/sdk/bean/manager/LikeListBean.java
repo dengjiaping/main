@@ -125,7 +125,7 @@ public class LikeListBean implements Serializable{
              * updateTime : 1500446138000
              */
 
-            private int id;
+            private long id;
             private String cName;
             private String gameName;
             private String gameLogo;
@@ -139,11 +139,11 @@ public class LikeListBean implements Serializable{
             private String versionName;
             private long updateTime;
 
-            public int getId() {
+            public long getId() {
                 return id;
             }
 
-            public void setId(int id) {
+            public void setId(long id) {
                 this.id = id;
             }
 
