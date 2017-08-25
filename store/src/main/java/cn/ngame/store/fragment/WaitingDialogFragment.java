@@ -64,7 +64,7 @@ public class WaitingDialogFragment extends DialogFragment {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         View view = inflater.inflate(R.layout.layout_dialog_waiting,container);
-        img_hand = (ImageView) view.findViewById(R.id.img_2);
+        img_hand = (ImageView) view.findViewById(R.id.img_1);
         tv_summary = (TextView) view.findViewById(R.id.tv_summary);
 
         return view;

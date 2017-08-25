@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +55,7 @@ import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.UrlConstant;
 import cn.ngame.store.exception.NoSDCardException;
+import cn.ngame.store.fragment.OneBtDialogFragment;
 import cn.ngame.store.util.ToastUtil;
 
 
@@ -87,6 +89,7 @@ public class UserCenterActivity extends BaseFgActivity {
     private SharedPreferences.Editor editor;
     private ArrayAdapter<String> mAdapter;
     private Dialog defAvatarDialog;
+    private FragmentManager fm;
 
 
     @Override
@@ -94,6 +97,7 @@ public class UserCenterActivity extends BaseFgActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_user_center);
         content = UserCenterActivity.this;
+        fm = getSupportFragmentManager();
         preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
         editor = preferences.edit();
         findViewById(R.id.left_bt).setOnClickListener(new View.OnClickListener() {
@@ -112,10 +116,10 @@ public class UserCenterActivity extends BaseFgActivity {
             changePwdBt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(content, ChangePwdActivity.class);
+                    Intent intent = new Intent(UserCenterActivity.this.content, ChangePwdActivity.class);
                     intent.putExtra(KeyConstant.IS_FROM_USER_CENTER, true);
                     startActivity(intent);
-                    content.finish();
+                    UserCenterActivity.this.content.finish();
                 }
             });
         } else {
@@ -167,11 +171,11 @@ public class UserCenterActivity extends BaseFgActivity {
             public void onClick(View v) {
                 String nickNameStr = tv_nickname.getText().toString();
                 if (nickNameStr.length() == 0) {
-                    ToastUtil.show(content, "昵称为空哦！");
+                    ToastUtil.show(UserCenterActivity.this.content, "昵称为空哦！");
                     return;
                 }
                 if (nickNameStr.equals(nickName) && "-1".equals(IMG_TYPE)) {
-                    ToastUtil.show(content, "您未修改任何资料哦");
+                    ToastUtil.show(UserCenterActivity.this.content, "您未修改任何资料哦");
                     //content.finish();
                 } else {
                     nickName = nickNameStr;
@@ -293,7 +297,7 @@ public class UserCenterActivity extends BaseFgActivity {
                 dialog.cancel();
                 logoutClearData();
                 startActivity(new Intent(content, LoginActivity.class));
-                content.finish();
+                UserCenterActivity.this.finish();
             }
         });
         inflate.findViewById(R.id.logout_cancel_bt).setOnClickListener(new View.OnClickListener() {
@@ -370,7 +374,7 @@ public class UserCenterActivity extends BaseFgActivity {
 
 
     private void uploadImage() {
-        DialogHelper.showWaiting(getSupportFragmentManager(), "加载中...");
+        DialogHelper.showWaiting(fm, "加载中...");
         String url = Constant.WEB_SITE + Constant.URL_MODIFY_USER_DATA;
         Response.Listener<JsonResult<User>> successListener =
                 new Response.Listener<JsonResult<User>>() {
@@ -402,7 +406,7 @@ public class UserCenterActivity extends BaseFgActivity {
                             Log.d(TAG, "HTTP请求成功：修改失败！" + code + result.msg);
                         }
                         //隐藏提示框
-                        DialogHelper.hideWaiting(getSupportFragmentManager());
+                        DialogHelper.hideWaiting(fm);
                     }
                 };
 
@@ -410,7 +414,7 @@ public class UserCenterActivity extends BaseFgActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                DialogHelper.hideWaiting(getSupportFragmentManager());
+                DialogHelper.hideWaiting(fm);
                 Toast.makeText(UserCenterActivity.this, "修改失败，网络连接异常！", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "HTTP请求失败：网络连接错误！" + volleyError.getMessage());
             }
@@ -443,7 +447,18 @@ public class UserCenterActivity extends BaseFgActivity {
      * 显示结果对话框
      */
     private void showReLoginDialog() {
-        CommonUtil.showUnLoginDialog(getSupportFragmentManager(), content, R.string.relogin_msg);
+        final OneBtDialogFragment dialogFragment = new OneBtDialogFragment();
+        dialogFragment.setTitle(R.string.relogin_msg);
+        dialogFragment.setDialogWidth(content.getResources().getDimensionPixelSize(R.dimen.unlogin_dialog_width));
+        dialogFragment.setNegativeButton(R.string.login_now, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogFragment.dismiss();
+                content.startActivity(new Intent(content, LoginActivity.class));
+                content.finish();
+            }
+        });
+        dialogFragment.show(fm, "successDialog");
     }
 
     ImageLoader imageLoader = ImageLoader.getInstance();
@@ -485,8 +500,8 @@ public class UserCenterActivity extends BaseFgActivity {
 
 /* private void showChangeNicknameDialog() {
 
-        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment prev = getSupportFragmentManager().findFragmentByTag("progressDialog");
+        final FragmentTransaction ft = fm.beginTransaction();
+        Fragment prev = fm.findFragmentByTag("progressDialog");
         if (prev != null) {
             ft.remove(prev);
         }
