@@ -5,21 +5,34 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import com.jzt.hol.android.jkda.sdk.bean.game.GameListBody;
-import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.reflect.TypeToken;
+import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBean;
+import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBody;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.main.LikeListClient;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimerTask;
 
 import cn.ngame.store.R;
+import cn.ngame.store.StoreApplication;
 import cn.ngame.store.adapter.LikeFragmentAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
+import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.fileload.IFileLoad;
+import cn.ngame.store.core.net.GsonRequest;
+import cn.ngame.store.core.utils.Constant;
+import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.ActionItem;
 import cn.ngame.store.view.QuickAction;
@@ -45,6 +58,7 @@ public class LikeFragment extends BaseSearchFragment {
      */
     private FragmentActivity content;
     private boolean isShow = true;
+    private List<LikeListBean.DataBean.GameListBean> gameList;
 
     public static LikeFragment newInstance(String type, int arg) {
         LikeFragment fragment = new LikeFragment();
@@ -80,12 +94,13 @@ public class LikeFragment extends BaseSearchFragment {
 
     private void getLikeList() {
         //tabPosition :0=全部   1=手柄   2=破解   3=汉化  4=特色
-        GameListBody bodyBean = new GameListBody();
-        bodyBean.setPageIndex(pageAction.getCurrentPage());
-        bodyBean.setPageSize(PAGE_SIZE);
+        LikeListBody bodyBean = new LikeListBody();
+        bodyBean.setUserCode(StoreApplication.userCode);
+        bodyBean.setStartRecord(pageAction.getCurrentPage());
+        bodyBean.setRecords(PAGE_SIZE);
         new LikeListClient(content, bodyBean).observable()
 //                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<GameRankListBean>() {
+                .subscribe(new ObserverWrapper<LikeListBean>() {
                     @Override
                     public void onError(Throwable e) {
 //                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
@@ -93,11 +108,14 @@ public class LikeFragment extends BaseSearchFragment {
                     }
 
                     @Override
-                    public void onNext(GameRankListBean result) {
+                    public void onNext(LikeListBean result) {
                         if (result != null && result.getCode() == 0) {
-                            List<GameRankListBean.DataBean> data = result.getData();
-                            if (null != likeAdapter) {
-                                likeAdapter.setDate(data);
+                            LikeListBean.DataBean data = result.getData();
+                            if (data != null) {
+                                gameList = data.getGameList();
+                                if (null != likeAdapter) {
+                                    likeAdapter.setDate(gameList);
+                                }
                             }
                         } else {
                             //ToastUtil.show(getActivity(), result.getMsg());
@@ -118,13 +136,62 @@ public class LikeFragment extends BaseSearchFragment {
             public void onItemClick(QuickAction source, int pos, int actionId) {
                 if (pos == 0 && null != likeAdapter) {
                     //获取gameId  传给服务器 不再喜欢
-                    String currentGameId = likeAdapter.getItemGameId();
-                    ToastUtil.show(content, "不再喜欢" + currentGameId);
+                    int gamePosition = likeAdapter.getItemGameId();
+                    if (gameList != null && gamePosition < gameList.size()) {
+                        cancelFavorite(gamePosition);
+                    }
                 }
                 //取消弹出框
                 source.dismiss();
             }
         });
+    }
+
+    private void cancelFavorite(final int position) {
+        final int gameId = gameList.get(position).getId();
+        Log.d(TAG, "cancelFavorite: "+gameId);
+        String url = Constant.WEB_SITE + Constant.URL_DEL_FAVORITE;
+        Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (result == null) {
+                    Toast.makeText(content, "服务端异常", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (result.code == 0) {
+                    ToastUtil.show(content, "取消成功");
+                    gameList.remove(position);
+                    if (null != likeAdapter) {
+                        likeAdapter.setDate(gameList);
+                    }
+                } else {
+                    ToastUtil.show(content, "取消收藏失败");
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                Log.d(TAG, "取消喜欢失败：网络连接错误！" + volleyError.getMessage());
+            }
+        };
+
+        Request<JsonResult> versionRequest = new GsonRequest<JsonResult>(Request.Method.POST, url,
+                successListener, errorListener, new TypeToken<JsonResult>() {
+        }.getType()) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                //{"userCode":"UC1500609205627","gameId":146,"appTypeId":0}
+                Map<String, String> params = new HashMap<>();
+                params.put(KeyConstant.GAME_ID, String.valueOf(gameId));
+                params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
+                return params;
+            }
+        };
+        StoreApplication.requestQueue.add(versionRequest);
     }
 
     @Override

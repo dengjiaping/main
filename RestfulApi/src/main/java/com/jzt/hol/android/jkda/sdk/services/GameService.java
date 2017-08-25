@@ -30,6 +30,8 @@ import com.jzt.hol.android.jkda.sdk.bean.gamehub.VoteRankBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.MainGameTypeListBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
+import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBean;
+import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBody;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBody;
 import com.jzt.hol.android.jkda.sdk.bean.search.RequestSearchBean;
@@ -173,8 +175,8 @@ public interface GameService {
 
     //
     @POST("user/listFavorite")
-    Observable<GameRankListBean> listFavorite(@Header("content-type") String type,
-                                              @Body GameListBody bean);
+    Observable<LikeListBean> listFavorite(@Header("content-type") String type,
+                                          @Body LikeListBody bean);
 
     // 首页-每日精选、MOBA精选、枪战精选、新平尝鲜、品牌游戏列表（12个）
     @POST("game/queryHomeGame")

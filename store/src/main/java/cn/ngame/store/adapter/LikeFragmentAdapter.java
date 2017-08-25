@@ -29,7 +29,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
+import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBean;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -60,11 +60,11 @@ public class LikeFragmentAdapter extends BaseAdapter {
 
     private List<TimerTask> timerTasks;
 
-    private List<GameRankListBean.DataBean> fileInfoList;
+    private List<LikeListBean.DataBean.GameListBean> fileInfoList;
     private Context context;
     private FragmentManager fm;
     private Handler uiHandler = new Handler();
-    private String mPositionGameId = "";
+    private int mPosition;
 
     public LikeFragmentAdapter(Context context, FragmentManager fm,
                                QuickAction mItemClickQuickAction, List<TimerTask> timerTasks) {
@@ -80,7 +80,7 @@ public class LikeFragmentAdapter extends BaseAdapter {
      *
      * @param fileInfoList 下载文件信息
      */
-    public void setDate(List<GameRankListBean.DataBean> fileInfoList) {
+    public void setDate(List<LikeListBean.DataBean.GameListBean> fileInfoList) {
         //uiHandler = new Handler();
         this.fileInfoList = fileInfoList;
         notifyDataSetChanged();
@@ -94,8 +94,8 @@ public class LikeFragmentAdapter extends BaseAdapter {
         return 0;
     }
 
-    public String getItemGameId() {
-        return mPositionGameId;
+    public int getItemGameId() {
+        return mPosition;
     }
 
     @Override
@@ -123,7 +123,7 @@ public class LikeFragmentAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
-        final GameRankListBean.DataBean fileInfo = (fileInfoList == null) ? null : fileInfoList.get(position);
+        final LikeListBean.DataBean.GameListBean fileInfo = (fileInfoList == null) ? null : fileInfoList.get(position);
 
         ViewHolder holder;
         if (convertView == null) {
@@ -146,7 +146,7 @@ public class LikeFragmentAdapter extends BaseAdapter {
             holder.more_bt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mPositionGameId = fileInfo.getId() + "";
+                    mPosition = position;
                     if (null != mItemClickQuickAction) {
                         mItemClickQuickAction.show(v);
                     }
@@ -167,7 +167,7 @@ public class LikeFragmentAdapter extends BaseAdapter {
 
         private Context context;
         private FragmentManager fm;
-        private GameRankListBean.DataBean gameInfo;
+        private LikeListBean.DataBean.GameListBean gameInfo;
         private ImageView more_bt;
         private SimpleDraweeView img;
         private TextView tv_title, tv_size, versionTv;
@@ -205,7 +205,7 @@ public class LikeFragmentAdapter extends BaseAdapter {
             timer.schedule(task, 0, 300);
         }
 
-        public void update(final GameRankListBean.DataBean gameInfo) {
+        public void update(final LikeListBean.DataBean.GameListBean gameInfo) {
             this.gameInfo = gameInfo;
             String gameName = gameInfo.getGameName();
             if (null != gameName) {
