@@ -32,6 +32,7 @@ import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBean;
 import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBody;
+import com.jzt.hol.android.jkda.sdk.bean.rank.RankListBody;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBody;
 import com.jzt.hol.android.jkda.sdk.bean.search.RequestSearchBean;
@@ -159,9 +160,9 @@ public interface GameService {
     Observable<GameRankListBean> rankDownloadList(@Header("content-type") String type,
                                                   @Body GameListBody bean);
     // 排行 好评榜游戏列表
-    @POST("game/queryGamePraiseList")
-    Observable<GameRankListBean> rankCommentList(@Header("content-type") String type,
-                                                 @Body GameListBody bean);
+    @POST("gameDiscovery/queryGameListByCategoryAndDownload")
+    Observable<LikeListBean> rankCommentList(@Header("content-type") String type,
+                                                 @Body RankListBody bean);
 
     // 帖子搜索
     @POST("gameCircle/gameCircleSearch")

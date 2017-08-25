@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.jzt.hol.android.jkda.sdk.bean.game.GameListBody;
-import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
+import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBean;
+import com.jzt.hol.android.jkda.sdk.bean.rank.RankListBody;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.game.GameCommentListClient;
 
@@ -64,8 +65,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
 
     private PageAction pageAction;
     public static int PAGE_SIZE = 30;
-    List<GameRankListBean.DataBean> topList = new ArrayList<>();
-    List<GameRankListBean.DataBean> list = new ArrayList<>();
+    List<LikeListBean.DataBean.GameListBean> list = new ArrayList<>();
     public static final String ARG_PAGE = "ARG_PAGE";
     private boolean IS_LOADED = false;
     private static int mSerial = 0;
@@ -88,6 +88,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
     private TabLayout tablayout2;
     private FragmentActivity content;
     private int tabPosition2 = 0;
+    private FragmentManager fm;
 
     public static Rank012345Fragment newInstance() {
         Rank012345Fragment fragment = new Rank012345Fragment(0);
@@ -126,13 +127,11 @@ public class Rank012345Fragment extends BaseSearchFragment {
 
     @Override
     protected void initViewsAndEvents(View view) {
-        android.util.Log.d(TAG, "0123initViewsAndEvents: ");
-        //        typeValue = getArguments().getInt("", 1);
         content = getActivity();
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
-
+        fm = getSupportFragmentManager();
         pullListView = (PullToRefreshListView) view.findViewById(R.id.pullListView);
         mTopLlay = (LinearLayout) view.findViewById(R.id.rank01234_top_llay);
 
@@ -291,16 +290,17 @@ public class Rank012345Fragment extends BaseSearchFragment {
     }
 
     /**
-     * 排行榜列表
+     * todo 排行榜列表
      */
     private void getRankList() {
         //tabPosition :0=全部   1=手柄   2=破解   3=汉化  4=特色
-        GameListBody bodyBean = new GameListBody();
-        bodyBean.setPageIndex(pageAction.getCurrentPage());
-        bodyBean.setPageSize(PAGE_SIZE);
-        new GameCommentListClient(getActivity(), bodyBean).observable()
+        RankListBody bodyBean = new RankListBody();
+        bodyBean.setStartRecord(pageAction.getCurrentPage());
+        bodyBean.setRecords(PAGE_SIZE);
+        bodyBean.setCategoryId(0);
+        new GameCommentListClient(content, bodyBean).observable()
 //                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<GameRankListBean>() {
+                .subscribe(new ObserverWrapper<LikeListBean>() {
                     @Override
                     public void onError(Throwable e) {
 //                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
@@ -310,7 +310,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
                     }
 
                     @Override
-                    public void onNext(GameRankListBean result) {
+                    public void onNext(LikeListBean result) {
                         if (result != null && result.getCode() == 0) {
                             listData(result);
                         } else {
@@ -320,43 +320,47 @@ public class Rank012345Fragment extends BaseSearchFragment {
                 });
     }
 
-    public void listData(GameRankListBean result) {
-        if (result.getData() == null) {
+    public void listData(LikeListBean dataBean) {
+        LikeListBean.DataBean result = dataBean.getData();
+        if (result == null) {
             return;
         }
+        List<LikeListBean.DataBean.GameListBean> gameList = result.getGameList();
+        if (null==gameList) {
+            return;
+        }
+        int size = gameList.size();
         if (pageAction.getCurrentPage() == 0) {
             this.list.clear(); //清除数据
-            this.topList.clear();
-            if (result.getData() == null || result.getData().size() == 0) {
+            if (gameList == null || size == 0) {
                 pullListView.onPullUpRefreshComplete();
                 pullListView.onPullDownRefreshComplete();
                 pullListView.setLastUpdatedLabel(new Date().toLocaleString());
                 return;
             }
         }
-        if (result.getData().size() > 0) {
+        if (size > 0) {
             pageAction.setTotal(result.getTotals());
-            this.list.addAll(result.getData());
-            this.topList.addAll(result.getData());
+            this.list.addAll(gameList);
         }
-        if (result.getData().size() > 0 && pageAction.getCurrentPage() == 0) {
+        if (size > 0 && pageAction.getCurrentPage() == 0) {
             this.list.clear(); //清除数据
-            this.topList.clear();
             pageAction.setTotal(result.getTotals());
-            this.list.addAll(result.getData());
-            this.topList.addAll(result.getData());
+            this.list.addAll(gameList);
         }
+        ListView refreshableView = pullListView.getRefreshableView();
+        //todo ------------------优化---------------
         if (adapter == null) {
-            adapter = new RankingListAdapter(getActivity(), getSupportFragmentManager(), list, 0);
-            pullListView.getRefreshableView().setAdapter(adapter);
+            adapter = new RankingListAdapter(content,fm , list, 0);
+            refreshableView.setAdapter(adapter);
         } else {
             adapter.setList(list);
         }
-        if (pageAction.getCurrentPage() > 0 && result.getData().size() > 0) { //设置上拉刷新后停留的地方
-            int index = pullListView.getRefreshableView().getFirstVisiblePosition();
-            View v = pullListView.getRefreshableView().getChildAt(0);
+        if (pageAction.getCurrentPage() > 0 &&size > 0) { //设置上拉刷新后停留的地方
+            int index = refreshableView.getFirstVisiblePosition();
+            View v = refreshableView.getChildAt(0);
             int top = (v == null) ? 0 : (v.getTop() - v.getHeight());
-            pullListView.getRefreshableView().setSelectionFromTop(index, top);
+            refreshableView.setSelectionFromTop(index, top);
         }
         pullListView.onPullUpRefreshComplete();
         pullListView.onPullDownRefreshComplete();

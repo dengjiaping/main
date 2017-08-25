@@ -171,11 +171,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                 }
             }
             tv_summary.setText(gameInfo.gameDesc);
-            String s = "";
-            for (int i = 0; i < 100; i++) {
-                s = s + "更新内容";
-            }
-            updateMsgTv.setText(s);
+            //updateMsgTv.setText();
             updateMsgTv.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
                 public boolean onPreDraw() {

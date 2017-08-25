@@ -7,10 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.jzt.hol.android.jkda.sdk.bean.game.GameListBody;
 import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.game.GameCommentListClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,6 @@ import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.NecessaryItemData;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.fileload.IFileLoad;
-import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.ActionItem;
 import cn.ngame.store.view.QuickAction;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
@@ -146,36 +142,6 @@ public class NecessaryFragment extends BaseSearchFragment {
         mLangyaDatas.add(new NecessaryItemData("5", "百度", "16", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
 
     }
-
-    private void getLikeList() {
-        //tabPosition :0=全部   1=手柄   2=破解   3=汉化  4=特色
-        GameListBody bodyBean = new GameListBody();
-        bodyBean.setPageIndex(pageAction.getCurrentPage());
-        bodyBean.setPageSize(PAGE_SIZE);
-        new GameCommentListClient(content, bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<GameRankListBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-//                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
-                        ToastUtil.show(content, getString(R.string.pull_to_refresh_network_error));
-                    }
-
-                    @Override
-                    public void onNext(GameRankListBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            List<GameRankListBean.DataBean> data = result.getData();
-                            if (null != langyaAdapter) {
-                                langyaAdapter.setDate(mLangyaDatas);
-                            }
-                        } else {
-                            //ToastUtil.show(getActivity(), result.getMsg());
-                            Log.d(TAG, "onNext: 请求成功,返回数据失败");
-                        }
-                    }
-                });
-    }
-
     private void initPop() {
         // 设置Action
         mItemClickQuickAction = new QuickAction(getActivity(), QuickAction.VERTICAL);

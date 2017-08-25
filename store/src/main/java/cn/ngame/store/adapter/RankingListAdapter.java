@@ -32,7 +32,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
+import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBean;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -55,12 +55,12 @@ import static cn.ngame.store.R.id.tv_shoubing;
 public class RankingListAdapter extends BaseAdapter {
     private Activity context;
     private FragmentManager fm;
-    private List<GameRankListBean.DataBean> list;
+    private List<LikeListBean.DataBean.GameListBean> list;
     private int type;
 
     private static Handler uiHandler = new Handler();
 
-    public RankingListAdapter(Activity context, FragmentManager fm, List<GameRankListBean.DataBean> list, int type) {
+    public RankingListAdapter(Activity context, FragmentManager fm, List<LikeListBean.DataBean.GameListBean> list, int type) {
         super();
         this.context = context;
         this.fm = fm;
@@ -68,7 +68,7 @@ public class RankingListAdapter extends BaseAdapter {
         this.type = type;
     }
 
-    public void setList(List<GameRankListBean.DataBean> list) {
+    public void setList(List<LikeListBean.DataBean.GameListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -96,7 +96,7 @@ public class RankingListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
-        final GameRankListBean.DataBean gameInfo = (list == null) ? null : list.get(position);
+        final LikeListBean.DataBean.GameListBean gameInfo = (list == null) ? null : list.get(position);
         final ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.ranking_list_item, parent, false);
@@ -124,7 +124,7 @@ public class RankingListAdapter extends BaseAdapter {
 
     public static class ViewHolder {
         private Activity context;
-        private GameRankListBean.DataBean gameInfo;
+        private LikeListBean.DataBean.GameListBean gameInfo;
         private SimpleDraweeView img;
         private TextView tv_position, tv_title, tv_percentage;
         private RatingBar ratingBar;
@@ -165,7 +165,7 @@ public class RankingListAdapter extends BaseAdapter {
          *
          * @param gameInfo 游戏信息
          */
-        public void update(final GameRankListBean.DataBean gameInfo, int type, int position) {
+        public void update(final LikeListBean.DataBean.GameListBean gameInfo, int type, int position) {
             this.gameInfo = gameInfo;
             final String gameName = gameInfo.getGameName();
             if (!"".equals(gameName)) {
@@ -253,11 +253,11 @@ public class RankingListAdapter extends BaseAdapter {
 
             //long gameSize = gameInfo.getGameSize();
             //String gameSizeStr = TextUtil.formatFileSize(gameSize);
-            tv_percentage.setText(gameInfo.getPercentage() + "");
+            tv_percentage.setText(gameInfo.getScoreLevel() + "");
 
-            ratingBar.setRating(gameInfo.getPercentage());
+            ratingBar.setRating(gameInfo.getScoreLevel());
 
-            //是否手柄、vr，头控,
+          /*  //是否手柄、vr，头控,
             if (gameInfo.getIsHeadControl() == 1) {
                 tv_toukong.setVisibility(View.VISIBLE);
             } else {
@@ -277,7 +277,7 @@ public class RankingListAdapter extends BaseAdapter {
                 tv_yun_duan.setVisibility(View.VISIBLE);
             } else {
                 tv_yun_duan.setVisibility(View.GONE);
-            }
+            }*/
         }
     }
 }

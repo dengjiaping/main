@@ -14,10 +14,10 @@ import rx.Observable;
  * Created by Administrator on 2016/12/27 0027.
  */
 
-public class GameListClient extends PostMsgBaseClient<GameRankListBean> {
+public class RankListClient extends PostMsgBaseClient<GameRankListBean> {
     GameListBody bean;
 
-    public GameListClient(Context cxt, GameListBody bean) {
+    public RankListClient(Context cxt, GameListBody bean) {
         super(cxt);
         this.bean = bean;
     }
