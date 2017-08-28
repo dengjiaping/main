@@ -12,6 +12,5 @@
         android:layout_marginBottom="0dp"
         android:background="@color/f5f5f5"
         android:divider="@null"
-        android:scrollbars="none"></cn.ngame.store.widget.pulllistview.PullToRefreshListView>
-
+        android:scrollbars="none"/>
 </FrameLayout>

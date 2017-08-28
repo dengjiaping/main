@@ -178,7 +178,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
                 for (int i = 0; i < length; i++) {
                     tablayout2.addTab(tablayout2.newTab().setText(tabList5[i]));
                 }
-                tab2_all = tab2_5Id;
+                tab2_all = tab2_id5;
                 initTabs5();
             } else {
                 int length = tabList.length;
@@ -245,7 +245,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
     private String tabList[] = new String[]{"全部", "大陆", "美国", "韩国", "日本", "港澳台"};
     private int tab2_Id01234[] = new int[]{0, 47, 49, 51, 50, 48};
     private String tabList5[] = new String[]{"FC", "MAME", "SFC", "GBA", "PS", "PSP", "MD", "GBC", "NDS"};
-    private int tab2_5Id[] = new int[]{50, 51, 52, 53, 54, 55, 56, 57, 58};
+    private int tab2_id5[] = new int[]{54, 55, 56, 57, 58, 59, 60, 61, 62};
     private int tab2_all[];
 
     //顶部下面的二级标签

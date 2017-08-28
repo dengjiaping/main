@@ -108,7 +108,7 @@ import static cn.ngame.store.R.id.main_download_bt;
  */
 
 public class MainHomeActivity extends BaseFgActivity implements View.OnClickListener {
-    public static final String TAG = "777";
+    public static final String TAG = MainHomeActivity.class.getSimpleName();
     private final MainHomeActivity context = MainHomeActivity.this;
     private boolean isExit = false;     //是否安装后第一次启动
     //    public FooterMenu menu;
@@ -604,6 +604,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 } else {
                     transaction.show(selectedFragment);
                 }
+                selectedFragment.scroll2Top();
+                selectedFragment.setShow(true);
                 bt_home.setSelected(true);
                 mTitleTv.setText("");
                 mTitleBgIv.setVisibility(View.VISIBLE);
@@ -623,6 +625,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 } else {
                     transaction.show(rankingFragment);
                 }
+                selectedFragment.setShow(false);
                 bt_game.setSelected(true);
                 mTitleTv.setText("排行榜");
                 fl_notifi.setVisibility(View.GONE);
@@ -653,6 +656,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 } else {
                     transaction.show(discoverFragment);
                 }
+                selectedFragment.setShow(false);
                 bt_video.setSelected(true);
                 mTitleTv.setText("发现");
                 mDownloadBt.setVisibility(View.GONE);
@@ -669,6 +673,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 } else {
                     transaction.show(administrationFragment);
                 }
+                selectedFragment.setShow(false);
                 bt_manager.setSelected(true);
                 mTitleTv.setText("管理");
                 mDownloadBt.setVisibility(View.VISIBLE);
@@ -677,7 +682,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 fl_notifi.setVisibility(View.GONE);
                 tv_manager.setTextColor(colorDark);
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainManagerButtonClickCount);
-
                 break;
         }
         transaction.commitAllowingStateLoss();

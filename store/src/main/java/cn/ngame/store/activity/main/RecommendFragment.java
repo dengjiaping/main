@@ -66,7 +66,7 @@ import static cn.ngame.store.core.utils.Constant.URL_RECOMMEND_TOPICS;
  */
 
 public class RecommendFragment extends BaseSearchFragment {
-    public static final String TAG = "777";
+    public static final String TAG = RecommendFragment.class.getSimpleName();
     PullToRefreshListView pullListView;
     private Timer timer = new Timer();
     private static Handler uiHandler = new Handler();
@@ -107,6 +107,8 @@ public class RecommendFragment extends BaseSearchFragment {
     private LinearLayout.LayoutParams hParams;
     private int wrapContent;
     private PicassoImageView picassoImageView;
+    private boolean mIsShow = false;
+    private ListView refreshableView;
 
     public static RecommendFragment newInstance(int arg) {
         RecommendFragment fragment = new RecommendFragment();
@@ -357,7 +359,7 @@ public class RecommendFragment extends BaseSearchFragment {
             }
         });
         //点击事件
-        ListView refreshableView = pullListView.getRefreshableView();
+        refreshableView = pullListView.getRefreshableView();
         refreshableView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -404,6 +406,15 @@ public class RecommendFragment extends BaseSearchFragment {
         //第一次进来,请求数据
         getGameList();
         getHorizontalData();
+    }
+
+    public void scroll2Top() {
+        android.util.Log.d(TAG, "是否在显示: " + mIsShow);
+        if (mIsShow && refreshableView != null) {
+            //refreshableView.setSelectionAfterHeaderView();
+            refreshableView.smoothScrollToPosition(0);
+            getGameList();
+        }
     }
 
     //顶部2个位置
@@ -489,12 +500,12 @@ public class RecommendFragment extends BaseSearchFragment {
 
     @Override
     protected void onFirstUserVisible() {
-
+        Log.d(TAG, "onUserVisible:当前 " + pageAction.getCurrentPage());
     }
 
     @Override
     protected void onUserVisible() {
-
+        Log.d(TAG, "onUserVisible:当前 " + pageAction.getCurrentPage());
     }
 
     @Override
@@ -510,7 +521,6 @@ public class RecommendFragment extends BaseSearchFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        android.util.Log.d(TAG, "onHiddenChanged: ");
     }
 
     @Override
@@ -519,4 +529,9 @@ public class RecommendFragment extends BaseSearchFragment {
         adapter = null;
         list = null;
     }
+
+    public void setShow(boolean isShow) {
+        mIsShow = isShow;
+    }
+
 }
