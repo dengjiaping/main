@@ -52,7 +52,7 @@ public class PadToolActivity extends BaseFgActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_pad_tool);
+        this.setContentView(R.layout.activity_login);
 
         Button left_but = (Button) findViewById(R.id.left_but);
         left_but.setOnClickListener(new View.OnClickListener() {

@@ -15,6 +15,7 @@ import cn.ngame.store.bean.VideoLabel;
 import cn.ngame.store.push.model.PushMessage;
 import cn.ngame.store.view.VideoTabView;
 
+
 /**
  * 显示消息列表
  * Created by zeng on 2016/11/23.
@@ -29,7 +30,7 @@ public class PushMessageActivity extends BaseFgActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.push_message_activity);
+        this.setContentView(R.layout.activity_push_message);
 
         Button left_but = (Button) findViewById(R.id.left_but);
         left_but.setOnClickListener(new View.OnClickListener() {

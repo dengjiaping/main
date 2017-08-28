@@ -64,7 +64,7 @@ android {
             // 不显示Log
             //buildConfigField "boolean", "LOG_DEBUG", "false"
             // 是否进行混淆
-//            minifyEnabled true
+            minifyEnabled true
             //Zipalign优化
             zipAlignEnabled true
             // 移除无用的resource文件
