@@ -85,7 +85,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private AutoHeightViewPager viewpager;
     private ArrayList<Fragment> fragments;
     private DCViewPagerAdapter adapter;
-    List<String> tabList = new ArrayList<>();
+    String[] tabList = {"详情","必读"};
     //游戏id
     private long gameId = 0;
     private GameInfo gameInfo;
@@ -265,6 +265,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                     fragments.add(GameReadFragment.newInstance(gameInfo));
 
                     adapter.setList(fragments, tabList);
+
                     viewpager.setAdapter(adapter);
 
                     setView();
@@ -407,8 +408,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
 
     //初始化TabLayout   &   ViewPager
     private void initTabViewPager() {
-        tabList.add("详情");
-        tabList.add("必读");
         scrollView = (StickyScrollView) findViewById(R.id.scrollView);
         scrollView.setOnScrollListener(this);
         tablayout = (TabLayout) findViewById(R.id.tablayout);

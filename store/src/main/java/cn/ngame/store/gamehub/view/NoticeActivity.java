@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cn.ngame.store.R;
 import cn.ngame.store.activity.BaseFgActivity;
@@ -31,7 +30,7 @@ public class NoticeActivity extends BaseFgActivity {
     private ViewPager viewpager;
     private ArrayList<Fragment> fragments;
     private DCViewPagerAdapter adapter;
-    List<String> tabList = new ArrayList<String>();
+    String[] tabList = {"浏览", "帖子", "评论"};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,9 +58,7 @@ public class NoticeActivity extends BaseFgActivity {
     }
 
     private void initViewPager() {
-        tabList.add("浏览");
-        tabList.add("帖子");
-        tabList.add("评论");
+
         fragments = new ArrayList<Fragment>();
         fragments.add(BrowseFragment.newInstance(1));
         fragments.add(BrowseFragment.newInstance(2));
@@ -105,8 +102,8 @@ public class NoticeActivity extends BaseFgActivity {
             textView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             int width = textView.getMeasuredWidth();
             int screenWidth = ImageUtil.getScreenWidth(this);
-            int margin = (screenWidth / tabList.size() - width) / tabList.size() + 5;
-            if (tabList.size() <= 4) {
+            int margin = (screenWidth / tabList.length - width) / tabList.length + 5;
+            if (tabList.length <= 4) {
                 layoutParams.setMargins(30, 0, 30, 0);
             } else {
                 layoutParams.setMargins(margin, 0, margin, 0);

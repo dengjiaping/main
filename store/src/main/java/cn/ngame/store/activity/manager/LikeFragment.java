@@ -195,16 +195,6 @@ public class LikeFragment extends BaseSearchFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (hidden && null != likeAdapter) {
@@ -220,10 +210,6 @@ public class LikeFragment extends BaseSearchFragment {
 
     @Override
     protected void onFirstUserVisible() {
-        /*if (null != likeAdapter) {
-            likeAdapter.clean();
-        }*/
-        Log.d(TAG, "onFirstUserVisible: ");
         getLikeList();
     }
 
@@ -234,16 +220,12 @@ public class LikeFragment extends BaseSearchFragment {
       /*  if (null != likeAdapter) {
             likeAdapter.clean();
         }*/
-        Log.d(TAG, "onUserVisible: ");
         getLikeList();
     }
 
 
     @Override
     protected void onUserInvisible() {
-      /*  if (null != likeAdapter) {
-            likeAdapter.clean();
-        }*/
     }
 
     @Override

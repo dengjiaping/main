@@ -124,6 +124,8 @@
 -dontwarn com.google.android.maps.**
 -dontwarn com.jeremyfeinstein.slidingmenu.**
 
+-dontwarn com.tencent.**
+-ignorewarning
 #-dontwarn okio.**
 #-dontwarn com.google.code.gson.**
 #-dontwarn org.joda.time.**

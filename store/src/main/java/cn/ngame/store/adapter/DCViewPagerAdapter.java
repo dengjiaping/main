@@ -11,16 +11,16 @@ import java.util.List;
  */
 public class DCViewPagerAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> list;
-    private List<String> tabList;
+    private String[] tabList;
 
 
-    public DCViewPagerAdapter(FragmentManager fm, List<Fragment> list, List<String> tabList) {
+    public DCViewPagerAdapter(FragmentManager fm, List<Fragment> list, String[] tabList) {
         super(fm);
         this.list = list;
         this.tabList = tabList;
     }
 
-    public void setList(List<Fragment> list, List<String> tabList) {
+    public void setList(List<Fragment> list, String[] tabList) {
         this.list = list;
         this.tabList = tabList;
         notifyDataSetChanged();
@@ -38,8 +38,7 @@ public class DCViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-
-        return tabList.get(position);
+        return tabList[position];
     }
    /* @Override
     public void finishUpdate(ViewGroup container) {

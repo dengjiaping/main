@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
@@ -30,9 +29,9 @@ import cn.ngame.store.core.utils.Constant;
 public class ManagerFragment extends BaseSearchFragment {
     private TabLayout tablayout;
     private ViewPager viewpager;
-    private ArrayList<Fragment> fragments = new ArrayList<>();
+    private ArrayList<Fragment> fragments2 = new ArrayList<>();
+    private ArrayList<Fragment> fragments3 = new ArrayList<>();
     private DCViewPagerAdapter adapter;
-    List<String> tabList = new ArrayList<>();
     String typeValue = "";
     private FragmentActivity context;
     private String pwd;
@@ -64,7 +63,14 @@ public class ManagerFragment extends BaseSearchFragment {
         //viewpager每次切换的时候， 会重新创建当前界面及左右界面三个界面， 每次切换都要重新oncreate,
         // 表示三个界面之间来回切换都不会重新加载
         //viewpager.setOffscreenPageLimit(0);
-        setTabViewPagerData();
+        //setTabViewPagerData();
+        fragments2.add(installedFragment);
+        fragments2.add(necessaryFragment);
+
+        fragments3.add(installedFragment);
+        fragments3.add(likeFragment);
+        fragments3.add(necessaryFragment);
+        adapter = new DCViewPagerAdapter(getChildFragmentManager(), fragments2, tabList2);
     }
 
 
@@ -92,35 +98,23 @@ public class ManagerFragment extends BaseSearchFragment {
         necessaryFragment.onHiddenChanged(hidden);
     }
 
+    String[] tabList3 = {"已装", "喜欢", "必备"};
+    String[] tabList2 = {"已装", "必备"};
+
     private void setTabViewPagerData() {
         //没有登录
         pwd = StoreApplication.passWord;
         if ((pwd != null && !"".endsWith(pwd)) || !Constant.PHONE.equals(StoreApplication.loginType)) {
             //已登录
-            tabList.clear();
-            fragments.clear();
-            tabList.add("已装");
-            fragments.add(installedFragment);
-            tabList.add("喜欢");
-
-            fragments.add(likeFragment);
-            tabList.add("必备");
-            fragments.add(necessaryFragment);
+            adapter.setList(fragments3, tabList3);
         } else {
             //未登录
-            //已登录
-            tabList.clear();
-            fragments.clear();
-            tabList.add("已装");
-            fragments.add(installedFragment);
-            tabList.add("必备");
-            fragments.add(necessaryFragment);
+            adapter.setList(fragments2, tabList2);
         }
         initViewPagerTabs();
     }
 
     private void initViewPagerTabs() {
-        adapter = new DCViewPagerAdapter(getChildFragmentManager(), fragments, tabList);
         viewpager.setAdapter(adapter);
         tablayout.setupWithViewPager(viewpager);
         tablayout.setTabMode(TabLayout.MODE_FIXED); //固定模式

@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cn.ngame.store.R;
 import cn.ngame.store.activity.BaseFgActivity;
@@ -23,7 +22,7 @@ import cn.ngame.store.core.utils.ImageUtil;
  * Created by gp on 2017/3/7 0007.
  */
 
-public class VoteActivity extends BaseFgActivity{
+public class VoteActivity extends BaseFgActivity {
 
     private LinearLayout ll_back;
     private TextView tv_title;
@@ -31,7 +30,6 @@ public class VoteActivity extends BaseFgActivity{
     private ViewPager viewpager;
     private ArrayList<Fragment> fragments;
     private DCViewPagerAdapter adapter;
-    List<String> tabList = new ArrayList<String>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,9 +55,9 @@ public class VoteActivity extends BaseFgActivity{
         initTabs();
     }
 
+    String[] tabList = {"帖子", "排行"};
+
     private void initViewPager() {
-        tabList.add("帖子");
-        tabList.add("排行");
         fragments = new ArrayList<Fragment>();
         fragments.add(VoteMagFragment.newInstance());
         fragments.add(OrderMagFragment.newInstance());
@@ -102,8 +100,8 @@ public class VoteActivity extends BaseFgActivity{
             textView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             int width = textView.getMeasuredWidth();
             int screenWidth = ImageUtil.getScreenWidth(this);
-            int margin = (screenWidth / tabList.size() - width) / tabList.size() + 5;
-            if (tabList.size() <= 4) {
+            int margin = (screenWidth / tabList.length- width) / tabList.length+ 5;
+            if (tabList.length<= 4) {
                 layoutParams.setMargins(30, 0, 30, 0);
             } else {
                 layoutParams.setMargins(margin, 0, margin, 0);
