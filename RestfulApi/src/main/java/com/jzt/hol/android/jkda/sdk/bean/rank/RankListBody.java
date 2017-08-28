@@ -13,10 +13,19 @@ public class RankListBody {
      * records : 10
      */
 
-    private int appTypeId=0;
+    private int appTypeId = 0;
     private int startRecord;
-    private int categoryId;
+    private int parentCategoryId;//第一级
+    private int categoryId;//第二级
     private int records;
+
+    public int getParentCategoryId() {
+        return parentCategoryId;
+    }
+
+    public void setParentCategoryId(int parentCategoryId) {
+        this.parentCategoryId = parentCategoryId;
+    }
 
     public int getAppTypeId() {
         return appTypeId;

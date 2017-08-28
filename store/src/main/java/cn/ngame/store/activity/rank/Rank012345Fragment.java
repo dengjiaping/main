@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBean;
 import com.jzt.hol.android.jkda.sdk.bean.rank.RankListBody;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
@@ -26,19 +25,16 @@ import com.jzt.hol.android.jkda.sdk.services.game.GameCommentListClient;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 
 import cn.ngame.store.R;
 import cn.ngame.store.adapter.RankingListAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.PageAction;
-import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.util.ToastUtil;
-import cn.ngame.store.view.GameLoadProgressBar;
 import cn.ngame.store.view.LoadStateView;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
@@ -50,20 +46,11 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 
 public class Rank012345Fragment extends BaseSearchFragment {
     private PullToRefreshListView pullListView;
-    private GameLoadProgressBar day_progress_bar_one, day_progress_bar_two, day_progress_bar_three;
-    private SimpleDraweeView sdv_img_1, sdv_img_2, sdv_img_3;
-    private TextView tv_rank_name_one, tv_rank_name_two, tv_rank_name_three;
-    private TextView tv_download_num_one, tv_download_num_two, tv_download_num_three;
-
-    private Timer timer = new Timer();
-    private IFileLoad fileLoad; //文件下载公共类接口
-
     private RankingListAdapter adapter;
-
+    protected final static String TAG = Rank012345Fragment.class.getSimpleName();
     private PageAction pageAction;
     public static int PAGE_SIZE = 30;
-    List<LikeListBean.DataBean.GameListBean> list = new ArrayList<>();
-    public static final String ARG_PAGE = "ARG_PAGE";
+    private List<LikeListBean.DataBean.GameListBean> list = new ArrayList<>();
     private boolean IS_LOADED = false;
     private static int mSerial = 0;
     private int tab_position = 0;
@@ -106,7 +93,6 @@ public class Rank012345Fragment extends BaseSearchFragment {
 
     @Override
     protected int getContentViewLayoutID() {
-        android.util.Log.d(TAG, "0123getContentViewLayoutID: ");
         if (isFirst && tab_position == mSerial) {
             isFirst = false;
             sendMessage();
@@ -170,7 +156,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
         });
         //点击事件
         final ListView refreshableView = pullListView.getRefreshableView();
-        adapter = new RankingListAdapter(content,fm , list, 0);
+        adapter = new RankingListAdapter(content, fm, list, 0);
         refreshableView.setAdapter(adapter);
         refreshableView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -186,16 +172,20 @@ public class Rank012345Fragment extends BaseSearchFragment {
         } else {
             tablayout2 = (TabLayout) view.findViewById(R.id.rank01234_tablayout);
             if (5 == tab_position) {
+                //默认FC的id
+                tab2_position=50;
                 int length = tabList5.length;
                 for (int i = 0; i < length; i++) {
                     tablayout2.addTab(tablayout2.newTab().setText(tabList5[i]));
                 }
+                tab2_all = tab2_5Id;
                 initTabs5();
             } else {
                 int length = tabList.length;
                 for (int i = 0; i < length; i++) {
                     tablayout2.addTab(tablayout2.newTab().setText(tabList[i]));
                 }
+                tab2_all = tab2_Id01234;
                 //二级标签
                 initTabs1234();
             }
@@ -229,7 +219,12 @@ public class Rank012345Fragment extends BaseSearchFragment {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     //0=全部   1=大陆   2=美国   3=韩国   4=日本   5=港澳台
-                    tab2_position = tab.getPosition();
+                    int position = tab.getPosition();
+                    int id = tab2_all[position];
+
+                    tab2_position = id;
+                    android.util.Log.d(TAG, tab.getText() + ",点击id," + id);
+
                     //请求数据
                     getRankList();
                 }
@@ -248,7 +243,10 @@ public class Rank012345Fragment extends BaseSearchFragment {
     }
 
     private String tabList[] = new String[]{"全部", "大陆", "美国", "韩国", "日本", "港澳台"};
+    private int tab2_Id01234[] = new int[]{0, 47, 49, 51, 50, 48};
     private String tabList5[] = new String[]{"FC", "MAME", "SFC", "GBA", "PS", "PSP", "MD", "GBC", "NDS"};
+    private int tab2_5Id[] = new int[]{50, 51, 52, 53, 54, 55, 56, 57, 58};
+    private int tab2_all[];
 
     //顶部下面的二级标签
     private void initTabs1234() {
@@ -278,14 +276,13 @@ public class Rank012345Fragment extends BaseSearchFragment {
         ViewGroup viewGroup = (ViewGroup) tablayout2.getChildAt(0);
         int dp20 = CommonUtil.dip2px(getActivity(), 20);
         int dp45 = CommonUtil.dip2px(getActivity(), 45);
-        int dp40 = CommonUtil.dip2px(getActivity(), 40);
-        int dp12 = CommonUtil.dip2px(content, 12f);
         for (int i = 0; i < viewGroup.getChildCount(); i++) {
             ViewGroup view = (ViewGroup) viewGroup.getChildAt(i);
             TextView textView = (TextView) view.getChildAt(1);
-            textView.setTextSize(dp12);
+            textView.setTextSize(getResources().getDimensionPixelSize(R.dimen.dm012));
             textView.setWidth(dp45);
             textView.setHeight(dp20);
+
             textView.setBackgroundResource(R.drawable.selector_rank5_tab2_bg);
         }
     }
@@ -294,13 +291,14 @@ public class Rank012345Fragment extends BaseSearchFragment {
      * 获取排行榜列表数据
      */
     private void getRankList() {
-        Log.d(TAG, tab_position + "当前索引:" + tab2_position);
+        Log.d(TAG, tab_position + ",请求数据,当前索引:" + tab2_position);
         //tab_position :0=全部   1=手柄   2=破解   3=汉化  4=特色
         loadStateView.setVisibility(View.VISIBLE);
         RankListBody bodyBean = new RankListBody();
         bodyBean.setStartRecord(pageAction.getCurrentPage());
         bodyBean.setRecords(PAGE_SIZE);
-        bodyBean.setCategoryId(tab_position);
+        bodyBean.setParentCategoryId(tab_position);
+        bodyBean.setCategoryId(tab2_position);
         new GameCommentListClient(content, bodyBean).observable()
 //                .compose(this.<DiscountListBean>bindToLifecycle())
                 .subscribe(new ObserverWrapper<LikeListBean>() {

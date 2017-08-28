@@ -29,7 +29,6 @@ import cn.ngame.store.adapter.LikeFragmentAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.PageAction;
-import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
@@ -44,14 +43,12 @@ import cn.ngame.store.view.QuickAction;
 
 public class LikeFragment extends BaseSearchFragment {
 
-    ListView listView;
+    private ListView listView;
     private PageAction pageAction;
     public static int PAGE_SIZE = 10;
     private int typeValue;
     private String type;
     protected QuickAction mItemClickQuickAction;
-    private IFileLoad fileLoad;
-
     private LikeFragmentAdapter likeAdapter;
     /**
      * 当前点击的列表 1.下载列表 2.完成列表
@@ -206,7 +203,6 @@ public class LikeFragment extends BaseSearchFragment {
             timerTasks.clear();
         }
     }
-
 
     @Override
     protected void onFirstUserVisible() {
