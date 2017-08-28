@@ -410,7 +410,8 @@ public class RecommendFragment extends BaseSearchFragment {
 
     public void scroll2Top() {
         android.util.Log.d(TAG, "是否在显示: " + mIsShow);
-        if (mIsShow && refreshableView != null) {
+        if (mIsShow && pullListView != null) {
+            ListView refreshableView = pullListView.getRefreshableView();
             //refreshableView.setSelectionAfterHeaderView();
             refreshableView.smoothScrollToPosition(0);
             getGameList();
