@@ -173,7 +173,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
             tablayout2 = (TabLayout) view.findViewById(R.id.rank01234_tablayout);
             if (5 == tab_position) {
                 //默认FC的id
-                tab2_position=50;
+                tab2_position = 50;
                 int length = tabList5.length;
                 for (int i = 0; i < length; i++) {
                     tablayout2.addTab(tablayout2.newTab().setText(tabList5[i]));
@@ -274,15 +274,15 @@ public class Rank012345Fragment extends BaseSearchFragment {
         tab5Params.setMargins(0, 0, 0, 0);
         tablayout2.setTabTextColors(ContextCompat.getColor(content, R.color.color999999), Color.WHITE);
         ViewGroup viewGroup = (ViewGroup) tablayout2.getChildAt(0);
-        int dp20 = CommonUtil.dip2px(getActivity(), 20);
-        int dp45 = CommonUtil.dip2px(getActivity(), 45);
-        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+        int dp20 = CommonUtil.dip2px(content, 20);
+        int dp42 = CommonUtil.dip2px(content, 42);
+        int childCount = viewGroup.getChildCount();
+        for (int i = 0; i < childCount; i++) {
             ViewGroup view = (ViewGroup) viewGroup.getChildAt(i);
             TextView textView = (TextView) view.getChildAt(1);
             textView.setTextSize(getResources().getDimensionPixelSize(R.dimen.dm012));
-            textView.setWidth(dp45);
+            textView.setWidth(1 == i ? dp42 + dp20 / 2 : dp42);
             textView.setHeight(dp20);
-
             textView.setBackgroundResource(R.drawable.selector_rank5_tab2_bg);
         }
     }
@@ -294,6 +294,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
         Log.d(TAG, tab_position + ",请求数据,当前索引:" + tab2_position);
         //tab_position :0=全部   1=手柄   2=破解   3=汉化  4=特色
         loadStateView.setVisibility(View.VISIBLE);
+        loadStateView.setState(LoadStateView.STATE_ING);
         RankListBody bodyBean = new RankListBody();
         bodyBean.setStartRecord(pageAction.getCurrentPage());
         bodyBean.setRecords(PAGE_SIZE);

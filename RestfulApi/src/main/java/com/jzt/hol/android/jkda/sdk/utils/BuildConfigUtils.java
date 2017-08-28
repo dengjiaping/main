@@ -19,7 +19,7 @@ public class BuildConfigUtils {
 //            final Class<?> activityThread = Class.forName("android.app.ActivityThread");
 //            final Method currentPackage = activityThread.getMethod("currentPackageName");
 //            final String packageName = (String) currentPackage.invoke(null, (Object[]) null);
-            Class<?> clazz = Class.forName("com.jzt.hol.android.jkda.BuildConfig");
+            Class<?> clazz = Class.forName("com.jzt.hol.android.jkda.sdk.BuildConfig");
             Field field = clazz.getField(fieldName);
             return (T)field.get(null);
         } catch (ClassNotFoundException e) {
