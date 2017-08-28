@@ -173,7 +173,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //........ ....................通知栏...................
+        //........ ....................通知栏  >= 4.4(KITKAT)...................
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
@@ -343,7 +343,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         findSMViewById(R.id.sm_about_us);
         findSMViewById(R.id.sm_ad);
 
-        mSmIconIv = (SimpleDraweeView) findViewById(R.id.sm_top_icon_iv);
+        mSmIconIv = (SimpleDraweeView) findViewById(R.id.top_icon_sdv);
         mSmNicknameTv = (TextView) findViewById(R.id.sm_top_nikename_tv);
         mEditProfileTv = (TextView) findViewById(R.id.edit_profile_click);
         mSmIconIv.setOnClickListener(mSmClickLstener);
@@ -389,7 +389,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         public void onClick(View v) {
             int id = v.getId();
             if (id == R.id.sm_top_nikename_tv
-                    || id == R.id.sm_top_icon_iv
+                    || id == R.id.top_icon_sdv
                     || id == R.id.edit_profile_click
                     ) {//系统设置
                 if (pwd != null && !"".endsWith(pwd) || !Constant.PHONE.equals(StoreApplication.loginType)) {

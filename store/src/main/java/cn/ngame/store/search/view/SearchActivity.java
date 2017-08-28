@@ -88,6 +88,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_search);
+        initStatusBar();
         content = this;
         dbManager = DatabaseManager.getInstance(this);
 

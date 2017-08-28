@@ -175,7 +175,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         headView.findViewById(R.id.discover_top_classify_all_bt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, GameAllClassifyActivity.class));
+                startActivity(new Intent(context, AllClassifyActivity.class));
             }
         });
     }

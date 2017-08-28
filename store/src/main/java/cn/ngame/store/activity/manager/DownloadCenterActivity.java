@@ -38,6 +38,7 @@ public class DownloadCenterActivity extends BaseFgActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_download_center);
+        initStatusBar();
         mContext = this;
         init();
     }

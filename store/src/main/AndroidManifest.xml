@@ -358,7 +358,7 @@
             android:theme="@android:style/Theme.NoTitleBar"
             />
         <activity
-            android:name=".activity.discover.GameAllClassifyActivity"
+            android:name=".activity.discover.AllClassifyActivity"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.NoTitleBar"
             />

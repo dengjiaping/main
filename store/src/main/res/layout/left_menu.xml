@@ -24,7 +24,7 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             xmlns:fresco="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/sm_top_icon_iv"
+            android:id="@+id/top_icon_sdv"
             android:layout_width="@dimen/sm_top_icon_height"
             android:layout_height="@dimen/sm_top_icon_height"
             android:layout_below="@id/edit_profile_click"
@@ -43,7 +43,7 @@
             android:id="@+id/sm_top_nikename_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/sm_top_icon_iv"
+            android:layout_below="@id/top_icon_sdv"
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:lines="1"

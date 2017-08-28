@@ -35,7 +35,7 @@ import static cn.ngame.store.core.utils.ImageUtil.setGridViewHeight;
  * 分类
  * Created by zeng on 2016/6/16.
  */
-public class GameAllClassifyActivity extends BaseFgActivity {
+public class AllClassifyActivity extends BaseFgActivity {
 
     private PullToRefreshListView pullListView;
     private LoadStateView loadStateView;
@@ -45,7 +45,7 @@ public class GameAllClassifyActivity extends BaseFgActivity {
     private PageAction pageAction;
     public static int PAGE_SIZE = 20;
     private long categoryId;
-    private GameAllClassifyActivity content;
+    private AllClassifyActivity content;
     private GridView mStyleGView, mCategoryGView, mManufacturerGView, mCountyGV;
 
     List<AllClassifyBean.DataBean.GameCountyListBean> mCountyList = new ArrayList<>();
@@ -63,7 +63,7 @@ public class GameAllClassifyActivity extends BaseFgActivity {
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
-        content = GameAllClassifyActivity.this;
+        content = AllClassifyActivity.this;
 
         findViewById(R.id.center_tv).setVisibility(View.GONE);
         Button leftBt = (Button) findViewById(R.id.left_bt);

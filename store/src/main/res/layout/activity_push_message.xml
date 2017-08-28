@@ -1,51 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ngame="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              xmlns:ngame="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:clipToPadding="false"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/layout_2"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/app_title_height"
-        android:layout_alignParentTop="true"
-        android:background="@color/mainColor" >
-
-        <Button
-            android:id="@+id/left_but"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/ic_back"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical"
-            android:text="消息"
-            android:textSize="22sp"
-            android:textColor="@color/white"/>
-
-    </RelativeLayout>
+    <include
+        android:id="@+id/ll_title"
+        layout="@layout/layout_title_left_center"/>
 
 
     <cn.ngame.store.view.VideoTabView
         android:id="@+id/auto_tab"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:scrollbars="none" />
+        android:scrollbars="none"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/f5f5f5" />
+        android:background="@color/f5f5f5"/>
 
     <!--<cn.ngame.store.view.LoadStateView
         android:id="@+id/loadStateView"
@@ -57,6 +33,6 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

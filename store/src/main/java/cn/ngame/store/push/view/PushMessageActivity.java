@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -31,15 +32,16 @@ public class PushMessageActivity extends BaseFgActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_push_message);
+        initStatusBar();
 
-        Button left_but = (Button) findViewById(R.id.left_but);
-        left_but.setOnClickListener(new View.OnClickListener() {
+        Button leftBt = (Button) findViewById(R.id.left_bt);
+        leftBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
+        ((TextView) findViewById(R.id.center_tv)).setText("消息");
         adapter = new PushMsgFgAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
@@ -51,11 +53,11 @@ public class PushMessageActivity extends BaseFgActivity {
 
     }
 
-    private void createFragmentData(){
+    private void createFragmentData() {
 
         ArrayList<VideoLabel> labels = new ArrayList<>();
-        VideoLabel labelYG = new VideoLabel(PushMessage.MSG_TYPE_TZ,"通知");
-        VideoLabel labelHD = new VideoLabel(PushMessage.MSG_TYPE_HD,"活动");
+        VideoLabel labelYG = new VideoLabel(PushMessage.MSG_TYPE_TZ, "通知");
+        VideoLabel labelHD = new VideoLabel(PushMessage.MSG_TYPE_HD, "活动");
         labels.add(labelYG);
         labels.add(labelHD);
         videoTabView.setVideoLabels(labels);
