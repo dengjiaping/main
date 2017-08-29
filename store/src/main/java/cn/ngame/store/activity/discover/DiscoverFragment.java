@@ -112,7 +112,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     public void onActivityCreated(Bundle savedInstanceState) {//3
         super.onActivityCreated(savedInstanceState);
         context = getActivity();
-        View headView = View.inflate(this.getActivity(), R.layout.discover_header_view, null);//头部
+        View headView = View.inflate(context, R.layout.discover_header_view, null);//头部
         //分类
         init0ClassifyView(headView);
         //每日新发现
@@ -250,7 +250,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         setOnMoreBtClickListener(headView, R.id.more_big_chang_tv);
     }
 
-    //动作
+    //todo 动作
     private void initActionView(View headView) {
         for (int i = 0; i < 10; i++) {
             mActionList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_14.png");

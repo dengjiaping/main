@@ -174,7 +174,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
             mTopLlay.setVisibility(View.GONE);
         } else {
             tablayout2 = (TabLayout) view.findViewById(R.id.rank01234_tablayout);
-            if (5 == tab_position) {
+            if (53 == tab_position) {
                 //默认FC的id
                 tab2_position = 50;
                 int length = tabList5.length;
