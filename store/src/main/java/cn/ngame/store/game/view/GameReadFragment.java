@@ -57,7 +57,7 @@ public class GameReadFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //获取初始参数
-        gameInfo = (GameInfo) getArguments().getSerializable(GameInfo.TAG);
+        //gameInfo = (GameInfo) getArguments().getSerializable(GameInfo.TAG);
     }
 
     @Nullable
@@ -66,13 +66,12 @@ public class GameReadFragment extends Fragment {
         context = getActivity();
 
         View rootLayout = inflater.inflate(R.layout.fragment_game_strategy, container, false);
-
-        tv_content = (TextView) rootLayout.findViewById(R.id.tv_summary);
+    /*    tv_content = (TextView) rootLayout.findViewById(R.id.tv_summary);
 
         if (gameInfo != null && gameInfo.gameStrategy != null) {
             tv_content.setText(gameInfo.gameStrategy.getStrategyContent());
-            getContent();
-        }
+            getData();
+        }*/
 
 
         return rootLayout;
@@ -81,7 +80,7 @@ public class GameReadFragment extends Fragment {
     /**
      * 获取攻略
      */
-    private void getContent() {
+    private void getData() {
 
         String url = Constant.WEB_SITE + Constant.URL_GAME_STRATEGY;
         Response.Listener<JsonResult<GameStrategy>> successListener = new Response.Listener<JsonResult<GameStrategy>>() {

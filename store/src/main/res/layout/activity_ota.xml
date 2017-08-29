@@ -60,7 +60,7 @@
         ngame:roundColor="@color/e5e5e5"
         ngame:roundProgressColor="@color/mainColor"
         ngame:roundWidth="@dimen/dm002"
-        ngame:textColor="@color/font_black_6"
+        ngame:textColor="@color/color_666666"
         ngame:textIsDisplayable="true"
         ngame:textSize="18sp"/>
 

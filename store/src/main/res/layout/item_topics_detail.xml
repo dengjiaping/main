@@ -105,7 +105,7 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:text="这是描述"
-        android:textColor="@color/font_black_6"
+        android:textColor="@color/color_666666"
         android:textSize="@dimen/dp_14"/>
 
     <include layout="@layout/layout_line_dp1_d9d9d9"/>

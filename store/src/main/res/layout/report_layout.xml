@@ -31,7 +31,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="6dp"
                 android:text="@string/game_hub_eygs"
-                android:textColor="@color/font_black_6"
+                android:textColor="@color/color_666666"
                 android:textSize="14dp"
                 android:id="@+id/textView2" />
         </LinearLayout>
@@ -60,7 +60,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="6dp"
                     android:text="@string/game_hub_ggzp"
-                    android:textColor="@color/font_black_6"
+                    android:textColor="@color/color_666666"
                     android:textSize="14dp" />
             </LinearLayout>
         </RelativeLayout>
@@ -90,7 +90,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="6dp"
                 android:text="@string/game_hub_yhsq"
-                android:textColor="@color/font_black_6"
+                android:textColor="@color/color_666666"
                 android:textSize="14dp" />
         </LinearLayout>
 
@@ -118,7 +118,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="6dp"
                     android:text="@string/game_hub_other"
-                    android:textColor="@color/font_black_6"
+                    android:textColor="@color/color_666666"
                     android:textSize="14dp" />
             </LinearLayout>
         </RelativeLayout>

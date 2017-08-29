@@ -14,7 +14,7 @@
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:background="@color/font_black_6" >
+        android:background="@color/color_666666" >
 
         <ImageButton
             android:id="@+id/video_play"

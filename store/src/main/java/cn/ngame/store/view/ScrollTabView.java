@@ -85,7 +85,7 @@ public class ScrollTabView extends HorizontalScrollView {
         currentTabBackgroundColor = context.getResources().getColor(R.color.f5f5f5);
         currentTabTextColor = context.getResources().getColor(R.color.mainColor);
 
-        defaultTextColor = context.getResources().getColor(R.color.font_black_6);
+        defaultTextColor = context.getResources().getColor(R.color.color_666666);
 
         textViewWidth = CommonUtil.dip2px(context, 65);
     }

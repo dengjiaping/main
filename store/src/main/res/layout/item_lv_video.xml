@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:gravity="left"
-            android:textColor="@color/font_black_6" />
+            android:textColor="@color/color_666666" />
 
         <TextView
             android:layout_width="match_parent"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:gravity="left"
-            android:textColor="@color/font_black_6" />
+            android:textColor="@color/color_666666" />
 
         <TextView
             android:layout_width="match_parent"
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:gravity="left"
-            android:textColor="@color/font_black_6" />
+            android:textColor="@color/color_666666" />
 
         <TextView
             android:layout_width="match_parent"

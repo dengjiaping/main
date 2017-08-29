@@ -15,7 +15,7 @@
         android:layout_alignParentLeft="true"
         android:text="Ngame controller class"
         android:layout_marginBottom="@dimen/dm010"
-        android:textColor="@color/font_black_6"
+        android:textColor="@color/color_666666"
         android:textSize="@dimen/dm025"/>
 
     <TextView

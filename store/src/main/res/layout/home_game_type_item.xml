@@ -48,7 +48,7 @@
             android:textSize="12sp"
             android:gravity="center"
             android:text="的期望人情味"
-            android:textColor="@color/font_black_6"
+            android:textColor="@color/color_666666"
             android:maxLines="1"/>
 
         <cn.ngame.store.view.GameLoadProgressBar

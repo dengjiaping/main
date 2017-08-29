@@ -15,7 +15,7 @@
         android:gravity="left"
         android:textSize="14sp"
         android:text="普通技能"
-        android:textColor="@color/font_black_6"/>
+        android:textColor="@color/color_666666"/>
 
     <TextView
         android:id="@+id/tv_key"

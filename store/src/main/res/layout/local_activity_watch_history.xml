@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/font_black_6"
+                    android:textColor="@color/color_666666"
                     android:textSize="18sp"
                     android:text="一周内"/>
 
@@ -99,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/font_black_6"
+                    android:textColor="@color/color_666666"
                     android:textSize="18sp"
                     android:text="更早"/>
 
@@ -133,7 +133,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textSize="16sp"
-            android:textColor="@color/font_black_6"
+            android:textColor="@color/color_666666"
             android:text="全选"/>
 
         <View

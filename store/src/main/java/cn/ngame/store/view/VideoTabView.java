@@ -73,7 +73,7 @@ public class VideoTabView extends RelativeLayout {
         this.context = context;
 
         currentTextColor = getResources().getColor(R.color.mainColor);
-        defaultTextColor = getResources().getColor(R.color.font_black_6);
+        defaultTextColor = getResources().getColor(R.color.color_666666);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.animationTabWidget);
         currentTab = typedArray.getInt(R.styleable.animationTabWidget_current_index, 0);

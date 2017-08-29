@@ -85,7 +85,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private AutoHeightViewPager viewpager;
     private ArrayList<Fragment> fragments;
     private DCViewPagerAdapter adapter;
-    String[] tabList = {"详情","必读"};
+    String[] tabList = {"详情", "必读"};
     //游戏id
     private long gameId = 0;
     private GameInfo gameInfo;
@@ -329,6 +329,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
+                Log.d(TAG, "onTabSelected: " + position);
                 ViewGroup view = (ViewGroup) viewGroup.getChildAt(position);
                 TextView textView = (TextView) view.getChildAt(1);
                 Paint paint = textView.getPaint();
@@ -352,6 +353,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
     }

@@ -30,7 +30,7 @@
             tabs:tabPaddingEnd="@dimen/dmTabPadding"
             tabs:tabPaddingStart="@dimen/dmTabPadding"
             tabs:tabSelectedTextColor="@color/color_18b9fe"
-            tabs:tabTextColor="@color/font_black_6"/>
+            tabs:tabTextColor="@color/color_666666"/>
         <!--
                 <include layout="@layout/layout_line_05dp_e6e6e6"/>
                 <include layout="@layout/layout_line_05dp_e6e6e6"/>-->

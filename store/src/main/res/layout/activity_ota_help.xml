@@ -27,7 +27,7 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:background="@color/white"
-        android:textColor="@color/font_black_6"
+        android:textColor="@color/color_666666"
         android:textSize="16sp"
         android:text="一、打开游戏手柄开关"/>
     <TextView
@@ -38,7 +38,7 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:background="@color/white"
-        android:textColor="@color/font_black_6"
+        android:textColor="@color/color_666666"
         android:textSize="16sp"
         android:text="二、打开手机蓝牙"/>
     <TextView
@@ -49,7 +49,7 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:background="@color/white"
-        android:textColor="@color/font_black_6"
+        android:textColor="@color/color_666666"
         android:textSize="16sp"
         android:text="三、在手机上等待搜索找到游戏手柄蓝牙信号"/>
     <TextView
@@ -60,7 +60,7 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:background="@color/white"
-        android:textColor="@color/font_black_6"
+        android:textColor="@color/color_666666"
         android:textSize="16sp"
         android:text="四、与游戏手柄蓝牙配对"/>
     <TextView
@@ -71,7 +71,7 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:background="@color/white"
-        android:textColor="@color/font_black_6"
+        android:textColor="@color/color_666666"
         android:textSize="16sp"
         android:text="五、连接成功后可点击检测更新进行手柄升级"/>
 

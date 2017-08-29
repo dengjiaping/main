@@ -63,7 +63,7 @@ public class GameTabView extends RelativeLayout implements OnClickListener {
         //this.context = context;
 
         currentTextColor = ContextCompat.getColor(context, R.color.game_detail_tab_tv_seleted);
-        normal = ContextCompat.getColor(context, R.color.font_black_6);
+        normal = ContextCompat.getColor(context, R.color.color_666666);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.animationTabWidget);
         currentTab = typedArray.getInt(R.styleable.animationTabWidget_current_index, 0);
         typedArray.recycle();

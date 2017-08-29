@@ -85,7 +85,7 @@ public class VideoTypeScrollTabView extends HorizontalScrollView {
         currentTabTextColor = context.getResources().getColor(R.color.white);
         currentTabTextSize = 16;
 
-        defaultTextColor = context.getResources().getColor(R.color.font_black_6);
+        defaultTextColor = context.getResources().getColor(R.color.color_666666);
         defaultTextSize = 16;
 
     }

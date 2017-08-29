@@ -30,7 +30,7 @@
             android:layout_marginLeft="15dp"
             android:text="我的游戏"
             android:textSize="16sp"
-            android:textColor="@color/font_black_6"/>
+            android:textColor="@color/color_666666"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
             android:layout_marginLeft="15dp"
             android:text="我的视频"
             android:textSize="16sp"
-            android:textColor="@color/font_black_6"/>
+            android:textColor="@color/color_666666"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -105,7 +105,7 @@
             android:layout_marginLeft="15dp"
             android:text="观看历史"
             android:textSize="16sp"
-            android:textColor="@color/font_black_6"/>
+            android:textColor="@color/color_666666"/>
 
         <ImageView
             android:layout_width="wrap_content"

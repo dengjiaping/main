@@ -16,7 +16,7 @@
         android:textSize="14sp"
         android:gravity="left"
         android:text=""
-        android:textColor="@color/font_black_6"
+        android:textColor="@color/color_666666"
         android:singleLine="true"
         android:ellipsize="end" />
 

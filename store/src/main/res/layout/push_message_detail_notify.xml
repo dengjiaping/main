@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textSize="14sp"
-            android:textColor="@color/font_black_6"
+            android:textColor="@color/color_666666"
             />
 
     </LinearLayout>
