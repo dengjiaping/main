@@ -54,7 +54,6 @@ import cn.ngame.store.core.utils.NetUtil;
 import cn.ngame.store.core.utils.UMEventNameConstant;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.util.ToastUtil;
-import cn.ngame.store.view.PicassoImageView;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 
@@ -106,7 +105,7 @@ public class RecommendFragment extends BaseSearchFragment {
     private Intent singeTopicsDetailIntent = new Intent();
     private LinearLayout.LayoutParams hParams;
     private int wrapContent;
-    private PicassoImageView picassoImageView;
+    private SimpleDraweeView picassoImageView;
     private boolean mIsShow = false;
     private ListView refreshableView;
 
@@ -192,7 +191,7 @@ public class RecommendFragment extends BaseSearchFragment {
                     for (int i = 0; i < size; i++) {
                         final RecommendTopicsItemInfo info = gameInfo.get(i);
                         final String gameImage = info.getSelectImage();//获取每一张图片
-                        picassoImageView = new PicassoImageView(context);
+                        picassoImageView = new SimpleDraweeView(context);
                         picassoImageView.setScaleType(ImageView.ScaleType.FIT_XY);
                         //为  PicassoImageView设置属性
                         hParams = new LinearLayout.LayoutParams(
@@ -207,7 +206,7 @@ public class RecommendFragment extends BaseSearchFragment {
                         }
                         picassoImageView.setLayoutParams(hParams);
                         //加载网络图片
-                        picassoImageView.setImageUrl(gameImage, width240, heght114, ic_def_logo_480_228);
+                        picassoImageView.setImageURI(gameImage);
                         picassoImageView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -243,7 +242,7 @@ public class RecommendFragment extends BaseSearchFragment {
     }
 
     public void listData(RecommendListBean result) {
-        android.util.Log.d(TAG, "listData: " + result.getData());
+        android.util.Log.d(TAG, "setData: " + result.getData());
         if (result.getData() == null) {
             return;
         }

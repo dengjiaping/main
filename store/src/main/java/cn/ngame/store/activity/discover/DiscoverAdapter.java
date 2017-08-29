@@ -1,0 +1,179 @@
+/*
+ * 	Flan.Zeng 2011-2016	http://git.oschina.net/signup?inviter=flan
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package cn.ngame.store.activity.discover;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
+import android.support.v4.app.FragmentManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
+
+import java.util.List;
+
+import cn.ngame.store.R;
+import cn.ngame.store.core.fileload.FileLoadManager;
+import cn.ngame.store.core.fileload.IFileLoad;
+import cn.ngame.store.core.utils.CommonUtil;
+import cn.ngame.store.core.utils.KeyConstant;
+import cn.ngame.store.game.view.GameDetailActivity;
+
+public class DiscoverAdapter extends BaseAdapter {
+
+    private final int wrapContent;
+    private Context context;
+    private FragmentManager fm;
+    private List<RecommendListBean.DataBean> list;
+    private int type;
+    private static Handler uiHandler = new Handler();
+    private final Intent intent;
+    private final LayoutInflater inflater;
+    private TextView gameNameTv;
+
+    public DiscoverAdapter(Context context, FragmentManager fm, List<RecommendListBean.DataBean> list, int type) {
+        super();
+        this.context = context;
+        this.fm = fm;
+        this.list = list;
+        this.type = type;
+        intent = new Intent();
+        intent.setClass(context, GameDetailActivity.class);
+        wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
+        inflater = LayoutInflater.from(context);
+    }
+
+    public void setList(List<RecommendListBean.DataBean> list) {
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public int getCount() {
+        if (list != null) {
+            return list.size();
+        }
+        return 0;
+    }
+
+    @Override
+    public Object getItem(int position) {
+        if (list != null) {
+            return list.get(position);
+        }
+        return null;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(final int position, View convertView, final ViewGroup parent) {
+        final RecommendListBean.DataBean gameInfo = (list == null) ? null : list.get(position);
+        final ViewHolder holder;
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.discover_list_item, parent, false);
+            holder = new ViewHolder(context, fm);
+            holder.horizontalViewContainer = (LinearLayout) convertView.findViewById(R.id.horizontalView_container);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        if (gameInfo != null) {
+            holder.update(gameInfo, type, position);
+        }
+
+        return convertView;
+    }
+
+    public class ViewHolder {
+        private Context context;
+        private RecommendListBean.DataBean gameInfo;
+        private SimpleDraweeView img;
+        private TextView tv_title, tv_summary, tv_from;
+        private IFileLoad fileLoad;
+        private FragmentManager fm;
+        private LinearLayout horizontalViewContainer;
+        public ImageView recommend_game_pic;
+        private SimpleDraweeView gameIV;
+        private LinearLayout.LayoutParams hParams;
+
+        public ViewHolder(Context context, FragmentManager fm) {
+            this.context = context;
+            this.fm = fm;
+            fileLoad = FileLoadManager.getInstance(context);
+        }
+
+        /**
+         * 更新普通数据
+         *
+         * @param gameInfo 游戏信息
+         */
+        public void update(final RecommendListBean.DataBean gameInfo, int type, int position) {
+            this.gameInfo = gameInfo;
+
+            horizontalViewContainer.removeAllViews();
+            int dp20 = CommonUtil.dip2px(context, 20);
+            int dp18 = CommonUtil.dip2px(context, 18);
+            int width240 = CommonUtil.dip2px(context, 240f);
+            int heght114 = CommonUtil.dip2px(context, 114f);
+            int ic_def_logo_480_228 = R.drawable.ic_def_logo_480_228;
+
+            for (int i = 0; i < 10; i++) {
+                final String gameImage = gameInfo.getGameLogo();//获取每一张图片
+                View view = inflater.inflate(R.layout.item_discover_tviv, horizontalViewContainer, false);
+                gameIV = (SimpleDraweeView) view.findViewById(R.id.tviv_item_iv);
+                gameNameTv = (TextView) view.findViewById(R.id.tviv_item_tv);
+                gameNameTv.setText(gameInfo.getGameName());
+                gameIV.setScaleType(ImageView.ScaleType.FIT_XY);
+                //为  PicassoImageView设置属性
+                hParams = new LinearLayout.LayoutParams(
+                        wrapContent, wrapContent);
+        /*        hParams.width = width240;
+                hParams.height = heght114;*/
+                //有多个图片的话
+                if (0 == i) {
+                    hParams.setMargins(dp20, 0, dp18, 0);
+                } else {
+                    hParams.setMargins(0, 0, dp18, 0);
+                }
+                view.setLayoutParams(hParams);
+                //加载网络图片
+                gameIV.setImageURI(gameImage);
+                gameIV.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        intent.putExtra(KeyConstant.ID, gameInfo.getGameId());
+                        context.startActivity(intent);
+                    }
+                });
+                horizontalViewContainer.addView(view, i);
+            }
+
+        }
+    }
+}

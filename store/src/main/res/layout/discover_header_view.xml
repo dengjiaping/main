@@ -226,52 +226,7 @@
     </RelativeLayout>
 
     <include layout="@layout/layout_line_05dp_b3b3b3"></include>
-    <!--................................动作...................................................-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/dp_20"
-        >
-
-        <TextView
-            android:paddingTop="@dimen/dp_20"
-            android:id="@+id/discover_tviv_left_title_tv5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:scaleType="centerInside"
-            android:text="动作"
-            android:textColor="@color/black"
-            android:textSize="@dimen/dp_16"/>
-
-        <TextView
-            android:id="@+id/more_action_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/discover_tviv_left_title_tv5"
-            android:layout_alignParentRight="true"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingTop="@dimen/dp_3"
-            android:paddingRight="@dimen/dp_20"
-            android:text="@string/see_more"
-            android:textColor="@color/font_18b9fe"
-            android:textSize="@dimen/dp_12"/>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_action"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/discover_tviv_left_title_tv5"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="@dimen/dp_20"
-            android:scrollbars="none"
-            />
-
-    </RelativeLayout>
-    <!--................................策略...................................................-->
-    <include layout="@layout/layout_line_05dp_b3b3b3"></include>
+<!--
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -316,5 +271,6 @@
             />
 
     </RelativeLayout>
+-->
 
 </LinearLayout>

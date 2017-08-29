@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:orientation="vertical"
@@ -18,11 +17,14 @@
         fresco:roundedCornerRadius="@dimen/dp_20"/>
 
     <TextView
+        android:layout_gravity="center_horizontal"
         android:id="@+id/tviv_item_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
         android:gravity="center"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:text="游戏名字"
         android:textColor="@color/black"
         android:textSize="@dimen/dp_12"/>

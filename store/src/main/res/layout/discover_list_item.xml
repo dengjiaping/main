@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:fresco="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@android:color/white"
+              android:descendantFocusability="blocksDescendants"
+              android:orientation="vertical">
+    <!--item的时候没有反应，无法获取的焦点-->
+    <!--................................动作...................................................-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/discover_tviv_left_title_tv5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:paddingTop="@dimen/dp_20"
+            android:scaleType="centerInside"
+            android:text="动作"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp_16"/>
+
+        <TextView
+            android:id="@+id/more_action_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/discover_tviv_left_title_tv5"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_20"
+            android:paddingTop="@dimen/dp_3"
+            android:text="@string/see_more"
+            android:textColor="@color/font_18b9fe"
+            android:textSize="@dimen/dp_12"/>
+
+        <HorizontalScrollView
+            android:layout_below="@id/discover_tviv_left_title_tv5"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/dp_20"
+            android:paddingTop="@dimen/dp_20"
+            android:scrollbars="none">
+            <LinearLayout
+                android:id="@+id/horizontalView_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:orientation="horizontal">
+            </LinearLayout>
+        </HorizontalScrollView>
+    </RelativeLayout>
+    <!--................................策略...................................................-->
+    <include layout="@layout/layout_line_05dp_b3b3b3"></include>
+</LinearLayout>
