@@ -17,14 +17,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
-import com.jzt.hol.android.jkda.sdk.bean.classification.ClassifiHomeBean;
+import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverListBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBody;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.recommend.RecommendClient;
+import com.jzt.hol.android.jkda.sdk.services.main.DiscoverClient;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +33,6 @@ import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.main.TopicsDetailActivity;
 import cn.ngame.store.activity.main.TopicsListActivity;
-import cn.ngame.store.adapter.HomeRaiderAdapter;
 import cn.ngame.store.adapter.discover.DiscoverClassifyTopAdapter;
 import cn.ngame.store.adapter.discover.DiscoverIvAdapter;
 import cn.ngame.store.adapter.discover.DiscoverTvIvAdapter;
@@ -67,7 +65,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private RecyclerView mRVClassifyAll;
     DiscoverClassifyTopAdapter remenAdapter;
     private BannerView bannerView;
-    private List<String> classifyList = new ArrayList<>(Arrays.asList("角色", "动作", "原生", "策略", "模拟", "VR", "枪战", "体育", "格斗"));
     private List<String> mEverydayList = new ArrayList();
     private DiscoverIvAdapter mTopicsAdapter;
     private RecyclerView mEverydayRv;
@@ -92,6 +89,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private List<RecommendTopicsItemInfo> mBigChangInfoList = new ArrayList<>();
     private RecommendTopicsItemInfo topicsInfo;
     private DiscoverAdapter adapter;
+    private List<DiscoverListBean.DataBean.GameCategroyListBean> categroyList = new ArrayList<>();
 
     public DiscoverFragment() {
         android.util.Log.d(TAG, "DiscoverFragment: ()");
@@ -113,13 +111,13 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
 
     @Override
     protected void initViewsAndEvents(View view) {//2
+        context = getActivity();
         init(view);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {//3
         super.onActivityCreated(savedInstanceState);
-        context = getActivity();
         View headView = View.inflate(context, R.layout.discover_header_view, null);//头部
         //分类
         init0ClassifyView(headView);
@@ -164,18 +162,9 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
 
         mRVClassifyAll = (RecyclerView) headView.findViewById(R.id.discover_head_rv_classify);//条目
         mRVClassifyAll.setLayoutManager(linearLayoutManager1);
-        remenAdapter = new DiscoverClassifyTopAdapter(this.getActivity(), classifyList);
+        remenAdapter = new DiscoverClassifyTopAdapter(context, categroyList);
         mRVClassifyAll.setAdapter(remenAdapter);
         //分类条目点击
-        remenAdapter.setmOnItemClickListener(new DiscoverClassifyTopAdapter.OnItemClickLitener() {
-            @Override
-            public void onItemClick(View view, int position, String itemText) {
-                Intent classifyIntent = new Intent(context, LabelGameListActivity.class);
-                classifyIntent.putExtra(KeyConstant.category_Id, 367 + "");//原生手柄 id 367
-                classifyIntent.putExtra(KeyConstant.TITLE, itemText);
-                context.startActivity(classifyIntent);
-            }
-        });
         //分类
         headView.findViewById(R.id.discover_top_classify_all_bt).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -300,9 +289,9 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
         pullListView = (PullToRefreshListView) view.findViewById(R.id.pullListView);
-        pullListView.setPullLoadEnabled(true); //false,不允许上拉加载
+        pullListView.setPullLoadEnabled(false); //false,不允许上拉加载
         pullListView.setScrollLoadEnabled(false);
-        pullListView.setPullLoadEnabled(true);
+        pullListView.setPullLoadEnabled(false);
         pullListView.setLastUpdatedLabel(new Date().toLocaleString());
         pullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             //下拉
@@ -340,7 +329,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                     pageAction.setCurrentPage(pageAction.getCurrentPage() == 0 ?
                             pageAction.getCurrentPage() + 2 : pageAction.getCurrentPage() + 1);
                     //上拉请求数据
-                   getData();
+                    getData();
                 } else {
                     ToastUtil.show(context, getString(R.string.no_more_data));
                     pullListView.setHasMoreData(false);
@@ -351,17 +340,14 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
 
 
         //onRecyclerViewItemClick(mRVClassifyAll, 1);
-        List<String> list = new ArrayList<>();
-        list.add(new String("测试"));
-        list.add(new String("测试2"));
-        HomeRaiderAdapter adapter = new HomeRaiderAdapter(context, list, "0");
+        adapter = new DiscoverAdapter(context, getSupportFragmentManager(), listNew, 0);
         pullListView.getRefreshableView().setAdapter(adapter);
-
         //getGameList();
         getBannerData();//轮播图
-        ClassifiHomeBean result = new ClassifiHomeBean();
     }
+
     protected final static String TAG = DiscoverFragment.class.getSimpleName();
+
     //请求数据
     private void getData() {
         //每日
@@ -381,12 +367,9 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
 
         //请求数据
         RecommendListBody bodyBean = new RecommendListBody();
-        bodyBean.setPageIndex(pageAction.getCurrentPage());
-        bodyBean.setPageSize(PAGE_SIZE);
-
-        new RecommendClient(getActivity(), bodyBean).observable()
+        new DiscoverClient(context, bodyBean).observable()
 //                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<RecommendListBean>() {
+                .subscribe(new ObserverWrapper<DiscoverListBean>() {
                     @Override
                     public void onError(Throwable e) {
 //                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
@@ -396,64 +379,36 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                     }
 
                     @Override
-                    public void onNext(RecommendListBean result) {
+                    public void onNext(DiscoverListBean result) {
+                        pullListView.onPullUpRefreshComplete();
+                        pullListView.onPullDownRefreshComplete();
+                        pullListView.setLastUpdatedLabel(new Date().toLocaleString());
                         if (result != null && result.getCode() == 0) {
                             setData(result);
                         } else {
-//                            ToastUtil.show(getActivity(), result.getMsg());
+                            //请求失败
+                            android.util.Log.d(TAG, "请求失败");
                         }
                     }
                 });
     }
 
-    public void setData(RecommendListBean result) {
-        android.util.Log.d(TAG, "setData: " + result.getData());
-        if (result.getData() == null) {
+    //todo 设置数据
+    public void setData(DiscoverListBean result) {
+        DiscoverListBean.DataBean data = result.getData();
+        android.util.Log.d(TAG, "setData: " + data);
+        if (data == null) {
             return;
         }
-        if (pageAction.getCurrentPage() == 0) {//当前页
-            if (result.getData() == null || result.getData().size() == 0) {
-                pullListView.onPullUpRefreshComplete();
-                pullListView.onPullDownRefreshComplete();
-                pullListView.setLastUpdatedLabel(new Date().toLocaleString());
-                return;
-            }
+        categroyList = data.getGameCategroyList();
+        if (null != categroyList) {
+            remenAdapter.setList(categroyList);
         }
-        if (result.getData().size() > 0) {//刷新后进来
-            pageAction.setTotal(result.getTotals());
-            this.listNew.addAll(result.getData());
-        }
-        if (result.getData().size() > 0 && pageAction.getCurrentPage() == 0) {
-            //第一次进来
-            this.listNew.clear(); //清除数据
-            pageAction.setTotal(result.getTotals());
-            this.listNew.addAll(result.getData());
-        }
-        if (adapter == null) {
-            adapter = new DiscoverAdapter(context, getSupportFragmentManager(), listNew, 0);
-            pullListView.getRefreshableView().setAdapter(adapter);
-        } else {
-            adapter.setList(listNew);
-        }
-        //设置上拉刷新后停留的地方  // TODO: 2017/7/17 0017
-    /*    if (0 == pageAction.getCurrentPage() && result.getData().size() <= 2) {
-            pullListView.getRefreshableView().setSelection(0);
-        }
-       if (pageAction.getCurrentPage() > 0 && result.getData().size() > 2) {//设置上拉刷新后停留的地方
-            int index = pullListView.getRefreshableView().getFirstVisiblePosition();
-            View v = pullListView.getRefreshableView().getChildAt(0);
-            int top = (v == null) ? 0 : (v.getTop() - v.getHeight());
-            pullListView.getRefreshableView().setSelectionFromTop(index, top);
-        }*/
-        if (pageAction.getCurrentPage() > 0 && result.getData().size() > 0) { //设置上拉刷新后停留的地方
-            int index = pullListView.getRefreshableView().getFirstVisiblePosition();
-            View v = pullListView.getRefreshableView().getChildAt(0);
-            int top = (v == null) ? 0 : (v.getTop() - v.getHeight());
-            pullListView.getRefreshableView().setSelectionFromTop(index, top);
-        }
-        pullListView.onPullUpRefreshComplete();
-        pullListView.onPullDownRefreshComplete();
-        pullListView.setLastUpdatedLabel(new Date().toLocaleString());
+        android.util.Log.d(TAG, "categroyList: " + categroyList.size());
+        adapter.setList(listNew);
+        pullListView.setPullLoadEnabled(false); //false,不允许上拉加载
+        pullListView.setScrollLoadEnabled(false);
+        pullListView.setPullLoadEnabled(false);
     }
 
     private PageAction pageAction;

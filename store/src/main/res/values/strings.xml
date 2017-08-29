@@ -216,7 +216,15 @@
     <string name="precented">已评分</string>
     <string name="open">打开</string>
     <string name="no_data">查询无结果</string>
-    <string name="read_text1">因政策原因，该版本的游戏充值服务无法正常使用，如需充值请卸载该版本游戏，然后再下 载官方客户端进行充值。充值完成后卸载掉官方客户端，再安装该版本游戏即可手柄畅玩。</string>
-    <string name="read_text2">关于部分手机使用手柄后调不出键盘，无法打字的情况，是因为手柄占用了键盘协议， 请断开手机蓝牙，打字后，再开启手机蓝牙，手柄自动回连。</string>
+    <string name="read_1">1.当游戏的标签有“云适配”标签</string>
+    <string name="read_text1">当游戏有“云适配”的标签时，该游戏为云适配版本游戏。安装前请先删除手机上的官方版本，再安装云适配版，游戏按键默认已经调整完美，需要按照自己习惯调整的请打开映射设置。</string>
+    <string name="read_2">2.当游戏的标签有“原生手柄”标签</string>
+    <string name="read_text2">当游戏有“原生手柄”的标签时，无法调出映射。</string>
+    <string name="read_3">3.云适配游戏调出映射</string>
+    <string name="read_text3">当游戏有“云适配”的标签时，该游戏为云适配版本游戏。如何调出映射：“i”键或Start+LB或start+select或back等按键，请根据不同型号手柄使用不同的方式。</string>
+    <string name="read_4">4.云适配游戏映射异常</string>
+    <string name="read_text4">部分游戏无法映射请按home键回到桌面，再进游戏即可呼出映射。</string>
+    <string name="read_5">5.调出键盘异常说明</string>
+    <string name="read_text5">关于部分手机使用手柄后调不出键盘，无法打字的情况，是因为手柄占用了键盘协议， 请断开手机蓝牙，打字后，再开启手机蓝牙，手柄自动回连。</string>
 
 </resources>

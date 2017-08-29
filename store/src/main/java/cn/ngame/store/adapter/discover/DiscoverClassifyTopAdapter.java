@@ -2,15 +2,20 @@
 package cn.ngame.store.adapter.discover;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverListBean;
+
 import java.util.List;
 
 import cn.ngame.store.R;
+import cn.ngame.store.core.utils.KeyConstant;
+import cn.ngame.store.game.view.LabelGameListActivity;
 
 /**
  * @author gp
@@ -19,10 +24,10 @@ public class DiscoverClassifyTopAdapter extends RecyclerView.Adapter<DiscoverCla
 
     private final LayoutInflater mInflater;
     private Context context;
-    private List<String> list;
+    private List<DiscoverListBean.DataBean.GameCategroyListBean> list;
 
     public interface OnItemClickLitener {
-        void onItemClick(View view, int position, String text);
+        void onItemClick(View view, int position, int text);
     }
 
     private OnItemClickLitener mOnItemClickLitener;
@@ -31,14 +36,14 @@ public class DiscoverClassifyTopAdapter extends RecyclerView.Adapter<DiscoverCla
         this.mOnItemClickLitener = mOnItemClickListener;
     }
 
-    public DiscoverClassifyTopAdapter(Context context, List<String> list) {
+    public DiscoverClassifyTopAdapter(Context context, List<DiscoverListBean.DataBean.GameCategroyListBean> list) {
         super();
         this.context = context;
         this.list = list;
         mInflater = LayoutInflater.from(context);
     }
 
-    public void setList(List<String> list) {
+    public void setList(List<DiscoverListBean.DataBean.GameCategroyListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -52,17 +57,19 @@ public class DiscoverClassifyTopAdapter extends RecyclerView.Adapter<DiscoverCla
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.tv_content.setText(list.get(position));
-        if (mOnItemClickLitener != null) {
-            //为ItemView设置监听器
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //int position1 = holder.getLayoutPosition();
-                    mOnItemClickLitener.onItemClick(holder.itemView, position, list.get(position)); // 2
-                }
-            });
-        }
+        final DiscoverListBean.DataBean.GameCategroyListBean gameCategroyListBean = list.get(position);
+        final String cName = gameCategroyListBean.getCName();
+        holder.tv_content.setText(cName);
+        //为ItemView设置监听器
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent classifyIntent = new Intent(context, LabelGameListActivity.class);
+                classifyIntent.putExtra(KeyConstant.category_Id, gameCategroyListBean.getId());//原生手柄 id 367
+                classifyIntent.putExtra(KeyConstant.TITLE, cName);
+                context.startActivity(classifyIntent);
+            }
+        });
     }
 
     @Override

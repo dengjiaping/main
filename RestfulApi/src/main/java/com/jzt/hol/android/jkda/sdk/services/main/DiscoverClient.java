@@ -3,8 +3,8 @@ package com.jzt.hol.android.jkda.sdk.services.main;
 import android.content.Context;
 
 import com.jzt.hol.android.jkda.sdk.api.HostDebug;
-import com.jzt.hol.android.jkda.sdk.bean.main.MainGameTypeListBean;
-import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
+import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverListBean;
+import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBody;
 import com.jzt.hol.android.jkda.sdk.services.GameService;
 import com.jzt.hol.android.jkda.sdk.services.gamehub.PostMsgBaseClient;
 
@@ -14,16 +14,16 @@ import rx.Observable;
  * Created by Administrator on 2016/12/27 0027.
  */
 
-public class MainGameTypeListClient extends PostMsgBaseClient<MainGameTypeListBean> {
-    YunduanBodyBean bean;
+public class DiscoverClient extends PostMsgBaseClient<DiscoverListBean> {
+    RecommendListBody bean;
 
-    public MainGameTypeListClient(Context cxt, YunduanBodyBean bean) {
+    public DiscoverClient(Context cxt, RecommendListBody bean) {
         super(cxt);
         this.bean = bean;
     }
 
     @Override
-    protected Observable<MainGameTypeListBean> requestService(GameService askDoctorService) {
+    protected Observable<DiscoverListBean> requestService(GameService askDoctorService) {
         return askDoctorService.queryHomeGame(HostDebug.AppJson, bean);
     }
 }

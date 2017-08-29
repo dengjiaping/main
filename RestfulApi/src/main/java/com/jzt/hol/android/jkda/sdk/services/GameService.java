@@ -27,7 +27,7 @@ import com.jzt.hol.android.jkda.sdk.bean.gamehub.PostSearchListBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.ReportPostBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.VoteListBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.VoteRankBodyBean;
-import com.jzt.hol.android.jkda.sdk.bean.main.MainGameTypeListBean;
+import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverListBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBean;
@@ -180,10 +180,9 @@ public interface GameService {
                                           @Body LikeListBody bean);
 
     // 首页-每日精选、MOBA精选、枪战精选、新平尝鲜、品牌游戏列表（12个）
-    @POST("game/queryHomeGame")
-    Observable<MainGameTypeListBean> queryHomeGame(@Header("content-type") String type,
-                                                   @Body YunduanBodyBean bean);
-
+    @POST("gameDiscovery/queryDiscoveryHome")
+    Observable<DiscoverListBean> queryHomeGame(@Header("content-type") String type,
+                                               @Body RecommendListBody bean);
     // 首页-热门攻略
     @POST("gameCircle/queryHomeHotRaiderPost")
     Observable<GameHubMainBean> queryHomeRaider(@Header("content-type") String type,
