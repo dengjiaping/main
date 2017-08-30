@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverListBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
 
 import java.util.List;
@@ -39,20 +40,22 @@ import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.game.view.GameDetailActivity;
+import cn.ngame.store.game.view.LabelGameListActivity;
 
 public class DiscoverAdapter extends BaseAdapter {
 
     private final int wrapContent;
+    private final Intent labelGameIntent;
     private Context context;
     private FragmentManager fm;
-    private List<RecommendListBean.DataBean> list;
+    private List<DiscoverListBean.DataBean.ResultListBean> list;
     private int type;
     private static Handler uiHandler = new Handler();
     private final Intent intent;
     private final LayoutInflater inflater;
     private TextView gameNameTv;
 
-    public DiscoverAdapter(Context context, FragmentManager fm, List<RecommendListBean.DataBean> list, int type) {
+    public DiscoverAdapter(Context context, FragmentManager fm, List<DiscoverListBean.DataBean.ResultListBean> list, int type) {
         super();
         this.context = context;
         this.fm = fm;
@@ -62,9 +65,12 @@ public class DiscoverAdapter extends BaseAdapter {
         intent.setClass(context, GameDetailActivity.class);
         wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
         inflater = LayoutInflater.from(context);
+
+        labelGameIntent = new Intent();
+        labelGameIntent.setClass(context, LabelGameListActivity.class);
     }
 
-    public void setList(List<RecommendListBean.DataBean> list) {
+    public void setList(List<DiscoverListBean.DataBean.ResultListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -73,8 +79,9 @@ public class DiscoverAdapter extends BaseAdapter {
     public int getCount() {
         if (list != null) {
             return list.size();
+        } else {
+            return 0;
         }
-        return 0;
     }
 
     @Override
@@ -92,19 +99,30 @@ public class DiscoverAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
-        final RecommendListBean.DataBean gameInfo = (list == null) ? null : list.get(position);
+        final DiscoverListBean.DataBean.ResultListBean listInfo = (list == null) ? null : list.get(position);
         final ViewHolder holder;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.discover_list_item, parent, false);
             holder = new ViewHolder(context, fm);
+            holder.titleTv = (TextView) convertView.findViewById(R.id.discover18_tviv_title);
+            holder.moreTv = (TextView) convertView.findViewById(R.id.more_action_tv);
             holder.horizontalViewContainer = (LinearLayout) convertView.findViewById(R.id.horizontalView_container);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if (gameInfo != null) {
-            holder.update(gameInfo, type, position);
+        if (listInfo != null) {
+            holder.titleTv.setText(listInfo.getCategoryId()+"");
+            holder.update(listInfo, type, position);
+            holder.moreTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    labelGameIntent.putExtra(KeyConstant.category_Id, listInfo.getCategoryId() + "");//云端适配id 336
+                    labelGameIntent.putExtra(KeyConstant.TITLE, listInfo.getCategoryId()+"");
+                    context.startActivity(labelGameIntent);
+                }
+            });
         }
 
         return convertView;
@@ -114,13 +132,16 @@ public class DiscoverAdapter extends BaseAdapter {
         private Context context;
         private RecommendListBean.DataBean gameInfo;
         private SimpleDraweeView img;
-        private TextView tv_title, tv_summary, tv_from;
         private IFileLoad fileLoad;
         private FragmentManager fm;
         private LinearLayout horizontalViewContainer;
         public ImageView recommend_game_pic;
         private SimpleDraweeView gameIV;
         private LinearLayout.LayoutParams hParams;
+        private List<DiscoverListBean.DataBean.ResultListBean.ListBean> gameInfoList;
+        private DiscoverListBean.DataBean.ResultListBean.ListBean gameInfoBean;
+        public TextView titleTv;
+        public TextView moreTv;
 
         public ViewHolder(Context context, FragmentManager fm) {
             this.context = context;
@@ -133,22 +154,20 @@ public class DiscoverAdapter extends BaseAdapter {
          *
          * @param gameInfo 游戏信息
          */
-        public void update(final RecommendListBean.DataBean gameInfo, int type, int position) {
-            this.gameInfo = gameInfo;
-
+        public void update(final DiscoverListBean.DataBean.ResultListBean gameInfo, int type, int position) {
             horizontalViewContainer.removeAllViews();
             int dp20 = CommonUtil.dip2px(context, 20);
             int dp18 = CommonUtil.dip2px(context, 18);
             int width240 = CommonUtil.dip2px(context, 240f);
             int heght114 = CommonUtil.dip2px(context, 114f);
-            int ic_def_logo_480_228 = R.drawable.ic_def_logo_480_228;
-
-            for (int i = 0; i < 10; i++) {
-                final String gameImage = gameInfo.getGameLogo();//获取每一张图片
+            gameInfoList = gameInfo.getList();
+            for (int i = 0; i < gameInfoList.size(); i++) {
+                gameInfoBean = gameInfoList.get(i);
+                final String gameImage = gameInfoBean.getGameLogo();//获取每一张图片
                 View view = inflater.inflate(R.layout.item_discover_tviv, horizontalViewContainer, false);
                 gameIV = (SimpleDraweeView) view.findViewById(R.id.tviv_item_iv);
                 gameNameTv = (TextView) view.findViewById(R.id.tviv_item_tv);
-                gameNameTv.setText(gameInfo.getGameName());
+                gameNameTv.setText(gameInfoBean.getGameName());
                 gameIV.setScaleType(ImageView.ScaleType.FIT_XY);
                 //为  PicassoImageView设置属性
                 hParams = new LinearLayout.LayoutParams(
@@ -167,7 +186,7 @@ public class DiscoverAdapter extends BaseAdapter {
                 gameIV.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        intent.putExtra(KeyConstant.ID, gameInfo.getGameId());
+                        intent.putExtra(KeyConstant.ID, gameInfoBean.getId());
                         context.startActivity(intent);
                     }
                 });

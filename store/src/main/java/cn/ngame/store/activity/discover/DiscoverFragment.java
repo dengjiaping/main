@@ -18,7 +18,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
 import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverListBean;
-import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBody;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.main.DiscoverClient;
@@ -63,7 +62,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private FragmentActivity context;
     private PullToRefreshListView pullListView;
     private RecyclerView mRVClassifyAll;
-    DiscoverClassifyTopAdapter remenAdapter;
+    DiscoverClassifyTopAdapter categroyTopAdapter;
     private BannerView bannerView;
     private List<String> mEverydayList = new ArrayList();
     private DiscoverIvAdapter mTopicsAdapter;
@@ -88,8 +87,9 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private List<RecommendTopicsItemInfo> topicsInfoList = new ArrayList<>();
     private List<RecommendTopicsItemInfo> mBigChangInfoList = new ArrayList<>();
     private RecommendTopicsItemInfo topicsInfo;
-    private DiscoverAdapter adapter;
-    private List<DiscoverListBean.DataBean.GameCategroyListBean> categroyList = new ArrayList<>();
+    private DiscoverAdapter categroy18Adapter;
+    private List<DiscoverListBean.DataBean.GameCategroyListBean> categroyAllList = new ArrayList<>();
+    private List<DiscoverListBean.DataBean.ResultListBean> categroy18ListBean = new ArrayList<>();
 
     public DiscoverFragment() {
         android.util.Log.d(TAG, "DiscoverFragment: ()");
@@ -162,8 +162,8 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
 
         mRVClassifyAll = (RecyclerView) headView.findViewById(R.id.discover_head_rv_classify);//条目
         mRVClassifyAll.setLayoutManager(linearLayoutManager1);
-        remenAdapter = new DiscoverClassifyTopAdapter(context, categroyList);
-        mRVClassifyAll.setAdapter(remenAdapter);
+        categroyTopAdapter = new DiscoverClassifyTopAdapter(context, categroyAllList);
+        mRVClassifyAll.setAdapter(categroyTopAdapter);
         //分类条目点击
         //分类
         headView.findViewById(R.id.discover_top_classify_all_bt).setOnClickListener(new View.OnClickListener() {
@@ -340,8 +340,8 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
 
 
         //onRecyclerViewItemClick(mRVClassifyAll, 1);
-        adapter = new DiscoverAdapter(context, getSupportFragmentManager(), listNew, 0);
-        pullListView.getRefreshableView().setAdapter(adapter);
+        categroy18Adapter = new DiscoverAdapter(context, getSupportFragmentManager(), categroy18ListBean, 0);
+        pullListView.getRefreshableView().setAdapter(categroy18Adapter);
         //getGameList();
         getBannerData();//轮播图
     }
@@ -400,12 +400,14 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         if (data == null) {
             return;
         }
-        categroyList = data.getGameCategroyList();
-        if (null != categroyList) {
-            remenAdapter.setList(categroyList);
+        categroyAllList = data.getGameCategroyList();
+        if (null != categroyAllList) {
+            categroyTopAdapter.setList(categroyAllList);
         }
-        android.util.Log.d(TAG, "categroyList: " + categroyList.size());
-        adapter.setList(listNew);
+        //下面18个分类
+        categroy18ListBean = data.getResultList();
+        android.util.Log.d(TAG, "setData: "+categroy18ListBean.size());
+        categroy18Adapter.setList(categroy18ListBean);
         pullListView.setPullLoadEnabled(false); //false,不允许上拉加载
         pullListView.setScrollLoadEnabled(false);
         pullListView.setPullLoadEnabled(false);
@@ -413,7 +415,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
 
     private PageAction pageAction;
     public static int PAGE_SIZE = 8;
-    private List<RecommendListBean.DataBean> listNew = new ArrayList<>();
 
     /**
      * 获取专题数据
