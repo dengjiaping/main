@@ -30,13 +30,10 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverListBean;
-import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
 
 import java.util.List;
 
 import cn.ngame.store.R;
-import cn.ngame.store.core.fileload.FileLoadManager;
-import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.game.view.GameDetailActivity;
@@ -51,9 +48,9 @@ public class DiscoverAdapter extends BaseAdapter {
     private List<DiscoverListBean.DataBean.ResultListBean> list;
     private int type;
     private static Handler uiHandler = new Handler();
-    private final Intent intent;
     private final LayoutInflater inflater;
     private TextView gameNameTv;
+    private Intent intent;
 
     public DiscoverAdapter(Context context, FragmentManager fm, List<DiscoverListBean.DataBean.ResultListBean> list, int type) {
         super();
@@ -61,10 +58,10 @@ public class DiscoverAdapter extends BaseAdapter {
         this.fm = fm;
         this.list = list;
         this.type = type;
-        intent = new Intent();
-        intent.setClass(context, GameDetailActivity.class);
         wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
         inflater = LayoutInflater.from(context);
+        intent = new Intent();
+        intent.setClass(context, GameDetailActivity.class);
 
         labelGameIntent = new Intent();
         labelGameIntent.setClass(context, LabelGameListActivity.class);
@@ -113,13 +110,13 @@ public class DiscoverAdapter extends BaseAdapter {
         }
 
         if (listInfo != null) {
-            holder.titleTv.setText(listInfo.getCategoryId()+"");
+            holder.titleTv.setText(listInfo.getCategoryId() + "");
             holder.update(listInfo, type, position);
             holder.moreTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     labelGameIntent.putExtra(KeyConstant.category_Id, listInfo.getCategoryId() + "");//云端适配id 336
-                    labelGameIntent.putExtra(KeyConstant.TITLE, listInfo.getCategoryId()+"");
+                    labelGameIntent.putExtra(KeyConstant.TITLE, listInfo.getCategoryId() + "");
                     context.startActivity(labelGameIntent);
                 }
             });
@@ -130,12 +127,7 @@ public class DiscoverAdapter extends BaseAdapter {
 
     public class ViewHolder {
         private Context context;
-        private RecommendListBean.DataBean gameInfo;
-        private SimpleDraweeView img;
-        private IFileLoad fileLoad;
-        private FragmentManager fm;
         private LinearLayout horizontalViewContainer;
-        public ImageView recommend_game_pic;
         private SimpleDraweeView gameIV;
         private LinearLayout.LayoutParams hParams;
         private List<DiscoverListBean.DataBean.ResultListBean.ListBean> gameInfoList;
@@ -145,8 +137,7 @@ public class DiscoverAdapter extends BaseAdapter {
 
         public ViewHolder(Context context, FragmentManager fm) {
             this.context = context;
-            this.fm = fm;
-            fileLoad = FileLoadManager.getInstance(context);
+            //fileLoad = FileLoadManager.getInstance(context);
         }
 
         /**
@@ -183,10 +174,11 @@ public class DiscoverAdapter extends BaseAdapter {
                 view.setLayoutParams(hParams);
                 //加载网络图片
                 gameIV.setImageURI(gameImage);
-                gameIV.setOnClickListener(new View.OnClickListener() {
+                final long id = gameInfoBean.getId();
+                view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        intent.putExtra(KeyConstant.ID, gameInfoBean.getId());
+                        intent.putExtra(KeyConstant.ID, id);
                         context.startActivity(intent);
                     }
                 });

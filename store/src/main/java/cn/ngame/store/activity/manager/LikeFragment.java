@@ -83,10 +83,10 @@ public class LikeFragment extends BaseSearchFragment {
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
 
+        initPop();
         likeAdapter = new LikeFragmentAdapter(getActivity(), getSupportFragmentManager(), mItemClickQuickAction, timerTasks);
         listView.setAdapter(likeAdapter);
 
-        initPop();
     }
 
     private void getLikeList() {
@@ -125,7 +125,7 @@ public class LikeFragment extends BaseSearchFragment {
     private void initPop() {
         // 设置Action
         mItemClickQuickAction = new QuickAction(content, QuickAction.VERTICAL);
-        ActionItem pointItem = new ActionItem(1, "不再喜欢", null);
+        ActionItem pointItem = new ActionItem(1, "不再喜欢");
         mItemClickQuickAction.addActionItem(pointItem);
 
         mItemClickQuickAction.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
@@ -146,7 +146,7 @@ public class LikeFragment extends BaseSearchFragment {
 
     private void cancelFavorite(final int position) {
         final long gameId = gameList.get(position).getId();
-        Log.d(TAG, "cancelFavorite: "+gameId);
+        Log.d(TAG, "cancelFavorite: " + gameId);
         String url = Constant.WEB_SITE + Constant.URL_DEL_FAVORITE;
         Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
             @Override
