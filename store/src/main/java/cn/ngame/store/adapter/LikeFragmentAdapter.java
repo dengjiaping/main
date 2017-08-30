@@ -147,6 +147,7 @@ public class LikeFragmentAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     mPosition = position;
+                    Log.d("Like", "onClick: " + mItemClickQuickAction);
                     if (null != mItemClickQuickAction) {
                         mItemClickQuickAction.show(v);
                     }

@@ -84,7 +84,7 @@ public class LikeFragment extends BaseSearchFragment {
         pageAction.setPageSize(PAGE_SIZE);
 
         initPop();
-        likeAdapter = new LikeFragmentAdapter(getActivity(), getSupportFragmentManager(), mItemClickQuickAction, timerTasks);
+        likeAdapter = new LikeFragmentAdapter(content, getSupportFragmentManager(), mItemClickQuickAction, timerTasks);
         listView.setAdapter(likeAdapter);
 
     }
