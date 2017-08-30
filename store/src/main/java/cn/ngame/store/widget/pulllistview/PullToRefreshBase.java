@@ -58,7 +58,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
     /**FooterView的高度*/
     private int mFooterHeight;
     /**下拉刷新是否可用*/
-    private boolean mPullRefreshEnabled = true;
+    private boolean mPullRefreshEnabled = false;
     /**上拉加载是否可用*/
     private boolean mPullLoadEnabled = false;
     /**判断滑动到底部加载是否可用*/

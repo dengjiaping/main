@@ -23,7 +23,6 @@ import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.main.DiscoverClient;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,13 +43,10 @@ import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
-import cn.ngame.store.core.utils.NetUtil;
 import cn.ngame.store.game.view.LabelGameListActivity;
-import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.BannerView;
 import cn.ngame.store.view.PicassoImageView;
 import cn.ngame.store.view.RecyclerViewDivider;
-import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 
 /**
@@ -131,8 +127,9 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         initBigChangView(headView);
 
         //添加头部
-        if (pullListView.getRefreshableView().getHeaderViewsCount() == 0) {
-            pullListView.getRefreshableView().addHeaderView(headView);
+        ListView refreshableView = pullListView.getRefreshableView();
+        if (refreshableView.getHeaderViewsCount() == 0) {
+            refreshableView.addHeaderView(headView);
         }
         getData();
     }
@@ -176,9 +173,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
 
     //每日新发现
     private void init1EverydayDiscoverView(View headView) {
-        for (int i = 0; i < 10; i++) {
-            mEverydayList.add("http://oss.ngame.cn/upload/userHead/1500626608632.png");
-        }
         mEverydayRv = (RecyclerView) headView.findViewById(R.id.everyday_discover_recyclerview);
         setOnMoreBtClickListener(headView, R.id.everyday_more_tv1);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
@@ -289,16 +283,14 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
         pullListView = (PullToRefreshListView) view.findViewById(R.id.pullListView);
-        pullListView.setPullLoadEnabled(false); //false,不允许上拉加载
-        pullListView.setScrollLoadEnabled(false);
-        pullListView.setPullLoadEnabled(false);
-        pullListView.setLastUpdatedLabel(new Date().toLocaleString());
-        pullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+        //pullListView.setPullRefreshEnabled(false); //false,不允许上拉加载
+        //pullListView.setLastUpdatedLabel(new Date().toLocaleString());
+       /* pullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             //下拉
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                pullListView.setPullLoadEnabled(true);
-                pageAction.setCurrentPage(0);
+               *//* pullListView.setPullLoadEnabled(true);
+                pageAction.setCurrentPage(0);*//*
                 //getGameList();
                 if (!NetUtil.isNetworkConnected(context)) {
                     ToastUtil.show(context, "无网络连接");
@@ -336,7 +328,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                     pullListView.onPullUpRefreshComplete();
                 }
             }
-        });
+        });*/
 
 
         //onRecyclerViewItemClick(mRVClassifyAll, 1);
@@ -350,15 +342,13 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
 
     //请求数据
     private void getData() {
-        //每日
+       /* //每日
         mEverydayList.clear();
         mActionList.clear();
         mHotRecentList.clear();
         //mSubjectList.clear();
-        //mBigChangList.clear();
+        //mBigChangList.clear();*/
         for (int i = 0; i < 10; i++) {
-            mEverydayList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_16.png");
-            mEverydayAdapter.setList(mEverydayList);
             //每日
             mHotRecentList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_13.png");
             mHotRecentAdapter.setList(mHotRecentList);
@@ -374,15 +364,15 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                     public void onError(Throwable e) {
 //                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
                         android.util.Log.d(TAG, "getGameListonError: ");
-                        pullListView.onPullUpRefreshComplete();
-                        pullListView.onPullDownRefreshComplete();
+                       /* pullListView.onPullUpRefreshComplete();
+                        pullListView.onPullDownRefreshComplete();*/
                     }
 
                     @Override
                     public void onNext(DiscoverListBean result) {
-                        pullListView.onPullUpRefreshComplete();
+                     /*   pullListView.onPullUpRefreshComplete();
                         pullListView.onPullDownRefreshComplete();
-                        pullListView.setLastUpdatedLabel(new Date().toLocaleString());
+                        pullListView.setLastUpdatedLabel(new Date().toLocaleString());*/
                         if (result != null && result.getCode() == 0) {
                             setData(result);
                         } else {
@@ -404,13 +394,13 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         if (null != categroyAllList) {
             categroyTopAdapter.setList(categroyAllList);
         }
+       // mEverydayList = data.getDailyNewGamesList();
+        //每日新发现
+        mEverydayAdapter.setList(mEverydayList);
+
         //下面18个分类
         categroy18ListBean = data.getResultList();
-        android.util.Log.d(TAG, "setData: "+categroy18ListBean.size());
         categroy18Adapter.setList(categroy18ListBean);
-        pullListView.setPullLoadEnabled(false); //false,不允许上拉加载
-        pullListView.setScrollLoadEnabled(false);
-        pullListView.setPullLoadEnabled(false);
     }
 
     private PageAction pageAction;
@@ -609,7 +599,19 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         switch (v.getId()) {
         }
     }
-
+    private boolean mIsShow = false;
+    public void setShow(boolean isShow) {
+        mIsShow = isShow;
+    }
+    public void scroll2Top() {
+        if (mIsShow && pullListView != null) {
+            //refreshableView.setSelectionAfterHeaderView();
+            ListView refreshableView = pullListView.getRefreshableView();
+            //refreshableView.setSelectionAfterHeaderView();
+            refreshableView.setSelection(0);
+            //getGameList();
+        }
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

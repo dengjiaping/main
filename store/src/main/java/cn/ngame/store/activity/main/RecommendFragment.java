@@ -412,8 +412,8 @@ public class RecommendFragment extends BaseSearchFragment {
         if (mIsShow && pullListView != null) {
             ListView refreshableView = pullListView.getRefreshableView();
             //refreshableView.setSelectionAfterHeaderView();
-            refreshableView.smoothScrollToPosition(0);
-            getGameList();
+            refreshableView.setSelection(0);
+            //getGameList();
         }
     }
 

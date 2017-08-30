@@ -606,6 +606,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 }
                 selectedFragment.scroll2Top();
                 selectedFragment.setShow(true);
+                if (null != discoverFragment) {
+                    discoverFragment.setShow(false);
+                }
                 bt_home.setSelected(true);
                 mTitleTv.setText("");
                 mTitleBgIv.setVisibility(View.VISIBLE);
@@ -624,6 +627,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     transaction.add(R.id.main_list_fragments, rankingFragment);
                 } else {
                     transaction.show(rankingFragment);
+                }
+                if (null != discoverFragment) {
+                    discoverFragment.setShow(false);
                 }
                 selectedFragment.setShow(false);
                 bt_game.setSelected(true);
@@ -656,6 +662,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 } else {
                     transaction.show(discoverFragment);
                 }
+                discoverFragment.scroll2Top();
+                discoverFragment.setShow(true);
                 selectedFragment.setShow(false);
                 bt_video.setSelected(true);
                 mTitleTv.setText("发现");
@@ -674,6 +682,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     transaction.show(administrationFragment);
                 }
                 selectedFragment.setShow(false);
+                if (null != discoverFragment) {
+                    discoverFragment.setShow(false);
+                }
                 bt_manager.setSelected(true);
                 mTitleTv.setText("管理");
                 mDownloadBt.setVisibility(View.VISIBLE);
