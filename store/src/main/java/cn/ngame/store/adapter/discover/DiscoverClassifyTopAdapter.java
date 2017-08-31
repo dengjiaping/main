@@ -65,7 +65,7 @@ public class DiscoverClassifyTopAdapter extends RecyclerView.Adapter<DiscoverCla
             @Override
             public void onClick(View v) {
                 Intent classifyIntent = new Intent(context, LabelGameListActivity.class);
-                classifyIntent.putExtra(KeyConstant.category_Id, gameCategroyListBean.getId());//原生手柄 id 367
+                classifyIntent.putExtra(KeyConstant.category_Id, gameCategroyListBean.getId()+"");//原生手柄 id 367
                 classifyIntent.putExtra(KeyConstant.TITLE, cName);
                 context.startActivity(classifyIntent);
             }

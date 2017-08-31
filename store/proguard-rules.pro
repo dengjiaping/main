@@ -255,7 +255,8 @@
 -keep class com.facebook.** {*;}
 #retrofit2.x
 -dontwarn retrofit2.** -keep class retrofit2.** { *; }
--keepattributes Signature -keepattributes Exceptions #Rxjava RxAndroid
+#Rxjava RxAndroid
+-keepattributes Signature -keepattributes Exceptions
 -dontwarn rx.* -dontwarn sun.misc.** -keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
  long producerIndex;
    long consumerIndex;

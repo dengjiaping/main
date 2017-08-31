@@ -16,6 +16,7 @@ public class GameInfo implements Serializable {
      * 名称
      */
     public String gameName;
+    public String gameInfo ;
     /**
      * 预览图片地址
      */

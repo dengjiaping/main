@@ -110,13 +110,14 @@ public class DiscoverAdapter extends BaseAdapter {
         }
 
         if (listInfo != null) {
-            holder.titleTv.setText(listInfo.getCategoryId() + "");
+            final String categoryName = listInfo.getCategoryName();
+            holder.titleTv.setText(categoryName);
             holder.update(listInfo, type, position);
             holder.moreTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    labelGameIntent.putExtra(KeyConstant.category_Id, listInfo.getCategoryId() + "");//云端适配id 336
-                    labelGameIntent.putExtra(KeyConstant.TITLE, listInfo.getCategoryId() + "");
+                    labelGameIntent.putExtra(KeyConstant.category_Id, listInfo.getCategoryId() + "");
+                    labelGameIntent.putExtra(KeyConstant.TITLE, categoryName);
                     context.startActivity(labelGameIntent);
                 }
             });

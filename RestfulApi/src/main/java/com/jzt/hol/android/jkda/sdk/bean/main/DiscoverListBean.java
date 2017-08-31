@@ -8,6 +8,17 @@ import java.util.List;
 
 public class DiscoverListBean {
 
+
+    /**
+     * code : 0
+     * msg : gameCategroyList游戏分类数据，dailyNewGamesList每日新发现，weeklyNewGamesList表示近期最热，agentGamePicList表示游戏厂商，roleGameList
+     * 角色游戏列表7，actionGameList动作游戏列表8，adventureGameList冒险游戏列表9，cardGameList卡牌游戏列表10，strategyGameList
+     * 策略游戏列表11，simulationGameList模拟游戏列表12， quadraticElementGameList二次元游戏列表13，fpsGameList FPS游戏列表14，racingGameList 竞速游戏列表15，
+     * flyingGameList 飞行游戏列表16，mobaGameList MOBA游戏列表17，puzzleGameList 益智游戏列表18，sportsGameList 体育游戏列表19，aestheticismGameList
+     * 唯美游戏列表20，survivalGameList 生存游戏列表21， puzzGameList 解谜游戏列表22， musicGameList 音乐游戏列表23，arcadeGameList 街机游戏列表24
+     * data : {"gameCategroyList":[{"id":7,"cName":"角色","cParentId":"2"},{"id":8,"cName":"动作","cParentId":"2"},{"id":9,
+     */
+
     private int code;
     private String msg;
     private DataBean data;
@@ -63,35 +74,50 @@ public class DiscoverListBean {
          * "cName":"MOBA","cParentId":"2"},{"id":18,"cName":"益智","cParentId":"2"},{"id":19,"cName":"体育","cParentId":"2"},
          * {"id":20,"cName":"唯美","cParentId":"2"},{"id":21,"cName":"生存","cParentId":"2"},{"id":22,"cName":"解谜",
          * "cParentId":"2"},{"id":23,"cName":"音乐","cParentId":"2"},{"id":24,"cName":"街机","cParentId":"2"}]
-         * dailyNewGamesList : {"list":[],"categoryId":-1}
-         * weeklyNewGamesList : {"list":[],"categoryId":-2}
-         * agentGamePicList : {"list":[],"categoryId":-3}
-         * resultList : [{"list":[{"id":1,"cName":"","gameName":"龙之谷","gameLogo":"http://oss.ngame.cn/upload/1488424068534
-         * .png","scoreLevel":0,"gameLink":"","gameSize":0,"versionCode":0,"packages":"","filename":"","md5":"",
-         * "versionName":"","updateTime":null},{"id":3,"cName":"","gameName":"晶体管","gameLogo":"http://oss.ngame
-         * .cn/upload/1496908609174.jpg","scoreLevel":0,"gameLink":"","gameSize":0,"versionCode":0,"packages":"","filename":"",
-         * "md5":"","versionName":"","updateTime":null}],"categoryId":7},{"list":[{"id":1,"cName":"","gameName":"龙之谷",
-         * "gameLogo":"http://oss.ngame.cn/upload/1488424068534.png","scoreLevel":0,"gameLink":"","gameSize":0,"versionCode":0,
-         * "packages":"","filename":"","md5":"","versionName":"","updateTime":null},{"id":3,"cName":"","gameName":"晶体管",
-         * "gameLogo":"http://oss.ngame.cn/upload/1496908609174.jpg","scoreLevel":0,"gameLink":"","gameSize":0,"versionCode":0,
-         * "packages":"","filename":"","md5":"","versionName":"","updateTime":null}],"categoryId":8},{"list":[{"id":1,
-         * "cName":"","gameName":"龙之谷","gameLogo":"http://oss.ngame.cn/upload/1488424068534.png","scoreLevel":0,"gameLink":"",
-         * "gameSize":0,"versionCode":0,"packages":"","filename":"","md5":"","versionName":"","updateTime":null},{"id":3,
-         * "cName":"","gameName":"晶体管","gameLogo":"http://oss.ngame.cn/upload/1496908609174.jpg","scoreLevel":0,"gameLink":"",
-         * "gameSize":0,"versionCode":0,"packages":"","filename":"","md5":"","versionName":"","updateTime":null}],
-         * "categoryId":9},{"list":[],"categoryId":10},{"list":[],"categoryId":11},{"list":[],"categoryId":12},
-         * {"list":[{"id":1,"cName":"","gameName":"龙之谷","gameLogo":"http://oss.ngame.cn/upload/1488424068534.png",
-         * "scoreLevel":0,"gameLink":"","gameSize":0,"versionCode":0,"packages":"","filename":"","md5":"","versionName":"",
-         * "updateTime":null}],"categoryId":13},{"list":[],"categoryId":14},{"list":[],"categoryId":15},{"list":[],
-         * "categoryId":16},{"list":[{"id":2,"cName":"","gameName":"王者荣耀","gameLogo":"http://oss.ngame.cn/upload/1466667978284
-         * .png","scoreLevel":0,"gameLink":"","gameSize":0,"versionCode":0,"packages":"","filename":"","md5":"",
-         * "versionName":"","updateTime":null}],"categoryId":17},{"list":[{"id":3,"cName":"","gameName":"晶体管",
-         * "gameLogo":"http://oss.ngame.cn/upload/1496908609174.jpg","scoreLevel":0,"gameLink":"","gameSize":0,"versionCode":0,
-         * "packages":"","filename":"","md5":"","versionName":"","updateTime":null}],"categoryId":18},{"list":[],
-         * "categoryId":19},{"list":[],"categoryId":20},{"list":[],"categoryId":21},{"list":[{"id":3,"cName":"",
-         * "gameName":"晶体管","gameLogo":"http://oss.ngame.cn/upload/1496908609174.jpg","scoreLevel":0,"gameLink":"",
-         * "gameSize":0,"versionCode":0,"packages":"","filename":"","md5":"","versionName":"","updateTime":null}],
-         * "categoryId":22},{"list":[],"categoryId":23},{"list":[],"categoryId":24}]
+         * dailyNewGamesList : {"list":[],"categoryName":"每日新发现","categoryId":-1}
+         * weeklyNewGamesList : {"list":[],"categoryName":"近期最热","categoryId":-2}
+         * agentGamePicList : {"list":[],"categoryName":"大厂","categoryId":-3}
+         * resultList : [{"list":[{"id":591,"cName":null,"gameName":"影之刃2","gameLogo":"http://oss.ngame.cn/upload/1483083079423
+         * .png","scoreLevel":null,"gameLink":null,"gameSize":null,"versionCode":null,"packages":null,"filename":null,
+         * "md5":null,"versionName":null,"updateTime":null},{"id":672,"cName":null,"gameName":"龙之谷","gameLogo":"",
+         * "scoreLevel":null,"gameLink":null,"gameSize":null,"versionCode":null,"packages":null,"filename":null,"md5":null,
+         * "versionName":null,"updateTime":null}],"categoryName":"角色","categoryId":7},{"list":[{"id":591,"cName":null,
+         * "gameName":"影之刃2","gameLogo":"http://oss.ngame.cn/upload/1483083079423.png","scoreLevel":null,"gameLink":null,
+         * "gameSize":null,"versionCode":null,"packages":null,"filename":null,"md5":null,"versionName":null,"updateTime":null},
+         * {"id":672,"cName":null,"gameName":"龙之谷","gameLogo":"","scoreLevel":null,"gameLink":null,"gameSize":null,
+         * "versionCode":null,"packages":null,"filename":null,"md5":null,"versionName":null,"updateTime":null}],
+         * "categoryName":"动作","categoryId":8},{"list":[{"id":591,"cName":null,"gameName":"影之刃2","gameLogo":"http://oss.ngame
+         * .cn/upload/1483083079423.png","scoreLevel":null,"gameLink":null,"gameSize":null,"versionCode":null,"packages":null,
+         * "filename":null,"md5":null,"versionName":null,"updateTime":null},{"id":671,"cName":null,"gameName":"贪吃蛇大作战【eva】",
+         * "gameLogo":"http://oss.ngame.cn/upload/1476084541957.png","scoreLevel":null,"gameLink":null,"gameSize":null,
+         * "versionCode":null,"packages":null,"filename":null,"md5":null,"versionName":null,"updateTime":null},{"id":672,
+         * "cName":null,"gameName":"龙之谷","gameLogo":"","scoreLevel":null,"gameLink":null,"gameSize":null,"versionCode":null,
+         * "packages":null,"filename":null,"md5":null,"versionName":null,"updateTime":null}],"categoryName":"冒险",
+         * "categoryId":9},{"list":[],"categoryName":"卡牌","categoryId":10},{"list":[],"categoryName":"策略","categoryId":11},
+         * {"list":[],"categoryName":"模拟","categoryId":12},{"list":[{"id":672,"cName":null,"gameName":"龙之谷","gameLogo":"",
+         * "scoreLevel":null,"gameLink":null,"gameSize":null,"versionCode":null,"packages":null,"filename":null,"md5":null,
+         * "versionName":null,"updateTime":null}],"categoryName":"二次元","categoryId":13},{"list":[],"categoryName":"FPS",
+         * "categoryId":14},{"list":[],"categoryName":"竞速","categoryId":15},{"list":[],"categoryName":"飞行","categoryId":16},
+         * {"list":[{"id":146,"cName":null,"gameName":"王者荣耀","gameLogo":"http://oss.ngame.cn/upload/1466667978284.png",
+         * "scoreLevel":null,"gameLink":null,"gameSize":null,"versionCode":null,"packages":null,"filename":null,"md5":null,
+         * "versionName":null,"updateTime":null},{"id":681,"cName":null,"gameName":"王者荣耀（eva）","gameLogo":"http://oss.ngame
+         * .cn/upload/1466667978284.png","scoreLevel":null,"gameLink":null,"gameSize":null,"versionCode":null,"packages":null,
+         * "filename":null,"md5":null,"versionName":null,"updateTime":null}],"categoryName":"MOBA","categoryId":17},
+         * {"list":[{"id":591,"cName":null,"gameName":"影之刃2","gameLogo":"http://oss.ngame.cn/upload/1483083079423.png",
+         * "scoreLevel":null,"gameLink":null,"gameSize":null,"versionCode":null,"packages":null,"filename":null,"md5":null,
+         * "versionName":null,"updateTime":null},{"id":671,"cName":null,"gameName":"贪吃蛇大作战【eva】","gameLogo":"http://oss.ngame
+         * .cn/upload/1476084541957.png","scoreLevel":null,"gameLink":null,"gameSize":null,"versionCode":null,"packages":null,
+         * "filename":null,"md5":null,"versionName":null,"updateTime":null}],"categoryName":"益智","categoryId":18},{"list":[],
+         * "categoryName":"体育","categoryId":19},{"list":[{"id":682,"cName":null,"gameName":"小小英雄","gameLogo":"http://oss.ngame
+         * .cn/upload/1497769296370.jpg","scoreLevel":null,"gameLink":null,"gameSize":null,"versionCode":null,"packages":null,
+         * "filename":null,"md5":null,"versionName":null,"updateTime":null}],"categoryName":"唯美","categoryId":20},
+         * {"list":[{"id":671,"cName":null,"gameName":"贪吃蛇大作战【eva】","gameLogo":"http://oss.ngame.cn/upload/1476084541957.png",
+         * "scoreLevel":null,"gameLink":null,"gameSize":null,"versionCode":null,"packages":null,"filename":null,"md5":null,
+         * "versionName":null,"updateTime":null}],"categoryName":"生存","categoryId":21},{"list":[{"id":591,"cName":null,
+         * "gameName":"影之刃2","gameLogo":"http://oss.ngame.cn/upload/1483083079423.png","scoreLevel":null,"gameLink":null,
+         * "gameSize":null,"versionCode":null,"packages":null,"filename":null,"md5":null,"versionName":null,
+         * "updateTime":null}],"categoryName":"解谜","categoryId":22},{"list":[],"categoryName":"音乐","categoryId":23},{"list":[],
+         * "categoryName":"街机","categoryId":24}]
          */
 
         private DailyNewGamesListBean dailyNewGamesList;
@@ -143,11 +169,21 @@ public class DiscoverListBean {
         public static class DailyNewGamesListBean {
             /**
              * list : []
+             * categoryName : 每日新发现
              * categoryId : -1
              */
 
+            private String categoryName;
             private int categoryId;
             private List<?> list;
+
+            public String getCategoryName() {
+                return categoryName;
+            }
+
+            public void setCategoryName(String categoryName) {
+                this.categoryName = categoryName;
+            }
 
             public int getCategoryId() {
                 return categoryId;
@@ -169,11 +205,21 @@ public class DiscoverListBean {
         public static class WeeklyNewGamesListBean {
             /**
              * list : []
+             * categoryName : 近期最热
              * categoryId : -2
              */
 
+            private String categoryName;
             private int categoryId;
             private List<?> list;
+
+            public String getCategoryName() {
+                return categoryName;
+            }
+
+            public void setCategoryName(String categoryName) {
+                this.categoryName = categoryName;
+            }
 
             public int getCategoryId() {
                 return categoryId;
@@ -195,11 +241,21 @@ public class DiscoverListBean {
         public static class AgentGamePicListBean {
             /**
              * list : []
+             * categoryName : 大厂
              * categoryId : -3
              */
 
+            private String categoryName;
             private int categoryId;
             private List<?> list;
+
+            public String getCategoryName() {
+                return categoryName;
+            }
+
+            public void setCategoryName(String categoryName) {
+                this.categoryName = categoryName;
+            }
 
             public int getCategoryId() {
                 return categoryId;
@@ -256,16 +312,26 @@ public class DiscoverListBean {
 
         public static class ResultListBean {
             /**
-             * list : [{"id":1,"cName":"","gameName":"龙之谷","gameLogo":"http://oss.ngame.cn/upload/1488424068534.png",
-             * "scoreLevel":0,"gameLink":"","gameSize":0,"versionCode":0,"packages":"","filename":"","md5":"","versionName":"",
-             * "updateTime":null},{"id":3,"cName":"","gameName":"晶体管","gameLogo":"http://oss.ngame.cn/upload/1496908609174
-             * .jpg","scoreLevel":0,"gameLink":"","gameSize":0,"versionCode":0,"packages":"","filename":"","md5":"",
-             * "versionName":"","updateTime":null}]
+             * list : [{"id":591,"cName":null,"gameName":"影之刃2","gameLogo":"http://oss.ngame.cn/upload/1483083079423.png",
+             * "scoreLevel":null,"gameLink":null,"gameSize":null,"versionCode":null,"packages":null,"filename":null,"md5":null,
+             * "versionName":null,"updateTime":null},{"id":672,"cName":null,"gameName":"龙之谷","gameLogo":"","scoreLevel":null,
+             * "gameLink":null,"gameSize":null,"versionCode":null,"packages":null,"filename":null,"md5":null,
+             * "versionName":null,"updateTime":null}]
+             * categoryName : 角色
              * categoryId : 7
              */
 
+            private String categoryName;
             private int categoryId;
             private List<ListBean> list;
+
+            public String getCategoryName() {
+                return categoryName;
+            }
+
+            public void setCategoryName(String categoryName) {
+                this.categoryName = categoryName;
+            }
 
             public int getCategoryId() {
                 return categoryId;
@@ -285,48 +351,48 @@ public class DiscoverListBean {
 
             public static class ListBean {
                 /**
-                 * id : 1
-                 * cName :
-                 * gameName : 龙之谷
-                 * gameLogo : http://oss.ngame.cn/upload/1488424068534.png
-                 * scoreLevel : 0
-                 * gameLink :
-                 * gameSize : 0
-                 * versionCode : 0
-                 * packages :
-                 * filename :
-                 * md5 :
-                 * versionName :
+                 * id : 591
+                 * cName : null
+                 * gameName : 影之刃2
+                 * gameLogo : http://oss.ngame.cn/upload/1483083079423.png
+                 * scoreLevel : null
+                 * gameLink : null
+                 * gameSize : null
+                 * versionCode : null
+                 * packages : null
+                 * filename : null
+                 * md5 : null
+                 * versionName : null
                  * updateTime : null
                  */
 
-                private long id;
-                private String cName;
+                private int id;
+                private Object cName;
                 private String gameName;
                 private String gameLogo;
-                private int scoreLevel;
-                private String gameLink;
-                private int gameSize;
-                private int versionCode;
-                private String packages;
-                private String filename;
-                private String md5;
-                private String versionName;
+                private Object scoreLevel;
+                private Object gameLink;
+                private Object gameSize;
+                private Object versionCode;
+                private Object packages;
+                private Object filename;
+                private Object md5;
+                private Object versionName;
                 private Object updateTime;
 
-                public long getId() {
+                public int getId() {
                     return id;
                 }
 
-                public void setId(long id) {
+                public void setId(int id) {
                     this.id = id;
                 }
 
-                public String getCName() {
+                public Object getCName() {
                     return cName;
                 }
 
-                public void setCName(String cName) {
+                public void setCName(Object cName) {
                     this.cName = cName;
                 }
 
@@ -346,67 +412,67 @@ public class DiscoverListBean {
                     this.gameLogo = gameLogo;
                 }
 
-                public int getScoreLevel() {
+                public Object getScoreLevel() {
                     return scoreLevel;
                 }
 
-                public void setScoreLevel(int scoreLevel) {
+                public void setScoreLevel(Object scoreLevel) {
                     this.scoreLevel = scoreLevel;
                 }
 
-                public String getGameLink() {
+                public Object getGameLink() {
                     return gameLink;
                 }
 
-                public void setGameLink(String gameLink) {
+                public void setGameLink(Object gameLink) {
                     this.gameLink = gameLink;
                 }
 
-                public int getGameSize() {
+                public Object getGameSize() {
                     return gameSize;
                 }
 
-                public void setGameSize(int gameSize) {
+                public void setGameSize(Object gameSize) {
                     this.gameSize = gameSize;
                 }
 
-                public int getVersionCode() {
+                public Object getVersionCode() {
                     return versionCode;
                 }
 
-                public void setVersionCode(int versionCode) {
+                public void setVersionCode(Object versionCode) {
                     this.versionCode = versionCode;
                 }
 
-                public String getPackages() {
+                public Object getPackages() {
                     return packages;
                 }
 
-                public void setPackages(String packages) {
+                public void setPackages(Object packages) {
                     this.packages = packages;
                 }
 
-                public String getFilename() {
+                public Object getFilename() {
                     return filename;
                 }
 
-                public void setFilename(String filename) {
+                public void setFilename(Object filename) {
                     this.filename = filename;
                 }
 
-                public String getMd5() {
+                public Object getMd5() {
                     return md5;
                 }
 
-                public void setMd5(String md5) {
+                public void setMd5(Object md5) {
                     this.md5 = md5;
                 }
 
-                public String getVersionName() {
+                public Object getVersionName() {
                     return versionName;
                 }
 
-                public void setVersionName(String versionName) {
+                public void setVersionName(Object versionName) {
                     this.versionName = versionName;
                 }
 

@@ -65,7 +65,7 @@ public class LabelGameListActivity extends BaseFgActivity {
         Intent intent = getIntent();
         String title = intent.getStringExtra(KeyConstant.TITLE);
         mLabelId = intent.getStringExtra(KeyConstant.category_Id);
-
+        android.util.Log.d(TAG, "分类id"+mLabelId);
         Button leftBt = (Button) findViewById(R.id.left_bt);
         findViewById(R.id.center_tv).setVisibility(View.GONE);
         leftBt.setOnClickListener(new View.OnClickListener() {

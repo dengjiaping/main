@@ -51,7 +51,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
     private Activity context;
     private LinearLayout ll_detail;
     private GameInfo gameInfo;
-    private TextView tv_summary, updateMsgTv, tv_version, tv_time, tv_company, tv_show_all,tv_show_all_2;
+    private TextView tv_summary, updateMsgTv, tv_version, tv_time, tv_company, tv_show_all, tv_show_all_2;
     private LinearLayout img_container;
     private DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     private ArrayList<String> imgs = new ArrayList<String>();
@@ -171,7 +171,8 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                 }
             }
             tv_summary.setText(gameInfo.gameDesc);
-            //updateMsgTv.setText();
+            String gameUpdateInfoStr = this.gameInfo.gameInfo;
+            updateMsgTv.setText(gameUpdateInfoStr == null ? "" : gameUpdateInfoStr);//更新内容
             updateMsgTv.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
                 public boolean onPreDraw() {
@@ -198,11 +199,11 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                     return false;
                 }
             });
-            tv_version.setText(gameInfo.versionName);
-            tv_game_size.setText(Formatter.formatFileSize(context, gameInfo.gameSize));
-            tv_download_count.setText(gameInfo.downloadCount + "");
-            tv_time.setText(df.format(new Date(gameInfo.updateTime)));
-            List<GameAgent> gameAgentList = gameInfo.gameAgentList;
+            tv_version.setText(this.gameInfo.versionName);
+            tv_game_size.setText(Formatter.formatFileSize(context, this.gameInfo.gameSize));
+            tv_download_count.setText(this.gameInfo.downloadCount + "");
+            tv_time.setText(df.format(new Date(this.gameInfo.updateTime)));
+            List<GameAgent> gameAgentList = this.gameInfo.gameAgentList;
             if (gameAgentList != null && gameAgentList.size() > 0) {
                 tv_company.setText(gameAgentList.get(0).agentName);
             }
