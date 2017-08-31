@@ -23,6 +23,7 @@ import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.main.DiscoverClient;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,11 +44,14 @@ import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
+import cn.ngame.store.core.utils.NetUtil;
 import cn.ngame.store.game.view.LabelGameListActivity;
+import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.BannerView;
 import cn.ngame.store.view.LoadStateView;
 import cn.ngame.store.view.PicassoImageView;
 import cn.ngame.store.view.RecyclerViewDivider;
+import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 
 /**
@@ -110,11 +114,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     protected void initViewsAndEvents(View view) {//2
         context = getActivity();
         init(view);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {//3
-        super.onActivityCreated(savedInstanceState);
+        getBannerData();
         View headView = View.inflate(context, R.layout.discover_header_view, null);//头部
         //分类
         init0ClassifyView(headView);
@@ -133,6 +133,12 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             refreshableView.addHeaderView(headView);
         }
         getData();
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {//3
+        super.onActivityCreated(savedInstanceState);
+
     }
 
     //近期最热
@@ -287,22 +293,17 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
         pullListView = (PullToRefreshListView) view.findViewById(R.id.pullListView);
-        //pullListView.setPullRefreshEnabled(false); //false,不允许上拉加载
+        pullListView.setPullRefreshEnabled(true); //false,不允许上拉加载
         //pullListView.setLastUpdatedLabel(new Date().toLocaleString());
-       /* pullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+        pullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             //下拉
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-               *//* pullListView.setPullLoadEnabled(true);
-                pageAction.setCurrentPage(0);*//*
-                //getGameList();
+
                 if (!NetUtil.isNetworkConnected(context)) {
                     ToastUtil.show(context, "无网络连接");
                     pullListView.onPullUpRefreshComplete();
                     pullListView.onPullDownRefreshComplete();
-                    if (0 == pageAction.getCurrentPage()) {
-                        pullListView.getRefreshableView().setSelection(0);
-                    }
                 } else {
                     android.util.Log.d(TAG, "onPullDownToRefresh: 下拉请求数据");
                     //下拉请求数据
@@ -315,7 +316,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 //少于指定条数不加载
-                if (pageAction.getTotal() < pageAction.getPageSize()) {
+              /*  if (pageAction.getTotal() < pageAction.getPageSize()) {
                     pullListView.setHasMoreData(false);
                     ToastUtil.show(context, getString(R.string.no_more_data));
                     pullListView.onPullUpRefreshComplete();
@@ -330,36 +331,25 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                     ToastUtil.show(context, getString(R.string.no_more_data));
                     pullListView.setHasMoreData(false);
                     pullListView.onPullUpRefreshComplete();
-                }
+                }*/
             }
-        });*/
-
-
-        //onRecyclerViewItemClick(mRVClassifyAll, 1);
+        });
         categroy18Adapter = new DiscoverAdapter(context, getSupportFragmentManager(), categroy18ListBean, 0);
         pullListView.getRefreshableView().setAdapter(categroy18Adapter);
-        //getGameList();
-        getBannerData();//轮播图
     }
 
     protected final static String TAG = DiscoverFragment.class.getSimpleName();
 
     //请求数据
     private void getData() {
-       /* //每日
-        mEverydayList.clear();
-        mActionList.clear();
-        mHotRecentList.clear();
-        //mSubjectList.clear();
-        //mBigChangList.clear();*/
+        loadStateView.setVisibility(View.VISIBLE);
+        loadStateView.setState(LoadStateView.STATE_ING);
+        //轮播图
         for (int i = 0; i < 10; i++) {
             //每日
             mHotRecentList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_13.png");
             mHotRecentAdapter.setList(mHotRecentList);
-            //专题
         }
-        loadStateView.setVisibility(View.VISIBLE);
-        loadStateView.setState(LoadStateView.STATE_ING);
         //请求数据
         RecommendListBody bodyBean = new RecommendListBody();
         new DiscoverClient(context, bodyBean).observable()
@@ -538,9 +528,8 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         };
 
         Request<JsonResult<List<RecommendTopicsItemInfo>>> request = new GsonRequest<JsonResult<List<RecommendTopicsItemInfo>>>
-                (Request.Method.POST, url,
-                        successListener, errorListener, new TypeToken<JsonResult<List<RecommendTopicsItemInfo>>>() {
-                }.getType()) {
+                (Request.Method.POST, url, successListener, errorListener,
+                        new TypeToken<JsonResult<List<RecommendTopicsItemInfo>>>() {}.getType()) {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
