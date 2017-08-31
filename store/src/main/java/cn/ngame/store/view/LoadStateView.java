@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -39,7 +40,7 @@ public class LoadStateView extends FrameLayout {
     private boolean isShowReload = true;
 
     private OnClickListener listener;
-    private long ANIMATION_DURATION = 600;
+    private long ANIMATION_DURATION = 500;
 
     public LoadStateView(Context context) {
         this(context, null);
@@ -94,11 +95,11 @@ public class LoadStateView extends FrameLayout {
             tv_summary.setText(text_ing);
 
             Animation animation = AnimationUtils.loadAnimation(content, R.anim.tip);
-        /*    LinearInterpolator interpolator = new LinearInterpolator();
-            animation.setInterpolator(interpolator);*/
+            //LinearInterpolator为匀速效果，Accelerateinterpolator为加速效果、DecelerateInterpolator为减速效果
+           LinearInterpolator interpolator = new LinearInterpolator();
+            animation.setInterpolator(interpolator);
             //animation.setFillAfter(false);//True:图片停在动画结束位置
             animation.setDuration(ANIMATION_DURATION);    //设置动画完成时间
-            animation.setRepeatMode(Animation.RESTART);
             animation.setRepeatCount(Integer.MAX_VALUE);
             loadingIv.startAnimation(animation);
         }

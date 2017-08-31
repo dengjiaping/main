@@ -45,6 +45,7 @@ import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.view.LabelGameListActivity;
 import cn.ngame.store.view.BannerView;
+import cn.ngame.store.view.LoadStateView;
 import cn.ngame.store.view.PicassoImageView;
 import cn.ngame.store.view.RecyclerViewDivider;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
@@ -277,8 +278,11 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             }*/
         }
     };
+    private LoadStateView loadStateView;
 
     private void init(View view) {
+        loadStateView = (LoadStateView) view.findViewById(R.id.load_state_view);
+        loadStateView.isShowLoadBut(false);
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
@@ -354,7 +358,8 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             mHotRecentAdapter.setList(mHotRecentList);
             //专题
         }
-
+        loadStateView.setVisibility(View.VISIBLE);
+        loadStateView.setState(LoadStateView.STATE_ING);
         //请求数据
         RecommendListBody bodyBean = new RecommendListBody();
         new DiscoverClient(context, bodyBean).observable()
@@ -366,6 +371,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                         android.util.Log.d(TAG, "getGameListonError: ");
                        /* pullListView.onPullUpRefreshComplete();
                         pullListView.onPullDownRefreshComplete();*/
+                        loadStateView.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -373,17 +379,19 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                      /*   pullListView.onPullUpRefreshComplete();
                         pullListView.onPullDownRefreshComplete();
                         pullListView.setLastUpdatedLabel(new Date().toLocaleString());*/
+                        loadStateView.setVisibility(View.GONE);
                         if (result != null && result.getCode() == 0) {
                             setData(result);
                         } else {
                             //请求失败
                             android.util.Log.d(TAG, "请求失败");
                         }
+
                     }
                 });
     }
 
-    //todo 设置数据
+    // 设置数据
     public void setData(DiscoverListBean result) {
         DiscoverListBean.DataBean data = result.getData();
         android.util.Log.d(TAG, "setData: " + data);
@@ -394,7 +402,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         if (null != categroyAllList) {
             categroyTopAdapter.setList(categroyAllList);
         }
-       // mEverydayList = data.getDailyNewGamesList();
+        // mEverydayList = data.getDailyNewGamesList();
         //每日新发现
         mEverydayAdapter.setList(mEverydayList);
 
@@ -599,10 +607,13 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         switch (v.getId()) {
         }
     }
+
     private boolean mIsShow = false;
+
     public void setShow(boolean isShow) {
         mIsShow = isShow;
     }
+
     public void scroll2Top() {
         if (mIsShow && pullListView != null) {
             //refreshableView.setSelectionAfterHeaderView();
@@ -612,6 +623,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             //getGameList();
         }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
