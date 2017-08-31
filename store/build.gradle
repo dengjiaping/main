@@ -1,14 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        release {
-            keyAlias 'ngame android'
-            keyPassword '^fdk%67sd$5'
-            storeFile file('F:/android/trunk/main/key/releasekey.jks')
-            storePassword '^fdk%67sd$5'
-        }
-    }
+
     compileSdkVersion 23
     buildToolsVersion '23.0.2'
     packagingOptions {
@@ -52,23 +45,25 @@ android {
             // signingConfigs signingConfigs.debug
             // proguardFiles 'proguard-rules.pro'*/
 //            versionNameSuffix "-debug"
-//            minifyEnabled false
+            minifyEnabled true
 //            zipAlignEnabled false
 //            shrinkResources false
-            signingConfig signingConfigs.release
+            //signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
+            //signingConfig signingConfigs.release
             /*minifyEnabled false
             signingConfigs signingConfigs.debug
             proguardFiles 'proguard-rules.pro'*/
             // 不显示Log
-            //buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "boolean", "LOG_DEBUG", "true"
             // 是否进行混淆
             minifyEnabled true
             //Zipalign优化
-            zipAlignEnabled true
+           //zipAlignEnabled true
             // 移除无用的resource文件
-//            shrinkResources true
+            shrinkResources true
             //前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -86,7 +81,7 @@ android {
     configurations.all {
         resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
     }
-    productFlavors {
+   /* productFlavors {
         c360 {}
         c360 {}
         uc {}
@@ -97,7 +92,7 @@ android {
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
         }
-    }
+    }*/
 }
 
 repositories {

@@ -1,21 +1,3 @@
-# Add project specific ProGuard rules here.
-# By default, the flags in this file are appended to flags specified
-# in D:\Android\sdk/tools/proguard/proguard-android.txt
-# You can edit the include path and order by changing the proguardFiles
-# directive in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
-
-# Add any project specific keep options here:
-
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
-
 
 ##---------------Begin: proguard configuration common for all Android apps ----------
 -optimizationpasses 5
@@ -39,6 +21,8 @@
 
 
 -keep public class * extends android.app.Activity
+-keep public class * extends android.support.v4.app.FragmentActivity
+-keep public class * extends android.support.v4.app.Fragment
 -keep public class * extends android.app.Application
 -keep public class * extends android.app.Service
 -keep public class * extends android.content.BroadcastReceiver
@@ -48,12 +32,11 @@
 -keep public class com.android.vending.licensing.ILicensingService
 -dontnote com.android.vending.licensing.ILicensingService
 
-
-# Explicitly preserve all serialization members. The Serializable interface
-# is only a marker interface, so it wouldn't save them.
+#保持 Serializable 不被混淆
 -keepclassmembers class * implements java.io.Serializable {
     static final long serialVersionUID;
     private static final java.io.ObjectStreamField[] serialPersistentFields;
+    !static !transient <fields>;
     private void writeObject(java.io.ObjectOutputStream);
     private void readObject(java.io.ObjectInputStream);
     java.lang.Object writeReplace();
@@ -61,7 +44,7 @@
 }
 
 
-# Preserve all native method names and the names of their classes.
+# 所有native的方法不能去混淆.
 -keepclasseswithmembernames class * {
     native <methods>;
 }
@@ -82,19 +65,14 @@
 -keepclassmembers class **.R$* {
   public static <fields>;
 }
-
+# 对于带有回调函数onXXEvent的，不能混淆
+-keepclassmembers class * { void *(**On*Event); }
 
 # Preserve the special static methods that are required in all enumeration classes.
 -keepclassmembers enum * {
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
-
-
--keep public class * {
-    public protected *;
-}
-
 
 -keep class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;
@@ -115,6 +93,7 @@
 -keep class com.parse.*{ *; }
 -dontwarn com.parse.**
 -dontwarn com.squareup.picasso.**
+-keep class com.squareup.picasso.** {*; }
 -keepclasseswithmembernames class * {
     native <methods>;
 }
@@ -125,7 +104,8 @@
 -dontwarn com.jeremyfeinstein.slidingmenu.**
 
 -dontwarn com.tencent.**
--ignorewarning
+-ignorewarnings
+
 #-dontwarn okio.**
 #-dontwarn com.google.code.gson.**
 #-dontwarn org.joda.time.**
@@ -145,6 +125,7 @@
 #-keep class joda-time.** { *; }
 #-keep class com.squareup.retrofit2.** { *; }
 #-keep class com.trello.** { *; }
+
 #-keep class com.alibaba.** { *; }
 
 -keep public class cn.ngame.store.ota.model.OtaService
@@ -156,16 +137,14 @@
 
 ##--------------------End mySelf --------------------------
 
-##---------------Begin: proguard configuration for Gson  ----------
-# Gson uses generic type information stored in a class file when working with fields. Proguard
-# removes such information by default, so configure it to keep all of it.
+#避免混淆泛型 如果混淆报错建议关掉
 -keepattributes Signature
 
 
 # Gson specific classes
 -keep class sun.misc.Unsafe { *; }
-#-keep class com.google.gson.stream.** { *; }
-
+-keep class com.google.gson.stream.** { *; }
+-keep class com.google.gson.** { *; }
 
 # Application classes that will be serialized/deserialized over Gson
 #-keep class com.google.gson.examples.android.model.** { *; } ##这里需要改成解析到哪个  javabean
@@ -175,4 +154,115 @@
 -keepclassmembers class * {
    public <init> (org.json.JSONObject);
 }
+#-----------------------umeng------------------------------------------
+-dontwarn com.umeng.**
+-dontwarn org.apache.commons.**
+-dontwarn com.tencent.weibo.sdk.**
+-keep class com.umeng*.** {*; }
+-keep public class [your_pkg].R$*{
+    public static final int *;
+}
+-keep class com.tencent.open.TDialog$*
+-keep class com.tencent.open.TDialog$* {*;}
+-keep class com.tencent.open.PKDialog
+-keep class com.tencent.open.PKDialog {*;}
+-keep class com.tencent.open.PKDialog$*
+-keep class com.tencent.open.PKDialog$* {*;}
+-keep class com.tencent.mm.sdk.openapi.WXMediaMessage {*;}
+-keep class com.tencent.mm.sdk.openapi.** implements com.tencent.mm.sdk.openapi.WXMediaMessage$IMediaObject {*;}
 ##---------------End: proguard configuration for Gson  ----------
+#RXjava
+-dontwarn sun.misc.** -keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* { long producerIndex; long consumerIndex; }
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef { rx.internal.util.atomic.LinkedQueueNode producerNode; }
+# Okio
+-dontwarn com.squareup.** -dontwarn okio.**
+-keep public class org.codehaus.* { *; }
+-keep public class java.nio.* { *; }
+#库
+-keep class javax.ws.rs.** { *; }
+-dontwarn com.alibaba.fastjson.**
+-keep class com.alibaba.fastjson.** { *; }
+#v4
+-dontwarn android.support.v4.**
+-keep class android.support.v4.** { *; }
+-keep interface android.support.v4.app.** { *; }
+-keep public class * extends android.support.v4.**
+-keep public class * extends android.app.Fragment
+-dontwarn com.zhy.m.** -keep class com.zhy.m.** {*;}
+ -keep interface com.zhy.m.** { *; }
+ -keep class **$$PermissionProxy { *; }
+ #新浪
+ -keep class android.webkit.**{*;}
+ -keep public class android.webkit.WebView {*;}
+ -keep public class android.webkit.WebViewClient {*;}
+ -keep class com.weibo.net.** {*;}
+ -keep class com.sina.**{*;}
+ -keep class m.framework.**{*;}
+ #sina SDK
+-dontwarn android.net.http.**
+-keep class android.net.http.** { *;}
+# Joda Time
+-dontwarn org.joda.convert.**
+-dontwarn org.joda.time.**
+ -keep class org.joda.time.** { *; }
+ -keep interface org.joda.time.** { *; }
+
+ -dontwarn org.codehaus.**
+ -dontwarn java.nio.**
+ -dontwarn java.lang.invoke.**
+ -dontwarn retrofit2.**
+ -keep class retrofit2.** { *; }
+ -keepattributes Signature
+ -keepattributes Exceptions
+
+ #WebView的处理
+ -keepclassmembers class * extends android.webkit.WebViewClient {
+     public void *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);
+     public boolean *(android.webkit.WebView, java.lang.String);
+ }
+ -keepclassmembers class * extends android.webkit.WebViewClient {
+     public void *(android.webkit.WebView, java.lang.String);
+ }
+ -keepclassmembers class com.sina.weibo.sdk.web.client.BaseWebViewClient {
+    <fields>;
+        <methods>;
+ }
+ # ############### volley混淆 ############### # # -------------------------------------------
+ -keep class com.android.volley.** {*;}
+ -keep class com.android.volley.toolbox.** {*;}
+ -keep class com.android.volley.Response$* { *; }
+ -keep class com.android.volley.Request$* { *; }
+ -keep class com.android.volley.RequestQueue$* { *; }
+ -keep class com.android.volley.toolbox.HurlStack$* { *; }
+ -keep class com.android.volley.toolbox.ImageLoader$* { *; }
+ #------------------实体类 # -------------------------------------------
+ -keep class cn.ngame.store.bean.** { *; }
+ -keep class cn.ngame.store.game.bean.** { *; }
+ -keep class cn.ngame.store.StoreApplication { *; }
+ -keep class com.jzt.hol.android.jkda.sdk.bean.** { *; }
+ -keep class com.jzt.hol.android.jkda.sdk.services.** { *; }
+ -keep class cn.ngame.store.push.model.ExtraDataBean
+ -keep class cn.ngame.store.push.model.MessageDetail
+ -keep class cn.ngame.store.activity.main.MainHomeActivity
+
+ -keep class org.apache.http.** {*; }
+ -keep class org.apache.**{*;}
+
+ #-dontwarn com.facebook.**
+-dontwarn com.facebook.**
+-keep enum com.facebook.** {*;}
+-keep public interface com.facebook.**
+-keep class com.facebook.** {*;}
+#retrofit2.x
+-dontwarn retrofit2.** -keep class retrofit2.** { *; }
+-keepattributes Signature -keepattributes Exceptions #Rxjava RxAndroid
+-dontwarn rx.* -dontwarn sun.misc.** -keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+ long producerIndex;
+   long consumerIndex;
+}
+ -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+  rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+ -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+ rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}

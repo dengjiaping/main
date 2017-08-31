@@ -1,5 +1,6 @@
 package cn.ngame.store.activity.rank;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -43,7 +44,7 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
  * 下载榜
  * Created by gp on 2017/3/22 0022.
  */
-
+@SuppressLint("ValidFragment")
 public class Rank012345Fragment extends BaseSearchFragment {
     private PullToRefreshListView pullListView;
     private RankingListAdapter adapter;
@@ -75,15 +76,18 @@ public class Rank012345Fragment extends BaseSearchFragment {
     private FragmentManager fm;
     private LoadStateView loadStateView;
 
-    public static Rank012345Fragment newInstance() {
+    public static Rank012345Fragment newInstance(int type) {
         Rank012345Fragment fragment = new Rank012345Fragment(0);
         Bundle bundle = new Bundle();
+        //bundle.putString("type", type+"");
         fragment.setArguments(bundle);
         return fragment;
     }
 
     public Rank012345Fragment(int serial) {
         mSerial = serial;
+    }
+    public Rank012345Fragment() {
     }
 
     public void sendMessage() {

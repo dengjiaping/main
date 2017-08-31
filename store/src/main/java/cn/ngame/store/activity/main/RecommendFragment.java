@@ -179,8 +179,7 @@ public class RecommendFragment extends BaseSearchFragment {
                 }
                 //GameInfo类  : 请求游戏JN数据后,封装的javabean
                 gameInfo = result.data;
-                int size = gameInfo.size();
-                if (null == gameInfo || size == 0) {
+                if (null == gameInfo ||  gameInfo.size() == 0) {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误！");
                 } else {
                     horizontalViewContainer.removeAllViews();
@@ -188,6 +187,7 @@ public class RecommendFragment extends BaseSearchFragment {
                     int width240 = CommonUtil.dip2px(context, 240f);
                     int heght114 = CommonUtil.dip2px(context, 114f);
                     int ic_def_logo_480_228 = R.drawable.ic_def_logo_480_228;
+                    int size = gameInfo.size();
                     for (int i = 0; i < size; i++) {
                         final RecommendTopicsItemInfo info = gameInfo.get(i);
                         final String gameImage = info.getSelectImage();//获取每一张图片

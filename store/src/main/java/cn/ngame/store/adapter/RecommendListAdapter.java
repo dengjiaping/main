@@ -135,11 +135,14 @@ public class RecommendListAdapter extends BaseAdapter {
                 imgUrl = null;
             }
             int screenWidth = ImageUtil.getScreenWidth((Activity) context);
-            img.setImageURI(fromUrl);
             Picasso.with(context).load(imgUrl).placeholder(R.drawable.ic_def_logo_720_288)
                     .error(R.drawable.ic_def_logo_720_288)
                     //.resize(screenWidth,150)
                     .into(recommend_game_pic);
+            Picasso.with(context).load(fromUrl).placeholder(R.drawable.ic_def_logo_720_288)
+                    .error(R.drawable.ic_def_logo_720_288)
+                    //.resize(screenWidth,150)
+                    .into(img);
 
             String gameName = gameInfo.getGameName();
             if (!"".equals(gameName)) {

@@ -90,7 +90,7 @@ public class StoreApplication extends MultiDexApplication {
     private void initUmengKey() {
         PlatformConfig.setWeixin("wxc3fd944502f63476", "15cc8fe486352fee6aac537f3f033066");
         PlatformConfig.setQQZone("1105610048", "cRaNEPSsHj95Ay9p");
-        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad", "http://sns.whalecloud.com");
+        //PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad", "http://sns.whalecloud.com");
 
     }
 
