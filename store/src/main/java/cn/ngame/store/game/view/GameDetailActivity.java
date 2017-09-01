@@ -394,15 +394,15 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         //获取状态栏高度设置给标题栏==========================================
         rl_top = (RelativeLayout) findViewById(R.id.rl_top);
         rl_top.setBackgroundResource(R.color.transparent);
-        int statusBarHeight = ImageUtil.getStatusBarHeight(content);
+        int statusBarHeight = ImageUtil.getStatusBarHeight(content) - 5;
         rl_top.setPadding(0, statusBarHeight, 0, 0);
         //======================================================================
         leftBt = (Button) findViewById(R.id.left_bt);
-        leftBt.setPadding(CommonUtil.dip2px(content, 20), statusBarHeight, 0, 0);
+        leftBt.setPadding(CommonUtil.dip2px(content, 18), statusBarHeight, 0, 0);
         leftBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                content.finish();
+                finish();
             }
         });
         fileLoad = FileLoadManager.getInstance(this);

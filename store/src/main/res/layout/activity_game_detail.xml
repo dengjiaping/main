@@ -5,6 +5,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:background="@color/f5f5f5"
+             android:descendantFocusability="blocksDescendants"
              android:orientation="vertical">
 
 
@@ -104,10 +105,10 @@
                 <HorizontalScrollView
                     android:id="@+id/game_detail_item_llay"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/img_1"
                     android:layout_toRightOf="@id/img_1"
-                    android:scrollbars="none"
-                    android:layout_height="wrap_content">
+                    android:scrollbars="none">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -320,16 +321,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_gravity="center_horizontal|center_vertical"
             android:background="@null"
+            android:clickable="true"
             android:drawableLeft="@drawable/ic_back"
             android:drawablePadding="@dimen/dp_10"
             android:ellipsize="end"
+            android:focusableInTouchMode="true"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:maxWidth="250dp"
+            android:maxWidth="@dimen/dm250"
             android:paddingLeft="@dimen/title_left_bt_padding_left"
             android:paddingRight="@dimen/dp_20"
             android:textColor="@android:color/white"
