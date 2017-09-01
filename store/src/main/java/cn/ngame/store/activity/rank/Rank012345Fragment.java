@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -33,7 +34,6 @@ import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.KeyConstant;
-import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.LoadStateView;
@@ -50,7 +50,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
     private RankingListAdapter adapter;
     protected final static String TAG = Rank012345Fragment.class.getSimpleName();
     private PageAction pageAction;
-    public static int PAGE_SIZE = 30;
+    public static int PAGE_SIZE = 10;
     private List<LikeListBean.DataBean.GameListBean> list = new ArrayList<>();
     private boolean IS_LOADED = false;
     private static int mSerial = 0;
@@ -64,7 +64,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
                 //这里执行加载数据的操作
                 getRankList();
             } else {
-                Log.d(TAG, tab_position + "不请求数据," + tab2_position);
+                // Log.d(TAG, tab_position + "不请求数据," + tab2_position);
             }
             return;
         }
@@ -87,6 +87,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
     public Rank012345Fragment(int serial) {
         mSerial = serial;
     }
+
     public Rank012345Fragment() {
     }
 
@@ -144,15 +145,16 @@ public class Rank012345Fragment extends BaseSearchFragment {
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 //少于指定条数不加载
+                Log.d(TAG, pageAction.getTotal() + "onPullUpToRefresh: " + pageAction.getPageSize());
                 if (pageAction.getTotal() < pageAction.getPageSize()) {
                     ToastUtil.show(content, "已经到底了");
                     pullListView.setHasMoreData(false);
                     pullListView.onPullUpRefreshComplete();
                     return;
                 }
-                if (pageAction.getCurrentPage() * pageAction.getPageSize() < pageAction.getTotal()) {
-                    pageAction.setCurrentPage(pageAction.getCurrentPage() == 0 ? pageAction.getCurrentPage() + 2 : pageAction
-                            .getCurrentPage() + 1);
+                int currentPage = pageAction.getCurrentPage();
+                if (currentPage * pageAction.getPageSize() < pageAction.getTotal()) {
+                    pageAction.setCurrentPage(currentPage == 0 ? currentPage + 2 : currentPage + 1);
 //                    getGameList();
                     getRankList();
                 } else {
@@ -298,10 +300,12 @@ public class Rank012345Fragment extends BaseSearchFragment {
      * 获取排行榜列表数据
      */
     private void getRankList() {
-        Log.d(TAG, tab_position + ",请求数据,当前索引:" + tab2_position);
+        // Log.d(TAG, tab_position + ",请求数据,当前索引:" + tab2_position);
         //tab_position :0=全部   1=手柄   2=破解   3=汉化  4=特色
         loadStateView.setVisibility(View.VISIBLE);
         loadStateView.setState(LoadStateView.STATE_ING);
+        Log.d(TAG, "请求索引? StartRecord是 pageAction.getCurrentPage()" + pageAction.getCurrentPage());
+        Log.d(TAG, "请求大小" + PAGE_SIZE);
         RankListBody bodyBean = new RankListBody();
         bodyBean.setStartRecord(pageAction.getCurrentPage());
         bodyBean.setRecords(PAGE_SIZE);
@@ -324,23 +328,31 @@ public class Rank012345Fragment extends BaseSearchFragment {
                         if (result != null && result.getCode() == 0) {
                             listData(result);
                         } else {
+                            android.util.Log.d(TAG, "onNext: 查询无结果");
                             loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_data));
                         }
                     }
                 });
     }
 
+    //设置数据
     public void listData(LikeListBean dataBean) {
         LikeListBean.DataBean result = dataBean.getData();
         if (result == null || result.getGameList() == null) {
+            android.util.Log.d(TAG, "gameList.NULL ");
+            android.util.Log.d(TAG, "list.size:NULL " + list.size());
             loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_data));
             return;
         }
         List<LikeListBean.DataBean.GameListBean> gameList = result.getGameList();
         int size = gameList.size();
         if (pageAction.getCurrentPage() == 0) {
+            android.util.Log.d(TAG, "1请求的.size: " + gameList.size());
+            android.util.Log.d(TAG, "1本地size: " + list.size());
             this.list.clear(); //清除数据
+            adapter.setList(list);
             if (gameList == null || size == 0) {
+                Log.d(TAG, "1 请求的数据 == null请求的size == 0: ");
                 pullListView.onPullUpRefreshComplete();
                 pullListView.onPullDownRefreshComplete();
                 pullListView.setLastUpdatedLabel(new Date().toLocaleString());
@@ -350,10 +362,15 @@ public class Rank012345Fragment extends BaseSearchFragment {
         }
         loadStateView.setVisibility(View.GONE);
         if (size > 0) {
+            android.util.Log.d(TAG, "2请求的size: " + gameList.size());
+            android.util.Log.d(TAG, "2本地listsize: " + list.size());
+            android.util.Log.d(TAG, "result.getTotals() " + result.getTotals());
             pageAction.setTotal(result.getTotals());
             this.list.addAll(gameList);
         }
         if (size > 0 && pageAction.getCurrentPage() == 0) {
+            android.util.Log.d(TAG, "3请求的.size: " + gameList.size());
+            android.util.Log.d(TAG, "3本地list.size: " + list.size());
             this.list.clear(); //清除数据
             pageAction.setTotal(result.getTotals());
             this.list.addAll(gameList);

@@ -22,6 +22,7 @@ import android.support.v4.app.FragmentManager;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TextAppearanceSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,8 +117,9 @@ public class RankingListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if (gameInfo != null)
+        if (gameInfo != null) {
             holder.update(gameInfo, type, position);
+        }
 
         return convertView;
     }
@@ -251,28 +253,32 @@ public class RankingListAdapter extends BaseAdapter {
             tv_percentage.setText(gameInfo.getScoreLevel() + "");
 
             ratingBar.setRating(gameInfo.getScoreLevel());
+            //是否手柄、vr，头控,
+            String typeNameStr = gameInfo.getCName();
+            String[] typeNameArray = typeNameStr.split("\\,");
+            Log.d("Rank012345Fragment", gameName + ",id:" + gameInfo.getId() + "类型: " + typeNameStr);
+            for (int i = 0; i < typeNameArray.length; i++) {
+                switch (i) {
+                    case 0:
+                        tv_shoubing.setText(typeNameArray[i]);
+                        tv_shoubing.setVisibility(View.VISIBLE);
+                        break;
+                    case 1:
+                        tv_vr.setText(typeNameArray[i]);
+                        tv_vr.setVisibility(View.VISIBLE);
+                        break;
+                    case 2:
+                        tv_toukong.setText(typeNameArray[i]);
+                        tv_toukong.setVisibility(View.VISIBLE);
 
-          /*  //是否手柄、vr，头控,
-            if (gameInfo.getIsHeadControl() == 1) {
-                tv_toukong.setVisibility(View.VISIBLE);
-            } else {
-                tv_toukong.setVisibility(View.GONE);
+                        break;
+                    case 3:
+                        tv_yun_duan.setText(typeNameArray[i]);
+                        tv_yun_duan.setVisibility(View.VISIBLE);
+                        break;
+                }
+
             }
-            if (gameInfo.getIsHand() == 1) {
-                tv_shoubing.setVisibility(View.VISIBLE);
-            } else {
-                tv_shoubing.setVisibility(View.GONE);
-            }
-            if (gameInfo.getIsVR() == 1) {//1=是   0=否
-                tv_vr.setVisibility(View.VISIBLE);
-            } else {
-                tv_vr.setVisibility(View.GONE);
-            }
-            if (gameInfo.getIsTouchScreen() == 1) {
-                tv_yun_duan.setVisibility(View.VISIBLE);
-            } else {
-                tv_yun_duan.setVisibility(View.GONE);
-            }*/
         }
     }
 }

@@ -40,7 +40,7 @@ public class LoadStateView extends FrameLayout {
     private boolean isShowReload = true;
 
     private OnClickListener listener;
-    private long ANIMATION_DURATION = 500;
+    private long ANIMATION_DURATION = 400;
 
     public LoadStateView(Context context) {
         this(context, null);

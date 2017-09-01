@@ -263,10 +263,11 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                     fragments = new ArrayList<>();
                     fragments.add(GameDetailFragment.newInstance(gameInfo));
                     fragments.add(GameReadFragment.newInstance(gameInfo));
+                    if (null != adapter) {
+                        adapter.setList(fragments, tabList);
+                        viewpager.setAdapter(adapter);
+                    }
 
-                    adapter.setList(fragments, tabList);
-
-                    viewpager.setAdapter(adapter);
 
                     setView();
                 } else {
