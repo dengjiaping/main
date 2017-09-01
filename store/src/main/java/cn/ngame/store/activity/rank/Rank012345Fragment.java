@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.List;
 
 import cn.ngame.store.R;
-import cn.ngame.store.adapter.RankingListAdapter;
+import cn.ngame.store.adapter.Ranking012345Adapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.utils.CommonUtil;
@@ -47,7 +47,7 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 @SuppressLint("ValidFragment")
 public class Rank012345Fragment extends BaseSearchFragment {
     private PullToRefreshListView pullListView;
-    private RankingListAdapter adapter;
+    private Ranking012345Adapter adapter;
     protected final static String TAG = Rank012345Fragment.class.getSimpleName();
     private PageAction pageAction;
     public static int PAGE_SIZE = 10;
@@ -165,7 +165,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
         });
         //点击事件
         final ListView refreshableView = pullListView.getRefreshableView();
-        adapter = new RankingListAdapter(content, fm, list, 0);
+        adapter = new Ranking012345Adapter(content, fm, list, 0);
         refreshableView.setAdapter(adapter);
         refreshableView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

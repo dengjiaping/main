@@ -15,7 +15,7 @@ import java.util.TimerTask;
 
 import cn.ngame.store.R;
 import cn.ngame.store.adapter.NeccssaryFragmentAdapter;
-import cn.ngame.store.adapter.RankingListAdapter;
+import cn.ngame.store.adapter.Ranking012345Adapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.NecessaryItemData;
 import cn.ngame.store.bean.PageAction;
@@ -39,7 +39,7 @@ public class NecessaryFragment extends BaseSearchFragment {
     private String type;
     protected QuickAction mItemClickQuickAction;
     private IFileLoad fileLoad;
-    private RankingListAdapter adapter;
+    private Ranking012345Adapter adapter;
 //    private GameUpdate2Adapter loadIngLvAdapter;
     /**
      * 当前点击的列表 1.下载列表 2.完成列表

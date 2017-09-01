@@ -19,6 +19,7 @@ package cn.ngame.store.adapter;
 import android.app.Activity;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TextAppearanceSpan;
@@ -53,7 +54,7 @@ import cn.ngame.store.view.GameLoadProgressBar;
 
 import static cn.ngame.store.R.id.tv_shoubing;
 
-public class RankingListAdapter extends BaseAdapter {
+public class Ranking012345Adapter extends BaseAdapter {
     private Activity context;
     private FragmentManager fm;
     private List<LikeListBean.DataBean.GameListBean> list;
@@ -61,7 +62,7 @@ public class RankingListAdapter extends BaseAdapter {
 
     private static Handler uiHandler = new Handler();
 
-    public RankingListAdapter(Activity context, FragmentManager fm, List<LikeListBean.DataBean.GameListBean> list, int type) {
+    public Ranking012345Adapter(Activity context, FragmentManager fm, List<LikeListBean.DataBean.GameListBean> list, int type) {
         super();
         this.context = context;
         this.fm = fm;
@@ -240,8 +241,15 @@ public class RankingListAdapter extends BaseAdapter {
 
                 }
             });
+            Log.d("Rank012345Fragment", gameName + "索引: " + position);
             tv_position.setText(position + 1 + "");
-
+            if (0 == position) {
+                tv_position.setTextColor(ContextCompat.getColor(context, R.color.f92b2b));
+            } else if (1 == position) {
+                tv_position.setTextColor(ContextCompat.getColor(context, R.color.fa702a));
+            } else if (2==position) {
+                tv_position.setTextColor(ContextCompat.getColor(context, R.color.fab52a));
+            }
             String imgUrl = gameInfo.getGameLogo();
             if (imgUrl != null && imgUrl.trim().equals("")) {
                 imgUrl = null;
@@ -255,6 +263,9 @@ public class RankingListAdapter extends BaseAdapter {
             ratingBar.setRating(gameInfo.getScoreLevel());
             //是否手柄、vr，头控,
             String typeNameStr = gameInfo.getCName();
+            if (typeNameStr == null) {
+                return;
+            }
             String[] typeNameArray = typeNameStr.split("\\,");
             Log.d("Rank012345Fragment", gameName + ",id:" + gameInfo.getId() + "类型: " + typeNameStr);
             for (int i = 0; i < typeNameArray.length; i++) {
@@ -270,7 +281,6 @@ public class RankingListAdapter extends BaseAdapter {
                     case 2:
                         tv_toukong.setText(typeNameArray[i]);
                         tv_toukong.setVisibility(View.VISIBLE);
-
                         break;
                     case 3:
                         tv_yun_duan.setText(typeNameArray[i]);

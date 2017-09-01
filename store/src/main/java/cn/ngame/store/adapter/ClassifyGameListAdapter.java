@@ -125,6 +125,10 @@ public class ClassifyGameListAdapter extends BaseAdapter {
             holder = new ViewHolder(context, fm);
             holder.img = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
             holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
+            holder.tagTv0 = (TextView) convertView.findViewById(R.id.classify_item_tip_tv_01);
+            holder.tagTv1 = (TextView) convertView.findViewById(R.id.classify_item_tip_tv_02);
+            holder.tagTv2 = (TextView) convertView.findViewById(R.id.classify_item_tip_tv_03);
+            holder.tagTv3 = (TextView) convertView.findViewById(R.id.classify_item_tip_tv_04);
             holder.tv_size = (TextView) convertView.findViewById(R.id.text1);
             holder.ratingBar = (RatingBar) convertView.findViewById(R.id.rating_bar);
             holder.progressBar = (GameLoadProgressBar) convertView.findViewById(R.id.progress_bar);
@@ -153,7 +157,7 @@ public class ClassifyGameListAdapter extends BaseAdapter {
         private GameInfo gameInfo;
 
         private SimpleDraweeView img;
-        private TextView tv_title, tv_size;
+        private TextView tv_title, tv_size, tagTv0, tagTv1, tagTv2, tagTv3;
         private RatingBar ratingBar;
         private GameLoadProgressBar progressBar;    //下载进度条
         private FragmentManager fm;
@@ -229,6 +233,32 @@ public class ClassifyGameListAdapter extends BaseAdapter {
                     progressBar.toggle();
                 }
             });
+            String simpleLabel = gameInfo.simpleLabel;
+            if (simpleLabel != null) {
+                String[] typeNameArray = simpleLabel.split("\\,");
+                for (int i = 0; i < typeNameArray.length; i++) {
+                    switch (i) {
+                        case 0:
+                            tagTv0.setText(typeNameArray[i]);
+                            tagTv0.setVisibility(View.VISIBLE);
+                            break;
+                        case 1:
+                            tagTv1.setText(typeNameArray[i]);
+                            tagTv1.setVisibility(View.VISIBLE);
+                            break;
+                        case 2:
+                            tagTv2.setText(typeNameArray[i]);
+                            tagTv2.setVisibility(View.VISIBLE);
+                            break;
+                        case 3:
+                            tagTv3.setText(typeNameArray[i]);
+                            tagTv3.setVisibility(View.VISIBLE);
+                            break;
+                    }
+
+                }
+            }
+            Log.d("LabelGameListActivity", "simpleLabel: " + simpleLabel);
         }
     }
 
