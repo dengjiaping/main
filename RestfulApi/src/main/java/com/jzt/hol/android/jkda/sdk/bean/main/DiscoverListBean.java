@@ -175,7 +175,7 @@ public class DiscoverListBean {
 
             private String categoryName;
             private int categoryId;
-            private List<?> list;
+            private List<DiscoverTopBean> list;
 
             public String getCategoryName() {
                 return categoryName;
@@ -193,11 +193,11 @@ public class DiscoverListBean {
                 this.categoryId = categoryId;
             }
 
-            public List<?> getList() {
+            public List<DiscoverTopBean> getList() {
                 return list;
             }
 
-            public void setList(List<?> list) {
+            public void setList(List<DiscoverTopBean> list) {
                 this.list = list;
             }
         }
@@ -211,7 +211,7 @@ public class DiscoverListBean {
 
             private String categoryName;
             private int categoryId;
-            private List<?> list;
+            private List<DiscoverTopBean> list;
 
             public String getCategoryName() {
                 return categoryName;
@@ -229,11 +229,11 @@ public class DiscoverListBean {
                 this.categoryId = categoryId;
             }
 
-            public List<?> getList() {
+            public List<DiscoverTopBean> getList() {
                 return list;
             }
 
-            public void setList(List<?> list) {
+            public void setList(List<DiscoverTopBean> list) {
                 this.list = list;
             }
         }
@@ -247,7 +247,7 @@ public class DiscoverListBean {
 
             private String categoryName;
             private int categoryId;
-            private List<?> list;
+            private List<DiscoverTopBean> list;
 
             public String getCategoryName() {
                 return categoryName;
@@ -265,11 +265,11 @@ public class DiscoverListBean {
                 this.categoryId = categoryId;
             }
 
-            public List<?> getList() {
+            public List<DiscoverTopBean> getList() {
                 return list;
             }
 
-            public void setList(List<?> list) {
+            public void setList(List<DiscoverTopBean> list) {
                 this.list = list;
             }
         }

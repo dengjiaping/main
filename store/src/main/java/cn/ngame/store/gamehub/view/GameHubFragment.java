@@ -37,6 +37,7 @@ import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
+import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.user.view.LoginActivity;
@@ -124,7 +125,8 @@ public class GameHubFragment extends BaseSearchFragment implements View.OnClickL
                     return;
                 }
                 if (pageAction.getCurrentPage() * pageAction.getPageSize() < pageAction.getTotal()) {
-                    pageAction.setCurrentPage(pageAction.getCurrentPage() == 0 ? pageAction.getCurrentPage() + 2 : pageAction.getCurrentPage() + 1);
+                    pageAction.setCurrentPage(pageAction.getCurrentPage() == 0 ? pageAction.getCurrentPage() + 2 : pageAction
+                            .getCurrentPage() + 1);
                     getDataList();
                 } else {
                     pullListView.setHasMoreData(false);
@@ -291,7 +293,8 @@ public class GameHubFragment extends BaseSearchFragment implements View.OnClickL
 
             final HotInfo info = hotInfoList.get(i);
             PicassoImageView img = new PicassoImageView(getActivity());
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
+                    .LayoutParams.MATCH_PARENT);
             img.setLayoutParams(params);
             img.setId((int) info.id);
             img.setTag(info.advImageLink);
@@ -307,11 +310,11 @@ public class GameHubFragment extends BaseSearchFragment implements View.OnClickL
                 public void onClick(View v) {
                     if (info.type == 1) {
                         Intent intent = new Intent(getActivity(), GameDetailActivity.class);
-                        intent.putExtra("id", info.gameId);
+                        intent.putExtra(KeyConstant.ID, info.gameId);
                         startActivity(intent);
                     } else if (info.type == 2) {
                         Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
-                        intent.putExtra("id", info.videoId);
+                        intent.putExtra(KeyConstant.ID, info.videoId);
                         startActivity(intent);
                     }
                 }

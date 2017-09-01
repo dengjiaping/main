@@ -49,12 +49,11 @@ public class TopicsDetailActivity extends BaseFgActivity {
     private PullToRefreshListView pullListView;
     TopicsDetailAdapter adapter;
     List<GameRankListBean.DataBean> list = new ArrayList<>();
-    long id;
     String title, desc, url;
     private PageAction pageAction;
     public static int PAGE_SIZE = 10;
     private TopicsDetailActivity content;
-    private long categoryId;
+    private Object categoryId;
     private RelativeLayout titleLayout;
     private RelativeLayout mTitleRlay;
     private Button leftBt;
@@ -72,7 +71,8 @@ public class TopicsDetailActivity extends BaseFgActivity {
         setContentView(R.layout.topics_detail_activity);
         content = TopicsDetailActivity.this;
         String title = getIntent().getStringExtra(KeyConstant.TITLE);
-        categoryId = getIntent().getLongExtra(KeyConstant.category_Id, 0);
+        categoryId = getIntent().getExtras().get(KeyConstant.category_Id);
+        Log.d(TAG, "categoryId: " + categoryId);
         //获取状态栏高度设置给标题栏==========================================
         mTitleRlay = (RelativeLayout) findViewById(R.id.ll_title);
         mTitleRlay.setBackgroundResource(R.color.transparent);
@@ -103,7 +103,6 @@ public class TopicsDetailActivity extends BaseFgActivity {
 
         pullListView = (PullToRefreshListView) findViewById(R.id.pullListView);
 
-        id = getIntent().getLongExtra("id", 0);
         title = getIntent().getStringExtra("title");
         desc = getIntent().getStringExtra("desc");
         url = getIntent().getStringExtra("url");
@@ -213,7 +212,8 @@ public class TopicsDetailActivity extends BaseFgActivity {
 
     public void getDataList() {
         GameListBody bodyBean = new GameListBody();
-        bodyBean.setCategoryId2(ConvUtil.NI(id));
+        int id = ConvUtil.NI(categoryId);
+        bodyBean.setCategoryId2(id);
         bodyBean.setPageIndex(pageAction.getCurrentPage());
         bodyBean.setPageSize(PAGE_SIZE);
         new GameSelectClient(this, bodyBean).observable()
@@ -240,6 +240,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
     }
 
     private void setData(GameRankListBean result) {
+        Log.d(TAG, "categoryId:size "+result.getData().size());
         if (result.getData() == null) {
             return;
         }

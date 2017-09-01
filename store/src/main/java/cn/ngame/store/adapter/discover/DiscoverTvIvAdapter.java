@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverTopBean;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class DiscoverTvIvAdapter extends RecyclerView.Adapter<DiscoverTvIvAdapte
 
     private final LayoutInflater mInflater;
     private Context context;
-    private List<String> list;
+    private List<DiscoverTopBean> list;
 
     public interface OnItemClickLitener {
         void onItemClick(View view, int position, String tag);
@@ -36,14 +37,14 @@ public class DiscoverTvIvAdapter extends RecyclerView.Adapter<DiscoverTvIvAdapte
         this.mOnItemClickLitener = mOnItemClickListener;
     }
 
-    public DiscoverTvIvAdapter(Context context, List<String> list) {
+    public DiscoverTvIvAdapter(Context context, List<DiscoverTopBean> list) {
         super();
         this.context = context;
         this.list = list;
         mInflater = LayoutInflater.from(context);
     }
 
-    public void setList(List<String> list) {
+    public void setList(List<DiscoverTopBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -57,14 +58,16 @@ public class DiscoverTvIvAdapter extends RecyclerView.Adapter<DiscoverTvIvAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.mTV.setText("游戏名字" + position);
-        holder.mIV.setImageURI(list.get(position));
+
+        final DiscoverTopBean discoverTopBean = list.get(position);
+        holder.mTV.setText(discoverTopBean.getGameName());
+        holder.mIV.setImageURI(discoverTopBean.getGameLogo());
         //为ItemView设置监听器
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, GameDetailActivity.class);
-                intent.putExtra(KeyConstant.ID, "254");
+                intent.putExtra(KeyConstant.ID, discoverTopBean.getId());
                 context.startActivity(intent);
             }
         });

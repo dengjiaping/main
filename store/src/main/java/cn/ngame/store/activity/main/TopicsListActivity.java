@@ -58,7 +58,7 @@ public class TopicsListActivity extends BaseFgActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent();
                 i.setClass(content, TopicsDetailActivity.class);
-                i.putExtra(KeyConstant.ID, list.get(position).getId());
+                i.putExtra(KeyConstant.category_Id, list.get(position).getId());
                 i.putExtra(KeyConstant.TITLE, list.get(position).getTypeName());
                 i.putExtra(KeyConstant.DESC, list.get(position).getTypeDesc());
                 i.putExtra(KeyConstant.URL, list.get(position).getLogoUrl());

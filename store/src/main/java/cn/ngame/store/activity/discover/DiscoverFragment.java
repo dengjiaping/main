@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
 import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverListBean;
+import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverTopBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBody;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.main.DiscoverClient;
@@ -65,7 +66,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private RecyclerView mRVClassifyAll;
     DiscoverClassifyTopAdapter categroyTopAdapter;
     private BannerView bannerView;
-    private List<String> mEverydayList = new ArrayList();
+    private List<DiscoverTopBean> mEverydayList = new ArrayList();
     private DiscoverIvAdapter mTopicsAdapter;
     private RecyclerView mEverydayRv;
     private RecyclerView mActionRv;
@@ -74,7 +75,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private DiscoverTvIvAdapter mEverydayAdapter;
     private RecyclerView mBigChang_Rv;
     private RecyclerView mStrategyRv;
-    private List<String> mHotRecentList = new ArrayList();
+    private List<DiscoverTopBean> mHotRecentList = new ArrayList();
     private List<String> mActionList = new ArrayList();
     private List<String> mStrategyList = new ArrayList();
     private DiscoverIvAdapter mBigChangAdapter;
@@ -91,6 +92,10 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private DiscoverAdapter categroy18Adapter;
     private List<DiscoverListBean.DataBean.GameCategroyListBean> categroyAllList = new ArrayList<>();
     private List<DiscoverListBean.DataBean.ResultListBean> categroy18ListBean = new ArrayList<>();
+    private DiscoverListBean.DataBean.DailyNewGamesListBean dailyNewGames;
+    private DiscoverListBean.DataBean.WeeklyNewGamesListBean hotGames;
+    private int categoryId = -1;
+    private String categoryName = "";
 
     public DiscoverFragment() {
         android.util.Log.d(TAG, "DiscoverFragment: ()");
@@ -143,9 +148,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
 
     //近期最热
     private void initHotRecentView(View headView) {
-        for (int i = 0; i < 10; i++) {
-            mHotRecentList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_20.png");
-        }
         mHotRecentRv = (RecyclerView) headView.findViewById(R.id.rv_hot_recent);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
                 this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
@@ -177,7 +179,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         });
     }
 
-    //每日新发现
+    //每日最新
     private void init1EverydayDiscoverView(View headView) {
         mEverydayRv = (RecyclerView) headView.findViewById(R.id.everyday_discover_recyclerview);
         setOnMoreBtClickListener(headView, R.id.everyday_more_tv1);
@@ -201,18 +203,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         mTopicsAdapter = new DiscoverIvAdapter(context, topicsInfoList);
         mSubjectRv.setAdapter(mTopicsAdapter);
         getTopicsInfoList();
-        mTopicsAdapter.setOnItemClickListener(new DiscoverIvAdapter.OnItemClickLitener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                RecommendTopicsItemInfo topicsInfo = topicsInfoList.get(position);
-                android.util.Log.d(TAG, "onItemClick: " + topicsInfo.getId());
-                singeTopicsDetailIntent.putExtra(KeyConstant.ID, topicsInfo.getId());
-                singeTopicsDetailIntent.putExtra(KeyConstant.TITLE, topicsInfo.getTitle());
-                singeTopicsDetailIntent.putExtra(KeyConstant.DESC, topicsInfo.getSelectDesc());
-                singeTopicsDetailIntent.putExtra(KeyConstant.URL, topicsInfo.getSelectImage());
-                startActivity(singeTopicsDetailIntent);
-            }
-        });
         //条目距离
         mSubjectRv.addItemDecoration(new RecyclerViewDivider(context,
                 20, 18, topicsInfoList.size()));
@@ -229,17 +219,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
 
         //获取大厂数据
         getBigChangInfoList();
-        mBigChangAdapter.setOnItemClickListener(new DiscoverIvAdapter.OnItemClickLitener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                topicsInfo = mBigChangInfoList.get(position);
-                singeTopicsDetailIntent.putExtra(KeyConstant.ID, topicsInfo.getId());
-                singeTopicsDetailIntent.putExtra(KeyConstant.TITLE, topicsInfo.getTitle());
-                singeTopicsDetailIntent.putExtra(KeyConstant.DESC, topicsInfo.getSelectDesc());
-                singeTopicsDetailIntent.putExtra(KeyConstant.URL, topicsInfo.getSelectImage());
-                startActivity(singeTopicsDetailIntent);
-            }
-        });
         mBigChang_Rv.addItemDecoration(new RecyclerViewDivider(context,
                 20, 18, mBigChangInfoList.size()));
         setOnMoreBtClickListener(headView, R.id.more_big_chang_tv);
@@ -258,30 +237,35 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             Intent intent = new Intent();
             //每日新发现
             if (id == R.id.everyday_more_tv1) {
+                if (null != dailyNewGames) {
+                    categoryId = dailyNewGames.getCategoryId();
+                    categoryName = dailyNewGames.getCategoryName();
+                }
                 intent.setClass(context, LabelGameListActivity.class);
-                intent.putExtra(KeyConstant.category_Id, 366 + "");//云端适配id 336
-                intent.putExtra(KeyConstant.TITLE, "每日新发现");
-                context.startActivity(intent);
+                intent.putExtra(KeyConstant.category_Id, String.valueOf(categoryId));//云端适配id 336
+                intent.putExtra(KeyConstant.TITLE, categoryName);
                 //近期最热
             } else if (id == R.id.more_hot_recent_tv) {
+                if (null != hotGames) {
+                    categoryId = hotGames.getCategoryId();
+                    categoryName = hotGames.getCategoryName();
+                }
                 intent.setClass(context, LabelGameListActivity.class);
-                intent.putExtra(KeyConstant.category_Id, 380 + "");//原生手柄 id 336   一周新游 380
-                intent.putExtra(KeyConstant.TITLE, "近期最热");
-                context.startActivity(intent);
+                intent.putExtra(KeyConstant.category_Id, String.valueOf(categoryId));//云端适配id 336
+                intent.putExtra(KeyConstant.TITLE, categoryName);
                 //专题
             } else if (id == R.id.more_subject_tv) {
                 intent.setClass(context, TopicsListActivity.class);
-                context.startActivity(intent);
                 //大厂
             } else if (id == R.id.more_big_chang_tv) {
                 intent.setClass(context, TopicsListActivity.class);
-                context.startActivity(intent);
             }/* else if (id == R.id.more_strategy_tv) {
                 intent.setClass(context, LabelGameListActivity.class);
                 intent.putExtra(KeyConstant.category_Id, 368 + "");//单机id 336
                 intent.putExtra(KeyConstant.TITLE, "策略");
                 context.startActivity(intent);
             }*/
+            context.startActivity(intent);
         }
     };
     private LoadStateView loadStateView;
@@ -344,12 +328,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private void getData() {
         loadStateView.setVisibility(View.VISIBLE);
         loadStateView.setState(LoadStateView.STATE_ING);
-        //轮播图
-        for (int i = 0; i < 10; i++) {
-            //每日
-            mHotRecentList.add("http://ngame.oss-cn-hangzhou.aliyuncs.com/userRecommendAvatar/tuijian_touxiang_13.png");
-            mHotRecentAdapter.setList(mHotRecentList);
-        }
         //请求数据
         RecommendListBody bodyBean = new RecommendListBody();
         new DiscoverClient(context, bodyBean).observable()
@@ -384,17 +362,30 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     // 设置数据
     public void setData(DiscoverListBean result) {
         DiscoverListBean.DataBean data = result.getData();
-        android.util.Log.d(TAG, "setData: " + data);
         if (data == null) {
             return;
         }
+        //----------------------- 每日最新 ------------------------------
+        dailyNewGames = data.getDailyNewGamesList();
+        if (null != dailyNewGames) {
+            mEverydayList = dailyNewGames.getList();
+            //每日新发现
+            mEverydayAdapter.setList(mEverydayList);
+        }
+
+        //近期最热
+        hotGames = data.getWeeklyNewGamesList();
+        if (null != hotGames) {
+            mHotRecentList = hotGames.getList();
+            //每日新发现
+            mHotRecentAdapter.setList(mHotRecentList);
+        }
+
+
         categroyAllList = data.getGameCategroyList();
         if (null != categroyAllList) {
             categroyTopAdapter.setList(categroyAllList);
         }
-        // mEverydayList = data.getDailyNewGamesList();
-        //每日新发现
-        mEverydayAdapter.setList(mEverydayList);
 
         //下面18个分类
         categroy18ListBean = data.getResultList();
@@ -416,7 +407,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                 if (result == null) {
                     return;
                 }
-                if (result.code == 0) {
+                if (result.code == 0 && result.data != null) {
                     mBigChangInfoList = result.data;
                     mBigChangAdapter.setList(mBigChangInfoList);
                 } else {
@@ -546,7 +537,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
      * 创建轮播视图
      */
     private ArrayList<ImageView> list = new ArrayList<>();
-    private Intent singeTopicsDetailIntent = new Intent();
 
     private List<ImageView> createBannerView(List<RecommendTopicsItemInfo> bannerInfoList) {
 
@@ -554,7 +544,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         if (bannerInfoList == null || bannerListSize <= 0) {
             return null;
         }
-        singeTopicsDetailIntent.setClass(context, TopicsDetailActivity.class);
+
         int heght = CommonUtil.dip2px(context, 158f);
         int ic_def_logo_720_228 = R.drawable.ic_def_logo_720_288;
         match_parent = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -580,7 +570,10 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             picassoImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    singeTopicsDetailIntent.putExtra(KeyConstant.ID, info.getId());
+                    Intent singeTopicsDetailIntent = new Intent();
+                    singeTopicsDetailIntent.setClass(context, TopicsDetailActivity.class);
+                    singeTopicsDetailIntent.putExtra(KeyConstant.category_Id, info.getId());
+                    android.util.Log.d(TAG, info.getId() + "categoryId: " + info.getTitle());
                     singeTopicsDetailIntent.putExtra(KeyConstant.TITLE, info.getTitle());
                     singeTopicsDetailIntent.putExtra(KeyConstant.DESC, info.getSelectDesc());
                     singeTopicsDetailIntent.putExtra(KeyConstant.URL, selectImage);
