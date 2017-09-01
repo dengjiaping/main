@@ -44,6 +44,7 @@ import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.adapter.DCViewPagerAdapter;
 import cn.ngame.store.adapter.ProgressBarStateListener;
 import cn.ngame.store.bean.GameAgent;
+import cn.ngame.store.bean.GameImage;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.GameType;
 import cn.ngame.store.bean.JsonResult;
@@ -172,8 +173,17 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         if (gameInfo == null) {
             return;
         }
+        List<GameImage> imagesList = gameInfo.gameDetailsImages;
+        for (GameImage gameImage : imagesList) {
+            byte type = gameImage.type;
+            Log.d(TAG, "setView: " + type);
+            if (3 == type) {
+                game_big_img.setImageURI(gameImage.imageLink);//游戏 -大图
+                break;
+            }
+        }
         gameName = gameInfo.gameName;
-        gameNameTv.setText(gameName);//名字
+        gameNameTv.setText(gameName == null ? "" : gameName);//名字
         likeIv.setSelected(1 == gameInfo.isFavoriteGame ? true : false);
         //类型
         List<GameType> typeList = gameInfo.gameTypeList;
@@ -201,7 +211,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         percentageTv.setText(gameInfo.percentage + "");//评分0
 
         game_logo_img.setImageURI(gameInfo.gameLogo);//游戏 -头像
-        game_big_img.setImageURI(gameInfo.gameLogo);//游戏 -大图
 
         //厂商
         List<GameAgent> gameAgentList = gameInfo.gameAgentList;
@@ -267,7 +276,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                         adapter.setList(fragments, tabList);
                         viewpager.setAdapter(adapter);
                     }
-
 
                     setView();
                 } else {

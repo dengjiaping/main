@@ -212,7 +212,7 @@
     <string name="unlogin_msg">您还未登录哦~\n登录后发现更多精彩！</string>
     <string name="relogin_msg">"您的登录状态已经失效\n请重新登录"</string>
     <string name="unkonw">--</string>
-    <string name="to_precent">评分</string>
+    <string name="to_precent">提交评分</string>
     <string name="precented">已评分</string>
     <string name="open">打开</string>
     <string name="no_data">查询无结果</string>

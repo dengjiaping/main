@@ -58,7 +58,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
     private ArrayList<TextView> tagTvList = new ArrayList<>();
     private boolean flag1 = true;
     private boolean flag2 = true;
-    HomeFragmentChangeLayoutListener listener;
+    private HomeFragmentChangeLayoutListener listener;
     private TextView tv_download_count;
     private TextView tv_game_size;
     private Button itemAllNext;

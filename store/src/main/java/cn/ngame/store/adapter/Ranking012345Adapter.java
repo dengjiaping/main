@@ -243,12 +243,16 @@ public class Ranking012345Adapter extends BaseAdapter {
             });
             Log.d("Rank012345Fragment", gameName + "索引: " + position);
             tv_position.setText(position + 1 + "");
-            if (0 == position) {
-                tv_position.setTextColor(ContextCompat.getColor(context, R.color.f92b2b));
-            } else if (1 == position) {
-                tv_position.setTextColor(ContextCompat.getColor(context, R.color.fa702a));
-            } else if (2==position) {
-                tv_position.setTextColor(ContextCompat.getColor(context, R.color.fab52a));
+            if (position < 3) {
+                int color123 = 0;
+                if (0 == position) {
+                    color123 = R.color.f92b2b;
+                } else if (1 == position) {
+                    color123 = R.color.fa702a;
+                } else if (2 == position) {
+                    color123 = R.color.fab52a;
+                }
+                tv_position.setTextColor(ContextCompat.getColor(context, color123));
             }
             String imgUrl = gameInfo.getGameLogo();
             if (imgUrl != null && imgUrl.trim().equals("")) {
