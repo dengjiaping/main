@@ -169,7 +169,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         categroyTopAdapter = new DiscoverClassifyTopAdapter(context, categroyAllList);
         mRVClassifyAll.setAdapter(categroyTopAdapter);
         //分类条目点击
-        //分类
         headView.findViewById(R.id.discover_top_classify_all_bt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,7 +184,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
                 this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mEverydayRv.setLayoutManager(linearLayoutManager2);
-        mEverydayAdapter = new DiscoverTvIvAdapter(this.getActivity(), mEverydayList);
+        mEverydayAdapter = new DiscoverTvIvAdapter(context, mEverydayList);
         mEverydayRv.setAdapter(mEverydayAdapter);
         mEverydayRv.addItemDecoration(new RecyclerViewDivider(context,
                 20, 18, mEverydayList.size()));
@@ -206,6 +205,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             @Override
             public void onItemClick(View view, int position) {
                 RecommendTopicsItemInfo topicsInfo = topicsInfoList.get(position);
+                android.util.Log.d(TAG, "onItemClick: " + topicsInfo.getId());
                 singeTopicsDetailIntent.putExtra(KeyConstant.ID, topicsInfo.getId());
                 singeTopicsDetailIntent.putExtra(KeyConstant.TITLE, topicsInfo.getTitle());
                 singeTopicsDetailIntent.putExtra(KeyConstant.DESC, topicsInfo.getSelectDesc());
@@ -529,7 +529,8 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
 
         Request<JsonResult<List<RecommendTopicsItemInfo>>> request = new GsonRequest<JsonResult<List<RecommendTopicsItemInfo>>>
                 (Request.Method.POST, url, successListener, errorListener,
-                        new TypeToken<JsonResult<List<RecommendTopicsItemInfo>>>() {}.getType()) {
+                        new TypeToken<JsonResult<List<RecommendTopicsItemInfo>>>() {
+                        }.getType()) {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {

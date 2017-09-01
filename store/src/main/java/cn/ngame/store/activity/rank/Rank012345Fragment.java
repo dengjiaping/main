@@ -59,13 +59,24 @@ public class Rank012345Fragment extends BaseSearchFragment {
 
     private Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
-            if (!IS_LOADED) {
-                IS_LOADED = true;
-                //这里执行加载数据的操作
-                getRankList();
-            } else {
-                // Log.d(TAG, tab_position + "不请求数据," + tab2_position);
+          /*  if (!IS_LOADED) {
+                IS_LOADED = true;*/
+            //这里执行加载数据的操作
+            if (tablayout2 != null) {
+                TabLayout.Tab tabAt = tablayout2.getTabAt(0);
+                pageAction.setCurrentPage(0);
+                if (tabAt != null) {
+                    tabAt.select();
+                    list.clear();
+                    adapter.setList(list);
+                    tab2_position = 0;
+                }
             }
+            getRankList();
+           /* } else {
+                // Log.d(TAG, tab_position + "不请求数据," + tab2_position);
+            }*/
+
             return;
         }
     };
@@ -138,6 +149,8 @@ public class Rank012345Fragment extends BaseSearchFragment {
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 pullListView.setPullLoadEnabled(true);
                 pageAction.setCurrentPage(0);
+                list.clear();
+                adapter.setList(list);
 //                getGameList();
                 getRankList();
             }
@@ -145,20 +158,17 @@ public class Rank012345Fragment extends BaseSearchFragment {
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 //少于指定条数不加载
-                Log.d(TAG, pageAction.getTotal() + "onPullUpToRefresh: " + pageAction.getPageSize());
-                if (pageAction.getTotal() < pageAction.getPageSize()) {
-                    ToastUtil.show(content, "已经到底了");
-                    pullListView.setHasMoreData(false);
-                    pullListView.onPullUpRefreshComplete();
-                    return;
-                }
+                int pageSize = pageAction.getPageSize();
                 int currentPage = pageAction.getCurrentPage();
-                if (currentPage * pageAction.getPageSize() < pageAction.getTotal()) {
-                    pageAction.setCurrentPage(currentPage == 0 ? currentPage + 2 : currentPage + 1);
-//                    getGameList();
+                Log.d(TAG, list.size() + "==下拉:pagerAction.getTotal==" + pageAction.getTotal());
+                //当前页
+                if (list.size() < pageAction.getTotal()) {
+                    pageAction.setCurrentPage(currentPage + 1);
+                    Log.d(TAG, "增加: ");
                     getRankList();
                 } else {
                     pullListView.setHasMoreData(false);
+                    ToastUtil.show(content, "没有更多数据了");
                     pullListView.onPullUpRefreshComplete();
                 }
             }
@@ -233,8 +243,10 @@ public class Rank012345Fragment extends BaseSearchFragment {
 
                     tab2_position = id;
                     android.util.Log.d(TAG, tab.getText() + ",点击id," + id);
-
                     //请求数据
+                    list.clear();
+                    adapter.setList(list);
+                    pageAction.setCurrentPage(0);
                     getRankList();
                 }
 
@@ -304,10 +316,11 @@ public class Rank012345Fragment extends BaseSearchFragment {
         //tab_position :0=全部   1=手柄   2=破解   3=汉化  4=特色
         loadStateView.setVisibility(View.VISIBLE);
         loadStateView.setState(LoadStateView.STATE_ING);
-        Log.d(TAG, "请求索引? StartRecord是 pageAction.getCurrentPage()" + pageAction.getCurrentPage());
-        Log.d(TAG, "请求大小" + PAGE_SIZE);
+        int startRecord = pageAction.getCurrentPage() * PAGE_SIZE;
+        Log.d(TAG, tab_position + "=参数=" + tab2_position);
         RankListBody bodyBean = new RankListBody();
-        bodyBean.setStartRecord(pageAction.getCurrentPage());
+        bodyBean.setStartRecord(startRecord);
+        Log.d(TAG, startRecord + "=请求大小==" + PAGE_SIZE);
         bodyBean.setRecords(PAGE_SIZE);
         bodyBean.setParentCategoryId(tab_position);
         bodyBean.setCategoryId(tab2_position);
@@ -347,12 +360,9 @@ public class Rank012345Fragment extends BaseSearchFragment {
         List<LikeListBean.DataBean.GameListBean> gameList = result.getGameList();
         int size = gameList.size();
         if (pageAction.getCurrentPage() == 0) {
-            android.util.Log.d(TAG, "1请求的.size: " + gameList.size());
-            android.util.Log.d(TAG, "1本地size: " + list.size());
             this.list.clear(); //清除数据
             adapter.setList(list);
             if (gameList == null || size == 0) {
-                Log.d(TAG, "1 请求的数据 == null请求的size == 0: ");
                 pullListView.onPullUpRefreshComplete();
                 pullListView.onPullDownRefreshComplete();
                 pullListView.setLastUpdatedLabel(new Date().toLocaleString());
@@ -361,16 +371,12 @@ public class Rank012345Fragment extends BaseSearchFragment {
             }
         }
         loadStateView.setVisibility(View.GONE);
+        android.util.Log.d(TAG, "请求集合:" + size + "本地集合" + gameList.size() + " 数据totals:" + result.getTotals());
         if (size > 0) {
-            android.util.Log.d(TAG, "2请求的size: " + gameList.size());
-            android.util.Log.d(TAG, "2本地listsize: " + list.size());
-            android.util.Log.d(TAG, "result.getTotals() " + result.getTotals());
             pageAction.setTotal(result.getTotals());
             this.list.addAll(gameList);
         }
         if (size > 0 && pageAction.getCurrentPage() == 0) {
-            android.util.Log.d(TAG, "3请求的.size: " + gameList.size());
-            android.util.Log.d(TAG, "3本地list.size: " + list.size());
             this.list.clear(); //清除数据
             pageAction.setTotal(result.getTotals());
             this.list.addAll(gameList);

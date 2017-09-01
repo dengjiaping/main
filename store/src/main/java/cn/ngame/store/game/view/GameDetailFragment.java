@@ -122,6 +122,9 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
             int dp10 = CommonUtil.dip2px(context, 10);
             for (int i = 0; i < imagesList.size(); i++) {
                 GameImage img = imagesList.get(i);
+                if (1 != img.type) {
+                    continue;
+                }
                 PicassoImageView imageView = new PicassoImageView(context);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup
                         .LayoutParams.WRAP_CONTENT);

@@ -23,7 +23,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TextAppearanceSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -241,10 +240,9 @@ public class Ranking012345Adapter extends BaseAdapter {
 
                 }
             });
-            Log.d("Rank012345Fragment", gameName + "索引: " + position);
             tv_position.setText(position + 1 + "");
+            int color123 = R.color.cccccc;
             if (position < 3) {
-                int color123 = 0;
                 if (0 == position) {
                     color123 = R.color.f92b2b;
                 } else if (1 == position) {
@@ -252,8 +250,10 @@ public class Ranking012345Adapter extends BaseAdapter {
                 } else if (2 == position) {
                     color123 = R.color.fab52a;
                 }
-                tv_position.setTextColor(ContextCompat.getColor(context, color123));
+            } else {
+                    color123 = R.color.cccccc;
             }
+            tv_position.setTextColor(ContextCompat.getColor(context, color123));
             String imgUrl = gameInfo.getGameLogo();
             if (imgUrl != null && imgUrl.trim().equals("")) {
                 imgUrl = null;
@@ -271,7 +271,6 @@ public class Ranking012345Adapter extends BaseAdapter {
                 return;
             }
             String[] typeNameArray = typeNameStr.split("\\,");
-            Log.d("Rank012345Fragment", gameName + ",id:" + gameInfo.getId() + "类型: " + typeNameStr);
             for (int i = 0; i < typeNameArray.length; i++) {
                 switch (i) {
                     case 0:
