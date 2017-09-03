@@ -54,6 +54,7 @@ import cn.ngame.store.core.utils.NetUtil;
 import cn.ngame.store.core.utils.UMEventNameConstant;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.util.ToastUtil;
+import cn.ngame.store.view.LoadStateView;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 
@@ -92,7 +93,7 @@ public class RecommendFragment extends BaseSearchFragment {
 
     private IFileLoad fileLoad; //文件下载公共类接口
 
-    private Handler handler = new Handler();
+    private LoadStateView loadStateView;
     private RecommendListAdapter adapter;
 
     private PageAction pageAction;
@@ -130,6 +131,8 @@ public class RecommendFragment extends BaseSearchFragment {
     }
 
     private void getGameList() {
+        loadStateView.setVisibility(View.VISIBLE);
+        loadStateView.setState(LoadStateView.STATE_ING);
         RecommendListBody bodyBean = new RecommendListBody();
         bodyBean.setPageIndex(pageAction.getCurrentPage());
         bodyBean.setPageSize(PAGE_SIZE);
@@ -138,8 +141,12 @@ public class RecommendFragment extends BaseSearchFragment {
                 .subscribe(new ObserverWrapper<RecommendListBean>() {
                     @Override
                     public void onError(Throwable e) {
-//                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
-                        android.util.Log.d(TAG, "getGameListonError: ");
+                        if (list != null && list.size() > 0) {
+                            ToastUtil.show(context, getString(R.string.no_network));
+                        } else {
+                            loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_network));
+                            loadStateView.setVisibility(View.VISIBLE);
+                        }
                         pullListView.onPullUpRefreshComplete();
                         pullListView.onPullDownRefreshComplete();
                     }
@@ -163,7 +170,7 @@ public class RecommendFragment extends BaseSearchFragment {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                ToastUtil.show(context, getString(R.string.pull_to_refresh_network_error));
+                //ToastUtil.show(context, getString(R.string.pull_to_refresh_network_error));
                 Log.d(TAG, "HTTP请求失败：网络连接错误！");
             }
         };
@@ -179,7 +186,7 @@ public class RecommendFragment extends BaseSearchFragment {
                 }
                 //GameInfo类  : 请求游戏JN数据后,封装的javabean
                 gameInfo = result.data;
-                if (null == gameInfo ||  gameInfo.size() == 0) {
+                if (null == gameInfo || gameInfo.size() == 0) {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误！");
                 } else {
                     horizontalViewContainer.removeAllViews();
@@ -242,7 +249,7 @@ public class RecommendFragment extends BaseSearchFragment {
     }
 
     public void listData(RecommendListBean result) {
-        android.util.Log.d(TAG, "setData: " + result.getData());
+        loadStateView.setVisibility(View.GONE);
         if (result.getData() == null) {
             return;
         }
@@ -310,6 +317,8 @@ public class RecommendFragment extends BaseSearchFragment {
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
+        loadStateView = (LoadStateView) view.findViewById(R.id.load_state_view2);
+        loadStateView.isShowLoadBut(false);
         pullListView = (PullToRefreshListView) view.findViewById(R.id.pullListView);
         pullListView.setPullLoadEnabled(true);
         pullListView.setPullRefreshEnabled(true);
@@ -318,17 +327,22 @@ public class RecommendFragment extends BaseSearchFragment {
         pullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                loadStateView.setVisibility(View.GONE);
                 pullListView.setPullLoadEnabled(true);
                 pageAction.setCurrentPage(0);
                 if (!NetUtil.isNetworkConnected(context)) {
-                    ToastUtil.show(context, "无网络连接");
                     pullListView.onPullUpRefreshComplete();
                     pullListView.onPullDownRefreshComplete();
                     if (0 == pageAction.getCurrentPage()) {
                         pullListView.getRefreshableView().setSelection(0);
                     }
+                    if (list != null && list.size() > 0) {
+                        ToastUtil.show(context, getString(R.string.no_network));
+                    } else {
+                        loadStateView.setVisibility(View.VISIBLE);
+                        loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_network));
+                    }
                 } else {
-                    android.util.Log.d(TAG, "onPullDownToRefresh: 下拉请求数据");
                     //下拉请求数据
                     getGameList();//竖着的,游戏位
                     getHorizontalData();//横着 精选位游戏
