@@ -63,7 +63,7 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 public class DiscoverFragment extends BaseSearchFragment implements View.OnClickListener {
     private FragmentActivity context;
     private PullToRefreshListView pullListView;
-    private RecyclerView mRVClassifyAll;
+    private RecyclerView mClassifyAllRv;
     DiscoverClassifyTopAdapter categroyTopAdapter;
     private BannerView bannerView;
     private List<DiscoverTopBean> mEverydayList = new ArrayList();
@@ -96,6 +96,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private DiscoverListBean.DataBean.WeeklyNewGamesListBean hotGames;
     private int categoryId = -1;
     private String categoryName = "";
+    private RecommendTopicsItemInfo info;
 
     public DiscoverFragment() {
         android.util.Log.d(TAG, "DiscoverFragment: ()");
@@ -119,10 +120,10 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     protected void initViewsAndEvents(View view) {//2
         context = getActivity();
         init(view);
-        getBannerData();
         View headView = View.inflate(context, R.layout.discover_header_view, null);//头部
         //分类
         init0ClassifyView(headView);
+        getBannerData();
         //每日新发现
         init1EverydayDiscoverView(headView);
         //近期最热
@@ -166,10 +167,10 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(
                 context, LinearLayoutManager.HORIZONTAL, false);
 
-        mRVClassifyAll = (RecyclerView) headView.findViewById(R.id.discover_head_rv_classify);//条目
-        mRVClassifyAll.setLayoutManager(linearLayoutManager1);
+        mClassifyAllRv = (RecyclerView) headView.findViewById(R.id.discover_head_rv_classify);//条目
+        mClassifyAllRv.setLayoutManager(linearLayoutManager1);
         categroyTopAdapter = new DiscoverClassifyTopAdapter(context, categroyAllList);
-        mRVClassifyAll.setAdapter(categroyTopAdapter);
+        mClassifyAllRv.setAdapter(categroyTopAdapter);
         //分类条目点击
         headView.findViewById(R.id.discover_top_classify_all_bt).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -371,6 +372,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             mEverydayList = dailyNewGames.getList();
             //每日新发现
             mEverydayAdapter.setList(mEverydayList);
+            mEverydayRv.setAdapter(mEverydayAdapter);
         }
 
         //近期最热
@@ -379,17 +381,20 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             mHotRecentList = hotGames.getList();
             //每日新发现
             mHotRecentAdapter.setList(mHotRecentList);
+            mHotRecentRv.setAdapter(mHotRecentAdapter);
         }
 
 
         categroyAllList = data.getGameCategroyList();
         if (null != categroyAllList) {
             categroyTopAdapter.setList(categroyAllList);
+            mClassifyAllRv.setAdapter(categroyTopAdapter);
         }
 
         //下面18个分类
         categroy18ListBean = data.getResultList();
         categroy18Adapter.setList(categroy18ListBean);
+        pullListView.getRefreshableView().setAdapter(categroy18Adapter);
     }
 
     private PageAction pageAction;
@@ -452,9 +457,10 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                 if (result == null) {
                     return;
                 }
-                if (result.code == 0) {
+                if (result.code == 0 && result.data != null) {
                     topicsInfoList = result.data;
                     mTopicsAdapter.setList(topicsInfoList);
+                    mSubjectRv.setAdapter(mTopicsAdapter);
                 } else {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误！");
                     //ToastUtil.show(context, getString(R.string.requery_failed));
@@ -545,17 +551,18 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             return null;
         }
 
-        int heght = CommonUtil.dip2px(context, 158f);
         int ic_def_logo_720_228 = R.drawable.ic_def_logo_720_288;
         match_parent = ViewGroup.LayoutParams.MATCH_PARENT;
+        final Intent singeTopicsDetailIntent = new Intent();
+        singeTopicsDetailIntent.setClass(context, TopicsDetailActivity.class);
+        hParams = new LinearLayout.LayoutParams(
+                match_parent, match_parent);
+        hParams.height = CommonUtil.dip2px(context, 158f);
         for (int i = 0; i < bannerListSize; i++) {
-            final RecommendTopicsItemInfo info = bannerInfoList.get(i);
+            info = bannerInfoList.get(i);
             selectImage = info.getSelectImage();
             picassoImageView = new PicassoImageView(context);
             picassoImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            hParams = new LinearLayout.LayoutParams(
-                    match_parent, match_parent);
-            hParams.height = heght;
             picassoImageView.setLayoutParams(hParams);
             // picassoImageView.setId(info.getId());
             // picassoImageView.setTag(info.getSelectImage());
@@ -570,13 +577,10 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             picassoImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent singeTopicsDetailIntent = new Intent();
-                    singeTopicsDetailIntent.setClass(context, TopicsDetailActivity.class);
                     singeTopicsDetailIntent.putExtra(KeyConstant.category_Id, info.getId());
-                    android.util.Log.d(TAG, info.getId() + "categoryId: " + info.getTitle());
                     singeTopicsDetailIntent.putExtra(KeyConstant.TITLE, info.getTitle());
                     singeTopicsDetailIntent.putExtra(KeyConstant.DESC, info.getSelectDesc());
-                    singeTopicsDetailIntent.putExtra(KeyConstant.URL, selectImage);
+                    singeTopicsDetailIntent.putExtra(KeyConstant.URL, info.getSelectImage());
                     startActivity(singeTopicsDetailIntent);
                 }
             });
