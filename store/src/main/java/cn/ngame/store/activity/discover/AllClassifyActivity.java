@@ -19,9 +19,7 @@ import java.util.List;
 
 import cn.ngame.store.R;
 import cn.ngame.store.activity.BaseFgActivity;
-import cn.ngame.store.adapter.GameListAdapter;
 import cn.ngame.store.adapter.HomeRaiderAdapter;
-import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.game.view.LabelGameListActivity;
@@ -39,8 +37,6 @@ public class AllClassifyActivity extends BaseFgActivity {
 
     private PullToRefreshListView pullListView;
     private LoadStateView loadStateView;
-    private GameListAdapter adapter;
-    private List<GameInfo> gameInfoList;
 
     private PageAction pageAction;
     public static int PAGE_SIZE = 20;
@@ -60,6 +56,7 @@ public class AllClassifyActivity extends BaseFgActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_all_classify);
+        initStatusBar();
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
@@ -74,6 +71,7 @@ public class AllClassifyActivity extends BaseFgActivity {
                 content.finish();
             }
         });
+        loadStateView = (LoadStateView) findViewById(R.id.load_state_view);
         pullListView = (PullToRefreshListView) findViewById(R.id.pullListView);
         pullListView.setPullLoadEnabled(false); //false,不允许上拉加载
         pullListView.setScrollLoadEnabled(false);
@@ -180,16 +178,19 @@ public class AllClassifyActivity extends BaseFgActivity {
      * 获取制定分类下的游戏列表
      */
     private void getGameList() {
+        loadStateView.setVisibility(View.VISIBLE);
+        loadStateView.setState(LoadStateView.STATE_ING, getString(R.string.loading));
         YunduanBodyBean bodyBean = new YunduanBodyBean();
         new ClassifiHomeClient(content, bodyBean).observable()
                 .subscribe(new ObserverWrapper<AllClassifyBean>() {
                     @Override
                     public void onError(Throwable e) {
+                        loadStateView.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onNext(AllClassifyBean result) {
-
+                        loadStateView.setVisibility(View.GONE);
                         if (result != null && result.getCode() == 0) {
                             listData(result);//更新数据
                         } else {

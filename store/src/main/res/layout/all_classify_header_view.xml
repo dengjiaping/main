@@ -55,7 +55,7 @@
         <GridView
             android:id="@+id/gridView_qiangzhan"
             android:layout_width="match_parent"
-            android:layout_height="460dp"
+            android:layout_height="@dimen/all_classify_grid_view_height"
             android:layout_marginLeft="@dimen/dp_4"
             android:layout_marginRight="@dimen/dp_5"
             android:horizontalSpacing="@dimen/dp_6"
@@ -85,7 +85,7 @@
         <GridView
             android:id="@+id/gridView_maoxian"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/all_classify_grid_view_height"
             android:layout_marginLeft="@dimen/dp_4"
             android:layout_marginRight="@dimen/dp_5"
             android:horizontalSpacing="@dimen/dp_6"
@@ -117,7 +117,7 @@
         <GridView
             android:id="@+id/gridView_dongzuo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/all_classify_grid_view_height"
             android:layout_marginLeft="@dimen/dp_4"
             android:layout_marginRight="@dimen/dp_5"
             android:horizontalSpacing="@dimen/dp_6"

@@ -81,7 +81,7 @@
     <dimen name="title_left_bt_padding_left">20dp</dimen>
     <dimen name="dp_3">3dp</dimen>
     <dimen name="classify_grid_item_height">48dp</dimen>
-    <dimen name="all_classify_grid_view_height">156dp</dimen>
+    <dimen name="all_classify_grid_view_height">426dp</dimen>
     <dimen name="dp_11">11dp</dimen>
     <dimen name="dp_60">60dp</dimen>
     <dimen name="dp_40">40dp</dimen>

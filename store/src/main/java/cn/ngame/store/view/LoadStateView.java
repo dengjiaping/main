@@ -37,7 +37,7 @@ public class LoadStateView extends FrameLayout {
 
     private String text_ing, text_end;
 
-    private boolean isShowReload = true;
+    private boolean isShowReload = false;
 
     private OnClickListener listener;
     private long ANIMATION_DURATION = 400;

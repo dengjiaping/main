@@ -287,8 +287,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
 
                 if (!NetUtil.isNetworkConnected(context)) {
                     ToastUtil.show(context, "无网络连接");
-                    pullListView.onPullUpRefreshComplete();
-                    pullListView.onPullDownRefreshComplete();
+                    pullListView.getRefreshableView().setSelection(0);
                 } else {
                     android.util.Log.d(TAG, "onPullDownToRefresh: 下拉请求数据");
                     //下拉请求数据
@@ -296,6 +295,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                 }
                 pullListView.setLastUpdatedLabel(new Date().toLocaleString());
                 pullListView.onPullDownRefreshComplete();
+                pullListView.onPullUpRefreshComplete();
             }
 
             @Override
@@ -562,7 +562,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             info = bannerInfoList.get(i);
             selectImage = info.getSelectImage();
             picassoImageView = new PicassoImageView(context);
-            picassoImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            picassoImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             picassoImageView.setLayoutParams(hParams);
             // picassoImageView.setId(info.getId());
             // picassoImageView.setTag(info.getSelectImage());

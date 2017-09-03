@@ -101,7 +101,7 @@ public class LikeFragment extends BaseSearchFragment {
                     @Override
                     public void onError(Throwable e) {
 //                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
-                        ToastUtil.show(content, getString(R.string.pull_to_refresh_network_error));
+                        //ToastUtil.show(content, getString(R.string.pull_to_refresh_network_error));
                     }
 
                     @Override
