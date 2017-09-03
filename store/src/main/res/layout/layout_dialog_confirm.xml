@@ -13,7 +13,7 @@
         android:gravity="center"
 		android:text="@string/update"
         android:textSize="20sp"
-		android:textColor="@color/black"/>
+		android:textColor="@color/color000000"/>
     
     <View 
         android:id="@+id/line1"
@@ -62,7 +62,7 @@
 				android:layout_gravity="center"
 				android:gravity="center"
 				android:layout_weight="1"
-				android:textColor="@color/black"/>
+				android:textColor="@color/color000000"/>
 
 			<View
 				android:id="@+id/line3"

@@ -8,26 +8,26 @@
     <com.facebook.drawee.view.SimpleDraweeView
         xmlns:fresco="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tviv_item_iv"
-        android:layout_width="@dimen/dp_85"
-        android:layout_height="@dimen/dp_85"
+        android:layout_width="@dimen/dm160"
+        android:layout_height="@dimen/dm160"
         android:scaleType="fitXY"
         fresco:actualImageScaleType="fitXY"
         fresco:placeholderImage="@drawable/ic_def_logo_188_188"
         fresco:placeholderImageScaleType="centerCrop"
         fresco:failureImage="@drawable/ic_def_logo_188_188"
         fresco:progressBarImage="@drawable/ic_def_logo_188_188"
-        fresco:roundedCornerRadius="@dimen/dp_20"/>
+        fresco:roundedCornerRadius="@dimen/dm036"/>
 
     <TextView
         android:layout_gravity="center_horizontal"
         android:id="@+id/tviv_item_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dm160"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dm016"
         android:gravity="center"
         android:maxLines="1"
         android:ellipsize="end"
-        android:text="游戏名字"
-        android:textColor="@color/black"
-        android:textSize="@dimen/dp_12"/>
+        android:text=""
+        android:textColor="@color/color000000"
+        android:textSize="@dimen/dm024"/>
 </LinearLayout>

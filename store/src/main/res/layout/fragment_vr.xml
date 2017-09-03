@@ -167,7 +167,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@+id/text"
-                    android:textColor="@color/black"
+                    android:textColor="@color/color000000"
                     android:textSize="14sp"
                     android:text="游戏推荐"/>
 
@@ -212,7 +212,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@+id/text2"
-                    android:textColor="@color/black"
+                    android:textColor="@color/color000000"
                     android:textSize="14sp"
                     android:text="视频推荐" />
 
@@ -257,7 +257,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@+id/text4"
-                    android:textColor="@color/black"
+                    android:textColor="@color/color000000"
                     android:textSize="14sp"
                     android:text="360全景" />
 

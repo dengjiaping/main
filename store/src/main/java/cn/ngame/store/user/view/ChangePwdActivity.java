@@ -188,7 +188,7 @@ public class ChangePwdActivity extends BaseFgActivity {
         tv.setLayoutParams(params);
         tv.setGravity(Gravity.CENTER);
         tv.setText("当前设备的登录信息已失效,\n需要重新登录后,才能执行修改操作");
-        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextColor(getResources().getColor(R.color.color000000));
         dialogFragment.setContentView(tv);
 
         dialogFragment.setNegativeButton("去登录", new View.OnClickListener() {
@@ -236,7 +236,7 @@ public class ChangePwdActivity extends BaseFgActivity {
         tv.setLayoutParams(params);
         tv.setGravity(Gravity.CENTER);
         tv.setText(msg);
-        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextColor(getResources().getColor(R.color.color000000));
         dialogFragment.setContentView(tv);
 
         int stringId;

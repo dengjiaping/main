@@ -11,7 +11,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="10dp"
-        android:textColor="@color/black"
+        android:textColor="@color/color000000"
         android:textSize="14sp"/>
 
     <TextView
@@ -21,7 +21,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:textColor="@color/black"
+        android:textColor="@color/color000000"
         android:textSize="12sp"/>
 
 </LinearLayout>

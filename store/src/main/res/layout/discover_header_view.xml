@@ -21,17 +21,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/f5f5f5"
-        android:paddingBottom="@dimen/dp_20"
-        android:paddingLeft="@dimen/dp_20"
-        android:paddingTop="@dimen/dp_20"
+        android:paddingBottom="@dimen/dm020"
+        android:paddingLeft="@dimen/discover_margin_left"
+        android:paddingTop="@dimen/dm020"
         >
         <!--:1dp*像素密度/160 = 实际像素数-->
         <ImageView
             android:id="@+id/discover_top_classify_all_bt"
-            android:layout_width="@dimen/dp_35"
-            android:layout_height="@dimen/dp_35"
-            android:layout_marginRight="@dimen/dp_18"
-            android:layout_marginTop="@dimen/dp_2"
+            android:layout_width="@dimen/discover_classify_item_hight"
+            android:layout_height="@dimen/discover_classify_item_hight"
+            android:layout_marginRight="@dimen/discover_margin_left"
+            android:layout_marginTop="@dimen/dm002"
             android:scaleType="centerInside"
             android:src="@drawable/ic_discover_classify_all_bt"/>
 
@@ -50,19 +50,19 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/dp_20"
+        android:paddingBottom="@dimen/discover_margin_bottom"
         >
 
         <TextView
-            android:paddingTop="@dimen/dp_20"
+            android:paddingTop="@dimen/discover_margin_left"
             android:id="@+id/discover_tviv_left_title_tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/discover_margin_left"
             android:scaleType="centerInside"
             android:text="每日新发现"
-            android:textColor="@color/black"
-            android:textSize="@dimen/dp_16"/>
+            android:textColor="@color/color000000"
+            android:textSize="@dimen/dm028"/>
 
         <TextView
             android:id="@+id/everyday_more_tv1"
@@ -70,20 +70,20 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/discover_tviv_left_title_tv1"
             android:layout_alignParentRight="true"
-            android:paddingLeft="@dimen/dp_10"
+            android:paddingLeft="@dimen/dm010"
+            android:paddingRight="@dimen/discover_margin_left"
             android:paddingTop="@dimen/dp_3"
-            android:paddingRight="@dimen/dp_20"
             android:text="@string/see_more"
             android:textColor="@color/font_18b9fe"
-            android:textSize="@dimen/dp_12"/>
+            android:textSize="@dimen/dm020"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/everyday_discover_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/discover_rv_height"
             android:layout_below="@id/discover_tviv_left_title_tv1"
             android:layout_centerVertical="true"
-            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginTop="@dimen/discover_margin_bottom"
             android:scrollbars="none"
             />
 
@@ -96,19 +96,19 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/dp_19"
+        android:paddingBottom="@dimen/discover_margin_bottom"
         >
 
         <TextView
-            android:paddingTop="@dimen/dp_20"
+            android:paddingTop="@dimen/discover_margin_left"
             android:id="@+id/discover_tviv_left_title_tv2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/discover_margin_left"
             android:scaleType="centerInside"
             android:text="近期最热"
-            android:textColor="@color/black"
-            android:textSize="@dimen/dp_16"/>
+            android:textColor="@color/color000000"
+            android:textSize="@dimen/dm028"/>
 
         <TextView
             android:id="@+id/more_hot_recent_tv"
@@ -116,20 +116,20 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/discover_tviv_left_title_tv2"
             android:layout_alignParentRight="true"
-            android:paddingLeft="@dimen/dp_10"
             android:paddingTop="@dimen/dp_3"
-            android:paddingRight="@dimen/dp_20"
+            android:paddingLeft="@dimen/dm010"
+            android:paddingRight="@dimen/discover_margin_left"
             android:text="@string/see_more"
             android:textColor="@color/font_18b9fe"
-            android:textSize="@dimen/dp_12"/>
+            android:textSize="@dimen/dm020"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_hot_recent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/discover_rv_height"
             android:layout_below="@id/discover_tviv_left_title_tv2"
             android:layout_centerVertical="true"
-            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginTop="@dimen/discover_margin_bottom"
             android:scrollbars="none"
             />
     </RelativeLayout>
@@ -142,19 +142,19 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/dp_19"
+        android:paddingBottom="@dimen/discover_margin_bottom"
         >
 
         <TextView
-            android:paddingTop="@dimen/dp_20"
+            android:paddingTop="@dimen/discover_margin_bottom"
             android:id="@+id/discover_tviv_left_title_tv3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/discover_margin_left"
             android:scaleType="centerInside"
             android:text="专题"
-            android:textColor="@color/black"
-            android:textSize="@dimen/dp_16"/>
+            android:textColor="@color/color000000"
+            android:textSize="@dimen/dm028"/>
 
         <TextView
             android:id="@+id/more_subject_tv"
@@ -162,12 +162,12 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/discover_tviv_left_title_tv3"
             android:layout_alignParentRight="true"
-            android:paddingLeft="@dimen/dp_10"
+            android:paddingLeft="@dimen/dm010"
             android:paddingTop="@dimen/dp_3"
-            android:paddingRight="@dimen/dp_20"
+            android:paddingRight="@dimen/discover_margin_left"
             android:text="@string/see_more"
             android:textColor="@color/font_18b9fe"
-            android:textSize="@dimen/dp_12"/>
+            android:textSize="@dimen/dm020"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_subject"
@@ -175,7 +175,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/discover_tviv_left_title_tv3"
             android:layout_centerVertical="true"
-            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginTop="@dimen/discover_margin_bottom"
             android:scrollbars="none"
             />
     </RelativeLayout>
@@ -187,19 +187,19 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/dp_19"
+        android:paddingBottom="@dimen/discover_margin_bottom"
         >
 
         <TextView
-            android:paddingTop="@dimen/dp_20"
+            android:paddingTop="@dimen/discover_margin_bottom"
             android:id="@+id/discover_tviv_left_title_tv4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/discover_margin_left"
             android:scaleType="centerInside"
             android:text="大厂"
-            android:textColor="@color/black"
-            android:textSize="@dimen/dp_16"/>
+            android:textColor="@color/color000000"
+            android:textSize="@dimen/dm028"/>
 
         <TextView
             android:id="@+id/more_big_chang_tv"
@@ -207,12 +207,12 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/discover_tviv_left_title_tv4"
             android:layout_alignParentRight="true"
-            android:paddingLeft="@dimen/dp_10"
+            android:paddingLeft="@dimen/dm010"
             android:paddingTop="@dimen/dp_3"
-            android:paddingRight="@dimen/dp_20"
+            android:paddingRight="@dimen/discover_margin_left"
             android:text="@string/see_more"
             android:textColor="@color/font_18b9fe"
-            android:textSize="@dimen/dp_12"/>
+            android:textSize="@dimen/dm020"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_big_chang"
@@ -220,7 +220,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/discover_tviv_left_title_tv4"
             android:layout_centerVertical="true"
-            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginTop="@dimen/discover_margin_bottom"
             android:scrollbars="none"
             />
     </RelativeLayout>

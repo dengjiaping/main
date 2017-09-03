@@ -76,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/color000000"
                     android:textSize="14sp"
                     android:text="触屏精选"/>
 

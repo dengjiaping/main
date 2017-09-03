@@ -18,6 +18,7 @@ package cn.ngame.store.activity.discover;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -34,7 +35,6 @@ import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverListBean;
 import java.util.List;
 
 import cn.ngame.store.R;
-import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.game.view.LabelGameListActivity;
@@ -148,10 +148,9 @@ public class DiscoverAdapter extends BaseAdapter {
          */
         public void update(final DiscoverListBean.DataBean.ResultListBean gameInfo, int type, int position) {
             horizontalViewContainer.removeAllViews();
-            int dp20 = CommonUtil.dip2px(context, 20);
-            int dp18 = CommonUtil.dip2px(context, 18);
-            int width240 = CommonUtil.dip2px(context, 240f);
-            int heght114 = CommonUtil.dip2px(context, 114f);
+            Resources resources = context.getResources();
+            int px36 = resources.getDimensionPixelSize(R.dimen.dm036);
+            int px28 =resources.getDimensionPixelSize(R.dimen.dm028);;
             gameInfoList = gameInfo.getList();
             for (int i = 0; i < gameInfoList.size(); i++) {
                 gameInfoBean = gameInfoList.get(i);
@@ -168,9 +167,9 @@ public class DiscoverAdapter extends BaseAdapter {
                 hParams.height = heght114;*/
                 //有多个图片的话
                 if (0 == i) {
-                    hParams.setMargins(dp20, 0, dp18, 0);
+                    hParams.setMargins(px36, 0, px28, 0);
                 } else {
-                    hParams.setMargins(0, 0, dp18, 0);
+                    hParams.setMargins(0, 0, px28, 0);
                 }
                 view.setLayoutParams(hParams);
                 //加载网络图片

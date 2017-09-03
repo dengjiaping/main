@@ -97,6 +97,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private int categoryId = -1;
     private String categoryName = "";
     private RecommendTopicsItemInfo info;
+    private LinearLayoutManager linearLayoutManager;
 
     public DiscoverFragment() {
         android.util.Log.d(TAG, "DiscoverFragment: ()");
@@ -150,13 +151,13 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     //近期最热
     private void initHotRecentView(View headView) {
         mHotRecentRv = (RecyclerView) headView.findViewById(R.id.rv_hot_recent);
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
+        linearLayoutManager = new LinearLayoutManager(
                 this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        mHotRecentRv.setLayoutManager(linearLayoutManager2);
+        mHotRecentRv.setLayoutManager(linearLayoutManager);
         mHotRecentAdapter = new DiscoverTvIvAdapter(context, mHotRecentList);
         mHotRecentRv.setAdapter(mHotRecentAdapter);
         mHotRecentRv.addItemDecoration(new RecyclerViewDivider(context,
-                20, 18, mHotRecentList.size()));
+                R.dimen.dm036, R.dimen.dm028, mHotRecentList.size()));
         setOnMoreBtClickListener(headView, R.id.more_hot_recent_tv);
     }
 
@@ -164,11 +165,10 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private void init0ClassifyView(View headView) {
         bannerView = (BannerView) headView.findViewById(R.id.banner_view);
         //获取RecyclerView实例
-        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(
-                context, LinearLayoutManager.HORIZONTAL, false);
+        linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
 
         mClassifyAllRv = (RecyclerView) headView.findViewById(R.id.discover_head_rv_classify);//条目
-        mClassifyAllRv.setLayoutManager(linearLayoutManager1);
+        mClassifyAllRv.setLayoutManager(linearLayoutManager);
         categroyTopAdapter = new DiscoverClassifyTopAdapter(context, categroyAllList);
         mClassifyAllRv.setAdapter(categroyTopAdapter);
         //分类条目点击
@@ -184,44 +184,44 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private void init1EverydayDiscoverView(View headView) {
         mEverydayRv = (RecyclerView) headView.findViewById(R.id.everyday_discover_recyclerview);
         setOnMoreBtClickListener(headView, R.id.everyday_more_tv1);
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
+        linearLayoutManager = new LinearLayoutManager(
                 this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        mEverydayRv.setLayoutManager(linearLayoutManager2);
+        mEverydayRv.setLayoutManager(linearLayoutManager);
         mEverydayAdapter = new DiscoverTvIvAdapter(context, mEverydayList);
         mEverydayRv.setAdapter(mEverydayAdapter);
         mEverydayRv.addItemDecoration(new RecyclerViewDivider(context,
-                20, 18, mEverydayList.size()));
+                R.dimen.dm036, R.dimen.dm028, mEverydayList.size()));
     }
 
     //专题
     private void initTopicsView(View headView) {
         mSubjectRv = (RecyclerView) headView.findViewById(R.id.rv_subject);
         setOnMoreBtClickListener(headView, R.id.more_subject_tv);
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
-                this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        mSubjectRv.setLayoutManager(linearLayoutManager2);
+        linearLayoutManager = new LinearLayoutManager(
+                context, LinearLayoutManager.HORIZONTAL, false);
+        mSubjectRv.setLayoutManager(linearLayoutManager);
 
         mTopicsAdapter = new DiscoverIvAdapter(context, topicsInfoList);
         mSubjectRv.setAdapter(mTopicsAdapter);
         getTopicsInfoList();
         //条目距离
         mSubjectRv.addItemDecoration(new RecyclerViewDivider(context,
-                20, 18, topicsInfoList.size()));
+                R.dimen.dm036, R.dimen.dm028, topicsInfoList.size()));
     }
 
     //大厂
     private void initBigChangView(View headView) {
         mBigChang_Rv = (RecyclerView) headView.findViewById(R.id.rv_big_chang);
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(
+        linearLayoutManager = new LinearLayoutManager(
                 this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        mBigChang_Rv.setLayoutManager(linearLayoutManager2);
+        mBigChang_Rv.setLayoutManager(linearLayoutManager);
         mBigChangAdapter = new DiscoverIvAdapter(context, mBigChangInfoList);
         mBigChang_Rv.setAdapter(mBigChangAdapter);
 
         //获取大厂数据
         getBigChangInfoList();
         mBigChang_Rv.addItemDecoration(new RecyclerViewDivider(context,
-                20, 18, mBigChangInfoList.size()));
+                R.dimen.dm036, R.dimen.dm028, mBigChangInfoList.size()));
         setOnMoreBtClickListener(headView, R.id.more_big_chang_tv);
     }
 
@@ -363,7 +363,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     // 设置数据
     public void setData(DiscoverListBean result) {
         DiscoverListBean.DataBean data = result.getData();
-        if (data == null) {
+        if (data == null || context == null) {
             return;
         }
         //----------------------- 每日最新 ------------------------------

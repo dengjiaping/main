@@ -23,7 +23,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:textColor="@color/black"
+        android:textColor="@color/color000000"
         android:text="点击星星打分"/>
 
     <LinearLayout
@@ -54,7 +54,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:textColor="@color/black"
+        android:textColor="@color/color000000"
         android:text="请填写评论（6-250个字符）"/>
 
     <EditText

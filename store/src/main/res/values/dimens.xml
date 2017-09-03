@@ -14,7 +14,7 @@
     <!-- 轮播图片高度 -->
     <dimen name="banner_image_height">214dp</dimen>
     <!-- 发现   轮播图片高度 -->
-    <dimen name="banner_image_height_discover">158dp</dimen>
+    <dimen name="banner_image_height_discover">@dimen/dm268</dimen>
     <!-- 侧滑菜单宽度 -->
     <dimen name="sliding_menu_width">80dp</dimen>
 
@@ -61,8 +61,8 @@
     <dimen name="dp_1">1dp</dimen>
     <dimen name="dp_7">7dp</dimen>
     <dimen name="dp_28">28dp</dimen>
-    <dimen name="discover_classify_item_width">50dp</dimen>
-    <dimen name="discover_classify_item_hight">34dp</dimen>
+    <dimen name="discover_classify_item_width">@dimen/dm090</dimen>
+    <dimen name="discover_classify_item_hight">@dimen/dm056</dimen>
     <dimen name="dp_36">36dp</dimen>
     <dimen name="dp_94">94dp</dimen>
     <dimen name="dp_90">90dp</dimen>
@@ -71,9 +71,9 @@
     <dimen name="discover_classify_item_radius">17dp</dimen>
     <dimen name="dp_33">33dp</dimen>
     <dimen name="dp_19">19dp</dimen>
-    <dimen name="dp_subject_iv_width">215dp</dimen>
-    <dimen name="dp_subject_iv_height">104dp</dimen>
-    <dimen name="dp_subject_iv_corner_8dp">8dp</dimen>
+    <dimen name="dp_subject_iv_width">@dimen/dm352</dimen>
+    <dimen name="dp_subject_iv_height">@dimen/dm172</dimen>
+    <dimen name="dp_subject_iv_corner">@dimen/dm016</dimen>
     <dimen name="dp_49">49dp</dimen>
     <dimen name="download_progressbar_width">48dp</dimen>
     <dimen name="download_progressbar_height">26dp</dimen>
@@ -105,4 +105,7 @@
     <dimen name="dp_45">45dp</dimen>
     <dimen name="dp_55">55dp</dimen>
     <dimen name="unlogin_dialog_width">@dimen/dm376</dimen>
+    <dimen name="discover_margin_left">@dimen/dm036</dimen>
+    <dimen name="discover_margin_bottom">@dimen/dm032</dimen>
+    <dimen name="discover_rv_height">@dimen/dm205</dimen>
 </resources>

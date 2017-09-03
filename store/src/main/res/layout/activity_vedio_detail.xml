@@ -90,7 +90,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/color000000"
                         android:textSize="14sp"
                         android:text="简介"/>
 
@@ -210,7 +210,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/color000000"
                         android:textSize="14sp"
                         android:text="相关"/>
                 </LinearLayout>
@@ -270,7 +270,7 @@
                     android:layout_toRightOf="@+id/text1"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/color000000"
                     android:textSize="14sp"
                     android:text="评论"/>
 

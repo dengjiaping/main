@@ -18,12 +18,12 @@
             android:id="@+id/discover18_tviv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:paddingTop="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/discover_margin_left"
+            android:paddingTop="@dimen/discover_margin_left"
             android:scaleType="centerInside"
             android:text=""
-            android:textColor="@color/black"
-            android:textSize="@dimen/dp_16"/>
+            android:textColor="@color/color000000"
+            android:textSize="@dimen/dm028"/>
 
         <TextView
             android:id="@+id/more_action_tv"
@@ -31,25 +31,25 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/discover18_tviv_title"
             android:layout_alignParentRight="true"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_20"
+            android:paddingLeft="@dimen/dm010"
+            android:paddingRight="@dimen/dm036"
             android:paddingTop="@dimen/dp_3"
             android:text="@string/see_more"
             android:textColor="@color/font_18b9fe"
-            android:textSize="@dimen/dp_12"/>
+            android:textSize="@dimen/dm020"/>
 
         <HorizontalScrollView
             android:layout_below="@id/discover18_tviv_title"
             android:layout_centerVertical="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/dp_20"
-            android:paddingTop="@dimen/dp_20"
+            android:paddingBottom="@dimen/discover_margin_bottom"
+            android:paddingTop="@dimen/discover_margin_bottom"
             android:scrollbars="none">
             <LinearLayout
                 android:id="@+id/horizontalView_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/discover_rv_height"
                 android:focusable="false"
                 android:orientation="horizontal">
             </LinearLayout>

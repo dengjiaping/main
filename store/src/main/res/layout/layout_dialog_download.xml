@@ -12,7 +12,7 @@
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="10dp"
         android:text="@string/update_ing"
-        android:textColor="@color/black"
+        android:textColor="@color/color000000"
         android:textSize="12sp"/>
 
     <ProgressBar

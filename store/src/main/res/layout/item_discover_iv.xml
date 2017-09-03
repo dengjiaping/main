@@ -13,5 +13,5 @@
         fresco:failureImage="@drawable/ic_def_logo_412_200"
         fresco:actualImageScaleType="fitXY"
         fresco:progressBarImage="@drawable/ic_def_logo_412_200"
-        fresco:roundedCornerRadius="@dimen/dp_subject_iv_corner_8dp"/>
+        fresco:roundedCornerRadius="@dimen/dp_subject_iv_corner"/>
 </LinearLayout>

@@ -3,10 +3,10 @@
     android:useLevel="false">
 
     <!-- 填充 -->
-    <solid android:color="@color/black" />
+    <solid android:color="@color/color000000" />
 
     <stroke 
-        android:color="@color/black"
+        android:color="@color/color000000"
         android:width="0dp"/>
 
     <corners android:radius="4dp"/>

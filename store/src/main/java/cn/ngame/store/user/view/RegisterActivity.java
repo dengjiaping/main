@@ -308,7 +308,7 @@ public class RegisterActivity extends BaseFgActivity {
         tv.setLayoutParams(params);
         tv.setGravity(Gravity.CENTER);
         tv.setText(msg);
-        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextColor(getResources().getColor(R.color.color000000));
         dialogFragment.setContentView(tv);
 
         int stringId;

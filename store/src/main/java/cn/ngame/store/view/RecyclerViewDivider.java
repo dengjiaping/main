@@ -1,11 +1,10 @@
 package cn.ngame.store.view;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
-import cn.ngame.store.core.utils.CommonUtil;
 
 
 /**
@@ -21,8 +20,9 @@ public class RecyclerViewDivider extends RecyclerView.ItemDecoration {
     private int size;
 
     public RecyclerViewDivider(Context context, int leftRightSpace, int centerSpace, int size) {
-        this.leftRightSpace = CommonUtil.dip2px(context, leftRightSpace);
-        this.centerSpace = CommonUtil.dip2px(context, centerSpace);
+        Resources resources = context.getResources();
+        this.leftRightSpace = resources.getDimensionPixelSize(leftRightSpace);
+        this.centerSpace = resources.getDimensionPixelSize(centerSpace);
         this.size = size;
     }
 

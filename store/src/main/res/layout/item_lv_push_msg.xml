@@ -31,7 +31,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:textColor="@color/black"
+            android:textColor="@color/color000000"
             android:textSize="16sp"
             android:text=""/>
 
