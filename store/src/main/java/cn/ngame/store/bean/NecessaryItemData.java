@@ -6,17 +6,28 @@ package cn.ngame.store.bean;
  */
 public class NecessaryItemData {
 
+    private String itemDesc;
     private String parentId;
     private String parentText;
     private String itemTitle;
     private String itemPosition;
-    private String itemDesc;
+    private String itemSize;
 
-    public NecessaryItemData(String parentId, String parentText, String itemPosition, String itemTitle, String itemDesc) {
+    public NecessaryItemData(String parentId, String parentText, String itemPosition, String itemTitle, String size, String
+            desc) {
         this.parentId = parentId;
         this.parentText = parentText;
         this.itemPosition = itemPosition;
         this.itemTitle = itemTitle;
+        this.itemSize = size;
+        this.itemDesc = desc;
+
+    }
+    public String getItemDesc() {
+        return itemDesc;
+    }
+
+    public void setItemDesc(String itemDesc) {
         this.itemDesc = itemDesc;
     }
 
@@ -52,12 +63,12 @@ public class NecessaryItemData {
         this.itemPosition = itemPosition;
     }
 
-    public String getItemDesc() {
-        return itemDesc;
+    public String getItemSize() {
+        return itemSize;
     }
 
-    public void setItemDesc(String itemDesc) {
-        this.itemDesc = itemDesc;
+    public void setItemSize(String itemSize) {
+        this.itemSize = itemSize;
     }
 
     @Override
@@ -67,7 +78,7 @@ public class NecessaryItemData {
                 ", parentText='" + parentText + '\'' +
                 ", itemTitle='" + itemTitle + '\'' +
                 ", itemPosition='" + itemPosition + '\'' +
-                ", itemDesc='" + itemDesc + '\'' +
+                ", itemSize='" + itemSize + '\'' +
                 '}';
     }
 }

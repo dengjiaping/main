@@ -83,10 +83,10 @@
         android:layout_height="@dimen/dm012"
         android:layout_alignParentRight="true"
         android:layout_below="@id/img_1"
-        android:scaleType="centerInside"
-        android:layout_marginTop="@dimen/dm019"
-        android:layout_marginRight="@dimen/dm040"
         android:layout_marginLeft="@dimen/dm020"
+        android:layout_marginRight="@dimen/dm040"
+        android:layout_marginTop="@dimen/dm019"
+        android:scaleType="centerInside"
         android:src="@drawable/ic_bottom_show_more"/>
 
     <TextView
@@ -98,12 +98,9 @@
         android:layout_marginTop="@dimen/dm012"
         android:layout_toLeftOf="@id/show_more_disc_bt"
         android:ellipsize="end"
-        android:textSize="@dimen/dm020"
-        android:textColor="@color/color_070707"
         android:maxLines="1"
-        android:text="　一对恋人到原始森林中去探险，不幸的是他们坠崖了。在惊惶失措地滑落中，姑娘抓住了一根树枝，小伙子则拼命地拽住了姑娘的脚踝，两个人荡秋千般地挂在绝壁上。但是树枝太细了，绝不可能同时负重两个人，树枝噼噼啪啪眼看着快被挣断。“也许我不能送给你结婚礼物了，多保重！”小伙子含泪说了一句，撒手跳下了悬崖。
-　　“他用生命表达了对我的爱。”姑娘讲到这儿，就哽咽难语，泪水滂沱。她就是那个幸存的姑娘。每天每天，忙完了工作和家务，姑娘就去一个地方：未婚夫的墓地。在那儿，她静静地坐在一块石板上，沉思默语，用灵魂同她的爱人对话。他一定希望我好好地活，亦一定希望我陪伴在他的身边。姑娘为此，特意将居住在闹市区的家迁到冷寂的郊外。姑娘说：离他越近，越能心安。
-　　20年，姑娘坐的石板微微凹去一块。姑娘说，那是他们俩的呢喃太多太重，让岁月压弯了腰。"/>
+        android:textColor="@color/color_070707"
+        android:textSize="@dimen/dm020"/>
 
     <View
         android:id="@+id/item_bottom_line"

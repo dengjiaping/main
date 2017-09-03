@@ -226,5 +226,6 @@
     <string name="read_text4">部分游戏无法映射请按home键回到桌面，再进游戏即可呼出映射。</string>
     <string name="read_5">5.调出键盘异常说明</string>
     <string name="read_text5">关于部分手机使用手柄后调不出键盘，无法打字的情况，是因为手柄占用了键盘协议， 请断开手机蓝牙，打字后，再开启手机蓝牙，手柄自动回连。</string>
+    <string name="necessary_content_desc">拇指玩的安装器,一键操作.安装指南:谷歌框架指的是谷歌服务框架,谷歌应用商店等4个谷歌出品的APP,是使用谷歌服务的基础.</string>
 
 </resources>

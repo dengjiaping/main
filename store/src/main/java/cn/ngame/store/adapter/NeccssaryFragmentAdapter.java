@@ -56,7 +56,7 @@ import static cn.ngame.store.R.id.tv_title;
  */
 public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListHeadersAdapter {
     private Timer timer = new Timer();
-    private List<TimerTask> timerTasks=new ArrayList<>();
+    private List<TimerTask> timerTasks = new ArrayList<>();
     private List<NecessaryItemData> mPlanDetails;
     private Context context;
     private FragmentManager fm;
@@ -113,14 +113,14 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
             mPlanDetails.clear();
             uiHandler = null;
             timer.cancel();
-            timer=null;
+            timer = null;
         }
     }
 
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
-        ViewHolder holder;
+        final ViewHolder holder;
         if (convertView == null) {
 
             holder = new ViewHolder(context, fm);
@@ -129,6 +129,7 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
             holder.itemTitle = (TextView) convertView.findViewById(tv_title);
             holder.versionTv = (TextView) convertView.findViewById(R.id.tv_version_time);
             holder.tv_size = (TextView) convertView.findViewById(R.id.tv_length);
+            holder.tv_desc = (TextView) convertView.findViewById(R.id.becessary_item_desc_tv);
             holder.progressBar = (GameLoadProgressBar) convertView.findViewById(R.id.progress_bar);
             holder.show_more_disc_bt = (ImageView) convertView.findViewById(R.id.show_more_disc_bt);
             convertView.setTag(holder);
@@ -140,10 +141,18 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
             //holder.update(fileInfo);
             holder.itemTitle.setText(planDetail.getItemTitle());
             holder.versionTv.setText(planDetail.getItemPosition());
-            holder.tv_size.setText(planDetail.getItemDesc());
+            holder.tv_size.setText(planDetail.getItemSize());
+            holder.tv_desc.setText(planDetail.getItemDesc());
             holder.show_more_disc_bt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    int lineCount = holder.tv_desc.getLineCount();
+                    int maxLines = holder.tv_desc.getMaxLines();
+                    if (1 == lineCount) {
+                        holder.tv_desc.setMaxLines(2);
+                    } else {
+                        holder.tv_desc.setMaxLines(1);
+                    }
                 }
             });
         }
@@ -174,6 +183,7 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
         // getHeaderId决定header出现的时机，如果当前的headerid和前一个headerid不同时，就会显示
         return Long.parseLong(this.mPlanDetails.get(position).getParentId());
     }
+
     class HeaderViewHolder {
         TextView itemParentTv;
     }
@@ -191,7 +201,7 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
         private GameRankListBean.DataBean gameInfo;
         private ImageView show_more_disc_bt;
         private SimpleDraweeView img;
-        private TextView itemTitle, tv_size, versionTv;
+        private TextView itemTitle, tv_size, versionTv, tv_desc;
         private GameLoadProgressBar progressBar;    //下载进度条
         private IFileLoad fileLoad;
 
@@ -232,7 +242,7 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
                 itemTitle.setText(gameName);
             }
             tv_size.setText(Formatter.formatFileSize(context, gameInfo.getGameSize()));
-            versionTv.setText("V"+gameInfo.getVersionName());
+            versionTv.setText("V" + gameInfo.getVersionName());
             progressBar.setVisibility(View.INVISIBLE);
             //设置进度条状态
             progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo

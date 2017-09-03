@@ -116,30 +116,30 @@ public class NecessaryFragment extends BaseSearchFragment {
     }
 
     /**
-     * 有个地方需要着重说明，那就是在初始化数据时，数据必须proj_id必须按分组排列，
+     * 初始化数据时，数据必须proj_id必须按分组排列，
      * 即，不要将proj_id不同的数据      参差着放在集合中，
      * 否则容易造成列表显示多组相同组名的数据。
      */
     private void initDatas() {
-        mLangyaDatas.add(new NecessaryItemData("1", "腾讯", "52", "腾讯助手", "腾讯腾讯腾讯腾讯腾讯腾讯腾讯"));
-        mLangyaDatas.add(new NecessaryItemData("1", "腾讯", "22", "腾讯助手", "腾讯腾讯腾讯腾讯腾讯腾讯腾讯"));
-        mLangyaDatas.add(new NecessaryItemData("1", "腾讯", "31", "腾讯助手", "腾讯腾讯腾讯腾讯腾讯腾讯腾讯"));
-        mLangyaDatas.add(new NecessaryItemData("1", "腾讯", "41", "腾讯助手", "腾讯腾讯腾讯腾讯腾讯腾讯腾讯"));
-        mLangyaDatas.add(new NecessaryItemData("1", "腾讯", "45", "腾讯助手", "腾讯腾讯腾讯腾讯腾讯腾讯腾讯"));
+        mLangyaDatas.add(new NecessaryItemData("1", "谷歌", "1", "谷歌安装器", "未知来源",getString(R.string.necessary_content_desc)));
+      /*  mLangyaDatas.add(new NecessaryItemData("1", "谷歌", "2", "谷歌安装器", "未知"));
+        mLangyaDatas.add(new NecessaryItemData("1", "谷歌", "3", "谷歌安装器", "未知"));
+        mLangyaDatas.add(new NecessaryItemData("1", "谷歌", "4", "谷歌安装器", "未知"));
+        mLangyaDatas.add(new NecessaryItemData("1", "谷歌", "4", "谷歌安装器", "未知"));*/
 
-        mLangyaDatas.add(new NecessaryItemData("2", "谷歌", "54", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));
+     /*   mLangyaDatas.add(new NecessaryItemData("2", "谷歌", "54", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));
         mLangyaDatas.add(new NecessaryItemData("2", "谷歌", "15", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));
         mLangyaDatas.add(new NecessaryItemData("2", "谷歌", "8", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));
         mLangyaDatas.add(new NecessaryItemData("2", "谷歌", "9", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));
-        mLangyaDatas.add(new NecessaryItemData("2", "谷歌", "10", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));
+        mLangyaDatas.add(new NecessaryItemData("2", "谷歌", "10", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));*/
 
 
-        mLangyaDatas.add(new NecessaryItemData("5", "百度", "11", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
+     /*   mLangyaDatas.add(new NecessaryItemData("5", "百度", "11", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
         mLangyaDatas.add(new NecessaryItemData("5", "百度", "12", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
         mLangyaDatas.add(new NecessaryItemData("5", "百度", "13", "百度助手", "百度助手百度助手百度助手百度助手"));
         mLangyaDatas.add(new NecessaryItemData("5", "百度", "14", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
         mLangyaDatas.add(new NecessaryItemData("5", "百度", "15", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
-        mLangyaDatas.add(new NecessaryItemData("5", "百度", "16", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
+        mLangyaDatas.add(new NecessaryItemData("5", "百度", "16", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));*/
 
     }
     private void initPop() {
