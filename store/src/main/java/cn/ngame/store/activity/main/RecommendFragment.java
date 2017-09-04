@@ -411,7 +411,7 @@ public class RecommendFragment extends BaseSearchFragment {
         });
 
         //todo添加头布局
-        View headView = View.inflate(getActivity(), R.layout.recommend_header_view, null);
+        View headView = View.inflate(context, R.layout.recommend_header_view, null);
         initHeadView(headView);
         //头布局放入listView中
         if (refreshableView.getHeaderViewsCount() == 0) {
@@ -434,8 +434,6 @@ public class RecommendFragment extends BaseSearchFragment {
             } else {
                 refreshableView.setSelection(0);
             }
-            //
-        } else {
         }
     }
 
