@@ -174,9 +174,6 @@ public class AllClassifyActivity extends BaseFgActivity {
         });
     }
 
-    /**
-     * 获取制定分类下的游戏列表
-     */
     private void getGameList() {
         loadStateView.setVisibility(View.VISIBLE);
         loadStateView.setState(LoadStateView.STATE_ING, getString(R.string.loading));
@@ -187,7 +184,6 @@ public class AllClassifyActivity extends BaseFgActivity {
                     public void onError(Throwable e) {
                         loadStateView.setVisibility(View.GONE);
                     }
-
                     @Override
                     public void onNext(AllClassifyBean result) {
                         loadStateView.setVisibility(View.GONE);

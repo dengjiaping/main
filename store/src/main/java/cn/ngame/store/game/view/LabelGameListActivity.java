@@ -47,7 +47,7 @@ public class LabelGameListActivity extends BaseFgActivity {
     private List<GameInfo> gameInfoList;
 
     private PageAction pageAction;
-    public static int PAGE_SIZE = 10;
+    public static int PAGE_SIZE = 40;
 
     private int lastItem;
 
@@ -65,7 +65,7 @@ public class LabelGameListActivity extends BaseFgActivity {
         Intent intent = getIntent();
         String title = intent.getStringExtra(KeyConstant.TITLE);
         mLabelId = intent.getStringExtra(KeyConstant.category_Id);
-        android.util.Log.d(TAG, "分类id"+mLabelId);
+        android.util.Log.d(TAG, "分类i0"+mLabelId);
         Button leftBt = (Button) findViewById(R.id.left_bt);
         findViewById(R.id.center_tv).setVisibility(View.GONE);
         leftBt.setOnClickListener(new View.OnClickListener() {
@@ -100,14 +100,15 @@ public class LabelGameListActivity extends BaseFgActivity {
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 //少于指定条数不加载
-                if (pageAction.getTotal() < pageAction.getPageSize()) {
+                int total = pageAction.getTotal();
+                if (total < pageAction.getPageSize()) {
                     pullListView.setHasMoreData(false);
                     pullListView.onPullUpRefreshComplete();
                     return;
                 }
-                if (pageAction.getCurrentPage() * pageAction.getPageSize() < pageAction.getTotal()) {
-                    pageAction.setCurrentPage(pageAction.getCurrentPage() == 0 ? pageAction.getCurrentPage() + 2 : pageAction
-                            .getCurrentPage() + 1);
+                int currentPage = pageAction.getCurrentPage();
+                if (currentPage * pageAction.getPageSize() < total) {
+                    pageAction.setCurrentPage(currentPage + 1);
                     getGameListByLabel();
                 } else {
                     pullListView.setHasMoreData(false);
@@ -214,7 +215,7 @@ public class LabelGameListActivity extends BaseFgActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
                 params.put(KeyConstant.GAME_LABEL_ID, mLabelId);
-                params.put(KeyConstant.START_INDEX, String.valueOf(pageAction.getCurrentPage()));
+                params.put(KeyConstant.START_INDEX, String.valueOf(0));
                 params.put(KeyConstant.PAGE_SIZE, String.valueOf(PAGE_SIZE));
                 return params;
             }
