@@ -20,6 +20,7 @@ import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.adapter.TopicsListAdapter;
 import cn.ngame.store.core.utils.KeyConstant;
 
+
 /**
  * 专题精选
  * Created by gp on 2017/4/13 0013.
@@ -27,7 +28,7 @@ import cn.ngame.store.core.utils.KeyConstant;
 
 public class TopicsListActivity extends BaseFgActivity {
 
-    private int ID = 22;
+    private int ID = 21;
     private Button tv_title;
     private String title;
     List<YunduanBean.DataBean> list = new ArrayList<>();
