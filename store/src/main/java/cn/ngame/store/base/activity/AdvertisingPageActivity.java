@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.jzt.hol.android.jkda.sdk.services.gamehub.AppCarouselClient;
 import cn.ngame.store.R;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.activity.main.MainHomeActivity;
+import cn.ngame.store.core.utils.APIErrorUtils;
 import cn.ngame.store.core.utils.SystemUtil;
 import cn.ngame.store.push.model.PushMessage;
 import cn.ngame.store.util.ToastUtil;
@@ -84,6 +86,7 @@ public class AdvertisingPageActivity extends BaseFgActivity {
                     @Override
                     public void onError(Throwable e) {
 //                        ToastUtil.show(AdvertisingPageActivity.this, APIErrorUtils.getMessage(e));
+                        Log.d(TAG, "onError: "+ APIErrorUtils.getMessage(e));
                         jumpHome();
                     }
 

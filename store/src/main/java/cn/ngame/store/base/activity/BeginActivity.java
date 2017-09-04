@@ -19,7 +19,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
-import android.widget.TextView;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.umeng.analytics.MobclickAgent;
 
@@ -28,6 +29,7 @@ import java.util.TimerTask;
 
 import cn.ngame.store.R;
 import cn.ngame.store.activity.BaseFgActivity;
+import cn.ngame.store.activity.main.MainHomeActivity;
 import cn.ngame.store.core.fileload.FileLoadService;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
@@ -48,14 +50,17 @@ public class BeginActivity extends BaseFgActivity {
     public static final String TAG = BeginActivity.class.getSimpleName();
     private boolean isFirstInstall = true;
     private Timer timer;
+    private BeginActivity content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //设置无标题
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //设置全屏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.setContentView(R.layout.activity_begin);
-
-        TextView tv_version = (TextView) findViewById(R.id.text1);
-        tv_version.setText(CommonUtil.getVersionName(this));
+        content=this;
         //启动后台服务
         Intent serviceIntent = new Intent(this, FileLoadService.class);
         startService(serviceIntent);
@@ -81,7 +86,6 @@ public class BeginActivity extends BaseFgActivity {
                 intent.putExtra("msg", msg);
             }
             startActivity(intent);
-            finish();
             //更新安装状态值
             SPUtils.put(this, Constant.CONFIG_FIRST_INSTALL, false);
             finish();
@@ -90,7 +94,7 @@ public class BeginActivity extends BaseFgActivity {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(BeginActivity.this, AdvertisingPageActivity.class);
+                    Intent intent = new Intent(content, MainHomeActivity.class);
                     if (pushMsgId > 0) {
                         intent.putExtra("msgId", pushMsgId);
                         intent.putExtra("type", pushMsgType);
@@ -99,7 +103,7 @@ public class BeginActivity extends BaseFgActivity {
                     startActivity(intent);
                     finish();
                 }
-            }, 1 * 1000);
+            }, 2 * 1000);
         }
     }
 

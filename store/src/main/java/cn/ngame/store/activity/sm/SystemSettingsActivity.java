@@ -1,8 +1,13 @@
 package cn.ngame.store.activity.sm;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
@@ -29,12 +34,14 @@ public class SystemSettingsActivity extends BaseFgActivity implements CompoundBu
 
     private ToggleButton but_push, but_load, but_install, but_update;
     private int delayMillis = 100;
+    private SystemSettingsActivity content;
+    private TextView tv_clear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_manager_settings);
-
+        content = this;
         Button left_but = (Button) findViewById(R.id.left_bt);
         left_but.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,16 +73,18 @@ public class SystemSettingsActivity extends BaseFgActivity implements CompoundBu
 
         //but_update = (ToggleButton) findViewById(R.id.but_update);
 
-        final TextView tv_clear = (TextView) findViewById(R.id.tv_clear);
+        tv_clear = (TextView) findViewById(R.id.tv_clear);
         RelativeLayout layout_1 = (RelativeLayout) findViewById(R.id.layout_1);
         layout_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String text = tv_clear.getText().toString();
                 if ("0KB".equals(text)) {
                     ToastUtil.show(SystemSettingsActivity.this, "没有缓存了~");
                     return;
                 }
+
                 if (text.endsWith("MB")) {
                     delayMillis = 1000;
                 } else if (text.endsWith("KB")) {
@@ -83,19 +92,7 @@ public class SystemSettingsActivity extends BaseFgActivity implements CompoundBu
                 } else {
                     delayMillis = 1000;
                 }
-                DataCleanManager.clearAllCache(SystemSettingsActivity.this);
-                final DialogHelper dialogHelper = new DialogHelper(getSupportFragmentManager(), SystemSettingsActivity.this);
-                dialogHelper.showAlert("清理中...", false);
-
-                v.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        dialogHelper.hideAlert();
-                        ToastUtil.show(SystemSettingsActivity.this, "清空缓存成功~");
-                        tv_clear.setText("0KB");
-                    }
-                }, delayMillis);
-
+                showLogoutDialog();
             }
         });
 
@@ -112,6 +109,57 @@ public class SystemSettingsActivity extends BaseFgActivity implements CompoundBu
             e.printStackTrace();
         }
 
+    }
+
+    //退出登录
+    public void showLogoutDialog() {
+        final Dialog dialog = new Dialog(this, R.style.Dialog_From_Bottom_Style);
+        //填充对话框的布局
+        View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_logout, null);
+
+        TextView title_tv = (TextView) inflate.findViewById(R.id.dialog_top_title_tv);
+        title_tv.setText("确定清除缓存数据吗?");
+        TextView clearBt = (TextView) inflate.findViewById(R.id.logout_yes_bt);
+        clearBt.setText("清除数据");
+        clearBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+                DataCleanManager.clearAllCache(SystemSettingsActivity.this);
+                final DialogHelper dialogHelper = new DialogHelper(getSupportFragmentManager(), SystemSettingsActivity.this);
+                dialogHelper.showAlert("清理中...", false);
+
+                v.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialogHelper.hideAlert();
+                        ToastUtil.show(SystemSettingsActivity.this, "缓存已清除~");
+                        if (null != tv_clear) {
+                            tv_clear.setText("0KB");
+                        }
+                    }
+                }, delayMillis);
+            }
+        });
+        inflate.findViewById(R.id.logout_cancel_bt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+        dialog.setContentView(inflate);//将布局设置给Dialog
+
+        setDialogWindow(dialog);
+    }
+
+    private void setDialogWindow(Dialog dialog) {
+        Window dialogWindow = dialog.getWindow(); //获取当前Activity所在的窗体
+        dialogWindow.setGravity(Gravity.BOTTOM);//设置Dialog从窗体底部弹出
+        WindowManager.LayoutParams params = dialogWindow.getAttributes();   //获得窗体的属性
+        //params.y = 20;  Dialog距离底部的距离
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;//设置Dialog距离底部的距离
+        dialogWindow.setAttributes(params); //将属性设置给窗体
+        dialog.show();//显示对话框
     }
 
     @Override
@@ -159,7 +207,7 @@ public class SystemSettingsActivity extends BaseFgActivity implements CompoundBu
 
     private void doLoadClick(boolean isChecked) {
         //允许 isChecked=true, 
-        Log.d(TAG, "isChecked: "+isChecked);
+        Log.d(TAG, "isChecked: " + isChecked);
         StoreApplication.allowAnyNet = isChecked;
         //如果允许
         if (isChecked) {

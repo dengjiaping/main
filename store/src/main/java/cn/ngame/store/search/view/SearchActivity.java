@@ -115,9 +115,8 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.d(TAG, "onTextChanged: " + s);
                 if (s.toString().trim().length() > 0) {
-                    doSearch();
+                    doSearch(false);
                 } else {
                     ll_show.setVisibility(View.VISIBLE);
                     resultListView.setVisibility(View.GONE);
@@ -155,7 +154,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
 
                         loadStateView.setVisibility(View.VISIBLE);
                         loadStateView.setState(LoadStateView.STATE_ING);
-                        doSearch();
+                        doSearch(true);
                     } else {
                         et_search.setText("");
                         Toast.makeText(SearchActivity.this, "请输入搜索内容", Toast.LENGTH_SHORT).show();
@@ -181,7 +180,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
                 et_search.setText(historyTitle);
                 et_search.setSelection(historyTitle.length());
                 searchName = historyTitle;
-                doSearch();
+                doSearch(false);
             }
         });
         gridView_game.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -286,7 +285,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
     }
 
     //搜索
-    private void doSearch() {
+    private void doSearch(boolean isBt ) {
         resultListView.setVisibility(View.VISIBLE);
         ll_show.setVisibility(View.GONE);
         loadStateView.setVisibility(View.VISIBLE);
@@ -340,6 +339,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.search_bt:
+                Log.d(TAG, "点击搜索: ");
                 String searchStr = et_search.getText().toString().trim();
                 if (StringUtil.isEmpty(searchStr)) {
                     et_search.setText("");
@@ -358,7 +358,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
 
                     loadStateView.setVisibility(View.VISIBLE);
                     loadStateView.setState(LoadStateView.STATE_ING);
-                    doSearch();
+                    doSearch(true);
                 }
                 break;
             case R.id.tv_clear:

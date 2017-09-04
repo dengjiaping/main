@@ -57,8 +57,8 @@ public class SupportedJoypadListActivity extends BaseFgActivity {
     }
 
     private void initDatas() {
-        mDatas = new ArrayList<>(Arrays.asList("原生手柄", "原生手柄", "原生手柄","原生手柄","原生手柄","原生手柄","原生手柄",
-                "原生手柄","原生手柄"));
+        mDatas = new ArrayList<>(Arrays.asList("Ngame", "新游", "明品","小霸王","金貂","科腾","GT-COUPE机器酷博",
+                "WELCOME惠康","北通"));
     }
 
     public class GalleryAdapter extends
