@@ -13,17 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.google.gson.reflect.TypeToken;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameHubMainBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
+import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBody;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
+import com.jzt.hol.android.jkda.sdk.services.main.YunduanClient;
 import com.jzt.hol.android.jkda.sdk.services.recommend.RecommendClient;
 import com.umeng.analytics.MobclickAgent;
 
@@ -31,23 +28,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 
 import cn.ngame.store.R;
-import cn.ngame.store.StoreApplication;
 import cn.ngame.store.adapter.MainHomeRaiderAdapter;
 import cn.ngame.store.adapter.RecommendListAdapter;
 import cn.ngame.store.adapter.SelectGameAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.GameInfo;
-import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.PageAction;
-import cn.ngame.store.bean.RecommendTopicsItemInfo;
 import cn.ngame.store.core.fileload.IFileLoad;
-import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.CommonUtil;
-import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.NetUtil;
@@ -57,8 +48,6 @@ import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.LoadStateView;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
-
-import static cn.ngame.store.core.utils.Constant.URL_RECOMMEND_TOPICS;
 
 /**
  * 精选
@@ -101,7 +90,6 @@ public class RecommendFragment extends BaseSearchFragment {
     List<RecommendListBean.DataBean> topList = new ArrayList<>();
     List<RecommendListBean.DataBean> list = new ArrayList<>();
     private LinearLayout horizontalViewContainer;
-    private List<RecommendTopicsItemInfo> gameInfo;
     private FragmentActivity context;
     private Intent singeTopicsDetailIntent = new Intent();
     private LinearLayout.LayoutParams hParams;
@@ -165,89 +153,67 @@ public class RecommendFragment extends BaseSearchFragment {
     }
 
 
+    private List<YunduanBean.DataBean> gameInfo;
+
     private void getHorizontalData() {
-        String url_recommend_topics = Constant.WEB_SITE + URL_RECOMMEND_TOPICS;
-        //请求失败
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
-                //ToastUtil.show(context, getString(R.string.pull_to_refresh_network_error));
-                Log.d(TAG, "HTTP请求失败：网络连接错误！");
-            }
-        };
-        // 获取横向滑动的数据
-        Response.Listener<JsonResult<List<RecommendTopicsItemInfo>>> successListener = new Response
-                .Listener<JsonResult<List<RecommendTopicsItemInfo>>>() {
-            @Override
-            public void onResponse(JsonResult<List<RecommendTopicsItemInfo>> result) {
-                //数据为空
-                if (result == null || result.code != 0) {
-                    ToastUtil.show(context, getString(R.string.requery_failed));
-                    return;
-                }
-                //GameInfo类  : 请求游戏JN数据后,封装的javabean
-                gameInfo = result.data;
-                if (null == gameInfo || gameInfo.size() == 0) {
-                    Log.d(TAG, "HTTP请求成功：服务端返回错误！");
-                } else {
-                    horizontalViewContainer.removeAllViews();
-                    int dp10 = CommonUtil.dip2px(context, 10);
-                    int width240 = CommonUtil.dip2px(context, 240f);
-                    int heght114 = CommonUtil.dip2px(context, 114f);
-                    int ic_def_logo_480_228 = R.drawable.ic_def_logo_480_228;
-                    int size = gameInfo.size();
-                    for (int i = 0; i < size; i++) {
-                        final RecommendTopicsItemInfo info = gameInfo.get(i);
-                        final String gameImage = info.getSelectImage();//获取每一张图片
-                        picassoImageView = new SimpleDraweeView(context);
-                        picassoImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                        //为  PicassoImageView设置属性
-                        hParams = new LinearLayout.LayoutParams(
-                                wrapContent, wrapContent);
-                        hParams.width = width240;
-                        hParams.height = heght114;
-                        //有多个图片的话
-                        if (0 == i) {
-                            hParams.setMargins(dp10, 0, dp10, 0);
-                        } else {
-                            hParams.setMargins(0, 0, dp10, 0);
-                        }
-                        picassoImageView.setLayoutParams(hParams);
-                        //加载网络图片
-                        picassoImageView.setImageURI(gameImage);
-                        picassoImageView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                singeTopicsDetailIntent.putExtra(KeyConstant.category_Id, info.getId());
-                                singeTopicsDetailIntent.putExtra(KeyConstant.TITLE, info.getTitle());
-                                singeTopicsDetailIntent.putExtra(KeyConstant.DESC, info.getSelectDesc());
-                                singeTopicsDetailIntent.putExtra(KeyConstant.URL, gameImage);
-                                startActivity(singeTopicsDetailIntent);
-                            }
-                        });
-                        horizontalViewContainer.addView(picassoImageView, i);
+        YunduanBodyBean bodyBean = new YunduanBodyBean();
+        new YunduanClient(context, bodyBean).observable()
+                .subscribe(new ObserverWrapper<YunduanBean>() {
+                    @Override
+                    public void onError(Throwable e) {
                     }
-                }
 
+                    @Override
+                    public void onNext(YunduanBean result) {
+                        if (result != null && result.getCode() == 0) {
+                            gameInfo = result.getData();
+                            if (null == gameInfo || gameInfo.size() == 0) {
+                                Log.d(TAG, "HTTP请求成功：服务端返回错误！");
+                            } else {
+                                horizontalViewContainer.removeAllViews();
+                                int dp10 = CommonUtil.dip2px(context, 10);
+                                int width240 = CommonUtil.dip2px(context, 240f);
+                                int heght114 = CommonUtil.dip2px(context, 114f);
+                                int ic_def_logo_480_228 = R.drawable.ic_def_logo_480_228;
+                                int size = gameInfo.size();
+                                for (int i = 0; i < size; i++) {
+                                    final YunduanBean.DataBean info = gameInfo.get(i);
+                                    final String gameImage = info.getLogoUrl();//获取每一张图片
+                                    picassoImageView = new SimpleDraweeView(context);
+                                    picassoImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                                    //为  PicassoImageView设置属性
+                                    hParams = new LinearLayout.LayoutParams(
+                                            wrapContent, wrapContent);
+                                    hParams.width = width240;
+                                    hParams.height = heght114;
+                                    //有多个图片的话
+                                    if (0 == i) {
+                                        hParams.setMargins(dp10, 0, dp10, 0);
+                                    } else {
+                                        hParams.setMargins(0, 0, dp10, 0);
+                                    }
+                                    picassoImageView.setLayoutParams(hParams);
+                                    //加载网络图片
+                                    picassoImageView.setImageURI(gameImage);
+                                    picassoImageView.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            singeTopicsDetailIntent.putExtra(KeyConstant.category_Id, info.getId());
+                                            singeTopicsDetailIntent.putExtra(KeyConstant.TITLE, info.getTypeName());
+                                            singeTopicsDetailIntent.putExtra(KeyConstant.DESC, info.getTypeDesc());
+                                            singeTopicsDetailIntent.putExtra(KeyConstant.URL, gameImage);
+                                            startActivity(singeTopicsDetailIntent);
+                                        }
+                                    });
+                                    horizontalViewContainer.addView(picassoImageView, i);
+                                }
+                            }
+                        } else {
+                        }
+                    }
+                });
+        //GameInfo类  : 请求游戏JN数据后,封装的javabean
 
-            }
-        };
-
-        //------------------------------------------------------------------------------
-        Request<JsonResult<List<RecommendTopicsItemInfo>>> request = new GsonRequest<JsonResult<List<RecommendTopicsItemInfo>>>
-                (Request.Method.POST, url_recommend_topics,
-                        successListener, errorListener, new TypeToken<JsonResult<List<RecommendTopicsItemInfo>>>() {
-                }.getType()) {
-            @Override//填写参数
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);//安卓
-                return params;
-            }
-        };
-        StoreApplication.requestQueue.add(request);
     }
 
     public void listData(RecommendListBean result) {
@@ -429,7 +395,11 @@ public class RecommendFragment extends BaseSearchFragment {
             ListView refreshableView = pullListView.getRefreshableView();
             //refreshableView.setSelectionAfterHeaderView();
             int firstVisiblePosition = refreshableView.getFirstVisiblePosition();
-            int top = refreshableView.getChildAt(0).getTop();
+            View childAt0 = refreshableView.getChildAt(0);
+            if (null==childAt0) {
+                return;
+            }
+            int top = childAt0.getTop();
             if (firstVisiblePosition == 0 && top == 0) {
                 getGameList();
             } else {

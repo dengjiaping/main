@@ -22,13 +22,12 @@ import cn.ngame.store.core.utils.KeyConstant;
 
 
 /**
- * 专题精选
+ * 全部专题
  * Created by gp on 2017/4/13 0013.
  */
 
 public class TopicsListActivity extends BaseFgActivity {
 
-    private int ID = 21;
     private Button tv_title;
     private String title;
     List<YunduanBean.DataBean> list = new ArrayList<>();
@@ -59,10 +58,11 @@ public class TopicsListActivity extends BaseFgActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent();
                 i.setClass(content, TopicsDetailActivity.class);
-                i.putExtra(KeyConstant.category_Id, list.get(position).getId());
-                i.putExtra(KeyConstant.TITLE, list.get(position).getTypeName());
-                i.putExtra(KeyConstant.DESC, list.get(position).getTypeDesc());
-                i.putExtra(KeyConstant.URL, list.get(position).getLogoUrl());
+                YunduanBean.DataBean dataBean = list.get(position);
+                i.putExtra(KeyConstant.category_Id, dataBean.getId());
+                i.putExtra(KeyConstant.TITLE, dataBean.getTypeName());
+                i.putExtra(KeyConstant.DESC, dataBean.getTypeDesc());
+                i.putExtra(KeyConstant.URL, dataBean.getLogoUrl());
                 startActivity(i);
             }
         });
@@ -70,14 +70,10 @@ public class TopicsListActivity extends BaseFgActivity {
     }
 
     public void runService() {
-        YunduanBodyBean bodyBean = new YunduanBodyBean();
-        bodyBean.setMarkId(ID);
-        new YunduanClient(this, bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
+        new YunduanClient(this, new YunduanBodyBean()).observable()
                 .subscribe(new ObserverWrapper<YunduanBean>() {
                     @Override
                     public void onError(Throwable e) {
-//                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
                     }
 
                     @Override
@@ -85,7 +81,6 @@ public class TopicsListActivity extends BaseFgActivity {
                         if (result != null && result.getCode() == 0) {
                             setData(result);
                         } else {
-//                            ToastUtil.show(getActivity(), result.getMsg());
                         }
                     }
                 });

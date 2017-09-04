@@ -5,22 +5,6 @@ package com.jzt.hol.android.jkda.sdk.bean.main;
  */
 
 public class YunduanBodyBean {
-    int markId;
+    int markId=21;
     int appTypeId = 0;
-
-    public int getMarkId() {
-        return markId;
-    }
-
-    public void setMarkId(int markId) {
-        this.markId = markId;
-    }
-
-    public int getAppTypeId() {
-        return appTypeId;
-    }
-
-    public void setAppTypeId(int appTypeId) {
-        this.appTypeId = appTypeId;
-    }
 }

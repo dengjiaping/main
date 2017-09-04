@@ -12,39 +12,30 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.google.gson.reflect.TypeToken;
 import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverListBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverTopBean;
+import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
+import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBody;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.main.DiscoverClient;
+import com.jzt.hol.android.jkda.sdk.services.main.YunduanClient;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cn.ngame.store.R;
-import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.main.TopicsDetailActivity;
 import cn.ngame.store.activity.main.TopicsListActivity;
 import cn.ngame.store.adapter.discover.DiscoverClassifyTopAdapter;
 import cn.ngame.store.adapter.discover.DiscoverIvAdapter;
 import cn.ngame.store.adapter.discover.DiscoverTvIvAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
-import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.bean.RecommendTopicsItemInfo;
-import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.CommonUtil;
-import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
-import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.NetUtil;
 import cn.ngame.store.game.view.LabelGameListActivity;
 import cn.ngame.store.util.ToastUtil;
@@ -86,7 +77,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private int match_parent;
     private LinearLayout.LayoutParams hParams;
     private String selectImage;
-    private List<RecommendTopicsItemInfo> topicsInfoList = new ArrayList<>();
+    private List<YunduanBean.DataBean> topicsInfoList = new ArrayList<>();
     private List<RecommendTopicsItemInfo> mBigChangInfoList = new ArrayList<>();
     private RecommendTopicsItemInfo topicsInfo;
     private DiscoverAdapter categroy18Adapter;
@@ -130,8 +121,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         initHotRecentView(headView);
         //专题
         initTopicsView(headView);
-        //大厂
-        initBigChangView(headView);
 
         //添加头部
         ListView refreshableView = pullListView.getRefreshableView();
@@ -202,14 +191,13 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
 
         mTopicsAdapter = new DiscoverIvAdapter(context, topicsInfoList);
         mSubjectRv.setAdapter(mTopicsAdapter);
-        getTopicsInfoList();
         //条目距离
         mSubjectRv.addItemDecoration(new RecyclerViewDivider(context,
                 R.dimen.dm036, R.dimen.dm028, topicsInfoList.size()));
     }
 
     //大厂
-    private void initBigChangView(View headView) {
+   /* private void initBigChangView(View headView) {
         mBigChang_Rv = (RecyclerView) headView.findViewById(R.id.rv_big_chang);
         linearLayoutManager = new LinearLayoutManager(
                 this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
@@ -222,7 +210,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         mBigChang_Rv.addItemDecoration(new RecyclerViewDivider(context,
                 R.dimen.dm036, R.dimen.dm028, mBigChangInfoList.size()));
         setOnMoreBtClickListener(headView, R.id.more_big_chang_tv);
-    }
+    }*/
 
     //更多按钮设置点击监听
     private void setOnMoreBtClickListener(View headView, int moreBtId) {
@@ -257,9 +245,9 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             } else if (id == R.id.more_subject_tv) {
                 intent.setClass(context, TopicsListActivity.class);
                 //大厂
-            } else if (id == R.id.more_big_chang_tv) {
+            } /* else if (id == R.id.more_big_chang_tv) {
                 intent.setClass(context, TopicsListActivity.class);
-            }/* else if (id == R.id.more_strategy_tv) {
+            }else if (id == R.id.more_strategy_tv) {
                 intent.setClass(context, LabelGameListActivity.class);
                 intent.putExtra(KeyConstant.category_Id, 368 + "");//单机id 336
                 intent.putExtra(KeyConstant.TITLE, "策略");
@@ -399,143 +387,31 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private PageAction pageAction;
     public static int PAGE_SIZE = 8;
 
-    /**
-     * 获取专题数据
-     */
-    private void getBigChangInfoList() {//0  专题
-        String url = Constant.WEB_SITE + Constant.URL_DISCOVER_BANNER;
-        Response.Listener<JsonResult<List<RecommendTopicsItemInfo>>> successListener = new Response
-                .Listener<JsonResult<List<RecommendTopicsItemInfo>>>() {
-            @Override
-            public void onResponse(JsonResult<List<RecommendTopicsItemInfo>> result) {
-                if (result == null) {
-                    return;
-                }
-                if (result.code == 0 && result.data != null) {
-                    mBigChangInfoList = result.data;
-                    mBigChangAdapter.setList(mBigChangInfoList);
-                } else {
-                    Log.d(TAG, "HTTP请求成功：服务端返回错误！");
-                    //ToastUtil.show(context, getString(R.string.requery_failed));
-                }
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
-                Log.d(TAG, "HTTP请求失败：网络连接错误！");
-            }
-        };
-
-        Request<JsonResult<List<RecommendTopicsItemInfo>>> request = new GsonRequest<JsonResult<List<RecommendTopicsItemInfo>>>
-                (Request.Method.POST, url,
-                        successListener, errorListener, new TypeToken<JsonResult<List<RecommendTopicsItemInfo>>>() {
-                }.getType()) {
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
-                return params;
-            }
-        };
-        StoreApplication.requestQueue.add(request);
-    }
-
-    /**
-     * 获取专题数据
-     */
-    private void getTopicsInfoList() {//0  专题
-        String url = Constant.WEB_SITE + Constant.URL_DISCOVER_BANNER;
-        Response.Listener<JsonResult<List<RecommendTopicsItemInfo>>> successListener = new Response
-                .Listener<JsonResult<List<RecommendTopicsItemInfo>>>() {
-            @Override
-            public void onResponse(JsonResult<List<RecommendTopicsItemInfo>> result) {
-                if (result == null) {
-                    return;
-                }
-                if (result.code == 0 && result.data != null) {
-                    topicsInfoList = result.data;
-                    mTopicsAdapter.setList(topicsInfoList);
-                    mSubjectRv.setAdapter(mTopicsAdapter);
-                } else {
-                    Log.d(TAG, "HTTP请求成功：服务端返回错误！");
-                    //ToastUtil.show(context, getString(R.string.requery_failed));
-                }
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
-                Log.d(TAG, "HTTP请求失败：网络连接错误！");
-            }
-        };
-
-        Request<JsonResult<List<RecommendTopicsItemInfo>>> request = new GsonRequest<JsonResult<List<RecommendTopicsItemInfo>>>
-                (Request.Method.POST, url,
-                        successListener, errorListener, new TypeToken<JsonResult<List<RecommendTopicsItemInfo>>>() {
-                }.getType()) {
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
-                return params;
-            }
-        };
-        StoreApplication.requestQueue.add(request);
-    }
 
     /**
      * 获取轮播图片数据
      */
     private void getBannerData() {
-        String url = Constant.WEB_SITE + Constant.URL_DISCOVER_BANNER;
-        Response.Listener<JsonResult<List<RecommendTopicsItemInfo>>> successListener = new Response
-                .Listener<JsonResult<List<RecommendTopicsItemInfo>>>() {
-            @Override
-            public void onResponse(JsonResult<List<RecommendTopicsItemInfo>> result) {
-                if (result == null) {
-                    return;
-                }
-                if (result.code == 0) {
-                    List<RecommendTopicsItemInfo> topicsInfoList = result.data;
+        new YunduanClient(context, new YunduanBodyBean()).observable()
+                .subscribe(new ObserverWrapper<YunduanBean>() {
+                    @Override
+                    public void onError(Throwable e) {
+                    }
 
-                    //创建轮播图BannerData
-                    List<ImageView> list = createBannerView(topicsInfoList);
-                    bannerView.setData(list);
-                } else {
-                    Log.d(TAG, "HTTP请求成功：服务端返回错误！");
-                    //ToastUtil.show(context, getString(R.string.requery_failed));
-                }
-            }
-        };
+                    @Override
+                    public void onNext(YunduanBean result) {
+                        if (result != null && result.getCode() == 0) {
+                            topicsInfoList = result.getData();
+                            List<ImageView> list = createBannerView(topicsInfoList);
+                            bannerView.setData(list);
 
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
-                Log.d(TAG, "HTTP请求失败：网络连接错误！");
-            }
-        };
+                            mTopicsAdapter.setList(topicsInfoList);
+                            mSubjectRv.setAdapter(mTopicsAdapter);
+                        } else {
+                        }
+                    }
+                });
 
-        Request<JsonResult<List<RecommendTopicsItemInfo>>> request = new GsonRequest<JsonResult<List<RecommendTopicsItemInfo>>>
-                (Request.Method.POST, url, successListener, errorListener,
-                        new TypeToken<JsonResult<List<RecommendTopicsItemInfo>>>() {
-                        }.getType()) {
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
-                return params;
-            }
-        };
-        StoreApplication.requestQueue.add(request);
     }
 
     /**
@@ -543,7 +419,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
      */
     private ArrayList<ImageView> list = new ArrayList<>();
 
-    private List<ImageView> createBannerView(List<RecommendTopicsItemInfo> bannerInfoList) {
+    private List<ImageView> createBannerView(List<YunduanBean.DataBean> bannerInfoList) {
 
         int bannerListSize = bannerInfoList.size();
         if (bannerInfoList == null || bannerListSize <= 0) {
@@ -558,8 +434,8 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                 match_parent, match_parent);
         hParams.height = CommonUtil.dip2px(context, 158f);
         for (int i = 0; i < bannerListSize; i++) {
-            final RecommendTopicsItemInfo info = bannerInfoList.get(i);
-            selectImage = info.getSelectImage();
+            final YunduanBean.DataBean info = bannerInfoList.get(i);
+            selectImage = info.getLogoUrl();
             picassoImageView = new PicassoImageView(context);
             picassoImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             picassoImageView.setLayoutParams(hParams);
@@ -577,9 +453,9 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                 public void onClick(View v) {
                     android.util.Log.d(TAG, "categoryId点击: " + info.getId());
                     singeTopicsDetailIntent.putExtra(KeyConstant.category_Id, info.getId());
-                    singeTopicsDetailIntent.putExtra(KeyConstant.TITLE, info.getTitle());
-                    singeTopicsDetailIntent.putExtra(KeyConstant.DESC, info.getSelectDesc());
-                    singeTopicsDetailIntent.putExtra(KeyConstant.URL, info.getSelectImage());
+                    singeTopicsDetailIntent.putExtra(KeyConstant.TITLE, info.getTypeName());
+                    singeTopicsDetailIntent.putExtra(KeyConstant.DESC, info.getTypeDesc());
+                    singeTopicsDetailIntent.putExtra(KeyConstant.URL, info.getLogoUrl());
                     startActivity(singeTopicsDetailIntent);
                 }
             });
