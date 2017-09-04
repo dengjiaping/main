@@ -132,9 +132,6 @@ public class LabelGameListActivity extends BaseFgActivity {
         pullListView.getRefreshableView().setAdapter(adapter);
     }
 
-    /**
-     * 获取制定分类下的游戏列表
-     */
     private void getGameListByLabel() {
 
         String url = Constant.WEB_SITE + Constant.URL_LABEL_GAME_LIST;
