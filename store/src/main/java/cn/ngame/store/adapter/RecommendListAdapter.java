@@ -87,8 +87,8 @@ public class RecommendListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.recommend_list_item, parent, false);
             holder = new ViewHolder(context, fm);
-            holder.img = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
-            holder.recommend_game_pic = (ImageView) convertView.findViewById(R.id.recommend_game_pic);
+            holder.fromIv = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
+            holder.game_logo_Iv = (ImageView) convertView.findViewById(R.id.recommend_game_pic);
             holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
             holder.tv_summary = (TextView) convertView.findViewById(R.id.tv_summary);
             holder.tv_from = (TextView) convertView.findViewById(R.id.text1);
@@ -107,12 +107,12 @@ public class RecommendListAdapter extends BaseAdapter {
     public static class ViewHolder {
         private Context context;
         private RecommendListBean.DataBean gameInfo;
-        private SimpleDraweeView img;
+        private SimpleDraweeView fromIv;
         private TextView tv_title, tv_summary, tv_from;
         private IFileLoad fileLoad;
         private FragmentManager fm;
         private Timer timer = new Timer();
-        public ImageView recommend_game_pic;
+        public ImageView game_logo_Iv;
 
         public ViewHolder(Context context, FragmentManager fm) {
             this.context = context;
@@ -134,12 +134,9 @@ public class RecommendListAdapter extends BaseAdapter {
             }
             Picasso.with(context).load(imgUrl).placeholder(R.drawable.ic_def_logo_720_288)
                     .error(R.drawable.ic_def_logo_720_288)
-                    //.resize(screenWidth,150)
-                    .into(recommend_game_pic);
-            Picasso.with(context).load(fromUrl).placeholder(R.drawable.ic_def_logo_720_288)
-                    .error(R.drawable.ic_def_logo_720_288)
-                    //.resize(screenWidth,150)
-                    .into(img);
+                   // .resize(screenWidth,150)
+                    .into(game_logo_Iv);
+            fromIv.setImageURI(fromUrl);
 
             String gameName = gameInfo.getGameName();
             if (!"".equals(gameName)) {
@@ -153,7 +150,7 @@ public class RecommendListAdapter extends BaseAdapter {
                 tv_summary.setText("");
             }
 
-            tv_from.setText("来自" +  gameInfo.getRecommender());
+            tv_from.setText("来自" + gameInfo.getRecommender());
         }
     }
 }

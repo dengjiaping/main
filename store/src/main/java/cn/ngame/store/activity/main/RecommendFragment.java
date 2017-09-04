@@ -295,7 +295,6 @@ public class RecommendFragment extends BaseSearchFragment {
             pullListView.setPullLoadEnabled(true);
         }*/
         //设置上拉刷新后停留的地方  // TODO: 2017/7/17 0017
-        android.util.Log.d(TAG, "mStickyLV.size(): " + list.size() + ",pageAction.getTotal():" + pageAction.getTotal());
 
         if (0 == pageAction.getCurrentPage() && result.getData().size() <= 2) {
             //pullListView.setScrollLoadEnabled(false);
