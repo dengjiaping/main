@@ -64,18 +64,17 @@
                     fresco:roundedCornerRadius="@dimen/dp_20"/>
 
                 <!--名字-->
-                <TextView
+                <cn.ngame.store.view.MarqueTextView
                     android:id="@+id/tv_title"
-                    android:layout_width="140dp"
+                    android:layout_width="@dimen/dm280"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/img_1"
                     android:ellipsize="marquee"
-                    android:fadingEdge="horizontal"
                     android:focusable="true"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:scrollHorizontally="true"
                     android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="marquee_forever"
                     android:singleLine="true"
+                    android:scrollHorizontally="true"
                     android:text=""
                     android:textColor="@color/color_1a"
                     android:textSize="@dimen/dp_18"/>

@@ -66,6 +66,7 @@ import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.AutoHeightViewPager;
 import cn.ngame.store.view.GameLoadProgressBar;
+import cn.ngame.store.view.MarqueTextView;
 import cn.ngame.store.view.ReviewScoreView;
 import cn.ngame.store.view.StickyScrollView;
 
@@ -97,7 +98,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private IFileLoad fileLoad;
     private Paint paint;
     private SimpleDraweeView game_logo_img;
-    private TextView gameNameTv;
+    private MarqueTextView gameNameTv;
     private TextView downLoadCountTv;
     private String gameName = "";
     private TextView changShangTv;
@@ -148,7 +149,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private void initView() {
         game_big_img = (SimpleDraweeView) findViewById(sdv_img);
         game_logo_img = (SimpleDraweeView) findViewById(R.id.img_1);
-        gameNameTv = (TextView) findViewById(R.id.tv_title);//游戏名字
+        gameNameTv = (MarqueTextView) findViewById(R.id.tv_title);//游戏名字
         downLoadCountTv = (TextView) findViewById(R.id.download_count_tv);//下载次数
         changShangTv = (TextView) findViewById(R.id.game_chang_shang_tv);//厂商
         gameSizeTv = (TextView) findViewById(R.id.game_detail_size);//大小
