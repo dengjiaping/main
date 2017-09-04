@@ -43,7 +43,6 @@ import cn.ngame.store.core.utils.TextUtil;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.util.StringUtil;
 import cn.ngame.store.util.ToastUtil;
-import cn.ngame.store.video.view.VideoDetailActivity;
 import cn.ngame.store.view.LoadStateView;
 
 
@@ -189,7 +188,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
                 SearchGameVideoBean.DataBean.HotSearchGameListBean hotSearchGameListBean = searchGameList.get(position);
                 String advName = hotSearchGameListBean.getAdvName().trim();
                 dbManager.addSearchHistory(advName);
-                intent.putExtra("id", hotSearchGameListBean.getGameId());
+                intent.putExtra(KeyConstant.ID, hotSearchGameListBean.getGameId());
                 startActivity(intent);
             }
         });
@@ -205,9 +204,9 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
                     intent.putExtra(KeyConstant.ID, dataBean.getTypeId());
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(SearchActivity.this, VideoDetailActivity.class);
-                    intent.putExtra("id", dataBean.getTypeId());
-                    startActivity(intent);
+                 /*   Intent intent = new Intent(SearchActivity.this, VideoDetailActivity.class);
+                    intent.putExtra(KeyConstant.ID, dataBean.getTypeId());
+                    startActivity(intent);*/
                 }
             }
         });
@@ -284,7 +283,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
     }
 
     //搜索
-    private void doSearch(boolean isBt ) {
+    private void doSearch(boolean isBt) {
         resultListView.setVisibility(View.VISIBLE);
         ll_show.setVisibility(View.GONE);
         loadStateView.setVisibility(View.VISIBLE);
@@ -311,14 +310,24 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
                     public void onNext(SearchBean result) {
                         if (result != null && result.getCode() == 0) {
                             searchList.clear();
-                            searchList.addAll(result.getData());
+                            List<SearchBean.DataBean> data = result.getData();
+                            if (data != null) {
+                                for (int i = 0; i < data.size(); i++) {
+                                    SearchBean.DataBean dataBean = data.get(i);
+                                    int type = dataBean.getType();
+                                    if (type == 1) {//1是游戏  其他不是
+                                        searchList.add(dataBean);
+                                    }
+                                }
+                            }
                             if (searchAdapter == null) {
                                 searchAdapter = new SearchAdapter(SearchActivity.this, searchList);
                                 resultListView.setAdapter(searchAdapter);
                             } else {
+                                loadStateView.setVisibility(View.GONE);
                                 searchAdapter.setSearchResultList(searchList);
                             }
-                            if (result.getData().size() == 0) {
+                            if (data.size() == 0) {
                                 ll_show.setVisibility(View.GONE);
                                 resultListView.setVisibility(View.GONE);
                                 loadStateView.setVisibility(View.VISIBLE);
