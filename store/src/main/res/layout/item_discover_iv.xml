@@ -9,9 +9,8 @@
         android:id="@+id/iv_item_iv"
         android:layout_width="@dimen/dp_subject_iv_width"
         android:layout_height="@dimen/dp_subject_iv_height"
-        android:scaleType="fitXY"
         fresco:failureImage="@drawable/ic_def_logo_412_200"
-        fresco:actualImageScaleType="fitXY"
+        fresco:actualImageScaleType="centerCrop"
         fresco:progressBarImage="@drawable/ic_def_logo_412_200"
         fresco:roundedCornerRadius="@dimen/dp_subject_iv_corner"/>
 </LinearLayout>

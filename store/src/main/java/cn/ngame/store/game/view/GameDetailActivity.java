@@ -217,7 +217,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         if (gameAgentList != null && gameAgentList.size() > 0) {
             changShangTv.setText(gameAgentList.get(0).agentName);
         } else {
-            changShangTv.setText("");
+            changShangTv.setText("不详");
         }
 
         //更新下载按钮

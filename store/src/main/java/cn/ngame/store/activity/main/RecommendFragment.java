@@ -142,6 +142,7 @@ public class RecommendFragment extends BaseSearchFragment {
                     @Override
                     public void onError(Throwable e) {
                         if (list != null && list.size() > 0) {
+                            loadStateView.setVisibility(View.GONE);
                             ToastUtil.show(context, getString(R.string.no_network));
                         } else {
                             loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_network));

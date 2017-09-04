@@ -96,7 +96,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private DiscoverListBean.DataBean.WeeklyNewGamesListBean hotGames;
     private int categoryId = -1;
     private String categoryName = "";
-    private RecommendTopicsItemInfo info;
     private LinearLayoutManager linearLayoutManager;
 
     public DiscoverFragment() {
@@ -559,14 +558,13 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                 match_parent, match_parent);
         hParams.height = CommonUtil.dip2px(context, 158f);
         for (int i = 0; i < bannerListSize; i++) {
-            info = bannerInfoList.get(i);
+            final RecommendTopicsItemInfo info = bannerInfoList.get(i);
             selectImage = info.getSelectImage();
             picassoImageView = new PicassoImageView(context);
-            picassoImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            picassoImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             picassoImageView.setLayoutParams(hParams);
             // picassoImageView.setId(info.getId());
             // picassoImageView.setTag(info.getSelectImage());
-
             picassoImageView.setImageUrl(selectImage, ic_def_logo_720_228);
             picassoImageView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -577,6 +575,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             picassoImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    android.util.Log.d(TAG, "categoryId点击: " + info.getId());
                     singeTopicsDetailIntent.putExtra(KeyConstant.category_Id, info.getId());
                     singeTopicsDetailIntent.putExtra(KeyConstant.TITLE, info.getTitle());
                     singeTopicsDetailIntent.putExtra(KeyConstant.DESC, info.getSelectDesc());
