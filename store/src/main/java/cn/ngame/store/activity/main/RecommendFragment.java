@@ -427,8 +427,15 @@ public class RecommendFragment extends BaseSearchFragment {
         if (mIsShow && pullListView != null) {
             ListView refreshableView = pullListView.getRefreshableView();
             //refreshableView.setSelectionAfterHeaderView();
-            refreshableView.setSelection(0);
-            //getGameList();
+            int firstVisiblePosition = refreshableView.getFirstVisiblePosition();
+            int top = refreshableView.getChildAt(0).getTop();
+            if (firstVisiblePosition == 0 && top == 0) {
+                getGameList();
+            } else {
+                refreshableView.setSelection(0);
+            }
+            //
+        } else {
         }
     }
 
