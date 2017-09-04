@@ -21,8 +21,7 @@ import cn.ngame.store.push.model.PushMessage;
 public class GuideViewActivity extends BaseFgActivity {
     private ViewPager viewPage;
     // 图片
-    private int[] imgs = {R.drawable.guide_1, R.drawable.guide_2,
-            R.drawable.guide_3, R.drawable.guide_4, R.drawable.guide_5};
+    private int[] imgs = {R.drawable.guide_0, R.drawable.guide_1, R.drawable.guide_2};
     private ArrayList<ImageView> list;
     // 底部小点的图片
     private LinearLayout llPoint;
@@ -33,9 +32,9 @@ public class GuideViewActivity extends BaseFgActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.guide_view_acitivyt);
-        // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // 隐藏状态栏
         initview();
         initoper();
         addView();

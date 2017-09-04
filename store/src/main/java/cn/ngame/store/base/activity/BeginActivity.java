@@ -19,7 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
-import android.view.Window;
+import android.util.Log;
 import android.view.WindowManager;
 
 import com.umeng.analytics.MobclickAgent;
@@ -55,12 +55,10 @@ public class BeginActivity extends BaseFgActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //设置无标题
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         //设置全屏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.setContentView(R.layout.activity_begin);
-        content=this;
+        content = this;
         //启动后台服务
         Intent serviceIntent = new Intent(this, FileLoadService.class);
         startService(serviceIntent);
@@ -94,6 +92,7 @@ public class BeginActivity extends BaseFgActivity {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
+                    Log.d(TAG, "run: 777");
                     Intent intent = new Intent(content, MainHomeActivity.class);
                     if (pushMsgId > 0) {
                         intent.putExtra("msgId", pushMsgId);
@@ -103,7 +102,7 @@ public class BeginActivity extends BaseFgActivity {
                     startActivity(intent);
                     finish();
                 }
-            }, 2 * 1000);
+            }, 300);
         }
     }
 
