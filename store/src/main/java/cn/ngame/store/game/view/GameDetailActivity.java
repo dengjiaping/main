@@ -64,9 +64,11 @@ import cn.ngame.store.core.utils.NetUtil;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.util.ToastUtil;
+import cn.ngame.store.view.ActionItem;
 import cn.ngame.store.view.AutoHeightViewPager;
 import cn.ngame.store.view.GameLoadProgressBar;
 import cn.ngame.store.view.MarqueTextView;
+import cn.ngame.store.view.QuickAction;
 import cn.ngame.store.view.ReviewScoreView;
 import cn.ngame.store.view.StickyScrollView;
 
@@ -209,7 +211,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         gameSizeTv.setText(Formatter.formatFileSize(content, gameInfo.gameSize));//大小
         downLoadCountTv.setText(gameInfo.downloadCount + "");//下载次数
         percentageTv.setText(gameInfo.percentage + "");//评分0
-        Log.d(TAG, "7777: "+gameInfo.percentage );
+        Log.d(TAG, "7777: " + gameInfo.percentage);
         game_logo_img.setImageURI(gameInfo.gameLogo);//游戏 -头像
 
         //厂商
@@ -540,7 +542,28 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                     break;
                 case R.id.game_detail_feedback_bt:
                     if (CommonUtil.isLogined()) {
-                        ToastUtil.show(content, "感谢提交,您的宝贵意见是宝宝进步的最大动力!~");
+                        QuickAction quickAction = new QuickAction(content, QuickAction.VERTICAL);
+                        quickAction.setItemBg();
+                        ActionItem pointItem = new ActionItem(1, "反馈1");
+                        ActionItem pointItem2 = new ActionItem(2, "反馈2");
+                        ActionItem pointItem3 = new ActionItem(3, "反馈2");
+                        quickAction.addActionItem(pointItem);
+                        quickAction.addActionItem(pointItem2);
+                        quickAction.addActionItem(pointItem3);
+
+
+                        quickAction.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
+                            @Override
+                            public void onItemClick(QuickAction source, int pos, int actionId) {
+                                if (pos == 0) {
+                                    //获取gameId  传给服务器 不再喜欢
+                                }
+                                ToastUtil.show(content, pos + "感谢提交,您的宝贵意见是宝宝进步的最大动力!~");
+                                //取消弹出框
+                                source.dismiss();
+                            }
+                        });
+                        quickAction.show(feedbackTv);
                     } else {
                         CommonUtil.showUnLoginDialog(fm, content, R.string.unlogin_msg);
                     }
