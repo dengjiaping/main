@@ -209,7 +209,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         gameSizeTv.setText(Formatter.formatFileSize(content, gameInfo.gameSize));//大小
         downLoadCountTv.setText(gameInfo.downloadCount + "");//下载次数
         percentageTv.setText(gameInfo.percentage + "");//评分0
-
+        Log.d(TAG, "7777: "+gameInfo.percentage );
         game_logo_img.setImageURI(gameInfo.gameLogo);//游戏 -头像
 
         //厂商

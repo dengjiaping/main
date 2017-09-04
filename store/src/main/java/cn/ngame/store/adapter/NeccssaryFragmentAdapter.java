@@ -17,6 +17,7 @@
 package cn.ngame.store.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.text.format.Formatter;
@@ -25,8 +26,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
 
@@ -122,16 +126,16 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
 
         final ViewHolder holder;
         if (convertView == null) {
-
             holder = new ViewHolder(context, fm);
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_necessary, parent, false);
-            holder.img = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
+            holder.logoIv = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
             holder.itemTitle = (TextView) convertView.findViewById(tv_title);
             holder.versionTv = (TextView) convertView.findViewById(R.id.tv_version_time);
             holder.tv_size = (TextView) convertView.findViewById(R.id.tv_length);
             holder.tv_desc = (TextView) convertView.findViewById(R.id.becessary_item_desc_tv);
             holder.progressBar = (GameLoadProgressBar) convertView.findViewById(R.id.progress_bar);
             holder.show_more_disc_bt = (ImageView) convertView.findViewById(R.id.show_more_disc_bt);
+            holder.neccessary_content_ll = (LinearLayout) convertView.findViewById(R.id.neccessary_content_ll);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -143,15 +147,22 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
             holder.versionTv.setText(planDetail.getItemPosition());
             holder.tv_size.setText(planDetail.getItemSize());
             holder.tv_desc.setText(planDetail.getItemDesc());
-            holder.show_more_disc_bt.setOnClickListener(new View.OnClickListener() {
+            Uri uri = Uri.parse("res:///" + R.drawable.ic_google_neccessary_logo);
+            DraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setUri(uri)
+                    .setTapToRetryEnabled(true)
+                    .build();
+            holder.logoIv.setController(controller);
+            holder.neccessary_content_ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int lineCount = holder.tv_desc.getLineCount();
-                    int maxLines = holder.tv_desc.getMaxLines();
                     if (1 == lineCount) {
-                        holder.tv_desc.setMaxLines(2);
+                        holder.tv_desc.setSingleLine(false);
+                        holder.show_more_disc_bt.setImageResource(R.drawable.ic_bottom_hide_more);
                     } else {
                         holder.tv_desc.setMaxLines(1);
+                        holder.show_more_disc_bt.setImageResource(R.drawable.ic_bottom_show_more);
                     }
                 }
             });
@@ -184,6 +195,7 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
         return Long.parseLong(this.mPlanDetails.get(position).getParentId());
     }
 
+
     class HeaderViewHolder {
         TextView itemParentTv;
     }
@@ -200,10 +212,11 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
         private FragmentManager fm;
         private GameRankListBean.DataBean gameInfo;
         private ImageView show_more_disc_bt;
-        private SimpleDraweeView img;
+        private SimpleDraweeView logoIv;
         private TextView itemTitle, tv_size, versionTv, tv_desc;
         private GameLoadProgressBar progressBar;    //下载进度条
         private IFileLoad fileLoad;
+        private LinearLayout neccessary_content_ll;
 
         public ViewHolder(Context context, FragmentManager fm) {
             this.context = context;
@@ -262,7 +275,7 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
             });
 
             //加载图片
-            img.setImageURI(gameInfo.getGameLogo());
+            logoIv.setImageURI(gameInfo.getGameLogo());
         }
 
     }

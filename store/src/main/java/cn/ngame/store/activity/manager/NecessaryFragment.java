@@ -64,16 +64,16 @@ public class NecessaryFragment extends BaseSearchFragment {
     private List<TimerTask> timerTasks = new ArrayList<>();
     public StickyListHeadersListView mStickyLV;
 
-    private NeccssaryFragmentAdapter langyaAdapter;
+    private NeccssaryFragmentAdapter mNecessaryAdapter;
 
-    private List<NecessaryItemData> mLangyaDatas;
+    private List<NecessaryItemData> mNecessaryList;
 
     @Override
     protected void initViewsAndEvents(View view) {
         type = getArguments().getString("type");
         content = getActivity();
         mStickyLV = (StickyListHeadersListView) view.findViewById(R.id.sticky_list_view);
-        mLangyaDatas = new ArrayList<>();
+        mNecessaryList = new ArrayList<>();
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
@@ -84,10 +84,10 @@ public class NecessaryFragment extends BaseSearchFragment {
         mStickyLV.setOnItemClickListener(new OnItemClick());
         mStickyLV.setOnItemLongClickListener(new OnPlanItemLongClick());
         mStickyLV.setDividerHeight(0);
-        langyaAdapter = new NeccssaryFragmentAdapter(getActivity(), getSupportFragmentManager(), timerTasks);
-        mStickyLV.setAdapter(langyaAdapter);
+        mNecessaryAdapter = new NeccssaryFragmentAdapter(getActivity(), getSupportFragmentManager(), timerTasks);
+        mStickyLV.setAdapter(mNecessaryAdapter);
 
-        langyaAdapter.setDate(mLangyaDatas);
+        mNecessaryAdapter.setDate(mNecessaryList);
         //initPop();
     }
 
@@ -95,8 +95,8 @@ public class NecessaryFragment extends BaseSearchFragment {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            String itemPosition = mLangyaDatas.get(position).getItemPosition();
-            String getItemTitle = mLangyaDatas.get(position).getItemTitle();
+            String itemPosition = mNecessaryList.get(position).getItemPosition();
+            String getItemTitle = mNecessaryList.get(position).getItemTitle();
             Log.d("5555",getItemTitle+",点击"+itemPosition);
         }
     }
@@ -105,11 +105,11 @@ public class NecessaryFragment extends BaseSearchFragment {
 
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-            NecessaryItemData oLangyaSimple = mLangyaDatas.get(position);
-            mLangyaDatas.remove(oLangyaSimple);
-            if (langyaAdapter != null && mLangyaDatas != null) {
-                langyaAdapter.setDate(mLangyaDatas);
-                langyaAdapter.notifyDataSetChanged();
+            NecessaryItemData oLangyaSimple = mNecessaryList.get(position);
+            mNecessaryList.remove(oLangyaSimple);
+            if (mNecessaryAdapter != null && mNecessaryList != null) {
+                mNecessaryAdapter.setDate(mNecessaryList);
+                mNecessaryAdapter.notifyDataSetChanged();
             }
             return true;
         }
@@ -121,25 +121,26 @@ public class NecessaryFragment extends BaseSearchFragment {
      * 否则容易造成列表显示多组相同组名的数据。
      */
     private void initDatas() {
-        mLangyaDatas.add(new NecessaryItemData("1", "谷歌", "1", "谷歌安装器", "未知来源",getString(R.string.necessary_content_desc)));
-      /*  mLangyaDatas.add(new NecessaryItemData("1", "谷歌", "2", "谷歌安装器", "未知"));
-        mLangyaDatas.add(new NecessaryItemData("1", "谷歌", "3", "谷歌安装器", "未知"));
-        mLangyaDatas.add(new NecessaryItemData("1", "谷歌", "4", "谷歌安装器", "未知"));
-        mLangyaDatas.add(new NecessaryItemData("1", "谷歌", "4", "谷歌安装器", "未知"));*/
+        mNecessaryList.add(new NecessaryItemData("1", "谷歌", "V4.2.1/20M", "谷歌安装器", "未知来源",getString(R.string
+                .necessary_content_desc)));
+      /*  mNecessaryList.add(new NecessaryItemData("1", "谷歌", "2", "谷歌安装器", "未知"));
+        mNecessaryList.add(new NecessaryItemData("1", "谷歌", "3", "谷歌安装器", "未知"));
+        mNecessaryList.add(new NecessaryItemData("1", "谷歌", "4", "谷歌安装器", "未知"));
+        mNecessaryList.add(new NecessaryItemData("1", "谷歌", "4", "谷歌安装器", "未知"));*/
 
-     /*   mLangyaDatas.add(new NecessaryItemData("2", "谷歌", "54", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));
-        mLangyaDatas.add(new NecessaryItemData("2", "谷歌", "15", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));
-        mLangyaDatas.add(new NecessaryItemData("2", "谷歌", "8", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));
-        mLangyaDatas.add(new NecessaryItemData("2", "谷歌", "9", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));
-        mLangyaDatas.add(new NecessaryItemData("2", "谷歌", "10", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));*/
+     /*   mNecessaryList.add(new NecessaryItemData("2", "谷歌", "54", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));
+        mNecessaryList.add(new NecessaryItemData("2", "谷歌", "15", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));
+        mNecessaryList.add(new NecessaryItemData("2", "谷歌", "8", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));
+        mNecessaryList.add(new NecessaryItemData("2", "谷歌", "9", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));
+        mNecessaryList.add(new NecessaryItemData("2", "谷歌", "10", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));*/
 
 
-     /*   mLangyaDatas.add(new NecessaryItemData("5", "百度", "11", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
-        mLangyaDatas.add(new NecessaryItemData("5", "百度", "12", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
-        mLangyaDatas.add(new NecessaryItemData("5", "百度", "13", "百度助手", "百度助手百度助手百度助手百度助手"));
-        mLangyaDatas.add(new NecessaryItemData("5", "百度", "14", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
-        mLangyaDatas.add(new NecessaryItemData("5", "百度", "15", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
-        mLangyaDatas.add(new NecessaryItemData("5", "百度", "16", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));*/
+     /*   mNecessaryList.add(new NecessaryItemData("5", "百度", "11", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
+        mNecessaryList.add(new NecessaryItemData("5", "百度", "12", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
+        mNecessaryList.add(new NecessaryItemData("5", "百度", "13", "百度助手", "百度助手百度助手百度助手百度助手"));
+        mNecessaryList.add(new NecessaryItemData("5", "百度", "14", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
+        mNecessaryList.add(new NecessaryItemData("5", "百度", "15", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
+        mNecessaryList.add(new NecessaryItemData("5", "百度", "16", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));*/
 
     }
     private void initPop() {
@@ -153,7 +154,7 @@ public class NecessaryFragment extends BaseSearchFragment {
             public void onItemClick(QuickAction source, int pos, int actionId) {
                 if (pos == 0) {
                     //获取gameId  传给服务器 不再喜欢
-                    String currentGameId = langyaAdapter.getItemGameId();
+                    String currentGameId = mNecessaryAdapter.getItemGameId();
 
                 }
                 //取消弹出框
@@ -165,9 +166,7 @@ public class NecessaryFragment extends BaseSearchFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (hidden && null != langyaAdapter) {
-            langyaAdapter.clean();
-            langyaAdapter = null;
+        if (hidden && null != mNecessaryAdapter) {
             for (TimerTask timerTask : timerTasks) {
                 timerTask.cancel();
             }
