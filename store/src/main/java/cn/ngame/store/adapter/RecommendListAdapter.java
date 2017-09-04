@@ -16,7 +16,6 @@
 
 package cn.ngame.store.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
@@ -37,7 +36,6 @@ import java.util.Timer;
 import cn.ngame.store.R;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
-import cn.ngame.store.core.utils.ImageUtil;
 
 public class RecommendListAdapter extends BaseAdapter {
 
@@ -134,7 +132,6 @@ public class RecommendListAdapter extends BaseAdapter {
             if (imgUrl != null && imgUrl.trim().equals("")) {
                 imgUrl = null;
             }
-            int screenWidth = ImageUtil.getScreenWidth((Activity) context);
             Picasso.with(context).load(imgUrl).placeholder(R.drawable.ic_def_logo_720_288)
                     .error(R.drawable.ic_def_logo_720_288)
                     //.resize(screenWidth,150)
@@ -156,9 +153,7 @@ public class RecommendListAdapter extends BaseAdapter {
                 tv_summary.setText("");
             }
 
-            String gameRecommender = gameInfo.getRecommender();
-            //String gameSizeStr = TextUtil.formatFileSize(gameSize);
-            tv_from.setText("来自" + gameRecommender);
+            tv_from.setText("来自" +  gameInfo.getRecommender());
         }
     }
 }

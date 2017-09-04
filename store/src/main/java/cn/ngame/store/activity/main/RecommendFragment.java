@@ -275,11 +275,12 @@ public class RecommendFragment extends BaseSearchFragment {
             pageAction.setTotal(result.getTotals());
             this.list.addAll(result.getData());
             this.topList.addAll(result.getData());
-            //删除第1,2,3名游戏
-            setHeaderInfo(list);//设置头部布局
-            //删除第1,2,3名游戏
-            list.remove(0);
-            list.remove(0);
+
+            if (list.size() > 1) {
+                setHeaderInfo(list);//设置头部布局
+                list.remove(0);
+                list.remove(0);
+            }
         }
         if (adapter == null) {
             adapter = new RecommendListAdapter(context, getSupportFragmentManager(), list, 0);
@@ -497,18 +498,23 @@ public class RecommendFragment extends BaseSearchFragment {
         RecommendListBean.DataBean dataBean0 = list.get(0);
         RecommendListBean.DataBean dataBean1 = list.get(1);
 
+        if (null == dataBean0) {
+            return;
+        }
+
         from_img_1.setImageURI(dataBean0.getGameLogo());//来自...头像
-        from_img_2.setImageURI(dataBean1.getGameLogo());//来自...头像
-
         game_big_pic_1.setImageURI(dataBean0.getGameRecommendImg());
-        game_big_pic_2.setImageURI(dataBean1.getGameRecommendImg());
         gamename_1.setText(dataBean0.getGameName());
-        gamename_2.setText(dataBean1.getGameName());
-
         from_1.setText("来自" + dataBean0.getRecommender());
-        from_2.setText("来自" + dataBean1.getRecommender());
-
         summary_1.setText(dataBean0.getRecommend());
+
+        if (null == dataBean1) {
+            return;
+        }
+        game_big_pic_2.setImageURI(dataBean1.getGameRecommendImg());
+        from_img_2.setImageURI(dataBean1.getGameLogo());//来自...头像
+        gamename_2.setText(dataBean1.getGameName());
+        from_2.setText("来自" + dataBean1.getRecommender());
         summary_2.setText(dataBean1.getRecommend());
     }
 

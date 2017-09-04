@@ -177,7 +177,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         List<GameImage> imagesList = gameInfo.gameDetailsImages;
         for (GameImage gameImage : imagesList) {
             byte type = gameImage.type;
-            Log.d(TAG, "setView: " + type);
             if (3 == type) {
                 game_big_img.setImageURI(gameImage.imageLink);//游戏 -大图
                 break;
