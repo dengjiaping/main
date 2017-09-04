@@ -127,7 +127,6 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.d(TAG, "afterTextChanged: " + s);
                 String searchText = et_search.getText().toString();
                 if (!TextUtil.isEmpty(searchText)) {
                     input_clear_bt.setVisibility(View.VISIBLE);

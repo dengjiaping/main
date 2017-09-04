@@ -4,24 +4,21 @@ package com.jzt.hol.android.jkda.sdk.api;
  * Created by tangkun on 16/9/3.
  */
 public interface IHostFetcher {
-    //String HOST = "192.168.0.233:10004/";      //测试服务器
-    String HOST = "openapi.ngame.cn/";            //生产服务器
+    String HOST = "192.168.0.233:10004/";      //测试服务器
+   // String HOST = "openapi.ngame.cn/";            //生产服务器
     //String HOST = "120.27.200.73:9011/;        //预发布数据
     String AppJson = "application/json";
 
     String S_PORT = ":8080";
     /**
-     *
      * @return
      */
     String getHOST_JKDA();
     /**
-     *
      * @return
      */
     String getHOST_MDS();
     /**
-     *
      * @return
      */
     String getHOST_MDS_IMG();
