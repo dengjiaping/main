@@ -217,7 +217,7 @@ public class RecommendFragment extends BaseSearchFragment {
                         picassoImageView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                singeTopicsDetailIntent.putExtra(KeyConstant.ID, info.getId());
+                                singeTopicsDetailIntent.putExtra(KeyConstant.category_Id, info.getId());
                                 singeTopicsDetailIntent.putExtra(KeyConstant.TITLE, info.getTitle());
                                 singeTopicsDetailIntent.putExtra(KeyConstant.DESC, info.getSelectDesc());
                                 singeTopicsDetailIntent.putExtra(KeyConstant.URL, gameImage);

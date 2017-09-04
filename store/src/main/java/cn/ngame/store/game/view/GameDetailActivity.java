@@ -540,7 +540,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                     break;
                 case R.id.game_detail_feedback_bt:
                     if (CommonUtil.isLogined()) {
-                        ToastUtil.show(content, "反馈成功");
+                        ToastUtil.show(content, "感谢提交,您的宝贵意见是宝宝进步的最大动力!~");
                     } else {
                         CommonUtil.showUnLoginDialog(fm, content, R.string.unlogin_msg);
                     }

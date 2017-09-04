@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -34,7 +36,6 @@ import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.fragment.ImageDialogFragment;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
 import cn.ngame.store.gamehub.view.ShowViewActivity;
-import cn.ngame.store.view.PicassoImageView;
 
 import static cn.ngame.store.R.id.tag_tv_01;
 import static cn.ngame.store.R.id.tv_show_all2;
@@ -64,6 +65,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
     private Button itemAllNext;
     private TextView labelTv0, labelTv1, labelTv2, labelTv3;
     private List<GameLabels> gameLabels;
+    private SimpleDraweeView picassoImageView;
 
     public static GameDetailFragment newInstance(GameInfo gameInfo) {
         GameDetailFragment fragment = new GameDetailFragment();
@@ -125,18 +127,21 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                 if (1 != img.type) {
                     continue;
                 }
-                PicassoImageView imageView = new PicassoImageView(context);
+                picassoImageView = new SimpleDraweeView(context);
+                picassoImageView.setScaleType(ImageView.ScaleType.CENTER);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup
                         .LayoutParams.WRAP_CONTENT);
                 params.width = dp250;
                 params.height = dp160;
-                params.setMargins(0, 0, dp10, 0);
-                imageView.setLayoutParams(params);
-                //imageView.setTag(img.imageLink);
+                if (imagesList.size() - 1 == i) {
+                    params.setMargins(0, 0, 0, 0);
+                } else {
+                    params.setMargins(0, 0, dp10, 0);
+                }
+                picassoImageView.setLayoutParams(params);
                 String imageLink = img.imageLink;
-                imageView.setScaleType(ImageView.ScaleType.CENTER);
-                imageView.setImageUrl(imageLink, R.drawable.ic_def_logo_720_288);
-                img_container.addView(imageView);
+                picassoImageView.setImageURI(imageLink);
+                img_container.addView(picassoImageView);
                 //添加图片，查看大图
                 imgs.add(imageLink);
             }
