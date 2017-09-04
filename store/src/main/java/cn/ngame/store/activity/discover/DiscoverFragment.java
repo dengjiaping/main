@@ -276,7 +276,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                     ToastUtil.show(context, "无网络连接");
                     pullListView.getRefreshableView().setSelection(0);
                 } else {
-                    android.util.Log.d(TAG, "onPullDownToRefresh: 下拉请求数据");
                     //下拉请求数据
                     getData();
                 }
@@ -310,7 +309,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
         pullListView.getRefreshableView().setAdapter(categroy18Adapter);
     }
 
-    protected final static String TAG = DiscoverFragment.class.getSimpleName();
+    private final static String TAG = DiscoverFragment.class.getSimpleName();
 
     //请求数据
     private void getData() {

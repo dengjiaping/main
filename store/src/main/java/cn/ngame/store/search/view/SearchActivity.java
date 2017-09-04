@@ -283,7 +283,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
     }
 
     //搜索
-    private void doSearch(boolean isBt) {
+    private void doSearch(final boolean isBt) {
         resultListView.setVisibility(View.VISIBLE);
         ll_show.setVisibility(View.GONE);
         loadStateView.setVisibility(View.VISIBLE);
