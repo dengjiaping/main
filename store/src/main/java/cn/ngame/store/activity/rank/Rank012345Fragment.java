@@ -341,8 +341,9 @@ public class Rank012345Fragment extends BaseSearchFragment {
                         if (result != null && result.getCode() == 0) {
                             listData(result);
                         } else {
-                            android.util.Log.d(TAG, "onNext: 查询无结果");
                             loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_data));
+                            pullListView.onPullUpRefreshComplete();
+                            pullListView.onPullDownRefreshComplete();
                         }
                     }
                 });

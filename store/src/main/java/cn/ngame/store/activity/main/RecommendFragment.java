@@ -157,7 +157,8 @@ public class RecommendFragment extends BaseSearchFragment {
                         if (result != null && result.getCode() == 0) {
                             listData(result);
                         } else {
-//                            ToastUtil.show(getActivity(), result.getMsg());
+                            pullListView.onPullUpRefreshComplete();
+                            pullListView.onPullDownRefreshComplete();
                         }
                     }
                 });
