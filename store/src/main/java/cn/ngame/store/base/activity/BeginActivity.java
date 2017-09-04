@@ -61,8 +61,7 @@ public class BeginActivity extends BaseFgActivity {
         startService(serviceIntent);
         //得到设备id
         CommonUtil.verifyStatePermissions(this);
-        TelephonyManager telephonyManager;
-        telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         deviceId = telephonyManager.getDeviceId();
         //友盟相关
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
@@ -73,32 +72,38 @@ public class BeginActivity extends BaseFgActivity {
         final long pushMsgId = getIntent().getLongExtra("msgId", 0);
         final int pushMsgType = getIntent().getIntExtra("type", 0);
         final PushMessage msg = (PushMessage) getIntent().getSerializableExtra("msg");
+        timer = new Timer();
         if (isFirstInstall) {
-            Intent intent = new Intent(BeginActivity.this, GuideViewActivity.class);
+            final Intent intent = new Intent(content, GuideViewActivity.class);
             if (pushMsgId > 0) {
                 intent.putExtra("msgId", pushMsgId);
                 intent.putExtra("type", pushMsgType);
                 intent.putExtra("msg", msg);
             }
-            startActivity(intent);
-            //更新安装状态值
-            SPUtils.put(this, Constant.CONFIG_FIRST_INSTALL, false);
-            finish();
-        } else {
-            timer = new Timer();
-            final Intent intent = new Intent(content, MainHomeActivity.class);
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if (pushMsgId > 0) {
-                        intent.putExtra("msgId", pushMsgId);
-                        intent.putExtra("type", pushMsgType);
-                        intent.putExtra("msg", msg);
-                    }
+                    startActivity(intent);
+                    //更新安装状态值
+                    SPUtils.put(content, Constant.CONFIG_FIRST_INSTALL, false);
+                    finish();
+                }
+            }, 200);
+
+        } else {
+            final Intent intent = new Intent(content, MainHomeActivity.class);
+            if (pushMsgId > 0) {
+                intent.putExtra("msgId", pushMsgId);
+                intent.putExtra("type", pushMsgType);
+                intent.putExtra("msg", msg);
+            }
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
                     startActivity(intent);
                     finish();
                 }
-            }, 300);
+            }, 200);
         }
     }
 

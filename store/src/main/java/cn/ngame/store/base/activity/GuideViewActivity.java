@@ -117,7 +117,7 @@ public class GuideViewActivity extends BaseFgActivity {
             if (i < 1) {
                 pointParams.setMargins(0, 0, 0, 0);
             } else {
-                pointParams.setMargins(10, 0, 0, 0);
+                pointParams.setMargins(20, 0, 0, 0);
             }
             ImageView iv = new ImageView(this);
             iv.setLayoutParams(pointParams);
