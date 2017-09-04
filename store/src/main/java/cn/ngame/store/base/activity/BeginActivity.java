@@ -19,8 +19,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
-import android.util.Log;
-import android.view.WindowManager;
 
 import com.umeng.analytics.MobclickAgent;
 
@@ -56,7 +54,6 @@ public class BeginActivity extends BaseFgActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //设置全屏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.setContentView(R.layout.activity_begin);
         content = this;
         //启动后台服务
@@ -89,11 +86,10 @@ public class BeginActivity extends BaseFgActivity {
             finish();
         } else {
             timer = new Timer();
+            final Intent intent = new Intent(content, MainHomeActivity.class);
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    Log.d(TAG, "run: 777");
-                    Intent intent = new Intent(content, MainHomeActivity.class);
                     if (pushMsgId > 0) {
                         intent.putExtra("msgId", pushMsgId);
                         intent.putExtra("type", pushMsgType);
