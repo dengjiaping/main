@@ -182,7 +182,7 @@ public class DiscoverAdapter extends BaseAdapter {
                         context.startActivity(intent);
                     }
                 });
-                horizontalViewContainer.addView(view, i);
+               horizontalViewContainer.addView(view, i);
             }
 
         }
