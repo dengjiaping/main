@@ -14,7 +14,7 @@
         fresco:actualImageScaleType="fitXY"
         fresco:placeholderImage="@drawable/ic_def_logo_720_288"
         fresco:placeholderImageScaleType="centerCrop"
-        fresco:viewAspectRatio="2.5"/>
+        fresco:viewAspectRatio="2"/><!--设置宽高比为2:1-->
 
     <TextView
         android:id="@+id/tv_info"
