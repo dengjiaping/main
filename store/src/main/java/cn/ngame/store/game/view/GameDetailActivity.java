@@ -543,14 +543,10 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 case R.id.game_detail_feedback_bt:
                     if (CommonUtil.isLogined()) {
                         QuickAction quickAction = new QuickAction(content, QuickAction.VERTICAL);
-                        quickAction.setItemBg();
-                        ActionItem pointItem = new ActionItem(1, "反馈1");
-                        ActionItem pointItem2 = new ActionItem(2, "反馈2");
-                        ActionItem pointItem3 = new ActionItem(3, "反馈2");
+                        ActionItem pointItem = new ActionItem(1, "更新提醒");
+                        ActionItem pointItem2 = new ActionItem(2, "下载异常");
                         quickAction.addActionItem(pointItem);
                         quickAction.addActionItem(pointItem2);
-                        quickAction.addActionItem(pointItem3);
-
 
                         quickAction.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
                             @Override
@@ -558,7 +554,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                                 if (pos == 0) {
                                     //获取gameId  传给服务器 不再喜欢
                                 }
-                                ToastUtil.show(content, pos + "感谢提交,您的宝贵意见是宝宝进步的最大动力!~");
+                                ToastUtil.show(content,  "提交成功,感谢您的反馈!");
                                 //取消弹出框
                                 source.dismiss();
                             }

@@ -1,7 +1,6 @@
 package cn.ngame.store.view;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.PopupWindow.OnDismissListener;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -59,7 +57,6 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
     public static final int ANIM_GROW_FROM_CENTER = 3;
     public static final int ANIM_REFLECT = 4;
     public static final int ANIM_AUTO = 5;
-    private RelativeLayout qaLL;
 
     /**
      * Constructor for default vertical layout
@@ -168,7 +165,6 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 
         ImageView img = (ImageView) container.findViewById(R.id.iv_icon);
         TextView text = (TextView) container.findViewById(R.id.tv_title);
-        qaLL = (RelativeLayout) container.findViewById(R.id.qa_ll);
         if (icon != null) {
             img.setImageDrawable(icon);
         } else {
@@ -220,12 +216,6 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 
         mChildPos++;
         mInsertPos++;
-    }
-
-    public void setItemBg() {
-        if (null != qaLL) {
-            qaLL.setBackgroundColor(Color.RED);
-        }
     }
 
     /**
