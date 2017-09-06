@@ -341,6 +341,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
                         if (result != null && result.getCode() == 0) {
                             listData(result);
                         } else {
+                            loadStateView.setVisibility(View.GONE);
                             pullListView.onPullUpRefreshComplete();
                             pullListView.onPullDownRefreshComplete();
                         }
@@ -352,8 +353,6 @@ public class Rank012345Fragment extends BaseSearchFragment {
     public void listData(LikeListBean dataBean) {
         LikeListBean.DataBean result = dataBean.getData();
         if (result == null || result.getGameList() == null) {
-            android.util.Log.d(TAG, "gameList.NULL ");
-            android.util.Log.d(TAG, "list.size:NULL " + list.size());
             loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_data));
             return;
         }
@@ -371,7 +370,6 @@ public class Rank012345Fragment extends BaseSearchFragment {
             }
         }
         loadStateView.setVisibility(View.GONE);
-        android.util.Log.d(TAG, "请求集合:" + size + "本地集合" + gameList.size() + " 数据totals:" + result.getTotals());
         if (size > 0) {
             pageAction.setTotal(result.getTotals());
             this.list.addAll(gameList);

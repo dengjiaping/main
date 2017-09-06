@@ -145,6 +145,7 @@ public class RecommendFragment extends BaseSearchFragment {
                         if (result != null && result.getCode() == 0) {
                             listData(result);
                         } else {
+                            loadStateView.setVisibility(View.GONE);
                             pullListView.onPullUpRefreshComplete();
                             pullListView.onPullDownRefreshComplete();
                         }
