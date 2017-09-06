@@ -28,7 +28,6 @@ public class RankFragment extends BaseSearchFragment {
     private ViewPager viewpager;
     private ArrayList<Fragment> fragments;
     private RankTopPagerAdapter adapter;
-    private Rank012345Fragment commentFragment;
     private TabLayout tablayout;
     private TextView textView;
     private LinearLayout.LayoutParams layoutParams;

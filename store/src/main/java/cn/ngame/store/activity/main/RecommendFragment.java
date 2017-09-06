@@ -2,7 +2,6 @@ package cn.ngame.store.activity.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameHubMainBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
@@ -28,16 +26,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
 
 import cn.ngame.store.R;
-import cn.ngame.store.adapter.MainHomeRaiderAdapter;
 import cn.ngame.store.adapter.RecommendListAdapter;
-import cn.ngame.store.adapter.SelectGameAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
-import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.PageAction;
-import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
@@ -57,34 +50,11 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 public class RecommendFragment extends BaseSearchFragment {
     public static final String TAG = RecommendFragment.class.getSimpleName();
     PullToRefreshListView pullListView;
-    private Timer timer = new Timer();
-    private static Handler uiHandler = new Handler();
-    /**
-     * list集合
-     */
-    List<YunduanBean.DataBean> yunduanList = new ArrayList<>();
-    List<YunduanBean.DataBean> xuniList = new ArrayList<>();
-    List<YunduanBean.DataBean> tencentList = new ArrayList<>();
-    List<GameInfo> dailyRecommendList = new ArrayList<>();
-    List<GameInfo> mobaList = new ArrayList<>();
-    List<GameInfo> qiangzhanList = new ArrayList<>();
-    List<GameInfo> bTencentList = new ArrayList<>();
-    List<GameInfo> allBradnList = new ArrayList<>();
-    List<GameHubMainBean.DataBean> homeList = new ArrayList<>();
-
-    private ListView listView_tBarnd, listView_allBarnd;
-
-    private SelectGameAdapter gameListAdapter;
-    private MainHomeRaiderAdapter raiderAdapter;
     private SimpleDraweeView from_img_1, from_img_2, game_big_pic_1, game_big_pic_2;
     private TextView gamename_1, gamename_2, summary_2;
     private TextView from_1, from_2, summary_1;
-
-    private IFileLoad fileLoad; //文件下载公共类接口
-
     private LoadStateView loadStateView;
     private RecommendListAdapter adapter;
-
     private PageAction pageAction;
     public static int PAGE_SIZE = 8;
     List<RecommendListBean.DataBean> topList = new ArrayList<>();

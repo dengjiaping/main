@@ -25,7 +25,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +43,6 @@ import com.jzt.hol.android.jkda.sdk.bean.gamehub.BrowseHistoryBodyBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.gamehub.AppCarouselClient;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.umeng.analytics.MobclickAgent;
 
@@ -111,36 +109,21 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     public static final String TAG = MainHomeActivity.class.getSimpleName();
     private final MainHomeActivity context = MainHomeActivity.this;
     private boolean isExit = false;     //是否安装后第一次启动
-    //    public FooterMenu menu;
-//    public ViewPager viewPager;
-
-    //检测及更新新版本相关
     private IFileLoad fileLoad;
     private Timer timer = new Timer();
     private Handler handler = new Handler();
-
     private ProgressBar progressBar;
-
     private RemoteViews remoteViews = null;
     private Notification notification = null;
     private NotificationManager mNotificationManager = null;
-
     private VersionInfo versionInfo = null;
-
     private boolean isRunningBackground = false;
     private boolean isDownloading = false;
     private boolean isChecking = false;
-
     private RecommendFragment selectedFragment;
     private RankFragment rankingFragment;
     private DiscoverFragment discoverFragment;
     private ManagerFragment administrationFragment;
-
-    /**
-     * 底部切换栏
-     *
-     * @param savedInstanceState
-     */
     private int currentMenu;
     private FragmentViewPagerAdapter adapter;
     private FragmentManager fragmentManager;
@@ -150,9 +133,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private int colorDark;
     private int colorNormal;
     private String imgUrl;
-    ImageLoader imageLoader = ImageLoader.getInstance();
     private List<Fragment> mfragmentlist = new ArrayList<>();
-    private FragmentTransaction mTransaction;
     private int rbIndex;
     private ImageView im_toSearch;
     private FrameLayout fl_notifi;
@@ -167,7 +148,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private TextView mEditProfileTv;
-    private RelativeLayout rl_top;
     private Button mDownloadBt;
 
     @Override
