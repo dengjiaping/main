@@ -2,7 +2,6 @@ package cn.ngame.store.activity.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -31,7 +30,6 @@ import cn.ngame.store.view.LoadStateView;
 public class TopicsListActivity extends BaseFgActivity {
 
     private Button tv_title;
-    private String title;
     List<YunduanBean.DataBean> list = new ArrayList<>();
     TopicsListAdapter adapter;
     private TopicsListActivity content;
@@ -82,7 +80,6 @@ public class TopicsListActivity extends BaseFgActivity {
                 .subscribe(new ObserverWrapper<YunduanBean>() {
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("topic", "onError: ");
                         loadStateView.setState(LoadStateView.STATE_END);
                     }
 

@@ -32,7 +32,7 @@ import cn.ngame.store.util.ToastUtil;
  */
 public class SystemSettingsActivity extends BaseFgActivity implements CompoundButton.OnCheckedChangeListener {
 
-    private ToggleButton but_push, but_load, but_install, but_update;
+    private ToggleButton but_push, but_load, but_install;
     private int delayMillis = 100;
     private SystemSettingsActivity content;
     private TextView tv_clear;

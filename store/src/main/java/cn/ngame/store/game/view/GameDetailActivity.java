@@ -211,7 +211,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         gameSizeTv.setText(Formatter.formatFileSize(content, gameInfo.gameSize));//大小
         downLoadCountTv.setText(gameInfo.downloadCount + "");//下载次数
         percentageTv.setText(gameInfo.percentage + "");//评分0
-        Log.d(TAG, "7777: " + gameInfo.percentage);
         game_logo_img.setImageURI(gameInfo.gameLogo);//游戏 -头像
 
         //厂商
@@ -335,7 +334,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             layoutParams.setMargins(0, 0, 2, 0);
             textView.setLayoutParams(layoutParams);
         }*/
-        tablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+      /*  tablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
@@ -368,7 +367,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
-        });
+        });*/
     }
 
     @Override
