@@ -9,11 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/dp_10"
         android:gravity="center"
 		android:text="@string/update"
-        android:textSize="20sp"
-		android:textColor="@color/color000000"/>
+        android:textSize="@dimen/dm030"
+		android:textColor="@color/color_333333"/>
     
     <View 
         android:id="@+id/line1"
@@ -62,7 +62,8 @@
 				android:layout_gravity="center"
 				android:gravity="center"
 				android:layout_weight="1"
-				android:textColor="@color/color000000"/>
+				android:textSize="@dimen/dm028"
+				android:textColor="@color/color_333333"/>
 
 			<View
 				android:id="@+id/line3"
@@ -77,6 +78,7 @@
 				android:layout_gravity="center"
 				android:gravity="center"
 				android:layout_weight="1"
+				android:textSize="@dimen/dm028"
 				android:textColor="@color/mainColor"/>
 
 	</LinearLayout>

@@ -212,7 +212,7 @@ public class SystemSettingsActivity extends BaseFgActivity implements CompoundBu
         //如果允许
         if (isChecked) {
             DialogHelper dialogHelper = new DialogHelper(getSupportFragmentManager(), this);
-            dialogHelper.showConfirm("温馨提示", "运营商网络下载可能导致流量超额，确认开启？", "取消", "开启", new View.OnClickListener() {
+            dialogHelper.showConfirm("提示", "允许数据流量下载可能导致手机流量超额，确认开启？", "取消", "开启", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     but_load.setChecked(false);

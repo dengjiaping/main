@@ -321,7 +321,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         tablayout.setupWithViewPager(viewpager);
         tablayout.setTabMode(TabLayout.MODE_FIXED); //固定模式
         tablayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        final ViewGroup viewGroup = (ViewGroup) tablayout.getChildAt(0);
 /*        //中间加分隔线
         for (int i = 0; i < viewGroup.getChildCount(); i++) {
             ViewGroup view = (ViewGroup) viewGroup.getChildAt(i);
@@ -340,7 +339,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
-                Log.d(TAG, "onTabSelected: " + position);
+                Log.d(TAG, "选中: " + position);
+                ViewGroup viewGroup = (ViewGroup) tablayout.getChildAt(0);
                 ViewGroup view = (ViewGroup) viewGroup.getChildAt(position);
                 TextView textView = (TextView) view.getChildAt(1);
                 Paint paint = textView.getPaint();
@@ -352,14 +352,16 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
+                Log.d(TAG, "未选中: " + tab.getPosition());
                 int position = tab.getPosition();
+                ViewGroup viewGroup = (ViewGroup) tablayout.getChildAt(0);
                 ViewGroup view = (ViewGroup) viewGroup.getChildAt(position);
                 TextView textView = (TextView) view.getChildAt(1);
                 Paint paint = textView.getPaint();
                 //paint.setTextSize(tabTextSize);
                 paint.setAntiAlias(true);//抗锯齿
                 paint.setUnderlineText(false);
-                viewpager.setCurrentItem(position);
+                //viewpager.setCurrentItem(position);
             }
 
             @Override

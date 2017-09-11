@@ -2,6 +2,7 @@ package cn.ngame.store.activity.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import cn.ngame.store.R;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.adapter.TopicsListAdapter;
 import cn.ngame.store.core.utils.KeyConstant;
+import cn.ngame.store.view.LoadStateView;
 
 
 /**
@@ -43,7 +45,11 @@ public class TopicsListActivity extends BaseFgActivity {
         init();
     }
 
+    private LoadStateView loadStateView;
+
     private void init() {
+        loadStateView = (LoadStateView) findViewById(R.id.load_state_view2);
+        loadStateView.isShowLoadBut(false);
         tv_title = (Button) findViewById(R.id.left_bt);
         tv_title.setText("全部专题");
         gview = (GridView) findViewById(R.id.gview);
@@ -70,17 +76,23 @@ public class TopicsListActivity extends BaseFgActivity {
     }
 
     public void runService() {
+        loadStateView.setVisibility(View.VISIBLE);
+        loadStateView.setState(LoadStateView.STATE_ING);
         new YunduanClient(this, new YunduanBodyBean()).observable()
                 .subscribe(new ObserverWrapper<YunduanBean>() {
                     @Override
                     public void onError(Throwable e) {
+                        Log.d("topic", "onError: ");
+                        loadStateView.setState(LoadStateView.STATE_END);
                     }
 
                     @Override
                     public void onNext(YunduanBean result) {
                         if (result != null && result.getCode() == 0) {
+                            loadStateView.setVisibility(View.GONE);
                             setData(result);
                         } else {
+                            loadStateView.setState(LoadStateView.STATE_END);
                         }
                     }
                 });

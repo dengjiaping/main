@@ -89,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="允许运营商下载"
+            android:text="使用数据流量下载"
             android:layout_centerVertical="true"
             android:paddingLeft="@dimen/dp_10"
             android:textColor="@color/color_1a"
