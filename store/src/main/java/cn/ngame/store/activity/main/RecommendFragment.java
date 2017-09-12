@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -101,9 +100,9 @@ public class RecommendFragment extends BaseSearchFragment {
                     public void onError(Throwable e) {
                         if (list != null && list.size() > 0) {
                             loadStateView.setVisibility(View.GONE);
-                            ToastUtil.show(context, getString(R.string.no_network));
+                            ToastUtil.show(context, getString(R.string.server_exception));
                         } else {
-                            loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_network));
+                            loadStateView.setState(LoadStateView.STATE_END, getString(R.string.server_exception));
                             loadStateView.setVisibility(View.VISIBLE);
                         }
                         pullListView.onPullUpRefreshComplete();
@@ -332,7 +331,7 @@ public class RecommendFragment extends BaseSearchFragment {
                 }
             }
         });
-        //滑动事件(搜索栏渐变)
+     /*   //滑动事件(搜索栏渐变)
         refreshableView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -346,7 +345,7 @@ public class RecommendFragment extends BaseSearchFragment {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             }
-        });
+        });*/
 
         //todo添加头布局
         View headView = View.inflate(context, R.layout.recommend_header_view, null);

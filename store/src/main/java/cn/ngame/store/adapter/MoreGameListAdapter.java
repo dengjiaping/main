@@ -39,6 +39,7 @@ import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.GameFileStatus;
 import cn.ngame.store.core.fileload.IFileLoad;
+import cn.ngame.store.game.view.MoreGameListActivity;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.view.GameLoadProgressBar;
 
@@ -48,18 +49,17 @@ import cn.ngame.store.view.GameLoadProgressBar;
  * @author zeng
  * @since 2016-05-16
  */
-public class ClassifyGameListAdapter extends BaseAdapter {
+public class MoreGameListAdapter extends BaseAdapter {
 
-    //private static final String TAG = LvSbGameAdapter.class.getSimpleName();
-
+    private static String TAG = MoreGameListActivity.class.getSimpleName();
     private List<LikeListBean.DataBean.GameListBean> gameInfoList;
     private ViewHolder holder;
-    private Handler uiHandler = new Handler();
+    private static Handler uiHandler = new Handler();
 
     private Context context;
     private FragmentManager fm;
 
-    public ClassifyGameListAdapter(Context context, FragmentManager fm) {
+    public MoreGameListAdapter(Context context, FragmentManager fm) {
         super();
         this.fm = fm;
         this.context = context;
@@ -71,18 +71,12 @@ public class ClassifyGameListAdapter extends BaseAdapter {
      * @param gameInfos 游戏数据
      */
     public void setDate(List<LikeListBean.DataBean.GameListBean> gameInfos) {
-
-        if (gameInfoList == null || gameInfoList.size() <= 0) {
-            gameInfoList = gameInfos;
-        } else {
-            gameInfoList.addAll(gameInfos);
-        }
-
+        gameInfoList = gameInfos;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-
         if (gameInfoList != null) {
             return gameInfoList.size();
         }
@@ -90,8 +84,7 @@ public class ClassifyGameListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
-
+    public LikeListBean.DataBean.GameListBean getItem(int position) {
         if (gameInfoList != null) {
             return gameInfoList.get(position);
         }
@@ -146,16 +139,13 @@ public class ClassifyGameListAdapter extends BaseAdapter {
     }
 
     /**
-     * 用于保存ListView中重用的item视图的引用
-     *
      * @author flan
      * @since 2015年10月28日
      */
-    public class ViewHolder {
+    public static class ViewHolder {
 
         private Context context;
         private LikeListBean.DataBean.GameListBean gameInfo;
-
         private SimpleDraweeView img;
         private TextView tv_title, tv_size, tagTv0, tagTv1, tagTv2, tagTv3;
         private RatingBar ratingBar;
@@ -170,23 +160,27 @@ public class ClassifyGameListAdapter extends BaseAdapter {
             this.context = context;
             this.fm = fm;
             fileLoad = FileLoadManager.getInstance(context);
-            //init();
+            init();
         }
 
         private void init() {
+            Log.d(TAG, "更新下载:" + gameInfo);
+            if (null == gameInfo) {
+                return;
+            }
+            Log.d(TAG, "更新下载:" + gameInfo.getGameName());
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     if (null == uiHandler) {
                         this.cancel();
-                        timer.cancel();
                         return;
                     }
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo.getGameLink(),
-                                    gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode()));
+                            GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo
+                                    .getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode()));
                             progressBar.setLoadState(fileStatus);
                         }
                     });
@@ -200,8 +194,8 @@ public class ClassifyGameListAdapter extends BaseAdapter {
          * @param gameInfo 游戏信息
          */
         public void update(final LikeListBean.DataBean.GameListBean gameInfo) {
-
             this.gameInfo = gameInfo;
+            Log.d(TAG, "update: " + gameInfo.getGameName());
 
             String gameLogo = gameInfo.getGameLogo();
             img.setImageURI(gameLogo);
@@ -222,12 +216,11 @@ public class ClassifyGameListAdapter extends BaseAdapter {
             //设置进度条状态
             String gameLink = gameInfo.getGameLink();
             GameFileStatus gameFileLoadStatus = fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameLink,
-                    gameInfo.getPackages(),
-                    ConvUtil.NI(gameInfo.getVersionCode()));
+                    gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode()));
             progressBar.setLoadState(gameFileLoadStatus);
             //必须设置，否则点击进度条后无法进行响应操作
             FileLoadInfo fileLoadInfo = new FileLoadInfo(gameInfo.getFilename(), gameLink, gameInfo.getMd5(),
-                    ConvUtil.NI(gameInfo.getVersionCode()), gameName,gameLogo, gameInfo.getId(), FileLoadInfo.TYPE_GAME);
+                    ConvUtil.NI(gameInfo.getVersionCode()), gameName, gameLogo, gameInfo.getId(), FileLoadInfo.TYPE_GAME);
             fileLoadInfo.setPackageName(gameInfo.getPackages());
             progressBar.setFileLoadInfo(fileLoadInfo);
             progressBar.setOnStateChangeListener(new ProgressBarStateListener(context, fm));

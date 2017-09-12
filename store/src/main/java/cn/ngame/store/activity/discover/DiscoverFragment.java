@@ -316,6 +316,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                        /* pullListView.onPullUpRefreshComplete();
                         pullListView.onPullDownRefreshComplete();*/
                         loadStateView.setVisibility(View.GONE);
+                        ToastUtil.show(context, getString(R.string.server_exception));
                     }
 
                     @Override

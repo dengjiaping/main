@@ -23,8 +23,7 @@ import java.util.Map;
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
-import cn.ngame.store.adapter.ClassifyGameListAdapter;
-import cn.ngame.store.bean.GameInfo;
+import cn.ngame.store.adapter.MoreGameListAdapter;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
@@ -43,17 +42,17 @@ public class MoreGameListActivity extends BaseFgActivity {
     private String TAG = MoreGameListActivity.class.getSimpleName();
     private PullToRefreshListView pullListView;
     private LoadStateView loadStateView;
-    private ClassifyGameListAdapter adapter;
+    private MoreGameListAdapter adapter;
     private List<LikeListBean.DataBean.GameListBean> gameInfoList;
     private PageAction pageAction;
-    public int PAGE_SIZE = 40;
+    public int PAGE_SIZE = 50;
     private String mLabelId;
     private MoreGameListActivity content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_vr_game_list);
+        this.setContentView(R.layout.activity_more_game_list);
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
@@ -84,7 +83,7 @@ public class MoreGameListActivity extends BaseFgActivity {
         pullListView = (PullToRefreshListView) findViewById(R.id.pullListView);
         pullListView.setPullRefreshEnabled(true); //刷新
         pullListView.setPullLoadEnabled(true); //false,不允许上拉加载
-        pullListView.setScrollLoadEnabled(false);
+        pullListView.setScrollLoadEnabled(true);
         pullListView.setLastUpdatedLabel(new Date().toLocaleString());
         pullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
@@ -119,14 +118,14 @@ public class MoreGameListActivity extends BaseFgActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MoreGameListActivity.this, GameDetailActivity.class);
-                intent.putExtra(KeyConstant.ID, ((GameInfo) adapter.getItem(position)).id);
+                intent.putExtra(KeyConstant.ID, adapter.getItem(position).getId());
                 startActivity(intent);
             }
         });
         gameInfoList = new ArrayList<>();
         //加载游戏分类，默认加载第一个分类
         getGameListByLabel();
-        adapter = new ClassifyGameListAdapter(this, getSupportFragmentManager());
+        adapter = new MoreGameListAdapter(this, getSupportFragmentManager());
         refreshableView.setAdapter(adapter);
     }
 
@@ -135,7 +134,6 @@ public class MoreGameListActivity extends BaseFgActivity {
         Response.Listener<LikeListBean> successListener = new Response.Listener<LikeListBean>() {
             @Override
             public void onResponse(LikeListBean result) {
-                android.util.Log.d(TAG, "请求返回: " + result);
                 if (result == null || result.getData() == null) {
                     loadStateView.setVisibility(View.VISIBLE);
                     loadStateView.setState(LoadStateView.STATE_END);
@@ -157,11 +155,10 @@ public class MoreGameListActivity extends BaseFgActivity {
                 if (result.getCode() == 0) {
                     gameInfoList = data.getGameList();
                     pageAction.setTotal(gameInfoList.size());
-                    Log.d(TAG, gameInfoList.size() + "返回" + gameInfoList);
+                    Log.d(TAG, gameInfoList.size() + "返回");
                     if (gameInfoList != null && gameInfoList.size() > 0) {
                         loadStateView.setVisibility(View.GONE);
                         adapter.setDate(gameInfoList);
-                        adapter.notifyDataSetChanged();
                     } else {
                         loadStateView.isShowLoadBut(false);
                         loadStateView.setVisibility(View.VISIBLE);
