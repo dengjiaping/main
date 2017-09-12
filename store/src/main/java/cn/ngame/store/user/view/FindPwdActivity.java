@@ -129,6 +129,9 @@ public class FindPwdActivity extends BaseFgActivity {
                         Toast.makeText(FindPwdActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                         return;
                     }
+                    tv_captcha.setBackgroundResource(R.drawable.shape_bg_verif_code_bt_waiting);
+                    tv_captcha.setText("正在获取...");
+                    tv_captcha.setClickable(false);
                     getVerifCode(mobile);
                 } else {
                     Toast.makeText(FindPwdActivity.this, "手机号不能为空", Toast.LENGTH_SHORT).show();
@@ -203,7 +206,10 @@ public class FindPwdActivity extends BaseFgActivity {
             @Override
             public void onResponse(JsonResult<Object> result) {
                 if (result == null) {
-                    Toast.makeText(FindPwdActivity.this, "服务端异常", Toast.LENGTH_SHORT).show();
+                    tv_captcha.setClickable(true);
+                    tv_captcha.setText(getResources().getString(R.string.register_get_captcha));
+                    tv_captcha.setBackgroundResource(R.drawable.shape_bg_verif_code_bt_send);
+                    Toast.makeText(FindPwdActivity.this, "服务器异常", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -211,8 +217,10 @@ public class FindPwdActivity extends BaseFgActivity {
                     second = 60;
                     new Thread(runnable).start();
                     Toast.makeText(FindPwdActivity.this, "验证码已发送成功，请注意查收", Toast.LENGTH_SHORT).show();
-
                 } else {
+                    tv_captcha.setClickable(true);
+                    tv_captcha.setText(getResources().getString(R.string.register_get_captcha));
+                    tv_captcha.setBackgroundResource(R.drawable.shape_bg_verif_code_bt_send);
                     Log.d(TAG, "获取验证码失败：服务端错误：" + result.msg);
                     showDialog(false, result.msg);
                 }
@@ -223,7 +231,10 @@ public class FindPwdActivity extends BaseFgActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                Toast.makeText(FindPwdActivity.this, "获取手机验证码失败，请检查网络连接!", Toast.LENGTH_SHORT).show();
+                tv_captcha.setClickable(true);
+                tv_captcha.setText(getResources().getString(R.string.register_get_captcha));
+                tv_captcha.setBackgroundResource(R.drawable.shape_bg_verif_code_bt_send);
+                Toast.makeText(FindPwdActivity.this, "服务器异常,获取验证码失败", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "HTTP请求失败：获取手机验证码失败！");
             }
         };
@@ -251,7 +262,7 @@ public class FindPwdActivity extends BaseFgActivity {
         Response.Listener<JsonResult<User>> successListener = new Response.Listener<JsonResult<User>>() {
             @Override
             public void onResponse(JsonResult<User> result) {
-              if (result == null) {
+                if (result == null) {
                     Toast.makeText(FindPwdActivity.this, "网络异常,请稍后重试", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -286,9 +297,9 @@ public class FindPwdActivity extends BaseFgActivity {
                 params.put(KeyConstant.LOGIN_NAME, userName);
                 params.put(KeyConstant.SMS_CODE, captcha);
                 params.put(KeyConstant.new_Password, pwd);
-                android.util.Log.d(TAG,KeyConstant.LOGIN_NAME+"getParams: " + userName);
-                android.util.Log.d(TAG,KeyConstant.new_Password+ "getParams: " + captcha);
-                android.util.Log.d(TAG,KeyConstant.SMS_CODE+ "getParams: " + pwd);
+                android.util.Log.d(TAG, KeyConstant.LOGIN_NAME + "getParams: " + userName);
+                android.util.Log.d(TAG, KeyConstant.new_Password + "getParams: " + captcha);
+                android.util.Log.d(TAG, KeyConstant.SMS_CODE + "getParams: " + pwd);
                 for (int i = 0; i < params.size(); i++) {
                 }
                 return params;

@@ -29,9 +29,11 @@ import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
+import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.LoadStateView;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
+
 
 /**
  * 游戏列表
@@ -60,7 +62,7 @@ public class MoreGameListActivity extends BaseFgActivity {
         Intent intent = getIntent();
         String title = intent.getStringExtra(KeyConstant.TITLE);
         mLabelId = intent.getStringExtra(KeyConstant.category_Id);
-        android.util.Log.d(TAG, "分类id:" + mLabelId);
+        android.util.Log.d(TAG, title + "分类id:" + mLabelId);
         Button leftBt = (Button) findViewById(R.id.left_bt);
         findViewById(R.id.center_tv).setVisibility(View.GONE);
         leftBt.setOnClickListener(new View.OnClickListener() {
@@ -73,12 +75,6 @@ public class MoreGameListActivity extends BaseFgActivity {
 
         loadStateView = (LoadStateView) findViewById(R.id.loadStateView);
         loadStateView.isShowLoadBut(false);
-        loadStateView.setReLoadListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getGameListByLabel(); //重新加载
-            }
-        });
 
         pullListView = (PullToRefreshListView) findViewById(R.id.pullListView);
         pullListView.setPullRefreshEnabled(true); //刷新
@@ -90,7 +86,8 @@ public class MoreGameListActivity extends BaseFgActivity {
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 pullListView.setPullLoadEnabled(true);
                 pageAction.setCurrentPage(0);
-                getGameListByLabel();
+                loadStateView.setVisibility(View.GONE);
+                getGameList();
             }
 
             @Override
@@ -105,7 +102,7 @@ public class MoreGameListActivity extends BaseFgActivity {
                 int currentPage = pageAction.getCurrentPage();
                 if (currentPage * pageAction.getPageSize() < total) {
                     pageAction.setCurrentPage(currentPage + 1);
-                    getGameListByLabel();
+                    getGameList();
                 } else {
                     pullListView.setHasMoreData(false);
                     pullListView.onPullUpRefreshComplete();
@@ -124,19 +121,26 @@ public class MoreGameListActivity extends BaseFgActivity {
         });
         gameInfoList = new ArrayList<>();
         //加载游戏分类，默认加载第一个分类
-        getGameListByLabel();
+        getGameList();
         adapter = new MoreGameListAdapter(this, getSupportFragmentManager());
         refreshableView.setAdapter(adapter);
     }
 
-    private void getGameListByLabel() {
+    private void getGameList() {
         String url = Constant.WEB_SITE + Constant.URL_LABEL_GAME_LIST;
         Response.Listener<LikeListBean> successListener = new Response.Listener<LikeListBean>() {
             @Override
             public void onResponse(LikeListBean result) {
                 if (result == null || result.getData() == null) {
-                    loadStateView.setVisibility(View.VISIBLE);
-                    loadStateView.setState(LoadStateView.STATE_END);
+                    if (gameInfoList != null && gameInfoList.size() > 0) {
+                        loadStateView.setVisibility(View.GONE);
+                        ToastUtil.show(content, getString(R.string.server_exception));
+                    } else {
+                        loadStateView.setState(LoadStateView.STATE_END, getString(R.string.server_exception));
+                        loadStateView.setVisibility(View.VISIBLE);
+                    }
+                    pullListView.onPullUpRefreshComplete();
+                    pullListView.onPullDownRefreshComplete();
                     return;
                 }
                 LikeListBean.DataBean data = result.getData();
@@ -192,7 +196,15 @@ public class MoreGameListActivity extends BaseFgActivity {
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
                 Log.d(TAG, "HTTP请求失败：网络连接错误！");
-                loadStateView.setState(LoadStateView.STATE_END);
+                if (gameInfoList != null && gameInfoList.size() > 0) {
+                    loadStateView.setVisibility(View.GONE);
+                    ToastUtil.show(content, getString(R.string.server_exception));
+                } else {
+                    loadStateView.setState(LoadStateView.STATE_END, getString(R.string.server_exception));
+                    loadStateView.setVisibility(View.VISIBLE);
+                }
+                pullListView.onPullUpRefreshComplete();
+                pullListView.onPullDownRefreshComplete();
             }
         };
 

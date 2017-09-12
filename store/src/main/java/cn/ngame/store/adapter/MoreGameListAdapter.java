@@ -164,11 +164,8 @@ public class MoreGameListAdapter extends BaseAdapter {
         }
 
         private void init() {
+
             Log.d(TAG, "更新下载:" + gameInfo);
-            if (null == gameInfo) {
-                return;
-            }
-            Log.d(TAG, "更新下载:" + gameInfo.getGameName());
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -179,6 +176,9 @@ public class MoreGameListAdapter extends BaseAdapter {
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
+                            if (null == gameInfo) {
+                                return;
+                            }
                             GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo
                                     .getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode()));
                             progressBar.setLoadState(fileStatus);
