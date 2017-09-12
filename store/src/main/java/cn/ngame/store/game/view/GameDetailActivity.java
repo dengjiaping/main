@@ -169,7 +169,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         percentageTv.setOnClickListener(gameDetailClickListener);
     }
 
-    protected static final String TAG = GameDetailActivity.class.getSimpleName();
+    private String TAG = GameDetailActivity.class.getSimpleName();
 
     //设置数据
     private void setView() {

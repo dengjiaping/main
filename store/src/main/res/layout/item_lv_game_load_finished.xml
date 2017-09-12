@@ -3,6 +3,7 @@
                 xmlns:ngame="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants"
                 android:background="@color/white"
                 android:paddingBottom="@dimen/dm018"
     >
@@ -19,7 +20,7 @@
         fresco:actualImageScaleType="fitXY"
         fresco:failureImage="@drawable/ic_def_logo_188_188"
         fresco:placeholderImage="@drawable/ic_def_logo_188_188"
-        fresco:placeholderImageScaleType="centerCrop"
+        fresco:placeholderImageScaleType="fitXY"
         fresco:progressBarImage="@drawable/ic_def_logo_188_188"
         fresco:roundedCornerRadius="@dimen/dp_14"/>
 

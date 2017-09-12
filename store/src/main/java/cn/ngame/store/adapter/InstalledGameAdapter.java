@@ -21,8 +21,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +31,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.squareup.picasso.Picasso;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
 
 import cn.ngame.store.R;
 import cn.ngame.store.core.fileload.FileLoadInfo;
@@ -53,23 +53,19 @@ import cn.ngame.store.view.QuickAction;
  * @since 2016-07-4
  */
 public class InstalledGameAdapter extends BaseAdapter {
-
-    //private static final String TAG = LoadIngLvAdapter.class.getSimpleName();
-
     private List<PackageInfo> fileInfoList;
-    private Timer timer = new Timer();
-    private Handler uiHandler = new Handler();
     private Context context;
     private FragmentManager fm;
     private QuickAction mItemClickQuickAction;
     private int mPosition;
     private ViewHolder holder;
-
+    private String TAG = InstalledGameAdapter.class.getSimpleName();
     public InstalledGameAdapter(Context context, FragmentManager fm, QuickAction mItemClickQuickAction) {
         super();
         this.mItemClickQuickAction = mItemClickQuickAction;
         this.context = context;
         this.fm = fm;
+        Log.d(TAG, "初始化: "+fileInfoList);
     }
 
     /**
@@ -80,11 +76,13 @@ public class InstalledGameAdapter extends BaseAdapter {
     public void setDate(List<PackageInfo> fileInfoList) {
         this.fileInfoList = fileInfoList;
         notifyDataSetChanged();
+        Log.d(TAG,  this.fileInfoList+",setDate 设置数据: "+fileInfoList.size());
     }
 
     @Override
     public int getCount() {
         if (fileInfoList != null) {
+            Log.d(TAG,  this.fileInfoList+",getCount: "+fileInfoList.size());
             return fileInfoList.size();
         }
         return 0;
@@ -182,13 +180,16 @@ public class InstalledGameAdapter extends BaseAdapter {
 
             final String appName = applicationInfo.loadLabel(packageManager).toString();
             Drawable drawable = applicationInfo.loadIcon(packageManager);
-            if (null != appName) {
-                tv_title.setText(appName);
-            } else {
-                tv_title.setText("");
-            }
-            //加载图片
-            img.getHierarchy().setPlaceholderImage(drawable);
+            tv_title.setText(null != appName ? appName : "");
+           //加载图片
+            Picasso.with(context)
+                    .load("...")
+                    .placeholder(drawable)
+                    .resizeDimen(R.dimen.dp_60, R.dimen.dp_60)
+                    .into(img);
+            Log.d(TAG, "设置图片 ");
+           /* GenericDraweeHierarchy hierarchy = img.getHierarchy();
+            hierarchy.setPlaceholderImage(drawable, ScalingUtils.ScaleType.FIT_XY);*/
             openBt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
