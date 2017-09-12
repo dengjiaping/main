@@ -36,7 +36,7 @@ import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.NetUtil;
-import cn.ngame.store.game.view.LabelGameListActivity;
+import cn.ngame.store.game.view.MoreGameListActivity;
 import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.BannerView;
 import cn.ngame.store.view.LoadStateView;
@@ -218,7 +218,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                     categoryId = dailyNewGames.getCategoryId();
                     categoryName = dailyNewGames.getCategoryName();
                 }
-                intent.setClass(context, LabelGameListActivity.class);
+                intent.setClass(context, MoreGameListActivity.class);
                 intent.putExtra(KeyConstant.category_Id, String.valueOf(categoryId));//云端适配id 336
                 intent.putExtra(KeyConstant.TITLE, categoryName);
                 //近期最热
@@ -227,7 +227,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
                     categoryId = hotGames.getCategoryId();
                     categoryName = hotGames.getCategoryName();
                 }
-                intent.setClass(context, LabelGameListActivity.class);
+                intent.setClass(context, MoreGameListActivity.class);
                 intent.putExtra(KeyConstant.category_Id, String.valueOf(categoryId));//云端适配id 336
                 intent.putExtra(KeyConstant.TITLE, categoryName);
                 //专题

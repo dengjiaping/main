@@ -36,4 +36,6 @@ public class KeyConstant {
     public static final String START_INDEX = "startIndex";
     public static final String PAGE_SIZE = "pageSize";
     public static final String index = "index";
+    public static final String start_Record="startRecord";
+    public static final String RECORDS = "records";
 }

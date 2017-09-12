@@ -37,7 +37,7 @@ import java.util.List;
 import cn.ngame.store.R;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.game.view.GameDetailActivity;
-import cn.ngame.store.game.view.LabelGameListActivity;
+import cn.ngame.store.game.view.MoreGameListActivity;
 
 public class DiscoverAdapter extends BaseAdapter {
 
@@ -64,7 +64,7 @@ public class DiscoverAdapter extends BaseAdapter {
         intent.setClass(context, GameDetailActivity.class);
 
         labelGameIntent = new Intent();
-        labelGameIntent.setClass(context, LabelGameListActivity.class);
+        labelGameIntent.setClass(context, MoreGameListActivity.class);
     }
 
     public void setList(List<DiscoverListBean.DataBean.ResultListBean> list) {

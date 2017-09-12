@@ -118,7 +118,7 @@ public class Constant {
      * 游戏主页，根据分类ID获取游戏列表的URL
      */
     public static final String URL_GAME_LIST = "/game/queryGameByTypeAndLabel";
-    public static final String URL_LABEL_GAME_LIST = "/game/queryGamesByLabel";
+    public static final String URL_LABEL_GAME_LIST = "/gameDiscovery/queryDiscoveryGameList";
     /**
      * 游戏排行
      */

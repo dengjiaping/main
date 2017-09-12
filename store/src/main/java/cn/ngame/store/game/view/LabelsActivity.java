@@ -109,7 +109,7 @@ public class LabelsActivity extends BaseFgActivity {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent();
-                    i.setClass(content, LabelGameListActivity.class);
+                    i.setClass(content, MoreGameListActivity.class);
                     i.putExtra(KeyConstant.category_Id, String.valueOf(gameLabels.id));// 动作游戏精选 getId()==369
                     i.putExtra(KeyConstant.TITLE, itemLabelName);//mStickyLV.get(position).getTypeName()
                     startActivity(i);

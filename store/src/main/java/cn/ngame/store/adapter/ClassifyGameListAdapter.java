@@ -28,13 +28,13 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBean;
 
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import cn.ngame.store.R;
-import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.GameFileStatus;
@@ -52,7 +52,7 @@ public class ClassifyGameListAdapter extends BaseAdapter {
 
     //private static final String TAG = LvSbGameAdapter.class.getSimpleName();
 
-    private List<GameInfo> gameInfoList;
+    private List<LikeListBean.DataBean.GameListBean> gameInfoList;
     private ViewHolder holder;
     private Handler uiHandler = new Handler();
 
@@ -70,7 +70,7 @@ public class ClassifyGameListAdapter extends BaseAdapter {
      *
      * @param gameInfos 游戏数据
      */
-    public void setDate(List<GameInfo> gameInfos) {
+    public void setDate(List<LikeListBean.DataBean.GameListBean> gameInfos) {
 
         if (gameInfoList == null || gameInfoList.size() <= 0) {
             gameInfoList = gameInfos;
@@ -117,7 +117,7 @@ public class ClassifyGameListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
-        final GameInfo gameInfo = (gameInfoList == null) ? null : gameInfoList.get(position);
+        final LikeListBean.DataBean.GameListBean gameInfo = (gameInfoList == null) ? null : gameInfoList.get(position);
         if (convertView == null) {
 
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_game_2, parent, false);
@@ -154,7 +154,7 @@ public class ClassifyGameListAdapter extends BaseAdapter {
     public class ViewHolder {
 
         private Context context;
-        private GameInfo gameInfo;
+        private LikeListBean.DataBean.GameListBean gameInfo;
 
         private SimpleDraweeView img;
         private TextView tv_title, tv_size, tagTv0, tagTv1, tagTv2, tagTv3;
@@ -170,7 +170,7 @@ public class ClassifyGameListAdapter extends BaseAdapter {
             this.context = context;
             this.fm = fm;
             fileLoad = FileLoadManager.getInstance(context);
-            init();
+            //init();
         }
 
         private void init() {
@@ -185,8 +185,8 @@ public class ClassifyGameListAdapter extends BaseAdapter {
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo.filename, gameInfo.gameLink,
-                                    gameInfo.packages, ConvUtil.NI(gameInfo.versionCode));
+                            GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo.getGameLink(),
+                                    gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode()));
                             progressBar.setLoadState(fileStatus);
                         }
                     });
@@ -199,13 +199,14 @@ public class ClassifyGameListAdapter extends BaseAdapter {
          *
          * @param gameInfo 游戏信息
          */
-        public void update(final GameInfo gameInfo) {
+        public void update(final LikeListBean.DataBean.GameListBean gameInfo) {
 
             this.gameInfo = gameInfo;
 
-            img.setImageURI(gameInfo.gameLogo);
+            String gameLogo = gameInfo.getGameLogo();
+            img.setImageURI(gameLogo);
 
-            String gameName = gameInfo.gameName;
+            String gameName = gameInfo.getGameName();
             if (null != gameName && !"".equals(gameName)) {
                 //gameName = gameName.length() > 15 ? gameName.substring(0, 15) : gameName;
                 tv_title.setText(gameName);
@@ -214,17 +215,20 @@ public class ClassifyGameListAdapter extends BaseAdapter {
            /* long gameSize = gameInfo.gameSize;
             String gameSizeStr = TextUtil.formatFileSize(gameSize);*/
 
-            tv_size.setText(gameInfo.percentage + "");
+            tv_size.setText(gameInfo.getScoreLevel() + "");
 
-            ratingBar.setRating(gameInfo.percentage);//星星
+            ratingBar.setRating(gameInfo.getScoreLevel());//星星
 
             //设置进度条状态
-            progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.filename, gameInfo.gameLink, gameInfo.packages,
-                    ConvUtil.NI(gameInfo.versionCode)));
+            String gameLink = gameInfo.getGameLink();
+            GameFileStatus gameFileLoadStatus = fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameLink,
+                    gameInfo.getPackages(),
+                    ConvUtil.NI(gameInfo.getVersionCode()));
+            progressBar.setLoadState(gameFileLoadStatus);
             //必须设置，否则点击进度条后无法进行响应操作
-            FileLoadInfo fileLoadInfo = new FileLoadInfo(gameInfo.filename, gameInfo.gameLink, gameInfo.md5, ConvUtil.NI
-                    (gameInfo.versionCode), gameInfo.gameName, gameInfo.gameLogo, gameInfo.id, FileLoadInfo.TYPE_GAME);
-            fileLoadInfo.setPackageName(gameInfo.packages);
+            FileLoadInfo fileLoadInfo = new FileLoadInfo(gameInfo.getFilename(), gameLink, gameInfo.getMd5(),
+                    ConvUtil.NI(gameInfo.getVersionCode()), gameName,gameLogo, gameInfo.getId(), FileLoadInfo.TYPE_GAME);
+            fileLoadInfo.setPackageName(gameInfo.getPackages());
             progressBar.setFileLoadInfo(fileLoadInfo);
             progressBar.setOnStateChangeListener(new ProgressBarStateListener(context, fm));
             progressBar.setOnClickListener(new View.OnClickListener() {
@@ -233,7 +237,7 @@ public class ClassifyGameListAdapter extends BaseAdapter {
                     progressBar.toggle();
                 }
             });
-            String simpleLabel = gameInfo.simpleLabel;
+            String simpleLabel = gameInfo.getCName();
             if (simpleLabel != null) {
                 String[] typeNameArray = simpleLabel.split("\\,");
                 for (int i = 0; i < typeNameArray.length; i++) {

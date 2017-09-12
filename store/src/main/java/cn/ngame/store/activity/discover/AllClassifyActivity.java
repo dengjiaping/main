@@ -22,7 +22,7 @@ import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.adapter.HomeRaiderAdapter;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.utils.KeyConstant;
-import cn.ngame.store.game.view.LabelGameListActivity;
+import cn.ngame.store.game.view.MoreGameListActivity;
 import cn.ngame.store.view.LoadStateView;
 import cn.ngame.store.widget.pulllistview.PullToRefreshBase;
 import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
@@ -131,7 +131,7 @@ public class AllClassifyActivity extends BaseFgActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent classifyIntent = new Intent(content, LabelGameListActivity.class);
+                Intent classifyIntent = new Intent(content, MoreGameListActivity.class);
                 switch (i) {
                     case 1:
                         if (position < mCountyList.size()) {

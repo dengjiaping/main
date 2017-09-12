@@ -15,7 +15,7 @@ import java.util.List;
 
 import cn.ngame.store.R;
 import cn.ngame.store.core.utils.KeyConstant;
-import cn.ngame.store.game.view.LabelGameListActivity;
+import cn.ngame.store.game.view.MoreGameListActivity;
 
 /**
  * @author gp
@@ -64,7 +64,7 @@ public class DiscoverClassifyTopAdapter extends RecyclerView.Adapter<DiscoverCla
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent classifyIntent = new Intent(context, LabelGameListActivity.class);
+                Intent classifyIntent = new Intent(context, MoreGameListActivity.class);
                 classifyIntent.putExtra(KeyConstant.category_Id, gameCategroyListBean.getId()+"");//原生手柄 id 367
                 classifyIntent.putExtra(KeyConstant.TITLE, cName);
                 context.startActivity(classifyIntent);

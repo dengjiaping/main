@@ -178,7 +178,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
-            android:name=".game.view.LabelGameListActivity"
+            android:name=".game.view.MoreGameListActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"/>

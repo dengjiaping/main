@@ -12,6 +12,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
+import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBean;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,7 +25,6 @@ import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.adapter.ClassifyGameListAdapter;
 import cn.ngame.store.bean.GameInfo;
-import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
@@ -38,21 +38,17 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
  * 游戏列表
  * Created by zeng on 2016/6/16.
  */
-public class LabelGameListActivity extends BaseFgActivity {
+public class MoreGameListActivity extends BaseFgActivity {
 
-    public static final String TAG = LabelGameListActivity.class.getSimpleName();
+    private String TAG = MoreGameListActivity.class.getSimpleName();
     private PullToRefreshListView pullListView;
     private LoadStateView loadStateView;
     private ClassifyGameListAdapter adapter;
-    private List<GameInfo> gameInfoList;
-
+    private List<LikeListBean.DataBean.GameListBean> gameInfoList;
     private PageAction pageAction;
-    public static int PAGE_SIZE = 40;
-
-    private int lastItem;
-
+    public int PAGE_SIZE = 40;
     private String mLabelId;
-    private LabelGameListActivity content;
+    private MoreGameListActivity content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +57,11 @@ public class LabelGameListActivity extends BaseFgActivity {
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
-        content = LabelGameListActivity.this;
+        content = MoreGameListActivity.this;
         Intent intent = getIntent();
         String title = intent.getStringExtra(KeyConstant.TITLE);
         mLabelId = intent.getStringExtra(KeyConstant.category_Id);
-        android.util.Log.d(TAG, "分类i0"+mLabelId);
+        android.util.Log.d(TAG, "分类id:" + mLabelId);
         Button leftBt = (Button) findViewById(R.id.left_bt);
         findViewById(R.id.center_tv).setVisibility(View.GONE);
         leftBt.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +73,7 @@ public class LabelGameListActivity extends BaseFgActivity {
         leftBt.setText(title);
 
         loadStateView = (LoadStateView) findViewById(R.id.loadStateView);
+        loadStateView.isShowLoadBut(false);
         loadStateView.setReLoadListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,10 +114,11 @@ public class LabelGameListActivity extends BaseFgActivity {
             }
         });
         //点击事件
-        pullListView.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ListView refreshableView = pullListView.getRefreshableView();
+        refreshableView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(LabelGameListActivity.this, GameDetailActivity.class);
+                Intent intent = new Intent(MoreGameListActivity.this, GameDetailActivity.class);
                 intent.putExtra(KeyConstant.ID, ((GameInfo) adapter.getItem(position)).id);
                 startActivity(intent);
             }
@@ -129,37 +127,36 @@ public class LabelGameListActivity extends BaseFgActivity {
         //加载游戏分类，默认加载第一个分类
         getGameListByLabel();
         adapter = new ClassifyGameListAdapter(this, getSupportFragmentManager());
-        pullListView.getRefreshableView().setAdapter(adapter);
+        refreshableView.setAdapter(adapter);
     }
 
     private void getGameListByLabel() {
-
         String url = Constant.WEB_SITE + Constant.URL_LABEL_GAME_LIST;
-        Response.Listener<JsonResult<List<GameInfo>>> successListener = new Response.Listener<JsonResult<List<GameInfo>>>() {
+        Response.Listener<LikeListBean> successListener = new Response.Listener<LikeListBean>() {
             @Override
-            public void onResponse(JsonResult<List<GameInfo>> result) {
-                if (result == null) {
+            public void onResponse(LikeListBean result) {
+                android.util.Log.d(TAG, "请求返回: " + result);
+                if (result == null || result.getData() == null) {
                     loadStateView.setVisibility(View.VISIBLE);
                     loadStateView.setState(LoadStateView.STATE_END);
                     return;
                 }
+                LikeListBean.DataBean data = result.getData();
                 if (pageAction.getCurrentPage() == 0) {
                     gameInfoList.clear(); //清除数据
-                    if (result.data == null || result.data.size() == 0) {
-                        android.util.Log.d(TAG, "onResponse: " + result.code);
+                    List<LikeListBean.DataBean.GameListBean> gameList = data.getGameList();
+                    if (gameList == null || gameList.size() == 0) {
                         pullListView.onPullUpRefreshComplete();
                         pullListView.onPullDownRefreshComplete();
                         pullListView.setLastUpdatedLabel(new Date().toLocaleString());
-
-                        loadStateView.isShowLoadBut(false);
                         loadStateView.setVisibility(View.VISIBLE);
                         loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_data));
                         return;
                     }
                 }
-                if (result.code == 0) {
-                    gameInfoList = result.data;
-                    pageAction.setTotal(result.totals);
+                if (result.getCode() == 0) {
+                    gameInfoList = data.getGameList();
+                    pageAction.setTotal(gameInfoList.size());
                     Log.d(TAG, gameInfoList.size() + "返回" + gameInfoList);
                     if (gameInfoList != null && gameInfoList.size() > 0) {
                         loadStateView.setVisibility(View.GONE);
@@ -168,7 +165,7 @@ public class LabelGameListActivity extends BaseFgActivity {
                     } else {
                         loadStateView.isShowLoadBut(false);
                         loadStateView.setVisibility(View.VISIBLE);
-                        loadStateView.setState(LoadStateView.STATE_END,getString(R.string.no_data));
+                        loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_data));
                     }
 
                 } else {
@@ -176,12 +173,12 @@ public class LabelGameListActivity extends BaseFgActivity {
                     loadStateView.setState(LoadStateView.STATE_END);
                 }
                 //设置下位列表
-                if ((gameInfoList.size() == 0 && pageAction.getTotal() == 0) || gameInfoList.size() >= pageAction.getTotal()) {
+          /*      if ((gameInfoList.size() == 0 && pageAction.getTotal() == 0) || gameInfoList.size() >= pageAction.getTotal()) {
                     pullListView.setPullLoadEnabled(false);
                 } else {
                     pullListView.setPullLoadEnabled(true);
-                }
-                if (pageAction.getCurrentPage() > 0 && result.data.size() > 0) { //设置上拉刷新后停留的地方
+                }*/
+                if (pageAction.getCurrentPage() > 0 && result.getData().getGameList().size() > 0) { //设置上拉刷新后停留的地方
                     int index = pullListView.getRefreshableView().getFirstVisiblePosition();
                     View v = pullListView.getRefreshableView().getChildAt(0);
                     int top = (v == null) ? 0 : (v.getTop() - v.getHeight());
@@ -202,18 +199,18 @@ public class LabelGameListActivity extends BaseFgActivity {
             }
         };
 
-        Request<JsonResult<List<GameInfo>>> request = new GsonRequest<JsonResult<List<GameInfo>>>(
+        Request<LikeListBean> request = new GsonRequest<LikeListBean>(
                 Request.Method.POST, url, successListener,
-                errorListener, new TypeToken<JsonResult<List<GameInfo>>>() {
+                errorListener, new TypeToken<LikeListBean>() {
         }.getType()) {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
-                params.put(KeyConstant.GAME_LABEL_ID, mLabelId);
-                params.put(KeyConstant.START_INDEX, String.valueOf(0));
-                params.put(KeyConstant.PAGE_SIZE, String.valueOf(PAGE_SIZE));
+                params.put(KeyConstant.category_Id, mLabelId);
+                params.put(KeyConstant.start_Record, String.valueOf(0));
+                params.put(KeyConstant.RECORDS, String.valueOf(PAGE_SIZE));
                 return params;
             }
         };

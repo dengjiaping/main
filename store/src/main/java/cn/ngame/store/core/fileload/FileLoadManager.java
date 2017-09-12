@@ -254,11 +254,10 @@ public class FileLoadManager implements IFileLoad {
             }
 
         } else {
-
             if (FileLoadService.gameFileStatusMap == null) {
                 return null;
             }
-            FileLoadInfo info = FileLoadService.gameFileStatusMap.get(fileUrl);
+            FileLoadInfo info = FileLoadService.gameFileStatusMap.get(fileUrl == null ? "" : fileUrl);
             if (info == null) {
                 status = new GameFileStatus(GameFileStatus.STATE_UN_INSTALL);
             } else {
