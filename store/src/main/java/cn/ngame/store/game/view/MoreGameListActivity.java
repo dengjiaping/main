@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimerTask;
 
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
@@ -50,6 +51,7 @@ public class MoreGameListActivity extends BaseFgActivity {
     public int PAGE_SIZE = 50;
     private String mLabelId;
     private MoreGameListActivity content;
+    private List<TimerTask> timerTasks = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +124,7 @@ public class MoreGameListActivity extends BaseFgActivity {
         gameInfoList = new ArrayList<>();
         //加载游戏分类，默认加载第一个分类
         getGameList();
-        adapter = new MoreGameListAdapter(this, getSupportFragmentManager());
+        adapter = new MoreGameListAdapter(this, getSupportFragmentManager(), timerTasks);
         refreshableView.setAdapter(adapter);
     }
 
@@ -227,10 +229,15 @@ public class MoreGameListActivity extends BaseFgActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         if (null != adapter) {
-            adapter.stopTimer();
+            adapter.clean();
+            adapter = null;
+            for (TimerTask timerTask : timerTasks) {
+                timerTask.cancel();
+            }
+            timerTasks.clear();
         }
     }
 }

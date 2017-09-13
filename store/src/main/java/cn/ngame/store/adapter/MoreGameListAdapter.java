@@ -54,15 +54,17 @@ public class MoreGameListAdapter extends BaseAdapter {
     private static String TAG = MoreGameListActivity.class.getSimpleName();
     private List<LikeListBean.DataBean.GameListBean> gameInfoList;
     private ViewHolder holder;
-    private static Handler uiHandler = new Handler();
-
+    private Handler uiHandler = new Handler();
+    private Timer timer = new Timer();
     private Context context;
     private FragmentManager fm;
+    private List<TimerTask> timerTasks;
 
-    public MoreGameListAdapter(Context context, FragmentManager fm) {
+    public MoreGameListAdapter(Context context, FragmentManager fm, List<TimerTask> timerTasks) {
         super();
         this.fm = fm;
         this.context = context;
+        this.timerTasks = timerTasks;
     }
 
     /**
@@ -97,8 +99,12 @@ public class MoreGameListAdapter extends BaseAdapter {
     }
 
     public void clean() {
-        if (gameInfoList != null)
+        if (gameInfoList != null) {
             gameInfoList.clear();
+            uiHandler = null;
+            timer.cancel();
+            timer = null;
+        }
     }
 
     public void stopTimer() {
@@ -142,7 +148,7 @@ public class MoreGameListAdapter extends BaseAdapter {
      * @author flan
      * @since 2015年10月28日
      */
-    public static class ViewHolder {
+    public class ViewHolder {
 
         private Context context;
         private LikeListBean.DataBean.GameListBean gameInfo;
@@ -151,22 +157,17 @@ public class MoreGameListAdapter extends BaseAdapter {
         private RatingBar ratingBar;
         private GameLoadProgressBar progressBar;    //下载进度条
         private FragmentManager fm;
-
         private IFileLoad fileLoad;
-
-        private Timer timer = new Timer();
 
         public ViewHolder(Context context, FragmentManager fm) {
             this.context = context;
             this.fm = fm;
             fileLoad = FileLoadManager.getInstance(context);
-            init();
+            //init();
         }
 
         private void init() {
-
-            Log.d(TAG, "更新下载:" + gameInfo);
-            timer.schedule(new TimerTask() {
+            TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
                     if (null == uiHandler) {
@@ -176,16 +177,20 @@ public class MoreGameListAdapter extends BaseAdapter {
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            if (null == gameInfo) {
+                            Log.d(TAG, "更新下载:" + ViewHolder.this.gameInfo.getGameName());
+                            if (null == ViewHolder.this.gameInfo) {
                                 return;
                             }
-                            GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo
-                                    .getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode()));
+                            GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(ViewHolder.this.gameInfo.getFilename(),
+                                    ViewHolder.this.gameInfo.getGameLink(), ViewHolder.this.gameInfo.getPackages(), ConvUtil.NI(ViewHolder.this
+                                            .gameInfo.getVersionCode()));
                             progressBar.setLoadState(fileStatus);
                         }
                     });
                 }
-            }, 0, 500);
+            };
+            timerTasks.add(task);
+            timer.schedule(task, 0, 500);
         }
 
         /**
@@ -230,6 +235,7 @@ public class MoreGameListAdapter extends BaseAdapter {
                     progressBar.toggle();
                 }
             });
+            init();
             String simpleLabel = gameInfo.getCName();
             if (simpleLabel != null) {
                 String[] typeNameArray = simpleLabel.split("\\,");
@@ -255,7 +261,6 @@ public class MoreGameListAdapter extends BaseAdapter {
 
                 }
             }
-            Log.d("LabelGameListActivity", "simpleLabel: " + simpleLabel);
         }
     }
 

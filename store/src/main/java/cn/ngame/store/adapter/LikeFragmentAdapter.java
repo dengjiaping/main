@@ -57,9 +57,7 @@ import static cn.ngame.store.R.id.tv_title;
 public class LikeFragmentAdapter extends BaseAdapter {
     private final QuickAction mItemClickQuickAction;
     private Timer timer = new Timer();
-
     private List<TimerTask> timerTasks;
-
     private List<LikeListBean.DataBean.GameListBean> fileInfoList;
     private Context context;
     private FragmentManager fm;
@@ -194,7 +192,6 @@ public class LikeFragmentAdapter extends BaseAdapter {
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d("777", "喜欢界面请求数据:");
                             progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo
                                     .getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode())));
                             progressBar.setVisibility(View.VISIBLE);
