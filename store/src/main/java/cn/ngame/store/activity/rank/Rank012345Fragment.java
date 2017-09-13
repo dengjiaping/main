@@ -72,6 +72,11 @@ public class Rank012345Fragment extends BaseSearchFragment {
                     tab2_position = 0;
                 }
             }
+            Log.d(TAG, tab_position + "请求数据," + tab2_position);
+            if (tab_position == 0 && tab2_position == 0) {
+                list.clear();
+                adapter.setList(list);
+            }
             getRankList();
            /* } else {
                 // Log.d(TAG, tab_position + "不请求数据," + tab2_position);

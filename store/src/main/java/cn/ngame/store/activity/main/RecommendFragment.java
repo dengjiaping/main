@@ -279,6 +279,7 @@ public class RecommendFragment extends BaseSearchFragment {
                     if (list != null && list.size() > 0) {
                         ToastUtil.show(context, getString(R.string.no_network));
                     } else {
+                        ToastUtil.show(context, getString(R.string.no_network));
                         loadStateView.setVisibility(View.VISIBLE);
                         loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_network));
                     }
@@ -357,8 +358,22 @@ public class RecommendFragment extends BaseSearchFragment {
             refreshableView.addHeaderView(headView);
         }
         //第一次进来,请求数据
-        getGameList();
-        getHorizontalData();
+        if (!NetUtil.isNetworkConnected(context)) {
+            pullListView.onPullUpRefreshComplete();
+            pullListView.onPullDownRefreshComplete();
+            if (0 == pageAction.getCurrentPage()) {
+                pullListView.getRefreshableView().setSelection(0);
+            }
+            if (list != null && list.size() > 0) {
+                ToastUtil.show(context, getString(R.string.no_network));
+            } else {
+                loadStateView.setVisibility(View.VISIBLE);
+                loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_network));
+            }
+        } else {
+            getGameList();
+            getHorizontalData();
+        }
     }
 
     public void scroll2Top() {

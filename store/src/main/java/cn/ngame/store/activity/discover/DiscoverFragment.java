@@ -260,14 +260,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             //下拉
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-
-                if (!NetUtil.isNetworkConnected(context)) {
-                    ToastUtil.show(context, "无网络连接");
-                    pullListView.getRefreshableView().setSelection(0);
-                } else {
-                    //下拉请求数据
-                    getData();
-                }
+                getData();
                 pullListView.setLastUpdatedLabel(new Date().toLocaleString());
                 pullListView.onPullDownRefreshComplete();
                 pullListView.onPullUpRefreshComplete();
@@ -304,6 +297,12 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     private void getData() {
         loadStateView.setVisibility(View.VISIBLE);
         loadStateView.setState(LoadStateView.STATE_ING);
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context, "网络异常,请检查网络设置");
+            pullListView.getRefreshableView().setSelection(0);
+            loadStateView.setVisibility(View.GONE);
+            return;
+        }
         //请求数据
         RecommendListBody bodyBean = new RecommendListBody();
         new DiscoverClient(context, bodyBean).observable()
