@@ -74,6 +74,7 @@ public class MoreGameListAdapter extends BaseAdapter {
      */
     public void setDate(List<LikeListBean.DataBean.GameListBean> gameInfos) {
         gameInfoList = gameInfos;
+        notifyDataSetChanged();
     }
 
     @Override
