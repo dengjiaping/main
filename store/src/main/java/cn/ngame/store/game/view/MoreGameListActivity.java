@@ -48,7 +48,7 @@ public class MoreGameListActivity extends BaseFgActivity {
     private MoreGameListAdapter adapter;
     private List<LikeListBean.DataBean.GameListBean> gameInfoList;
     private PageAction pageAction;
-    public int PAGE_SIZE = 50;
+    public int PAGE_SIZE = 10;
     private String mLabelId;
     private MoreGameListActivity content;
     private List<TimerTask> timerTasks = new ArrayList<>();
@@ -81,7 +81,7 @@ public class MoreGameListActivity extends BaseFgActivity {
         pullListView = (PullToRefreshListView) findViewById(R.id.pullListView);
         pullListView.setPullRefreshEnabled(true); //刷新
         pullListView.setPullLoadEnabled(true); //false,不允许上拉加载
-        pullListView.setScrollLoadEnabled(true);
+        pullListView.setScrollLoadEnabled(false);
         pullListView.setLastUpdatedLabel(new Date().toLocaleString());
         pullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
@@ -129,6 +129,11 @@ public class MoreGameListActivity extends BaseFgActivity {
     }
 
     private void getGameList() {
+        gameInfoList.clear();
+        if (adapter != null) {
+            adapter.setDate(gameInfoList);
+            adapter.notifyDataSetChanged();
+        }
         String url = Constant.WEB_SITE + Constant.URL_LABEL_GAME_LIST;
         Response.Listener<LikeListBean> successListener = new Response.Listener<LikeListBean>() {
             @Override
@@ -147,7 +152,6 @@ public class MoreGameListActivity extends BaseFgActivity {
                 }
                 LikeListBean.DataBean data = result.getData();
                 if (pageAction.getCurrentPage() == 0) {
-                    gameInfoList.clear(); //清除数据
                     List<LikeListBean.DataBean.GameListBean> gameList = data.getGameList();
                     if (gameList == null || gameList.size() == 0) {
                         pullListView.onPullUpRefreshComplete();
@@ -166,6 +170,7 @@ public class MoreGameListActivity extends BaseFgActivity {
                         loadStateView.setVisibility(View.GONE);
                         if (null != adapter) {
                             adapter.setDate(gameInfoList);
+                            adapter.notifyDataSetChanged();
                         }
                     } else {
                         loadStateView.isShowLoadBut(false);
@@ -235,7 +240,6 @@ public class MoreGameListActivity extends BaseFgActivity {
         super.onStop();
         if (null != adapter) {
             adapter.clean();
-            adapter = null;
             for (TimerTask timerTask : timerTasks) {
                 timerTask.cancel();
             }

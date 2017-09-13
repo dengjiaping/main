@@ -74,7 +74,6 @@ public class MoreGameListAdapter extends BaseAdapter {
      */
     public void setDate(List<LikeListBean.DataBean.GameListBean> gameInfos) {
         gameInfoList = gameInfos;
-        notifyDataSetChanged();
     }
 
     @Override
@@ -100,16 +99,11 @@ public class MoreGameListAdapter extends BaseAdapter {
 
     public void clean() {
         if (gameInfoList != null) {
-            gameInfoList.clear();
             uiHandler = null;
-            timer.cancel();
-            timer = null;
-        }
-    }
-
-    public void stopTimer() {
-        if (null != holder) {
-            uiHandler = null;
+            if (null != timer) {
+                timer.cancel();
+                timer = null;
+            }
         }
     }
 
@@ -182,15 +176,18 @@ public class MoreGameListAdapter extends BaseAdapter {
                                 return;
                             }
                             GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(ViewHolder.this.gameInfo.getFilename(),
-                                    ViewHolder.this.gameInfo.getGameLink(), ViewHolder.this.gameInfo.getPackages(), ConvUtil.NI(ViewHolder.this
-                                            .gameInfo.getVersionCode()));
+                                    ViewHolder.this.gameInfo.getGameLink(), ViewHolder.this.gameInfo.getPackages(), ConvUtil.NI
+                                            (ViewHolder.this
+                                                    .gameInfo.getVersionCode()));
                             progressBar.setLoadState(fileStatus);
                         }
                     });
                 }
             };
             timerTasks.add(task);
-            timer.schedule(task, 0, 500);
+            if (null != timer) {
+                timer.schedule(task, 0, 500);
+            }
         }
 
         /**

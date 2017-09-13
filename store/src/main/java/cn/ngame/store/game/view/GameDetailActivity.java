@@ -171,6 +171,12 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
 
     private String TAG = GameDetailActivity.class.getSimpleName();
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        hasStop = false;
+    }
+
     //设置数据
     private void setView() {
         if (gameInfo == null) {
@@ -222,6 +228,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         }
 
         //更新下载按钮
+        timer.cancel();
+        timer=new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -237,6 +245,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         }, 0, 500);
 
     }
+
+    boolean hasStop;
 
     /**
      * 获取游戏详情
@@ -273,9 +283,11 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                     fragments = new ArrayList<>();
                     fragments.add(GameDetailFragment.newInstance(gameInfo));
                     fragments.add(GameReadFragment.newInstance(gameInfo));
-                    if (null != adapter) {
+                    if (null != adapter && !hasStop) {
                         adapter.setList(fragments, tabList);
-                        viewpager.setAdapter(adapter);
+                        if (null != viewpager) {
+                            viewpager.setAdapter(adapter);
+                        }
                     }
 
                     setView();
@@ -555,7 +567,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                                 if (pos == 0) {
                                     //获取gameId  传给服务器 不再喜欢
                                 }
-                                ToastUtil.show(content,  "提交成功,感谢您的反馈!");
+                                ToastUtil.show(content, "提交成功,感谢您的反馈!");
                                 //取消弹出框
                                 source.dismiss();
                             }
@@ -682,5 +694,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         if (null != timer) {
             timer.cancel();
         }
+        hasStop = true;
     }
 }

@@ -34,6 +34,7 @@ import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.KeyConstant;
+import cn.ngame.store.core.utils.NetUtil;
 import cn.ngame.store.game.view.GameDetailActivity;
 import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.LoadStateView;
@@ -169,7 +170,6 @@ public class Rank012345Fragment extends BaseSearchFragment {
                 //当前页
                 if (list.size() < pageAction.getTotal()) {
                     pageAction.setCurrentPage(currentPage + 1);
-                    Log.d(TAG, "增加: ");
                     getRankList();
                 } else {
                     pullListView.setHasMoreData(false);
@@ -337,16 +337,21 @@ public class Rank012345Fragment extends BaseSearchFragment {
 //                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
                         pullListView.onPullUpRefreshComplete();
                         pullListView.onPullDownRefreshComplete();
-
-                        loadStateView.setState(LoadStateView.STATE_END, getString(R.string.requery_failed));
+                        if (!NetUtil.isNetworkConnected(content)) {
+                            loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_network));
+                        } else {
+                            loadStateView.setState(LoadStateView.STATE_END, getString(R.string.requery_failed));
+                        }
                     }
 
                     @Override
                     public void onNext(LikeListBean result) {
                         if (result != null && result.getCode() == 0) {
+                            Log.d(TAG, "onNext:请求到数据");
                             listData(result);
                         } else {
-                            loadStateView.setVisibility(View.GONE);
+                            Log.d(TAG, "onNext: 服务器开小差");
+                            loadStateView.setState(LoadStateView.STATE_END,getString(R.string.server_exception_2_pullrefresh));
                             pullListView.onPullUpRefreshComplete();
                             pullListView.onPullDownRefreshComplete();
                         }
@@ -380,9 +385,8 @@ public class Rank012345Fragment extends BaseSearchFragment {
             this.list.addAll(gameList);
         }
         if (size > 0 && pageAction.getCurrentPage() == 0) {
-            this.list.clear(); //清除数据
+            list=gameList;
             pageAction.setTotal(result.getTotals());
-            this.list.addAll(gameList);
         }
         ListView refreshableView = pullListView.getRefreshableView();
         //设置适配器
