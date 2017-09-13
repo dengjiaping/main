@@ -61,7 +61,7 @@
         android:id="@+id/recommend_game_pic"
         android:layout_width="match_parent"
         android:layout_height="@dimen/recommend_item_game_pic_hight"
-        android:scaleType="fitXY"/>
+        android:scaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/tv_summary"

@@ -63,17 +63,11 @@
             android:textColor="@color/game_name"
             android:textSize="@dimen/title_size"/>
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/recommend_game_pic_1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/recommend_item_game_pic_hight"
-            fresco:actualImageScaleType="fitXY"
-            fresco:failureImage="@drawable/ic_def_logo_720_288"
-            fresco:failureImageScaleType="fitXY"
-            fresco:placeholderImage="@drawable/ic_def_logo_720_288"
-            fresco:placeholderImageScaleType="fitXY"
-            fresco:progressBarImage="@drawable/ic_def_logo_720_288"
-            fresco:progressBarImageScaleType="fitXY"
+            android:scaleType="centerCrop"
             />
 
         <TextView
@@ -149,17 +143,11 @@
             android:textColor="@color/game_name"
             android:textSize="@dimen/title_size"/>
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/recommend_game_pic_2"
             android:layout_width="match_parent"
             android:layout_height="@dimen/recommend_item_game_pic_hight"
-            fresco:actualImageScaleType="fitXY"
-            fresco:failureImage="@drawable/ic_def_logo_720_288"
-            fresco:failureImageScaleType="fitXY"
-            fresco:placeholderImage="@drawable/ic_def_logo_720_288"
-            fresco:placeholderImageScaleType="fitXY"
-            fresco:progressBarImage="@drawable/ic_def_logo_720_288"
-            fresco:progressBarImageScaleType="fitXY"/>
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/tv_summary2"

@@ -164,7 +164,9 @@ public class MoreGameListActivity extends BaseFgActivity {
                     Log.d(TAG, gameInfoList.size() + "返回");
                     if (gameInfoList != null && gameInfoList.size() > 0) {
                         loadStateView.setVisibility(View.GONE);
-                        adapter.setDate(gameInfoList);
+                        if (null != adapter) {
+                            adapter.setDate(gameInfoList);
+                        }
                     } else {
                         loadStateView.isShowLoadBut(false);
                         loadStateView.setVisibility(View.VISIBLE);

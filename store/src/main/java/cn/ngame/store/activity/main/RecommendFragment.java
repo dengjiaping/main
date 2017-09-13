@@ -19,6 +19,7 @@ import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBody;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.main.YunduanClient;
 import com.jzt.hol.android.jkda.sdk.services.recommend.RecommendClient;
+import com.squareup.picasso.Picasso;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -48,8 +49,9 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 
 public class RecommendFragment extends BaseSearchFragment {
     public static final String TAG = RecommendFragment.class.getSimpleName();
-    PullToRefreshListView pullListView;
-    private SimpleDraweeView from_img_1, from_img_2, game_big_pic_1, game_big_pic_2;
+    private PullToRefreshListView pullListView;
+    private ImageView game_big_pic_1, game_big_pic_2;
+    private SimpleDraweeView from_img_1, from_img_2;
     private TextView gamename_1, gamename_2, summary_2;
     private TextView from_1, from_2, summary_1;
     private LoadStateView loadStateView;
@@ -63,9 +65,10 @@ public class RecommendFragment extends BaseSearchFragment {
     private Intent singeTopicsDetailIntent = new Intent();
     private LinearLayout.LayoutParams hParams;
     private int wrapContent;
-    private SimpleDraweeView picassoImageView;
+    private SimpleDraweeView simpleImageView;
     private boolean mIsShow = false;
     private ListView refreshableView;
+    private Picasso picasso;
 
     public static RecommendFragment newInstance(int arg) {
         RecommendFragment fragment = new RecommendFragment();
@@ -84,6 +87,7 @@ public class RecommendFragment extends BaseSearchFragment {
     protected void initViewsAndEvents(View view) {
 //        typeValue = getArguments().getInt("", 1);
         context = getActivity();
+        picasso = Picasso.with(context);
         initListView(view);     //初始化
     }
 
@@ -144,13 +148,12 @@ public class RecommendFragment extends BaseSearchFragment {
                                 int dp10 = CommonUtil.dip2px(context, 10);
                                 int width240 = CommonUtil.dip2px(context, 240f);
                                 int heght114 = CommonUtil.dip2px(context, 114f);
-                                int ic_def_logo_480_228 = R.drawable.ic_def_logo_480_228;
                                 int size = gameInfo.size();
                                 for (int i = 0; i < size; i++) {
                                     final YunduanBean.DataBean info = gameInfo.get(i);
                                     final String gameImage = info.getLogoUrl();//获取每一张图片
-                                    picassoImageView = new SimpleDraweeView(context);
-                                    picassoImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                                    simpleImageView = new SimpleDraweeView(context);
+                                    simpleImageView.setScaleType(ImageView.ScaleType.FIT_XY);
                                     //为  PicassoImageView设置属性
                                     hParams = new LinearLayout.LayoutParams(
                                             wrapContent, wrapContent);
@@ -162,10 +165,10 @@ public class RecommendFragment extends BaseSearchFragment {
                                     } else {
                                         hParams.setMargins(0, 0, dp10, 0);
                                     }
-                                    picassoImageView.setLayoutParams(hParams);
+                                    simpleImageView.setLayoutParams(hParams);
                                     //加载网络图片
-                                    picassoImageView.setImageURI(gameImage);
-                                    picassoImageView.setOnClickListener(new View.OnClickListener() {
+                                    simpleImageView.setImageURI(gameImage);
+                                    simpleImageView.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             singeTopicsDetailIntent.putExtra(KeyConstant.category_Id, info.getId());
@@ -175,7 +178,7 @@ public class RecommendFragment extends BaseSearchFragment {
                                             startActivity(singeTopicsDetailIntent);
                                         }
                                     });
-                                    horizontalViewContainer.addView(picassoImageView, i);
+                                    horizontalViewContainer.addView(simpleImageView, i);
                                 }
                             }
                         } else {
@@ -201,19 +204,18 @@ public class RecommendFragment extends BaseSearchFragment {
                 return;
             }
         }
+        List<RecommendListBean.DataBean> resultData = result.getData();
+        int totals = result.getTotals();
         if (result.getData().size() > 0) {//刷新后进来
-            pageAction.setTotal(result.getTotals());
-            this.list.addAll(result.getData());
-            this.topList.addAll(result.getData());
+            pageAction.setTotal(totals);
+            list.addAll(resultData);
+            topList.addAll(resultData);
         }
         if (result.getData().size() > 0 && pageAction.getCurrentPage() == 0) {
             //第一次进来
-            this.list.clear(); //清除数据
-            this.topList.clear();
-            pageAction.setTotal(result.getTotals());
-            this.list.addAll(result.getData());
-            this.topList.addAll(result.getData());
-
+            list = resultData; //清除数据
+            topList = resultData;
+            pageAction.setTotal(totals);
             if (list.size() > 1) {
                 setHeaderInfo(list);//设置头部布局
                 list.remove(0);
@@ -366,7 +368,7 @@ public class RecommendFragment extends BaseSearchFragment {
             //refreshableView.setSelectionAfterHeaderView();
             int firstVisiblePosition = refreshableView.getFirstVisiblePosition();
             View childAt0 = refreshableView.getChildAt(0);
-            if (null==childAt0) {
+            if (null == childAt0) {
                 return;
             }
             int top = childAt0.getTop();
@@ -389,8 +391,8 @@ public class RecommendFragment extends BaseSearchFragment {
         gamename_1 = (TextView) view.findViewById(R.id.tv_gamename_1);//游戏名字
         gamename_2 = (TextView) view.findViewById(R.id.tv_gamename_2);
 
-        game_big_pic_1 = (SimpleDraweeView) view.findViewById(R.id.recommend_game_pic_1);//游戏图片
-        game_big_pic_2 = (SimpleDraweeView) view.findViewById(R.id.recommend_game_pic_2);
+        game_big_pic_1 = (ImageView) view.findViewById(R.id.recommend_game_pic_1);//游戏图片
+        game_big_pic_2 = (ImageView) view.findViewById(R.id.recommend_game_pic_2);
 
         summary_1 = (TextView) view.findViewById(R.id.tv_summary1);//游戏摘要
         summary_2 = (TextView) view.findViewById(R.id.tv_summary2);
@@ -449,7 +451,10 @@ public class RecommendFragment extends BaseSearchFragment {
         }
 
         from_img_1.setImageURI(dataBean0.getGameLogo());//来自...头像
-        game_big_pic_1.setImageURI(dataBean0.getGameRecommendImg());
+        picasso.load(dataBean0.getGameRecommendImg()).placeholder(R.drawable.ic_def_logo_720_288)
+                .error(R.drawable.ic_def_logo_720_288)
+                // .resize(screenWidth,150)
+                .into(game_big_pic_1);
         gamename_1.setText(dataBean0.getGameName());
         from_1.setText("来自" + dataBean0.getRecommender());
         summary_1.setText(dataBean0.getRecommend());
@@ -457,8 +462,14 @@ public class RecommendFragment extends BaseSearchFragment {
         if (null == dataBean1) {
             return;
         }
-        game_big_pic_2.setImageURI(dataBean1.getGameRecommendImg());
+        picasso.load(dataBean1.getGameRecommendImg()).placeholder(R.drawable.ic_def_logo_720_288)
+                .error(R.drawable.ic_def_logo_720_288)
+                // .resize(screenWidth,150)
+                .into(game_big_pic_2);
         from_img_2.setImageURI(dataBean1.getGameLogo());//来自...头像
+
+        android.util.Log.d(TAG, "setHeaderInfo: " + dataBean0.getGameLogo());
+        android.util.Log.d(TAG, "setHeaderInfo: " + dataBean0.getGameRecommendImg());
         gamename_2.setText(dataBean1.getGameName());
         from_2.setText("来自" + dataBean1.getRecommender());
         summary_2.setText(dataBean1.getRecommend());
