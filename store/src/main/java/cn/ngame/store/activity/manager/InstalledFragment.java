@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 
@@ -54,7 +54,7 @@ public class InstalledFragment extends BaseSearchFragment {
     private PackageInfo packageInfo = new PackageInfo();
     private ApplicationInfo applicationInfo;
     private int oldLength;
-    private ImageView emptyIv;
+    private TextView emptyTv;
 
     public static InstalledFragment newInstance(String type, int arg) {
         InstalledFragment fragment = new InstalledFragment();
@@ -77,8 +77,8 @@ public class InstalledFragment extends BaseSearchFragment {
         typeValue = getArguments().getInt("typeValue", 1);
         type = getArguments().getString("type");
         listView = (ListView) view.findViewById(R.id.listView);
-        emptyIv = (ImageView) view.findViewById(R.id.empty_iv);
-
+        emptyTv = (TextView) view.findViewById(R.id.empty_tv);
+        emptyTv.setText("游戏列表为空~");
         initPop();
         initListView();
     }
@@ -148,9 +148,9 @@ public class InstalledFragment extends BaseSearchFragment {
                 }
             }
             if (localAppList == null || localAppList.size() == 0) {
-                emptyIv.setVisibility(View.VISIBLE);
+                emptyTv.setVisibility(View.VISIBLE);
             } else {
-                emptyIv.setVisibility(View.GONE);
+                emptyTv.setVisibility(View.GONE);
             }
         }
         return localAppList;

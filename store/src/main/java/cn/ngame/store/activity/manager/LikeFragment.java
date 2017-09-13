@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -32,6 +32,7 @@ import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
+import cn.ngame.store.core.utils.NetUtil;
 import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.ActionItem;
 import cn.ngame.store.view.QuickAction;
@@ -56,6 +57,7 @@ public class LikeFragment extends BaseSearchFragment {
     private FragmentActivity content;
     private boolean isShow = true;
     private List<LikeListBean.DataBean.GameListBean> gameList;
+    private TextView emptyTv;
 
     public static LikeFragment newInstance(String type, int arg) {
         LikeFragment fragment = new LikeFragment();
@@ -79,6 +81,8 @@ public class LikeFragment extends BaseSearchFragment {
         typeValue = getArguments().getInt("typeValue", 1);
         type = getArguments().getString("type");
         listView = (ListView) view.findViewById(R.id.listView);
+        emptyTv = (TextView) view.findViewById(R.id.empty_tv);
+        emptyTv.setText("您的喜欢列表为空哦~");
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
@@ -91,6 +95,11 @@ public class LikeFragment extends BaseSearchFragment {
 
     private void getLikeList() {
         //tabPosition :0=全部   1=手柄   2=破解   3=汉化  4=特色
+        if (!NetUtil.isNetworkConnected(content)) {
+            emptyTv.setText(getString(R.string.no_network));
+            emptyTv.setVisibility(View.VISIBLE);
+            return;
+        }
         LikeListBody bodyBean = new LikeListBody();
         bodyBean.setUserCode(StoreApplication.userCode);
         bodyBean.setStartRecord(pageAction.getCurrentPage());
@@ -110,13 +119,20 @@ public class LikeFragment extends BaseSearchFragment {
                             LikeListBean.DataBean data = result.getData();
                             if (data != null) {
                                 gameList = data.getGameList();
-                                if (null != likeAdapter) {
-                                    likeAdapter.setDate(gameList);
+                                if (gameList == null || gameList.size() == 0) {
+                                    emptyTv.setVisibility(View.VISIBLE);
+                                } else {
+                                    if (null != likeAdapter) {
+                                        likeAdapter.setDate(gameList);
+                                    }
+                                    emptyTv.setVisibility(View.GONE);
                                 }
                             }
                         } else {
                             //ToastUtil.show(getActivity(), result.getMsg());
                             Log.d(TAG, "onNext: 请求成功,返回数据失败");
+                            emptyTv.setText(getString(R.string.server_exception));
+                            emptyTv.setVisibility(View.VISIBLE);
                         }
                     }
                 });
@@ -152,7 +168,7 @@ public class LikeFragment extends BaseSearchFragment {
             @Override
             public void onResponse(JsonResult result) {
                 if (result == null) {
-                    Toast.makeText(content, "服务端异常", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(content, getString(R.string.server_exception));
                     return;
                 }
                 if (result.code == 0) {

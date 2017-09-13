@@ -2,8 +2,8 @@ package cn.ngame.store.activity.manager;
 
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -16,6 +16,7 @@ import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.view.ActionItem;
 import cn.ngame.store.view.QuickAction;
+
 
 /**
  * 下载更新fragment (懒加载-当滑动到当前fragment时，才去加载。而不是进入到activity时，加载所有fragment)
@@ -40,7 +41,7 @@ public class DownloadCenterFragment extends BaseSearchFragment {
     private int itemPosition;
     private FragmentActivity content;
     private List<FileLoadInfo> alreadyList;
-    private ImageView emptyIv;
+    private TextView emptyTv;
 
     @Override
     protected int getContentViewLayoutID() {
@@ -51,7 +52,8 @@ public class DownloadCenterFragment extends BaseSearchFragment {
     protected void initViewsAndEvents(View view) {
         content = getActivity();
         listView = (ListView) view.findViewById(R.id.listView);
-        emptyIv = (ImageView) view.findViewById(R.id.empty_iv);
+        emptyTv = (TextView) view.findViewById(R.id.empty_tv);
+        emptyTv.setText("您还没有下载任务哦~");
         fileLoad = FileLoadManager.getInstance(content);
         initPop();
 
@@ -76,9 +78,9 @@ public class DownloadCenterFragment extends BaseSearchFragment {
     private void reLoadFileInfo() {
         alreadyList = fileLoad.getLoadedFileInfo();
         if (alreadyList == null || alreadyList.size() <= 0) {
-            emptyIv.setVisibility(View.VISIBLE);
+            emptyTv.setVisibility(View.VISIBLE);
         } else {
-            emptyIv.setVisibility(View.INVISIBLE);
+            emptyTv.setVisibility(View.INVISIBLE);
         }
         alreadyLvAdapter.setDate(alreadyList);
     }
