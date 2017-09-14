@@ -199,7 +199,7 @@ public class DownLoadCenterAdapter extends BaseAdapter {
                             } else {
                                 tv_finished.setText(Formatter.formatFileSize(context, finished) + "/");
                             }
-
+                            tv_size.setText(Formatter.formatFileSize(context, total));
                             if (fileStatus == null) {
                                 return;
                             }

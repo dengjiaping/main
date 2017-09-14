@@ -64,7 +64,7 @@ public class MoreGameListActivity extends BaseFgActivity {
         Intent intent = getIntent();
         String title = intent.getStringExtra(KeyConstant.TITLE);
         mLabelId = intent.getStringExtra(KeyConstant.category_Id);
-        android.util.Log.d(TAG, title + "分类id:" + mLabelId);
+        android.util.Log.d(TAG, title + ",分类,id:" + mLabelId);
         Button leftBt = (Button) findViewById(R.id.left_bt);
         findViewById(R.id.center_tv).setVisibility(View.GONE);
         leftBt.setOnClickListener(new View.OnClickListener() {
@@ -102,12 +102,13 @@ public class MoreGameListActivity extends BaseFgActivity {
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 //少于指定条数不加载
-                int total = pageAction.getTotal();
+             /*   int total = pageAction.getTotal();
                 if (total < pageAction.getPageSize()) {
                     pullListView.setHasMoreData(false);
                     pullListView.onPullUpRefreshComplete();
                     return;
-                }
+                }*/
+
                 int currentPage = pageAction.getCurrentPage();
                 getGameList(); //上拉,加载更多
 
@@ -125,9 +126,9 @@ public class MoreGameListActivity extends BaseFgActivity {
         });
         gameInfoList = new ArrayList<>();
 
-        getGameList();//第一次进来加载
-        adapter = new MoreGameListAdapter(this, getSupportFragmentManager(), timerTasks);
+        adapter = new MoreGameListAdapter(this, getSupportFragmentManager(), timerTasks,gameInfoList);
         refreshableView.setAdapter(adapter);
+        getGameList();//第一次进来加载
     }
 
     private void getGameList() {
@@ -167,33 +168,38 @@ public class MoreGameListActivity extends BaseFgActivity {
                             pageAction.setTotal(data.getTotals());}*/
                             gameInfoList = gameList;
                             adapter.setDate(gameInfoList);
+                            loadStateView.setVisibility(View.GONE);
+                            pageAction.setCurrentPage(1);
                         }
                     } else {
                         //不是第一页
                       /*  if (size > 0) {
                             pageAction.setTotal(data.getTotals());
                             gameInfoList.addAll(gameList);
+
+                            0    0--10
+                            1
                         }*/
+                        loadStateView.setVisibility(View.GONE);
                         if (gameList == null) {
-                            loadStateView.setVisibility(View.GONE);
                             ToastUtil.show(content, getString(R.string.server_exception));
                             return;
                         }
                         int size = gameList.size();
-                        if (size == 0 || size <= PAGE_SIZE) {
-                            loadStateView.setVisibility(View.GONE);
+                        android.util.Log.d(TAG, "这次请求到的大小:" + size);
+                        if (size == 0) {
                             ToastUtil.show(content, getString(R.string.no_more_data));
                             pullListView.setHasMoreData(false);
                             return;
                         }
-                        loadStateView.setVisibility(View.GONE);
+                        pageAction.setCurrentPage(pageAction.getCurrentPage() + 1);
+                       /* if ( size < PAGE_SIZE) {
 
+                        }*/
                         //数据不为空
-                        //pageAction.setTotal(gameInfoList.size());
-                        pageAction.setTotal(100);
-                        Log.d(TAG, gameInfoList.size() + "返回");
                         if (gameInfoList != null) {
                             gameInfoList.addAll(gameList);
+                            Log.d(TAG, "总数:" + gameInfoList.size());
                             if (null != adapter) {
                                 adapter.setDate(gameInfoList);
                             }
@@ -255,8 +261,10 @@ public class MoreGameListActivity extends BaseFgActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
                 params.put(KeyConstant.category_Id, mLabelId);
-                params.put(KeyConstant.start_Record, String.valueOf(PAGE_SIZE * pageAction.getCurrentPage()));
+                int startRecord = PAGE_SIZE * pageAction.getCurrentPage();
+                params.put(KeyConstant.start_Record, String.valueOf(startRecord));
                 params.put(KeyConstant.RECORDS, String.valueOf(PAGE_SIZE));
+                android.util.Log.d(TAG, startRecord + ",请求参数:" + PAGE_SIZE);
                 return params;
             }
         };
@@ -266,6 +274,7 @@ public class MoreGameListActivity extends BaseFgActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        android.util.Log.d(TAG, "onStop: !!");
         if (null != adapter) {
             adapter.clean();
             for (TimerTask timerTask : timerTasks) {

@@ -113,7 +113,9 @@ public class InstalledFragment extends BaseSearchFragment {
         for (FileLoadInfo openFileInfo : openFileInfoList) {
             //String gameName = openFileInfo.getName();
             String gamePackageName = openFileInfo.getPackageName();
+            Log.d(TAG, openFileInfo.getPackageName() + "======已装===========" + openFileInfo.getTitle());
             if (pkgNameListStr == null || !pkgNameListStr.contains(gamePackageName)) {
+                Log.d(TAG, "进来," + gamePackageName);
                 jsonArray.put(gamePackageName);
             }
         }
@@ -129,12 +131,10 @@ public class InstalledFragment extends BaseSearchFragment {
     private List<PackageInfo> getLocalApp() {
         packageInfos = packageManager.getInstalledPackages(0);
         localAppList.clear();
-        Log.d(TAG, packageInfos + "getLocalApp: " + packageInfos.size());
         if (pkgNameListStr != null) {
             for (int i = 0; i < packageInfos.size(); i++) {
                 packageInfo = packageInfos.get(i);
                 applicationInfo = packageInfo.applicationInfo;
-                Log.d(TAG, packageInfo + "/applicationInfo " + applicationInfo);
                 //非系统应用
                 if (null != applicationInfo) {
                     if ((applicationInfo.flags & applicationInfo.FLAG_SYSTEM) <= 0) {
@@ -143,6 +143,7 @@ public class InstalledFragment extends BaseSearchFragment {
                         //如果包名   包含在SD文件里
                         if (pkgNameListStr.contains(packageName)) {
                             localAppList.add(packageInfo);
+                            Log.d(TAG, packageName + ",包含在sd卡:" + localAppList.size());
                         }
                     }
                 }

@@ -53,18 +53,18 @@ public class MoreGameListAdapter extends BaseAdapter {
 
     private static String TAG = MoreGameListActivity.class.getSimpleName();
     private List<LikeListBean.DataBean.GameListBean> gameInfoList;
-    private ViewHolder holder;
-    private Handler uiHandler = new Handler();
-    private Timer timer = new Timer();
+    private static Handler uiHandler = new Handler();
     private Context context;
     private FragmentManager fm;
     private List<TimerTask> timerTasks;
 
-    public MoreGameListAdapter(Context context, FragmentManager fm, List<TimerTask> timerTasks) {
+    public MoreGameListAdapter(Context context, FragmentManager fm, List<TimerTask> timerTasks, List<LikeListBean.DataBean
+            .GameListBean> gameInfoList) {
         super();
         this.fm = fm;
         this.context = context;
         this.timerTasks = timerTasks;
+        this.gameInfoList = gameInfoList;
     }
 
     /**
@@ -99,23 +99,21 @@ public class MoreGameListAdapter extends BaseAdapter {
     }
 
     public void clean() {
-        if (gameInfoList != null) {
+      /*  if (gameInfoList != null) {
             uiHandler = null;
             if (null != timer) {
                 timer.cancel();
                 timer = null;
             }
-        }
+        }*/
     }
 
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
-
         final LikeListBean.DataBean.GameListBean gameInfo = (gameInfoList == null) ? null : gameInfoList.get(position);
+        final ViewHolder holder;
         if (convertView == null) {
-
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_game_2, parent, false);
-
             holder = new ViewHolder(context, fm);
             holder.img = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
             holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
@@ -143,7 +141,7 @@ public class MoreGameListAdapter extends BaseAdapter {
      * @author flan
      * @since 2015年10月28日
      */
-    public class ViewHolder {
+    public static class ViewHolder {
 
         private Context context;
         private LikeListBean.DataBean.GameListBean gameInfo;
@@ -153,42 +151,44 @@ public class MoreGameListAdapter extends BaseAdapter {
         private GameLoadProgressBar progressBar;    //下载进度条
         private FragmentManager fm;
         private IFileLoad fileLoad;
+        private Timer timer = new Timer();
 
         public ViewHolder(Context context, FragmentManager fm) {
             this.context = context;
             this.fm = fm;
             fileLoad = FileLoadManager.getInstance(context);
-            //init();
+            init();
         }
 
         private void init() {
             TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
-                    if (null == uiHandler) {
+            /*        if (null == uiHandler) {
+                        Log.d(TAG, "run: 更新  null == uiHandler" );
                         this.cancel();
                         return;
-                    }
+                    }*/
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d(TAG, "更新下载:" + ViewHolder.this.gameInfo.getGameName());
-                            if (null == ViewHolder.this.gameInfo) {
+                            Log.d(TAG, gameInfo.getGameName()+"下载进度更新:" +gameInfo.getPackages() );
+                      /*      if (null == gameInfo) {
                                 return;
-                            }
-                            GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(ViewHolder.this.gameInfo.getFilename(),
-                                    ViewHolder.this.gameInfo.getGameLink(), ViewHolder.this.gameInfo.getPackages(), ConvUtil.NI
-                                            (ViewHolder.this
-                                                    .gameInfo.getVersionCode()));
+                            }*/
+                            GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo.getFilename(),
+                                   gameInfo.getGameLink(),gameInfo.getPackages(), ConvUtil.NI
+                                            (gameInfo.getVersionCode()));
+                            Log.d(TAG, "下载状态:"+fileStatus.getStatus());
                             progressBar.setLoadState(fileStatus);
                         }
                     });
                 }
             };
-            timerTasks.add(task);
-            if (null != timer) {
+            //timerTasks.add(task);
+           // if (null != timer) {
                 timer.schedule(task, 0, 500);
-            }
+            //}
         }
 
         /**
@@ -217,13 +217,10 @@ public class MoreGameListAdapter extends BaseAdapter {
             ratingBar.setRating(gameInfo.getScoreLevel());//星星
 
             //设置进度条状态
-            String gameLink = gameInfo.getGameLink();
-            GameFileStatus gameFileLoadStatus = fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameLink,
-                    gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode()));
-            progressBar.setLoadState(gameFileLoadStatus);
+            //设置进度条状态
+            progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo.getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode())));
             //必须设置，否则点击进度条后无法进行响应操作
-            FileLoadInfo fileLoadInfo = new FileLoadInfo(gameInfo.getFilename(), gameLink, gameInfo.getMd5(),
-                    ConvUtil.NI(gameInfo.getVersionCode()), gameName, gameLogo, gameInfo.getId(), FileLoadInfo.TYPE_GAME);
+            FileLoadInfo fileLoadInfo = new FileLoadInfo(gameInfo.getFilename(), gameInfo.getGameLink(), gameInfo.getMd5(), gameInfo.getVersionCode(), gameInfo.getGameName(), gameInfo.getGameLogo(), gameInfo.getId(), FileLoadInfo.TYPE_GAME);
             fileLoadInfo.setPackageName(gameInfo.getPackages());
             progressBar.setFileLoadInfo(fileLoadInfo);
             progressBar.setOnStateChangeListener(new ProgressBarStateListener(context, fm));
@@ -233,7 +230,7 @@ public class MoreGameListAdapter extends BaseAdapter {
                     progressBar.toggle();
                 }
             });
-            init();
+            //init(gameInfo);
             String simpleLabel = gameInfo.getCName();
             if (simpleLabel != null) {
                 String[] typeNameArray = simpleLabel.split("\\,");
