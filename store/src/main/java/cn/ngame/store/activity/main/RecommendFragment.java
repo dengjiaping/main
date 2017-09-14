@@ -208,14 +208,16 @@ public class RecommendFragment extends BaseSearchFragment {
         int totals = result.getTotals();
         if (result.getData().size() > 0) {//刷新后进来
             pageAction.setTotal(totals);
-            list.addAll(resultData);
-            topList.addAll(resultData);
+            this.list.addAll(resultData);
+            this.topList.addAll(resultData);
         }
         if (result.getData().size() > 0 && pageAction.getCurrentPage() == 0) {
             //第一次进来
-            list = resultData; //清除数据
-            topList = resultData;
+            this.list.clear(); //清除数据
+            this.topList.clear();
             pageAction.setTotal(totals);
+            this.list.addAll(resultData); //清除数据
+            this.topList.addAll(resultData) ;
             if (list.size() > 1) {
                 setHeaderInfo(list);//设置头部布局
                 list.remove(0);

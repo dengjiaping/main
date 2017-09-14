@@ -4,7 +4,7 @@
              xmlns:ngame="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="@color/f5f5f5"
+             android:background="@color/f7f7f7"
              android:descendantFocusability="blocksDescendants"
              android:orientation="vertical">
 
@@ -291,22 +291,21 @@
                 android:id="@+id/tablayout"
                 style="@style/MyCustomTabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_50"
-                android:layout_marginTop="@dimen/dp_05"
-                android:background="@color/white"
+                android:layout_height="@dimen/dp_48"
+                android:background="@color/f5f5f5"
                 android:tag="sticky"
                 tabs:tabGravity="fill"
+                tabs:tabIndicatorHeight="@dimen/dm002"
                 tabs:tabIndicatorColor="@color/transparent"
                 tabs:tabMaxWidth="0dp"
                 tabs:tabMode="fixed"
-                tabs:tabSelectedTextColor="@color/game_detail_tab_tv_seleted"
-                tabs:tabTextColor="@color/color_666666"/>
+                tabs:tabSelectedTextColor="@color/mainColor"
+                tabs:tabTextColor="@color/aaaaaa"/>
 
             <cn.ngame.store.view.AutoHeightViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_12"
                 android:background="@color/f5f5f5"/>
         </LinearLayout>
     </cn.ngame.store.view.StickyScrollView>

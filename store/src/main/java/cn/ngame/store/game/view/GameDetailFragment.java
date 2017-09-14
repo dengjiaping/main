@@ -37,7 +37,6 @@ import cn.ngame.store.fragment.ImageDialogFragment;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
 import cn.ngame.store.gamehub.view.ShowViewActivity;
 
-import static cn.ngame.store.R.id.tag_tv_01;
 import static cn.ngame.store.R.id.tv_show_all2;
 
 /**
@@ -101,7 +100,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
         img_container = (LinearLayout) view.findViewById(R.id.img_container);
         ll_detail = (LinearLayout) view.findViewById(R.id.ll_detail);
 
-        labelTv0 = (TextView) view.findViewById(tag_tv_01);
+        labelTv0 = (TextView) view.findViewById(R.id.tag_tv_01);
         labelTv1 = (TextView) view.findViewById(R.id.tag_tv_02);
         labelTv2 = (TextView) view.findViewById(R.id.tag_tv_03);
         labelTv3 = (TextView) view.findViewById(R.id.tag_tv_04);

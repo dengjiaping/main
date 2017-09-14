@@ -122,7 +122,7 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
                 }
 
                 if(!newFile.exists() || !newFile.isFile()){
-                    Toast.makeText(context,"安装文件丢失，删除记录重新下载",Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,"安装文件丢失，请删除记录重新下载",Toast.LENGTH_LONG).show();
 
                     return;
                 }

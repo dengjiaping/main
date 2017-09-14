@@ -78,7 +78,6 @@ public class GameLoadProgressBar extends View {
         textSize = CommonUtil.dip2px(context, Float.valueOf(tempSize.substring(0, tempSize.length() - 2)));
         String tempWidth = attrs.getAttributeValue("http://schemas.android.com/apk/res/android", "layout_width");
         width = CommonUtil.dip2px(context, Float.valueOf(tempWidth.substring(0, tempWidth.length() - 3)));
-        Log.d(TAG, "888width=" + width);
         //圆角
         mRadius = CommonUtil.dip2px(context, 4);
         if (240==width) {
@@ -121,9 +120,11 @@ public class GameLoadProgressBar extends View {
         } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_HAS_DOWNLOAD) { //已经下载完成
             //progress = 100;
             text = "安装";
+            Log.d(TAG, "setLoadState: 安装");
         } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_HAS_INSTALL || gameFileStatus.getStatus() ==
                 GameFileStatus.STATE_HAS_INSTALL_OLD) {     //已经安装
             text = "打开";
+            Log.d(TAG, "setLoadState: 打开");
         }
 //        else if(gameFileStatus.getStatus() == GameFileStatus.STATE_HAS_INSTALL_OLD){
 //            text = "更新";
@@ -161,6 +162,7 @@ public class GameLoadProgressBar extends View {
         } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_PAUSE) {    //暂停中，点击后下载
             restartDownload();
         } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_HAS_DOWNLOAD) { //已经下载完成，点击后安装
+            Log.d(TAG, "已经下载完成，点击后安装");
             installApp();
         } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_HAS_INSTALL || gameFileStatus.getStatus() ==
                 GameFileStatus.STATE_HAS_INSTALL_OLD) { //已经安装，点击后打开APP
@@ -268,17 +270,16 @@ public class GameLoadProgressBar extends View {
     }
 
     private void openApp() {
-        HashMap<String, String> map = new HashMap<>();
-        map.put(KeyConstant.game_Name, fileLoadInfo.getTitle());
-        MobclickAgent.onEvent(context, UMEventNameConstant.gameOpenButton,
-                map);
         gameFileStatus.setStatus(GameFileStatus.STATE_HAS_INSTALL);
         text = "打开";
         if (listener != null) {
             listener.onOpenApp(fileLoadInfo);
             invalidate();
-
         }
+        HashMap<String, String> map = new HashMap<>();
+        map.put(KeyConstant.game_Name, fileLoadInfo.getTitle());
+        MobclickAgent.onEvent(context, UMEventNameConstant.gameOpenButton,
+                map);
     }
 
     @Override

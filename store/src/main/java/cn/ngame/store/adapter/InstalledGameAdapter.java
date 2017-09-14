@@ -187,7 +187,6 @@ public class InstalledGameAdapter extends BaseAdapter {
                     .placeholder(drawable)
                     .resizeDimen(R.dimen.dp_60, R.dimen.dp_60)
                     .into(img);
-            Log.d(TAG, "设置图片 ");
            /* GenericDraweeHierarchy hierarchy = img.getHierarchy();
             hierarchy.setPlaceholderImage(drawable, ScalingUtils.ScaleType.FIT_XY);*/
             openBt.setOnClickListener(new View.OnClickListener() {

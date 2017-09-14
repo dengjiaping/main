@@ -179,7 +179,6 @@ public class MoreGameListAdapter extends BaseAdapter {
                             GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo.getFilename(),
                                    gameInfo.getGameLink(),gameInfo.getPackages(), ConvUtil.NI
                                             (gameInfo.getVersionCode()));
-                            Log.d(TAG, "下载状态:"+fileStatus.getStatus());
                             progressBar.setLoadState(fileStatus);
                         }
                     });
