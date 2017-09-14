@@ -125,9 +125,7 @@ public class MoreGameListActivity extends BaseFgActivity {
             }
         });
         gameInfoList = new ArrayList<>();
-
-        adapter = new MoreGameListAdapter(this, getSupportFragmentManager(), timerTasks,gameInfoList);
-        refreshableView.setAdapter(adapter);
+        
         getGameList();//第一次进来加载
     }
 

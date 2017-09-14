@@ -18,7 +18,9 @@ package cn.ngame.store.base.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.umeng.analytics.MobclickAgent;
 
@@ -26,7 +28,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import cn.ngame.store.R;
-import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.activity.main.MainHomeActivity;
 import cn.ngame.store.core.fileload.FileLoadService;
 import cn.ngame.store.core.utils.CommonUtil;
@@ -43,7 +44,7 @@ import static cn.ngame.store.StoreApplication.deviceId;
  * @author flan
  * @since 2016年5月3日
  */
-public class BeginActivity extends BaseFgActivity {
+public class BeginActivity extends FragmentActivity {
 
     public static final String TAG = BeginActivity.class.getSimpleName();
     private boolean isFirstInstall = true;
@@ -54,6 +55,7 @@ public class BeginActivity extends BaseFgActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //设置全屏
+        Log.d(TAG, "onCreate: ");
         this.setContentView(R.layout.activity_begin);
         content = this;
         //启动后台服务
@@ -88,7 +90,7 @@ public class BeginActivity extends BaseFgActivity {
                     SPUtils.put(content, Constant.CONFIG_FIRST_INSTALL, false);
                     finish();
                 }
-            }, 200);
+            }, 100);
 
         } else {
             final Intent intent = new Intent(content, MainHomeActivity.class);
@@ -103,7 +105,7 @@ public class BeginActivity extends BaseFgActivity {
                     startActivity(intent);
                     finish();
                 }
-            }, 200);
+            }, 100);
         }
     }
 

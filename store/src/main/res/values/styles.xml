@@ -10,7 +10,7 @@
     <style name="AppTheme_NoActionBar_Fullscreen" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
+       <!-- <item name="android:windowFullscreen">true</item>-->
         <item name="android:windowActionBar">false</item>
         <item name="android:windowBackground">@drawable/img_welcome_0</item>
     </style>
