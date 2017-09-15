@@ -109,7 +109,6 @@ public class MoreGameListActivity extends BaseFgActivity {
                     return;
                 }*/
 
-                int currentPage = pageAction.getCurrentPage();
                 getGameList(); //上拉,加载更多
 
             }
@@ -126,6 +125,8 @@ public class MoreGameListActivity extends BaseFgActivity {
         });
         gameInfoList = new ArrayList<>();
         
+        adapter = new MoreGameListAdapter(this, getSupportFragmentManager(), timerTasks,gameInfoList);
+        refreshableView.setAdapter(adapter);
         getGameList();//第一次进来加载
     }
 

@@ -20,8 +20,11 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.app.FragmentManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,9 +62,11 @@ public class InstalledGameAdapter extends BaseAdapter {
     private QuickAction mItemClickQuickAction;
     private int mPosition;
     private ViewHolder holder;
+    private PackageManager packageManager;
     private String TAG = InstalledGameAdapter.class.getSimpleName();
     public InstalledGameAdapter(Context context, FragmentManager fm, QuickAction mItemClickQuickAction) {
         super();
+        packageManager = context.getPackageManager();
         this.mItemClickQuickAction = mItemClickQuickAction;
         this.context = context;
         this.fm = fm;
@@ -162,10 +167,8 @@ public class InstalledGameAdapter extends BaseAdapter {
         private ImageView more_bt;
         private TextView tv_title, openBt, tv_size;
         private IFileLoad fileLoad;
-        private PackageManager packageManager;
 
         public ViewHolder(Context context, FragmentManager fm) {
-            packageManager = context.getPackageManager();
             this.fm = fm;
             fileLoad = FileLoadManager.getInstance(context);
             //init();
@@ -179,13 +182,13 @@ public class InstalledGameAdapter extends BaseAdapter {
             }
 
             final String appName = applicationInfo.loadLabel(packageManager).toString();
-            Drawable drawable = applicationInfo.loadIcon(packageManager);
+            Drawable drawable = getIconFromPackageName(packageInfo.packageName,context);
             tv_title.setText(null != appName ? appName : "");
            //加载图片
             Picasso.with(context)
                     .load("...")
                     .placeholder(drawable)
-                    .resizeDimen(R.dimen.dp_60, R.dimen.dp_60)
+                    .resizeDimen(R.dimen.dm100, R.dimen.dm100)
                     .into(img);
            /* GenericDraweeHierarchy hierarchy = img.getHierarchy();
             hierarchy.setPlaceholderImage(drawable, ScalingUtils.ScaleType.FIT_XY);*/
@@ -199,7 +202,48 @@ public class InstalledGameAdapter extends BaseAdapter {
                 }
             });
         }
-
+        public  Drawable getIconFromPackageName(String packageName, Context context)
+        {
+            PackageManager pm = context.getPackageManager();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
+            {
+                try
+                {
+                    PackageInfo pi = pm.getPackageInfo(packageName, 0);
+                    Context otherAppCtx = context.createPackageContext(packageName, Context.CONTEXT_IGNORE_SECURITY);
+                    int displayMetrics[] = {DisplayMetrics.DENSITY_XHIGH, DisplayMetrics.DENSITY_HIGH, DisplayMetrics.DENSITY_TV};
+                    for (int displayMetric : displayMetrics)
+                    {
+                        try
+                        {
+                            Drawable d = otherAppCtx.getResources().getDrawableForDensity(pi.applicationInfo.icon, displayMetric);
+                            if (d != null)
+                            {
+                                return d;
+                            }
+                        }
+                        catch (Resources.NotFoundException e)
+                        {
+                            continue;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    // Handle Error here
+                }
+            }
+            ApplicationInfo appInfo = null;
+            try
+            {
+                appInfo = pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+            }
+            catch (PackageManager.NameNotFoundException e)
+            {
+                return null;
+            }
+            return appInfo.loadIcon(pm);
+        }
         /*private void init() {
             timer.schedule(new TimerTask() {
                 @Override

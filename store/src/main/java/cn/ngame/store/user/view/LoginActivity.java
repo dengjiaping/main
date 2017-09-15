@@ -66,7 +66,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     private ImageView deleteIv;
     private UMShareAPI mShareAPI;
     private LoginActivity mContext;
-    private String loginloginType;
     private DialogHelper dialogHelper;
 
     @Override
@@ -166,7 +165,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     protected void onResume() {
         super.onResume();
         userName = preferences.getString(Constant.CONFIG_USER_NAME, "");
-        loginloginType = preferences.getString(Constant.CONFIG_LOGIN_TYPE, "1");
         if (!userName.equals("") && userName.length() <= 11) {
             et_user.setText(userName);
             et_user.setSelection(userName.length());
