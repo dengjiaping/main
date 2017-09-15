@@ -106,7 +106,7 @@ public class DownLoadCenterAdapter extends BaseAdapter {
     public void clean() {
         if (fileInfoList != null) {
             fileInfoList.clear();
-            uiHandler = null;
+            //uiHandler = null;
         }
     }
 
@@ -205,17 +205,25 @@ public class DownLoadCenterAdapter extends BaseAdapter {
                             }
                             int process = (int) ((double) fileStatus.getFinished() / (double) fileStatus.getLength() * 100);
                             pb.setProgress(process);
-                            tv_percent.setText(100 == process ? "" : process + "%");
+                            String processStr = "";
+                            if (100 < process) {
+                                processStr = process + "%";
+                            }
+                            tv_percent.setText(processStr);
                             progressBar.setVisibility(View.VISIBLE);
-                            if (fileStatus.getStatus() == GameFileStatus.STATE_DOWNLOAD) {
-                                tv_state.setText("下载中:");
+                            int status = fileStatus.getStatus();
+                            if (status == GameFileStatus.STATE_DOWNLOAD) {
+                                tv_state.setText("正在下载");
                                 pb.setVisibility(View.VISIBLE);
-                            } else if (fileStatus.getStatus() == GameFileStatus.STATE_PAUSE) {
+                            } else if (status == GameFileStatus.STATE_PAUSE) {
                                 tv_state.setText("暂停中");
                                 pb.setVisibility(View.VISIBLE);
-                            } else {
+                            } else if (status == GameFileStatus.STATE_HAS_DOWNLOAD) {
                                 pb.setVisibility(View.INVISIBLE);
                                 tv_state.setText("已完成");
+                            } else {
+                                pb.setVisibility(View.INVISIBLE);
+                                tv_state.setText("获取资源失败");
                             }
                         }
                     });

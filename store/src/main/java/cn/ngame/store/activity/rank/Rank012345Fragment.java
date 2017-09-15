@@ -351,7 +351,13 @@ public class Rank012345Fragment extends BaseSearchFragment {
                             listData(result);
                         } else {
                             Log.d(TAG, "onNext: 服务器开小差");
-                            loadStateView.setState(LoadStateView.STATE_END,getString(R.string.server_exception_2_pullrefresh));
+                            if (list != null && list.size() > 0) {
+                                ToastUtil.show(content, getString(R.string
+                                        .server_exception_2_pullrefresh));
+                            } else {
+                                loadStateView.setState(LoadStateView.STATE_END, getString(R.string
+                                        .server_exception_2_pullrefresh));
+                            }
                             pullListView.onPullUpRefreshComplete();
                             pullListView.onPullDownRefreshComplete();
                         }
@@ -385,7 +391,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
             this.list.addAll(gameList);
         }
         if (size > 0 && pageAction.getCurrentPage() == 0) {
-            list=gameList;
+            list = gameList;
             pageAction.setTotal(result.getTotals());
         }
         ListView refreshableView = pullListView.getRefreshableView();

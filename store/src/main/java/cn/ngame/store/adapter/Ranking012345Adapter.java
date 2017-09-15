@@ -23,6 +23,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TextAppearanceSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -267,9 +268,14 @@ public class Ranking012345Adapter extends BaseAdapter {
             ratingBar.setRating(gameInfo.getScoreLevel());
             //是否手柄、vr，头控,
             String typeNameStr = gameInfo.getCName();
+            Log.d("8888", "name------------------"+gameName+"----------------------"+typeNameStr);
             if (typeNameStr == null) {
                 return;
             }
+            tv_shoubing.setVisibility(View.GONE);
+            tv_vr.setVisibility(View.GONE);
+            tv_toukong.setVisibility(View.GONE);
+            tv_yun_duan.setVisibility(View.GONE);
             String[] typeNameArray = typeNameStr.split("\\,");
             for (int i = 0; i < typeNameArray.length; i++) {
                 switch (i) {
