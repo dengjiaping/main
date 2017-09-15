@@ -206,7 +206,7 @@ public class DownLoadCenterAdapter extends BaseAdapter {
                             int process = (int) ((double) fileStatus.getFinished() / (double) fileStatus.getLength() * 100);
                             pb.setProgress(process);
                             String processStr = "";
-                            if (100 < process) {
+                            if (process < 100) {
                                 processStr = process + "%";
                             }
                             tv_percent.setText(processStr);

@@ -33,8 +33,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.squareup.picasso.Picasso;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
@@ -185,13 +186,13 @@ public class InstalledGameAdapter extends BaseAdapter {
             Drawable drawable = getIconFromPackageName(packageInfo.packageName,context);
             tv_title.setText(null != appName ? appName : "");
            //加载图片
-            Picasso.with(context)
+     /*       Picasso.with(context)
                     .load("...")
                     .placeholder(drawable)
                     .resizeDimen(R.dimen.dm100, R.dimen.dm100)
-                    .into(img);
-           /* GenericDraweeHierarchy hierarchy = img.getHierarchy();
-            hierarchy.setPlaceholderImage(drawable, ScalingUtils.ScaleType.FIT_XY);*/
+                    .into(img);*/
+            GenericDraweeHierarchy hierarchy = img.getHierarchy();
+            hierarchy.setPlaceholderImage(drawable, ScalingUtils.ScaleType.FIT_XY);
             openBt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
