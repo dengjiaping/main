@@ -117,6 +117,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
         if (gameInfo != null && gameInfo.gameDetailsImages != null && gameInfo.gameDetailsImages.size() > 0) {
             img_container.removeAllViews();
             imgs.clear();
+            img_container.setBackgroundResource(R.color.transparent);
             List<GameImage> imagesList = gameInfo.gameDetailsImages;
             int dp250 = CommonUtil.dip2px(context, 250);
             int dp160 = CommonUtil.dip2px(context, 160);

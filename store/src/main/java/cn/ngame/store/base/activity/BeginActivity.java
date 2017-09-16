@@ -20,7 +20,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import com.umeng.analytics.MobclickAgent;
 
@@ -54,8 +53,7 @@ public class BeginActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //设置全屏
-        Log.d(TAG, "onCreate: ");
-      // this.setContentView(R.layout.activity_begin);
+        // this.setContentView(R.layout.activity_begin);
         content = this;
         //启动后台服务
         Intent serviceIntent = new Intent(this, FileLoadService.class);
