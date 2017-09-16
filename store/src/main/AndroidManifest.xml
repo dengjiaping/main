@@ -56,7 +56,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".base.activity.BeginActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme_NoActionBar_Fullscreen"
             >
             <intent-filter>

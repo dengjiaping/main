@@ -213,7 +213,7 @@ public class DownLoadCenterAdapter extends BaseAdapter {
                             progressBar.setVisibility(View.VISIBLE);
                             int status = fileStatus.getStatus();
                             if (status == GameFileStatus.STATE_DOWNLOAD) {
-                                tv_state.setText("正在下载");
+                                tv_state.setText("正在下载 ");
                                 pb.setVisibility(View.VISIBLE);
                             } else if (status == GameFileStatus.STATE_PAUSE) {
                                 tv_state.setText("暂停中");
@@ -234,7 +234,7 @@ public class DownLoadCenterAdapter extends BaseAdapter {
         public void update(final FileLoadInfo fileInfo) {
             this.fileInfo = fileInfo;
             String gameName = fileInfo.getTitle();
-            Log.d("555", "update " + gameName);
+            Log.d("8888", "update " + gameName);
             if (null != gameName) {
                 tv_title.setText(gameName);
             }

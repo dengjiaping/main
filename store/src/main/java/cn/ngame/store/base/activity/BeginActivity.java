@@ -27,7 +27,6 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.ngame.store.R;
 import cn.ngame.store.activity.main.MainHomeActivity;
 import cn.ngame.store.core.fileload.FileLoadService;
 import cn.ngame.store.core.utils.CommonUtil;
@@ -56,7 +55,7 @@ public class BeginActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         //设置全屏
         Log.d(TAG, "onCreate: ");
-        this.setContentView(R.layout.activity_begin);
+      // this.setContentView(R.layout.activity_begin);
         content = this;
         //启动后台服务
         Intent serviceIntent = new Intent(this, FileLoadService.class);
@@ -76,7 +75,7 @@ public class BeginActivity extends FragmentActivity {
         final PushMessage msg = (PushMessage) getIntent().getSerializableExtra("msg");
         timer = new Timer();
         if (isFirstInstall) {
-            final Intent intent = new Intent(content, GuideViewActivity.class);
+            final Intent intent = new Intent(this, GuideViewActivity.class);
             if (pushMsgId > 0) {
                 intent.putExtra("msgId", pushMsgId);
                 intent.putExtra("type", pushMsgType);
@@ -93,7 +92,7 @@ public class BeginActivity extends FragmentActivity {
             }, 100);
 
         } else {
-            final Intent intent = new Intent(content, MainHomeActivity.class);
+            final Intent intent = new Intent(this, MainHomeActivity.class);
             if (pushMsgId > 0) {
                 intent.putExtra("msgId", pushMsgId);
                 intent.putExtra("type", pushMsgType);
