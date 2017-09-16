@@ -2,17 +2,10 @@ package cn.ngame.store.activity.manager;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import cn.ngame.store.R;
 import cn.ngame.store.activity.BaseFgActivity;
@@ -26,12 +19,6 @@ public class DownloadCenterActivity extends BaseFgActivity {
 
     private LinearLayout ll_back;
     private TextView tv_title;
-    private ViewPager viewpager;
-    private ArrayList<Fragment> fragments;
-    List<String> tabList = new ArrayList<String>();
-    String typeValue = "";
-    GameRankListBean bean;
-    String updateValue = "";
     private DownloadCenterActivity mContext;
 
     @Override

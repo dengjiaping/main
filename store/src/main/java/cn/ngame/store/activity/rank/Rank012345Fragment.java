@@ -53,7 +53,6 @@ public class Rank012345Fragment extends BaseSearchFragment {
     private PageAction pageAction;
     public static int PAGE_SIZE = 10;
     private List<LikeListBean.DataBean.GameListBean> list = new ArrayList<>();
-    private boolean IS_LOADED = false;
     private static int mSerial = 0;
     private int tab_position = 0;
     private boolean isFirst = true;

@@ -83,7 +83,6 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
     }
 
     public static DiscoverFragment newInstance(String arg) {
-        android.util.Log.d(TAG, "discover newInstance: ()");
         DiscoverFragment fragment = new DiscoverFragment();
         Bundle bundle = new Bundle();
         bundle.putString("", arg);

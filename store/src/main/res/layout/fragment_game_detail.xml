@@ -9,10 +9,9 @@
     <LinearLayout
         android:id="@+id/classify_item_llay"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_46"
+        android:layout_height="@dimen/dp_45"
         android:gravity="center_vertical"
         android:lines="1"
-        android:paddingBottom="@dimen/dp_2"
         android:paddingLeft="@dimen/dp_20"
         >
 
@@ -114,6 +113,7 @@
             android:id="@+id/img_container"
             android:layout_width="match_parent"
             android:layout_height="160dp"
+            android:background="@drawable/ic_def_logo_720_288"
             android:focusable="false"
             android:orientation="horizontal">
         </LinearLayout>
@@ -132,6 +132,7 @@
             android:layout_width="@dimen/dp_2"
             android:layout_height="@dimen/dp_17"
             android:layout_marginRight="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dm001"
             android:background="@color/color_2cbffe"/>
 
         <TextView
@@ -187,6 +188,7 @@
         <View
             android:layout_width="@dimen/dp_2"
             android:layout_height="@dimen/dp_17"
+            android:layout_marginTop="@dimen/dm001"
             android:layout_marginRight="@dimen/dp_4"
             android:background="@color/color_2cbffe"/>
 
@@ -243,6 +245,7 @@
             android:layout_width="@dimen/dp_2"
             android:layout_height="@dimen/dp_17"
             android:layout_marginRight="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dm001"
             android:background="@color/color_2cbffe"/>
 
         <TextView

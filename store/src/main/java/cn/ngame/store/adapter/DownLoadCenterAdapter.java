@@ -20,7 +20,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.text.format.Formatter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -213,14 +212,25 @@ public class DownLoadCenterAdapter extends BaseAdapter {
                             progressBar.setVisibility(View.VISIBLE);
                             int status = fileStatus.getStatus();
                             if (status == GameFileStatus.STATE_DOWNLOAD) {
-                                tv_state.setText("正在下载 ");
+                                String url = fileInfo.getUrl();
+                                if (!url.toString().contains(".apk")) {
+                                    tv_percent.setText("");
+                                    tv_state.setText("下载地址错误");
+                                } else {
+                                    tv_state.setText("正在下载 ");
+                                }
                                 pb.setVisibility(View.VISIBLE);
                             } else if (status == GameFileStatus.STATE_PAUSE) {
                                 tv_state.setText("暂停中");
                                 pb.setVisibility(View.VISIBLE);
                             } else if (status == GameFileStatus.STATE_HAS_DOWNLOAD) {
                                 pb.setVisibility(View.INVISIBLE);
-                                tv_state.setText("已完成");
+                                if (tv_size != null && tv_size.getText().toString().endsWith("KB")) {
+                                    tv_state.setText("安装包异常");
+                                } else {
+                                    tv_state.setText("已完成");
+                                }
+
                             } else {
                                 pb.setVisibility(View.INVISIBLE);
                                 tv_state.setText("获取资源失败");
@@ -234,7 +244,6 @@ public class DownLoadCenterAdapter extends BaseAdapter {
         public void update(final FileLoadInfo fileInfo) {
             this.fileInfo = fileInfo;
             String gameName = fileInfo.getTitle();
-            Log.d("8888", "update " + gameName);
             if (null != gameName) {
                 tv_title.setText(gameName);
             }
