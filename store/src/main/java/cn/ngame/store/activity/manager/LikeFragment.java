@@ -101,7 +101,10 @@ public class LikeFragment extends BaseSearchFragment {
         emptyTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getLikeList();
+                String retryStr = emptyTv.getText().toString();
+                if (retryStr.endsWith("点击重试")) {
+                    getLikeList();
+                }
             }
         });
     }
@@ -116,9 +119,9 @@ public class LikeFragment extends BaseSearchFragment {
         if (gameList == null || gameList.size() == 0) {
             emptyTv.setText("正在获取列表...");
         }
-        if (gameList != null) {
+     /*   if (gameList != null) {
             gameList.clear();
-        }
+        }*/
         LikeListBody bodyBean = new LikeListBody();
         bodyBean.setUserCode(StoreApplication.userCode);
         bodyBean.setStartRecord(pageAction.getCurrentPage());
@@ -129,7 +132,7 @@ public class LikeFragment extends BaseSearchFragment {
                     @Override
                     public void onError(Throwable e) {
 //                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
-                        //ToastUtil.show(content, getString(R.string.pull_to_refresh_network_error));
+                        Log.d(TAG, "onError: " + e.getMessage());
                         emptyTv.setText("获取喜欢列表失败~点击重试");
                     }
 
@@ -138,7 +141,9 @@ public class LikeFragment extends BaseSearchFragment {
                         if (result != null && result.getCode() == 0) {
                             LikeListBean.DataBean data = result.getData();
                             if (data != null) {
-                                gameList.clear();
+                                if (gameList != null) {
+                                    gameList.clear();
+                                }
                                 if (null != likeAdapter) {
                                     likeAdapter.setDate(gameList);
                                 }
