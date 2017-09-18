@@ -52,7 +52,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
     private Ranking012345Adapter adapter;
     protected final static String TAG = Rank012345Fragment.class.getSimpleName();
     private PageAction pageAction;
-    public static int PAGE_SIZE = 10;
+    public static int PAGE_SIZE = 20;
     private List<LikeListBean.DataBean.GameListBean> list = new ArrayList<>();
     private static int mSerial = 0;
     private int tab_position = 0;
@@ -121,10 +121,6 @@ public class Rank012345Fragment extends BaseSearchFragment {
         }
         return R.layout.rank01234_fragment;
     }
-
-    //第一级标签
-    private int tab_ids[] = new int[]{0, 102, 103, 104, 106, IMITATOR_ID};
-
     public void setTabPos(int mTabPos) {
         this.tab_position = tab_ids[mTabPos];
     }
@@ -164,7 +160,6 @@ public class Rank012345Fragment extends BaseSearchFragment {
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 //少于指定条数不加载
-                int pageSize = pageAction.getPageSize();
                 int currentPage = pageAction.getCurrentPage();
                 Log.d(TAG, list.size() + "==下拉:pagerAction.getTotal==" + pageAction.getTotal());
                 //当前页
@@ -268,10 +263,14 @@ public class Rank012345Fragment extends BaseSearchFragment {
         }
     }
 
+    //第一级标签                        全部,手柄,破解,汉化,特色,模拟器
+    private int tab_ids[] = new int[]{0, 102, 103, 104, 106, IMITATOR_ID};
     private String tabList[] = new String[]{"全部", "大陆", "美国", "韩国", "日本", "港澳台"};
-    private int tab2_Id01234[] = new int[]{0, 47, 49, 51, 50, 48};
+    private int tab2_Id01234[] = new int[]{0, 147, 149, 151, 150, 148};
+
+
     private String tabList5[] = new String[]{"FC", "MAME", "SFC", "GBA", "PS", "PSP", "MD", "GBC", "NDS"};
-    private int tab2_id5[] = new int[]{54, 55, 56, 57, 58, 59, 60, 61, 62};
+    private int tab2_id5[] = new int[]{154, 155, 156, 157, 158, 159, 160, 161, 162};
     private int tab2_all[];
 
     //顶部下面的二级标签
