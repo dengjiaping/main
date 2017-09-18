@@ -38,6 +38,7 @@ import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
+import cn.ngame.store.core.utils.DialogHelper;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.NetUtil;
 import cn.ngame.store.util.ToastUtil;
@@ -164,7 +165,7 @@ public class LikeFragment extends BaseSearchFragment {
                     View.OnClickListener mDialogClickLstener = new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            dialog.cancel();
+
                             if (v.getId() == R.id.choose_right_tv) {//游戏更新
                                 //获取gameId  传给服务器 不再喜欢
                                 int gamePosition = likeAdapter.getItemGameId();
@@ -172,6 +173,7 @@ public class LikeFragment extends BaseSearchFragment {
                                     cancelFavorite(gamePosition);
                                 }
                             }
+                            dialog.cancel();
                         }
                     };
                     inflate.findViewById(R.id.choose_right_tv).setOnClickListener(mDialogClickLstener);
@@ -200,22 +202,26 @@ public class LikeFragment extends BaseSearchFragment {
     private void cancelFavorite(final int position) {
         final long gameId = gameList.get(position).getId();
         Log.d(TAG, "cancelFavorite: " + gameId);
+        DialogHelper.showWaiting(getSupportFragmentManager(),"加载中...");
         String url = Constant.WEB_SITE + Constant.URL_DEL_FAVORITE;
         Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
             @Override
             public void onResponse(JsonResult result) {
+                DialogHelper.hideWaiting(getSupportFragmentManager());
                 if (result == null) {
                     ToastUtil.show(content, getString(R.string.server_exception));
                     return;
                 }
                 if (result.code == 0) {
-                    ToastUtil.show(content, "取消成功");
-                    gameList.remove(position);
+                    ToastUtil.show(content, "取消喜欢成功");
+                    if (gameList.size() > position) {
+                        gameList.remove(position);
+                    }
                     if (null != likeAdapter) {
                         likeAdapter.setDate(gameList);
                     }
                 } else {
-                    ToastUtil.show(content, "取消收藏失败");
+                    ToastUtil.show(content, "取消喜欢失败");
                 }
             }
         };
@@ -224,6 +230,8 @@ public class LikeFragment extends BaseSearchFragment {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
+                DialogHelper.hideWaiting(getSupportFragmentManager());
+                ToastUtil.show(content, "取消喜欢失败,请稍后重试");
                 Log.d(TAG, "取消喜欢失败：网络连接错误！" + volleyError.getMessage());
             }
         };
