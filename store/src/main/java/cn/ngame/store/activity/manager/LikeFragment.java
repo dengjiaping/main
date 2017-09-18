@@ -90,7 +90,6 @@ public class LikeFragment extends BaseSearchFragment {
         type = getArguments().getString("type");
         listView = (ListView) view.findViewById(R.id.listView);
         emptyTv = (TextView) view.findViewById(R.id.empty_tv);
-        emptyTv.setText("您的喜欢列表为空哦~");
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
@@ -99,6 +98,12 @@ public class LikeFragment extends BaseSearchFragment {
         likeAdapter = new LikeFragmentAdapter(content, getSupportFragmentManager(), mItemClickQuickAction, timerTasks);
         listView.setAdapter(likeAdapter);
 
+        emptyTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getLikeList();
+            }
+        });
     }
 
     private void getLikeList() {
@@ -108,7 +113,12 @@ public class LikeFragment extends BaseSearchFragment {
             emptyTv.setText(getString(R.string.no_network));
             return;
         }
-        emptyTv.setText("正在获取列表...");
+        if (gameList == null || gameList.size() == 0) {
+            emptyTv.setText("正在获取列表...");
+        }
+        if (gameList != null) {
+            gameList.clear();
+        }
         LikeListBody bodyBean = new LikeListBody();
         bodyBean.setUserCode(StoreApplication.userCode);
         bodyBean.setStartRecord(pageAction.getCurrentPage());
@@ -120,7 +130,7 @@ public class LikeFragment extends BaseSearchFragment {
                     public void onError(Throwable e) {
 //                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
                         //ToastUtil.show(content, getString(R.string.pull_to_refresh_network_error));
-                        emptyTv.setText("获取喜欢列表失败~");
+                        emptyTv.setText("获取喜欢列表失败~点击重试");
                     }
 
                     @Override
@@ -128,9 +138,13 @@ public class LikeFragment extends BaseSearchFragment {
                         if (result != null && result.getCode() == 0) {
                             LikeListBean.DataBean data = result.getData();
                             if (data != null) {
+                                gameList.clear();
+                                if (null != likeAdapter) {
+                                    likeAdapter.setDate(gameList);
+                                }
                                 gameList = data.getGameList();
                                 if (gameList == null || gameList.size() == 0) {
-                                    emptyTv.setText("列表为空~");
+                                    emptyTv.setText("您的喜欢列表为空哦~");
                                     emptyTv.setVisibility(View.VISIBLE);
                                 } else {
                                     if (null != likeAdapter) {
@@ -141,7 +155,7 @@ public class LikeFragment extends BaseSearchFragment {
                             }
                         } else {
                             //ToastUtil.show(getActivity(), result.getMsg());
-                            emptyTv.setText(getString(R.string.server_exception));
+                            emptyTv.setText(getString(R.string.server_exception) + "点击重试");
                             emptyTv.setVisibility(View.VISIBLE);
                         }
                     }
@@ -202,7 +216,7 @@ public class LikeFragment extends BaseSearchFragment {
     private void cancelFavorite(final int position) {
         final long gameId = gameList.get(position).getId();
         Log.d(TAG, "cancelFavorite: " + gameId);
-        DialogHelper.showWaiting(getSupportFragmentManager(),"加载中...");
+        DialogHelper.showWaiting(getSupportFragmentManager(), "加载中...");
         String url = Constant.WEB_SITE + Constant.URL_DEL_FAVORITE;
         Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
             @Override
