@@ -36,6 +36,7 @@ import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.fragment.ImageDialogFragment;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
 import cn.ngame.store.gamehub.view.ShowViewActivity;
+import cn.ngame.store.util.ToastUtil;
 
 import static cn.ngame.store.R.id.tv_show_all2;
 
@@ -281,6 +282,8 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                     intent.putExtra(KeyConstant.game_Name, gameInfo.gameName);
                     intent.putExtra(KeyConstant.GAME_LABELS, (Serializable) gameLabels);
                     startActivity(intent);
+                } else {
+                    ToastUtil.show(context,"无标签数据");
                 }
                 break;
             case R.id.img_container:
