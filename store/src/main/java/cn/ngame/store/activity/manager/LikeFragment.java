@@ -53,7 +53,7 @@ public class LikeFragment extends BaseSearchFragment {
 
     private ListView listView;
     private PageAction pageAction;
-    public static int PAGE_SIZE = 10;
+    public static int PAGE_SIZE = 15;
     private int typeValue;
     private String type;
     protected QuickAction mItemClickQuickAction;
@@ -102,11 +102,12 @@ public class LikeFragment extends BaseSearchFragment {
 
     private void getLikeList() {
         //tabPosition :0=全部   1=手柄   2=破解   3=汉化  4=特色
+        emptyTv.setVisibility(View.VISIBLE);
         if (!NetUtil.isNetworkConnected(content)) {
             emptyTv.setText(getString(R.string.no_network));
-            emptyTv.setVisibility(View.VISIBLE);
             return;
         }
+        emptyTv.setText("正在获取列表...");
         LikeListBody bodyBean = new LikeListBody();
         bodyBean.setUserCode(StoreApplication.userCode);
         bodyBean.setStartRecord(pageAction.getCurrentPage());
@@ -118,6 +119,7 @@ public class LikeFragment extends BaseSearchFragment {
                     public void onError(Throwable e) {
 //                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
                         //ToastUtil.show(content, getString(R.string.pull_to_refresh_network_error));
+                        emptyTv.setText("获取喜欢列表失败~");
                     }
 
                     @Override
@@ -127,6 +129,7 @@ public class LikeFragment extends BaseSearchFragment {
                             if (data != null) {
                                 gameList = data.getGameList();
                                 if (gameList == null || gameList.size() == 0) {
+                                    emptyTv.setText("列表为空~");
                                     emptyTv.setVisibility(View.VISIBLE);
                                 } else {
                                     if (null != likeAdapter) {
@@ -137,7 +140,6 @@ public class LikeFragment extends BaseSearchFragment {
                             }
                         } else {
                             //ToastUtil.show(getActivity(), result.getMsg());
-                            Log.d(TAG, "onNext: 请求成功,返回数据失败");
                             emptyTv.setText(getString(R.string.server_exception));
                             emptyTv.setVisibility(View.VISIBLE);
                         }
