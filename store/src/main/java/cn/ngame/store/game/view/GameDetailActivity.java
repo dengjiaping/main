@@ -599,7 +599,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         }
     };
 
-    //
+    //反馈
     public void showFeedbackDialog() {
         final Dialog dialog = new Dialog(this, R.style.Dialog_From_Bottom_Style);
         //填充对话框的布局

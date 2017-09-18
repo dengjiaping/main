@@ -1,9 +1,16 @@
 package cn.ngame.store.activity.manager;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -148,16 +155,44 @@ public class LikeFragment extends BaseSearchFragment {
             @Override
             public void onItemClick(QuickAction source, int pos, int actionId) {
                 if (pos == 0 && null != likeAdapter) {
-                    //获取gameId  传给服务器 不再喜欢
-                    int gamePosition = likeAdapter.getItemGameId();
-                    if (gameList != null && gamePosition < gameList.size()) {
-                        cancelFavorite(gamePosition);
-                    }
+                    final Dialog dialog = new Dialog(content);
+                    //填充对话框的布局
+                    View inflate = LayoutInflater.from(content).inflate(R.layout.layout_dialog_cancel_like, null);
+
+                    View.OnClickListener mDialogClickLstener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                            if (v.getId() == R.id.choose_right_tv) {//游戏更新
+                                //获取gameId  传给服务器 不再喜欢
+                                int gamePosition = likeAdapter.getItemGameId();
+                                if (gameList != null && gamePosition < gameList.size()) {
+                                    cancelFavorite(gamePosition);
+                                }
+                            }
+                        }
+                    };
+                    inflate.findViewById(R.id.choose_right_tv).setOnClickListener(mDialogClickLstener);
+                    inflate.findViewById(R.id.choose_cancel_tv).setOnClickListener(mDialogClickLstener);
+
+                    dialog.setContentView(inflate);//将布局设置给Dialog
+                    setDialogWindow(dialog);
                 }
                 //取消弹出框
                 source.dismiss();
             }
         });
+    }
+
+    private void setDialogWindow(Dialog dialog) {
+        Window dialogWindow = dialog.getWindow(); //获取当前Activity所在的窗体
+        dialogWindow.setGravity(Gravity.CENTER);//设置Dialog从窗体底部弹出
+        dialogWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams params = dialogWindow.getAttributes();   //获得窗体的属性
+        //params.y = 20;  Dialog距离底部的距离
+        params.width = getResources().getDimensionPixelSize(R.dimen.dm440);//设置Dialog距离底部的距离
+        dialogWindow.setAttributes(params); //将属性设置给窗体
+        dialog.show();//显示对话框
     }
 
     private void cancelFavorite(final int position) {
