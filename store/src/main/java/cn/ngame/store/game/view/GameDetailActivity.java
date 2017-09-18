@@ -576,7 +576,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                                     ToastUtil.show(content, "反馈失败,请稍后重试");
                                     return;
                                 }
-                                feedBack();
+                                postFeedBack();
                                 //取消弹出框
                                 source.dismiss();
                             }
@@ -616,7 +616,11 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                     UPDATE_TIPS_OR_DOWNLOAD_EXCEPTION = 2;
                 }
                 //提交反馈
-                feedBack();
+                if (gameInfo != null) {
+                    postFeedBack();
+                } else {
+                    ToastUtil.show(content, "网络异常,请稍后重试.");
+                }
             }
         };
         inflate.findViewById(R.id.choose_01_tv).setOnClickListener(mDialogClickLstener);
@@ -638,7 +642,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     }
 
     //游戏反馈
-    private void feedBack() {
+    private void postFeedBack() {
         final DialogHelper dialogHelper = new DialogHelper(getSupportFragmentManager(), content);
         dialogHelper.showAlert("提交反馈", true);
         String url = Constant.WEB_SITE + Constant.URL_SUBMIT_FEED_BACK_V4;

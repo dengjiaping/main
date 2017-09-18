@@ -47,6 +47,7 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
  */
 @SuppressLint("ValidFragment")
 public class Rank012345Fragment extends BaseSearchFragment {
+    private static int IMITATOR_ID = 153;
     private PullToRefreshListView pullListView;
     private Ranking012345Adapter adapter;
     protected final static String TAG = Rank012345Fragment.class.getSimpleName();
@@ -122,7 +123,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
     }
 
     //第一级标签
-    private int tab_ids[] = new int[]{0, 102, 103, 104, 106, 153};
+    private int tab_ids[] = new int[]{0, 102, 103, 104, 106, IMITATOR_ID};
 
     public void setTabPos(int mTabPos) {
         this.tab_position = tab_ids[mTabPos];
@@ -194,7 +195,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
             mTopLlay.setVisibility(View.GONE);
         } else {
             tablayout2 = (TabLayout) view.findViewById(R.id.rank01234_tablayout);
-            if (53 == tab_position) {
+            if (IMITATOR_ID == tab_position) {
                 //默认FC的id
                 tab2_position = 50;
                 int length = tabList5.length;
