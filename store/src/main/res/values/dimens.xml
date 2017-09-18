@@ -55,7 +55,7 @@
     <dimen name="dp_13">13dp</dimen>
     <dimen name="dp_2">2dp</dimen>
     <dimen name="dp_4">4dp</dimen>
-    <dimen name="diolg_bottom_height">50dp</dimen>
+    <dimen name="diolg_bottom_height">@dimen/dm080</dimen>
     <dimen name="dp_21">21dp</dimen>
     <dimen name="dp_32">32dp</dimen>
     <dimen name="dp_1">1dp</dimen>

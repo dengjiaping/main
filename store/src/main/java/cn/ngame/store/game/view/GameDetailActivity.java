@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.format.Formatter;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,11 +65,9 @@ import cn.ngame.store.core.utils.NetUtil;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.util.ToastUtil;
-import cn.ngame.store.view.ActionItem;
 import cn.ngame.store.view.AutoHeightViewPager;
 import cn.ngame.store.view.GameLoadProgressBar;
 import cn.ngame.store.view.MarqueTextView;
-import cn.ngame.store.view.QuickAction;
 import cn.ngame.store.view.ReviewScoreView;
 import cn.ngame.store.view.StickyScrollView;
 
@@ -229,7 +228,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
 
         //更新下载按钮
         timer.cancel();
-        timer=new Timer();
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -529,6 +528,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         StoreApplication.requestQueue.add(versionRequest);
     }
 
+    private int UPDATE_TIPS_OR_DOWNLOAD_EXCEPTION = 1;
     private View.OnClickListener gameDetailClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -555,24 +555,34 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                     break;
                 case R.id.game_detail_feedback_bt:
                     if (CommonUtil.isLogined()) {
-                        QuickAction quickAction = new QuickAction(content, QuickAction.VERTICAL);
+                      /*  QuickAction quickAction = new QuickAction(content, QuickAction.VERTICAL);
                         ActionItem pointItem = new ActionItem(1, "更新提醒");
                         ActionItem pointItem2 = new ActionItem(2, "下载异常");
                         quickAction.addActionItem(pointItem);
                         quickAction.addActionItem(pointItem2);
 
                         quickAction.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
+
                             @Override
                             public void onItemClick(QuickAction source, int pos, int actionId) {
-                                if (pos == 0) {
-                                    //获取gameId  传给服务器 不再喜欢
+                                if (0 == pos) {//更新提醒
+                                    //获取gameId
+                                    UPDATE_TIPS_OR_DOWNLOAD_EXCEPTION = 1;
+                                } else if (1 == pos) {
+                                    UPDATE_TIPS_OR_DOWNLOAD_EXCEPTION = 2;
                                 }
-                                ToastUtil.show(content, "提交成功,感谢您的反馈!");
+                                //提交反馈
+                                if (gameInfo == null) {
+                                    ToastUtil.show(content, "反馈失败,请稍后重试");
+                                    return;
+                                }
+                                feedBack();
                                 //取消弹出框
                                 source.dismiss();
                             }
                         });
-                        quickAction.show(feedbackTv);
+                        quickAction.show(feedbackTv);*/
+                        showFeedbackDialog();
                     } else {
                         CommonUtil.showUnLoginDialog(fm, content, R.string.unlogin_msg);
                     }
@@ -588,6 +598,106 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             }
         }
     };
+
+    //
+    public void showFeedbackDialog() {
+        final Dialog dialog = new Dialog(this, R.style.Dialog_From_Bottom_Style);
+        //填充对话框的布局
+        View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_feedback, null);
+
+        View.OnClickListener mDialogClickLstener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+                int id = v.getId();
+                if (id == R.id.choose_01_tv) {//游戏更新
+                    UPDATE_TIPS_OR_DOWNLOAD_EXCEPTION = 1;
+                } else if (id == R.id.choose_02_tv) {//下载异常
+                    UPDATE_TIPS_OR_DOWNLOAD_EXCEPTION = 2;
+                }
+                //提交反馈
+                feedBack();
+            }
+        };
+        inflate.findViewById(R.id.choose_01_tv).setOnClickListener(mDialogClickLstener);
+        inflate.findViewById(R.id.choose_02_tv).setOnClickListener(mDialogClickLstener);
+        inflate.findViewById(R.id.choose_cancel_tv).setOnClickListener(mDialogClickLstener);
+
+        dialog.setContentView(inflate);//将布局设置给Dialog
+        setDialogWindow(dialog);
+    }
+
+    private void setDialogWindow(Dialog dialog) {
+        Window dialogWindow = dialog.getWindow(); //获取当前Activity所在的窗体
+        dialogWindow.setGravity(Gravity.BOTTOM);//设置Dialog从窗体底部弹出
+        WindowManager.LayoutParams params = dialogWindow.getAttributes();   //获得窗体的属性
+        //params.y = 20;  Dialog距离底部的距离
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;//设置Dialog距离底部的距离
+        dialogWindow.setAttributes(params); //将属性设置给窗体
+        dialog.show();//显示对话框
+    }
+
+    //游戏反馈
+    private void feedBack() {
+        final DialogHelper dialogHelper = new DialogHelper(getSupportFragmentManager(), content);
+        dialogHelper.showAlert("提交反馈", true);
+        String url = Constant.WEB_SITE + Constant.URL_SUBMIT_FEED_BACK_V4;
+        Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (dialogHelper != null) {
+                    dialogHelper.hideAlert();
+                }
+                if (result == null) {
+                    ToastUtil.show(content, "反馈失败,服务器异常,请稍后重试.");
+                    return;
+                }
+                if (result.code == 0) {
+                    ToastUtil.show(content, "反馈成功");
+                } else {
+                    ToastUtil.show(content, "反馈失败");
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                if (dialogHelper != null) {
+                    dialogHelper.hideAlert();
+                }
+                ToastUtil.show(content, "反馈失败," + getString(R.string.server_exception));
+            }
+        };
+
+        Request<JsonResult> versionRequest = new GsonRequest<JsonResult>(Request.Method.POST, url,
+                successListener, errorListener, new TypeToken<JsonResult>() {
+        }.getType()) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                //{"userCode":"UC1500609205627","gameId":146,"appTypeId":0}
+                Map<String, String> params = new HashMap<>();
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
+                params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
+                params.put(KeyConstant.GAME_ID, String.valueOf(gameId));
+                params.put(KeyConstant.gameVersion, gameInfo.versionName);
+                params.put(KeyConstant.brand, android.os.Build.BRAND);//手机品牌
+                params.put(KeyConstant.model, android.os.Build.MODEL);//手机型号
+                params.put(KeyConstant.bluetooth, "");//蓝牙
+                params.put(KeyConstant.system, android.os.Build.VERSION.RELEASE);//系统
+                params.put(KeyConstant.cpu, android.os.Build.CPU_ABI);//蓝牙
+                Log.d(TAG, "手机MODEL:" + android.os.Build.MODEL);
+                Log.d(TAG, "手机.VERSION.RELEASE:" + android.os.Build.VERSION.RELEASE);
+                Log.d(TAG, "手机BRAND:" + android.os.Build.BRAND);
+                Log.d(TAG, "手机CPU_ABI:" + android.os.Build.CPU_ABI);
+                params.put(KeyConstant.isSupportOTG, "0");//是否支持OTG（0表示不支持，1表示支持）
+                params.put(KeyConstant.updateOrDownloadTips, String.valueOf(UPDATE_TIPS_OR_DOWNLOAD_EXCEPTION));
+                return params;
+            }
+        };
+        StoreApplication.requestQueue.add(versionRequest);
+    }
 
     //提示绑定对话框
     public void showPercentDialog() {

@@ -87,7 +87,7 @@ public class Constant {
     /**
      * APP首页 视频总分类
      */
-    public static final String URL_HOME_VIDEO_CATEGORY = "/video/videoSubTypeListByParentId";
+    public static final String URL_SUBMIT_FEED_BACK_V4 = "/complaint/submitFeedbackV4";
     public static final String URL_DEL_FAVORITE = "/user/delFavorite";
     public static final String URL_ADD_FAVORITE = "/user/addFavorite";
     /**

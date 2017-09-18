@@ -38,4 +38,13 @@ public class KeyConstant {
     public static final String index = "index";
     public static final String start_Record="startRecord";
     public static final String RECORDS = "records";
+    public static final String updateOrDownloadTips = "updateOrDownloadTips";
+    public static final String gameVersion = "gameVersion";
+    public static final String brand = "brand";//手机品牌
+    public static final String model = "model";//手机型号
+    public static final String bluetooth = "bluetooth";//手机型号
+    public static final String isSupportOTG = "isSupportOTG";//手机型号
+    public static final String system = "system";//手机系统
+    public static final String cpu = "cpu";
+
 }
