@@ -122,7 +122,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
     }
 
     //第一级标签
-    private int tab_ids[] = new int[]{0, 2, 3, 4, 6, 53};
+    private int tab_ids[] = new int[]{0, 102, 103, 104, 106, 153};
 
     public void setTabPos(int mTabPos) {
         this.tab_position = tab_ids[mTabPos];
