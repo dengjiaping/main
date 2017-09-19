@@ -55,7 +55,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
     private TextView tv_summary, updateMsgTv, tv_version, tv_time, tv_company, tv_show_all, tv_show_all_2;
     private LinearLayout img_container;
     private DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-    private ArrayList<String> imgs = new ArrayList<String>();
+    private ArrayList<String> imgs = new ArrayList<>();
     private ArrayList<TextView> tagTvList = new ArrayList<>();
     private boolean flag1 = true;
     private boolean flag2 = true;

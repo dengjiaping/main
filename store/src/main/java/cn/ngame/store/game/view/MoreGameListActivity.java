@@ -124,8 +124,8 @@ public class MoreGameListActivity extends BaseFgActivity {
             }
         });
         gameInfoList = new ArrayList<>();
-        
-        adapter = new MoreGameListAdapter(this, getSupportFragmentManager(), timerTasks,gameInfoList);
+
+        adapter = new MoreGameListAdapter(this, getSupportFragmentManager(), timerTasks, gameInfoList);
         refreshableView.setAdapter(adapter);
         getGameList();//第一次进来加载
     }
@@ -273,8 +273,8 @@ public class MoreGameListActivity extends BaseFgActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        android.util.Log.d(TAG, "onStop: !!");
-        if (null != adapter) {
+        android.util.Log.d(TAG, "停止更新 onStop: !!");
+        if (null != adapter && timerTasks != null) {
             adapter.clean();
             for (TimerTask timerTask : timerTasks) {
                 timerTask.cancel();

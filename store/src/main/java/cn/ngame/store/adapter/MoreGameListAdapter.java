@@ -56,7 +56,7 @@ public class MoreGameListAdapter extends BaseAdapter {
     private static Handler uiHandler = new Handler();
     private Context context;
     private FragmentManager fm;
-    private List<TimerTask> timerTasks;
+    private static List<TimerTask> timerTasks;
 
     public MoreGameListAdapter(Context context, FragmentManager fm, List<TimerTask> timerTasks, List<LikeListBean.DataBean
             .GameListBean> gameInfoList) {
@@ -184,10 +184,12 @@ public class MoreGameListAdapter extends BaseAdapter {
                     });
                 }
             };
-            //timerTasks.add(task);
-           // if (null != timer) {
+            if (null!=timerTasks) {
+            timerTasks.add(task);
+            }
+           if (null != timer) {
                 timer.schedule(task, 0, 500);
-            //}
+            }
         }
 
         /**

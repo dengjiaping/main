@@ -21,6 +21,14 @@
         android:gravity="center_horizontal"
         android:orientation="horizontal" >
     </LinearLayout>
+    <ImageView
+        android:id="@+id/show_view_iv"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_def_logo_720_288"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </FrameLayout>
 

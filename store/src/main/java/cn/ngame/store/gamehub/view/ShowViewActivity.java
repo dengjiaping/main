@@ -11,8 +11,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -60,13 +58,33 @@ public class ShowViewActivity extends BaseFgActivity {
             "http://www.foreveross.com/foreveross/images/banner04.jpg"};
     private ArrayList<String> imgs = new ArrayList<>();
     private TouchImageView iv;
+    private ShowViewActivity content;
+    protected static final String TAG = "ShowViewActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        content = this;
         imgs = getIntent().getStringArrayListExtra("viewImages");
+        main = getLayoutInflater().inflate(R.layout.activity_show_view, null);
+        //7. 通过main layout对象获取图片区域ViewPager
+        viewPager = (ViewPager) main.findViewById(R.id.imagePages);
+        //8. 通过main layout对象获取导航指示区域
+        pointGroup = (ViewGroup) main.findViewById(R.id.pointGroup);
+        if (imgs == null || imgs.size() == 0) {
+            Log.d(TAG, "图片为空: ");
+            ImageView imageView = (ImageView) main.findViewById(R.id.show_view_iv);
+            imageView.setVisibility(View.VISIBLE);
+            main.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    content.finish();
+                }
+            });
+            setContentView(main);
+            return;
+        }
         initLocal = getIntent().getIntExtra("selectPosition", 0);
-
         DialogHelper.showWaiting(getSupportFragmentManager(), "加载中...");
         // 2. 启动线程用于加载远程图片
         new LoadImageThread().start();
@@ -76,9 +94,8 @@ public class ShowViewActivity extends BaseFgActivity {
         @Override
         public void run() {
             //3. 获取LayoutInflater,目的是方便后面得到xml布局文件进行装配
-            LayoutInflater inflater = getLayoutInflater();
             //4. 创建图片view存储集合
-            imgViews = new ArrayList<View>();
+            imgViews = new ArrayList<>();
 
             Looper.prepare();
             //5. 通过网络方式下载图片,并最终放在集合中
@@ -98,16 +115,13 @@ public class ShowViewActivity extends BaseFgActivity {
             }
             //6. 获取main.xml layout对象,他是装配其他图片布局的中心点
             //   要记得,它里面声明了一个图片区域ViewPager,以及一个导航指示区域
-            main = (View) inflater.inflate(R.layout.show_view_activity, null);
-
-            //7. 通过main layout对象获取图片区域ViewPager
-            viewPager = (ViewPager) main.findViewById(R.id.imagePages);
-            //8. 通过main layout对象获取导航指示区域
-            pointGroup = (ViewGroup) main.findViewById(R.id.pointGroup);
-
+            // main = getLayoutInflater().inflate(R.layout.activity_show_view, null);
             //9. 下面开始控制导航小圆点,有多少张img,就要做多大的小圆点数组
             pointViews = new ImageView[imgViews.size()];
 
+            if (content == null && content.isFinishing()) {
+                return;
+            }
             //10. 根据图片集合的长度决定创建多少小圆点ImageView
             for (int i = 0; i < imgViews.size(); i++) {
 //                imageView = new ImageView(ShowViewActivity.this);
@@ -133,22 +147,26 @@ public class ShowViewActivity extends BaseFgActivity {
                 pointGroup.addView(pointViews[i]);
             }
             handler.sendEmptyMessage(0); //表示下载完毕.
-            DialogHelper.hideWaiting(getSupportFragmentManager());
+            if (content != null && !content.isFinishing()) {
+                DialogHelper.hideWaiting(getSupportFragmentManager());
+            }
             Looper.loop();
         }
     }
 
-    @Override
+   /* @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (flag) {
                 this.finish();
             } else {
-                DialogHelper.hideWaiting(getSupportFragmentManager());
+                if (content != null && !content.isFinishing()) {
+                    DialogHelper.hideWaiting(getSupportFragmentManager());
+                }
             }
         }
         return false;
-    }
+    }*/
 
     public Bitmap getHttpBitmap(String url) {
         URL myFileURL;
