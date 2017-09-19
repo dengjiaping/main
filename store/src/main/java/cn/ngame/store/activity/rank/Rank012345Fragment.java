@@ -52,7 +52,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
     private Ranking012345Adapter adapter;
     protected final static String TAG = Rank012345Fragment.class.getSimpleName();
     private PageAction pageAction;
-    public static int PAGE_SIZE = 20;
+    public static int PAGE_SIZE = 10;
     private List<LikeListBean.DataBean.GameListBean> list = new ArrayList<>();
     private static int mSerial = 0;
     private int tab_position = 0;
@@ -73,7 +73,6 @@ public class Rank012345Fragment extends BaseSearchFragment {
                     tab2_position = 0;
                 }
             }
-            Log.d(TAG, tab_position + "请求数据," + tab2_position);
             if (tab_position == 0 && tab2_position == 0) {
                 list.clear();
                 adapter.setList(list);
@@ -161,7 +160,6 @@ public class Rank012345Fragment extends BaseSearchFragment {
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 //少于指定条数不加载
                 int currentPage = pageAction.getCurrentPage();
-                Log.d(TAG, list.size() + "==下拉:pagerAction.getTotal==" + pageAction.getTotal());
                 //当前页
                 if (list.size() < pageAction.getTotal()) {
                     pageAction.setCurrentPage(currentPage + 1);
@@ -242,7 +240,6 @@ public class Rank012345Fragment extends BaseSearchFragment {
                     int id = tab2_all[position];
 
                     tab2_position = id;
-                    android.util.Log.d(TAG, tab.getText() + ",点击id," + id);
                     //请求数据
                     list.clear();
                     adapter.setList(list);
@@ -264,7 +261,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
     }
 
     //第一级标签                        全部,手柄,破解,汉化,特色,模拟器
-    private int tab_ids[] = new int[]{0, 102, 103, 104, 106, IMITATOR_ID};
+    private int tab_ids[] = new int[]{0,101, 102, 103, 104, 106, IMITATOR_ID};
     private String tabList[] = new String[]{"全部", "大陆", "美国", "韩国", "日本", "港澳台"};
     private int tab2_Id01234[] = new int[]{0, 147, 149, 151, 150, 148};
 
@@ -321,10 +318,10 @@ public class Rank012345Fragment extends BaseSearchFragment {
         loadStateView.setVisibility(View.VISIBLE);
         loadStateView.setState(LoadStateView.STATE_ING);
         int startRecord = pageAction.getCurrentPage() * PAGE_SIZE;
-        Log.d(TAG, tab_position + "=参数=" + tab2_position);
+        Log.d(TAG,  "排行榜请求参数:" +tab_position+","+ tab2_position);
         RankListBody bodyBean = new RankListBody();
         bodyBean.setStartRecord(startRecord);
-        Log.d(TAG, startRecord + "=请求大小==" + PAGE_SIZE);
+        Log.d(TAG,  "排行榜请求索引:" +startRecord+" -> "+ PAGE_SIZE);
         bodyBean.setRecords(PAGE_SIZE);
         bodyBean.setParentCategoryId(tab_position);
         bodyBean.setCategoryId(tab2_position);
@@ -346,10 +343,8 @@ public class Rank012345Fragment extends BaseSearchFragment {
                     @Override
                     public void onNext(LikeListBean result) {
                         if (result != null && result.getCode() == 0) {
-                            Log.d(TAG, "onNext:请求到数据");
                             listData(result);
                         } else {
-                            Log.d(TAG, "onNext: 服务器开小差");
                             if (list != null && list.size() > 0) {
                                 ToastUtil.show(content, getString(R.string
                                         .server_exception_2_pullrefresh));

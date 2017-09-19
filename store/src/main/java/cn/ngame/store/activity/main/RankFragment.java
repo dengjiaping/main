@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -85,12 +84,11 @@ public class RankFragment extends BaseSearchFragment {
         }
     }
 
-    private String tabList[] = new String[]{"全部", "手柄游戏", "破解游戏", "汉化游戏", "特色游戏", "模拟器"};
+    private String tabList[] = new String[]{"全部", "原生手柄","云适配", "破解游戏", "汉化游戏", "特色游戏", "模拟器"};
 
     private void initViewPager() {
         fragments = new ArrayList<>();
         final int length = tabList.length;
-        Log.d(TAG, "onPagelength: " + length);
         for (int i = 0; i < length; i++) {
             fragment012345 = new Rank012345Fragment(curTab);
             fragment012345.setTabPos(i);
@@ -106,7 +104,6 @@ public class RankFragment extends BaseSearchFragment {
 
             @Override
             public void onPageSelected(int position) {
-                Log.d(TAG, "onPageSelected: " + position);
                 //滑动监听加载数据，一次只加载一个标签页
                 if (position < length) {
                     ((Rank012345Fragment) adapter.getItem(position)).sendMessage();
