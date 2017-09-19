@@ -25,7 +25,7 @@
         android:id="@+id/show_view_iv"
         android:layout_gravity="center"
         android:src="@drawable/ic_def_logo_720_288"
-        android:scaleType="centerCrop"
+        android:scaleType="center"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
