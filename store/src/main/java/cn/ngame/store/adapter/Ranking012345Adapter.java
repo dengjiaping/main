@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -51,8 +52,6 @@ import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.view.GameLoadProgressBar;
-
-import static cn.ngame.store.R.id.tv_shoubing;
 
 public class Ranking012345Adapter extends BaseAdapter {
     private Activity context;
@@ -107,11 +106,8 @@ public class Ranking012345Adapter extends BaseAdapter {
             holder.tv_position = (TextView) convertView.findViewById(R.id.tv_position);
             holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
             holder.tv_percentage = (TextView) convertView.findViewById(R.id.text1);
-            holder.tv_yun_duan = (TextView) convertView.findViewById(R.id.tv_yun_duan);
             holder.ratingBar = (RatingBar) convertView.findViewById(R.id.rating_bar);
-            holder.tv_shoubing = (TextView) convertView.findViewById(tv_shoubing);
-            holder.tv_vr = (TextView) convertView.findViewById(R.id.tv_vr);
-            holder.tv_toukong = (TextView) convertView.findViewById(R.id.tv_toukong);
+            holder.tank01234LLay = (LinearLayout) convertView.findViewById(R.id.tank01234_ll);
             holder.moreBt = (ImageView) convertView.findViewById(R.id.rank_more_bt);
             convertView.setTag(holder);
         } else {
@@ -139,6 +135,7 @@ public class Ranking012345Adapter extends BaseAdapter {
         private Timer timer = new Timer();
         private SpannableString textSpan;
         private PopupWindow popupWindow;
+        private LinearLayout tank01234LLay;
 
         public ViewHolder(Activity context, FragmentManager fm) {
             this.context = context;
@@ -252,7 +249,7 @@ public class Ranking012345Adapter extends BaseAdapter {
                     color123 = R.color.fab52a;
                 }
             } else {
-                    color123 = R.color.cccccc;
+                color123 = R.color.cccccc;
             }
             tv_position.setTextColor(ContextCompat.getColor(context, color123));
             String imgUrl = gameInfo.getGameLogo();
@@ -268,17 +265,25 @@ public class Ranking012345Adapter extends BaseAdapter {
             ratingBar.setRating(gameInfo.getScoreLevel());
             //是否手柄、vr，头控,
             String typeNameStr = gameInfo.getCName();
-            Log.d("8888", "name------------------"+gameName+"----------------------"+typeNameStr);
+            Log.d("8888", "name------------------" + gameName + "----------------------" + typeNameStr);
             if (typeNameStr == null) {
                 return;
             }
-            tv_shoubing.setVisibility(View.GONE);
+          /*  tv_shoubing.setVisibility(View.GONE);
             tv_vr.setVisibility(View.GONE);
             tv_toukong.setVisibility(View.GONE);
-            tv_yun_duan.setVisibility(View.GONE);
+            tv_yun_duan.setVisibility(View.GONE);*/
+            int px10 = CommonUtil.dip2px(context, 10);
             String[] typeNameArray = typeNameStr.split("\\,");
             for (int i = 0; i < typeNameArray.length; i++) {
-                switch (i) {
+                TextView textView = new TextView(context);
+                textView.setText(typeNameArray[i]);
+                textView.setPadding(px10,4,px10,4);
+                textView.setTextColor(ContextCompat.getColor(context,R.color.color_2abfff));
+                textView.setTextSize(10);
+                textView.setBackgroundResource(R.drawable.shape_corner8dp_2abfff);
+                tank01234LLay.addView(textView);
+             /*   switch (i) {
                     case 0:
                         tv_shoubing.setText(typeNameArray[i]);
                         tv_shoubing.setVisibility(View.VISIBLE);
@@ -295,7 +300,7 @@ public class Ranking012345Adapter extends BaseAdapter {
                         tv_yun_duan.setText(typeNameArray[i]);
                         tv_yun_duan.setVisibility(View.VISIBLE);
                         break;
-                }
+                }*/
 
             }
         }
