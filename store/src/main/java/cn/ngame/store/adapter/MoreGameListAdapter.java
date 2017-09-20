@@ -19,11 +19,13 @@ package cn.ngame.store.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -117,10 +119,7 @@ public class MoreGameListAdapter extends BaseAdapter {
             holder = new ViewHolder(context, fm);
             holder.img = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
             holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
-            holder.tagTv0 = (TextView) convertView.findViewById(R.id.classify_item_tip_tv_01);
-            holder.tagTv1 = (TextView) convertView.findViewById(R.id.classify_item_tip_tv_02);
-            holder.tagTv2 = (TextView) convertView.findViewById(R.id.classify_item_tip_tv_03);
-            holder.tagTv3 = (TextView) convertView.findViewById(R.id.classify_item_tip_tv_04);
+            holder.tank01234LLay = (LinearLayout) convertView.findViewById(R.id.classify_item_llay);
             holder.tv_size = (TextView) convertView.findViewById(R.id.text1);
             holder.ratingBar = (RatingBar) convertView.findViewById(R.id.rating_bar);
             holder.progressBar = (GameLoadProgressBar) convertView.findViewById(R.id.progress_bar);
@@ -151,7 +150,9 @@ public class MoreGameListAdapter extends BaseAdapter {
         private GameLoadProgressBar progressBar;    //下载进度条
         private FragmentManager fm;
         private IFileLoad fileLoad;
+        private LinearLayout tank01234LLay;
         private Timer timer = new Timer();
+        private TextView textView;
 
         public ViewHolder(Context context, FragmentManager fm) {
             this.context = context;
@@ -246,25 +247,19 @@ public class MoreGameListAdapter extends BaseAdapter {
             String simpleLabel = gameInfo.getCName();
             if (simpleLabel != null) {
                 String[] typeNameArray = simpleLabel.split("\\,");
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup
+                        .LayoutParams.WRAP_CONTENT);
+                params.setMargins(0, 0, 18, 0);
+                tank01234LLay.removeAllViews();
                 for (int i = 0; i < typeNameArray.length; i++) {
-                    switch (i) {
-                        case 0:
-                            tagTv0.setText(typeNameArray[i]);
-                            tagTv0.setVisibility(View.VISIBLE);
-                            break;
-                        case 1:
-                            tagTv1.setText(typeNameArray[i]);
-                            tagTv1.setVisibility(View.VISIBLE);
-                            break;
-                        case 2:
-                            tagTv2.setText(typeNameArray[i]);
-                            tagTv2.setVisibility(View.VISIBLE);
-                            break;
-                        case 3:
-                            tagTv3.setText(typeNameArray[i]);
-                            tagTv3.setVisibility(View.VISIBLE);
-                            break;
-                    }
+                    textView = new TextView(context);
+                    textView.setText(typeNameArray[i]);
+                    textView.setPadding(15, 4, 15, 4);
+                    textView.setTextColor(ContextCompat.getColor(context, R.color.color_2abfff));
+                    textView.setTextSize(10);
+                    textView.setLayoutParams(params);
+                    textView.setBackgroundResource(R.drawable.shape_classify_item_white_blue);
+                    tank01234LLay.addView(textView);
                 }
             }
         }
