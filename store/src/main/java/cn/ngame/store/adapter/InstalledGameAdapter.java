@@ -82,13 +82,11 @@ public class InstalledGameAdapter extends BaseAdapter {
     public void setDate(List<PackageInfo> fileInfoList) {
         this.fileInfoList = fileInfoList;
         notifyDataSetChanged();
-        Log.d(TAG,  this.fileInfoList+",setDate 设置数据: "+fileInfoList.size());
     }
 
     @Override
     public int getCount() {
         if (fileInfoList != null) {
-            Log.d(TAG,  this.fileInfoList+",getCount: "+fileInfoList.size());
             return fileInfoList.size();
         }
         return 0;

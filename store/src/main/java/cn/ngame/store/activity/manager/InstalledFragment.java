@@ -141,9 +141,9 @@ public class InstalledFragment extends BaseSearchFragment {
                         //String appName = applicationInfo.loadLabel(packageManager).toString();
                         String packageName = applicationInfo.packageName;
                         //如果包名   包含在SD文件里
+                        Log.d(TAG, applicationInfo.loadLabel(packageManager).toString() + ",本地:" + packageName);
                         if (pkgNameListStr.contains(packageName)) {
                             localAppList.add(packageInfo);
-                            Log.d(TAG, packageName + ",包含在sd卡:" + localAppList.size());
                         }
                     }
                 }
@@ -157,7 +157,7 @@ public class InstalledFragment extends BaseSearchFragment {
         return localAppList;
     }
 
-    protected final static String TAG = "22222";
+    protected final static String TAG = InstalledFragment.class.getSimpleName();
 
     @Override
     public void onHiddenChanged(boolean hidden) {
