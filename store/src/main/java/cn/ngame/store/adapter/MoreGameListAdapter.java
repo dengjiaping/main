@@ -172,22 +172,26 @@ public class MoreGameListAdapter extends BaseAdapter {
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d(TAG, gameInfo.getGameName()+"下载进度更新:" +gameInfo.getPackages() );
+                            Log.d(TAG, gameInfo.getGameName() + "下载进度更新:" + gameInfo.getPackages());
                       /*      if (null == gameInfo) {
                                 return;
                             }*/
+                            String gameLink = gameInfo.getGameLink();
+                            if (gameLink == null) {
+                                gameLink = "..";
+                            }
                             GameFileStatus fileStatus = fileLoad.getGameFileLoadStatus(gameInfo.getFilename(),
-                                   gameInfo.getGameLink(),gameInfo.getPackages(), ConvUtil.NI
+                                    gameLink, gameInfo.getPackages(), ConvUtil.NI
                                             (gameInfo.getVersionCode()));
                             progressBar.setLoadState(fileStatus);
                         }
                     });
                 }
             };
-            if (null!=timerTasks) {
-            timerTasks.add(task);
+            if (null != timerTasks) {
+                timerTasks.add(task);
             }
-           if (null != timer) {
+            if (null != timer) {
                 timer.schedule(task, 0, 500);
             }
         }
@@ -219,9 +223,16 @@ public class MoreGameListAdapter extends BaseAdapter {
 
             //设置进度条状态
             //设置进度条状态
-            progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo.getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode())));
+            String gameLink = gameInfo.getGameLink();
+            if (gameLink == null) {
+                gameLink = "..";
+            }
+            Log.d(TAG, gameInfo.getGameName() + ",下载链接: " + gameLink);
+            progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameLink, gameInfo.getPackages(),
+                    ConvUtil.NI(gameInfo.getVersionCode())));
             //必须设置，否则点击进度条后无法进行响应操作
-            FileLoadInfo fileLoadInfo = new FileLoadInfo(gameInfo.getFilename(), gameInfo.getGameLink(), gameInfo.getMd5(), gameInfo.getVersionCode(), gameInfo.getGameName(), gameInfo.getGameLogo(), gameInfo.getId(), FileLoadInfo.TYPE_GAME);
+            FileLoadInfo fileLoadInfo = new FileLoadInfo(gameInfo.getFilename(), gameLink, gameInfo.getMd5(), gameInfo
+                    .getVersionCode(), gameInfo.getGameName(), gameInfo.getGameLogo(), gameInfo.getId(), FileLoadInfo.TYPE_GAME);
             fileLoadInfo.setPackageName(gameInfo.getPackages());
             progressBar.setFileLoadInfo(fileLoadInfo);
             progressBar.setOnStateChangeListener(new ProgressBarStateListener(context, fm));
@@ -254,7 +265,6 @@ public class MoreGameListAdapter extends BaseAdapter {
                             tagTv3.setVisibility(View.VISIBLE);
                             break;
                     }
-
                 }
             }
         }

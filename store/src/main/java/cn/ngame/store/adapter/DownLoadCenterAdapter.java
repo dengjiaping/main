@@ -25,9 +25,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -125,7 +125,7 @@ public class DownLoadCenterAdapter extends BaseAdapter {
             holder.tv_state = (TextView) convertView.findViewById(R.id.tv_state);
             holder.tv_finished = (TextView) convertView.findViewById(R.id.tv_finished);
             holder.tv_size = (TextView) convertView.findViewById(R.id.tv_length);
-            holder.pb = (ProgressBar) convertView.findViewById(R.id.pb);
+            holder.pb = (NumberProgressBar) convertView.findViewById(R.id.pb);
             holder.progressBar = (GameLoadProgressBar) convertView.findViewById(R.id.progress_bar);
             holder.more_bt = (ImageView) convertView.findViewById(R.id.manager_installed_more_bt);
             convertView.setTag(holder);
@@ -163,7 +163,7 @@ public class DownLoadCenterAdapter extends BaseAdapter {
         private ImageView more_bt;
         private SimpleDraweeView img;
         private TextView tv_title, tv_percent, tv_state, tv_finished, tv_size;
-        private ProgressBar pb;
+        private NumberProgressBar pb;
         private GameLoadProgressBar progressBar;    //下载进度条
 
         private Timer timer = new Timer();
@@ -217,7 +217,7 @@ public class DownLoadCenterAdapter extends BaseAdapter {
                                     tv_percent.setText("");
                                     tv_state.setText("下载地址错误");
                                 } else {
-                                    tv_state.setText("正在下载 ");
+                                    tv_state.setText("下载中");
                                 }
                                 pb.setVisibility(View.VISIBLE);
                             } else if (status == GameFileStatus.STATE_PAUSE) {

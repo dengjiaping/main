@@ -166,4 +166,22 @@
         <item name="android:textSize">14dp</item>
         <item name="android:textColor">@color/color_989999</item>
     </style>
+
+    <!--进度条 -->
+    <style name="NumberProgressBar_MyDef">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+
+        <item name="progress_max">100</item>
+        <item name="progress_current">0</item>
+
+        <item name="progress_unreached_color">@color/f5f5f5</item>
+        <item name="progress_reached_color">@color/mainColor</item>
+
+        <item name="progress_text_size">10sp</item>
+        <item name="progress_text_color">@color/mainColor</item>
+
+        <item name="progress_reached_bar_height">@dimen/dm001</item>
+        <item name="progress_unreached_bar_height">@dimen/dm001</item>
+    </style>
 </resources>
