@@ -110,8 +110,9 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/img_1"
             android:gravity="center_vertical"
-            android:paddingRight="@dimen/dm025"
+            android:layout_toLeftOf="@id/rank_more_bt"
             android:paddingLeft="@dimen/dp_9"
+            android:layout_marginRight="-13dp"
             android:layout_toRightOf="@+id/img_1"
             android:scrollbars="none">
 

@@ -277,7 +277,8 @@ public class Ranking012345Adapter extends BaseAdapter {
             String[] typeNameArray = typeNameStr.split("\\,");
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup
                     .LayoutParams.WRAP_CONTENT);
-            params.setMargins(0, 0, 15, 0);
+            params.setMargins(0, 0, 18, 0);
+            tank01234LLay.removeAllViews();
             for (int i = 0; i < typeNameArray.length; i++) {
                 textView = new TextView(context);
                 textView.setText(typeNameArray[i]);
