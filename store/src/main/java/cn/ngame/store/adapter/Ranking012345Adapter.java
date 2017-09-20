@@ -136,6 +136,7 @@ public class Ranking012345Adapter extends BaseAdapter {
         private SpannableString textSpan;
         private PopupWindow popupWindow;
         private LinearLayout tank01234LLay;
+        private TextView textView;
 
         public ViewHolder(Activity context, FragmentManager fm) {
             this.context = context;
@@ -273,14 +274,17 @@ public class Ranking012345Adapter extends BaseAdapter {
             tv_vr.setVisibility(View.GONE);
             tv_toukong.setVisibility(View.GONE);
             tv_yun_duan.setVisibility(View.GONE);*/
-            int px10 = CommonUtil.dip2px(context, 10);
             String[] typeNameArray = typeNameStr.split("\\,");
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup
+                    .LayoutParams.WRAP_CONTENT);
+            params.setMargins(0, 0, 15, 0);
             for (int i = 0; i < typeNameArray.length; i++) {
-                TextView textView = new TextView(context);
+                textView = new TextView(context);
                 textView.setText(typeNameArray[i]);
-                textView.setPadding(px10,4,px10,4);
-                textView.setTextColor(ContextCompat.getColor(context,R.color.color_2abfff));
+                textView.setPadding(15, 4, 15, 4);
+                textView.setTextColor(ContextCompat.getColor(context, R.color.color_2abfff));
                 textView.setTextSize(10);
+                textView.setLayoutParams(params);
                 textView.setBackgroundResource(R.drawable.shape_corner8dp_2abfff);
                 tank01234LLay.addView(textView);
              /*   switch (i) {
