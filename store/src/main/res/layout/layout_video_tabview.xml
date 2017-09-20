@@ -17,11 +17,11 @@
     <ImageView
         android:id="@+id/tag_img_cursor"
         android:layout_width="wrap_content"
-        android:layout_height="2dp"
-        android:layout_gravity="bottom"
+        android:layout_height="@dimen/dm002"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/dm005"
+        android:layout_marginLeft="@dimen/dm132"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="1dp"
-        android:layout_marginTop="3dp"
         android:background="@color/mainColor"
         android:contentDescription="@string/image_des" />
 

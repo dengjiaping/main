@@ -55,7 +55,7 @@ public class VideoTabView extends RelativeLayout {
     private int currentTab = 0;
     private int currentTextColor;
     private int defaultTextColor;
-    private int defaultTextSize = 18;
+    private int defaultTextSize = 16;
 
     private int imgWidth;
     private int tagWidth;
@@ -73,7 +73,7 @@ public class VideoTabView extends RelativeLayout {
         this.context = context;
 
         currentTextColor = getResources().getColor(R.color.mainColor);
-        defaultTextColor = getResources().getColor(R.color.color_666666);
+        defaultTextColor = getResources().getColor(R.color.aaaaaa);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.animationTabWidget);
         currentTab = typedArray.getInt(R.styleable.animationTabWidget_current_index, 0);
@@ -139,7 +139,8 @@ public class VideoTabView extends RelativeLayout {
         int screenW = dm.widthPixels;
         tagWidth = screenW / tagList.size();
         //imgWidth = screenW / tagList.size() - img_cursor_margin;
-        imgWidth = screenW / tagList.size();
+        //imgWidth = screenW / tagList.size();
+        imgWidth = 124;
 
         LayoutParams para = (LayoutParams) img_cursor.getLayoutParams();
         para.width = imgWidth;

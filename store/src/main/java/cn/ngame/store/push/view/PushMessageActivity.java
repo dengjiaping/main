@@ -48,7 +48,6 @@ public class PushMessageActivity extends BaseFgActivity {
 
         videoTabView = (VideoTabView) findViewById(R.id.auto_tab);
         videoTabView.setViewPager(viewPager);
-
         createFragmentData();
 
     }
