@@ -120,6 +120,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
         }
         return R.layout.rank01234_fragment;
     }
+
     public void setTabPos(int mTabPos) {
         this.tab_position = tab_ids[mTabPos];
     }
@@ -261,10 +262,9 @@ public class Rank012345Fragment extends BaseSearchFragment {
     }
 
     //第一级标签                        全部,手柄,破解,汉化,特色,模拟器
-    private int tab_ids[] = new int[]{0,101, 102, 103, 104, 106, IMITATOR_ID};
+    private int tab_ids[] = new int[]{0, 101, 102, 103, 104, 106};
     private String tabList[] = new String[]{"全部", "大陆", "美国", "韩国", "日本", "港澳台"};
     private int tab2_Id01234[] = new int[]{0, 147, 149, 151, 150, 148};
-
 
     private String tabList5[] = new String[]{"FC", "MAME", "SFC", "GBA", "PS", "PSP", "MD", "GBC", "NDS"};
     private int tab2_id5[] = new int[]{154, 155, 156, 157, 158, 159, 160, 161, 162};
@@ -318,10 +318,10 @@ public class Rank012345Fragment extends BaseSearchFragment {
         loadStateView.setVisibility(View.VISIBLE);
         loadStateView.setState(LoadStateView.STATE_ING);
         int startRecord = pageAction.getCurrentPage() * PAGE_SIZE;
-        Log.d(TAG,  "排行榜请求参数:" +tab_position+","+ tab2_position);
+        Log.d(TAG, "排行榜请求参数:" + tab_position + "," + tab2_position);
         RankListBody bodyBean = new RankListBody();
         bodyBean.setStartRecord(startRecord);
-        Log.d(TAG,  "排行榜请求索引:" +startRecord+" -> "+ PAGE_SIZE);
+        Log.d(TAG, "排行榜请求索引:" + startRecord + " -> " + PAGE_SIZE);
         bodyBean.setRecords(PAGE_SIZE);
         bodyBean.setParentCategoryId(tab_position);
         bodyBean.setCategoryId(tab2_position);
