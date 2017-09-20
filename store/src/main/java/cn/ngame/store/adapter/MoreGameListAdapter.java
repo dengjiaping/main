@@ -249,7 +249,7 @@ public class MoreGameListAdapter extends BaseAdapter {
                 String[] typeNameArray = simpleLabel.split("\\,");
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup
                         .LayoutParams.WRAP_CONTENT);
-                params.setMargins(0, 0, 18, 0);
+                params.setMargins(0, 0, 20, 0);
                 tank01234LLay.removeAllViews();
                 for (int i = 0; i < typeNameArray.length; i++) {
                     textView = new TextView(context);
@@ -258,7 +258,8 @@ public class MoreGameListAdapter extends BaseAdapter {
                     textView.setTextColor(ContextCompat.getColor(context, R.color.color_2abfff));
                     textView.setTextSize(10);
                     textView.setLayoutParams(params);
-                    textView.setBackgroundResource(R.drawable.shape_classify_item_white_blue);
+                   // textView.setBackgroundResource(R.drawable.shape_classify_item_white_blue);
+                    textView.setBackgroundResource(R.drawable.shape_corner8dp_2abfff);
                     tank01234LLay.addView(textView);
                 }
             }

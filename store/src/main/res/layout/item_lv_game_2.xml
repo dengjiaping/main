@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/img_1"
-            android:layout_marginRight="@dimen/dm010"
+            android:layout_marginRight="@dimen/dm025"
             android:layout_toLeftOf="@id/progress_bar"
             android:layout_toRightOf="@+id/img_1"
             android:gravity="center"
