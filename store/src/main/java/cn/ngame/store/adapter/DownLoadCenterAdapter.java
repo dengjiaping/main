@@ -121,7 +121,7 @@ public class DownLoadCenterAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_download_center, parent, false);
             holder.img = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
             holder.tv_title = (TextView) convertView.findViewById(tv_title);
-            holder.tv_percent = (TextView) convertView.findViewById(R.id.tv_percent);
+            // holder.tv_percent = (TextView) convertView.findViewById(R.id.tv_percent);
             holder.tv_state = (TextView) convertView.findViewById(R.id.tv_state);
             holder.tv_finished = (TextView) convertView.findViewById(R.id.tv_finished);
             holder.tv_size = (TextView) convertView.findViewById(R.id.tv_length);
@@ -203,22 +203,25 @@ public class DownLoadCenterAdapter extends BaseAdapter {
                                 return;
                             }
                             int process = (int) ((double) fileStatus.getFinished() / (double) fileStatus.getLength() * 100);
+                            if (process >= 100) {
+                                process = 0;
+                            }
                             pb.setProgress(process);
-                            String processStr = "";
+                           /* String processStr = "";
                             if (process < 100) {
                                 processStr = process + "%";
-                            }
-                            tv_percent.setText(processStr);
+                            }*/
+                            // tv_percent.setText(processStr);
                             progressBar.setVisibility(View.VISIBLE);
                             int status = fileStatus.getStatus();
                             if (status == GameFileStatus.STATE_DOWNLOAD) {
                                 String url = fileInfo.getUrl();
-                                if (!url.toString().contains(".apk")) {
-                                    tv_percent.setText("");
+                            /*    if (!url.toString().contains(".apk")) {
+                                    //tv_percent.setText("");
                                     tv_state.setText("下载地址错误");
-                                } else {
-                                    tv_state.setText("下载中");
-                                }
+                                } else {*/
+                                tv_state.setText("下载中...");
+                                //}
                                 pb.setVisibility(View.VISIBLE);
                             } else if (status == GameFileStatus.STATE_PAUSE) {
                                 tv_state.setText("暂停中");
@@ -248,7 +251,7 @@ public class DownLoadCenterAdapter extends BaseAdapter {
                 tv_title.setText(gameName);
             }
             tv_finished.setText("");
-            tv_percent.setText("");
+            //tv_percent .setText("");
             tv_state.setText("");
             pb.setVisibility(View.INVISIBLE);
             tv_size.setText(Formatter.formatFileSize(context, fileInfo.getLength()));
