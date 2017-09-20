@@ -114,12 +114,12 @@
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/dp_16"
                         android:clickable="false"
                         android:gravity="center"
                         android:lines="1"
                         >
-
+                        <!--原生手柄  云适配  破解  汉化 特色游戏-->
                         <TextView
                             android:id="@+id/game_detail_type0"
                             android:layout_width="wrap_content"
@@ -132,7 +132,7 @@
                             android:text="原生手柄"
                             android:textColor="@color/color_2abfff"
                             android:textSize="@dimen/dp_10"
-                            android:visibility="invisible"/>
+                            android:visibility="gone"/>
 
                         <TextView
                             android:id="@+id/game_detail_type1"
@@ -147,7 +147,7 @@
                             android:text="云存档"
                             android:textColor="@color/color_2abfff"
                             android:textSize="@dimen/dp_10"
-                            android:visibility="invisible"
+                            android:visibility="gone"
                             />
 
                         <TextView
@@ -163,7 +163,7 @@
                             android:text="汉化"
                             android:textColor="@color/color_2abfff"
                             android:textSize="@dimen/dp_10"
-                            android:visibility="invisible"
+                            android:visibility="gone"
                             />
 
                         <TextView
@@ -179,7 +179,7 @@
                             android:text="破解"
                             android:textColor="@color/color_2abfff"
                             android:textSize="@dimen/dp_10"
-                            android:visibility="invisible"
+                            android:visibility="gone"
                             />
 
                         <!--    <TextView

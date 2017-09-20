@@ -195,8 +195,29 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         //类型
         List<GameType> typeList = gameInfo.gameTypeList;
         if (typeList != null) {
-            int typeSize = typeList.size();
-            if (typeSize > 0) {
+            for (GameType gameType : typeList) {
+                String typeName = gameType.typeName.trim();
+                if (typeName.equals("原生手柄") || typeName.equals("云适配")) {
+                    gameType0.setText(typeName);
+                    gameType0.setVisibility(View.VISIBLE);
+                }
+                if (typeName.equals("破解")) {
+                    gameType1.setText(typeName);
+                    gameType1.setVisibility(View.VISIBLE);
+                }
+                if (typeName.equals("汉化")) {
+                    gameType2.setText(typeName);
+                    gameType2.setVisibility(View.VISIBLE);
+                }
+                if (typeName.endsWith("特色游戏")) {
+                    gameType3.setText(typeName);
+                    gameType3.setVisibility(View.VISIBLE);
+                }
+            }
+
+           /*
+               int typeSize = typeList.size();
+           if (typeSize > 0) {
                 gameType0.setText(typeList.get(0).typeName);
                 gameType0.setVisibility(View.VISIBLE);
             }
@@ -211,7 +232,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             if (typeSize > 3) {
                 gameType3.setText(typeList.get(3).typeName);
                 gameType3.setVisibility(View.VISIBLE);
-            }
+            }*/
         }
         gameSizeTv.setText(Formatter.formatFileSize(content, gameInfo.gameSize));//大小
         downLoadCountTv.setText(gameInfo.downloadCount + "");//下载次数
