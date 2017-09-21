@@ -75,7 +75,7 @@ public class MoreGameListAdapter extends BaseAdapter {
      * @param gameInfos 游戏数据
      */
     public void setDate(List<LikeListBean.DataBean.GameListBean> gameInfos) {
-        gameInfoList = gameInfos;
+        this.gameInfoList = gameInfos;
         notifyDataSetChanged();
     }
 
@@ -131,6 +131,7 @@ public class MoreGameListAdapter extends BaseAdapter {
 
         if (gameInfo != null) {
             holder.update(gameInfo);
+        } else {
         }
 
         return convertView;
@@ -258,7 +259,7 @@ public class MoreGameListAdapter extends BaseAdapter {
                     textView.setTextColor(ContextCompat.getColor(context, R.color.color_2abfff));
                     textView.setTextSize(10);
                     textView.setLayoutParams(params);
-                   // textView.setBackgroundResource(R.drawable.shape_classify_item_white_blue);
+                    // textView.setBackgroundResource(R.drawable.shape_classify_item_white_blue);
                     textView.setBackgroundResource(R.drawable.shape_corner8dp_2abfff);
                     tank01234LLay.addView(textView);
                 }

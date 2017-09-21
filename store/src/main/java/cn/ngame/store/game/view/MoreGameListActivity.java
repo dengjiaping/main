@@ -97,6 +97,8 @@ public class MoreGameListActivity extends BaseFgActivity {
                 }
 
                 getGameList(); //下拉,刷新
+                ListView refreshableView = pullListView.getRefreshableView();
+                refreshableView.setSelection(adapter.getCount() - 1);
             }
 
             @Override
@@ -151,7 +153,6 @@ public class MoreGameListActivity extends BaseFgActivity {
                 }
                 LikeListBean.DataBean data = result.getData();
                 List<LikeListBean.DataBean.GameListBean> gameList = data.getGameList();
-
                 if (result.getCode() == 0) {
                     if (pageAction.getCurrentPage() == 0) {
                         gameInfoList.clear();
@@ -199,6 +200,10 @@ public class MoreGameListActivity extends BaseFgActivity {
                         if (gameInfoList != null) {
                             gameInfoList.addAll(gameList);
                             Log.d(TAG, "总数:" + gameInfoList.size());
+                            for (LikeListBean.DataBean.GameListBean gameListBean : gameInfoList) {
+                                String gameName = gameListBean.getGameName();
+                                android.util.Log.d(TAG, "遍历:" + gameName);
+                            }
                             if (null != adapter) {
                                 adapter.setDate(gameInfoList);
                             }
@@ -208,11 +213,11 @@ public class MoreGameListActivity extends BaseFgActivity {
                         }
 
                         //下拉停留的位置
-                        ListView refreshableView = pullListView.getRefreshableView();
+                     /*   ListView refreshableView = pullListView.getRefreshableView();
                         int index = refreshableView.getFirstVisiblePosition();
                         View v = refreshableView.getChildAt(0);
                         int top = (v == null) ? 0 : (v.getTop() - v.getHeight());
-                        refreshableView.setSelectionFromTop(index, top);
+                        refreshableView.setSelectionFromTop(index, top);*/
                     }
 
 
