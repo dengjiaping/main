@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.ngame.store.R;
@@ -27,7 +28,7 @@ public class LabelsActivity extends BaseFgActivity {
 
     private RecyclerView mRecyclerView;
     private LabelsItemAdapter mAdapter;
-    private List<GameLabels> mDatas;
+    private List<GameLabels> mDatas = new ArrayList<>();
     private LabelsActivity content;
 
     @Override
@@ -81,7 +82,7 @@ public class LabelsActivity extends BaseFgActivity {
 
         @Override
         public int getItemCount() {
-            return mDatas.size();
+            return mDatas == null ? 0 : mDatas.size();
         }
 
         /**
@@ -102,6 +103,9 @@ public class LabelsActivity extends BaseFgActivity {
          */
         @Override
         public void onBindViewHolder(final ViewHolder viewHolder, final int i) {
+            if (mDatas == null) {
+                return;
+            }
             final GameLabels gameLabels = mDatas.get(i);
             final String itemLabelName = gameLabels.labelName;
             viewHolder.mTxt.setText(itemLabelName);

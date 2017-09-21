@@ -96,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_title"
-                    android:layout_marginTop="@dimen/dp_6"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:layout_toRightOf="@id/chang_shang"
                     android:lines="1"
                     android:text=""

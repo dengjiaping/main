@@ -46,7 +46,6 @@ import cn.ngame.store.adapter.DCViewPagerAdapter;
 import cn.ngame.store.adapter.ProgressBarStateListener;
 import cn.ngame.store.bean.GameImage;
 import cn.ngame.store.bean.GameInfo;
-import cn.ngame.store.bean.GameType;
 import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.Token;
 import cn.ngame.store.bean.UpLoadBean;
@@ -192,26 +191,27 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         gameNameTv.setText(gameName == null ? "" : gameName);//名字
         likeIv.setSelected(1 == gameInfo.isFavoriteGame ? true : false);
         //类型
-        List<GameType> typeList = gameInfo.gameTypeList;
-        if (typeList != null) {
-            for (GameType gameType : typeList) {
-                String typeName = gameType.typeName.trim();
-                if (typeName.equals("原生手柄") || typeName.equals("云适配")) {
-                    gameType0.setText(typeName);
-                    gameType0.setVisibility(View.VISIBLE);
-                }
-                if (typeName.equals("破解")) {
-                    gameType1.setText(typeName);
-                    gameType1.setVisibility(View.VISIBLE);
-                }
-                if (typeName.equals("汉化")) {
-                    gameType2.setText(typeName);
-                    gameType2.setVisibility(View.VISIBLE);
-                }
-                if (typeName.endsWith("特色游戏")) {
-                    gameType3.setText(typeName);
-                    gameType3.setVisibility(View.VISIBLE);
-                }
+        String typeName = gameInfo.cName;
+        if (typeName != null) {
+            if (typeName.contains("原生手柄")) {
+                gameType0.setText("原生手柄");
+                gameType0.setVisibility(View.VISIBLE);
+            }
+            if (typeName.contains("云适配")) {
+                gameType0.setText("云适配");
+                gameType0.setVisibility(View.VISIBLE);
+            }
+            if (typeName.contains("破解")) {
+                gameType1.setText("破解");
+                gameType1.setVisibility(View.VISIBLE);
+            }
+            if (typeName.contains("汉化")) {
+                gameType2.setText("汉化");
+                gameType2.setVisibility(View.VISIBLE);
+            }
+            if (typeName.contains("特色游戏")) {
+                gameType3.setText("特色游戏");
+                gameType3.setVisibility(View.VISIBLE);
             }
 
            /*
@@ -240,7 +240,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
 
         //厂商
         String gameAgent = gameInfo.gameAgent;
-        changShangTv.setText(gameAgent==null?"":gameAgent);
+        changShangTv.setText(gameAgent == null ? "" : gameAgent);
 
         //更新下载按钮
         timer.cancel();

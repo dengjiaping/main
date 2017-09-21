@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.format.Formatter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -213,8 +212,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
             tv_download_count.setText(this.gameInfo.downloadCount + "");
             tv_time.setText(df.format(new Date(this.gameInfo.updateTime)));
             String gameAgent = gameInfo.gameAgent;
-            Log.d(TAG, "gameAgent22: " + gameAgent);
-            tv_company.setText(gameAgent);
+            tv_company.setText( gameAgent);
         }
     }
 
