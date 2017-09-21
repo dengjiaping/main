@@ -20,7 +20,8 @@
         fresco:actualImageScaleType="fitXY"
         fresco:failureImage="@drawable/ic_def_logo_720_288"
         fresco:placeholderImage="@drawable/ic_def_logo_720_288"
-        fresco:placeholderImageScaleType="fitXY"
+        fresco:failureImageScaleType="centerCrop"
+        fresco:placeholderImageScaleType="centerCrop"
         fresco:progressBarImage="@drawable/ic_def_logo_720_288"
         />
 
