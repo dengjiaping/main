@@ -137,6 +137,7 @@ public class GameRankListBean implements Serializable{
         private String gameLogo;
         private String gameVersion;
         private String gameLink;
+        private String imgLink;
         private int gameSize;
         private String gameDesc;
         private Object gameInfo;
@@ -211,7 +212,13 @@ public class GameRankListBean implements Serializable{
         public String getGameLink() {
             return gameLink;
         }
+        public String getImgLink() {
+            return imgLink;
+        }
 
+        public void setImgLink(String imgLink) {
+            this.imgLink = imgLink;
+        }
         public void setGameLink(String gameLink) {
             this.gameLink = gameLink;
         }

@@ -31,9 +31,10 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/discover18_tviv_title"
             android:layout_alignParentRight="true"
-            android:paddingLeft="@dimen/dm010"
-            android:paddingRight="@dimen/dm036"
-            android:paddingTop="@dimen/dp_3"
+            android:paddingBottom="@dimen/dm008"
+            android:paddingLeft="@dimen/dm020"
+            android:paddingTop="@dimen/dm020"
+            android:paddingRight="@dimen/discover_margin_left"
             android:text="@string/see_more"
             android:textColor="@color/font_18b9fe"
             android:textSize="@dimen/dm020"/>

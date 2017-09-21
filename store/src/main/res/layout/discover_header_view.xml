@@ -170,8 +170,8 @@
             android:layout_alignParentRight="true"
             android:paddingBottom="@dimen/dm008"
             android:paddingLeft="@dimen/dm020"
-            android:paddingRight="@dimen/discover_margin_left"
             android:paddingTop="@dimen/dm020"
+            android:paddingRight="@dimen/discover_margin_left"
             android:text="@string/see_more"
             android:textColor="@color/font_18b9fe"
             android:textSize="@dimen/dm020"/>

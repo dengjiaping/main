@@ -91,8 +91,9 @@ public class TopicsDetailAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if (gameInfo != null)
+        if (gameInfo != null) {
             holder.update(gameInfo, type, position);
+        }
 
         return convertView;
     }
@@ -141,10 +142,9 @@ public class TopicsDetailAdapter extends BaseAdapter {
         public void update(final GameRankListBean.DataBean gameInfo, int type, int position) {
             this.gameInfo = gameInfo;
 
-            String imgUrl = gameInfo.getGameLogo();
-            img.setImageURI(imgUrl);
+            img.setImageURI(gameInfo.getGameLogo());
 
-            gameBigLogoIv.setImageURI(imgUrl);//游戏大图
+            gameBigLogoIv.setImageURI(gameInfo.getImgLink());//游戏大图
 
 
             String gameName = gameInfo.getGameName();
