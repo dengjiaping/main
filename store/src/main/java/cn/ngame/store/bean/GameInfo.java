@@ -36,7 +36,7 @@ public class GameInfo implements Serializable {
     /**
      * 评级分数
      */
-    public int scoreLevel;
+    public String gameAgent;
     /**
      * 是否是精选
      */
@@ -69,7 +69,7 @@ public class GameInfo implements Serializable {
     /**
      * 排序ID
      */
-    public String orderNo;
+    public String cName;
     /**
      * 程序包名
      */

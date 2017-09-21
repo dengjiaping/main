@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.format.Formatter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,6 @@ import java.util.Date;
 import java.util.List;
 
 import cn.ngame.store.R;
-import cn.ngame.store.bean.GameAgent;
 import cn.ngame.store.bean.GameImage;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.GameLabels;
@@ -212,10 +212,9 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
             tv_game_size.setText(Formatter.formatFileSize(context, this.gameInfo.gameSize));
             tv_download_count.setText(this.gameInfo.downloadCount + "");
             tv_time.setText(df.format(new Date(this.gameInfo.updateTime)));
-            List<GameAgent> gameAgentList = this.gameInfo.gameAgentList;
-            if (gameAgentList != null && gameAgentList.size() > 0) {
-                tv_company.setText(gameAgentList.get(0).agentName);
-            }
+            String gameAgent = gameInfo.gameAgent;
+            Log.d(TAG, "gameAgent22: " + gameAgent);
+            tv_company.setText(gameAgent);
         }
     }
 
@@ -283,7 +282,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                     intent.putExtra(KeyConstant.GAME_LABELS, (Serializable) gameLabels);
                     startActivity(intent);
                 } else {
-                    ToastUtil.show(context,"无标签数据");
+                    ToastUtil.show(context, "无标签数据");
                 }
                 break;
             case R.id.img_container:

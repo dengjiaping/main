@@ -44,7 +44,6 @@ import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.adapter.DCViewPagerAdapter;
 import cn.ngame.store.adapter.ProgressBarStateListener;
-import cn.ngame.store.bean.GameAgent;
 import cn.ngame.store.bean.GameImage;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.GameType;
@@ -240,12 +239,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         game_logo_img.setImageURI(gameInfo.gameLogo);//游戏 -头像
 
         //厂商
-        List<GameAgent> gameAgentList = gameInfo.gameAgentList;
-        if (gameAgentList != null && gameAgentList.size() > 0) {
-            changShangTv.setText(gameAgentList.get(0).agentName);
-        } else {
-            changShangTv.setText("");
-        }
+        String gameAgent = gameInfo.gameAgent;
+        changShangTv.setText(gameAgent==null?"":gameAgent);
 
         //更新下载按钮
         timer.cancel();
