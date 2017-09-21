@@ -29,7 +29,7 @@ import java.util.List;
 import cn.ngame.store.R;
 import cn.ngame.store.bean.GameImage;
 import cn.ngame.store.bean.GameInfo;
-import cn.ngame.store.bean.GameLabels;
+import cn.ngame.store.bean.GameCategorys;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.fragment.ImageDialogFragment;
@@ -63,7 +63,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
     private TextView tv_game_size;
     private Button itemAllNext;
     private TextView labelTv0, labelTv1, labelTv2, labelTv3;
-    private List<GameLabels> gameLabels;
+    private List<GameCategorys> gameLabels;
     private SimpleDraweeView picassoImageView;
 
     public static GameDetailFragment newInstance(GameInfo gameInfo) {
@@ -154,7 +154,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
         super.onViewCreated(view, savedInstanceState);
         if (gameInfo != null) {
             //标签
-            gameLabels = gameInfo.gameLabels;
+            gameLabels = gameInfo.gameCategorys;
             if (gameLabels != null) {
                 int labelSize = gameLabels.size();
                 int tvSize = tagTvList.size();
@@ -163,8 +163,8 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                 intent.setClass(context, MoreGameListActivity.class);
                 for (int i = 0; i < size; i++) {
                     TextView labelTv = tagTvList.get(i);
-                    final GameLabels gameLabel = this.gameLabels.get(i);
-                    final String labelName = gameLabel.labelName;
+                    final GameCategorys gameLabel = this.gameLabels.get(i);
+                    final String labelName = gameLabel.cName;
                     labelTv.setText(labelName);
                     labelTv.setVisibility(View.VISIBLE);
                     labelTv.setOnClickListener(new View.OnClickListener() {

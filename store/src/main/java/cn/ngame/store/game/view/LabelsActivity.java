@@ -16,7 +16,7 @@ import java.util.List;
 
 import cn.ngame.store.R;
 import cn.ngame.store.activity.BaseFgActivity;
-import cn.ngame.store.bean.GameLabels;
+import cn.ngame.store.bean.GameCategorys;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.util.ToastUtil;
 
@@ -28,7 +28,7 @@ public class LabelsActivity extends BaseFgActivity {
 
     private RecyclerView mRecyclerView;
     private LabelsItemAdapter mAdapter;
-    private List<GameLabels> mDatas = new ArrayList<>();
+    private List<GameCategorys> mDatas = new ArrayList<>();
     private LabelsActivity content;
 
     @Override
@@ -37,7 +37,7 @@ public class LabelsActivity extends BaseFgActivity {
         this.setContentView(R.layout.activity_singe_item_list);
         content = this;
         Intent intent = getIntent();
-        mDatas = (List<GameLabels>) intent.getSerializableExtra(KeyConstant.GAME_LABELS);
+        mDatas = (List<GameCategorys>) intent.getSerializableExtra(KeyConstant.GAME_LABELS);
         Button backBt = (Button) findViewById(R.id.left_bt);
         backBt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,9 +65,9 @@ public class LabelsActivity extends BaseFgActivity {
 
     public class LabelsItemAdapter extends RecyclerView.Adapter<LabelsItemAdapter.ViewHolder> {
         private LayoutInflater mInflater;
-        private List<GameLabels> mDatas;
+        private List<GameCategorys> mDatas;
 
-        public LabelsItemAdapter(Context context, List<GameLabels> datats) {
+        public LabelsItemAdapter(Context context, List<GameCategorys> datats) {
             mInflater = LayoutInflater.from(context);
             mDatas = datats;
         }
@@ -106,8 +106,8 @@ public class LabelsActivity extends BaseFgActivity {
             if (mDatas == null) {
                 return;
             }
-            final GameLabels gameLabels = mDatas.get(i);
-            final String itemLabelName = gameLabels.labelName;
+            final GameCategorys gameLabels = mDatas.get(i);
+            final String itemLabelName = gameLabels.cName;
             viewHolder.mTxt.setText(itemLabelName);
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
