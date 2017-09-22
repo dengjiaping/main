@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_title"
-                android:layout_marginTop="@dimen/dm010"
+                android:layout_marginTop="@dimen/dm012"
                 android:indeterminate="false"
                 android:indeterminateOnly="false"
                 android:progress="0"

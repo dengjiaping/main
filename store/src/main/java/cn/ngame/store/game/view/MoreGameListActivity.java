@@ -206,6 +206,7 @@ public class MoreGameListActivity extends BaseFgActivity {
                             }
                             if (null != adapter) {
                                 adapter.setDate(gameInfoList);
+                                adapter.notifyDataSetChanged();
                             }
                         } else {
                             loadStateView.setVisibility(View.VISIBLE);

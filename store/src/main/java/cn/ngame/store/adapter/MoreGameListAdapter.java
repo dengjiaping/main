@@ -76,13 +76,19 @@ public class MoreGameListAdapter extends BaseAdapter {
      */
     public void setDate(List<LikeListBean.DataBean.GameListBean> gameInfos) {
         this.gameInfoList = gameInfos;
+        for (LikeListBean.DataBean.GameListBean gameListBean : gameInfoList) {
+            Log.d(TAG, "遍历:22222"+gameListBean.getGameName());
+        }
         notifyDataSetChanged();
+        for (LikeListBean.DataBean.GameListBean gameListBean : gameInfoList) {
+            Log.d(TAG, "遍历:3333"+gameListBean.getGameName());
+        }
     }
 
     @Override
     public int getCount() {
-        if (gameInfoList != null) {
-            return gameInfoList.size();
+        if (this.gameInfoList != null) {
+            return this.gameInfoList.size();
         }
         return 0;
     }
@@ -113,6 +119,7 @@ public class MoreGameListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
         final LikeListBean.DataBean.GameListBean gameInfo = (gameInfoList == null) ? null : gameInfoList.get(position);
+        Log.d(TAG, "遍历:55555"+gameInfo.getGameName());
         final ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_game_2, parent, false);
@@ -132,6 +139,7 @@ public class MoreGameListAdapter extends BaseAdapter {
         if (gameInfo != null) {
             holder.update(gameInfo);
         } else {
+            Log.d(TAG, "遍历:gameInfo==null ");
         }
 
         return convertView;
