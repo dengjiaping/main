@@ -52,7 +52,7 @@ import cn.ngame.store.util.ToastUtil;
  */
 public class LoginActivity extends BaseFgActivity implements View.OnClickListener {
 
-    public static final String TAG = "777";
+    public static final String TAG = LoginActivity.class.getSimpleName();
 
     private EditText et_user, et_pwd;
     private String userName, password;
@@ -426,11 +426,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             protected Map<String, String> getParams() throws AuthFailureError {
                 //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
-                Log.d(TAG, "userHeadUrl: " + URL_HEAD_PHOTO);
-                Log.d(TAG, "userName: " + userName);
-                Log.d(TAG, "userCode: " + StoreApplication.userCode);
-                Log.d(TAG, "nicknameStr:" + nicknameStr);
-                Log.d(TAG, "loginType:" + LOGIN_TYPE);
                 params.put(KeyConstant.LOGIN_NAME, userName);//uid
                 params.put(KeyConstant.NICK_NAME, nicknameStr);//
                 params.put(KeyConstant.pass_word, password);//""
@@ -538,4 +533,25 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         StoreApplication.requestQueue.add(versionRequest);
     }*/
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mShareAPI.deleteOauth(mContext, SHARE_MEDIA.QQ, new UMAuthListener() {
+            @Override
+            public void onStart(SHARE_MEDIA share_media) {
+            }
+            @Override
+            public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA share_media, int i) {
+            }
+        });
+    }
 }
