@@ -23,7 +23,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TextAppearanceSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -266,7 +265,6 @@ public class Ranking012345Adapter extends BaseAdapter {
             ratingBar.setRating(gameInfo.getScoreLevel());
             //是否手柄、vr，头控,
             String typeNameStr = gameInfo.getCName();
-            Log.d("8888", "name------------------" + gameName + "----------------------" + typeNameStr);
             if (typeNameStr == null) {
                 return;
             }

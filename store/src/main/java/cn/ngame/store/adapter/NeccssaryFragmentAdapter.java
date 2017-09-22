@@ -236,7 +236,6 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d("777", "必备  ---   请求数据");
                             progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo
                                     .getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode())));
                             progressBar.setVisibility(View.VISIBLE);

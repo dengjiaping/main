@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.os.IBinder;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -340,7 +339,6 @@ public class FileLoadManager implements IFileLoad {
             for (FileLoadInfo info : loadInfos) {
                 String packageName = info.getPackageName();
                 int status = info.getStatus();
-                Log.d("777", info.getName() + "app: " + info.getType());
                 boolean hasInstalled = AppInstallHelper.isAppInstalled(context, packageName);
                 if (hasInstalled) {// status== GameFileStatus.STATE_HAS_INSTALL
                     infoList.add(info);

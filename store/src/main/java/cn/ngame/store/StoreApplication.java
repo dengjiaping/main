@@ -55,7 +55,7 @@ public class StoreApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.setLevel(Log.DEBUG);    //设置Log打印级别
+        Log.setLevel(Log.ERROR);    //设置Log打印级别
 
         token = (String) SPUtils.get(this, Constant.CONFIG_TOKEN, "");
         userHeadUrl = (String) SPUtils.get(this, Constant.CONFIG_USER_HEAD, "");
@@ -63,7 +63,6 @@ public class StoreApplication extends MultiDexApplication {
         nickName = (String) SPUtils.get(this, Constant.CONFIG_NICK_NAME, "");
         userCode = (String) SPUtils.get(this, Constant.CONFIG_USER_CODE, "");
         passWord = (String) SPUtils.get(this, Constant.CONFIG_USER_PWD, "");
-        android.util.Log.d("777", "StoreApplication onCreate: ");
         loginType = (String) SPUtils.get(this, Constant.CONFIG_LOGIN_TYPE, "1");
 
         isReceiveMsg = (boolean) SPUtils.get(this, Constant.CFG_RECEIVE_MSG, true);
@@ -84,7 +83,7 @@ public class StoreApplication extends MultiDexApplication {
         //配置友盟
         UMShareAPI.get(this);
         initUmengKey();
-        Config.DEBUG = true;
+        Config.DEBUG = false;
     }
 
     private void initUmengKey() {

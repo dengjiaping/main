@@ -186,7 +186,6 @@ public class MoreGameListActivity extends BaseFgActivity {
                             return;
                         }
                         int size = gameList.size();
-                        android.util.Log.d(TAG, "这次请求到的大小:" + size);
                         if (size == 0) {
                             ToastUtil.show(content, getString(R.string.no_more_data));
                             pullListView.setHasMoreData(false);
@@ -202,7 +201,6 @@ public class MoreGameListActivity extends BaseFgActivity {
                             Log.d(TAG, "总数:" + gameInfoList.size());
                             for (LikeListBean.DataBean.GameListBean gameListBean : gameInfoList) {
                                 String gameName = gameListBean.getGameName();
-                                android.util.Log.d(TAG, "遍历:" + gameName);
                             }
                             if (null != adapter) {
                                 adapter.setDate(gameInfoList);
@@ -269,7 +267,6 @@ public class MoreGameListActivity extends BaseFgActivity {
                 int startRecord = PAGE_SIZE * pageAction.getCurrentPage();
                 params.put(KeyConstant.start_Record, String.valueOf(startRecord));
                 params.put(KeyConstant.RECORDS, String.valueOf(PAGE_SIZE));
-                android.util.Log.d(TAG, startRecord + ",请求参数:" + PAGE_SIZE);
                 return params;
             }
         };
@@ -279,7 +276,6 @@ public class MoreGameListActivity extends BaseFgActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        android.util.Log.d(TAG, "停止更新 onStop: !!");
         if (null != adapter && timerTasks != null) {
             adapter.clean();
             for (TimerTask timerTask : timerTasks) {

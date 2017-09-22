@@ -2,7 +2,6 @@ package cn.ngame.store.activity.sm;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -207,7 +206,6 @@ public class SystemSettingsActivity extends BaseFgActivity implements CompoundBu
 
     private void doLoadClick(boolean isChecked) {
         //允许 isChecked=true, 
-        Log.d(TAG, "isChecked: " + isChecked);
         StoreApplication.allowAnyNet = isChecked;
         //如果允许
         if (isChecked) {

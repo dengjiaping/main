@@ -25,7 +25,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +70,6 @@ public class InstalledGameAdapter extends BaseAdapter {
         this.mItemClickQuickAction = mItemClickQuickAction;
         this.context = context;
         this.fm = fm;
-        Log.d(TAG, "初始化: "+fileInfoList);
     }
 
     /**

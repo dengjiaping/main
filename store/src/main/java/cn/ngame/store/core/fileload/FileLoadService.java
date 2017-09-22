@@ -130,9 +130,6 @@ public class FileLoadService extends Service {
      * 初始化游戏文件的下载状态
      */
     private void initGameFileStatus(){
-
-        Log.d(TAG,"----------------------------------------->>>>> 我执行了初始化任务");
-
         gameFileStatusMap = new ConcurrentHashMap<>(); //当前正在下载的文件
         taskMap = new ConcurrentHashMap<>();
         packageInfoMap = new ConcurrentHashMap<>();
@@ -141,7 +138,6 @@ public class FileLoadService extends Service {
         final List<FileLoadInfo> fileLoadInfos = dbManager.queryAllFileLoadInfo(FileLoadInfo.TYPE_GAME);
         for (FileLoadInfo info : fileLoadInfos){
             gameFileStatusMap.put(info.getUrl(),info);
-            Log.d(TAG,"----------------------------------------->>>>> 我执行了初始化任务111111111111");
         }
 
         //2.查询本机上已安装的游戏
@@ -562,7 +558,6 @@ public class FileLoadService extends Service {
                         new Thread(task).start();
                     }
                     taskMap.put(fileInfo.getUrl(), tasks);
-                    Log.d(TAG,"<<== 文件下载 ==>> ------------------------ 我进入下载循环了333333333"+fileInfo.getUrl());
                 }
             }
         }

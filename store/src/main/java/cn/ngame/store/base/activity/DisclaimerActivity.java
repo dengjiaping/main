@@ -42,7 +42,6 @@ public class DisclaimerActivity extends BaseFgActivity {
                 "   并提供身份证明、权属证明及详细侵权情况证明。\n" +
                 "   Ngame在收到上述法律文件后，将会依法尽快断开相关链接内容。</strong></p>\n" +
                 "</html>";
-        Log.d(TAG,s);
         tv_content.setText(Html.fromHtml(s));
     }
 

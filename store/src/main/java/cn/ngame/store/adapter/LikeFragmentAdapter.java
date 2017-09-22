@@ -20,7 +20,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.text.format.Formatter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -145,7 +144,6 @@ public class LikeFragmentAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     mPosition = position;
-                    Log.d("Like", "onClick: " + mItemClickQuickAction);
                     if (null != mItemClickQuickAction) {
                         mItemClickQuickAction.show(v);
                     }

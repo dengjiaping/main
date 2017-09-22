@@ -20,7 +20,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,11 +76,9 @@ public class MoreGameListAdapter extends BaseAdapter {
     public void setDate(List<LikeListBean.DataBean.GameListBean> gameInfos) {
         this.gameInfoList = gameInfos;
         for (LikeListBean.DataBean.GameListBean gameListBean : gameInfoList) {
-            Log.d(TAG, "遍历:22222"+gameListBean.getGameName());
         }
         notifyDataSetChanged();
         for (LikeListBean.DataBean.GameListBean gameListBean : gameInfoList) {
-            Log.d(TAG, "遍历:3333"+gameListBean.getGameName());
         }
     }
 
@@ -119,7 +116,6 @@ public class MoreGameListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
         final LikeListBean.DataBean.GameListBean gameInfo = (gameInfoList == null) ? null : gameInfoList.get(position);
-        Log.d(TAG, "遍历:55555"+gameInfo.getGameName());
         final ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_game_2, parent, false);
@@ -139,7 +135,6 @@ public class MoreGameListAdapter extends BaseAdapter {
         if (gameInfo != null) {
             holder.update(gameInfo);
         } else {
-            Log.d(TAG, "遍历:gameInfo==null ");
         }
 
         return convertView;
@@ -182,7 +177,6 @@ public class MoreGameListAdapter extends BaseAdapter {
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d(TAG, gameInfo.getGameName() + "下载进度更新:" + gameInfo.getPackages());
                       /*      if (null == gameInfo) {
                                 return;
                             }*/
@@ -213,8 +207,6 @@ public class MoreGameListAdapter extends BaseAdapter {
          */
         public void update(final LikeListBean.DataBean.GameListBean gameInfo) {
             this.gameInfo = gameInfo;
-            Log.d(TAG, "update: " + gameInfo.getGameName());
-
             String gameLogo = gameInfo.getGameLogo();
             img.setImageURI(gameLogo);
 
@@ -237,7 +229,6 @@ public class MoreGameListAdapter extends BaseAdapter {
             if (gameLink == null) {
                 gameLink = "..";
             }
-            Log.d(TAG, gameInfo.getGameName() + ",下载链接: " + gameLink);
             progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameLink, gameInfo.getPackages(),
                     ConvUtil.NI(gameInfo.getVersionCode())));
             //必须设置，否则点击进度条后无法进行响应操作
