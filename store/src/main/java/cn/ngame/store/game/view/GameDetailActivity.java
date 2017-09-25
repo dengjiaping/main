@@ -192,7 +192,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         }
         gameName = gameInfo.gameName;
         gameNameTv.setText(gameName == null ? "" : gameName);//名字
-        likeIv.setSelected(1 == gameInfo.isFavoriteGame ? true : false);
+        likeIv.setSelected(gameInfo.isFavoriteGame >0 ? true : false);
         //类型
         String typeName = gameInfo.cName;
         if (typeName != null) {
