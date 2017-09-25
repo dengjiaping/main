@@ -260,6 +260,7 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 getData();
+                getBannerData();
                 pullListView.setLastUpdatedLabel(new Date().toLocaleString());
                 pullListView.onPullDownRefreshComplete();
                 pullListView.onPullUpRefreshComplete();
@@ -379,6 +380,9 @@ public class DiscoverFragment extends BaseSearchFragment implements View.OnClick
      * 获取轮播图片数据
      */
     private void getBannerData() {
+        if (list != null) {
+            list.clear();
+        }
         new YunduanClient(context, new YunduanBodyBean()).observable()
                 .subscribe(new ObserverWrapper<YunduanBean>() {
                     @Override

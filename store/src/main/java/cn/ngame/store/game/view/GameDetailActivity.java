@@ -274,7 +274,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         Response.Listener<JsonResult<GameInfo>> successListener = new Response.Listener<JsonResult<GameInfo>>() {
             @Override
             public void onResponse(JsonResult<GameInfo> result) {
-                Log.d(TAG, "服务器返回成功: " + df.format(new Date()) + result == null ? ",数据为空" : "," + result.code);
                 if (result == null || result.code != 0) {
                     ToastUtil.show(content, getString(R.string.server_exception));
                     return;
@@ -322,7 +321,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                Log.d(TAG, "请求服务器失败: " + df.format(new Date()) + "," + volleyError);
             }
         };
 
@@ -340,7 +338,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 return params;
             }
         };
-        Log.d(TAG, "UseCode:"+StoreApplication.userCode + "访问服务器开始: " + df.format(new Date()));
+        Log.d(TAG, "访问服务器开始: " + df.format(new Date()));
         StoreApplication.requestQueue.add(request);
     }
 
@@ -473,6 +471,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             @Override
             public void onResponse(JsonResult result) {
                 if (result == null) {
+                    Log.d(TAG, "服务端异常: " + df.format(new Date()));
                     Toast.makeText(content, "服务端异常", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -489,6 +488,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
+                Log.d(TAG, "网络连接错误: " + df.format(new Date()));
                 Log.d(TAG, "取消喜欢失败：网络连接错误！" + volleyError.getMessage());
             }
         };
@@ -548,6 +548,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
                 params.put(KeyConstant.TOKEN, StoreApplication.token);
+                Log.d(TAG, "getParams: " + StoreApplication.userCode);
                 return params;
             }
         };
