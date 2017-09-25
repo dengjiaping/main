@@ -65,7 +65,7 @@ import cn.ngame.store.util.ToastUtil;
  */
 public class UserCenterActivity extends BaseFgActivity {
 
-    public static final String TAG = "777";
+    public static final String TAG = UserCenterActivity.class.getSimpleName();
     private UserCenterActivity content;
     private String pwd;
 
@@ -397,7 +397,10 @@ public class UserCenterActivity extends BaseFgActivity {
                             StoreApplication.userCode = user.userCode;
                             UserCenterActivity.this.finish();
                         } else if (code >= -4 && code <= -1) {
-                            showReLoginDialog();
+                            android.util.Log.d(TAG, "返回: " + code + result.msg);
+                            if (content != null && !content.isFinishing()) {
+                                showReLoginDialog();
+                            }
                             //需要重新登录
                             logoutClearData();
                             //UserCenterActivity.this.finish();

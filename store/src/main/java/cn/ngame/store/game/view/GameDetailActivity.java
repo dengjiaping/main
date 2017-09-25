@@ -32,7 +32,10 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -271,7 +274,9 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         Response.Listener<JsonResult<GameInfo>> successListener = new Response.Listener<JsonResult<GameInfo>>() {
             @Override
             public void onResponse(JsonResult<GameInfo> result) {
+                Log.d(TAG, "服务器返回成功: " + df.format(new Date()) + result == null ? ",数据为空" : "," + result.code);
                 if (result == null || result.code != 0) {
+                    ToastUtil.show(content, getString(R.string.server_exception));
                     return;
                 }
                 gameInfo = result.data;
@@ -304,9 +309,10 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                             viewpager.setAdapter(adapter);
                         }
                     }
-
+                    Log.d(TAG, "服务器返回成功,有数据 " + df.format(new Date()));
                     setView();
                 } else {
+                    Log.d(TAG, "服务端返回错误: " + df.format(new Date()));
                     Log.d(TAG, "HTTP请求成功：服务端返回错误！");
                 }
             }
@@ -316,6 +322,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
+                Log.d(TAG, "请求服务器失败: " + df.format(new Date()) + "," + volleyError);
             }
         };
 
@@ -325,6 +332,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
+
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.GAME_ID, String.valueOf(gameId));
                 params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
@@ -332,6 +340,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 return params;
             }
         };
+        Log.d(TAG, "UseCode:"+StoreApplication.userCode + "访问服务器开始: " + df.format(new Date()));
         StoreApplication.requestQueue.add(request);
     }
 
@@ -500,6 +509,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         StoreApplication.requestQueue.add(versionRequest);
     }
 
+    private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     private void addFavorite() {
         String url = Constant.WEB_SITE + Constant.URL_ADD_FAVORITE;
         Response.Listener<UpLoadBean> successListener = new Response.Listener<UpLoadBean>() {
@@ -537,7 +548,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
                 params.put(KeyConstant.TOKEN, StoreApplication.token);
-                Log.d(TAG, "getParams: " + StoreApplication.userCode);
                 return params;
             }
         };

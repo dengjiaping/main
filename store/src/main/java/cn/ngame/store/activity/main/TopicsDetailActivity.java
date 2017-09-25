@@ -1,7 +1,6 @@
 package cn.ngame.store.activity.main;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -18,7 +17,6 @@ import com.jzt.hol.android.jkda.sdk.bean.game.GameListBody;
 import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.main.GameSelectClient;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,16 +43,15 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
 public class TopicsDetailActivity extends BaseFgActivity {
 
     private SimpleDraweeView sdv_img;
-    private TextView tv_title2, tv_info;
+    private TextView tv_info;
     private PullToRefreshListView pullListView;
     TopicsDetailAdapter adapter;
     List<GameRankListBean.DataBean> list = new ArrayList<>();
-    private String  desc, url;
+    private String desc, url;
     private PageAction pageAction;
     public static int PAGE_SIZE = 10;
     private TopicsDetailActivity content;
     private Object categoryId;
-    private RelativeLayout titleLayout;
     private RelativeLayout mTitleRlay;
     private Button leftBt;
     private String title;
@@ -63,12 +60,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(R.color.transparent);//通知栏所需颜色
-        }
+        initStatusBar();
         setContentView(R.layout.topics_detail_activity);
         content = TopicsDetailActivity.this;
         title = getIntent().getStringExtra(KeyConstant.TITLE);
@@ -230,27 +222,26 @@ public class TopicsDetailActivity extends BaseFgActivity {
 
                     @Override
                     public void onNext(GameRankListBean result) {
+
                         if (result != null && result.getCode() == 0) {
                             setData(result);
                         } else {
                             pullListView.getRefreshableView().setAdapter(adapter); //数据位空时，加载头部
-//                          ToastUtil.show(getActivity(), result.getMsg());
                         }
+                        pullListView.onPullUpRefreshComplete();
+                        pullListView.onPullDownRefreshComplete();
+                        pullListView.setLastUpdatedLabel(new Date().toLocaleString());
                     }
                 });
     }
 
     private void setData(GameRankListBean result) {
-        Log.d(TAG, "categoryId:size "+result.getData().size());
         if (result.getData() == null) {
             return;
         }
         if (pageAction.getCurrentPage() == 0) {
             this.list.clear(); //清除数据
             if (result.getData() == null || result.getData().size() == 0) {
-                pullListView.onPullUpRefreshComplete();
-                pullListView.onPullDownRefreshComplete();
-                pullListView.setLastUpdatedLabel(new Date().toLocaleString());
                 pullListView.getRefreshableView().setAdapter(adapter); //数据位空时，加载头部
                 return;
             }
@@ -275,9 +266,6 @@ public class TopicsDetailActivity extends BaseFgActivity {
             int top = (v == null) ? 0 : (v.getTop() - v.getHeight());
             pullListView.getRefreshableView().setSelectionFromTop(index, top);
         }
-        pullListView.onPullUpRefreshComplete();
-        pullListView.onPullDownRefreshComplete();
-        pullListView.setLastUpdatedLabel(new Date().toLocaleString());
     }
 
     @Override

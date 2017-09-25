@@ -11,6 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
@@ -153,7 +157,13 @@ public class RecommendFragment extends BaseSearchFragment {
                                     final YunduanBean.DataBean info = gameInfo.get(i);
                                     final String gameImage = info.getLogoUrl();//获取每一张图片
                                     simpleImageView = new SimpleDraweeView(context);
-                                    simpleImageView.setScaleType(ImageView.ScaleType.FIT_START);
+                                    GenericDraweeHierarchy hierarchy = GenericDraweeHierarchyBuilder
+                                            .newInstance(getResources())
+                                            .setActualImageScaleType(ScalingUtils.ScaleType.CENTER)
+                                            .setRoundingParams(RoundingParams.fromCornersRadius(16))
+                                            .setFadeDuration(0)
+                                            .build();
+                                    simpleImageView.setHierarchy(hierarchy);
                                     //为  PicassoImageView设置属性
                                     hParams = new LinearLayout.LayoutParams(
                                             wrapContent, wrapContent);
@@ -217,7 +227,7 @@ public class RecommendFragment extends BaseSearchFragment {
             this.topList.clear();
             pageAction.setTotal(totals);
             this.list.addAll(resultData); //清除数据
-            this.topList.addAll(resultData) ;
+            this.topList.addAll(resultData);
             if (list.size() > 1) {
                 setHeaderInfo(list);//设置头部布局
                 list.remove(0);
