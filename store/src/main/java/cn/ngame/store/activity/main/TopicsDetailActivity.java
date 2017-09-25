@@ -49,7 +49,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
     private PullToRefreshListView pullListView;
     TopicsDetailAdapter adapter;
     List<GameRankListBean.DataBean> list = new ArrayList<>();
-    String title, desc, url;
+    private String  desc, url;
     private PageAction pageAction;
     public static int PAGE_SIZE = 10;
     private TopicsDetailActivity content;
@@ -57,6 +57,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
     private RelativeLayout titleLayout;
     private RelativeLayout mTitleRlay;
     private Button leftBt;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
         }
         setContentView(R.layout.topics_detail_activity);
         content = TopicsDetailActivity.this;
-        String title = getIntent().getStringExtra(KeyConstant.TITLE);
+        title = getIntent().getStringExtra(KeyConstant.TITLE);
         categoryId = getIntent().getExtras().get(KeyConstant.category_Id);
         Log.d(TAG, "categoryId: " + categoryId);
         //获取状态栏高度设置给标题栏==========================================
@@ -85,7 +86,6 @@ public class TopicsDetailActivity extends BaseFgActivity {
         //======================================================================
         leftBt = (Button) findViewById(R.id.left_bt);
         leftBt.setPadding(48, statusBarHeight, 0, 0);
-        leftBt.setText(title);
         leftBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +103,6 @@ public class TopicsDetailActivity extends BaseFgActivity {
 
         pullListView = (PullToRefreshListView) findViewById(R.id.pullListView);
 
-        title = getIntent().getStringExtra("title");
         desc = getIntent().getStringExtra("desc");
         url = getIntent().getStringExtra("url");
 
@@ -114,7 +113,6 @@ public class TopicsDetailActivity extends BaseFgActivity {
         pullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                Log.d("888", "onPullDownToRefresh): ");
                 pullListView.setPullLoadEnabled(true);
                 pullListView.setPullRefreshEnabled(true);
                 pageAction.setCurrentPage(0);
@@ -187,14 +185,17 @@ public class TopicsDetailActivity extends BaseFgActivity {
                         mTitleRlay.setBackgroundResource(color);
                     } else {
                         mTitleRlay.setAlpha(1f);
+                        leftBt.setText(title);
                         mTitleRlay.setBackgroundResource(R.color.mainColor);
                     }
                 } else {
                     if (firstVisibleItem != 0) {
+                        leftBt.setText(title);
                         mTitleRlay.setBackgroundResource(R.color.mainColor);
                         mTitleRlay.setAlpha(1f);
 
                     } else {
+                        leftBt.setText("");
                         mTitleRlay.setBackgroundResource(R.color.transparent);
                         mTitleRlay.setAlpha(1f);
                     }

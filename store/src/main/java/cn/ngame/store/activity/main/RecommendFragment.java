@@ -153,7 +153,7 @@ public class RecommendFragment extends BaseSearchFragment {
                                     final YunduanBean.DataBean info = gameInfo.get(i);
                                     final String gameImage = info.getLogoUrl();//获取每一张图片
                                     simpleImageView = new SimpleDraweeView(context);
-                                    simpleImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                                    simpleImageView.setScaleType(ImageView.ScaleType.FIT_START);
                                     //为  PicassoImageView设置属性
                                     hParams = new LinearLayout.LayoutParams(
                                             wrapContent, wrapContent);

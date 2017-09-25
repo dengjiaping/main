@@ -120,11 +120,9 @@ public class GameLoadProgressBar extends View {
         } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_HAS_DOWNLOAD) { //已经下载完成
             //progress = 100;
             text = "安装";
-            Log.d(TAG, "setLoadState: 安装");
         } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_HAS_INSTALL || gameFileStatus.getStatus() ==
                 GameFileStatus.STATE_HAS_INSTALL_OLD) {     //已经安装
             text = "打开";
-            Log.d(TAG, "setLoadState: 打开");
         }
 //        else if(gameFileStatus.getStatus() == GameFileStatus.STATE_HAS_INSTALL_OLD){
 //            text = "更新";

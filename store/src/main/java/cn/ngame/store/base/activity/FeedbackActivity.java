@@ -58,7 +58,6 @@ public class FeedbackActivity extends CommonBaseActivity implements View.OnClick
     public static final String TAG = FeedbackActivity.class.getSimpleName();
     private LinearLayout ll_back;
     private TextView tv_title, tv_rightTxt;
-
     private EditText et_content, et_contact;
     private TextView tv_content_num;
     private Button bt_submit;
