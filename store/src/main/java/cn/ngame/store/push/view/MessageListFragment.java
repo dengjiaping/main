@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -42,25 +43,28 @@ public class MessageListFragment extends Fragment implements IPushMsgListView {
     private int itemPosition;
 
     private long labelId = 1;
+    private TextView msgEmptyTv;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getActivity();
-        presenter = new PushMsgListPresenter(context,this);
+        presenter = new PushMsgListPresenter(context, this);
 
     }
 
     @Nullable
     @Override
-    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle
+            savedInstanceState) {
 
         //获取初始参数
         labelId = getArguments().getLong("labelId", 1);
 
-        View view = inflater.inflate(R.layout.push_message_list_fragment,container,false);
+        View view = inflater.inflate(R.layout.push_message_list_fragment, container, false);
         listView = (ListView) view.findViewById(R.id.listView);
-        adapter = new PushMsgLvAdapter(getActivity(),getFragmentManager());
+        msgEmptyTv = (TextView) view.findViewById(R.id.no_msg_tv);
+        adapter = new PushMsgLvAdapter(getActivity(), getFragmentManager());
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,21 +73,21 @@ public class MessageListFragment extends Fragment implements IPushMsgListView {
 
                 PushMessage msg = (PushMessage) adapter.getItem(position);
 
-                if(msg.getIsRead() == 0){
+                if (msg.getIsRead() == 0) {
                     ImageView img = (ImageView) view.findViewById(R.id.img_1);
                     img.setBackgroundResource(R.drawable.msg_dot_gray);
                 }
                 //通知
-                if(msg.getType() == PushMessage.MSG_TYPE_TZ){
+                if (msg.getType() == PushMessage.MSG_TYPE_TZ) {
 
-                    Intent intent = new Intent(context,NotifyMsgDetailActivity.class);
-                    intent.putExtra("msg",msg);
+                    Intent intent = new Intent(context, NotifyMsgDetailActivity.class);
+                    intent.putExtra("msg", msg);
                     context.startActivity(intent);
-                //活动
-                }else {
-                    Intent intent = new Intent(context,MessageDetailActivity.class);
-                    intent.putExtra("msgId",msg.getMsgId());
-                    intent.putExtra("type",msg.getType());
+                    //活动
+                } else {
+                    Intent intent = new Intent(context, MessageDetailActivity.class);
+                    intent.putExtra("msgId", msg.getMsgId());
+                    intent.putExtra("type", msg.getType());
                     context.startActivity(intent);
                 }
 
@@ -111,7 +115,7 @@ public class MessageListFragment extends Fragment implements IPushMsgListView {
             @Override
             public void onItemClick(QuickAction source, int pos, int actionId) {
 
-                if(pos == 0){
+                if (pos == 0) {
 
                     //删除消息
                     PushMessage msg = (PushMessage) adapter.getItem(itemPosition);
@@ -124,7 +128,7 @@ public class MessageListFragment extends Fragment implements IPushMsgListView {
                     }
 
                     //刷新消息列表
-                    presenter.showMsgList((int)labelId,1,20);    //默认显示公告的前20条
+                    presenter.showMsgList((int) labelId, 1, 20);    //默认显示公告的前20条
                 }
 
                 //取消弹出框
@@ -151,11 +155,16 @@ public class MessageListFragment extends Fragment implements IPushMsgListView {
     @Override
     public void onResume() {
         super.onResume();
-        presenter.showMsgList((int)labelId,1,20);    //默认显示公告的前20条
+        presenter.showMsgList((int) labelId, 1, 20);    //默认显示公告的前20条
     }
 
     @Override
     public void showMsgList(List<PushMessage> msgList) {
+        if (msgList == null || msgList.size() == 0) {
+            msgEmptyTv.setVisibility(View.VISIBLE);
+            return;
+        }
+        msgEmptyTv.setVisibility(View.GONE);
         adapter.setDate(msgList);
         adapter.notifyDataSetChanged();
     }

@@ -2,6 +2,7 @@ package cn.ngame.store.push.presenter;
 
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 
@@ -51,6 +52,13 @@ public class PushMsgListPresenter implements IPushMsgListPresenter {
 
                     @Override
                     public void onNext(List<PushMessage> msgList) {
+                        for (PushMessage pushMessage : msgList) {
+                            Log.d(TAG, "消息Id:"+pushMessage.getId());
+                            Log.d(TAG, "消息MsgId:"+pushMessage.getMsgId());
+                            Log.d(TAG, "消息Title:"+pushMessage.getTitle());
+                            Log.d(TAG, "消息Description:"+pushMessage.getDescription());
+                        }
+                        Log.d(TAG, "获取消息列表大小:"+msgList.size());
                         msgView.showMsgList(msgList);
                     }
 

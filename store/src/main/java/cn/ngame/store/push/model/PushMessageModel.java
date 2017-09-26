@@ -110,7 +110,6 @@ public class PushMessageModel implements IPushMessageModel{
 
     @Override
     public int getUnReadMsgCount(int type) {
-
         int count = 0;
         if(dbManager != null){
             count = dbManager.getUnReadMsgCount(type);
