@@ -73,13 +73,13 @@ public class MessageListFragment extends Fragment implements IPushMsgListView {
                     ImageView img = (ImageView) view.findViewById(R.id.img_1);
                     img.setBackgroundResource(R.drawable.msg_dot_gray);
                 }
-
+                //通知
                 if(msg.getType() == PushMessage.MSG_TYPE_TZ){
 
                     Intent intent = new Intent(context,NotifyMsgDetailActivity.class);
                     intent.putExtra("msg",msg);
                     context.startActivity(intent);
-
+                //活动
                 }else {
                     Intent intent = new Intent(context,MessageDetailActivity.class);
                     intent.putExtra("msgId",msg.getMsgId());

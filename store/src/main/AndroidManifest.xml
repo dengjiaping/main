@@ -240,7 +240,7 @@
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
-            android:name=".push.view.PushMessageActivity"
+            android:name=".push.view.MsgCenterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"/>

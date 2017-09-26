@@ -21,7 +21,7 @@ import cn.ngame.store.view.VideoTabView;
  * 显示消息列表
  * Created by zeng on 2016/11/23.
  */
-public class PushMessageActivity extends BaseFgActivity {
+public class MsgCenterActivity extends BaseFgActivity {
 
     private VideoTabView videoTabView;       //分类标签控件
     private ViewPager viewPager;
@@ -64,7 +64,7 @@ public class PushMessageActivity extends BaseFgActivity {
 
         ArrayList<Fragment> fragments = new ArrayList<>();
 
-        //预告
+        //通知
         MessageListFragment msgYGFragment = new MessageListFragment();
         Bundle bundleYG = new Bundle();
         bundleYG.putLong("labelId", PushMessage.MSG_TYPE_TZ);

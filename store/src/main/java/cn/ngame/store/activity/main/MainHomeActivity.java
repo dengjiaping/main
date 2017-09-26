@@ -92,7 +92,7 @@ import cn.ngame.store.push.model.PushMessage;
 import cn.ngame.store.push.model.PushMessageModel;
 import cn.ngame.store.push.view.MessageDetailActivity;
 import cn.ngame.store.push.view.NotifyMsgDetailActivity;
-import cn.ngame.store.push.view.PushMessageActivity;
+import cn.ngame.store.push.view.MsgCenterActivity;
 import cn.ngame.store.search.view.SearchActivity;
 import cn.ngame.store.user.view.LoginActivity;
 import cn.ngame.store.user.view.UserCenterActivity;
@@ -839,7 +839,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 startActivity(new Intent(context, SearchActivity.class));
                 break;
             case R.id.fl_notifi:
-                startActivity(new Intent(context, PushMessageActivity.class));
+                startActivity(new Intent(context, MsgCenterActivity.class));
                 break;
             case R.id.main_download_bt:
                 startActivity(new Intent(context, DownloadCenterActivity.class));
