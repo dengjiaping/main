@@ -728,10 +728,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 params.put(KeyConstant.bluetooth, "");//蓝牙
                 params.put(KeyConstant.system, android.os.Build.VERSION.RELEASE);//系统
                 params.put(KeyConstant.cpu, android.os.Build.CPU_ABI);//蓝牙
-                Log.d(TAG, "手机MODEL:" + android.os.Build.MODEL);
-                Log.d(TAG, "手机.VERSION.RELEASE:" + android.os.Build.VERSION.RELEASE);
-                Log.d(TAG, "手机BRAND:" + android.os.Build.BRAND);
-                Log.d(TAG, "手机CPU_ABI:" + android.os.Build.CPU_ABI);
                 params.put(KeyConstant.isSupportOTG, "0");//是否支持OTG（0表示不支持，1表示支持）
                 params.put(KeyConstant.updateOrDownloadTips, String.valueOf(UPDATE_TIPS_OR_DOWNLOAD_EXCEPTION));
                 return params;
@@ -773,6 +769,12 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 mUnboundDialog.dismiss();
                 //提交评分
                 //submitPercent(mUnboundDialog);
+
+                //评分数据埋点
+                HashMap<String, String> map = new HashMap<>();
+                map.put(KeyConstant.game_Name, gameName);
+                MobclickAgent.onEvent(content, UMEventNameConstant.GameGrade,
+                        map);
             }
         });
         if (isPrecented) {

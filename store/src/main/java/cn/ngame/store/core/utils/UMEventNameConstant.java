@@ -17,4 +17,5 @@ public class UMEventNameConstant {
 
     public static final String FeedBack_UpdateRemind= "FeedBack_UpdateRemind";
     public static final String FeedBack_DownloadException= "FeedBack_DownloadException";
+    public static final String GameGrade= "GameGrade";
 }
