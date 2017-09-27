@@ -31,6 +31,7 @@ import com.android.volley.VolleyError;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.umeng.analytics.MobclickAgent;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -63,6 +64,7 @@ import cn.ngame.store.core.utils.DialogHelper;
 import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.NetUtil;
+import cn.ngame.store.core.utils.UMEventNameConstant;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.util.ToastUtil;
@@ -192,7 +194,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         }
         gameName = gameInfo.gameName;
         gameNameTv.setText(gameName == null ? "" : gameName);//名字
-        likeIv.setSelected(gameInfo.isFavoriteGame >0 ? true : false);
+        likeIv.setSelected(gameInfo.isFavoriteGame > 0 ? true : false);
         //类型
         String typeName = gameInfo.cName;
         if (typeName != null) {
@@ -238,7 +240,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         }
         gameSizeTv.setText(Formatter.formatFileSize(content, gameInfo.gameSize));//大小
         downLoadCountTv.setText(gameInfo.downloadCount + "");//下载次数
-        percentageTv.setText(gameInfo.percentage + "");//评分0
+        //percentageTv.setText(gameInfo.percentage + "");//评分0
+        percentageTv.setText("5.0");//评分0
         game_logo_img.setImageURI(gameInfo.gameLogo);//游戏 -头像
 
         //厂商
@@ -637,10 +640,17 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             public void onClick(View v) {
                 dialog.cancel();
                 int id = v.getId();
-                if (id == R.id.choose_01_tv) {//游戏更新
+                HashMap<String, String> map = new HashMap<>();
+                map.put(KeyConstant.game_Name, gameName);
+                if (id == R.id.choose_01_tv) {
                     UPDATE_TIPS_OR_DOWNLOAD_EXCEPTION = 1;
-                } else if (id == R.id.choose_02_tv) {//下载异常
+                    //数据埋点  -- 游戏更新提醒
+                    MobclickAgent.onEvent(content, UMEventNameConstant.FeedBack_UpdateRemind,
+                            map);
+                } else if (id == R.id.choose_02_tv) {//下载异常\
                     UPDATE_TIPS_OR_DOWNLOAD_EXCEPTION = 2;
+                    MobclickAgent.onEvent(content, UMEventNameConstant.FeedBack_DownloadException,
+                            map);
                 }
                 //提交反馈
                 if (gameInfo != null) {

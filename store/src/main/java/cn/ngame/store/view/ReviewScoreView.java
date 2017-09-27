@@ -50,6 +50,7 @@ public class ReviewScoreView extends LinearLayout {
     }
 
     public void setData(GameInfo gameInfo) {
+        percentTv.setText("5.0");
         if (null == gameInfo) {
             return;
         }
@@ -87,7 +88,7 @@ public class ReviewScoreView extends LinearLayout {
         }
 
         ratingBar.setRating(gameInfo.percentage);
-        percentTv.setText(gameInfo.percentage + "");
+        //percentTv.setText(gameInfo.percentage + "");
     }
 
 

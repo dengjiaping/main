@@ -27,7 +27,8 @@ public class Constant {
    public static final String WEB_SITE = "http://openapi.ngame.cn";
     //生产服务器
     //public static final String WEB_SITE = "http://120.27.200.73:9011";        //预发布数据
-    public static final String WEB_SITE2 = "http://192.168.37.252:20004";      //h5测试服务器
+    public static final String WEB_SITE2 = "http://192.168.37.252:20004";      //h5测试
+ // 服务器
     public static final String WEB_SITE3 = "http://files.ngame.cn";      //h5正式服务器
     /**
      * SharedPreferences 配置文件名

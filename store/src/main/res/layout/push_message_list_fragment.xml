@@ -20,6 +20,7 @@
         android:layout_centerInParent="true"
         android:text="暂无消息"
         android:paddingBottom="@dimen/dm100"
+
         android:visibility="gone"
         android:textColor="@color/color_989999"
         android:textSize="@dimen/dm028"/>
