@@ -55,7 +55,7 @@ public class StoreApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.setLevel(Log.ERROR);    //设置Log打印级别
+        Log.setLevel(Log.DEBUG);    //设置Log打印级别
 
         token = (String) SPUtils.get(this, Constant.CONFIG_TOKEN, "");
         userHeadUrl = (String) SPUtils.get(this, Constant.CONFIG_USER_HEAD, "");

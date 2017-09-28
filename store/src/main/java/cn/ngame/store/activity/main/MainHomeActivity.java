@@ -37,12 +37,12 @@ import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
+import com.inmobi.sdk.InMobiSdk;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.AppCarouselBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.BrowseHistoryBodyBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.gamehub.AppCarouselClient;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.umeng.analytics.MobclickAgent;
 
@@ -75,7 +75,6 @@ import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.AppInstallHelper;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
-import cn.ngame.store.core.utils.FileUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.LoginHelper;
@@ -91,8 +90,8 @@ import cn.ngame.store.push.model.IPushMessageModel;
 import cn.ngame.store.push.model.PushMessage;
 import cn.ngame.store.push.model.PushMessageModel;
 import cn.ngame.store.push.view.MessageDetailActivity;
-import cn.ngame.store.push.view.NotifyMsgDetailActivity;
 import cn.ngame.store.push.view.MsgCenterActivity;
+import cn.ngame.store.push.view.NotifyMsgDetailActivity;
 import cn.ngame.store.search.view.SearchActivity;
 import cn.ngame.store.user.view.LoginActivity;
 import cn.ngame.store.user.view.UserCenterActivity;
@@ -153,6 +152,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        InMobiSdk.init(this, Constant.InMobiSdk_Id);
         //........ ....................通知栏  >= 4.4(KITKAT)...................
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
@@ -278,6 +278,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     .permission.SYSTEM_ALERT_WINDOW, Manifest.permission.WRITE_APN_SETTINGS};
             ActivityCompat.requestPermissions(this, mPermissionList, 777);
         }*/
+        //Intent intent = new Intent(this, SplashFullscreenActivity.class);
+        //startActivity(intent);
     }
 
     /*  @Override
@@ -285,7 +287,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
           android.util.Log.d(TAG, "onRequest6.0PermissionsResult: " + requestCode);
 
       }*/
-    DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_def_logo_188_188, 360);
+    //DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_def_logo_188_188, 360);
 
     @Override
     protected void onResume() {
@@ -713,10 +715,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
      * 内部类用于处理底部菜单点击后页面跳转
      */
     public class MenuOnTouchListener implements View.OnTouchListener {
-
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-
             int action = event.getAction();
             switch (v.getId()) {
                 case R.id.menu_home_ll:
@@ -790,9 +790,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 msgIntent.putExtra("msgId", pushMsgId);
                 msgIntent.putExtra("type", pushMsgType);
                 startActivity(msgIntent);
-
             } else if (pushMsgType == PushMessage.MSG_TYPE_TZ) {
-
                 PushMessage msg = (PushMessage) getIntent().getSerializableExtra("msg");
                 Intent msgIntent = new Intent(this, NotifyMsgDetailActivity.class);
                 msgIntent.putExtra("msg", msg);
@@ -1013,6 +1011,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 dialogFragment.dismiss();
+                finish();
             }
         });
         dialogFragment.setNegativeButton(R.string.update_now, new View.OnClickListener() {

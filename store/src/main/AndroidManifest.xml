@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="cn.ngame.store">
 
     <uses-sdk
@@ -428,7 +429,32 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
+        <!--广告 -->
+        <activity
+            android:name="com.inmobi.rendering.InMobiAdActivity"
+            android:configChanges="keyboardHidden|orientation|keyboard|screenSize|screenLayout"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.NoTitleBar"
+            tools:ignore="UnusedAttribute"/>
+        <service
+            android:name= "com.inmobi.ads.ApkDownloader$ApkDownloadService"
+            android:enabled="true">
+        </service>
+        <receiver
+            android:name="com.inmobi.commons.core.utilities.uid.ImIdShareBroadCastReceiver"
+            android:enabled="true"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <!-- 监听网络变动事件 -->
+                <action android:name="com.inmobi.share.id"/>
+            </intent-filter>
+        </receiver>
 
+        <service
+            android:name="com.inmobi.signals.activityrecognition.ActivityRecognitionManager"
+            android:enabled="true"/>
+        <!--广告 end-->
         <!-- 注册后台服务组件 -->
         <!--<service android:name=".core.service.StoreService" />-->
         <service android:name=".core.fileload.FileLoadService"/>

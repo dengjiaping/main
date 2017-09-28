@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/img_welcome_0"
+                tools:context=".base.activity.BeginActivity">
+
+    <!--    <com.inmobi.nativead.sample.CountDownView
+            android:layout_alignParentRight="true"
+            android:id="@+id/countDownView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:background_color="#22000000"
+            app:border_color="#55B8E2"
+            app:border_width="2dp"
+            app:text_size="12dp" />-->
+
+    <LinearLayout
+        android:background="@drawable/img_welcome_0"
+        android:id="@+id/fullscreen_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <!-- <com.inmobi.nativead.sample.CountDownView
+         android:id="@+id/PreRollBtn"
+         android:layout_width="90dp"
+         android:layout_height="90dp"
+         app:background_color="#22020020"
+         app:border_color="#55B8E2"
+         app:border_width="2dp"
+         app:text_size="12dp"
+         app:text="前贴视频"
+         android:layout_alignParentBottom="true"
+          />-->
+<Button
+    android:id="@+id/skip_bt"
+    android:layout_width="wrap_content"
+    android:textColor="@color/mainColor"
+    android:textSize="@dimen/dm028"
+    android:padding="@dimen/dm025"
+    android:layout_marginRight="@dimen/dm005"
+    android:background="@null"
+    android:text="跳过"
+    android:visibility="gone"
+    android:layout_alignParentRight="true"
+    android:layout_height="wrap_content"/>
+</RelativeLayout>

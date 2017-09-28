@@ -136,6 +136,9 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     compile 'se.emilsjolander:stickylistheaders:2.7.0'
-
     compile 'com.daimajia.numberprogressbar:library:1.4@aar'
+    //广告
+    //compile 'com.inmobi.monetization:inmobi-ads:7.0.0'
+    //compile files('libs/InMobi-7.0.0-China.jar')
+    compile files('libs/InMobi-7.0.0.jar')
 }
