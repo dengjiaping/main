@@ -63,6 +63,7 @@ public class BeginActivity extends FragmentActivity {
     private Timer timer;
     private BeginActivity content;
     private long SHOW_TIME = 6000;
+    private long SHOW_TIME_isFirstInstall = 6000;
     private Button skipBt;
 
     @Override
@@ -122,7 +123,6 @@ public class BeginActivity extends FragmentActivity {
 
             @Override
             public void onAdLoadFailed(@NonNull InMobiNative inMobiNative, @NonNull InMobiAdRequestStatus inMobiAdRequestStatus) {
-                Log.d(TAG, "onAdLoadFailed");
                 skip2Main();
             }
 
@@ -178,7 +178,7 @@ public class BeginActivity extends FragmentActivity {
         final long pushMsgId = getIntent().getLongExtra("msgId", 0);
         final int pushMsgType = getIntent().getIntExtra("type", 0);
         final PushMessage msg = (PushMessage) getIntent().getSerializableExtra("msg");
-        if (isFirstInstall) {
+        if (isFirstInstall){
             Log.d(TAG, "滑动页");
             final Intent intent = new Intent(content, GuideViewActivity.class);
             if (pushMsgId > 0) {
@@ -194,7 +194,7 @@ public class BeginActivity extends FragmentActivity {
                     SPUtils.put(content, Constant.CONFIG_FIRST_INSTALL, false);
                     finish();
                 }
-            }, SHOW_TIME);
+            }, SHOW_TIME_isFirstInstall);
         } else {
             Log.d(TAG, "跳主页面");
             final Intent intent = new Intent(content, MainHomeActivity.class);

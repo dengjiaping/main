@@ -58,11 +58,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
-                android:text="更新日期：2017.8.10"
+                android:text="更新日期：2017.09.28"
                 android:textColor="@color/color_1a"
                 android:textSize="@dimen/dp_16"
                 />
-            <!--            1    -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
