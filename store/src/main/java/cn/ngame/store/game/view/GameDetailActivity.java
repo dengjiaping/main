@@ -652,9 +652,10 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                     MobclickAgent.onEvent(content, UMEventNameConstant.FeedBack_DownloadException,
                             map);
                 }
+                ToastUtil.show(content, "反馈成功");
                 //提交反馈
                 if (gameInfo != null) {
-                    postFeedBack();
+                    //postFeedBack();
                 } else {
                     ToastUtil.show(content, "网络异常,请稍后重试.");
                 }

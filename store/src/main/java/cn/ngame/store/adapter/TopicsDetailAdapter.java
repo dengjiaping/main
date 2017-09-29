@@ -153,7 +153,7 @@ public class TopicsDetailAdapter extends BaseAdapter {
             String gameDesc = gameInfo.getGameDesc();
             tv_summary.setText(gameDesc == null ? "" : gameDesc);
 
-            float percentage = gameInfo.getPercentage();
+            float percentage = gameInfo.getScoreLevel();
             tv_size.setText(percentage + "");
             ratingBar.setRating(percentage);
 

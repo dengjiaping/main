@@ -939,8 +939,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
                     //判读是否需要更新
                     int localVersion = CommonUtil.getVersionCode(context);
+                    android.util.Log.d(TAG, "版本:" + localVersion);
                     if (localVersion < versionInfo.versionCode) {
-
                         showUpdateDialog();
                         CommonUtil.verifyStoragePermissions(context); //申请读写SD卡权限
                     } else {
