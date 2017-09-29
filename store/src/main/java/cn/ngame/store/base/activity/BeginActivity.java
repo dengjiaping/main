@@ -95,7 +95,7 @@ public class BeginActivity extends FragmentActivity {
         Log.d(TAG, "开始");
         mFrameLayoutView = (LinearLayout) findViewById(R.id.fullscreen_view);
 
-        nativeAd = new InMobiNative(this, key, new InMobiNative.NativeAdListener() {
+        nativeAd = new InMobiNative(this, Constant.PlacementID, new InMobiNative.NativeAdListener() {
             @Override
             public void onAdLoadSucceeded(@NonNull InMobiNative inMobiNative) {
                 Log.d(TAG, "广告加载成功.");
@@ -213,9 +213,6 @@ public class BeginActivity extends FragmentActivity {
             }, SHOW_TIME);
         }
     }
-
-    static final long key = 1507004826745L;
-
     private LinearLayout mFrameLayoutView;
     InMobiNative nativeAd;
   /*  private Handler handler = new Handler() {

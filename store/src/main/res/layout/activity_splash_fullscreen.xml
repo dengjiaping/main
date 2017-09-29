@@ -17,13 +17,13 @@
             app:text_size="12dp" />-->
 
     <LinearLayout
-        android:background="@drawable/img_welcome_0"
         android:id="@+id/fullscreen_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:gravity="center"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/img_welcome_0"
+        android:gravity="center"
         android:orientation="vertical">
 
     </LinearLayout>
@@ -39,16 +39,16 @@
          app:text="前贴视频"
          android:layout_alignParentBottom="true"
           />-->
-<Button
-    android:id="@+id/skip_bt"
-    android:layout_width="wrap_content"
-    android:textColor="@color/mainColor"
-    android:textSize="@dimen/dm028"
-    android:padding="@dimen/dm025"
-    android:layout_marginRight="@dimen/dm005"
-    android:background="@null"
-    android:text="跳过"
-    android:visibility="gone"
-    android:layout_alignParentRight="true"
-    android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/skip_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dm005"
+        android:background="@null"
+        android:padding="@dimen/dm025"
+        android:text="跳过广告"
+        android:textColor="@color/mainColor"
+        android:textSize="@dimen/dm025"
+        android:visibility="gone"/>
 </RelativeLayout>

@@ -311,4 +311,15 @@ public class Constant {
     public static final String SINA = "4";//（1手机，2QQ，3微信，4新浪微博）
     public static final String FILE_NAME_SD_CRAD_APP_PKGNAME = "file_name_sd_crad_app_pkgname";
     public static final String InMobiSdk_Id = "11b639a4def2492faf3d832ead67618f";
+    public static final long PlacementID = 1507004826745L;
+    public static final String FEED_URL = "https://api.rss2json.com/v1/api.json?rss_url=http://rss.nytimes.com/services/xml/rss/nyt/World.xml";
+
+    public interface FeedJsonKeys {
+        String FEED_LIST = "items";
+        String CONTENT_TITLE = "title";
+        String CONTENT_ENCLOSURE = "enclosure";
+        String CONTENT_LINK = "link";
+        String FEED_CONTENT = "content";
+    }
+    public static final String FALLBACK_IMAGE_URL = "https://s3-ap-southeast-1.amazonaws.com/inmobi-surpriseme/notification/notif2.jpg";
 }

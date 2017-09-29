@@ -35,7 +35,7 @@ public class PushMsgListPresenter implements IPushMsgListPresenter {
 
     @Override
     public void showMsgList(final int type, final int pageNo, final int pageSize) {
-
+        Log.d(TAG, "显示消息: ");
         Observable.just(msgModel.getPushMessage(type, pageNo, pageSize))
                 //指定了被观察者执行的线程环境
                 .subscribeOn(Schedulers.newThread())

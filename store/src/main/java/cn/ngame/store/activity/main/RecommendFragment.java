@@ -2,6 +2,7 @@ package cn.ngame.store.activity.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,9 @@ import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.inmobi.ads.InMobiAdRequestStatus;
+import com.inmobi.ads.InMobiNative;
+import com.inmobi.sdk.InMobiSdk;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
@@ -26,16 +30,20 @@ import com.jzt.hol.android.jkda.sdk.services.recommend.RecommendClient;
 import com.squareup.picasso.Picasso;
 import com.umeng.analytics.MobclickAgent;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.ngame.store.R;
+import cn.ngame.store.activity.NewsSnippet;
 import cn.ngame.store.adapter.RecommendListAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.utils.CommonUtil;
+import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.NetUtil;
@@ -55,8 +63,8 @@ public class RecommendFragment extends BaseSearchFragment {
     public static final String TAG = RecommendFragment.class.getSimpleName();
     private PullToRefreshListView pullListView;
     private ImageView game_big_pic_1, game_big_pic_2;
-    private SimpleDraweeView from_img_1, from_img_2;
-    private TextView gamename_1, gamename_2, summary_2;
+    private SimpleDraweeView from_img_1, from_img_ad,from_img_2;
+    private TextView gamename_1, gamename_2, summary_2,summary_ad,gamename_ad;
     private TextView from_1, from_2, summary_1;
     private LoadStateView loadStateView;
     private RecommendListAdapter adapter;
@@ -73,6 +81,7 @@ public class RecommendFragment extends BaseSearchFragment {
     private boolean mIsShow = false;
     private ListView refreshableView;
     private Picasso picasso;
+    private LinearLayout adContainer;
 
     public static RecommendFragment newInstance(int arg) {
         RecommendFragment fragment = new RecommendFragment();
@@ -389,7 +398,6 @@ public class RecommendFragment extends BaseSearchFragment {
     }
 
     public void scroll2Top() {
-        android.util.Log.d(TAG, "是否在显示: " + mIsShow);
         if (mIsShow && pullListView != null) {
             ListView refreshableView = pullListView.getRefreshableView();
             //refreshableView.setSelectionAfterHeaderView();
@@ -418,11 +426,18 @@ public class RecommendFragment extends BaseSearchFragment {
         gamename_1 = (TextView) view.findViewById(R.id.tv_gamename_1);//游戏名字
         gamename_2 = (TextView) view.findViewById(R.id.tv_gamename_2);
 
+
         game_big_pic_1 = (ImageView) view.findViewById(R.id.recommend_game_pic_1);//游戏图片
         game_big_pic_2 = (ImageView) view.findViewById(R.id.recommend_game_pic_2);
 
         summary_1 = (TextView) view.findViewById(R.id.tv_summary1);//游戏摘要
         summary_2 = (TextView) view.findViewById(R.id.tv_summary2);
+
+        //广告位
+        adContainer = (LinearLayout) view.findViewById(R.id.banner);
+        gamename_ad = (TextView) view.findViewById(R.id.tv_gamename_ad);
+        summary_ad = (TextView) view.findViewById(R.id.tv_summary_ad);//游戏摘要
+        from_img_ad = (SimpleDraweeView) view.findViewById(R.id.img_from_ad);
 
         view.findViewById(R.id.recommend_head_llay_0).setOnClickListener(headClickListener);
         view.findViewById(R.id.recommend_head_llay_1).setOnClickListener(headClickListener);
@@ -495,11 +510,84 @@ public class RecommendFragment extends BaseSearchFragment {
                 .into(game_big_pic_2);
         from_img_2.setImageURI(dataBean1.getGameLogo());//来自...头像
 
-        android.util.Log.d(TAG, "setHeaderInfo: " + dataBean0.getGameLogo());
-        android.util.Log.d(TAG, "setHeaderInfo: " + dataBean0.getGameRecommendImg());
         gamename_2.setText(dataBean1.getGameName());
         from_2.setText("来自" + dataBean1.getRecommender());
         summary_2.setText(dataBean1.getRecommend());
+
+        //广告
+        InMobiSdk.init(context, Constant.InMobiSdk_Id);
+
+        InMobiNative nativeAd = new InMobiNative(context, Constant.PlacementID, new InMobiNative.NativeAdListener() {
+            @Override
+            public void onAdLoadSucceeded(@NonNull InMobiNative inMobiNative) {
+                Log.d(TAG, "广告加载成功.");
+                //JSONObject content = inMobiNative.getCustomAdContent();
+                NewsSnippet item = new NewsSnippet();
+                item.title = inMobiNative.getAdTitle();
+                gamename_ad.setText(item.title );//广告标题
+
+                item.imageUrl = inMobiNative.getAdIconUrl();
+                from_img_ad.setImageURI(item.imageUrl);
+
+                item.description = inMobiNative.getAdDescription();
+                summary_ad.setText(item.description);
+
+                item.inMobiNative = new WeakReference<>(inMobiNative);
+                //item.view =inMobiNative.getPrimaryViewOfWidth(mAdapter.,viewGroup,0);
+                //adContainer.removeAllViews();
+                adContainer.addView(inMobiNative.getPrimaryViewOfWidth(adContainer, adContainer,
+                        adContainer.getWidth()));
+            }
+
+            @Override
+            public void onAdLoadFailed(@NonNull InMobiNative inMobiNative, @NonNull InMobiAdRequestStatus inMobiAdRequestStatus) {
+                Log.d(TAG, "广告加载失败");
+            }
+
+            @Override
+            public void onAdFullScreenDismissed(InMobiNative inMobiNative) {
+                Log.d(TAG, "onAdFullScreenDismissed");
+            }
+
+            @Override
+            public void onAdFullScreenWillDisplay(InMobiNative inMobiNative) {
+                Log.d(TAG, "onAdFullScreenWillDisplay");
+            }
+
+            @Override
+            public void onAdFullScreenDisplayed(InMobiNative inMobiNative) {
+                Log.d(TAG, "onAdFullScreenDisplayed");
+            }
+
+            @Override
+            public void onUserWillLeaveApplication(InMobiNative inMobiNative) {
+                Log.d(TAG, "onUserWillLeaveApplication");
+            }
+
+            @Override
+            public void onAdImpressed(@NonNull InMobiNative inMobiNative) {
+                Log.d(TAG, "onAdImpressed");
+            }
+
+            @Override
+            public void onAdClicked(@NonNull InMobiNative inMobiNative) {
+                Log.d(TAG, "onAdClicked");
+            }
+
+            @Override
+            public void onMediaPlaybackComplete(@NonNull InMobiNative inMobiNative) {
+                Log.d(TAG, "onMediaPlaybackComplete");
+            }
+            @Override
+            public void onAdStatusChanged(@NonNull InMobiNative inMobiNative) {
+                Log.d(TAG, "onAdStatusChanged");
+            }
+        });
+
+        Map<String, String> map = new HashMap<>();
+        nativeAd.setExtras(map);
+        nativeAd.setDownloaderEnabled(true);
+        nativeAd.load();
     }
 
     @Override

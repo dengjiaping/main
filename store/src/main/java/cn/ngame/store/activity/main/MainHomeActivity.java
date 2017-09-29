@@ -172,6 +172,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
         editor = preferences.edit();
+
 //        mfragmentlist = getFragmentList();
 //        FragmentManager FragmentManager = getSupportFragmentManager();
 //        mTransaction = FragmentManager.beginTransaction();

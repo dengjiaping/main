@@ -157,6 +157,9 @@ public class LikeFragment extends BaseSearchFragment {
                                     }
                                     emptyTv.setVisibility(View.GONE);
                                 }
+                            } else {
+                                emptyTv.setText("您的喜欢列表为空哦~");
+                                emptyTv.setVisibility(View.VISIBLE);
                             }
                         } else {
                             //ToastUtil.show(getActivity(), result.getMsg());
