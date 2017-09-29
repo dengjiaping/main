@@ -44,11 +44,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/dm005"
+        android:layout_marginRight="@dimen/dm008"
         android:background="@null"
-        android:padding="@dimen/dm025"
+        android:layout_margin="@dimen/dm030"
         android:text="跳过广告"
         android:textColor="@color/mainColor"
-        android:textSize="@dimen/dm025"
+        android:textSize="@dimen/dm020"
         android:visibility="gone"/>
 </RelativeLayout>

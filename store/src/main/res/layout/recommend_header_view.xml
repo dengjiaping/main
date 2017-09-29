@@ -124,7 +124,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:paddingRight="20dp"
-                android:text="来自广告"
+                android:text="广告"
                 android:textColor="@color/b3"
                 android:textSize="12dp"/>
 
@@ -145,6 +145,7 @@
 
         <LinearLayout
             android:id="@+id/banner"
+            android:background="@color/f5f5f5"
             android:layout_width="match_parent"
             android:layout_height="@dimen/recommend_item_game_pic_hight"
             android:gravity="center"

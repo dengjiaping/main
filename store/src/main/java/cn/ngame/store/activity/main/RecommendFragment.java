@@ -515,6 +515,13 @@ public class RecommendFragment extends BaseSearchFragment {
         summary_2.setText(dataBean1.getRecommend());
 
         //广告
+        setAdView();
+    }
+
+    /**
+     * 广告
+     */
+    private void setAdView() {
         InMobiSdk.init(context, Constant.InMobiSdk_Id);
 
         InMobiNative nativeAd = new InMobiNative(context, Constant.PlacementID, new InMobiNative.NativeAdListener() {
@@ -534,7 +541,7 @@ public class RecommendFragment extends BaseSearchFragment {
 
                 item.inMobiNative = new WeakReference<>(inMobiNative);
                 //item.view =inMobiNative.getPrimaryViewOfWidth(mAdapter.,viewGroup,0);
-                //adContainer.removeAllViews();
+                adContainer.removeAllViews();
                 adContainer.addView(inMobiNative.getPrimaryViewOfWidth(adContainer, adContainer,
                         adContainer.getWidth()));
             }

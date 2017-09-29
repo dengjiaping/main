@@ -992,8 +992,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
         dialogFragment.setCancelable(false);
-        dialogFragment.setTitle("更新");
-        dialogFragment.setDialogWidth(250);
+        dialogFragment.setDialogWidth(260);
 
 
         LayoutInflater inflater = getLayoutInflater();
@@ -1002,19 +1001,12 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         String fileSizeStr = Formatter.formatFileSize(context, versionInfo.fileSize);
 
-        tv_title.setText("新版本：" + versionInfo.versionName + "\r\n大小：" + fileSizeStr);
+        tv_title.setText("有新版本：" + versionInfo.versionName + "/ 大小：" + fileSizeStr);
         TextView tv_summary = (TextView) contentView.findViewById(R.id.tv_summary);
         tv_summary.setText(versionInfo.content);
 
         dialogFragment.setContentView(contentView);
 
-        dialogFragment.setPositiveButton(R.string.update_later, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogFragment.dismiss();
-                finish();
-            }
-        });
         dialogFragment.setNegativeButton(R.string.update_now, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1044,8 +1036,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
 
         dialogFragment.setCancelable(false);
-        dialogFragment.setTitle("更新");
-        dialogFragment.setDialogWidth(250);
+        dialogFragment.setDialogWidth(255);
 
         LayoutInflater inflater = getLayoutInflater();
         LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_download, null);
