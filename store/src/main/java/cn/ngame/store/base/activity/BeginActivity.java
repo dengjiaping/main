@@ -178,6 +178,10 @@ public class BeginActivity extends FragmentActivity {
         final long pushMsgId = getIntent().getLongExtra("msgId", 0);
         final int pushMsgType = getIntent().getIntExtra("type", 0);
         final PushMessage msg = (PushMessage) getIntent().getSerializableExtra("msg");
+        if (timer==null) {
+            skip2Main();
+            return;
+        }
         if (isFirstInstall){
             Log.d(TAG, "滑动页");
             final Intent intent = new Intent(content, GuideViewActivity.class);

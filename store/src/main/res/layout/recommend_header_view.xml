@@ -89,6 +89,8 @@
     </LinearLayout>
     <!--广告-->
     <LinearLayout
+        android:id="@+id/ad_layout"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">

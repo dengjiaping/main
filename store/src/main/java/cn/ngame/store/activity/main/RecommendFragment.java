@@ -82,6 +82,7 @@ public class RecommendFragment extends BaseSearchFragment {
     private ListView refreshableView;
     private Picasso picasso;
     private LinearLayout adContainer;
+    private LinearLayout adLayout;
 
     public static RecommendFragment newInstance(int arg) {
         RecommendFragment fragment = new RecommendFragment();
@@ -438,6 +439,7 @@ public class RecommendFragment extends BaseSearchFragment {
         gamename_ad = (TextView) view.findViewById(R.id.tv_gamename_ad);
         summary_ad = (TextView) view.findViewById(R.id.tv_summary_ad);//游戏摘要
         from_img_ad = (SimpleDraweeView) view.findViewById(R.id.img_from_ad);
+        adLayout = (LinearLayout) view.findViewById(R.id.ad_layout);
 
         view.findViewById(R.id.recommend_head_llay_0).setOnClickListener(headClickListener);
         view.findViewById(R.id.recommend_head_llay_1).setOnClickListener(headClickListener);
@@ -527,6 +529,7 @@ public class RecommendFragment extends BaseSearchFragment {
         InMobiNative nativeAd = new InMobiNative(context, Constant.PlacementID, new InMobiNative.NativeAdListener() {
             @Override
             public void onAdLoadSucceeded(@NonNull InMobiNative inMobiNative) {
+                adLayout.setVisibility(View.VISIBLE);
                 Log.d(TAG, "广告加载成功.");
                 //JSONObject content = inMobiNative.getCustomAdContent();
                 NewsSnippet item = new NewsSnippet();
@@ -549,6 +552,7 @@ public class RecommendFragment extends BaseSearchFragment {
             @Override
             public void onAdLoadFailed(@NonNull InMobiNative inMobiNative, @NonNull InMobiAdRequestStatus inMobiAdRequestStatus) {
                 Log.d(TAG, "广告加载失败");
+                adLayout.setVisibility(View.GONE);
             }
 
             @Override
