@@ -230,5 +230,7 @@
     <string name="read_text5">关于部分手机使用手柄后调不出键盘，无法打字的情况，是因为手柄占用了键盘协议， 请断开手机蓝牙，打字后，再开启手机蓝牙，手柄自动回连。</string>
     <string name="necessary_content_desc">拇指玩的安装器,一键操作.安装指南:谷歌框架指的是谷歌服务框架,谷歌应用商店等4个谷歌出品的APP,是使用谷歌服务的基础.</string>
     <string name="cancel_like_msg">主人~不再喜欢了我\n我将从"喜欢"列表消失~</string>
+    <string name="install_apk_lost_redownload">安装包文件丢失\n请重新下载</string>
+    <string name="ok">好的</string>
 
 </resources>

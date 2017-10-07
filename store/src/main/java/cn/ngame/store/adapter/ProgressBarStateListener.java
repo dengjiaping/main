@@ -35,6 +35,7 @@ import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.DialogHelper;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.exception.NoSDCardException;
+import cn.ngame.store.fragment.OneBtDialogFragment;
 import cn.ngame.store.fragment.SimpleDialogFragment;
 import cn.ngame.store.view.GameLoadProgressBar;
 
@@ -60,12 +61,13 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
     @Override
     public void onStartDownload(FileLoadInfo info) {
         //Toast.makeText(context,"我开始下载了",Toast.LENGTH_SHORT).show();
-        int res = manager.load(info.getName(),info.getUrl(),info.getMd5(),info.getPackageName(),info.getVersionCode(),info.getTitle(),info.getPreviewUrl(),info.getServerId(),StoreApplication.allowAnyNet);
-        if(res == IFileLoad.RESULT_NO_NET){
-            Toast.makeText(context,"无网络，请检查网络连接",Toast.LENGTH_SHORT).show();
-        }else if(res == IFileLoad.RESULT_PARAMES_ERROR){
-            Toast.makeText(context,"资源异常，无法下载",Toast.LENGTH_SHORT).show();
-        }else if(res == IFileLoad.RESULT_4G_NET){
+        int res = manager.load(info.getName(), info.getUrl(), info.getMd5(), info.getPackageName(), info.getVersionCode(), info
+                .getTitle(), info.getPreviewUrl(), info.getServerId(), StoreApplication.allowAnyNet);
+        if (res == IFileLoad.RESULT_NO_NET) {
+            Toast.makeText(context, "无网络，请检查网络连接", Toast.LENGTH_SHORT).show();
+        } else if (res == IFileLoad.RESULT_PARAMES_ERROR) {
+            Toast.makeText(context, "资源异常，无法下载", Toast.LENGTH_SHORT).show();
+        } else if (res == IFileLoad.RESULT_4G_NET) {
             showUpdateDialog(info);
         }
         updateDownloadCount(info);
@@ -74,12 +76,13 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
     @Override
     public void updateApp(FileLoadInfo info) {
 
-        int res = manager.load(info.getName(),info.getUrl(),info.getMd5(),info.getPackageName(),info.getVersionCode(),info.getTitle(),info.getPreviewUrl(),info.getServerId(),StoreApplication.allowAnyNet);
-        if(res == IFileLoad.RESULT_NO_NET){
-            Toast.makeText(context,"无网络，请检查网络连接",Toast.LENGTH_SHORT).show();
-        }else if(res == IFileLoad.RESULT_PARAMES_ERROR){
-            Toast.makeText(context,"资源异常，无法下载",Toast.LENGTH_SHORT).show();
-        }else if(res == IFileLoad.RESULT_4G_NET){
+        int res = manager.load(info.getName(), info.getUrl(), info.getMd5(), info.getPackageName(), info.getVersionCode(), info
+                .getTitle(), info.getPreviewUrl(), info.getServerId(), StoreApplication.allowAnyNet);
+        if (res == IFileLoad.RESULT_NO_NET) {
+            Toast.makeText(context, "无网络，请检查网络连接", Toast.LENGTH_SHORT).show();
+        } else if (res == IFileLoad.RESULT_PARAMES_ERROR) {
+            Toast.makeText(context, "资源异常，无法下载", Toast.LENGTH_SHORT).show();
+        } else if (res == IFileLoad.RESULT_4G_NET) {
             showUpdateDialog(info);
         }
     }
@@ -93,12 +96,13 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
     @Override
     public void onRestartDownload(FileLoadInfo info) {
         //Toast.makeText(context,"继续下载",Toast.LENGTH_SHORT).show();
-        int res = manager.load(info.getName(),info.getUrl(),info.getMd5(),info.getPackageName(),info.getVersionCode(),info.getTitle(),info.getPreviewUrl(),info.getServerId(),StoreApplication.allowAnyNet);
-        if(res == IFileLoad.RESULT_NO_NET){
-            Toast.makeText(context,"无网络，请检查网络连接",Toast.LENGTH_SHORT).show();
-        }else if(res == IFileLoad.RESULT_PARAMES_ERROR){
-            Toast.makeText(context,"资源异常，无法下载",Toast.LENGTH_SHORT).show();
-        }else if(res == IFileLoad.RESULT_4G_NET){
+        int res = manager.load(info.getName(), info.getUrl(), info.getMd5(), info.getPackageName(), info.getVersionCode(), info
+                .getTitle(), info.getPreviewUrl(), info.getServerId(), StoreApplication.allowAnyNet);
+        if (res == IFileLoad.RESULT_NO_NET) {
+            Toast.makeText(context, "无网络，请检查网络连接", Toast.LENGTH_SHORT).show();
+        } else if (res == IFileLoad.RESULT_PARAMES_ERROR) {
+            Toast.makeText(context, "资源异常，无法下载", Toast.LENGTH_SHORT).show();
+        } else if (res == IFileLoad.RESULT_4G_NET) {
             showUpdateDialog(info);
         }
     }
@@ -107,60 +111,73 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
     public void onInstallApp(FileLoadInfo info) {
 
         String fileName = info.getName();
-        if(fileName != null && fileName.endsWith(".ngk")){
+        if (fileName != null && fileName.endsWith(".ngk")) {
 
             try {
                 String fName = fileName.split("\\.")[0];
 
-                File file = new File(CommonUtil.getFileLoadBasePath(),fileName);
+                File file = new File(CommonUtil.getFileLoadBasePath(), fileName);
                 File newFile;
-                if(file.exists() && file.isFile()){
-                    newFile = new File(CommonUtil.getFileLoadBasePath(),fName+".zip");
+                if (file.exists() && file.isFile()) {
+                    newFile = new File(CommonUtil.getFileLoadBasePath(), fName + ".zip");
                     file.renameTo(newFile);
-                }else {
-                    newFile = new File(CommonUtil.getFileLoadBasePath(),fName+".zip");
+                } else {
+                    newFile = new File(CommonUtil.getFileLoadBasePath(), fName + ".zip");
                 }
 
-                if(!newFile.exists() || !newFile.isFile()){
-                    Toast.makeText(context,"安装文件丢失，请重新下载",Toast.LENGTH_LONG).show();
+                if (!newFile.exists() || !newFile.isFile()) {
+                    Toast.makeText(context, "安装文件丢失，请重新下载", Toast.LENGTH_LONG).show();
                     manager.delete(info.getUrl());
                     return;
                 }
 
-                DialogHelper.showWaiting(fm,"Waiting...");//正在解压
-                new Thread(new UnZipFileTask(fm,context,info,handler)).start();
+                DialogHelper.showWaiting(fm, "Waiting...");//正在解压
+                new Thread(new UnZipFileTask(fm, context, info, handler)).start();
 
-            }catch (NoSDCardException e){
+            } catch (NoSDCardException e) {
                 e.printStackTrace();
             }
 
-        }else if(fileName != null && fileName.endsWith(".apk")) {
+        } else if (fileName != null && fileName.endsWith(".apk")) {
             try {
-                File file = new File(CommonUtil.getFileLoadBasePath(),fileName);
-                if(!file.exists() || !file.isFile()){
-                    Toast.makeText(context,"安装包文件已丢失，请重新下载",Toast.LENGTH_SHORT).show();
+                File file = new File(CommonUtil.getFileLoadBasePath(), fileName);
+                if (!file.exists() || !file.isFile()) {
                     manager.delete(info.getUrl());
+                    showApkLostDialog();
                     return;
                 }
-            }catch (NoSDCardException e){
+            } catch (NoSDCardException e) {
                 e.printStackTrace();
             }
 
-            AppInstallHelper.installApk(context,info.getName());
+            AppInstallHelper.installApk(context, info.getName());
         }
     }
 
     @Override
     public void onOpenApp(FileLoadInfo info) {
         //Toast.makeText(context,"我要打开APP："+info.packages,Toast.LENGTH_SHORT).show();
-        AppInstallHelper.openApp(context,info.getPackageName());
+        AppInstallHelper.openApp(context, info.getPackageName());
     }
 
+    //安装包丢失对话框
+    private void showApkLostDialog() {
+        final OneBtDialogFragment dialogFragment = new OneBtDialogFragment();
+        dialogFragment.setTitle(R.string.install_apk_lost_redownload);
+        dialogFragment.setDialogWidth(context.getResources().getDimensionPixelSize(R.dimen.unlogin_dialog_width));
+        dialogFragment.setNegativeButton(R.string.ok, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogFragment.dismiss();
+            }
+        });
+        dialogFragment.show(fm.beginTransaction(), "successDialog");
+    }
 
     /**
      * 显示更新对话框
      */
-    private void showUpdateDialog(final FileLoadInfo info){
+    private void showUpdateDialog(final FileLoadInfo info) {
 
         FragmentTransaction ft = fm.beginTransaction();
         Fragment prev = fm.findFragmentByTag("4g_net");
@@ -175,7 +192,7 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
 
 
         LayoutInflater inflater = LayoutInflater.from(context);
-        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_update,null);
+        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_update, null);
         TextView tv_title = (TextView) contentView.findViewById(R.id.tv_title);
         tv_title.setVisibility(View.GONE);
 
@@ -189,7 +206,8 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
             public void onClick(View v) {
                 dialogFragment.dismiss();
 
-                manager.load(info.getName(),info.getUrl(),info.getMd5(),info.getPackageName(),info.getVersionCode(),info.getTitle(),info.getPreviewUrl(),info.getServerId(),true);
+                manager.load(info.getName(), info.getUrl(), info.getMd5(), info.getPackageName(), info.getVersionCode(), info
+                        .getTitle(), info.getPreviewUrl(), info.getServerId(), true);
             }
         });
         dialogFragment.setPositiveButton("取消", new View.OnClickListener() {
@@ -198,20 +216,20 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
                 dialogFragment.dismiss();
             }
         });
-        dialogFragment.show(ft,"4g_net");
+        dialogFragment.show(ft, "4g_net");
     }
 
     /**
      * 调用接口，更新下载次数
      */
-    private void updateDownloadCount(final FileLoadInfo info){
+    private void updateDownloadCount(final FileLoadInfo info) {
 
         String url = Constant.WEB_SITE + Constant.URL_GAME_CENSUS;
         Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
             @Override
             public void onResponse(JsonResult result) {
 
-                if(result == null || result.code != 0){
+                if (result == null || result.code != 0) {
                     return;
                 }
             }
@@ -226,7 +244,8 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
         };
 
         Request<JsonResult> request = new GsonRequest<JsonResult>(Request.Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult>() {}.getType()) {
+                successListener, errorListener, new TypeToken<JsonResult>() {
+        }.getType()) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
