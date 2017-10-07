@@ -113,7 +113,6 @@ public class InstalledFragment extends BaseSearchFragment {
         for (FileLoadInfo openFileInfo : openFileInfoList) {
             //String gameName = openFileInfo.getName();
             String gamePackageName = openFileInfo.getPackageName();
-            Log.d(TAG, openFileInfo.getPackageName() + "======已装===========" + openFileInfo.getTitle());
             if (pkgNameListStr == null || !pkgNameListStr.contains(gamePackageName)) {
                 Log.d(TAG, "进来," + gamePackageName);
                 jsonArray.put(gamePackageName);
@@ -153,6 +152,8 @@ public class InstalledFragment extends BaseSearchFragment {
             } else {
                 emptyTv.setVisibility(View.GONE);
             }
+        } else {
+            emptyTv.setVisibility(View.VISIBLE);
         }
         return localAppList;
     }

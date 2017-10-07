@@ -122,8 +122,8 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
                 }
 
                 if(!newFile.exists() || !newFile.isFile()){
-                    Toast.makeText(context,"安装文件丢失，请删除记录重新下载",Toast.LENGTH_LONG).show();
-
+                    Toast.makeText(context,"安装文件丢失，请重新下载",Toast.LENGTH_LONG).show();
+                    manager.delete(info.getUrl());
                     return;
                 }
 
@@ -138,7 +138,8 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
             try {
                 File file = new File(CommonUtil.getFileLoadBasePath(),fileName);
                 if(!file.exists() || !file.isFile()){
-                    Toast.makeText(context,"安装文件丢失，删除记录重新下载",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"安装包文件已丢失，请重新下载",Toast.LENGTH_SHORT).show();
+                    manager.delete(info.getUrl());
                     return;
                 }
             }catch (NoSDCardException e){

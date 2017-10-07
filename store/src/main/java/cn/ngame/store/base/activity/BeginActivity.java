@@ -109,6 +109,7 @@ public class BeginActivity extends FragmentActivity {
                 item.inMobiNative = new WeakReference<>(inMobiNative);
                 //item.view =inMobiNative.getPrimaryViewOfWidth(mAdapter.,viewGroup,0);
                 mFrameLayoutView.removeAllViews();
+
                 mFrameLayoutView.addView(inMobiNative.getPrimaryViewOfWidth(mFrameLayoutView, mFrameLayoutView,
                         mFrameLayoutView.getWidth()));
                 mFrameLayoutView.setBackgroundColor(ContextCompat.getColor(content, R.color.white));
@@ -123,6 +124,7 @@ public class BeginActivity extends FragmentActivity {
 
             @Override
             public void onAdLoadFailed(@NonNull InMobiNative inMobiNative, @NonNull InMobiAdRequestStatus inMobiAdRequestStatus) {
+                Log.d(TAG, "广告加载失败.");
                 skip2Main();
             }
 
