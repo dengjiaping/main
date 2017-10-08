@@ -262,7 +262,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
     }
 
     //第一级标签                        全部,手柄,破解,汉化,特色,模拟器
-    private int tab_ids[] = new int[]{0, 101, 102, 103, 104, 106};
+    private int tab_ids[] = new int[]{0, 101, 102, 103, 104, 106,IMITATOR_ID};
     private String tabList[] = new String[]{"全部", "大陆", "美国", "韩国", "日本", "港澳台"};
     private int tab2_Id01234[] = new int[]{0, 147, 149, 151, 150, 148};
 

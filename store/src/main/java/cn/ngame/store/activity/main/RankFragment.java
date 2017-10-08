@@ -84,7 +84,7 @@ public class RankFragment extends BaseSearchFragment {
         }
     }
 
-    private String tabList[] = new String[]{"全部", "原生手柄","云适配", "破解游戏", "汉化游戏", "特色游戏"};
+    private String tabList[] = new String[]{"全部", "原生手柄","云适配手柄", "破解游戏", "汉化游戏", "特色游戏","模拟器"};
 
     private void initViewPager() {
         fragments = new ArrayList<>();
