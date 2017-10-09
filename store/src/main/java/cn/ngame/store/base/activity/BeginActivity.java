@@ -15,11 +15,11 @@
  */
 package cn.ngame.store.base.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.view.View;
@@ -56,7 +56,7 @@ import static cn.ngame.store.StoreApplication.deviceId;
  * @author flan
  * @since 2016年5月3日
  */
-public class BeginActivity extends FragmentActivity {
+public class BeginActivity extends Activity {
 
     public static final String TAG = BeginActivity.class.getSimpleName();
     private boolean isFirstInstall = true;
