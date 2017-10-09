@@ -29,18 +29,6 @@
             fresco:progressBarImage="@drawable/ic_def_logo_188_188"
             fresco:roundedCornerRadius="@dimen/dp_12"/>
 
-        <cn.ngame.store.view.GameLoadProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="60dp"
-            android:layout_height="26dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:background="@color/transparent"
-            android:clickable="true"
-            android:text="@string/download"
-            android:textColor="@color/white"
-            android:textSize="14dp"
-            ngame:progress="0"/><!-- textSize不能引用资源文,件直接3dp-->
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="200dp"
@@ -52,6 +40,19 @@
             android:maxLines="1"
             android:textColor="@color/color_1a"
             android:textSize="@dimen/dp_16"/>
+        <cn.ngame.store.view.GameLoadProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="60dp"
+            android:layout_height="26dp"
+            android:layout_below="@id/tv_title"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dm005"
+            android:background="@color/transparent"
+            android:clickable="true"
+            android:text="@string/download"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            ngame:progress="0"/><!-- textSize不能引用资源文,件直接3dp-->
         <!--=========================   分类tip ====================================== -->
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView"
