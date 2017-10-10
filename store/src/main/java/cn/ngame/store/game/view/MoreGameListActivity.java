@@ -274,8 +274,8 @@ public class MoreGameListActivity extends BaseFgActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         if (null != adapter && timerTasks != null) {
             adapter.clean();
             for (TimerTask timerTask : timerTasks) {
@@ -284,4 +284,5 @@ public class MoreGameListActivity extends BaseFgActivity {
             timerTasks.clear();
         }
     }
+
 }

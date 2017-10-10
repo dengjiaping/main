@@ -195,8 +195,8 @@ public class MoreGameListAdapter extends BaseAdapter {
             if (null != timerTasks) {
                 timerTasks.add(task);
             }
-            if (null != timer) {
-                timer.schedule(task, 0, 500);
+           if (null != timer) {
+                timer.schedule(task, 0, 2000);
             }
         }
 

@@ -526,11 +526,10 @@ public class RecommendFragment extends BaseSearchFragment {
     private void setAdView() {
         InMobiSdk.init(context, Constant.InMobiSdk_Id);
 
-        InMobiNative nativeAd = new InMobiNative(context, Constant.PlacementID, new InMobiNative.NativeAdListener() {
+        InMobiNative nativeAd = new InMobiNative(context, Constant.PlacementID_Recommend, new InMobiNative.NativeAdListener() {
             @Override
             public void onAdLoadSucceeded(@NonNull InMobiNative inMobiNative) {
                 adLayout.setVisibility(View.VISIBLE);
-                Log.d(TAG, "广告加载成功.");
                 //JSONObject content = inMobiNative.getCustomAdContent();
                 NewsSnippet item = new NewsSnippet();
                 item.title = inMobiNative.getAdTitle();

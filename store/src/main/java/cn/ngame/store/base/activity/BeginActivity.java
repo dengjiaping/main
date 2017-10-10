@@ -95,7 +95,7 @@ public class BeginActivity extends Activity {
         Log.d(TAG, "开始");
         mFrameLayoutView = (LinearLayout) findViewById(R.id.fullscreen_view);
 
-        nativeAd = new InMobiNative(this, Constant.PlacementID, new InMobiNative.NativeAdListener() {
+        nativeAd = new InMobiNative(this, Constant.PlacementID_BeginActivity, new InMobiNative.NativeAdListener() {
             @Override
             public void onAdLoadSucceeded(@NonNull InMobiNative inMobiNative) {
                 Log.d(TAG, "广告加载成功.");

@@ -97,7 +97,7 @@ public class NecessaryFragment extends BaseSearchFragment {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             String itemPosition = mNecessaryList.get(position).getItemPosition();
             String getItemTitle = mNecessaryList.get(position).getItemTitle();
-            Log.d("5555",getItemTitle+",点击"+itemPosition);
+            Log.d("5555", getItemTitle + ",点击" + itemPosition);
         }
     }
 
@@ -121,28 +121,43 @@ public class NecessaryFragment extends BaseSearchFragment {
      * 否则容易造成列表显示多组相同组名的数据。
      */
     private void initDatas() {
-        mNecessaryList.add(new NecessaryItemData("1", "谷歌", "V4.2.1/20M", "谷歌安装器", "未知来源",getString(R.string
+        mNecessaryList.add(new NecessaryItemData("1", "谷歌", "1", "谷歌安装器", "未知来源", getString(R.string
                 .necessary_content_desc)));
-      /*  mNecessaryList.add(new NecessaryItemData("1", "谷歌", "2", "谷歌安装器", "未知"));
-        mNecessaryList.add(new NecessaryItemData("1", "谷歌", "3", "谷歌安装器", "未知"));
-        mNecessaryList.add(new NecessaryItemData("1", "谷歌", "4", "谷歌安装器", "未知"));
-        mNecessaryList.add(new NecessaryItemData("1", "谷歌", "4", "谷歌安装器", "未知"));*/
+        mNecessaryList.add(new NecessaryItemData("1", "谷歌", "2", "谷歌安装器", "未知", getString(R.string
+                .necessary_content_desc)));
+        mNecessaryList.add(new NecessaryItemData("1", "谷歌", "3", "谷歌安装器", "未知", getString(R.string
+                .necessary_content_desc)));
+        mNecessaryList.add(new NecessaryItemData("1", "谷歌", "4", "谷歌安装器", "未知", getString(R.string
+                .necessary_content_desc)));
+        mNecessaryList.add(new NecessaryItemData("1", "谷歌", "4", "谷歌安装器", "未知", getString(R.string
+                .necessary_content_desc)));
+        mNecessaryList.add(new NecessaryItemData("2", "腾讯", "54", "腾讯助手", "腾讯助手腾讯助手腾讯助手腾讯助手", getString(R.string
+                .necessary_content_desc)));
+        mNecessaryList.add(new NecessaryItemData("2", "腾讯", "15", "腾讯助手", "腾讯助手腾讯助手腾讯助手腾讯助手", getString(R.string
+                .necessary_content_desc)));
+        mNecessaryList.add(new NecessaryItemData("2", "腾讯", "8", "腾讯助手", "腾讯助手腾讯助手腾讯助手腾讯助手", getString(R.string
+                .necessary_content_desc)));
+        mNecessaryList.add(new NecessaryItemData("2", "腾讯", "9", "腾讯助手", "腾讯助手腾讯助手腾讯助手腾讯助手", getString(R.string
+                .necessary_content_desc)));
+        mNecessaryList.add(new NecessaryItemData("2", "腾讯", "10", "腾讯助手", "腾讯助手腾讯助手腾讯助手腾讯助手", getString(R.string
+                .necessary_content_desc)));
 
-     /*   mNecessaryList.add(new NecessaryItemData("2", "谷歌", "54", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));
-        mNecessaryList.add(new NecessaryItemData("2", "谷歌", "15", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));
-        mNecessaryList.add(new NecessaryItemData("2", "谷歌", "8", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));
-        mNecessaryList.add(new NecessaryItemData("2", "谷歌", "9", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));
-        mNecessaryList.add(new NecessaryItemData("2", "谷歌", "10", "谷歌助手", "谷歌谷歌谷歌谷歌谷歌谷歌谷歌"));*/
 
-
-     /*   mNecessaryList.add(new NecessaryItemData("5", "百度", "11", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
-        mNecessaryList.add(new NecessaryItemData("5", "百度", "12", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
-        mNecessaryList.add(new NecessaryItemData("5", "百度", "13", "百度助手", "百度助手百度助手百度助手百度助手"));
-        mNecessaryList.add(new NecessaryItemData("5", "百度", "14", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
-        mNecessaryList.add(new NecessaryItemData("5", "百度", "15", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));
-        mNecessaryList.add(new NecessaryItemData("5", "百度", "16", "百度助手", "百度助手百度助手百度助手百度助手百度助手"));*/
+        mNecessaryList.add(new NecessaryItemData("5", "百度", "11", "百度助手", "百度助手百度助手百度助手百度助手百度助手", getString(R.string
+                .necessary_content_desc)));
+        mNecessaryList.add(new NecessaryItemData("5", "百度", "12", "百度助手", "百度助手百度助手百度助手百度助手百度助手", getString(R.string
+                .necessary_content_desc)));
+        mNecessaryList.add(new NecessaryItemData("5", "百度", "13", "百度助手", "百度助手百度助手百度助手百度助手", getString(R.string
+                .necessary_content_desc)));
+        mNecessaryList.add(new NecessaryItemData("5", "百度", "14", "百度助手", "百度助手百度助手百度助手百度助手百度助手", getString(R.string
+                .necessary_content_desc)));
+        mNecessaryList.add(new NecessaryItemData("5", "百度", "15", "百度助手", "百度助手百度助手百度助手百度助手百度助手", getString(R.string
+                .necessary_content_desc)));
+        mNecessaryList.add(new NecessaryItemData("5", "百度", "16", "百度助手", "百度助手百度助手百度助手百度助手百度助手", getString(R.string
+                .necessary_content_desc)));
 
     }
+
     private void initPop() {
         // 设置Action
         mItemClickQuickAction = new QuickAction(getActivity(), QuickAction.VERTICAL);
