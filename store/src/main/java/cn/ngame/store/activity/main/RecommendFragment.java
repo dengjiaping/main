@@ -526,7 +526,7 @@ public class RecommendFragment extends BaseSearchFragment {
     private void setAdView() {
         InMobiSdk.init(context, Constant.InMobiSdk_Id);
 
-        InMobiNative nativeAd = new InMobiNative(context, Constant.PlacementID_Recommend, new InMobiNative.NativeAdListener() {
+        InMobiNative nativeAd = new InMobiNative(context, Constant.AD_PlacementID_RecommendFragment, new InMobiNative.NativeAdListener() {
             @Override
             public void onAdLoadSucceeded(@NonNull InMobiNative inMobiNative) {
                 adLayout.setVisibility(View.VISIBLE);
