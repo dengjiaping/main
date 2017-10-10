@@ -106,7 +106,6 @@ public class InstalledFragment extends BaseSearchFragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Log.d(TAG, "已装" + pkgNameListStr);
         oldLength = jsonArray.length();
         //获取数据库 =>  添加
         openFileInfoList = fileLoad.getOpenFileInfo();
@@ -114,7 +113,6 @@ public class InstalledFragment extends BaseSearchFragment {
             //String gameName = openFileInfo.getName();
             String gamePackageName = openFileInfo.getPackageName();
             if (pkgNameListStr == null || !pkgNameListStr.contains(gamePackageName)) {
-                Log.d(TAG, "进来," + gamePackageName);
                 jsonArray.put(gamePackageName);
             }
         }
@@ -140,8 +138,7 @@ public class InstalledFragment extends BaseSearchFragment {
                         //String appName = applicationInfo.loadLabel(packageManager).toString();
                         String packageName = applicationInfo.packageName;
                         //如果包名   包含在SD文件里
-                        Log.d(TAG, applicationInfo.loadLabel(packageManager).toString() + ",本地:" + packageName);
-                        if (pkgNameListStr.contains(packageName)) {
+                        if (pkgNameListStr.contains(packageName)&&!"cn.ngame.store".equals(packageName)) {
                             localAppList.add(packageInfo);
                         }
                     }
