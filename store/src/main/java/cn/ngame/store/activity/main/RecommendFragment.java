@@ -63,8 +63,8 @@ public class RecommendFragment extends BaseSearchFragment {
     public static final String TAG = RecommendFragment.class.getSimpleName();
     private PullToRefreshListView pullListView;
     private ImageView game_big_pic_1, game_big_pic_2;
-    private SimpleDraweeView from_img_1, from_img_ad,from_img_2;
-    private TextView gamename_1, gamename_2, summary_2,summary_ad,gamename_ad;
+    private SimpleDraweeView from_img_1, from_img_ad, from_img_2;
+    private TextView gamename_1, gamename_2, summary_2, summary_ad, gamename_ad;
     private TextView from_1, from_2, summary_1;
     private LoadStateView loadStateView;
     private RecommendListAdapter adapter;
@@ -472,7 +472,7 @@ public class RecommendFragment extends BaseSearchFragment {
                     RecommendListBean.DataBean dataBean1 = topList.get(1);
                     //埋点
                     HashMap<String, String> map1 = new HashMap<>();
-                    map1.put(KeyConstant.index, 1 + "");
+                    map1.put(KeyConstant.index, 2 + "");
                     map1.put(KeyConstant.game_Name, dataBean1.getGameName());
                     MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPositionClickCount, map1);
                     intent.putExtra(KeyConstant.ID, dataBean1.getGameId());
@@ -526,14 +526,15 @@ public class RecommendFragment extends BaseSearchFragment {
     private void setAdView() {
         InMobiSdk.init(context, Constant.InMobiSdk_Id);
 
-        InMobiNative nativeAd = new InMobiNative(context, Constant.AD_PlacementID_RecommendFragment, new InMobiNative.NativeAdListener() {
+        InMobiNative nativeAd = new InMobiNative(context, Constant.AD_PlacementID_RecommendFragment, new InMobiNative
+                .NativeAdListener() {
             @Override
             public void onAdLoadSucceeded(@NonNull InMobiNative inMobiNative) {
                 adLayout.setVisibility(View.VISIBLE);
                 //JSONObject content = inMobiNative.getCustomAdContent();
                 NewsSnippet item = new NewsSnippet();
                 item.title = inMobiNative.getAdTitle();
-                gamename_ad.setText(item.title );//广告标题
+                gamename_ad.setText(item.title);//广告标题
 
                 item.imageUrl = inMobiNative.getAdIconUrl();
                 from_img_ad.setImageURI(item.imageUrl);
@@ -581,13 +582,21 @@ public class RecommendFragment extends BaseSearchFragment {
 
             @Override
             public void onAdClicked(@NonNull InMobiNative inMobiNative) {
-                Log.d(TAG, "onAdClicked");
+                if (inMobiNative == null) {
+                    return;
+                }
+                //广告埋点
+                HashMap<String, String> map = new HashMap<>();
+                map.put(KeyConstant.index, 1 + "");
+                map.put(KeyConstant.game_Name, inMobiNative.getAdTitle());
+                MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPositionClickCount, map);
             }
 
             @Override
             public void onMediaPlaybackComplete(@NonNull InMobiNative inMobiNative) {
                 Log.d(TAG, "onMediaPlaybackComplete");
             }
+
             @Override
             public void onAdStatusChanged(@NonNull InMobiNative inMobiNative) {
                 Log.d(TAG, "onAdStatusChanged");
