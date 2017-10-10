@@ -313,6 +313,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
                     @Override
                     public void onNext(SearchBean result) {
                         if (result != null && result.getCode() == 0) {
+                            searchList.clear();
                             List<SearchBean.DataBean> data = result.getData();
                             if (data != null) {
                                 for (int i = 0; i < data.size(); i++) {
