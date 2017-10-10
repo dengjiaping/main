@@ -54,7 +54,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
 
     public static final int READ_EXTERNAL_STORAGE = 24;
     public static final int WRITE_EXTERNAL_STORAGE = 25;
-    public static final String TAG = "999";
+    public static final String TAG = SearchActivity.class.getSimpleName();
     public int GAMETYPE_ID = 36;
     public int VIDEOTYPE_ID = 37;
     private LoadStateView loadStateView;
@@ -285,6 +285,10 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
     //搜索
     private void doSearch(final boolean isBt) {
         resultListView.setVisibility(View.VISIBLE);
+        searchList.clear();
+        if (searchAdapter != null) {
+            searchAdapter.notifyDataSetChanged();
+        }
         ll_show.setVisibility(View.GONE);
         loadStateView.setVisibility(View.VISIBLE);
         loadStateView.setState(LoadStateView.STATE_ING);
@@ -309,7 +313,6 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
                     @Override
                     public void onNext(SearchBean result) {
                         if (result != null && result.getCode() == 0) {
-                            searchList.clear();
                             List<SearchBean.DataBean> data = result.getData();
                             if (data != null) {
                                 for (int i = 0; i < data.size(); i++) {
@@ -323,6 +326,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
                             if (searchAdapter == null) {
                                 searchAdapter = new SearchAdapter(SearchActivity.this, searchList);
                                 resultListView.setAdapter(searchAdapter);
+                                loadStateView.setVisibility(View.GONE);
                             } else {
                                 loadStateView.setVisibility(View.GONE);
                                 searchAdapter.setSearchResultList(searchList);
