@@ -129,7 +129,7 @@ public class NecessaryFragment extends BaseSearchFragment {
                 .necessary_content_desc)));
         mNecessaryList.add(new NecessaryItemData("1", "谷歌", "4", "谷歌安装器", "未知", getString(R.string
                 .necessary_content_desc)));
-        mNecessaryList.add(new NecessaryItemData("1", "谷歌", "4", "谷歌安装器", "未知", getString(R.string
+        mNecessaryList.add(new NecessaryItemData("1", "谷歌", "5", "谷歌安装器", "未知", getString(R.string
                 .necessary_content_desc)));
         mNecessaryList.add(new NecessaryItemData("2", "腾讯", "54", "腾讯助手", "腾讯助手腾讯助手腾讯助手腾讯助手", getString(R.string
                 .necessary_content_desc)));
