@@ -266,8 +266,8 @@ public class Rank012345Fragment extends BaseSearchFragment {
     private String tabList[] = new String[]{"全部", "大陆", "美国", "韩国", "日本", "港澳台"};
     private int tab2_Id01234[] = new int[]{0, 147, 149, 151, 150, 148};
 
-    private String tabList5[] = new String[]{"FC", "MAME", "SFC", "GBA", "PS", "PSP", "MD", "GBC", "NDS"};
-    private int tab2_id5[] = new int[]{154, 155, 156, 157, 158, 159, 160, 161, 162};
+    private String tabList5[] = new String[]{"NDS","FC", "MAME", "SFC", "GBA", "PS", "PSP", "MD", "GBC"};
+    private int tab2_id5[] = new int[]{162,154, 155, 156, 157, 158, 159, 160, 161};
     private int tab2_all[];
 
     //顶部下面的二级标签

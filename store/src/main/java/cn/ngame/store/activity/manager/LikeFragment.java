@@ -117,7 +117,7 @@ public class LikeFragment extends BaseSearchFragment {
             return;
         }
         if (gameList == null || gameList.size() == 0) {
-            emptyTv.setText("正在获取列表...");
+            emptyTv.setText("正在加载...");
         }
      /*   if (gameList != null) {
             gameList.clear();
