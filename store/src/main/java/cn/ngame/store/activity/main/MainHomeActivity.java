@@ -7,14 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.telephony.TelephonyManager;
 import android.text.format.Formatter;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -43,7 +41,6 @@ import com.jzt.hol.android.jkda.sdk.bean.gamehub.AppCarouselBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.BrowseHistoryBodyBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.gamehub.AppCarouselClient;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
@@ -97,7 +94,6 @@ import cn.ngame.store.user.view.LoginActivity;
 import cn.ngame.store.user.view.UserCenterActivity;
 import cn.ngame.store.view.DialogModel;
 
-import static cn.ngame.store.R.id.main_download_bt;
 
 /**
  * 首页底部tab栏
@@ -126,7 +122,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private int currentMenu;
     private FragmentViewPagerAdapter adapter;
     private FragmentManager fragmentManager;
-    private LinearLayout home, game, video, manager;
+    private LinearLayout home, game, menu_game_hub, video, manager;
     private Button bt_home, bt_game, bt_video, bt_manager;
     private TextView tv_home, tv_game, tv_video, tv_manager;
     private int colorDark;
@@ -148,18 +144,16 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private SharedPreferences.Editor editor;
     private TextView mEditProfileTv;
     private Button mDownloadBt;
+    private TextView menu_gamehub_tv;
+    private Button menu_game_hub_bt;
+    private GameHubFragment gameHubFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         InMobiSdk.init(this, Constant.InMobiSdk_Id);
         //........ ....................通知栏  >= 4.4(KITKAT)...................
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(R.color.mainColor);
-        }
+        initStatusBar();
         Intent serviceIntent = new Intent(this, FileLoadService.class);
         startService(serviceIntent);
         //-----------------------------------------------------------------------------
@@ -168,8 +162,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         showAdverDialog();
         //得到设备id
         CommonUtil.verifyStatePermissions(this);
-        TelephonyManager telephonyManager;
-        telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
         editor = preferences.edit();
 
@@ -190,7 +182,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         rl_top.setPadding(0, statusBarHeight, 0, 0);*/
         home = (LinearLayout) findViewById(R.id.menu_home_ll);
         game = (LinearLayout) findViewById(R.id.menu_game_ll);
-        //menu_game_hub = (LinearLayout) findViewById(R.id.menu_game_hub);圈子
+        menu_game_hub = (LinearLayout) findViewById(R.id.menu_game_hub);
         video = (LinearLayout) findViewById(R.id.menu_video);
         manager = (LinearLayout) findViewById(R.id.menu_manager);
 
@@ -201,10 +193,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         tv_home = (TextView) findViewById(R.id.menu_home_tv);
         tv_game = (TextView) findViewById(R.id.menu_game_tv);
-        //menu_gamehub_tv = (TextView) findViewById(R.id.menu_gamehub_tv);
+        menu_gamehub_tv = (TextView) findViewById(R.id.menu_gamehub_tv);
         tv_video = (TextView) findViewById(R.id.menu_video_tv);
         tv_manager = (TextView) findViewById(R.id.menu_manager_tv);
-        // menu_game_hub_bt = (ImageView) findViewById(menu_game_hub_bt);圈子
+        menu_game_hub_bt = (Button) findViewById(R.id.menu_game_hub_bt);
 
         //标题上面的消息和搜索
         im_toSearch = (ImageView) findViewById(R.id.im_toSearch);
@@ -214,7 +206,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         mIconIv = (SimpleDraweeView) findViewById(R.id.iv_icon_title);
         mTitleBgIv = (ImageView) findViewById(R.id.title_iv);
         mTitleTv = (TextView) findViewById(R.id.title_tv);
-        mDownloadBt = (Button) findViewById(main_download_bt);
+        mDownloadBt = (Button) findViewById(R.id.main_download_bt);
         im_toSearch.setOnClickListener(this);
         fl_notifi.setOnClickListener(this);
         mIconIv.setOnClickListener(this);
@@ -543,7 +535,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
             list.add(RecommendFragment.newInstance(0));
             list.add(RankFragment.newInstance(""));
-            //mStickyLV.add(GameHubFragment.newInstance());
+            list.add(GameHubFragment.newInstance(0));
             list.add(DiscoverFragment.newInstance(""));
             list.add(ManagerFragment.newInstance());
 
@@ -565,11 +557,11 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         bt_game.setSelected(false);
         bt_video.setSelected(false);
         bt_manager.setSelected(false);
-        //menu_game_hub_bt.setSelected(false);
+        menu_game_hub_bt.setSelected(false);
 
         tv_home.setTextColor(colorNormal);
         tv_game.setTextColor(colorNormal);
-        //menu_gamehub_tv.setTextColor(colorNormal);圈子
+        menu_gamehub_tv.setTextColor(colorNormal);
         tv_video.setTextColor(colorNormal);
         tv_manager.setTextColor(colorNormal);
 
@@ -624,7 +616,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 tv_game.setTextColor(colorDark);
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainRankButtonClickCount);
                 break;
-        /*    case 2://圈子
+            case 2://圈子
                 if (null == gameHubFragment) {
                     gameHubFragment = new GameHubFragment();
                     transaction.add(R.id.main_list_fragments, gameHubFragment);
@@ -632,12 +624,13 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     transaction.show(gameHubFragment);
                 }
                 menu_game_hub_bt.setSelected(true);
-                mTitleTv.setText("圈子");
+                mTitleTv.setText(R.string.main_tab_04);
                 mTitleBgIv.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.GONE);
+                mDownloadBt.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 menu_gamehub_tv.setTextColor(colorDark);
-                break;*/
+                break;
             case 3://发现
                 if (null == discoverFragment) {
                     discoverFragment = new DiscoverFragment();
@@ -688,9 +681,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         if (null != rankingFragment) {
             transaction.hide(rankingFragment);
         }
-      /*  if (null != gameHubFragment) {
+        if (null != gameHubFragment) {
             transaction.hide(gameHubFragment);
-        }*/
+        }
         if (null != discoverFragment) {
             transaction.hide(discoverFragment);
         }
@@ -707,7 +700,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     public void setOnTouchListener(View.OnTouchListener listener) {
         home.setOnTouchListener(listener);
         game.setOnTouchListener(listener);
-        //menu_game_hub.setOnTouchListener(listener);
+        menu_game_hub.setOnTouchListener(listener);
         video.setOnTouchListener(listener);
         manager.setOnTouchListener(listener);
     }
@@ -730,11 +723,11 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                         setCurrentMenu(1);
                     }
                     break;
-               /* case R.id.menu_game_hub:
+                case R.id.menu_game_hub:
                     if (currentMenu != R.id.menu_game_hub && event.getAction() == MotionEvent.ACTION_UP) {
                         setCurrentMenu(2);
                     }
-                    break;*/
+                    break;
                 case R.id.menu_video:
                     if (currentMenu != R.id.menu_video && action == MotionEvent.ACTION_UP) {
                         setCurrentMenu(3);

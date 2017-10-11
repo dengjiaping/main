@@ -53,9 +53,9 @@ import static cn.ngame.store.R.id.banner_view;
  * 游戏圈
  * Created by gp on 2016/8/24.
  */
-public class GameHubFragment extends BaseSearchFragment implements View.OnClickListener {
+public class GameHubOldFragment extends BaseSearchFragment implements View.OnClickListener {
 
-    public static final String TAG = GameHubFragment.class.getSimpleName();
+    public static final String TAG = GameHubOldFragment.class.getSimpleName();
     private BannerView bannerView;
     private PullToRefreshListView pullListView;
     private GameHubAdapter adapter;
@@ -66,9 +66,9 @@ public class GameHubFragment extends BaseSearchFragment implements View.OnClickL
     private PageAction pageAction;
     public static int PAGE_SIZE = 10;
 
-    public static GameHubFragment newInstance() {
+    public static GameHubOldFragment newInstance() {
         Bundle args = new Bundle();
-        GameHubFragment fragment = new GameHubFragment();
+        GameHubOldFragment fragment = new GameHubOldFragment();
         fragment.setArguments(args);
         return fragment;
     }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import cn.ngame.store.R;
@@ -24,16 +25,18 @@ public class MessageDetailActivity extends BaseFgActivity implements IPushMsgDet
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.push_message_detail_activity);
+        initStatusBar();
+        this.setContentView(R.layout.activity_msg_detail2);
 
-        TextView tv_title_bar = (TextView) findViewById(R.id.tv_title_bar);
-        TextView tv_back = (TextView) findViewById(R.id.left_but);
-        tv_back.setOnClickListener(new View.OnClickListener() {
+        Button viewById =(Button) findViewById(R.id.left_bt);
+        viewById.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        viewById.setText("活动");
+        ((TextView) findViewById(R.id.center_tv)).setText("");
 
         web_content = (WebView) findViewById(R.id.web_content);
         WebSettings wSet = web_content.getSettings();
@@ -43,8 +46,6 @@ public class MessageDetailActivity extends BaseFgActivity implements IPushMsgDet
 
         final long msgId = getIntent().getLongExtra("msgId",0);
         final int msgType = getIntent().getIntExtra("type",1);
-
-        tv_title_bar.setText("活动");
 
         presenter = new PushMsgDetailPresenter(this,this);
         presenter.showDetail(msgType,msgId);

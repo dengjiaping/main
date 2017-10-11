@@ -3,6 +3,7 @@ package cn.ngame.store.push.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -29,16 +30,18 @@ public class NotifyMsgDetailActivity extends BaseFgActivity implements IPushMsgD
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.push_message_detail_notify);
+        initStatusBar();
+        this.setContentView(R.layout.activity_msg_detail1);
 
-        TextView tv_back = (TextView) findViewById(R.id.left_but);
-        tv_back.setOnClickListener(new View.OnClickListener() {
+        Button viewById =(Button) findViewById(R.id.left_bt);
+        viewById.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
+        viewById.setText("通知");
+        ((TextView) findViewById(R.id.center_tv)).setText("");
         tv_title = (TextView) findViewById(R.id.tv_title);
         tv_time = (TextView) findViewById(R.id.tv_time);
         tv_summary = (TextView) findViewById(R.id.tv_summary);
