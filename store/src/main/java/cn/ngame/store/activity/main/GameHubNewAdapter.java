@@ -23,12 +23,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Timer;
@@ -37,7 +35,7 @@ import cn.ngame.store.R;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
 
-public class GameHubListAdapter extends BaseAdapter {
+public class GameHubNewAdapter extends BaseAdapter {
 
     private Context context;
     private FragmentManager fm;
@@ -46,7 +44,7 @@ public class GameHubListAdapter extends BaseAdapter {
 
     private static Handler uiHandler = new Handler();
 
-    public GameHubListAdapter(Context context, FragmentManager fm, List<RecommendListBean.DataBean> list, int type) {
+    public GameHubNewAdapter(Context context, FragmentManager fm, List<RecommendListBean.DataBean> list, int type) {
         super();
         this.context = context;
         this.fm = fm;
@@ -88,7 +86,7 @@ public class GameHubListAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.game_hub_new_lv_item, parent, false);
             holder = new ViewHolder(context, fm);
             holder.fromIv = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
-            holder.game_logo_Iv = (ImageView) convertView.findViewById(R.id.recommend_game_pic);
+            holder.game_logo_Iv = (SimpleDraweeView) convertView.findViewById(R.id.recommend_game_pic_new);
             holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
             holder.tv_summary = (TextView) convertView.findViewById(R.id.tv_summary);
             holder.tv_from = (TextView) convertView.findViewById(R.id.text1);
@@ -112,7 +110,7 @@ public class GameHubListAdapter extends BaseAdapter {
         private IFileLoad fileLoad;
         private FragmentManager fm;
         private Timer timer = new Timer();
-        public ImageView game_logo_Iv;
+        public SimpleDraweeView game_logo_Iv;
 
         public ViewHolder(Context context, FragmentManager fm) {
             this.context = context;
@@ -132,11 +130,8 @@ public class GameHubListAdapter extends BaseAdapter {
             if (imgUrl != null && imgUrl.trim().equals("")) {
                 imgUrl = null;
             }
-            Picasso.with(context).load(imgUrl).placeholder(R.drawable.ic_def_logo_720_288)
-                    .error(R.drawable.ic_def_logo_720_288)
-                   // .resize(screenWidth,150)
-                    .into(game_logo_Iv);
             fromIv.setImageURI(fromUrl);
+            game_logo_Iv.setImageURI(imgUrl);
 
             String gameName = gameInfo.getGameName();
             if (!"".equals(gameName)) {

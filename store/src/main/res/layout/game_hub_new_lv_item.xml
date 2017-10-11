@@ -44,8 +44,15 @@
 
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/recommend_game_pic"
+    <com.facebook.drawee.view.SimpleDraweeView
+        fresco:actualImageScaleType="fitXY"
+        fresco:failureImage="@drawable/ic_def_logo_720_288"
+        fresco:failureImageScaleType="centerCrop"
+        fresco:placeholderImage="@drawable/ic_def_logo_720_288"
+        fresco:placeholderImageScaleType="centerCrop"
+        fresco:progressBarImage="@drawable/ic_def_logo_720_288"
+        fresco:viewAspectRatio="2"
+        android:id="@+id/recommend_game_pic_new"
         android:layout_width="match_parent"
         android:layout_height="@dimen/recommend_item_game_pic_hight"
         android:paddingLeft="@dimen/dm015"

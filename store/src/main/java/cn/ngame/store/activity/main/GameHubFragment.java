@@ -51,7 +51,7 @@ public class GameHubFragment extends BaseSearchFragment {
     private TextView gamename_1, gamename_2, summary_2;
     private TextView from_1, from_2, summary_1;
     private LoadStateView loadStateView;
-    private GameHubListAdapter adapter;
+    private GameHubNewAdapter adapter;
     private PageAction pageAction;
     public static int PAGE_SIZE = 8;
     List<RecommendListBean.DataBean> topList = new ArrayList<>();
@@ -162,7 +162,7 @@ public class GameHubFragment extends BaseSearchFragment {
             }*/
         }
         if (adapter == null) {
-            adapter = new GameHubListAdapter(context, getSupportFragmentManager(), list, 0);
+            adapter = new GameHubNewAdapter(context, getSupportFragmentManager(), list, 0);
             pullListView.getRefreshableView().setAdapter(adapter);
         } else {
             adapter.setList(list);
@@ -255,21 +255,18 @@ public class GameHubFragment extends BaseSearchFragment {
         refreshableView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0) {
-                    int i = position - 1;
                     /**   pullListView的头部position是0  第一个item 索引是 1
                      1-1= 0(所以position是1时,要拿list里的0处数据, position是2时,拿1处数据)   */
-                    RecommendListBean.DataBean dataBean = list.get(i);
+                    RecommendListBean.DataBean dataBean = list.get(position);
                     //埋点
-                    HashMap<String, String> map = new HashMap<>();
-                    map.put(KeyConstant.index, i + 2 + "");
+                /*    HashMap<String, String> map = new HashMap<>();
+                    map.put(KeyConstant.index, position + "");
                     map.put(KeyConstant.game_Name, dataBean.getGameName());
                     MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPositionClickCount, map);
-
-                    Intent intent = new Intent(context, GameDetailActivity.class);
+*/
+                    Intent intent = new Intent(context, GameHubDetailActivity.class);
                     intent.putExtra(KeyConstant.ID, dataBean.getGameId());
                     startActivity(intent);
-                }
             }
         });
      /*   //滑动事件(搜索栏渐变)

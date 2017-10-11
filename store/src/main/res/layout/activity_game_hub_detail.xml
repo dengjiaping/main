@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:fresco="http://schemas.android.com/apk/res-auto"
+             xmlns:ngame="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/f7f7f7"
+             android:descendantFocusability="blocksDescendants"
+             android:orientation="vertical">
+
+
+    <cn.ngame.store.view.StickyScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+            <!--大图-->
+            <com.facebook.drawee.view.SimpleDraweeView
+                xmlns:fresco="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/sdv_img"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dm300"
+                fresco:actualImageScaleType="fitXY"
+                fresco:failureImage="@drawable/ic_def_logo_720_288"
+                fresco:failureImageScaleType="centerCrop"
+                fresco:placeholderImage="@drawable/ic_def_logo_720_288"
+                fresco:placeholderImageScaleType="centerCrop"
+                fresco:progressBarImage="@drawable/ic_def_logo_720_288"
+                fresco:viewAspectRatio="2"/>
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/game_hub_sdv"
+                android:layout_width="@dimen/dm044"
+                android:layout_height="@dimen/dm044"
+                android:layout_below="@id/sdv_img"
+                android:layout_marginLeft="@dimen/dm036"
+                android:layout_marginTop="@dimen/dm020"
+                android:src="@drawable/ic_launcher"
+                fresco:actualImageScaleType="centerCrop"
+                fresco:failureImage="@drawable/ic_launcher"
+                fresco:failureImageScaleType="centerCrop"
+                fresco:placeholderImage="@drawable/ic_launcher"
+                fresco:placeholderImageScaleType="centerCrop"
+                fresco:progressBarImage="@drawable/ic_launcher"
+                fresco:viewAspectRatio="2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sdv_img"
+                android:layout_marginLeft="@dimen/dm016"
+                android:layout_marginTop="@dimen/dm026"
+                android:layout_toRightOf="@id/game_hub_sdv"
+                android:text="乐游地带"
+                android:textColor="@color/color_1a"
+                android:textSize="@dimen/dm024"/>
+
+            <View
+                android:id="@+id/game_hub_line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dm001"
+                android:layout_below="@id/game_hub_sdv"
+                android:layout_marginLeft="@dimen/dm036"
+                android:layout_marginRight="@dimen/dm036"
+                android:layout_marginTop="@dimen/dm018"
+                android:background="@color/e6e6e6"/>
+
+            <TextView
+                android:id="@+id/game_hub_detail_title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/game_hub_line"
+                android:layout_marginBottom="@dimen/dm020"
+                android:layout_marginLeft="@dimen/dm036"
+                android:layout_marginRight="@dimen/dm036"
+                android:layout_marginTop="@dimen/dm020"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="大量的留白给用户更加轻松舒适的体验"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dm032"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/game_hub_detail_desc_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/game_hub_detail_title_tv"
+                android:layout_marginLeft="@dimen/dm036"
+                android:layout_marginRight="@dimen/dm036"
+                android:lineSpacingExtra="@dimen/dm020"
+                android:paddingBottom="@dimen/dm020"
+                android:text="NGAMEZONE支持数百款游戏的手柄操作，一个游戏，两种玩法，
+        即使那些游戏原生并不支持手柄，通过我们的云映射功能，也能轻松享受。数十家手柄品牌方官方推荐，值得信赖。
+        NGAMEZONE支持数百款游戏的手柄操作，一个游戏，两种玩法，      即使那些游戏原生并不支持手柄，通过我们的云映射功能，也能轻松享受。数十家手柄品牌方官方推荐，值得信赖。
+        NGAMEZONE支持数百款游戏的手柄操作，一个游戏，两种玩法，
+        即使那些游戏原生并不支持手柄，通过我们的云映射功能，也能轻松享受。数十家手柄品牌方官方推荐，值得信赖。NGAMEZONE支持数百款游戏的手柄操作，一个游戏，两种玩法，
+        即使那些游戏原生并不支持手柄，通过我们的云映射功能，也能轻松享受。数十家手柄品牌方官方推荐，值得信赖。
+        即使那些游戏原生并不支持手柄，通过我们的云映射功能，也能轻松享受。数十家手柄品牌方官方推荐，值得信赖。NGAMEZONE支持数百款游戏的手柄操作，一个游戏，两种玩法，
+        即使那些游戏原生并不支持手柄，通过我们的云映射功能，也能轻松享受。数十家手柄品牌方官方推荐，值得信赖。
+              即使那些游戏原生并不支持手柄，通过我们的云映射功能，也能轻松享受。数十家手柄品牌方官方推荐，值得信赖。
+        NGAMEZONE支持数百款游戏的手柄操作，一个游戏，两种玩法，
+        即使那些游戏原生并不支持手柄，通过我们的云映射功能，也能轻松享受。数十家手柄品牌方官方推荐，值得信赖。NGAMEZONE支持数百款游戏的手柄操作，一个游戏，两种玩法，
+        即使那些游戏原生并不支持手柄，通过我们的云映射功能，也能轻松享受。数十家手柄品牌方官方推荐，值得信赖。
+        "
+                android:textColor="@color/color_1a"
+                android:textSize="@dimen/dm026"/>
+        </RelativeLayout>
+    </cn.ngame.store.view.StickyScrollView>
+
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainColor"
+        >
+
+        <Button
+            android:id="@+id/left_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:clickable="true"
+            android:drawableLeft="@drawable/ic_back"
+            android:drawablePadding="@dimen/dp_10"
+            android:ellipsize="end"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:maxWidth="@dimen/dm400"
+            android:paddingLeft="@dimen/title_left_bt_padding_left"
+            android:paddingRight="@dimen/dp_20"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_size"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm001"
+            android:background="@color/e6e6e6"/>
+
+        <TextView
+            android:id="@+id/game_hub_support_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dm036"
+            android:paddingTop="@dimen/dm003"
+            android:text="10"
+            android:textColor="@color/color_1a"
+            android:textSize="@dimen/dm028"/>
+
+        <ImageView
+            android:id="@+id/game_hub_support_bt"
+            android:layout_width="@dimen/dm042"
+            android:layout_height="@dimen/dm042"
+            android:layout_marginBottom="@dimen/dm020"
+            android:layout_marginRight="@dimen/dm010"
+            android:layout_marginTop="@dimen/dm020"
+            android:layout_toLeftOf="@id/game_hub_support_tv"
+            android:scaleType="centerInside"
+            android:src="@drawable/zan1"/>
+    </RelativeLayout>
+</FrameLayout>
