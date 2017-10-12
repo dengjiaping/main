@@ -28,6 +28,9 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameHubMainBean;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 
@@ -41,7 +44,6 @@ public class GameHubNewAdapter extends BaseAdapter {
     private FragmentManager fm;
     private List<GameHubMainBean.DataBean> list;
     private int type;
-
     private static Handler uiHandler = new Handler();
 
     public GameHubNewAdapter(Context context, FragmentManager fm, List<GameHubMainBean.DataBean> list, int type) {
@@ -85,11 +87,13 @@ public class GameHubNewAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.game_hub_new_lv_item, parent, false);
             holder = new ViewHolder(context, fm);
-            holder.fromIv = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
+            holder.fromLogoIv = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
             holder.game_logo_Iv = (SimpleDraweeView) convertView.findViewById(R.id.recommend_game_pic_new);
             holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
             holder.tv_summary = (TextView) convertView.findViewById(R.id.tv_summary);
+            holder.timeTv = (TextView) convertView.findViewById(R.id.game_hub_time_tv);
             holder.tv_from = (TextView) convertView.findViewById(R.id.text1);
+            holder.lookNub = (TextView) convertView.findViewById(R.id.game_hub_look_nub_tv);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -104,9 +108,10 @@ public class GameHubNewAdapter extends BaseAdapter {
 
     public static class ViewHolder {
         private Context context;
+        private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         private GameHubMainBean.DataBean gameInfo;
-        private SimpleDraweeView fromIv;
-        private TextView tv_title, tv_summary, tv_from;
+        private SimpleDraweeView fromLogoIv;
+        private TextView tv_title, timeTv,lookNub, tv_summary, tv_from;
         private IFileLoad fileLoad;
         private FragmentManager fm;
         private Timer timer = new Timer();
@@ -129,7 +134,7 @@ public class GameHubNewAdapter extends BaseAdapter {
             if (imgUrl != null && imgUrl.trim().equals("")) {
                 imgUrl = null;
             }
-            fromIv.setImageURI("");
+            fromLogoIv.setImageURI("");
             game_logo_Iv.setImageURI(imgUrl);
 
             String gameName = gameInfo.getPostTitle();
@@ -143,8 +148,9 @@ public class GameHubNewAdapter extends BaseAdapter {
             } else {
                 tv_summary.setText("");
             }
-
-            tv_from.setText( gameInfo.getPostPublisher());
+            timeTv.setText(df.format(new Date(gameInfo.getUpdateTime())));
+            lookNub.setText(gameInfo.getWatchNum()+"");
+            tv_from.setText(gameInfo.getPostPublisher());
         }
     }
 }
