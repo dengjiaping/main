@@ -28,7 +28,7 @@
     <dimen name="title_size">18dp</dimen>
     <dimen name="title_back_bt_paddingLeft">20dp</dimen>
     <dimen name="recommend_item_from_pic">18dp</dimen>
-    <dimen name="recommend_item_game_pic_hight">150dp</dimen>
+    <dimen name="recommend_item_game_pic_hight">@dimen/dm300</dimen>
 
 
     <dimen name="dp_05">0.5dp</dimen>

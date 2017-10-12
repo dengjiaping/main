@@ -46,7 +46,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/dm008"
         android:background="@null"
-        android:layout_margin="@dimen/dm030"
+        android:padding="@dimen/dm030"
         android:text="跳过广告"
         android:textColor="@color/mainColor"
         android:textSize="@dimen/dm020"
