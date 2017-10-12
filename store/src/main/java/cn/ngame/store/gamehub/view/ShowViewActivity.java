@@ -46,8 +46,6 @@ public class ShowViewActivity extends BaseFgActivity {
     private ImageView[] pointViews;
 
     // 具体一个小圆点
-    private ImageView imageView;
-
     private boolean flag = false; // 等待框 是否显示
     private int initLocal = 0; // viewpager初始位置
 
@@ -289,7 +287,6 @@ public class ShowViewActivity extends BaseFgActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0: {
-                    flag = true;
                     //11. 设置main布局为当前Activity内容
                     setContentView(main);
                     //12. 设置viewPager 图片切换Adapter,图片最终能够切换就是在Adapter中实现的

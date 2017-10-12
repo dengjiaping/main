@@ -1,9 +1,17 @@
 package cn.ngame.store.activity.main;
 
 import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -26,8 +35,12 @@ import com.google.gson.reflect.TypeToken;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.umeng.analytics.MobclickAgent;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,6 +64,7 @@ import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
 import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.ReviewScoreView;
 import cn.ngame.store.view.StickyScrollView;
+import cn.ngame.store.widget.TouchImageView;
 
 import static cn.ngame.store.R.id.sdv_img;
 
@@ -80,6 +94,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
     private TextView sumbitTv;
     private boolean isPrecented = false;
     private FragmentManager fm;
+    private TextView picNubSeletedTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +105,12 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintResource(R.color.transparent);
         }
-        setContentView(R.layout.activity_game_hub_detail);
+        imgs.add("http://oss.ngame.cn/upload/1507691783059.jpg");
+        imgs.add("http://www.foreveross.com/foreveross/images/banner07.jpg");
+        imgs.add("http://www.foreveross.com/foreveross/images/banner03.jpg");
+        imgs.add("http://www.foreveross.com/foreveross/images/banner04.jpg");
+        main = getLayoutInflater().inflate(R.layout.activity_game_hub_detail, null);
+        setContentView(main);
         try {
             gameId = getIntent().getLongExtra(KeyConstant.ID, 0l);
             Log.d(TAG, "游趣详情" + gameId);
@@ -103,17 +123,234 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
         //初始化
         initStatus();
         initTabViewPager();
-        initView();
+        game_big_img = (SimpleDraweeView) main.findViewById(sdv_img);
         //请求数据
-        getGameInfo();
+        getData();
+        initBanner();
     }
 
-    //初始化其他控件
-    private void initView() {
-        game_big_img = (SimpleDraweeView) findViewById(sdv_img);
+    private int initLocal = 0;
+    private ViewGroup pointGroup;
+    private ViewPager viewPager;
+    private ArrayList<View> imgViews;
+    private ImageView[] pointViews;
 
+    private void initBanner() {
+        viewPager = (ViewPager) main.findViewById(R.id.imagePages);
+        picNubSeletedTv = (TextView) main.findViewById(R.id.pic_nub_seleted_show_tv);
+        pointGroup = (ViewGroup) main.findViewById(R.id.pointGroup);
+        new LoadImageThread().start();
     }
 
+    private ArrayList<String> imgs = new ArrayList<>();
+    TouchImageView iv;
+
+    class LoadImageThread extends Thread {
+        @Override
+        public void run() {
+            //3. 获取LayoutInflater,目的是方便后面得到xml布局文件进行装配
+            //4. 创建图片view存储集合
+            imgViews = new ArrayList<>();
+
+            Looper.prepare();
+            //5. 通过网络方式下载图片,并最终放在集合中
+            for (int i = 0; i < imgs.size(); i++) {
+                iv = new TouchImageView(content);
+                iv.setScaleType(ImageView.ScaleType.FIT_XY);
+                Bitmap bitmap = getHttpBitmap(imgs.get(i));
+                //从网上取图片
+                iv.setImageBitmap(bitmap);
+                imgViews.add(iv);
+
+                iv.setOnImageClickListener(new TouchImageView.OnClickListener() {
+                    @Override
+                    public void onClick() {
+                        //图片点击
+                    }
+                });
+            }
+            //6. 获取main.xml layout对象,他是装配其他图片布局的中心点
+            //   要记得,它里面声明了一个图片区域ViewPager,以及一个导航指示区域
+            // main = getLayoutInflater().inflate(R.layout.activity_show_view, null);
+            //9. 下面开始控制导航小圆点,有多少张img,就要做多大的小圆点数组
+       /*     pointViews = new ImageView[imgViews.size()];
+
+            if (content == null && content.isFinishing()) {
+                return;
+            }
+            //10. 根据图片集合的长度决定创建多少小圆点ImageView
+            for (int i = 0; i < imgViews.size(); i++) {
+//                imageView = new ImageView(ShowViewActivity.this);
+//                imageView.setLayoutParams(new LayoutParams(15, 15));
+//                imageView.setPadding(20, 0, 20, 0);
+                LinearLayout.LayoutParams pointParams = new LinearLayout.LayoutParams(
+                        ViewPager.LayoutParams.WRAP_CONTENT, ViewPager.LayoutParams.WRAP_CONTENT);
+                if (i < 1) {
+                    pointParams.setMargins(0, 0, 0, 0);
+                } else {
+                    pointParams.setMargins(10, 0, 0, 0);
+                }
+                ImageView iv = new ImageView(content);
+                iv.setLayoutParams(pointParams);
+                pointViews[i] = iv;
+                if (i == 0) {
+                    //默认选中第一张图片,加入焦点
+                    pointViews[i].setBackgroundResource(R.drawable.choosen_radius);
+                } else {
+                    pointViews[i].setBackgroundResource(R.drawable.white_radius);
+                }
+                // 把每一个导航小圆点都加入到ViewGroup中
+                pointGroup.addView(pointViews[i]);
+            }*/
+            //表示下载完毕.
+            if (content != null && !content.isFinishing()) {
+                handler.sendEmptyMessage(0);
+            }
+            Looper.loop();
+        }
+    }
+
+    public Bitmap getHttpBitmap(String url) {
+        URL myFileURL;
+        Bitmap bitmap = null;
+        try {
+            myFileURL = new URL(url);
+            // 获得连接
+            HttpURLConnection conn = (HttpURLConnection) myFileURL
+                    .openConnection();
+            // 设置超时时间为6000毫秒，conn.setConnectionTiem(0);表示没有时间限制
+            conn.setConnectTimeout(6000);
+            // 连接设置获得数据流
+            conn.setDoInput(true);
+            // 不使用缓存
+            conn.setUseCaches(false);
+            // 这句可有可无，没有影响
+            // conn.connect();
+            // 得到数据流
+            InputStream is = conn.getInputStream();
+            // 解析得到图片
+            bitmap = BitmapFactory.decodeStream(is);
+            // 关闭数据流
+            is.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
+    // adapter内部类
+    // 指引页面数据适配器
+    class ViewPagerAdapter extends PagerAdapter {
+        @Override
+        public int getCount() {
+            // 通过集合的size告诉Adapter共有多少张图片
+            return imgViews.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View arg0, Object arg1) {
+            return arg0 == arg1;
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            // TODO Auto-generated method stub
+            return super.getItemPosition(object);
+        }
+
+        @Override
+        public void destroyItem(View arg0, int arg1, Object arg2) {
+            // TODO Auto-generated method stub
+            // 移除旧的View
+            ((ViewPager) arg0).removeView(imgViews.get(arg1));
+        }
+
+        @Override
+        public Object instantiateItem(View arg0, int arg1) {
+            // TODO Auto-generated method stub
+            // 获取新的view
+            ((ViewPager) arg0).addView(imgViews.get(arg1));
+            return imgViews.get(arg1);
+        }
+
+        @Override
+        public void restoreState(Parcelable arg0, ClassLoader arg1) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public Parcelable saveState() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public void startUpdate(View arg0) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void finishUpdate(View arg0) {
+            // TODO Auto-generated method stub
+        }
+    }
+
+    // 监听器内部类
+    // 指引页面更改事件监听器
+    class PagerChangeListener implements ViewPager.OnPageChangeListener {
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void onPageSelected(int arg0) {
+         /*   pointViews[arg0].setBackgroundResource(R.drawable.choosen_radius);
+            int picNum = pointViews.length;//总数
+
+            for (int i = 0; i < picNum; i++) {
+                if (arg0 != i) {
+                    pointViews[i].setBackgroundResource(R.drawable.white_radius);
+                }
+            }*/
+            int imgsSize = imgs.size();
+            if (imgsSize > 1) {
+                picNubSeletedTv.setText(arg0 + 1 + "/" + imgsSize);
+            } else {
+                picNubSeletedTv.setText("");
+            }
+        }
+    }
+    private View main;
+    private Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0: {
+                    //setContentView(main);
+                    int imgsSize = imgs.size();
+                    if (imgsSize > 1) {
+                        picNubSeletedTv.setText(1 + "/" + imgsSize);
+                    } else {
+                        picNubSeletedTv.setText("");
+                    }
+                    //12. 设置viewPager 图片切换Adapter,图片最终能够切换就是在Adapter中实现的
+                    viewPager.setAdapter(new ViewPagerAdapter());
+                    //13. 设置viewPager 页面改变监听器,利用监听器改变小圆点焦点状态
+                    viewPager.setOnPageChangeListener(new PagerChangeListener());
+                    //14. 根据需求 初始位置
+                    viewPager.setCurrentItem(initLocal);
+                    break;
+                }
+            }
+        }
+    };
     private String TAG = GameHubDetailActivity.class.getSimpleName();
 
     @Override
@@ -127,7 +364,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
     /**
      * 获取游戏详情
      */
-    private void getGameInfo() {
+    private void getData() {
         String url = Constant.WEB_SITE + Constant.URL_GAME_DETAIL;
         Response.Listener<JsonResult<GameInfo>> successListener = new Response.Listener<JsonResult<GameInfo>>() {
             @Override
@@ -197,12 +434,12 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
 
     private void initStatus() {
         //获取状态栏高度设置给标题栏==========================================
-        rl_top = (RelativeLayout) findViewById(R.id.rl_top);
+        rl_top = (RelativeLayout) main.findViewById(R.id.rl_top);
         rl_top.setBackgroundResource(R.color.transparent);
         int statusBarHeight = ImageUtil.getStatusBarHeight(content) - 5;
         rl_top.setPadding(0, statusBarHeight, 0, 0);
         //======================================================================
-        leftBt = (Button) findViewById(R.id.left_bt);
+        leftBt = (Button) main.findViewById(R.id.left_bt);
         leftBt.setPadding(CommonUtil.dip2px(content, 18), statusBarHeight, 0, 0);
         leftBt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,7 +451,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
 
     //初始化TabLayout   &   ViewPager
     private void initTabViewPager() {
-        scrollView = (StickyScrollView) findViewById(R.id.scrollView);
+        scrollView = (StickyScrollView) main.findViewById(R.id.scrollView);
         scrollView.setOnScrollListener(this);
     }
 

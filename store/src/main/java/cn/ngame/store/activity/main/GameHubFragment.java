@@ -66,6 +66,7 @@ public class GameHubFragment extends BaseSearchFragment {
     private ListView refreshableView;
     private Picasso picasso;
 
+
     public static GameHubFragment newInstance(int arg) {
         GameHubFragment fragment = new GameHubFragment();
         Bundle bundle = new Bundle();
@@ -86,6 +87,7 @@ public class GameHubFragment extends BaseSearchFragment {
         picasso = Picasso.with(context);
         initListView(view);     //初始化
     }
+
 
     private void getGameList() {
         loadStateView.setVisibility(View.VISIBLE);
