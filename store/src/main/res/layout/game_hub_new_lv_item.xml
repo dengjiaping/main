@@ -35,14 +35,14 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dm016"
+            android:layout_marginRight="@dimen/dm036"
             android:layout_toRightOf="@+id/img_1"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:maxWidth="100dp"
-            android:text="乐游地带"
+            android:text=""
             android:textColor="@color/b3"
-            android:textSize="@dimen/dm022"/>
+            android:textSize="@dimen/dm025"/>
 
     </RelativeLayout>
 
@@ -71,7 +71,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:paddingRight="@dimen/dm036"
-        android:text="游戏名字"
+        android:text=""
         android:textColor="@color/game_name"
         android:textSize="@dimen/dm030"
         android:textStyle="bold"/>
@@ -87,7 +87,7 @@
         android:ellipsize="end"
         android:lineSpacingExtra="@dimen/dm010"
         android:maxLines="3"
-        android:text="游戏描述"
+        android:text=""
         android:textColor="@color/color_808080"
         android:textSize="@dimen/dm022"/>
 
@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="2041"
+            android:text=""
             android:textColor="@color/color_808080"
             android:textSize="@dimen/dm020"/>
 

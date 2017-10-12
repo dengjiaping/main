@@ -134,7 +134,7 @@ public class GameHubNewAdapter extends BaseAdapter {
             if (imgUrl != null && imgUrl.trim().equals("")) {
                 imgUrl = null;
             }
-            fromLogoIv.setImageURI("");
+            //fromLogoIv.setImageURI(gameInfo.getHeadPhoto());
             game_logo_Iv.setImageURI(imgUrl);
 
             String gameName = gameInfo.getPostTitle();

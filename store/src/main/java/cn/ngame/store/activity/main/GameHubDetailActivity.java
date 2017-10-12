@@ -32,6 +32,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.MsgDetailBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.MsgDetailBodyBean;
+import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
+import com.jzt.hol.android.jkda.sdk.services.gamehub.MsgDetailClient;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.umeng.analytics.MobclickAgent;
 
@@ -41,7 +45,6 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -53,7 +56,9 @@ import cn.ngame.store.adapter.DCViewPagerAdapter;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.Token;
+import cn.ngame.store.bean.User;
 import cn.ngame.store.core.net.GsonRequest;
+import cn.ngame.store.core.utils.APIErrorUtils;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.DialogHelper;
@@ -82,7 +87,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
     private DCViewPagerAdapter adapter;
     String[] tabList = {"详情", "必读"};
     //游戏id
-    private int gameId = 0;
+    private int msgId = 0;
     private GameInfo gameInfo;
     //下载进度条
     private Timer timer = new Timer();
@@ -95,6 +100,10 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
     private boolean isPrecented = false;
     private FragmentManager fm;
     private TextView picNubSeletedTv;
+    private TextView mFromTv;
+    private TextView mTitleTv;
+    private TextView mDescTv;
+    private TextView mSupportNumTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,15 +114,12 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintResource(R.color.transparent);
         }
-        imgs.add("http://oss.ngame.cn/upload/1507691783059.jpg");
-        imgs.add("http://www.foreveross.com/foreveross/images/banner07.jpg");
-        imgs.add("http://www.foreveross.com/foreveross/images/banner03.jpg");
-        imgs.add("http://www.foreveross.com/foreveross/images/banner04.jpg");
         main = getLayoutInflater().inflate(R.layout.activity_game_hub_detail, null);
         setContentView(main);
+        initView();
         try {
-            gameId = getIntent().getIntExtra(KeyConstant.ID, 0);
-            Log.d(TAG, "游趣详情" + gameId);
+            msgId = getIntent().getIntExtra(KeyConstant.ID, 0);
+            Log.d(TAG, "游趣详情" + msgId);
         } catch (Exception e) {
         }
         content = this;
@@ -129,11 +135,29 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
         initBanner();
     }
 
+    private void initView() {
+        mFromTv=(TextView)findViewById(R.id.hub_detail_from_tv);
+        mTitleTv=(TextView)findViewById(R.id.game_hub_detail_title_tv);
+        mDescTv=(TextView)findViewById(R.id.game_hub_detail_desc_tv);
+        mSupportNumTv=(TextView)findViewById(R.id.game_hub_support_tv);
+    }
+
+    private void setMsgDetail(MsgDetailBean result) {
+        MsgDetailBean.DataBean data = result.getData();
+        if (data == null) {
+            return;
+        }
+        mFromTv.setText(data.getPostPublisher());
+        mTitleTv.setText(data.getPostTitle());
+        mDescTv.setText(data.getPostContent());
+        mSupportNumTv.setText(data.getCommentNum()+"");
+        imgs.add(data.getPostImage());
+
+    }
     private int initLocal = 0;
     private ViewGroup pointGroup;
     private ViewPager viewPager;
     private ArrayList<View> imgViews;
-    private ImageView[] pointViews;
 
     private void initBanner() {
         viewPager = (ViewPager) main.findViewById(R.id.imagePages);
@@ -365,40 +389,32 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
      * 获取游戏详情
      */
     private void getData() {
-        String url = Constant.WEB_SITE + Constant.URL_GAME_DETAIL;
-        Response.Listener<JsonResult<GameInfo>> successListener = new Response.Listener<JsonResult<GameInfo>>() {
-            @Override
-            public void onResponse(JsonResult<GameInfo> result) {
-                if (result == null || result.code != 0) {
-                    ToastUtil.show(content, getString(R.string.server_exception));
-                    return;
-                }
-            }
-        };
+        MsgDetailBodyBean bodyBean = new MsgDetailBodyBean();
+        User user = StoreApplication.user;
+        if (user != null) {
+            bodyBean.setUserCode(user.userCode);
+        } else {
+            bodyBean.setDeviceOnlyNum(StoreApplication.deviceId);
+        }
+        bodyBean.setId(msgId);
+        bodyBean.setType(1);
+        new MsgDetailClient(this, bodyBean).observable()
+//                .compose(this.<DiscountListBean>bindToLifecycle())
+                .subscribe(new ObserverWrapper<MsgDetailBean>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtil.show(content, APIErrorUtils.getMessage(e));
+                    }
 
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
-            }
-        };
-
-        Request<JsonResult<GameInfo>> request = new GsonRequest<JsonResult<GameInfo>>(Request.Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult<GameInfo>>() {
-        }.getType()) {
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.GAME_ID, String.valueOf(gameId));
-                params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
-                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
-                return params;
-            }
-        };
-        Log.d(TAG, "访问服务器开始: " + df.format(new Date()));
-        StoreApplication.requestQueue.add(request);
+                    @Override
+                    public void onNext(MsgDetailBean result) {
+                        if (result != null && result.getCode() == 0) {
+                            setMsgDetail(result);
+                        } else {
+                            ToastUtil.show(content, result.getMsg());
+                        }
+                    }
+                });
     }
 
     @Override
@@ -561,11 +577,11 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
         }.getType()) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                //{"userCode":"UC1500609205627","gameId":146,"appTypeId":0}
+                //{"userCode":"UC1500609205627","msgId":146,"appTypeId":0}
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
                 params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
-                params.put(KeyConstant.GAME_ID, String.valueOf(gameId));
+                params.put(KeyConstant.GAME_ID, String.valueOf(msgId));
                 params.put(KeyConstant.gameVersion, gameInfo.versionName);
                 params.put(KeyConstant.brand, Build.BRAND);//手机品牌
                 params.put(KeyConstant.model, Build.MODEL);//手机型号
@@ -676,7 +692,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.GAME_ID, "gameId");
+                params.put(KeyConstant.GAME_ID, "msgId");
                 params.put(KeyConstant.VALUE, (int) Math.floor(rate) + ""); //评分值
                 params.put(KeyConstant.TOKEN, StoreApplication.token);
                 return params;
