@@ -136,10 +136,10 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
     }
 
     private void initView() {
-        mFromTv=(TextView)findViewById(R.id.hub_detail_from_tv);
-        mTitleTv=(TextView)findViewById(R.id.game_hub_detail_title_tv);
-        mDescTv=(TextView)findViewById(R.id.game_hub_detail_desc_tv);
-        mSupportNumTv=(TextView)findViewById(R.id.game_hub_support_tv);
+        mFromTv = (TextView) findViewById(R.id.hub_detail_from_tv);
+        mTitleTv = (TextView) findViewById(R.id.game_hub_detail_title_tv);
+        mDescTv = (TextView) findViewById(R.id.game_hub_detail_desc_tv);
+        mSupportNumTv = (TextView) findViewById(R.id.game_hub_support_tv);
     }
 
     private void setMsgDetail(MsgDetailBean result) {
@@ -150,10 +150,20 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
         mFromTv.setText(data.getPostPublisher());
         mTitleTv.setText(data.getPostTitle());
         mDescTv.setText(data.getPostContent());
-        mSupportNumTv.setText(data.getCommentNum()+"");
-        imgs.add(data.getPostImage());
+        mSupportNumTv.setText(data.getPointCount() + "");
 
+
+        String postImage = data.getPostImage();
+        if (postImage != null) {
+            String[] typeNameArray = postImage.split("\\,");
+            for (int i = 0; i < typeNameArray.length; i++) {
+                imgs.add(typeNameArray[i]);
+            }
+        }
+
+        new LoadImageThread().start();
     }
+
     private int initLocal = 0;
     private ViewGroup pointGroup;
     private ViewPager viewPager;
@@ -163,7 +173,6 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
         viewPager = (ViewPager) main.findViewById(R.id.imagePages);
         picNubSeletedTv = (TextView) main.findViewById(R.id.pic_nub_seleted_show_tv);
         pointGroup = (ViewGroup) main.findViewById(R.id.pointGroup);
-        new LoadImageThread().start();
     }
 
     private ArrayList<String> imgs = new ArrayList<>();
@@ -352,6 +361,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
             }
         }
     }
+
     private View main;
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
