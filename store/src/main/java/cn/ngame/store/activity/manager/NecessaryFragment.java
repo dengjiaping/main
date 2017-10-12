@@ -2,24 +2,39 @@ package cn.ngame.store.activity.manager;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.reflect.TypeToken;
 import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimerTask;
 
 import cn.ngame.store.R;
+import cn.ngame.store.StoreApplication;
 import cn.ngame.store.adapter.NeccssaryFragmentAdapter;
 import cn.ngame.store.adapter.Ranking012345Adapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
+import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.NecessaryItemData;
+import cn.ngame.store.bean.NecessaryListInfo;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.fileload.IFileLoad;
+import cn.ngame.store.core.net.GsonRequest;
+import cn.ngame.store.core.utils.Constant;
+import cn.ngame.store.core.utils.KeyConstant;
+import cn.ngame.store.core.utils.UrlConstant;
 import cn.ngame.store.view.ActionItem;
 import cn.ngame.store.view.QuickAction;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
@@ -66,30 +81,73 @@ public class NecessaryFragment extends BaseSearchFragment {
 
     private NeccssaryFragmentAdapter mNecessaryAdapter;
 
-    private List<NecessaryItemData> mNecessaryList;
+    private List<NecessaryItemData> mNecessaryList = new ArrayList<>();
 
     @Override
     protected void initViewsAndEvents(View view) {
         type = getArguments().getString("type");
         content = getActivity();
         mStickyLV = (StickyListHeadersListView) view.findViewById(R.id.sticky_list_view);
-        mNecessaryList = new ArrayList<>();
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
-
-
-        initDatas();
 
         mStickyLV.setOnItemClickListener(new OnItemClick());
         mStickyLV.setOnItemLongClickListener(new OnPlanItemLongClick());
         mStickyLV.setDividerHeight(0);
         mNecessaryAdapter = new NeccssaryFragmentAdapter(getActivity(), getSupportFragmentManager(), timerTasks);
         mStickyLV.setAdapter(mNecessaryAdapter);
-
-        mNecessaryAdapter.setDate(mNecessaryList);
+        getData();
         //initPop();
     }
+
+    private void getData() {
+        String url = Constant.WEB_SITE + UrlConstant.URL_QUERY_NECESSARY;
+        Response.Listener<JsonResult<List<NecessaryListInfo>>> successListener = new Response
+                .Listener<JsonResult<List<NecessaryListInfo>>>() {
+            @Override
+            public void onResponse(JsonResult<List<NecessaryListInfo>> result) {
+
+                if (result == null || result.code != 0) {
+                    //"服务端异常"
+                    Log.d(TAG, "服务端异常！");
+                    return;
+                }
+
+                List<NecessaryListInfo> necessaryListInfoList = result.data;
+                if (necessaryListInfoList != null && necessaryListInfoList.size() > 0) {
+                    setData(necessaryListInfoList);
+                } else {
+                    Log.d(TAG, "HTTP请求成功：服务端返回错误！");
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                cn.ngame.store.core.utils.Log.d(TAG, "HTTP请求失败：网络连接错误！");
+            }
+        };
+
+        Request<JsonResult<List<NecessaryListInfo>>> request = new GsonRequest<JsonResult<List<NecessaryListInfo>>>(Request
+                .Method.POST, url,
+                successListener, errorListener, new TypeToken<JsonResult<List<NecessaryListInfo>>>() {
+        }.getType()) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
+                params.put(KeyConstant.parentId, Constant.APP_TYPE_ID_0_ANDROID);
+                return params;
+            }
+        };
+        StoreApplication.requestQueue.add(request);
+    }
+
 
     private class OnItemClick implements AdapterView.OnItemClickListener {
 
@@ -97,7 +155,7 @@ public class NecessaryFragment extends BaseSearchFragment {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             String itemPosition = mNecessaryList.get(position).getItemPosition();
             String getItemTitle = mNecessaryList.get(position).getItemTitle();
-            Log.d("5555", getItemTitle + ",点击" + itemPosition);
+            Log.d(TAG, getItemTitle + ",点击" + itemPosition);
         }
     }
 
@@ -105,14 +163,37 @@ public class NecessaryFragment extends BaseSearchFragment {
 
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-            NecessaryItemData oLangyaSimple = mNecessaryList.get(position);
+            //长按删除一行
+           /* NecessaryItemData oLangyaSimple = mNecessaryList.get(position);
             mNecessaryList.remove(oLangyaSimple);
             if (mNecessaryAdapter != null && mNecessaryList != null) {
                 mNecessaryAdapter.setDate(mNecessaryList);
                 mNecessaryAdapter.notifyDataSetChanged();
-            }
+            }*/
             return true;
         }
+    }
+
+    private void setData(List<NecessaryListInfo> necessaryListInfoList) {
+        mNecessaryList.clear();
+        mNecessaryAdapter.setDate(mNecessaryList);
+        for (int i = 0; i < necessaryListInfoList.size(); i++) {
+            NecessaryListInfo necessaryListInfo = necessaryListInfoList.get(i);
+            int id = necessaryListInfo.getId();
+            String toolName = necessaryListInfo.getToolName();
+            List<NecessaryListInfo.AuxiliaryToolsBean> singeToolList = necessaryListInfo.getAuxiliaryTools();
+            for (int j = 0; j < singeToolList.size(); j++) {
+                NecessaryListInfo.AuxiliaryToolsBean singeToolInfo = singeToolList.get(j);
+                Log.d(TAG,toolName+ ",/必备/"+singeToolInfo
+                        .getToolName());
+                mNecessaryList.add(new NecessaryItemData(id + "", toolName, singeToolInfo.getId() + "", singeToolInfo
+                        .getToolName(),
+                        Formatter.formatFileSize(content, singeToolInfo.getFileSize()),
+                        singeToolInfo.getInstallDesc()));
+            }
+
+        }
+        mNecessaryAdapter.setDate(mNecessaryList);
     }
 
     /**
@@ -121,37 +202,17 @@ public class NecessaryFragment extends BaseSearchFragment {
      * 否则容易造成列表显示多组相同组名的数据。
      */
     private void initDatas() {
-        mNecessaryList.add(new NecessaryItemData("1", "谷歌", "1", "谷歌安装器", "未知来源", getString(R.string
-                .necessary_content_desc)));
-        mNecessaryList.add(new NecessaryItemData("1", "谷歌", "2", "谷歌安装器", "未知", getString(R.string
-                .necessary_content_desc)));
-        mNecessaryList.add(new NecessaryItemData("1", "谷歌", "3", "谷歌安装器", "未知", getString(R.string
-                .necessary_content_desc)));
         mNecessaryList.add(new NecessaryItemData("1", "谷歌", "4", "谷歌安装器", "未知", getString(R.string
                 .necessary_content_desc)));
         mNecessaryList.add(new NecessaryItemData("1", "谷歌", "5", "谷歌安装器", "未知", getString(R.string
                 .necessary_content_desc)));
         mNecessaryList.add(new NecessaryItemData("2", "腾讯", "54", "腾讯助手", "腾讯助手腾讯助手腾讯助手腾讯助手", getString(R.string
                 .necessary_content_desc)));
-        mNecessaryList.add(new NecessaryItemData("2", "腾讯", "15", "腾讯助手", "腾讯助手腾讯助手腾讯助手腾讯助手", getString(R.string
-                .necessary_content_desc)));
-        mNecessaryList.add(new NecessaryItemData("2", "腾讯", "8", "腾讯助手", "腾讯助手腾讯助手腾讯助手腾讯助手", getString(R.string
-                .necessary_content_desc)));
-        mNecessaryList.add(new NecessaryItemData("2", "腾讯", "9", "腾讯助手", "腾讯助手腾讯助手腾讯助手腾讯助手", getString(R.string
-                .necessary_content_desc)));
         mNecessaryList.add(new NecessaryItemData("2", "腾讯", "10", "腾讯助手", "腾讯助手腾讯助手腾讯助手腾讯助手", getString(R.string
                 .necessary_content_desc)));
 
 
         mNecessaryList.add(new NecessaryItemData("5", "百度", "11", "百度助手", "百度助手百度助手百度助手百度助手百度助手", getString(R.string
-                .necessary_content_desc)));
-        mNecessaryList.add(new NecessaryItemData("5", "百度", "12", "百度助手", "百度助手百度助手百度助手百度助手百度助手", getString(R.string
-                .necessary_content_desc)));
-        mNecessaryList.add(new NecessaryItemData("5", "百度", "13", "百度助手", "百度助手百度助手百度助手百度助手", getString(R.string
-                .necessary_content_desc)));
-        mNecessaryList.add(new NecessaryItemData("5", "百度", "14", "百度助手", "百度助手百度助手百度助手百度助手百度助手", getString(R.string
-                .necessary_content_desc)));
-        mNecessaryList.add(new NecessaryItemData("5", "百度", "15", "百度助手", "百度助手百度助手百度助手百度助手百度助手", getString(R.string
                 .necessary_content_desc)));
         mNecessaryList.add(new NecessaryItemData("5", "百度", "16", "百度助手", "百度助手百度助手百度助手百度助手百度助手", getString(R.string
                 .necessary_content_desc)));

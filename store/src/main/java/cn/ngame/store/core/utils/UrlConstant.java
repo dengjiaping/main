@@ -11,4 +11,5 @@ public class UrlConstant {
     //推荐头像地址开头
     public static final String RECOMMED_URL_START = "http://ngame.oss-cn-hangzhou.aliyuncs" +
             ".com/userRecommendAvatar/tuijian_touxiang_";
+    public static final String URL_QUERY_NECESSARY= "/tools/queryAuxiliaryToolList";
 }

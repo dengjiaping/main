@@ -47,4 +47,5 @@ public class KeyConstant {
     public static final String system = "system";//手机系统
     public static final String cpu = "cpu";
 
+    public static final String parentId="parentId";
 }
