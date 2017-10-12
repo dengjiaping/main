@@ -26,7 +26,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameHubMainBean;
 
 import java.util.List;
 import java.util.Timer;
@@ -39,12 +39,12 @@ public class GameHubNewAdapter extends BaseAdapter {
 
     private Context context;
     private FragmentManager fm;
-    private List<RecommendListBean.DataBean> list;
+    private List<GameHubMainBean.DataBean> list;
     private int type;
 
     private static Handler uiHandler = new Handler();
 
-    public GameHubNewAdapter(Context context, FragmentManager fm, List<RecommendListBean.DataBean> list, int type) {
+    public GameHubNewAdapter(Context context, FragmentManager fm, List<GameHubMainBean.DataBean> list, int type) {
         super();
         this.context = context;
         this.fm = fm;
@@ -52,7 +52,7 @@ public class GameHubNewAdapter extends BaseAdapter {
         this.type = type;
     }
 
-    public void setList(List<RecommendListBean.DataBean> list) {
+    public void setList(List<GameHubMainBean.DataBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -80,7 +80,7 @@ public class GameHubNewAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
-        final RecommendListBean.DataBean gameInfo = (list == null) ? null : list.get(position);
+        final GameHubMainBean.DataBean gameInfo = (list == null) ? null : list.get(position);
         final ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.game_hub_new_lv_item, parent, false);
@@ -104,7 +104,7 @@ public class GameHubNewAdapter extends BaseAdapter {
 
     public static class ViewHolder {
         private Context context;
-        private RecommendListBean.DataBean gameInfo;
+        private GameHubMainBean.DataBean gameInfo;
         private SimpleDraweeView fromIv;
         private TextView tv_title, tv_summary, tv_from;
         private IFileLoad fileLoad;
@@ -123,29 +123,28 @@ public class GameHubNewAdapter extends BaseAdapter {
          *
          * @param gameInfo 游戏信息
          */
-        public void update(final RecommendListBean.DataBean gameInfo, int type, int position) {
+        public void update(final GameHubMainBean.DataBean gameInfo, int type, int position) {
             this.gameInfo = gameInfo;
-            String imgUrl = gameInfo.getGameRecommendImg();
-            String fromUrl = gameInfo.getGameLogo();
+            String imgUrl = gameInfo.getPostImage();
             if (imgUrl != null && imgUrl.trim().equals("")) {
                 imgUrl = null;
             }
-            fromIv.setImageURI(fromUrl);
+            fromIv.setImageURI("");
             game_logo_Iv.setImageURI(imgUrl);
 
-            String gameName = gameInfo.getGameName();
+            String gameName = gameInfo.getPostTitle();
             if (!"".equals(gameName)) {
                 tv_title.setText(gameName);
             }
 
-            String gameDesc = gameInfo.getRecommend();
+            String gameDesc = gameInfo.getPostContent();
             if (gameDesc != null && !"".equals(gameDesc)) {
                 tv_summary.setText(gameDesc);
             } else {
                 tv_summary.setText("");
             }
 
-            tv_from.setText("来自" + gameInfo.getRecommender());
+            tv_from.setText( gameInfo.getPostPublisher());
         }
     }
 }

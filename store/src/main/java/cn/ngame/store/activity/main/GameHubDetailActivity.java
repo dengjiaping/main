@@ -82,7 +82,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
     private DCViewPagerAdapter adapter;
     String[] tabList = {"详情", "必读"};
     //游戏id
-    private long gameId = 0;
+    private int gameId = 0;
     private GameInfo gameInfo;
     //下载进度条
     private Timer timer = new Timer();
@@ -112,7 +112,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
         main = getLayoutInflater().inflate(R.layout.activity_game_hub_detail, null);
         setContentView(main);
         try {
-            gameId = getIntent().getLongExtra(KeyConstant.ID, 0l);
+            gameId = getIntent().getIntExtra(KeyConstant.ID, 0);
             Log.d(TAG, "游趣详情" + gameId);
         } catch (Exception e) {
         }
