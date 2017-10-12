@@ -17,10 +17,9 @@
 package cn.ngame.store.adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
-import android.text.format.Formatter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +28,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,16 +36,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import cn.ngame.store.R;
+import cn.ngame.store.activity.manager.NecessaryFragment;
 import cn.ngame.store.bean.NecessaryItemData;
 import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
-import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.view.GameLoadProgressBar;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
-
-import static cn.ngame.store.R.id.tv_title;
 
 
 /**
@@ -128,8 +122,8 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
         if (convertView == null) {
             holder = new ViewHolder(context, fm);
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_necessary, parent, false);
-            holder.logoIv = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
-            holder.itemTitle = (TextView) convertView.findViewById(tv_title);
+            holder.toolLogo = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
+            holder.toolNameTv = (TextView) convertView.findViewById(R.id.necessary_tv_title);
             holder.versionTv = (TextView) convertView.findViewById(R.id.tv_version_time);
             holder.tv_size = (TextView) convertView.findViewById(R.id.tv_length);
             holder.tv_desc = (TextView) convertView.findViewById(R.id.becessary_item_desc_tv);
@@ -142,30 +136,7 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
         }
         final NecessaryItemData planDetail = (mPlanDetails == null) ? null : mPlanDetails.get(position);
         if (planDetail != null) {
-            //holder.update(fileInfo);
-            holder.itemTitle.setText(planDetail.getItemTitle());
-            holder.versionTv.setText(planDetail.getItemPosition());
-            holder.tv_size.setText(planDetail.getItemSize());
-            holder.tv_desc.setText(planDetail.getItemDesc());
-            Uri uri = Uri.parse("res:///" + R.drawable.ic_google_neccessary_logo);
-            DraweeController controller = Fresco.newDraweeControllerBuilder()
-                    .setUri(uri)
-                    .setTapToRetryEnabled(true)
-                    .build();
-            holder.logoIv.setController(controller);
-            holder.neccessary_content_ll.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int lineCount = holder.tv_desc.getLineCount();
-                    if (1 == lineCount) {
-                        holder.tv_desc.setSingleLine(false);
-                        holder.show_more_disc_bt.setImageResource(R.drawable.ic_bottom_hide_more);
-                    } else {
-                        holder.tv_desc.setMaxLines(1);
-                        holder.show_more_disc_bt.setImageResource(R.drawable.ic_bottom_show_more);
-                    }
-                }
-            });
+            holder.update(planDetail);
         }
 
         return convertView;
@@ -173,7 +144,6 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
 
     @Override
     public View getHeaderView(int position, View convertView, ViewGroup parent) {
-        //指定了Header的View的显示
         HeaderViewHolder holder;
         if (convertView == null) {
             holder = new HeaderViewHolder();
@@ -184,7 +154,7 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
             holder = (HeaderViewHolder) convertView.getTag();
         }
         //set proj_plans_header itemParentTv as first char in name
-        String parentText = this.mPlanDetails.get(position).getParentText();
+        String parentText = this.mPlanDetails.get(position).getParentName();
         holder.itemParentTv.setText(parentText);
         return convertView;
     }
@@ -206,14 +176,16 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
      * @author flan
      * @date 2015年10月28日
      */
+    protected final static String TAG = NecessaryFragment.class.getSimpleName();
+
     public class ViewHolder {
 
         private Context context;
         private FragmentManager fm;
-        private GameRankListBean.DataBean gameInfo;
+        private NecessaryItemData toolInfo;
         private ImageView show_more_disc_bt;
-        private SimpleDraweeView logoIv;
-        private TextView itemTitle, tv_size, versionTv, tv_desc;
+        private SimpleDraweeView toolLogo;
+        private TextView toolNameTv, tv_size, versionTv, tv_desc;
         private GameLoadProgressBar progressBar;    //下载进度条
         private IFileLoad fileLoad;
         private LinearLayout neccessary_content_ll;
@@ -222,7 +194,7 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
             this.context = context;
             this.fm = fm;
             fileLoad = FileLoadManager.getInstance(context);
-            //init();
+            init();
         }
 
         private void init() {
@@ -232,38 +204,59 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
                     if (uiHandler == null) {
                         this.cancel();
                         return;
-                    }
+                    }// "org.getlantern.lantern\r\n",
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo
-                                    .getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode())));
+                            Log.d(TAG, "必备更新:"+toolInfo.getFileName());
+                            progressBar.setLoadState(fileLoad.getGameFileLoadStatus(toolInfo.getFileName(), toolInfo
+                                    .getToolURL(), toolInfo.getPackages(), ConvUtil.NI(toolInfo.getToolVersion())));
                             progressBar.setVisibility(View.VISIBLE);
                         }
                     });
                 }
             };
             timerTasks.add(task);
-            timer.schedule(task, 0, 200);
+            timer.schedule(task, 0, 300);
         }
 
-        public void update(final GameRankListBean.DataBean gameInfo) {
-            this.gameInfo = gameInfo;
-            String gameName = gameInfo.getGameName();
-            if (null != gameName) {
-                itemTitle.setText(gameName);
-            }
-            tv_size.setText(Formatter.formatFileSize(context, gameInfo.getGameSize()));
-            versionTv.setText("V" + gameInfo.getVersionName());
+        public void update(final NecessaryItemData toolInfo) {
+            this.toolInfo = toolInfo;
+            toolNameTv.setText(toolInfo.getToolName());
+            versionTv.setText("V" + toolInfo.getToolVersion());
+            tv_size.setText(toolInfo.getToolSize());
+            tv_desc.setText(toolInfo.getToolDesc());
+      /*      Uri uri = Uri.parse("res:///" + R.drawable.ic_google_neccessary_logo);
+            DraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setUri(uri)
+                    .setTapToRetryEnabled(true)
+                    .build();
+            holder.toolLogo.setController(controller);*/
+            toolLogo.setImageURI(toolInfo.getToolLogo());
+            neccessary_content_ll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int lineCount = tv_desc.getLineCount();
+                    if (1 == lineCount) {
+                        tv_desc.setSingleLine(false);
+                        show_more_disc_bt.setImageResource(R.drawable.ic_bottom_hide_more);
+                    } else {
+                        tv_desc.setMaxLines(1);
+                        show_more_disc_bt.setImageResource(R.drawable.ic_bottom_show_more);
+                    }
+                }
+            });
             progressBar.setVisibility(View.INVISIBLE);
             //设置进度条状态
-            progressBar.setLoadState(fileLoad.getGameFileLoadStatus(gameInfo.getFilename(), gameInfo
-                    .getGameLink(), gameInfo.getPackages(), ConvUtil.NI(gameInfo.getVersionCode())));
+            int version = ConvUtil.NI(toolInfo.getToolVersion());
+            Log.d(TAG, "必备更新 本地包名/"+toolInfo.getPackages()+"/");
+            progressBar.setLoadState(fileLoad.getGameFileLoadStatus(toolInfo.getFileName(), toolInfo
+                    .getToolURL(), toolInfo.getPackages(), version));
             //必须设置，否则点击进度条后无法进行响应操作
-            FileLoadInfo fileLoadInfo = new FileLoadInfo(gameInfo.getFilename(), gameInfo.getGameLink(), gameInfo
-                    .getMd5(), gameInfo.getVersionCode(), gameInfo.getGameName(), gameInfo.getGameLogo(), gameInfo
-                    .getId(), FileLoadInfo.TYPE_GAME);
-            fileLoadInfo.setPackageName(gameInfo.getPackages());
+            FileLoadInfo fileLoadInfo = new FileLoadInfo(toolInfo.getFileName(), toolInfo.getToolURL(), toolInfo
+                    .getMd5(), version, toolInfo.getToolName(), toolInfo.getToolLogo(), toolInfo
+                    .getToolId(), FileLoadInfo.TYPE_GAME);
+            fileLoadInfo.setPackageName(toolInfo.getPackages());
             progressBar.setFileLoadInfo(fileLoadInfo);
             progressBar.setOnStateChangeListener(new ProgressBarStateListener(context, fm));
             progressBar.setOnClickListener(new View.OnClickListener() {
@@ -272,9 +265,6 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
                     progressBar.toggle();
                 }
             });
-
-            //加载图片
-            logoIv.setImageURI(gameInfo.getGameLogo());
         }
 
     }

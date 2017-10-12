@@ -6,29 +6,58 @@ package cn.ngame.store.bean;
  */
 public class NecessaryItemData {
 
-    private String itemDesc;
+    private String toolDesc;
     private String parentId;
-    private String parentText;
-    private String itemTitle;
-    private String itemPosition;
-    private String itemSize;
+    private String parentName;
+    private String toolName;
+    private long toolId;
+    private String toolSize;
+    private String toolLogo;
+    private String toolURL;
+    private String md5;
+    private String fileName;
+    private String packages;
+    private String toolVersion;
 
-    public NecessaryItemData(String parentId, String parentText, String itemPosition, String itemTitle, String size, String
-            desc) {
+    public String getToolVersion() {
+        return toolVersion;
+    }
+
+    public void setToolVersion(String toolVersion) {
+        this.toolVersion = toolVersion;
+    }
+
+    public NecessaryItemData(String parentId, String parentName, long
+            toolId, String toolName, String toolDesc, String toolSize, String toolLogo, String toolURL, String md5, String
+            fileName, String packages,String toolVersion) {
+        this.toolDesc = toolDesc;
         this.parentId = parentId;
-        this.parentText = parentText;
-        this.itemPosition = itemPosition;
-        this.itemTitle = itemTitle;
-        this.itemSize = size;
-        this.itemDesc = desc;
-
+        this.parentName = parentName;
+        this.toolName = toolName;
+        this.toolSize = toolSize;
+        this.toolId = toolId;
+        this.toolLogo = toolLogo;
+        this.toolURL = toolURL;
+        this.md5 = md5;
+        this.fileName = fileName;
+        this.packages = packages;
+        this.toolVersion = toolVersion;
     }
-    public String getItemDesc() {
-        return itemDesc;
+
+    public String getPackages() {
+        return packages;
     }
 
-    public void setItemDesc(String itemDesc) {
-        this.itemDesc = itemDesc;
+    public void setPackages(String packages) {
+        this.packages = packages;
+    }
+
+    public String getToolDesc() {
+        return toolDesc;
+    }
+
+    public void setToolDesc(String toolDesc) {
+        this.toolDesc = toolDesc;
     }
 
     public String getParentId() {
@@ -39,46 +68,67 @@ public class NecessaryItemData {
         this.parentId = parentId;
     }
 
-    public String getParentText() {
-        return parentText;
+    public String getParentName() {
+        return parentName;
     }
 
-    public void setParentText(String parentText) {
-        this.parentText = parentText;
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
     }
 
-    public String getItemTitle() {
-        return itemTitle;
+    public String getToolName() {
+        return toolName;
     }
 
-    public void setItemTitle(String itemTitle) {
-        this.itemTitle = itemTitle;
+    public void setToolName(String toolName) {
+        this.toolName = toolName;
     }
 
-    public String getItemPosition() {
-        return itemPosition;
+    public long getToolId() {
+        return toolId;
     }
 
-    public void setItemPosition(String itemPosition) {
-        this.itemPosition = itemPosition;
+    public void setToolId(long toolId) {
+        this.toolId = toolId;
     }
 
-    public String getItemSize() {
-        return itemSize;
+    public String getToolSize() {
+        return toolSize;
     }
 
-    public void setItemSize(String itemSize) {
-        this.itemSize = itemSize;
+    public void setToolSize(String toolSize) {
+        this.toolSize = toolSize;
     }
 
-    @Override
-    public String toString() {
-        return "LangyaSimple{" +
-                "parentId='" + parentId + '\'' +
-                ", parentText='" + parentText + '\'' +
-                ", itemTitle='" + itemTitle + '\'' +
-                ", itemPosition='" + itemPosition + '\'' +
-                ", itemSize='" + itemSize + '\'' +
-                '}';
+    public String getToolLogo() {
+        return toolLogo;
+    }
+
+    public void setToolLogo(String toolLogo) {
+        this.toolLogo = toolLogo;
+    }
+
+    public String getToolURL() {
+        return toolURL;
+    }
+
+    public void setToolURL(String toolURL) {
+        this.toolURL = toolURL;
+    }
+
+    public String getMd5() {
+        return md5;
+    }
+
+    public void setMd5(String md5) {
+        this.md5 = md5;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

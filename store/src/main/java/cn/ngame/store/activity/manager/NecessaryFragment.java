@@ -61,6 +61,7 @@ public class NecessaryFragment extends BaseSearchFragment {
      */
     private GameRankListBean gameInfoBean;
     private FragmentActivity content;
+    private NecessaryListInfo.AuxiliaryToolsBean mToolInfo;
 
     public static NecessaryFragment newInstance(String type, int bean) {
         NecessaryFragment fragment = new NecessaryFragment();
@@ -153,8 +154,8 @@ public class NecessaryFragment extends BaseSearchFragment {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            String itemPosition = mNecessaryList.get(position).getItemPosition();
-            String getItemTitle = mNecessaryList.get(position).getItemTitle();
+            long itemPosition = mNecessaryList.get(position).getToolId();
+            String getItemTitle = mNecessaryList.get(position).getToolName();
             Log.d(TAG, getItemTitle + ",点击" + itemPosition);
         }
     }
@@ -183,15 +184,12 @@ public class NecessaryFragment extends BaseSearchFragment {
             String toolName = necessaryListInfo.getToolName();
             List<NecessaryListInfo.AuxiliaryToolsBean> singeToolList = necessaryListInfo.getAuxiliaryTools();
             for (int j = 0; j < singeToolList.size(); j++) {
-                NecessaryListInfo.AuxiliaryToolsBean singeToolInfo = singeToolList.get(j);
-                Log.d(TAG,toolName+ ",/必备/"+singeToolInfo
-                        .getToolName());
-                mNecessaryList.add(new NecessaryItemData(id + "", toolName, singeToolInfo.getId() + "", singeToolInfo
-                        .getToolName(),
-                        Formatter.formatFileSize(content, singeToolInfo.getFileSize()),
-                        singeToolInfo.getInstallDesc()));
+                mToolInfo = singeToolList.get(j);
+                mNecessaryList.add(new NecessaryItemData(id + "", toolName, mToolInfo.getId(), mToolInfo.getToolName()
+                        , mToolInfo.getInstallDesc(), Formatter.formatFileSize(content, mToolInfo.getFileSize()),
+                        mToolInfo.getToolLogo(), mToolInfo.getToolURL(), mToolInfo.getMd5(), mToolInfo.getFileName(), mToolInfo
+                        .getPackages(), mToolInfo.getToolVersion()));
             }
-
         }
         mNecessaryAdapter.setDate(mNecessaryList);
     }
@@ -201,7 +199,7 @@ public class NecessaryFragment extends BaseSearchFragment {
      * 即，不要将proj_id不同的数据      参差着放在集合中，
      * 否则容易造成列表显示多组相同组名的数据。
      */
-    private void initDatas() {
+/*    private void initDatas() {
         mNecessaryList.add(new NecessaryItemData("1", "谷歌", "4", "谷歌安装器", "未知", getString(R.string
                 .necessary_content_desc)));
         mNecessaryList.add(new NecessaryItemData("1", "谷歌", "5", "谷歌安装器", "未知", getString(R.string
@@ -217,8 +215,7 @@ public class NecessaryFragment extends BaseSearchFragment {
         mNecessaryList.add(new NecessaryItemData("5", "百度", "16", "百度助手", "百度助手百度助手百度助手百度助手百度助手", getString(R.string
                 .necessary_content_desc)));
 
-    }
-
+    }*/
     private void initPop() {
         // 设置Action
         mItemClickQuickAction = new QuickAction(getActivity(), QuickAction.VERTICAL);

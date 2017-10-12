@@ -10,26 +10,29 @@ import java.util.List;
 public class NecessaryListInfo implements Serializable {
 
     /**
-     * id : 5
+     * id : 6
      * parentId : 0
-     * toolName : 谷歌
+     * toolName : 腾讯
      * installDesc : null
      * toolLogo : null
      * toolURL : null
      * md5 : null
      * uploadId : null
      * fileName : null
-     * fileSize : null
+     * fileSize : 0
      * downloadCount : 0
-     * appTypeId : 0
+     * appTypeId : null
      * orderNo : 0
      * isDelete : 0
      * createTime : null
      * updateTime : null
-     * auxiliaryTools : [{"id":1,"parentId":5,"toolName":"蓝灯VPN","installDesc":"阿道夫GV阿萨德发的了富华大厦vflgsadfg6546546
-     * 、、、、、、打算的放弃","toolLogo":"http://oss.ngame.cn/upload/1466577288833.png","toolURL":"http://oss.ngame
-     * .cn/upload/1466577288833.png","md5":"8E992EBA9BF0E6C22E818AD1D011D356","uploadId":null,"fileName":"vpn.zip",
-     * "fileSize":null,"downloadCount":50,"appTypeId":0,"orderNo":2,"isDelete":0,"createTime":null,"updateTime":null,"auxiliaryTools":null}]
+     * toolVersion : null
+     * packages : null
+     * auxiliaryTools : [{"id":2,"parentId":6,"toolName":"破解工具","installDesc":"范德萨范德萨","toolLogo":"http://oss.ngame
+     * .cn/auxToolLogo/1494494984130.png","toolURL":"http://oss.ngame.cn/log4j-1.2.17.jar",
+     * "md5":"04a41f0a068986f0f73485cf507c0f40","uploadId":null,"fileName":"log4j-1.2.17.jar","fileSize":489884,
+     * "downloadCount":0,"appTypeId":null,"orderNo":0,"isDelete":0,"createTime":null,"updateTime":null,"toolVersion":"1.0.0",
+     * "packages":"ferwe","auxiliaryTools":null}]
      */
 
     private int id;
@@ -41,13 +44,15 @@ public class NecessaryListInfo implements Serializable {
     private Object md5;
     private Object uploadId;
     private Object fileName;
-    private Object fileSize;
+    private int fileSize;
     private int downloadCount;
-    private int appTypeId;
+    private Object appTypeId;
     private int orderNo;
     private int isDelete;
     private Object createTime;
     private Object updateTime;
+    private Object toolVersion;
+    private Object packages;
     private List<AuxiliaryToolsBean> auxiliaryTools;
 
     public int getId() {
@@ -122,11 +127,11 @@ public class NecessaryListInfo implements Serializable {
         this.fileName = fileName;
     }
 
-    public Object getFileSize() {
+    public int getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(Object fileSize) {
+    public void setFileSize(int fileSize) {
         this.fileSize = fileSize;
     }
 
@@ -138,11 +143,11 @@ public class NecessaryListInfo implements Serializable {
         this.downloadCount = downloadCount;
     }
 
-    public int getAppTypeId() {
+    public Object getAppTypeId() {
         return appTypeId;
     }
 
-    public void setAppTypeId(int appTypeId) {
+    public void setAppTypeId(Object appTypeId) {
         this.appTypeId = appTypeId;
     }
 
@@ -178,6 +183,22 @@ public class NecessaryListInfo implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public Object getToolVersion() {
+        return toolVersion;
+    }
+
+    public void setToolVersion(Object toolVersion) {
+        this.toolVersion = toolVersion;
+    }
+
+    public Object getPackages() {
+        return packages;
+    }
+
+    public void setPackages(Object packages) {
+        this.packages = packages;
+    }
+
     public List<AuxiliaryToolsBean> getAuxiliaryTools() {
         return auxiliaryTools;
     }
@@ -188,22 +209,24 @@ public class NecessaryListInfo implements Serializable {
 
     public static class AuxiliaryToolsBean {
         /**
-         * id : 1
-         * parentId : 5
-         * toolName : 蓝灯VPN
-         * installDesc : 阿道夫GV阿萨德发的了富华大厦vflgsadfg6546546    、、、、、、打算的放弃
-         * toolLogo : http://oss.ngame.cn/upload/1466577288833.png
-         * toolURL : http://oss.ngame.cn/upload/1466577288833.png
-         * md5 : 8E992EBA9BF0E6C22E818AD1D011D356
+         * id : 2
+         * parentId : 6
+         * toolName : 破解工具
+         * installDesc : 范德萨范德萨
+         * toolLogo : http://oss.ngame.cn/auxToolLogo/1494494984130.png
+         * toolURL : http://oss.ngame.cn/log4j-1.2.17.jar
+         * md5 : 04a41f0a068986f0f73485cf507c0f40
          * uploadId : null
-         * fileName : vpn.zip
-         * fileSize : null
-         * downloadCount : 50
-         * appTypeId : 0
-         * orderNo : 2
+         * fileName : log4j-1.2.17.jar
+         * fileSize : 489884
+         * downloadCount : 0
+         * appTypeId : null
+         * orderNo : 0
          * isDelete : 0
          * createTime : null
          * updateTime : null
+         * toolVersion : 1.0.0
+         * packages : ferwe
          * auxiliaryTools : null
          */
 
@@ -216,13 +239,15 @@ public class NecessaryListInfo implements Serializable {
         private String md5;
         private Object uploadId;
         private String fileName;
-        private long fileSize;
+        private int fileSize;
         private int downloadCount;
-        private int appTypeId;
+        private Object appTypeId;
         private int orderNo;
         private int isDelete;
         private Object createTime;
         private Object updateTime;
+        private String toolVersion;
+        private String packages;
         private Object auxiliaryTools;
 
         public int getId() {
@@ -297,11 +322,11 @@ public class NecessaryListInfo implements Serializable {
             this.fileName = fileName;
         }
 
-        public long getFileSize() {
+        public int getFileSize() {
             return fileSize;
         }
 
-        public void setFileSize(long fileSize) {
+        public void setFileSize(int fileSize) {
             this.fileSize = fileSize;
         }
 
@@ -313,11 +338,11 @@ public class NecessaryListInfo implements Serializable {
             this.downloadCount = downloadCount;
         }
 
-        public int getAppTypeId() {
+        public Object getAppTypeId() {
             return appTypeId;
         }
 
-        public void setAppTypeId(int appTypeId) {
+        public void setAppTypeId(Object appTypeId) {
             this.appTypeId = appTypeId;
         }
 
@@ -351,6 +376,22 @@ public class NecessaryListInfo implements Serializable {
 
         public void setUpdateTime(Object updateTime) {
             this.updateTime = updateTime;
+        }
+
+        public String getToolVersion() {
+            return toolVersion;
+        }
+
+        public void setToolVersion(String toolVersion) {
+            this.toolVersion = toolVersion;
+        }
+
+        public String getPackages() {
+            return packages;
+        }
+
+        public void setPackages(String packages) {
+            this.packages = packages;
         }
 
         public Object getAuxiliaryTools() {
