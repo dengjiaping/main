@@ -57,7 +57,7 @@ public class ManagerFragment extends BaseSearchFragment {
         context = getActivity();
         likeFragment = LikeFragment.newInstance(typeValue, 1);
         installedFragment = InstalledFragment.newInstance(typeValue, 2);
-        necessaryFragment = NecessaryFragment.newInstance(typeValue, 3);
+        necessaryFragment = NecessaryFragment.newInstance("1", 3);
         tablayout = (TabLayout) view.findViewById(R.id.tablayout);
         viewpager = (ViewPager) view.findViewById(R.id.viewpager);
         //viewpager每次切换的时候， 会重新创建当前界面及左右界面三个界面， 每次切换都要重新oncreate,
@@ -76,7 +76,7 @@ public class ManagerFragment extends BaseSearchFragment {
     @Override
     public void onStart() {
         super.onStart();
-        adapter.setList(null,null);
+        adapter.setList(null, null);
         //是否显示了,显示了就去加载
         Log.d(TAG, "更换加载数据 " + isNeedLoad);
         if (isNeedLoad) {
@@ -107,7 +107,6 @@ public class ManagerFragment extends BaseSearchFragment {
         if ((pwd != null && !"".endsWith(pwd)) || !Constant.PHONE.equals(StoreApplication.loginType)) {
             //已登录
             Log.d(TAG, "更换:已登录 ");
-
             adapter.setList(fragments3, tabList3);
         } else {
             //未登录

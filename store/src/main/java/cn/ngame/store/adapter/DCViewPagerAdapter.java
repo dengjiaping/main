@@ -23,7 +23,7 @@ public class DCViewPagerAdapter extends FragmentStatePagerAdapter {
     public void setList(List<Fragment> list, String[] tabList) {
         this.list = list;
         this.tabList = tabList;
-        notifyDataSetChanged();
+        //notifyDataSetChanged();    Fragment already active
     }
 
     @Override
@@ -33,12 +33,12 @@ public class DCViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return list.size();
+        return list==null?0:list.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return tabList[position];
+        return tabList==null?"":tabList[position];
     }
    /* @Override
     public void finishUpdate(ViewGroup container) {

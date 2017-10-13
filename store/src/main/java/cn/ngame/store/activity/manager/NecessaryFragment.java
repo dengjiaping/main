@@ -6,7 +6,6 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -24,13 +23,11 @@ import java.util.TimerTask;
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.adapter.NeccssaryFragmentAdapter;
-import cn.ngame.store.adapter.Ranking012345Adapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.NecessaryItemData;
 import cn.ngame.store.bean.NecessaryListInfo;
 import cn.ngame.store.bean.PageAction;
-import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.net.GsonRequest;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
@@ -47,15 +44,9 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 public class NecessaryFragment extends BaseSearchFragment {
 
-    ListView listView;
     private PageAction pageAction;
     public static int PAGE_SIZE = 10;
-    private int typeValue;
-    private String type;
     protected QuickAction mItemClickQuickAction;
-    private IFileLoad fileLoad;
-    private Ranking012345Adapter adapter;
-//    private GameUpdate2Adapter loadIngLvAdapter;
     /**
      * 当前点击的列表 1.下载列表 2.完成列表
      */
@@ -86,7 +77,6 @@ public class NecessaryFragment extends BaseSearchFragment {
 
     @Override
     protected void initViewsAndEvents(View view) {
-        type = getArguments().getString("type");
         content = getActivity();
         mStickyLV = (StickyListHeadersListView) view.findViewById(R.id.sticky_list_view);
         pageAction = new PageAction();
@@ -228,7 +218,6 @@ public class NecessaryFragment extends BaseSearchFragment {
                 if (pos == 0) {
                     //获取gameId  传给服务器 不再喜欢
                     String currentGameId = mNecessaryAdapter.getItemGameId();
-
                 }
                 //取消弹出框
                 mItemClickQuickAction.dismiss();

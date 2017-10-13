@@ -19,7 +19,6 @@ package cn.ngame.store.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -208,7 +207,6 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
                     uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d(TAG, "必备更新:"+toolInfo.getFileName());
                             progressBar.setLoadState(fileLoad.getGameFileLoadStatus(toolInfo.getFileName(), toolInfo
                                     .getToolURL(), toolInfo.getPackages(), ConvUtil.NI(toolInfo.getToolVersion())));
                             progressBar.setVisibility(View.VISIBLE);
@@ -249,7 +247,6 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
             progressBar.setVisibility(View.INVISIBLE);
             //设置进度条状态
             int version = ConvUtil.NI(toolInfo.getToolVersion());
-            Log.d(TAG, "必备更新 本地包名/"+toolInfo.getPackages()+"/");
             progressBar.setLoadState(fileLoad.getGameFileLoadStatus(toolInfo.getFileName(), toolInfo
                     .getToolURL(), toolInfo.getPackages(), version));
             //必须设置，否则点击进度条后无法进行响应操作
