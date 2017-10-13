@@ -18,5 +18,15 @@
         android:overScrollMode="never"
         android:scrollbars="none"
          />
-
+    <TextView
+        android:id="@+id/necessary_empty_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="正在获取列表..."
+        android:padding="@dimen/dm030"
+        android:textColor="@color/color_808080"
+        android:textSize="@dimen/dm024"
+        android:visibility="visible"/>
 </RelativeLayout>

@@ -89,16 +89,16 @@
         </FrameLayout>
 
 
-        <Button
+        <ImageView
             android:id="@+id/main_download_bt"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/dm048"
+            android:layout_height="@dimen/dm038"
+            android:paddingLeft="@dimen/dm010"
             android:layout_alignParentRight="true"
             android:background="@null"
-            android:gravity="center"
-            android:paddingRight="@dimen/dm018"
-            android:text="下载中心"
-            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_15"
+            android:src="@drawable/ic_downloadcenter"
             android:textSize="@dimen/dm028"
             android:visibility="gone"/>
     </RelativeLayout>

@@ -6,6 +6,7 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -38,7 +39,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 
 /**
- * 下载更新fragment (懒加载-当滑动到当前fragment时，才去加载。而不是进入到activity时，加载所有fragment)
+ * 必备
  * Created by gp on 2017/3/3 0003.
  */
 
@@ -53,6 +54,7 @@ public class NecessaryFragment extends BaseSearchFragment {
     private GameRankListBean gameInfoBean;
     private FragmentActivity content;
     private NecessaryListInfo.AuxiliaryToolsBean mToolInfo;
+    private TextView mEmptyTV;
 
     public static NecessaryFragment newInstance(String type, int bean) {
         NecessaryFragment fragment = new NecessaryFragment();
@@ -79,6 +81,7 @@ public class NecessaryFragment extends BaseSearchFragment {
     protected void initViewsAndEvents(View view) {
         content = getActivity();
         mStickyLV = (StickyListHeadersListView) view.findViewById(R.id.sticky_list_view);
+        mEmptyTV = (TextView) view.findViewById(R.id.necessary_empty_tv);
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
@@ -101,15 +104,19 @@ public class NecessaryFragment extends BaseSearchFragment {
 
                 if (result == null || result.code != 0) {
                     //"服务端异常"
-                    Log.d(TAG, "服务端异常！");
+                    mEmptyTV.setVisibility(View.VISIBLE);
+                    mEmptyTV.setText("服务器开小差了~");
                     return;
                 }
 
                 List<NecessaryListInfo> necessaryListInfoList = result.data;
                 if (necessaryListInfoList != null && necessaryListInfoList.size() > 0) {
+                    mEmptyTV.setVisibility(View.GONE);
                     setData(necessaryListInfoList);
                 } else {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误！");
+                    mEmptyTV.setVisibility(View.VISIBLE);
+                    mEmptyTV.setText("数据为空~");
                 }
             }
         };
@@ -119,6 +126,8 @@ public class NecessaryFragment extends BaseSearchFragment {
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
                 cn.ngame.store.core.utils.Log.d(TAG, "HTTP请求失败：网络连接错误！");
+                mEmptyTV.setVisibility(View.VISIBLE);
+                mEmptyTV.setText("服务器开小差了~");
             }
         };
 

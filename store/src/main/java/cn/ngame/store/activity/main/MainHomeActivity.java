@@ -143,7 +143,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private TextView mEditProfileTv;
-    private Button mDownloadBt;
+    private ImageView mDownloadBt;
     private TextView menu_gamehub_tv;
     private Button menu_game_hub_bt;
     private GameHubFragment gameHubFragment;
@@ -206,7 +206,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         mIconIv = (SimpleDraweeView) findViewById(R.id.iv_icon_title);
         mTitleBgIv = (ImageView) findViewById(R.id.title_iv);
         mTitleTv = (TextView) findViewById(R.id.title_tv);
-        mDownloadBt = (Button) findViewById(R.id.main_download_bt);
+        mDownloadBt = (ImageView) findViewById(R.id.main_download_bt);
         im_toSearch.setOnClickListener(this);
         fl_notifi.setOnClickListener(this);
         mIconIv.setOnClickListener(this);

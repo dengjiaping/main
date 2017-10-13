@@ -62,8 +62,8 @@ public class BeginActivity extends Activity {
     private boolean isFirstInstall = true;
     private Timer timer;
     private BeginActivity content;
-    private long SHOW_TIME = 1000;
-    private long SHOW_TIME_isFirstInstall = 1000;
+    private long SHOW_TIME = 10000;
+    private long SHOW_TIME_isFirstInstall = 10000;
     private Button skipBt;
 
     @Override
