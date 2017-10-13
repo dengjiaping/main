@@ -19,6 +19,7 @@ package cn.ngame.store.activity.main;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,12 +107,14 @@ public class GameHubNewAdapter extends BaseAdapter {
         return convertView;
     }
 
+    public static final String TAG = GameHubFragment.class.getSimpleName();
+
     public static class ViewHolder {
         private Context context;
         private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         private GameHubMainBean.DataBean gameInfo;
         private SimpleDraweeView fromLogoIv;
-        private TextView tv_title, timeTv,lookNub, tv_summary, tv_from;
+        private TextView tv_title, timeTv, lookNub, tv_summary, tv_from;
         private IFileLoad fileLoad;
         private FragmentManager fm;
         private Timer timer = new Timer();
@@ -135,8 +138,11 @@ public class GameHubNewAdapter extends BaseAdapter {
                 imgUrl = null;
             }
             //fromLogoIv.setImageURI(gameInfo.getHeadPhoto());
-            game_logo_Iv.setImageURI(imgUrl);
-
+            String[] typeNameArray = imgUrl.split("\\,");
+            if (typeNameArray != null && typeNameArray.length > 0) {
+                game_logo_Iv.setImageURI(typeNameArray[0]);
+            }
+            Log.d(TAG, "图片地址: " + typeNameArray.length);
             String gameName = gameInfo.getPostTitle();
             if (!"".equals(gameName)) {
                 tv_title.setText(gameName);
@@ -149,7 +155,7 @@ public class GameHubNewAdapter extends BaseAdapter {
                 tv_summary.setText("");
             }
             timeTv.setText(df.format(new Date(gameInfo.getUpdateTime())));
-            lookNub.setText(gameInfo.getWatchNum()+"");
+            lookNub.setText(gameInfo.getWatchNum() + "");
             tv_from.setText(gameInfo.getPostPublisher());
         }
     }

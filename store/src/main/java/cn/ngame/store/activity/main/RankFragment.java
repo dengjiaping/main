@@ -23,7 +23,8 @@ import cn.ngame.store.core.utils.CommonUtil;
  * Created by gp on 2017/3/14 0014.
  */
 
-public class RankFragment extends BaseSearchFragment {
+public class
+RankFragment extends BaseSearchFragment {
     private ViewPager viewpager;
     private ArrayList<Fragment> fragments;
     private RankTopPagerAdapter adapter;
