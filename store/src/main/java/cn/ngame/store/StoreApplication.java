@@ -33,7 +33,6 @@ import cn.ngame.store.exception.GlobalExceptionHandler;
  */
 public class StoreApplication extends MultiDexApplication {
 
-    public static final int READ_EXTERNAL_STORAGE_2 = 24;
     public static RequestQueue requestQueue;
 
     public static String userName;   //用户名
@@ -81,8 +80,8 @@ public class StoreApplication extends MultiDexApplication {
         //配置友盟
         UMShareAPI.get(this);
         initUmengKey();
-        Log.setLevel(Log.DEBUG);    //设置Log打印级别
-        Config.DEBUG = true;
+        Log.setLevel(Log.ERROR);    //设置Log打印级别
+        Config.DEBUG = false;
     }
 
     private void initUmengKey() {
