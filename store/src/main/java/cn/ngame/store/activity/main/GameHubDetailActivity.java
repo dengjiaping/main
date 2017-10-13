@@ -229,7 +229,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
                             } else {
                             }
                         } else {
-                            ToastUtil.show(content, result.getMsg());
+                            ToastUtil.show(content,"点赞失败哦,请稍后重试~");
                         }
                     }
                 });
