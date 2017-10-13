@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:fresco="http://schemas.android.com/apk/res-auto"
              xmlns:ngame="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
@@ -127,7 +127,7 @@
                 android:layout_marginLeft="@dimen/dm036"
                 android:layout_marginRight="@dimen/dm036"
                 android:lineSpacingExtra="@dimen/dm010"
-                android:paddingBottom="@dimen/dm020"
+                android:paddingBottom="@dimen/dm150"
                 android:text="加载中..."
                 android:textColor="@color/color_1a"
                 android:textSize="@dimen/dm026"/>
@@ -164,12 +164,13 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/layout_zan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/white"
         >
-
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dm001"
@@ -200,4 +201,11 @@
             android:scaleType="centerInside"
            />
     </RelativeLayout>
-</FrameLayout>
+    <cn.ngame.store.view.zan.HeartLayout
+        android:id="@+id/heart_layout"
+        android:layout_marginBottom="-15dp"
+        android:layout_above="@id/layout_zan"
+        android:layout_width="@dimen/dm160"
+        android:layout_height="@dimen/dm200"
+        android:layout_alignParentRight="true"/>
+</RelativeLayout>

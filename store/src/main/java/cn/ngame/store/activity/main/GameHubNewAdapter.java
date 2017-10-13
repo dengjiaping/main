@@ -19,7 +19,6 @@ package cn.ngame.store.activity.main;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,15 +133,13 @@ public class GameHubNewAdapter extends BaseAdapter {
         public void update(final GameHubMainBean.DataBean gameInfo, int type, int position) {
             this.gameInfo = gameInfo;
             String imgUrl = gameInfo.getPostImage();
-            if (imgUrl != null && imgUrl.trim().equals("")) {
-                imgUrl = null;
-            }
-            //fromLogoIv.setImageURI(gameInfo.getHeadPhoto());
+            if (imgUrl != null && !imgUrl.trim().equals("")) {
             String[] typeNameArray = imgUrl.split("\\,");
             if (typeNameArray != null && typeNameArray.length > 0) {
                 game_logo_Iv.setImageURI(typeNameArray[0]);
             }
-            Log.d(TAG, "图片地址: " + typeNameArray.length);
+            }
+            //fromLogoIv.setImageURI(gameInfo.getHeadPhoto());
             String gameName = gameInfo.getPostTitle();
             if (!"".equals(gameName)) {
                 tv_title.setText(gameName);

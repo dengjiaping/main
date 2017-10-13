@@ -72,6 +72,7 @@ import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.ReviewScoreView;
 import cn.ngame.store.view.StickyScrollView;
+import cn.ngame.store.view.zan.HeartLayout;
 import cn.ngame.store.widget.TouchImageView;
 
 /**
@@ -165,6 +166,8 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
                 @Override
                 public void onClick(View v) {
                    ToastUtil.show(content,"已经点过赞了哦~");
+                    HeartLayout heartLayout = (HeartLayout)findViewById(R.id.heart_layout);
+                    heartLayout.addFavor();
                 }
             });
         } else {
@@ -173,6 +176,8 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
             mSupportImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    HeartLayout heartLayout = (HeartLayout)findViewById(R.id.heart_layout);
+                    heartLayout.addFavor();
                     clickAgree(1,msgId);
                 }
             });
@@ -482,7 +487,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
                         if (result != null && result.getCode() == 0) {
                             setMsgDetail(result);
                         } else {
-                            ToastUtil.show(content, result.getMsg());
+                            //ToastUtil.show(content, "获取失败");
                         }
                     }
                 });
