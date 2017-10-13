@@ -207,6 +207,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
                     public void onNext(NormalDataBean result) {
                         if (result != null && result.getCode() == 0) {
                             if (type == 1) { //区分帖子点赞和评论点赞
+                                ToastUtil.show(content,"点赞成功~");
                                 mSupportNumTv.setText(ConvUtil.NI(mSupportNumTv.getText().toString()) + 1 + "");
                                 mSupportImageView.setBackgroundResource(R.drawable.un_zan);
                                 mSupportImageView.setOnClickListener(new View.OnClickListener() {

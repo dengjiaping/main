@@ -183,14 +183,14 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dm036"
             android:paddingTop="@dimen/dm005"
-            android:text="10"
+            android:text=""
             android:textColor="@color/color_1a"
             android:textSize="@dimen/dm030"/>
 
         <ImageView
             android:id="@+id/game_hub_support_bt"
-            android:layout_width="@dimen/dm042"
-            android:layout_height="@dimen/dm042"
+            android:layout_width="@dimen/dm040"
+            android:layout_height="@dimen/dm040"
             android:layout_marginBottom="@dimen/dm020"
             android:clickable="false"
             android:layout_marginRight="@dimen/dm010"
