@@ -42,7 +42,7 @@
             android:maxLines="1"
             android:text=""
             android:textColor="@color/b3"
-            android:textSize="@dimen/dm025"/>
+            android:textSize="@dimen/dm024"/>
 
     </RelativeLayout>
 

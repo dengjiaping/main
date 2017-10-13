@@ -73,12 +73,12 @@ public class ManagerFragment extends BaseSearchFragment {
         adapter = new DCViewPagerAdapter(getChildFragmentManager(), fragments2, tabList2);
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
+        adapter.setList(null,null);
         //是否显示了,显示了就去加载
-        Log.d(TAG, "ManagerFragment onStart:加载数据 " + isNeedLoad);
+        Log.d(TAG, "更换加载数据 " + isNeedLoad);
         if (isNeedLoad) {
             setTabViewPagerData();
         }
@@ -88,6 +88,7 @@ public class ManagerFragment extends BaseSearchFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        Log.d(TAG, "更换:隐藏改变 ");
         isNeedLoad = !hidden;
         if (isNeedLoad) {
             setTabViewPagerData();
@@ -105,9 +106,12 @@ public class ManagerFragment extends BaseSearchFragment {
         pwd = StoreApplication.passWord;
         if ((pwd != null && !"".endsWith(pwd)) || !Constant.PHONE.equals(StoreApplication.loginType)) {
             //已登录
+            Log.d(TAG, "更换:已登录 ");
+
             adapter.setList(fragments3, tabList3);
         } else {
             //未登录
+            Log.d(TAG, "更换:未登录 ");
             adapter.setList(fragments2, tabList2);
         }
         initViewPagerTabs();

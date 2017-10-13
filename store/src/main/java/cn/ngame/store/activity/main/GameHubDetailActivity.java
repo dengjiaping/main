@@ -32,9 +32,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.AddPointBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.MsgDetailBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.MsgDetailBodyBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.NormalDataBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
+import com.jzt.hol.android.jkda.sdk.services.gamehub.AddPointClient;
 import com.jzt.hol.android.jkda.sdk.services.gamehub.MsgDetailClient;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.umeng.analytics.MobclickAgent;
@@ -52,7 +55,6 @@ import java.util.Timer;
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
-import cn.ngame.store.adapter.DCViewPagerAdapter;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.Token;
@@ -66,12 +68,11 @@ import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.UMEventNameConstant;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
+import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.ReviewScoreView;
 import cn.ngame.store.view.StickyScrollView;
 import cn.ngame.store.widget.TouchImageView;
-
-import static cn.ngame.store.R.id.sdv_img;
 
 /**
  * Created by Administrator on 2017/6/13 0013.
@@ -81,11 +82,8 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
         HomeFragmentChangeLayoutListener {
     private RelativeLayout rl_top, rl_top2;
     private StickyScrollView scrollView;
-    private SimpleDraweeView game_big_img;
     private Button leftBt;
     private GameHubDetailActivity content;
-    private DCViewPagerAdapter adapter;
-    String[] tabList = {"详情", "必读"};
     //游戏id
     private int msgId = 0;
     private GameInfo gameInfo;
@@ -104,6 +102,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
     private TextView mTitleTv;
     private TextView mDescTv;
     private TextView mSupportNumTv;
+    private ImageView mSupportImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +128,6 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
         //初始化
         initStatus();
         initTabViewPager();
-        game_big_img = (SimpleDraweeView) main.findViewById(sdv_img);
         //请求数据
         getData();
         initBanner();
@@ -140,6 +138,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
         mTitleTv = (TextView) findViewById(R.id.game_hub_detail_title_tv);
         mDescTv = (TextView) findViewById(R.id.game_hub_detail_desc_tv);
         mSupportNumTv = (TextView) findViewById(R.id.game_hub_support_tv);
+        mSupportImageView= (ImageView) findViewById(R.id.game_hub_support_bt);
     }
 
     private void setMsgDetail(MsgDetailBean result) {
@@ -160,8 +159,69 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
                 imgs.add(typeNameArray[i]);
             }
         }
+        if (data.getIsPoint() == 1) {//已经点赞
+            mSupportImageView.setBackgroundResource(R.drawable.un_zan);
+            mSupportImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   ToastUtil.show(content,"已经点过赞了哦~");
+                }
+            });
+        } else {
+            mSupportImageView.setBackgroundResource(R.drawable.zan);
+            mSupportImageView.setEnabled(true);
+            mSupportImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickAgree(1,msgId);
+                }
+            });
+        }
 
         new LoadImageThread().start();
+    }
+    /**
+     * @param type     1表示帖子点赞，2表示评论点赞，3表示投票
+     * @param id       帖子id/评论id
+     */
+    public void clickAgree(final int type, int id) {
+        //帖子id
+        AddPointBodyBean bodyBean = new AddPointBodyBean();
+        User user = StoreApplication.user;
+        if (user != null) {
+            bodyBean.setUserCode(user.userCode);
+        } else {
+            bodyBean.setDeviceOnlyNum(StoreApplication.deviceId);
+        }
+        bodyBean.setType(type);  //type：1表示帖子点赞，2表示评论点赞，3表示投票
+        bodyBean.setPostId(id);  //帖子id
+        new AddPointClient(this, bodyBean).observable()
+//                .compose(this.<DiscountListBean>bindToLifecycle())
+                .subscribe(new ObserverWrapper<NormalDataBean>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtil.show(content, APIErrorUtils.getMessage(e));
+                    }
+
+                    @Override
+                    public void onNext(NormalDataBean result) {
+                        if (result != null && result.getCode() == 0) {
+                            if (type == 1) { //区分帖子点赞和评论点赞
+                                mSupportNumTv.setText(ConvUtil.NI(mSupportNumTv.getText().toString()) + 1 + "");
+                                mSupportImageView.setBackgroundResource(R.drawable.un_zan);
+                                mSupportImageView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        ToastUtil.show(content,"已经点过赞了哦~");
+                                    }
+                                });
+                            } else {
+                            }
+                        } else {
+                            ToastUtil.show(content, result.getMsg());
+                        }
+                    }
+                });
     }
 
     private int initLocal = 0;
