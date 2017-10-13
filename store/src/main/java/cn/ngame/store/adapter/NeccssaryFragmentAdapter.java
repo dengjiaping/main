@@ -238,9 +238,11 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
                     int lineCount = tv_desc.getLineCount();
                     if (1 == lineCount) {
                         tv_desc.setSingleLine(false);
+                        show_more_disc_bt.setVisibility(View.INVISIBLE);
                         show_more_disc_bt.setImageResource(R.drawable.ic_bottom_hide_more);
                     } else {
                         tv_desc.setMaxLines(1);
+                        show_more_disc_bt.setVisibility(View.VISIBLE);
                         show_more_disc_bt.setImageResource(R.drawable.ic_bottom_show_more);
                     }
                 }
