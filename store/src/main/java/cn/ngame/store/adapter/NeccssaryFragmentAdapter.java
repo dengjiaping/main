@@ -221,7 +221,8 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
         public void update(final NecessaryItemData toolInfo) {
             this.toolInfo = toolInfo;
             toolNameTv.setText(toolInfo.getToolName());
-            versionTv.setText("V" + toolInfo.getToolVersion());
+            String toolVersion = toolInfo.getToolVersion();
+            versionTv.setText("V" + toolVersion==null?"":toolVersion);
             tv_size.setText(toolInfo.getToolSize());
             tv_desc.setText(toolInfo.getToolDesc());
       /*      Uri uri = Uri.parse("res:///" + R.drawable.ic_google_neccessary_logo);
@@ -246,7 +247,7 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
             });
             progressBar.setVisibility(View.INVISIBLE);
             //设置进度条状态
-            int version = ConvUtil.NI(toolInfo.getToolVersion());
+            int version = ConvUtil.NI(toolVersion);
             progressBar.setLoadState(fileLoad.getGameFileLoadStatus(toolInfo.getFileName(), toolInfo
                     .getToolURL(), toolInfo.getPackages(), version));
             //必须设置，否则点击进度条后无法进行响应操作
