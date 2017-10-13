@@ -630,6 +630,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mDownloadBt.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 menu_gamehub_tv.setTextColor(colorDark);
+                MobclickAgent.onEvent(context, UMEventNameConstant.mainCircleButtonClickCount);
                 break;
             case 3://发现
                 if (null == discoverFragment) {

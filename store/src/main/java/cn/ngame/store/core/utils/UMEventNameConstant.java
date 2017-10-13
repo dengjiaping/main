@@ -7,6 +7,7 @@ package cn.ngame.store.core.utils;
 public class UMEventNameConstant {
     public static final String mainRecommendButtonClickCount = "mainRecommendButtonClickCount";
     public static final String mainRankButtonClickCount = "mainRankButtonClickCount";
+    public static final String mainCircleButtonClickCount = "mainCircleButtonClickCount";//游趣
     public static final String mainDiscoverButtonClickCount = "mainDiscoverButtonClickCount";
     public static final String mainManagerButtonClickCount = "mainManagerButtonClickCount";
 
