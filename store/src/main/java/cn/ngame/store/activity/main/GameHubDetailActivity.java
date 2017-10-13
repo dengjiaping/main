@@ -169,7 +169,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
                 @Override
                 public void onClick(View v) {
                    ToastUtil.show(content,"已经点过赞了哦~");
-                    heartLayout.addFavor();
+                    //heartLayout.addFavor();
                 }
             });
         } else {
@@ -223,7 +223,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
                                     @Override
                                     public void onClick(View v) {
                                         ToastUtil.show(content,"已经点过赞了哦~");
-                                        heartLayout.addFavor();
+                                        //heartLayout.addFavor();
                                     }
                                 });
                             } else {
