@@ -60,7 +60,6 @@ import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.Token;
 import cn.ngame.store.bean.User;
 import cn.ngame.store.core.net.GsonRequest;
-import cn.ngame.store.core.utils.APIErrorUtils;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.DialogHelper;
@@ -74,6 +73,7 @@ import cn.ngame.store.view.ReviewScoreView;
 import cn.ngame.store.view.StickyScrollView;
 import cn.ngame.store.view.zan.HeartLayout;
 import cn.ngame.store.widget.TouchImageView;
+
 
 /**
  * Created by Administrator on 2017/6/13 0013.
@@ -104,6 +104,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
     private TextView mDescTv;
     private TextView mSupportNumTv;
     private ImageView mSupportImageView;
+    private HeartLayout heartLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +141,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
         mDescTv = (TextView) findViewById(R.id.game_hub_detail_desc_tv);
         mSupportNumTv = (TextView) findViewById(R.id.game_hub_support_tv);
         mSupportImageView= (ImageView) findViewById(R.id.game_hub_support_bt);
+        heartLayout = (HeartLayout)findViewById(R.id.heart_layout);
     }
 
     private void setMsgDetail(MsgDetailBean result) {
@@ -148,7 +150,8 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
             return;
         }
         mFromTv.setText(data.getPostPublisher());
-        mTitleTv.setText(data.getPostTitle());
+        gameName = data.getPostTitle();
+        mTitleTv.setText(gameName);
         mDescTv.setText(data.getPostContent());
         mSupportNumTv.setText(data.getPointCount() + "");
 
@@ -166,7 +169,6 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
                 @Override
                 public void onClick(View v) {
                    ToastUtil.show(content,"已经点过赞了哦~");
-                    HeartLayout heartLayout = (HeartLayout)findViewById(R.id.heart_layout);
                     heartLayout.addFavor();
                 }
             });
@@ -176,7 +178,6 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
             mSupportImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    HeartLayout heartLayout = (HeartLayout)findViewById(R.id.heart_layout);
                     heartLayout.addFavor();
                     clickAgree(1,msgId);
                 }
@@ -190,6 +191,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
      * @param id       帖子id/评论id
      */
     public void clickAgree(final int type, int id) {
+        mSupportImageView.setEnabled(false);
         //帖子id
         AddPointBodyBean bodyBean = new AddPointBodyBean();
         User user = StoreApplication.user;
@@ -205,11 +207,13 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
                 .subscribe(new ObserverWrapper<NormalDataBean>() {
                     @Override
                     public void onError(Throwable e) {
-                        ToastUtil.show(content, APIErrorUtils.getMessage(e));
+                        mSupportImageView.setEnabled(true);
+                        ToastUtil.show(content,"点赞失败哦,请稍后重试~");
                     }
 
                     @Override
                     public void onNext(NormalDataBean result) {
+                        mSupportImageView.setEnabled(true);
                         if (result != null && result.getCode() == 0) {
                             if (type == 1) { //区分帖子点赞和评论点赞
                                 ToastUtil.show(content,"点赞成功~");
@@ -219,6 +223,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
                                     @Override
                                     public void onClick(View v) {
                                         ToastUtil.show(content,"已经点过赞了哦~");
+                                        heartLayout.addFavor();
                                     }
                                 });
                             } else {
@@ -479,7 +484,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
                 .subscribe(new ObserverWrapper<MsgDetailBean>() {
                     @Override
                     public void onError(Throwable e) {
-                        ToastUtil.show(content, APIErrorUtils.getMessage(e));
+                        mDescTv.setText("服务器开小差咯~");
                     }
 
                     @Override
@@ -488,6 +493,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
                             setMsgDetail(result);
                         } else {
                             //ToastUtil.show(content, "获取失败");
+                            mDescTv.setText("获取失败~");
                         }
                     }
                 });

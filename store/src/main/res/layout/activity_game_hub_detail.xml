@@ -79,6 +79,7 @@
                 fresco:placeholderImage="@drawable/ic_launcher"
                 fresco:placeholderImageScaleType="centerCrop"
                 fresco:progressBarImage="@drawable/ic_launcher"
+                fresco:roundAsCircle="true"
                 fresco:viewAspectRatio="2"/>
 
             <TextView
