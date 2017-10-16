@@ -214,6 +214,9 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
 
                     @Override
                     public void onNext(NormalDataBean result) {
+                        if (content == null || content.isFinishing()) {
+                            return;
+                        }
                         mSupportImageView.setEnabled(true);
                         if (result != null && result.getCode() == 0) {
                             if (type == 1) { //区分帖子点赞和评论点赞
