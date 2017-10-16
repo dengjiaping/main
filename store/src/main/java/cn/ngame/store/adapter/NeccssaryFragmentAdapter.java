@@ -222,7 +222,7 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
             this.toolInfo = toolInfo;
             toolNameTv.setText(toolInfo.getToolName());
             String toolVersion = toolInfo.getToolVersion();
-            versionTv.setText("V" + toolVersion==null?"":toolVersion);
+            versionTv.setText(toolVersion==null?"":"V" +toolVersion);
             tv_size.setText(toolInfo.getToolSize());
             tv_desc.setText(toolInfo.getToolDesc());
       /*      Uri uri = Uri.parse("res:///" + R.drawable.ic_google_neccessary_logo);
