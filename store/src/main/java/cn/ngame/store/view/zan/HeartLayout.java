@@ -165,14 +165,15 @@ public class HeartLayout extends RelativeLayout implements View.OnClickListener 
         removeAllViews();
     }
 
-    private static int[] drawableIds = new int[]{R.drawable.zan1, R.drawable.zan2, R.drawable.zan3, R.drawable.zan4, R.drawable
+    private static int[] drawableIds = new int[]{R.drawable.zan,R.drawable.zan1, R.drawable.zan2, R.drawable.zan3, R.drawable
+            .zan4, R.drawable
             .zan5, R.drawable
             .zan6};
     private Random random = new Random();
 
     public void addFavor() {
         HeartView heartView = new HeartView(getContext());
-        heartView.setDrawable(drawableIds[random.nextInt(6)]);//返回(0,6)集合中的整数，注意不包括6
+        heartView.setDrawable(drawableIds[random.nextInt(7)]);//返回(0,6)集合中的整数，注意不包括6
         init(attrs, defStyleAttr);
         mAnimator.start(heartView, this);
     }

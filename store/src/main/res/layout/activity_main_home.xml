@@ -235,8 +235,10 @@
             <Button
                 android:id="@+id/menu_game_hub_bt"
                 android:layout_width="23dp"
-
                 android:layout_height="23dp"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/menu_game_hub"/>
 

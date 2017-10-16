@@ -140,8 +140,8 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
         mTitleTv = (TextView) findViewById(R.id.game_hub_detail_title_tv);
         mDescTv = (TextView) findViewById(R.id.game_hub_detail_desc_tv);
         mSupportNumTv = (TextView) findViewById(R.id.game_hub_support_tv);
-        mSupportImageView= (ImageView) findViewById(R.id.game_hub_support_bt);
-        heartLayout = (HeartLayout)findViewById(R.id.heart_layout);
+        mSupportImageView = (ImageView) findViewById(R.id.game_hub_support_bt);
+        heartLayout = (HeartLayout) findViewById(R.id.heart_layout);
     }
 
     private void setMsgDetail(MsgDetailBean result) {
@@ -164,31 +164,32 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
             }
         }
         if (data.getIsPoint() == 1) {//已经点赞
-            mSupportImageView.setBackgroundResource(R.drawable.un_zan);
+            mSupportImageView.setBackgroundResource(R.drawable.zan);
             mSupportImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   ToastUtil.show(content,"已经点过赞了哦~");
+                    ToastUtil.show(content, "已经点过赞了哦~");
                     //heartLayout.addFavor();
                 }
             });
         } else {
-            mSupportImageView.setBackgroundResource(R.drawable.zan);
+            mSupportImageView.setBackgroundResource(R.drawable.un_zan);
             mSupportImageView.setEnabled(true);
             mSupportImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    clickAgree(1, msgId);
                     heartLayout.addFavor();
-                    clickAgree(1,msgId);
                 }
             });
         }
 
         new LoadImageThread().start();
     }
+
     /**
-     * @param type     1表示帖子点赞，2表示评论点赞，3表示投票
-     * @param id       帖子id/评论id
+     * @param type 1表示帖子点赞，2表示评论点赞，3表示投票
+     * @param id   帖子id/评论id
      */
     public void clickAgree(final int type, int id) {
         mSupportImageView.setEnabled(false);
@@ -208,7 +209,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
                     @Override
                     public void onError(Throwable e) {
                         mSupportImageView.setEnabled(true);
-                        ToastUtil.show(content,"点赞失败哦,请稍后重试~");
+                        ToastUtil.show(content, "点赞失败哦,请稍后重试~");
                     }
 
                     @Override
@@ -216,20 +217,20 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
                         mSupportImageView.setEnabled(true);
                         if (result != null && result.getCode() == 0) {
                             if (type == 1) { //区分帖子点赞和评论点赞
-                                ToastUtil.show(content,"点赞成功~");
+                                ToastUtil.show(content, "点赞成功~");
                                 mSupportNumTv.setText(ConvUtil.NI(mSupportNumTv.getText().toString()) + 1 + "");
-                                mSupportImageView.setBackgroundResource(R.drawable.un_zan);
+                                mSupportImageView.setBackgroundResource(R.drawable.zan);
                                 mSupportImageView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        ToastUtil.show(content,"已经点过赞了哦~");
+                                        ToastUtil.show(content, "已经点过赞了哦~");
                                         //heartLayout.addFavor();
                                     }
                                 });
                             } else {
                             }
                         } else {
-                            ToastUtil.show(content,"点赞失败哦,请稍后重试~");
+                            ToastUtil.show(content, "点赞失败哦,请稍后重试~");
                         }
                     }
                 });

@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:fillViewport="true"
         android:focusable="true"
+        android:scrollbarStyle="outsideOverlay"
         android:focusableInTouchMode="true"
         android:scrollbars="none">
 
