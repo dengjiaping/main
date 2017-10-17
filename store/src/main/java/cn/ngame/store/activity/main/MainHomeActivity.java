@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +31,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 import com.inmobi.sdk.InMobiSdk;
@@ -106,7 +106,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private IFileLoad fileLoad;
     private Timer timer = new Timer();
     private Handler handler = new Handler();
-    private ProgressBar progressBar;
+    private NumberProgressBar progressBar;
     private RemoteViews remoteViews = null;
     private Notification notification = null;
     private NotificationManager mNotificationManager = null;
@@ -994,7 +994,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         String fileSizeStr = Formatter.formatFileSize(context, versionInfo.fileSize);
 
-        tv_title.setText("有新版本：" + versionInfo.versionName + "  大小：" + fileSizeStr);
+        tv_title.setText("有新版本：V" + versionInfo.versionName + "（" + fileSizeStr+"）");
         TextView tv_summary = (TextView) contentView.findViewById(R.id.tv_summary);
         tv_summary.setText(versionInfo.content);
 
@@ -1033,11 +1033,11 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         LayoutInflater inflater = getLayoutInflater();
         LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_download, null);
-        progressBar = (ProgressBar) contentView.findViewById(R.id.progress_bar);
+        progressBar = (NumberProgressBar) contentView.findViewById(R.id.progress_bar);
 
         dialogFragment.setContentView(contentView);
 
-        dialogFragment.setPositiveButton(R.string.update_cancel, new View.OnClickListener() {
+        dialogFragment.setPositiveButton("关闭", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialogFragment.dismiss();
@@ -1120,9 +1120,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                                 }
                                 mNotificationManager.notify(1, notification);
                             } else {
-                                if (progressBar != null)
+                                if (progressBar != null) {
                                     progressBar.setProgress((int) process);
-
+                                }
                                 if (process == 100) {
                                     //处理安装App的操作
                                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
