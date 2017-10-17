@@ -3,7 +3,6 @@ package cn.ngame.store.activity.main;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -995,7 +994,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         String fileSizeStr = Formatter.formatFileSize(context, versionInfo.fileSize);
 
-        tv_title.setText("有新版本：" + versionInfo.versionName + "/ 大小：" + fileSizeStr);
+        tv_title.setText("有新版本：" + versionInfo.versionName + "  大小：" + fileSizeStr);
         TextView tv_summary = (TextView) contentView.findViewById(R.id.tv_summary);
         tv_summary.setText(versionInfo.content);
 
@@ -1049,10 +1048,11 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     mNotificationManager.cancel(1);
                 }
                 isDownloading = false;
+                finish();
             }
         });
 
-        dialogFragment.setNegativeButton(R.string.update_background, new View.OnClickListener() {
+       /* dialogFragment.setNegativeButton(R.string.update_background, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -1068,7 +1068,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 isRunningBackground = true;
 
             }
-        });
+        });*/
         dialogFragment.show(ft, "progressDialog");
 
     }
