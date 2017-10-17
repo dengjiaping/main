@@ -897,7 +897,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         }
         if (isDownloading) {
             if (isRunningBackground) {
-                Toast.makeText(context, "正在后台为您更新！", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "更新！", Toast.LENGTH_SHORT).show();
             } else {
                 showProgressDialog();
             }
