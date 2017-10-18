@@ -34,7 +34,6 @@ import com.baidu.android.pushservice.PushManager;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
-import com.inmobi.sdk.InMobiSdk;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.AppCarouselBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.BrowseHistoryBodyBean;
@@ -150,7 +149,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        InMobiSdk.init(this, Constant.InMobiSdk_Id);
+        //InMobiSdk.init(this, Constant.InMobiSdk_Id);
         //........ ....................通知栏  >= 4.4(KITKAT)...................
         initStatusBar();
         Intent serviceIntent = new Intent(this, FileLoadService.class);

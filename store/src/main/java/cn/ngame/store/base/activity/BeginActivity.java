@@ -18,27 +18,21 @@ package cn.ngame.store.base.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
-import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.inmobi.ads.InMobiAdRequestStatus;
-import com.inmobi.ads.InMobiNative;
-import com.inmobi.sdk.InMobiSdk;
+import com.hubcloud.adhubsdk.AdListener;
+import com.hubcloud.adhubsdk.SplashAd;
 import com.umeng.analytics.MobclickAgent;
 
-import java.lang.ref.WeakReference;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import cn.ngame.store.R;
-import cn.ngame.store.activity.NewsSnippet;
 import cn.ngame.store.activity.main.MainHomeActivity;
 import cn.ngame.store.core.fileload.FileLoadService;
 import cn.ngame.store.core.utils.CommonUtil;
@@ -65,6 +59,7 @@ public class BeginActivity extends Activity {
     private long SHOW_TIME = 10000;
     private long SHOW_TIME_isFirstInstall = 10000;
     private Button skipBt;
+    private FrameLayout adsParent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +83,48 @@ public class BeginActivity extends Activity {
         //判断是否是安装后第一次启动
         isFirstInstall = ConvUtil.NB(SPUtils.get(this, Constant.CONFIG_FIRST_INSTALL, true));
         timer = new Timer();
-
         //广告
+        adsParent = (FrameLayout) this.findViewById(R.id.adsFl);
+        AdListener listener = new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                Log.d(TAG, "onAdLoaded");
+            }
+
+            @Override
+            public void onAdShown() {
+                Log.d(TAG, "onAdShown");
+                if (adsParent!=null) {
+                    adsParent.setBackgroundColor(Color.WHITE);
+                }
+
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                Log.d(TAG, "onAdFailedToLoad");
+                //加载失败
+                skip2Main();
+            }
+
+            @Override
+            public void onAdClosed() {
+                Log.d(TAG, "onAdClosed");
+                // 跳转至您的应用主界面
+                skip2Main();
+            }
+
+            @Override
+            public void onAdClicked() {
+                Log.d(TAG, "onAdClick");
+                // 设置开屏可接受点击时，该回调可用
+            }
+        };
+        // adsParent: 放置SplashAd的ViewGroup
+        // listener:  事件监听器
+        // splashAdUnitId: 广告位ID
+        new SplashAd(this, adsParent, listener, Constant.AdHub_AD_ID);
+   /*     //广告
         InMobiSdk.init(content, Constant.InMobiSdk_Id);
         InMobiSdk.setLogLevel(InMobiSdk.LogLevel.DEBUG);
         Log.d(TAG, "开始");
@@ -171,9 +206,7 @@ public class BeginActivity extends Activity {
         Map<String, String> map = new HashMap<>();
         nativeAd.setExtras(map);
         nativeAd.setDownloaderEnabled(true);
-        nativeAd.load();
-
-        go2Main();
+        nativeAd.load();*/
     }
 
     private void go2Main() {
@@ -202,7 +235,6 @@ public class BeginActivity extends Activity {
                 }
             }, SHOW_TIME_isFirstInstall);
         } else {
-            Log.d(TAG, "跳主页面");
             final Intent intent = new Intent(content, MainHomeActivity.class);
             if (pushMsgId > 0) {
                 intent.putExtra("msgId", pushMsgId);
@@ -220,7 +252,7 @@ public class BeginActivity extends Activity {
         }
     }
     private LinearLayout mFrameLayoutView;
-    InMobiNative nativeAd;
+    //InMobiNative nativeAd;
   /*  private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -250,7 +282,7 @@ public class BeginActivity extends Activity {
         final int pushMsgType = getIntent().getIntExtra("type", 0);
         final PushMessage msg = (PushMessage) getIntent().getSerializableExtra("msg");
         if (isFirstInstall) {
-            Log.d(TAG, "滑动页");
+            Log.d(TAG, "skip2Main 滑动页");
             final Intent intent = new Intent(content, GuideViewActivity.class);
             if (pushMsgId > 0) {
                 intent.putExtra("msgId", pushMsgId);
@@ -263,7 +295,7 @@ public class BeginActivity extends Activity {
             finish();
 
         } else {
-            Log.d(TAG, "跳主页面");
+            Log.d(TAG, "skip2Main 跳主页面");
             final Intent intent = new Intent(content, MainHomeActivity.class);
             if (pushMsgId > 0) {
                 intent.putExtra("msgId", pushMsgId);

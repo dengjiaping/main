@@ -140,5 +140,6 @@ dependencies {
     //广告
     //compile 'com.inmobi.monetization:inmobi-ads:7.0.0'
     //compile files('libs/InMobi-7.0.0-China.jar')
-    compile files('libs/InMobi-7.0.0.jar')
+
+    compile(name:'sdk-release',ext:'aar')
 }

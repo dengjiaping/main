@@ -15,18 +15,27 @@
             app:border_color="#55B8E2"
             app:border_width="2dp"
             app:text_size="12dp" />-->
-
-    <LinearLayout
-        android:id="@+id/fullscreen_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <FrameLayout
+        android:id="@+id/adsFl"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/img_welcome_0"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        ></FrameLayout>
+    <!--    <LinearLayout
+            android:id="@+id/fullscreen_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/img_welcome_0"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    </LinearLayout>
+        </LinearLayout>-->
 
     <!-- <com.inmobi.nativead.sample.CountDownView
          android:id="@+id/PreRollBtn"

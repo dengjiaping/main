@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sdk-release-">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/store/build/intermediates/exploded-aar/sdk-release/res" />
+      <root url="jar://$PROJECT_DIR$/store/build/intermediates/exploded-aar/sdk-release/jars/classes.jar!/" />
+      <root url="jar://$PROJECT_DIR$/store/build/intermediates/exploded-aar/sdk-release/jars/libs/protobuf-lite-3.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

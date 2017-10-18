@@ -287,3 +287,17 @@ public *;
  -dontwarn com.moat.**
 # skip AVID classes
 -keep class com.integralads.avid.library.* {*;}
+
+#广告
+-dontwarn com.hubcloud.adhubsdk.**
+
+-dontwarn android.app.**
+-dontwarn android.support.**
+
+
+-keepattributes Signature
+-keepattributes *Annotation*
+
+-keep class com.hubcloud.adhubsdk.** {*; }
+-keep class android.app.**{*;}
+-keep class **.R$* {*;}

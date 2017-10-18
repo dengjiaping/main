@@ -88,7 +88,7 @@
         <include layout="@layout/layout_match_parent_line_height10dp"/>
     </LinearLayout>
     <!--广告-->
-    <LinearLayout
+ <!--   <LinearLayout
         android:id="@+id/ad_layout"
         android:visibility="gone"
         android:layout_width="match_parent"
@@ -171,7 +171,7 @@
             android:textSize="12dp"/>
 
         <include layout="@layout/layout_match_parent_line_height10dp"/>
-    </LinearLayout>
+    </LinearLayout>-->
     <!--........................................................................-->
     <LinearLayout
         android:id="@+id/recommend_head_llay_1"

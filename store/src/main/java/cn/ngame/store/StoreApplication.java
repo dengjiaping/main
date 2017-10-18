@@ -8,6 +8,7 @@ import android.support.multidex.MultiDexApplication;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.hubcloud.adhubsdk.AdHub;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -76,12 +77,14 @@ public class StoreApplication extends MultiDexApplication {
         initGloalData();
 
 
-
         //配置友盟
         UMShareAPI.get(this);
         initUmengKey();
         Log.setLevel(Log.DEBUG);    //设置Log打印级别
         Config.DEBUG = false;
+
+        //广告SDK 初始化
+        AdHub.initialize(this, Constant.AdHub_APP_ID);
     }
 
     private void initUmengKey() {
@@ -147,6 +150,5 @@ public class StoreApplication extends MultiDexApplication {
         // Initialize ImageLoader with configuration.
         // 初始化ImageLoader
         ImageLoader.getInstance().init(config);
-
     }
 }

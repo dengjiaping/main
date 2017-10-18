@@ -310,7 +310,8 @@ public class Constant {
     public static final String WEIXIN = "3";
     public static final String SINA = "4";//（1手机，2QQ，3微信，4新浪微博）
     public static final String FILE_NAME_SD_CRAD_APP_PKGNAME = "file_name_sd_crad_app_pkgname";
-    public static final String InMobiSdk_Id = "11b639a4def2492faf3d832ead67618f";
+    public static final String AdHub_APP_ID = "1172";
+    public static final String AdHub_AD_ID = "3140";
     public static final long AD_PlacementID_BeginActivity = 1507004826745L;
     public static final long AD_PlacementID_RecommendFragment = 1504668848699L;
 }

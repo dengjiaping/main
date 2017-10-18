@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -199,7 +200,11 @@ public abstract class BaseLazyFragment extends Fragment {
      * @return
      */
     protected FragmentManager getSupportFragmentManager() {
-        return getActivity().getSupportFragmentManager();
+        FragmentActivity activity = getActivity();
+        if (null != activity) {
+            return activity.getSupportFragmentManager();
+        }
+        return null;
     }
 
 

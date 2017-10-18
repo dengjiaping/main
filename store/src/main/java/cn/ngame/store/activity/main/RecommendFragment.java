@@ -2,7 +2,6 @@ package cn.ngame.store.activity.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +16,6 @@ import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.inmobi.ads.InMobiAdRequestStatus;
-import com.inmobi.ads.InMobiNative;
-import com.inmobi.sdk.InMobiSdk;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
@@ -30,20 +26,16 @@ import com.jzt.hol.android.jkda.sdk.services.recommend.RecommendClient;
 import com.squareup.picasso.Picasso;
 import com.umeng.analytics.MobclickAgent;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cn.ngame.store.R;
-import cn.ngame.store.activity.NewsSnippet;
 import cn.ngame.store.adapter.RecommendListAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.utils.CommonUtil;
-import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.NetUtil;
@@ -215,8 +207,10 @@ public class RecommendFragment extends BaseSearchFragment {
             return;
         }
         if (pageAction.getCurrentPage() == 0) {//当前页
-            this.list.clear(); //清除数据
-            this.topList.clear();
+            if (list != null) {
+                this.list.clear(); //清除数据
+                this.topList.clear();
+            }
             if (result.getData() == null || result.getData().size() == 0) {
                 pullListView.onPullUpRefreshComplete();
                 pullListView.onPullDownRefreshComplete();
@@ -228,10 +222,12 @@ public class RecommendFragment extends BaseSearchFragment {
         int totals = result.getTotals();
         if (result.getData().size() > 0) {//刷新后进来
             pageAction.setTotal(totals);
-            this.list.addAll(resultData);
-            this.topList.addAll(resultData);
+            if (list != null) {
+                this.list.addAll(resultData);
+                this.topList.addAll(resultData);
+            }
         }
-        if (result.getData().size() > 0 && pageAction.getCurrentPage() == 0) {
+        if (result.getData().size() > 0 && pageAction.getCurrentPage() == 0&& list != null) {
             //第一次进来
             this.list.clear(); //清除数据
             this.topList.clear();
@@ -435,11 +431,11 @@ public class RecommendFragment extends BaseSearchFragment {
         summary_2 = (TextView) view.findViewById(R.id.tv_summary2);
 
         //广告位
-        adContainer = (LinearLayout) view.findViewById(R.id.banner);
+      /*  adContainer = (LinearLayout) view.findViewById(R.id.banner);
         gamename_ad = (TextView) view.findViewById(R.id.tv_gamename_ad);
         summary_ad = (TextView) view.findViewById(R.id.tv_summary_ad);//游戏摘要
         from_img_ad = (SimpleDraweeView) view.findViewById(R.id.img_from_ad);
-        adLayout = (LinearLayout) view.findViewById(R.id.ad_layout);
+        adLayout = (LinearLayout) view.findViewById(R.id.ad_layout);*/
 
         view.findViewById(R.id.recommend_head_llay_0).setOnClickListener(headClickListener);
         view.findViewById(R.id.recommend_head_llay_1).setOnClickListener(headClickListener);
@@ -517,13 +513,13 @@ public class RecommendFragment extends BaseSearchFragment {
         summary_2.setText(dataBean1.getRecommend());
 
         //广告
-        setAdView();
+        //setAdView();
     }
 
     /**
      * 广告
      */
-    private void setAdView() {
+  /*  private void setAdView() {
         InMobiSdk.init(context, Constant.InMobiSdk_Id);
 
         InMobiNative nativeAd = new InMobiNative(context, Constant.AD_PlacementID_RecommendFragment, new InMobiNative
@@ -607,8 +603,7 @@ public class RecommendFragment extends BaseSearchFragment {
         nativeAd.setExtras(map);
         nativeAd.setDownloaderEnabled(true);
         nativeAd.load();
-    }
-
+    }*/
     @Override
     protected void onFirstUserVisible() {
         Log.d(TAG, "onUserVisible:当前 " + pageAction.getCurrentPage());
