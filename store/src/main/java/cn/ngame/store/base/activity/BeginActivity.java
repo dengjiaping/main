@@ -94,7 +94,7 @@ public class BeginActivity extends Activity {
             @Override
             public void onAdShown() {
                 Log.d(TAG, "onAdShown");
-                if (adsParent!=null) {
+                if (adsParent != null) {
                     adsParent.setBackgroundColor(Color.WHITE);
                 }
 
@@ -123,7 +123,7 @@ public class BeginActivity extends Activity {
         // adsParent: 放置SplashAd的ViewGroup
         // listener:  事件监听器
         // splashAdUnitId: 广告位ID
-        new SplashAd(this, adsParent, listener, Constant.AdHub_AD_ID);
+        new SplashAd(this, adsParent, listener, Constant.AdHub_AD_BEGIN_ID);
    /*     //广告
         InMobiSdk.init(content, Constant.InMobiSdk_Id);
         InMobiSdk.setLogLevel(InMobiSdk.LogLevel.DEBUG);
@@ -213,11 +213,11 @@ public class BeginActivity extends Activity {
         final long pushMsgId = getIntent().getLongExtra("msgId", 0);
         final int pushMsgType = getIntent().getIntExtra("type", 0);
         final PushMessage msg = (PushMessage) getIntent().getSerializableExtra("msg");
-        if (timer==null) {
+        if (timer == null) {
             skip2Main();
             return;
         }
-        if (isFirstInstall){
+        if (isFirstInstall) {
             Log.d(TAG, "滑动页");
             final Intent intent = new Intent(content, GuideViewActivity.class);
             if (pushMsgId > 0) {
@@ -251,6 +251,7 @@ public class BeginActivity extends Activity {
             }, SHOW_TIME);
         }
     }
+
     private LinearLayout mFrameLayoutView;
     //InMobiNative nativeAd;
   /*  private Handler handler = new Handler() {

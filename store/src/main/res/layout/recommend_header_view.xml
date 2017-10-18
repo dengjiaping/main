@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:ads="http://schemas.android.com/tools"
               xmlns:fresco="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -87,23 +88,23 @@
 
         <include layout="@layout/layout_match_parent_line_height10dp"/>
     </LinearLayout>
-    <!--广告-->
- <!--   <LinearLayout
+
+    <LinearLayout
         android:id="@+id/ad_layout"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="18dp"
-            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginBottom="14.5dp"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_10"
             >
 
-            <com.facebook.drawee.view.SimpleDraweeView
+        <!--    <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/img_from_ad"
                 android:layout_width="@dimen/recommend_item_from_pic"
                 android:layout_height="@dimen/recommend_item_from_pic"
@@ -113,15 +114,15 @@
                 fresco:placeholderImage="@drawable/ic_def_logo_188_188"
                 fresco:placeholderImageScaleType="fitXY"
                 fresco:progressBarImage="@drawable/ic_def_logo_188_188"
-                fresco:roundedCornerRadius="4dp"/>
+                fresco:roundedCornerRadius="4dp"/>-->
 
+            <!-- android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@+id/img_from_ad"-->
             <TextView
                 android:id="@+id/text_from_ad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="6dp"
-                android:layout_toRightOf="@+id/img_from_ad"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
@@ -132,7 +133,7 @@
 
         </RelativeLayout>
 
-        <TextView
+     <!--   <TextView
             android:id="@+id/tv_gamename_ad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -143,23 +144,22 @@
             android:paddingRight="20dp"
             android:text=""
             android:textColor="@color/game_name"
-            android:textSize="@dimen/title_size"/>
+            android:textSize="@dimen/title_size"/>-->
 
-        <LinearLayout
-            android:id="@+id/banner"
-            android:background="@color/f5f5f5"
+        <com.hubcloud.adhubsdk.AdView
+            android:id="@+id/adView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/recommend_item_game_pic_hight"
-            android:gravity="center"
-            android:orientation="horizontal"
-            >
-        </LinearLayout>
+            android:background="@color/f5f5f5"
+            ads:adUnitId="3174"
+            android:layout_marginBottom="14.5dp"
+            />
 
-        <TextView
+       <!-- <TextView
             android:id="@+id/tv_summary_ad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="14.5dp"
+
             android:layout_marginLeft="9.5dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="13dp"
@@ -169,9 +169,95 @@
             android:text=""
             android:textColor="@color/color999999"
             android:textSize="12dp"/>
-
+-->
         <include layout="@layout/layout_match_parent_line_height10dp"/>
-    </LinearLayout>-->
+    </LinearLayout>
+    <!--........................................................................-->
+    <!--广告-->
+    <!--   <LinearLayout
+           android:id="@+id/ad_layout"
+           android:visibility="gone"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical">
+
+           <RelativeLayout
+               android:layout_width="wrap_content"
+               android:layout_height="18dp"
+               android:layout_marginBottom="@dimen/dp_10"
+               android:layout_marginLeft="@dimen/dp_10"
+               android:layout_marginTop="@dimen/dp_10"
+               >
+
+               <com.facebook.drawee.view.SimpleDraweeView
+                   android:id="@+id/img_from_ad"
+                   android:layout_width="@dimen/recommend_item_from_pic"
+                   android:layout_height="@dimen/recommend_item_from_pic"
+                   fresco:actualImageScaleType="fitXY"
+                   fresco:failureImage="@drawable/ic_def_logo_188_188"
+                   fresco:failureImageScaleType="fitXY"
+                   fresco:placeholderImage="@drawable/ic_def_logo_188_188"
+                   fresco:placeholderImageScaleType="fitXY"
+                   fresco:progressBarImage="@drawable/ic_def_logo_188_188"
+                   fresco:roundedCornerRadius="4dp"/>
+
+               <TextView
+                   android:id="@+id/text_from_ad"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_centerVertical="true"
+                   android:layout_marginLeft="6dp"
+                   android:layout_toRightOf="@+id/img_from_ad"
+                   android:ellipsize="end"
+                   android:gravity="center_vertical"
+                   android:maxLines="1"
+                   android:paddingRight="20dp"
+                   android:text="广告"
+                   android:textColor="@color/b3"
+                   android:textSize="12dp"/>
+
+           </RelativeLayout>
+
+           <TextView
+               android:id="@+id/tv_gamename_ad"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginBottom="@dimen/dp_10"
+               android:layout_marginLeft="@dimen/dp_10"
+               android:clickable="false"
+               android:maxLines="1"
+               android:paddingRight="20dp"
+               android:text=""
+               android:textColor="@color/game_name"
+               android:textSize="@dimen/title_size"/>
+
+           <LinearLayout
+               android:id="@+id/banner"
+               android:background="@color/f5f5f5"
+               android:layout_width="match_parent"
+               android:layout_height="@dimen/recommend_item_game_pic_hight"
+               android:gravity="center"
+               android:orientation="horizontal"
+               >
+           </LinearLayout>
+
+           <TextView
+               android:id="@+id/tv_summary_ad"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginBottom="14.5dp"
+               android:layout_marginLeft="9.5dp"
+               android:layout_marginRight="20dp"
+               android:layout_marginTop="13dp"
+               android:clickable="false"
+               android:ellipsize="end"
+               android:maxLines="2"
+               android:text=""
+               android:textColor="@color/color999999"
+               android:textSize="12dp"/>
+
+           <include layout="@layout/layout_match_parent_line_height10dp"/>
+       </LinearLayout>-->
     <!--........................................................................-->
     <LinearLayout
         android:id="@+id/recommend_head_llay_1"

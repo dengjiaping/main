@@ -16,6 +16,9 @@ import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.hubcloud.adhubsdk.AdListener;
+import com.hubcloud.adhubsdk.AdRequest;
+import com.hubcloud.adhubsdk.AdView;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
@@ -36,6 +39,7 @@ import cn.ngame.store.adapter.RecommendListAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.utils.CommonUtil;
+import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.core.utils.NetUtil;
@@ -227,7 +231,7 @@ public class RecommendFragment extends BaseSearchFragment {
                 this.topList.addAll(resultData);
             }
         }
-        if (result.getData().size() > 0 && pageAction.getCurrentPage() == 0&& list != null) {
+        if (result.getData().size() > 0 && pageAction.getCurrentPage() == 0 && list != null) {
             //第一次进来
             this.list.clear(); //清除数据
             this.topList.clear();
@@ -431,11 +435,11 @@ public class RecommendFragment extends BaseSearchFragment {
         summary_2 = (TextView) view.findViewById(R.id.tv_summary2);
 
         //广告位
-      /*  adContainer = (LinearLayout) view.findViewById(R.id.banner);
-        gamename_ad = (TextView) view.findViewById(R.id.tv_gamename_ad);
-        summary_ad = (TextView) view.findViewById(R.id.tv_summary_ad);//游戏摘要
-        from_img_ad = (SimpleDraweeView) view.findViewById(R.id.img_from_ad);
-        adLayout = (LinearLayout) view.findViewById(R.id.ad_layout);*/
+        //adContainer = (LinearLayout) view.findViewById(R.id.banner);
+        //gamename_ad = (TextView) view.findViewById(R.id.tv_gamename_ad);
+        //summary_ad = (TextView) view.findViewById(R.id.tv_summary_ad);//游戏摘要
+        //from_img_ad = (SimpleDraweeView) view.findViewById(R.id.img_from_ad);
+        adLayout = (LinearLayout) view.findViewById(R.id.ad_layout);
 
         view.findViewById(R.id.recommend_head_llay_0).setOnClickListener(headClickListener);
         view.findViewById(R.id.recommend_head_llay_1).setOnClickListener(headClickListener);
@@ -445,6 +449,66 @@ public class RecommendFragment extends BaseSearchFragment {
         horizontalViewContainer = (LinearLayout) view.findViewById(R.id.horizontalView_container);
         singeTopicsDetailIntent.setClass(context, TopicsDetailActivity.class);
         wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
+
+        //================广告======================
+        //AdHub.initialize(context, Constant.AdHub_APP_ID);
+        final AdView adView = (AdView) view.findViewById(R.id.adView);
+        adView.setAdUnitId(Constant.AdHub_AD_BANNER_ID);
+        android.util.Log.d(TAG, "广告开始: ");
+        if (null != adLayout) {
+            adLayout.setVisibility(View.VISIBLE);
+        }
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                android.util.Log.d(TAG, "onAdLoaded: ");
+            }
+
+            @Override
+            public void onAdShown() {
+                super.onAdShown();
+                android.util.Log.d(TAG, "onAdShown:");
+                if (null != adLayout) {
+                    adLayout.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                super.onAdFailedToLoad(errorCode);
+                android.util.Log.d(TAG, "onAdFailedToLoad: ");
+                if (null != adLayout) {
+                    adLayout.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                super.onAdLeftApplication();
+            }
+
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                android.util.Log.d(TAG, "onAdClosed: ");
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+                android.util.Log.d(TAG, "onAdOpened: ");
+            }
+
+            @Override
+            public void onAdClicked() {
+                super.onAdClicked();
+                android.util.Log.d(TAG, "onAdClicked: ");
+            }
+        });
+        final AdRequest adRequest = new AdRequest.Builder().build();
+        //建议使用此方法调用loadAd方法
+        adView.loadAd(adRequest);
     }
 
     //头部点击
@@ -513,7 +577,11 @@ public class RecommendFragment extends BaseSearchFragment {
         summary_2.setText(dataBean1.getRecommend());
 
         //广告
-        //setAdView();
+        setAdView();
+    }
+
+    private void setAdView() {
+
     }
 
     /**
@@ -606,12 +674,10 @@ public class RecommendFragment extends BaseSearchFragment {
     }*/
     @Override
     protected void onFirstUserVisible() {
-        Log.d(TAG, "onUserVisible:当前 " + pageAction.getCurrentPage());
     }
 
     @Override
     protected void onUserVisible() {
-        Log.d(TAG, "onUserVisible:当前 " + pageAction.getCurrentPage());
     }
 
     @Override
