@@ -418,6 +418,63 @@ public class RecommendFragment extends BaseSearchFragment {
 
     //顶部2个位置
     private void initHeadView(View view) {
+
+        //================广告 开始======================
+        final AdView adView = (AdView) view.findViewById(R.id.adView);
+        adView.setAdUnitId(Constant.AdHub_AD_BANNER_ID);
+        final AdRequest adRequest = new AdRequest.Builder().build();
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                android.util.Log.d(TAG, "onAdLoaded: ");
+            }
+
+            @Override
+            public void onAdShown() {
+                super.onAdShown();
+                android.util.Log.d(TAG, "onAdShown:");
+                if (null != adLayout) {
+                    adLayout.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                super.onAdFailedToLoad(errorCode);
+                android.util.Log.d(TAG, "onAdFailedToLoad: ");
+                if (null != adLayout&&NetUtil.isNetworkConnected(context) ) {
+                    adLayout.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                super.onAdLeftApplication();
+            }
+
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                android.util.Log.d(TAG, "onAdClosed: ");
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+                android.util.Log.d(TAG, "onAdOpened: ");
+            }
+
+            @Override
+            public void onAdClicked() {
+                super.onAdClicked();
+                android.util.Log.d(TAG, "onAdClicked: ");
+            }
+        });
+        //建议使用此方法调用loadAd方法
+        adView.loadAd(adRequest);
+        //================广告 结束======================
+
         from_img_1 = (SimpleDraweeView) view.findViewById(R.id.img_from_1);//来自 头像
         from_img_2 = (SimpleDraweeView) view.findViewById(R.id.img_from_2);
 
@@ -449,66 +506,6 @@ public class RecommendFragment extends BaseSearchFragment {
         horizontalViewContainer = (LinearLayout) view.findViewById(R.id.horizontalView_container);
         singeTopicsDetailIntent.setClass(context, TopicsDetailActivity.class);
         wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
-
-        //================广告======================
-        //AdHub.initialize(context, Constant.AdHub_APP_ID);
-        final AdView adView = (AdView) view.findViewById(R.id.adView);
-        adView.setAdUnitId(Constant.AdHub_AD_BANNER_ID);
-        android.util.Log.d(TAG, "广告开始: ");
-        if (null != adLayout) {
-            adLayout.setVisibility(View.VISIBLE);
-        }
-        adView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                android.util.Log.d(TAG, "onAdLoaded: ");
-            }
-
-            @Override
-            public void onAdShown() {
-                super.onAdShown();
-                android.util.Log.d(TAG, "onAdShown:");
-                if (null != adLayout) {
-                    adLayout.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                super.onAdFailedToLoad(errorCode);
-                android.util.Log.d(TAG, "onAdFailedToLoad: ");
-                if (null != adLayout) {
-                    adLayout.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                super.onAdLeftApplication();
-            }
-
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-                android.util.Log.d(TAG, "onAdClosed: ");
-            }
-
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-                android.util.Log.d(TAG, "onAdOpened: ");
-            }
-
-            @Override
-            public void onAdClicked() {
-                super.onAdClicked();
-                android.util.Log.d(TAG, "onAdClicked: ");
-            }
-        });
-        final AdRequest adRequest = new AdRequest.Builder().build();
-        //建议使用此方法调用loadAd方法
-        adView.loadAd(adRequest);
     }
 
     //头部点击
