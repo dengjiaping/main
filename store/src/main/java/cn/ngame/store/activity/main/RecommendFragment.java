@@ -16,9 +16,12 @@ import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.hubcloud.adhubsdk.AdListener;
-import com.hubcloud.adhubsdk.AdRequest;
-import com.hubcloud.adhubsdk.AdView;
+import com.hubcloud.adhubsdk.NativeAd;
+import com.hubcloud.adhubsdk.NativeAdListener;
+import com.hubcloud.adhubsdk.NativeAdResponse;
+import com.hubcloud.adhubsdk.internal.nativead.NativeAdEventListener;
+import com.hubcloud.adhubsdk.internal.nativead.NativeAdUtil;
+import com.hubcloud.adhubsdk.internal.network.ServerResponse;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
@@ -79,6 +82,9 @@ public class RecommendFragment extends BaseSearchFragment {
     private Picasso picasso;
     private LinearLayout adContainer;
     private LinearLayout adLayout;
+    private LinearLayout parent;
+    private LinearLayout ad_container;
+    private ImageView adIv;
 
     public static RecommendFragment newInstance(int arg) {
         RecommendFragment fragment = new RecommendFragment();
@@ -420,59 +426,13 @@ public class RecommendFragment extends BaseSearchFragment {
     private void initHeadView(View view) {
 
         //================广告 开始======================
-        final AdView adView = (AdView) view.findViewById(R.id.adView);
-        adView.setAdUnitId(Constant.AdHub_AD_BANNER_ID);
-        final AdRequest adRequest = new AdRequest.Builder().build();
-        adView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                android.util.Log.d(TAG, "onAdLoaded: ");
-            }
-
-            @Override
-            public void onAdShown() {
-                super.onAdShown();
-                android.util.Log.d(TAG, "onAdShown:");
-                if (null != adLayout) {
-                    adLayout.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                super.onAdFailedToLoad(errorCode);
-                android.util.Log.d(TAG, "onAdFailedToLoad: ");
-                if (null != adLayout&&NetUtil.isNetworkConnected(context) ) {
-                    adLayout.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                super.onAdLeftApplication();
-            }
-
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-                android.util.Log.d(TAG, "onAdClosed: ");
-            }
-
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-                android.util.Log.d(TAG, "onAdOpened: ");
-            }
-
-            @Override
-            public void onAdClicked() {
-                super.onAdClicked();
-                android.util.Log.d(TAG, "onAdClicked: ");
-            }
-        });
-        //建议使用此方法调用loadAd方法
-        adView.loadAd(adRequest);
+        adLayout = (LinearLayout) view.findViewById(R.id.ad_layout);
+        //广告位
+        adIv = (ImageView) view.findViewById(R.id.recommend_game_pic_ad);
+        gamename_ad = (TextView) view.findViewById(R.id.tv_gamename_ad);
+        summary_ad = (TextView) view.findViewById(R.id.tv_summary_ad);//游戏摘要
+        from_img_ad = (SimpleDraweeView) view.findViewById(R.id.img_from_ad);
+        fetchAd();
         //================广告 结束======================
 
         from_img_1 = (SimpleDraweeView) view.findViewById(R.id.img_from_1);//来自 头像
@@ -491,13 +451,6 @@ public class RecommendFragment extends BaseSearchFragment {
         summary_1 = (TextView) view.findViewById(R.id.tv_summary1);//游戏摘要
         summary_2 = (TextView) view.findViewById(R.id.tv_summary2);
 
-        //广告位
-        //adContainer = (LinearLayout) view.findViewById(R.id.banner);
-        //gamename_ad = (TextView) view.findViewById(R.id.tv_gamename_ad);
-        //summary_ad = (TextView) view.findViewById(R.id.tv_summary_ad);//游戏摘要
-        //from_img_ad = (SimpleDraweeView) view.findViewById(R.id.img_from_ad);
-        adLayout = (LinearLayout) view.findViewById(R.id.ad_layout);
-
         view.findViewById(R.id.recommend_head_llay_0).setOnClickListener(headClickListener);
         view.findViewById(R.id.recommend_head_llay_1).setOnClickListener(headClickListener);
         view.findViewById(R.id.recommend_topics_more_tv).setOnClickListener(headClickListener);
@@ -506,6 +459,78 @@ public class RecommendFragment extends BaseSearchFragment {
         horizontalViewContainer = (LinearLayout) view.findViewById(R.id.horizontalView_container);
         singeTopicsDetailIntent.setClass(context, TopicsDetailActivity.class);
         wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
+    }
+
+    private void fetchAd() {
+        final NativeAd nativeAd = new NativeAd(context, Constant.AdHub_AD_NATIVE_ID, new NativeAdListener() {
+
+            @Override
+            public void onAdFailed(int errorcode) {
+                android.util.Log.d(TAG, "获取广告失败:onAdFailed: "+errorcode);
+            }
+
+            @Override
+            public void onAdLoaded(NativeAdResponse response) {
+                adLayout.setVisibility(View.VISIBLE);
+                // 一个广告只允许展现一次，多次展现、点击只会计入一次
+                // demo仅简单地显示一条。可将返回的多条广告保存起来备用。
+               // updateView(response);
+                //返回设置的广告的多个图片的URL，SDK并未处理加载urls里面的图片，需要集成者自己去加载展示
+                ArrayList<String> imageUrls = response.getImageUrls();
+                android.util.Log.d(TAG, "广告-大图: "+imageUrls.get(0));
+                if (imageUrls!=null&&imageUrls.size()>0) {
+                    picasso.load(imageUrls.get(0)).placeholder(R.drawable.ic_def_logo_720_288)
+                            .error(R.drawable.ic_def_logo_720_288)
+                            // .resize(screenWidth,150)
+                            .into(adIv);
+                }
+                //返回设置的广告的多个视频流的URL，SDK并未处理加载urls里面的视频，需要集成者自己去加载展示
+               // ArrayList<String> vedioUrls = response.getVedioUrls();
+                //返回设置的广告的多个文本信息
+                ArrayList<String> texts = response.getTexts();
+                android.util.Log.d(TAG, "广告成功: "+texts.size());
+
+
+                //根据广告法新规定，必须加入广告标识和广告来源。此处返回广告字样及广告来源标识图片。需要开发者分别放置于广告左下和右下角
+                //sdk内部提供了NativeAdUtil.addADLogo（View v，NativeAdResponse response）方法，可以将一个view加上logo并返回一个加入了logo的FrameLayout替代原本无logo的view;
+                //注意若传入此方法的view之前已经有父view，调用了此方法之后原来的view会从父view中移除，须将方法返回的framelayout加入之前view的父view之中。
+                //若此方法不满足要求，请开发者自己实现加入logo及广告字样。具体请参考本样例及样例效果
+                // ServerResponse.AdLogoInfo结构
+                // public static class AdLogoInfo {
+                //    public static int TYPE_PIC = 0;
+                //    public static int TYPE_TEXT = 1;
+                //    String adurl;
+                //    int type = 0;
+                //    }
+                //其中属性type为广告表示的类型共2种：图片和文字，如果type==TYPE_PIC则属性adurl是图片的url
+                //如果是type==TYPE_TEXT则属性adurl是文字字符串
+                //广告字样
+                ServerResponse.AdLogoInfo adUrl = response.getAdUrl();//广告2个字的那个图
+                android.util.Log.d(TAG, "广告-来源描述: "+adUrl.getAdurl());
+                //广告来源标识
+                ServerResponse.AdLogoInfo adLogoInfo = response.getlogoUrl();
+                android.util.Log.d(TAG, "广告-来源图标: "+adLogoInfo.getAdurl());
+                if (adLogoInfo!=null) {
+                    from_img_ad.setImageURI(adLogoInfo.getAdurl());//来自...头像
+                }
+                //注册原生广告展示及点击曝光，必须调用。
+                NativeAdUtil.registerTracking(response, adLayout, new NativeAdEventListener() {
+                    @Override
+                    public void onAdWasClicked() {
+                    }
+
+                    @Override
+                    public void onAdWillLeaveApplication() {
+                    }
+                });
+            }
+        });
+        //此方法已过时，请不要使用。SDK不再为接入者下载资源图片
+        //nativeAd.shouldLoadIcon(true);
+        //此方法已过时，请不要使用。SDK不再为接入者下载资源图片
+        //nativeAd.shouldLoadImage(true);
+        nativeAd.loadAd();
+
     }
 
     //头部点击
@@ -563,6 +588,7 @@ public class RecommendFragment extends BaseSearchFragment {
         if (null == dataBean1) {
             return;
         }
+        android.util.Log.d(TAG, "ggg: "+dataBean1.getGameRecommendImg());
         picasso.load(dataBean1.getGameRecommendImg()).placeholder(R.drawable.ic_def_logo_720_288)
                 .error(R.drawable.ic_def_logo_720_288)
                 // .resize(screenWidth,150)

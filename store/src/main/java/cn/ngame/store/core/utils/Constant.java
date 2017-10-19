@@ -312,7 +312,7 @@ public class Constant {
     public static final String FILE_NAME_SD_CRAD_APP_PKGNAME = "file_name_sd_crad_app_pkgname";
     public static final String AdHub_APP_ID = "1172";
     public static final String AdHub_AD_BEGIN_ID = "3140";
-    public static final String AdHub_AD_BANNER_ID = "3174";
+    public static final String AdHub_AD_NATIVE_ID = "3177";//3180
     public static final long AD_PlacementID_BeginActivity = 1507004826745L;
     public static final long AD_PlacementID_RecommendFragment = 1504668848699L;
 }
