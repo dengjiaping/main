@@ -286,20 +286,9 @@ public class Constant {
      * 文件的存在状态 value = status
      */
     public static final String STATUS = "status";
-
-
-    /**
-     * 网络未连接
-     */
-    public static final int NET_STATUS_DISCONNECT = 0x0010;
-    /**
-     * 4G状态连接
-     */
-    public static final int NET_STATUS_4G = 0x0011;
-    /**
-     * wifi状态连接
-     */
-    public static final int NET_STATUS_WIFI = 0x0012;
+    public static final int NET_STATUS_DISCONNECT = 0x0010;//网络未连接
+    public static final int NET_STATUS_4G = 0x0011;// 4G状态连接
+    public static final int NET_STATUS_WIFI = 0x0012;//WIFI状态
     public static final String APP_TYPE_ID_0_ANDROID = "0";
     public static final String URL_FORGOT_REGIST_SMS_CODE = "/user/SMSAuthenticationCode";
     public static final String URL_MODIFY_USER_DATA = "/user/modifyUserData";
@@ -312,7 +301,7 @@ public class Constant {
     public static final String FILE_NAME_SD_CRAD_APP_PKGNAME = "file_name_sd_crad_app_pkgname";
     public static final String AdHub_APP_ID = "1172";
     public static final String AdHub_AD_BEGIN_ID = "3140";
-    public static final String AdHub_AD_NATIVE_ID = "3177";//3180
+    public static final String AdHub_AD_NATIVE_ID = "3190";//3177
     public static final long AD_PlacementID_BeginActivity = 1507004826745L;
     public static final long AD_PlacementID_RecommendFragment = 1504668848699L;
 }
