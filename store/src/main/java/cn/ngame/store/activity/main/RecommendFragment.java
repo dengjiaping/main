@@ -480,7 +480,6 @@ public class RecommendFragment extends BaseSearchFragment {
                     return;
                 }
                 ArrayList<String> imageUrls = response.getImageUrls();
-                android.util.Log.d(TAG, "广告-大图: " + response.getIcon());
                 if (imageUrls != null && imageUrls.size() > 0) {
                     picasso.load(imageUrls.get(0)).placeholder(R.drawable.ic_def_logo_720_288)
                             .error(R.drawable.ic_def_logo_720_288)
@@ -604,12 +603,6 @@ public class RecommendFragment extends BaseSearchFragment {
         gamename_2.setText(dataBean1.getGameName());
         from_2.setText("来自" + dataBean1.getRecommender());
         summary_2.setText(dataBean1.getRecommend());
-
-        //广告
-        setAdView();
-    }
-
-    private void setAdView() {
 
     }
 
