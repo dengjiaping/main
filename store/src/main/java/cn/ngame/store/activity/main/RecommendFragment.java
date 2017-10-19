@@ -515,10 +515,8 @@ public class RecommendFragment extends BaseSearchFragment {
                 //如果是type==TYPE_TEXT则属性adurl是文字字符串
                 //广告字样
                 ServerResponse.AdLogoInfo adUrl = response.getAdUrl();//广告2个字的那个图
-                android.util.Log.d(TAG, adUrl.getType() + "广告-来源描述: " + adUrl.getAdurl());
                 //广告来源标识
                 ServerResponse.AdLogoInfo adLogoInfo = response.getlogoUrl();
-                android.util.Log.d(TAG, adLogoInfo.getType() + "广告-来源图标: " + adLogoInfo.getAdurl());
                 if (adLogoInfo != null) {
                     from_img_ad.setImageURI(adLogoInfo.getAdurl());//来自...头像
                 }
