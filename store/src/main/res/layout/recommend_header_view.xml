@@ -146,11 +146,29 @@
             android:textColor="@color/game_name"
             android:textSize="@dimen/title_size"/>
 
-        <ImageView
-            android:id="@+id/recommend_game_pic_ad"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/recommend_item_game_pic_hight"
-            android:scaleType="fitXY"/>
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/recommend_game_pic_ad"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/recommend_item_game_pic_hight"
+                android:scaleType="fitXY"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="广告"
+                android:layout_alignParentBottom="true"
+                android:padding="@dimen/dm020"
+                android:textColor="@color/white"
+                android:textSize="12dp"/>
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_summary_ad"
@@ -168,21 +186,22 @@
             android:textSize="12dp"/>
 
         <include layout="@layout/layout_match_parent_line_height10dp"/>
-    </LinearLayout>-->
-       <!-- <TextView
-            android:id="@+id/tv_summary_ad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+    </LinearLayout>
+    -->
+    <!-- <TextView
+         android:id="@+id/tv_summary_ad"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
 
-            android:layout_marginLeft="9.5dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="13dp"
-            android:clickable="false"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text=""
-            android:textColor="@color/color999999"
-            android:textSize="12dp"/>
+         android:layout_marginLeft="9.5dp"
+         android:layout_marginRight="20dp"
+         android:layout_marginTop="13dp"
+         android:clickable="false"
+         android:ellipsize="end"
+         android:maxLines="2"
+         android:text=""
+         android:textColor="@color/color999999"
+         android:textSize="12dp"/>
 -->
     <!--........................................................................-->
     <!--广告-->
