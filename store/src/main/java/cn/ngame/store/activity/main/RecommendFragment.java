@@ -486,7 +486,7 @@ public class RecommendFragment extends BaseSearchFragment {
                             // .resize(screenWidth,150)
                             .into(adIv);
                 }
-                //返回设置的广告的多个视频流的URL，SDK并未处理加载urls里面的视频，需要集成者自己去加载展示
+                //返回设置的广告的多个视频流的URL，SDK并未处理加载urls里面的视频，需要集成者自己去加载展示`
                 // ArrayList<String> vedioUrls = response.getVedioUrls();
                 //广告====标题
                 String title = response.getHeadline();
