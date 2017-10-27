@@ -262,14 +262,14 @@ public class Rank012345Fragment extends BaseSearchFragment {
     }
 
     //第一级标签                        全部,手柄,破解,汉化,特色,模拟器
-    private int tab_ids[] = new int[]{0, 101, 102, 103, 104, 106,IMITATOR_ID};
+    private int tab_ids[] = new int[]{0, 101, 102, 103, 104, 106, IMITATOR_ID};
     private String tabList[] = new String[]{"全部", "大陆", "美国", "韩国", "日本", "港澳台"};
     private int tab2_Id01234[] = new int[]{0, 147, 149, 151, 150, 148};
 
-    private String tabList5[] = new String[]{"NDS"};
-    //private String tabList5[] = new String[]{"NDS","FC", "MAME", "SFC", "GBA", "PS", "PSP", "MD", "GBC"};
-    //private int tab2_id5[] = new int[]{162,154, 155, 156, 157, 158, 159, 160, 161};
-    private int tab2_id5[] = new int[]{162};
+    //private String tabList5[] = new String[]{"NDS"};
+    private String tabList5[] = new String[]{"NDS", "FC", "MAME", "SFC", "GBA", "PS", "PSP", "MD", "GBC"};
+    private int tab2_id5[] = new int[]{162, 154, 155, 156, 157, 158, 159, 160, 161};
+    //private int tab2_id5[] = new int[]{162};
     private int tab2_all[];
 
     //顶部下面的二级标签
@@ -305,7 +305,8 @@ public class Rank012345Fragment extends BaseSearchFragment {
             ViewGroup view = (ViewGroup) viewGroup.getChildAt(i);
             TextView textView = (TextView) view.getChildAt(1);
             textView.setTextSize(getResources().getDimensionPixelSize(R.dimen.dm012));
-            textView.setWidth(1 == i ? dp42 + dp20 / 2 : dp42);
+            textView.setSingleLine(true);
+            textView.setWidth(2 == i ? dp42 + dp42/3 : dp42);
             textView.setHeight(dp20);
             textView.setBackgroundResource(R.drawable.selector_rank5_tab2_bg);
         }
