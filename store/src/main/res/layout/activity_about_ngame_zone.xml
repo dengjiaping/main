@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
-                android:text="更新日期：2017.10.13"
+                android:text="更新日期：2017.10.27"
                 android:textColor="@color/color_1a"
                 android:textSize="@dimen/dp_16"
                 />
