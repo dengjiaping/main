@@ -70,7 +70,12 @@ public class Rank012345Fragment extends BaseSearchFragment {
                     tabAt.select();
                     list.clear();
                     adapter.setList(list);
-                    tab2_position = 0;
+                    Log.d(TAG, "索引777: " + tab_position);
+                    if (tab_position == IMITATOR_ID) {
+                        tab2_position = NDS_ID;
+                    } else {
+                        tab2_position = 0;
+                    }
                 }
             }
             if (tab_position == 0 && tab2_position == 0) {
@@ -91,6 +96,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
     private int tab2_position = 0;
     private FragmentManager fm;
     private LoadStateView loadStateView;
+    private int NDS_ID = 162;
 
     public static Rank012345Fragment newInstance(int type) {
         Rank012345Fragment fragment = new Rank012345Fragment(0);
@@ -191,7 +197,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
             tablayout2 = (TabLayout) view.findViewById(R.id.rank01234_tablayout);
             if (IMITATOR_ID == tab_position) {
                 //默认FC的id
-                tab2_position = 50;
+                tab2_position = NDS_ID;
                 int length = tabList5.length;
                 for (int i = 0; i < length; i++) {
                     tablayout2.addTab(tablayout2.newTab().setText(tabList5[i]));
@@ -306,7 +312,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
             TextView textView = (TextView) view.getChildAt(1);
             textView.setTextSize(getResources().getDimensionPixelSize(R.dimen.dm012));
             textView.setSingleLine(true);
-            textView.setWidth(2 == i ? dp42 + dp42/3 : dp42);
+            textView.setWidth(2 == i ? dp42 + dp42 / 3 : dp42);
             textView.setHeight(dp20);
             textView.setBackgroundResource(R.drawable.selector_rank5_tab2_bg);
         }
