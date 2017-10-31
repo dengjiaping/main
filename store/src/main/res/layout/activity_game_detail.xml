@@ -337,5 +337,21 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/title_size"
             />
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:ellipsize="end"
+            android:id="@+id/shareBtClick"
+            android:focusableInTouchMode="true"
+            android:maxLines="1"
+            android:src="@drawable/umeng_socialize_share_web"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_size"
+            />
+
     </RelativeLayout>
 </FrameLayout>

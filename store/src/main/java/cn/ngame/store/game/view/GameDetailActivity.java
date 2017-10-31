@@ -1,6 +1,7 @@
 package cn.ngame.store.game.view;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +33,14 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
+import com.umeng.socialize.shareboard.SnsPlatform;
+import com.umeng.socialize.utils.ShareBoardlistener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -118,6 +127,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private boolean isPrecented = false;
     private FragmentManager fm;
     private TextView gameType0, gameType1, gameType2, gameType3;
+    private UMImage mUMImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,6 +179,39 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         likeIv.setOnClickListener(gameDetailClickListener);
         feedbackTv.setOnClickListener(gameDetailClickListener);
         percentageTv.setOnClickListener(gameDetailClickListener);
+        findViewById(R.id.shareBtClick).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (gameInfo == null) {
+                    //资源文件
+                    mUMImage = new UMImage(content, R.drawable.ic_launcher);
+                } else {
+                    mUMImage = new UMImage(content, gameInfo.gameLogo);//资源文件
+                }
+                final UMWeb web = new UMWeb("http://sj.qq.com/myapp/detail.htm?apkName=cn.ngame.store");
+                //final UMWeb web = new UMWeb("http://m.app.so.com/detail/index?pname=cn.ngame.store&id=3419150");
+                web.setTitle(gameName);
+                web.setThumb(mUMImage);//缩略图
+                web.setDescription(getString(R.string.share_description));//描述
+
+                new ShareAction(content).setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA
+                        .WEIXIN, SHARE_MEDIA.SINA).setShareboardclickCallback(new ShareBoardlistener() {
+                    @Override
+                    public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
+                        Log.d(TAG,  "平台:" + share_media);
+                        if (share_media != null) {
+                            new ShareAction(content).setPlatform(share_media).withMedia(web).setCallback(umShareListener).share();
+                        }
+                    }
+                }).open();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 
     private String TAG = GameDetailActivity.class.getSimpleName();
@@ -178,6 +221,78 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         super.onStart();
         hasStop = false;
     }
+
+    public void shareBtClick(View view) {
+        Log.d(TAG, "分享");
+        if (gameInfo == null) {
+            //资源文件
+            mUMImage = new UMImage(content, R.drawable.ic_launcher);
+        } else {
+            mUMImage = new UMImage(content, gameInfo.gameLogo);//资源文件
+        }
+
+
+        final UMWeb web = new UMWeb("http://m.app.so.com/detail/index?pname=cn.ngame.store&id=3419150");
+        //UMWeb web = new UMWeb("http://sj.qq.com/myapp/detail.htm?apkName=cn.ngame.store");
+        web.setTitle(gameName);
+        web.setThumb(mUMImage);//缩略图
+        web.setDescription(getString(R.string.share_description));//描述
+
+        new ShareAction(content).setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA
+                .WEIXIN, SHARE_MEDIA.SINA).setShareboardclickCallback(new ShareBoardlistener() {
+            @Override
+            public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
+                Log.d(TAG, snsPlatform + "平台" + share_media);
+                Log.d(TAG, share_media.equals(SHARE_MEDIA.QQ) + "");
+                if (share_media != null) {
+                    new ShareAction(content).setPlatform(share_media).withMedia(web).setCallback(umShareListener).share();
+                }
+            }
+        }).open();
+    }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        /**
+         * @descrption 分享开始的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+
+        }
+
+        /**
+         * @descrption 分享成功的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Log.d(TAG, "分享成功了: ");
+            Toast.makeText(content, "成功了", Toast.LENGTH_LONG).show();
+        }
+
+        /**
+         * @descrption 分享失败的回调
+         * @param platform 平台类型
+         * @param t 错误原因
+         */
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Log.d(TAG, "分享失败了: ");
+            Toast.makeText(content, "失败" + t.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        /**
+         * @descrption 分享取消的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Log.d(TAG, "分享取消了: ");
+            Toast.makeText(content, "取消了", Toast.LENGTH_LONG).show();
+
+        }
+    };
 
     //设置数据
     private void setView() {
@@ -849,5 +964,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             timer.cancel();
         }
         hasStop = true;
+        UMShareAPI.get(this).release();
     }
+
+
 }

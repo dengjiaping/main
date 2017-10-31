@@ -81,7 +81,7 @@ public class StoreApplication extends MultiDexApplication {
         UMShareAPI.get(this);
         initUmengKey();
         Log.setLevel(Log.ERROR);    //设置Log打印级别
-        Config.DEBUG = false;
+        Config.DEBUG = true;
 
         //广告SDK 初始化
         AdHub.initialize(this, Constant.AdHub_APP_ID);
@@ -90,7 +90,7 @@ public class StoreApplication extends MultiDexApplication {
     private void initUmengKey() {
         PlatformConfig.setWeixin("wxc3fd944502f63476", "15cc8fe486352fee6aac537f3f033066");
         PlatformConfig.setQQZone("1105610048", "cRaNEPSsHj95Ay9p");
-        //PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad", "http://sns.whalecloud.com");
+        PlatformConfig.setSinaWeibo("3533498134", "28073913cd2521023ef4fcd9bdde88bf", "http://www.ngame.cn/views/platform.html");
 
     }
 

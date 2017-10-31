@@ -185,8 +185,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:paddingRight="5dp"
             android:gravity="center_vertical"
+            android:paddingRight="5dp"
             android:text="立即注册"
             android:textColor="#99ccff"
             android:textSize="@dimen/dp_14"/>
@@ -206,7 +206,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="@dimen/dp_30"
-            android:layout_marginLeft="@dimen/dm190"
+            android:layout_marginLeft="@dimen/dm100"
             android:scaleType="centerInside"
             android:src="@drawable/user_qq"/>
 
@@ -215,22 +215,22 @@
             android:layout_width="@dimen/dp_45"
             android:layout_height="@dimen/dp_45"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/dp_30"
-            android:layout_marginRight="@dimen/dm190"
             android:scaleType="centerInside"
             android:src="@drawable/user_wechat"/>
 
         <ImageView
             android:id="@+id/login_sina_bt"
-            android:layout_width="@dimen/dp_42"
-            android:layout_height="@dimen/dp_42"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="@dimen/dp_45"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             android:layout_marginBottom="@dimen/dp_30"
-            android:layout_toRightOf="@id/login_wechat_bt"
+            android:layout_marginRight="@dimen/dm100"
             android:scaleType="centerInside"
             android:src="@drawable/user_weibo"
-            android:visibility="gone"/>
+            />
 
         <RelativeLayout
             android:layout_width="match_parent"
