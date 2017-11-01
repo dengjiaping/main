@@ -339,8 +339,8 @@
             />
 
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:clickable="true"
@@ -348,7 +348,11 @@
             android:id="@+id/shareBtClick"
             android:focusableInTouchMode="true"
             android:maxLines="1"
-            android:src="@drawable/umeng_socialize_share_web"
+            android:paddingTop="@dimen/dm035"
+            android:paddingLeft="@dimen/dm010"
+            android:paddingRight="@dimen/dp_20"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_game_detail_share"
             android:textColor="@android:color/white"
             android:textSize="@dimen/title_size"
             />
