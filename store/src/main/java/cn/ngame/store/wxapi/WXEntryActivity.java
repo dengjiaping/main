@@ -6,4 +6,4 @@ package cn.ngame.store.wxapi;
 import com.umeng.socialize.weixin.view.WXCallbackActivity;
 
 public class WXEntryActivity extends WXCallbackActivity {
-}
+        }

@@ -204,7 +204,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                                     new ShareAction(content).setPlatform(share_media).withMedia(web).setCallback
                                             (umShareListener).share();
                                 } else {
-                                    ToastUtil.show(content,"未安装该应用哦~");
+                                    ToastUtil.show(content, "未安装该应用哦~");
                                 }
                             }
                         }).open();
@@ -282,8 +282,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
          */
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-            if (t!=null&&t.getMessage().contains("错误码：2008 错误信息：没有安装应用")) {
-                ToastUtil.show(content,"未安装该应用哦~");
+            if (t != null && t.getMessage().contains("错误码：2008 错误信息：没有安装应用")) {
+                ToastUtil.show(content, "未安装该应用哦~");
             }
         }
 
@@ -294,7 +294,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         @Override
         public void onCancel(SHARE_MEDIA platform) {
             Log.d(TAG, "分享取消了: ");
-           // Toast.makeText(content, "分享取消", Toast.LENGTH_LONG).show();
+            // Toast.makeText(content, "分享取消", Toast.LENGTH_LONG).show();
         }
     };
 
