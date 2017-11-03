@@ -551,6 +551,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
 
     @Override
     public void changeLayoutHeight(int height) {
+        Log.d(TAG, "高度:" + height);
         ViewGroup.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
                 .LayoutParams.MATCH_PARENT);
         layoutParams.height = height;

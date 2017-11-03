@@ -8,96 +8,99 @@
               android:padding="@dimen/dm040">
 
     <TextView
+        android:id="@+id/strategy_title_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/read_1"
+        android:text=""
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/dm016"
         android:textColor="@color/color_4d4d4d"
         android:textSize="@dimen/dm030"
         />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dm016"
-        android:lineSpacingExtra="@dimen/dm010"
-        android:text="@string/read_text1"
-        android:textColor="@color/color_666666"
-        android:textSize="@dimen/dm024"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dm040"
-        android:text="@string/read_2"
-        android:textColor="@color/color_4d4d4d"
-        android:textSize="@dimen/dm030"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dm016"
-        android:text="@string/read_text2"
-        android:lineSpacingExtra="@dimen/dm010"
-        android:textColor="@color/color_666666"
-        android:textSize="@dimen/dm024"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dm040"
-        android:text="@string/read_3"
-        android:textColor="@color/color_4d4d4d"
-        android:textSize="@dimen/dm030"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dm016"
-        android:text="@string/read_text3"
-        android:lineSpacingExtra="@dimen/dm010"
-        android:textColor="@color/color_666666"
-        android:textSize="@dimen/dm024"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dm040"
-        android:text="@string/read_4"
-        android:textColor="@color/color_4d4d4d"
-        android:textSize="@dimen/dm030"
-        />
-
-    <TextView
+        android:id="@+id/strategy_content_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="@dimen/dm010"
-        android:layout_marginTop="@dimen/dm016"
-        android:text="@string/read_text4"
+        android:text=""
         android:textColor="@color/color_666666"
         android:textSize="@dimen/dm024"
         />
+    <!--
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dm040"
+            android:text="@string/read_2"
+            android:textColor="@color/color_4d4d4d"
+            android:textSize="@dimen/dm030"
+            />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dm040"
-        android:text="@string/read_5"
-        android:textColor="@color/color_4d4d4d"
-        android:textSize="@dimen/dm030"
-        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dm016"
+            android:text="@string/read_text2"
+            android:lineSpacingExtra="@dimen/dm010"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dm024"
+            />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dm016"
-        android:text="@string/read_text5"
-        android:lineSpacingExtra="@dimen/dm010"
-        android:textColor="@color/color_666666"
-        android:textSize="@dimen/dm024"
-        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dm040"
+            android:text="@string/read_3"
+            android:textColor="@color/color_4d4d4d"
+            android:textSize="@dimen/dm030"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dm016"
+            android:text="@string/read_text3"
+            android:lineSpacingExtra="@dimen/dm010"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dm024"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dm040"
+            android:text="@string/read_4"
+            android:textColor="@color/color_4d4d4d"
+            android:textSize="@dimen/dm030"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="@dimen/dm010"
+            android:layout_marginTop="@dimen/dm016"
+            android:text="@string/read_text4"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dm024"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dm040"
+            android:text="@string/read_5"
+            android:textColor="@color/color_4d4d4d"
+            android:textSize="@dimen/dm030"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dm016"
+            android:text="@string/read_text5"
+            android:lineSpacingExtra="@dimen/dm010"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dm024"
+            />-->
 </LinearLayout>

@@ -39,8 +39,11 @@ public class GameReadFragment extends Fragment {
     public static final String TAG = GameReadFragment.class.getSimpleName();
 
     private static GameReadFragment gameStrategyFragment = null;
+    private TextView titleTv;
+    private TextView contentTv;
 
     public static GameReadFragment newInstance(GameInfo gameInfo) {
+        android.util.Log.d(TAG, "newInstance: "+gameInfo);
         GameReadFragment fragment = new GameReadFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(GameInfo.TAG, gameInfo);
@@ -51,37 +54,39 @@ public class GameReadFragment extends Fragment {
     private Activity context;
     private GameInfo gameInfo;
 
-    private TextView tv_content;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //获取初始参数
-        //gameInfo = (GameInfo) getArguments().getSerializable(GameInfo.TAG);
+        android.util.Log.d(TAG, "onCreate000 : ");
+        gameInfo = (GameInfo) getArguments().getSerializable(GameInfo.TAG);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         context = getActivity();
-
-        View rootLayout = inflater.inflate(R.layout.fragment_game_strategy, container, false);
-    /*    tv_content = (TextView) rootLayout.findViewById(R.id.tv_summary);
-
+        android.util.Log.d(TAG, "onCreateView7777: " + gameInfo);
+        View view = inflater.inflate(R.layout.fragment_game_strategy, container, false);
+        titleTv = (TextView) view.findViewById(R.id.strategy_title_tv);
+        contentTv = (TextView) view.findViewById(R.id.strategy_content_tv);
         if (gameInfo != null && gameInfo.gameStrategy != null) {
-            tv_content.setText(gameInfo.gameStrategy.getStrategyContent());
-            getData();
-        }*/
-
-
-        return rootLayout;
+            GameStrategy gameStrategy = gameInfo.gameStrategy;
+            android.util.Log.d(TAG, "有数据: "+gameStrategy);
+            titleTv.setText("");
+            String strategyContent = gameStrategy.getStrategyContent();
+            contentTv.setText(strategyContent == null ? "" : strategyContent);
+            //getData();
+        } else {
+            android.util.Log.d(TAG, "无数据: "+gameInfo);
+            contentTv.setText("无数据");
+        }
+        return view;
     }
 
     /**
      * 获取攻略
      */
     private void getData() {
-
         String url = Constant.WEB_SITE + Constant.URL_GAME_STRATEGY;
         Response.Listener<JsonResult<GameStrategy>> successListener = new Response.Listener<JsonResult<GameStrategy>>() {
             @Override
@@ -91,13 +96,12 @@ public class GameReadFragment extends Fragment {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误！");
                 }
                 GameStrategy strategy = result.data;
-                if (strategy != null) {
 
-                    tv_content.setText(strategy.getStrategyContent());
+                if (strategy != null) {
+                    Log.d(TAG, "请求成功");
 
                 } else {
                     Log.d(TAG, "正在整理中...");
-                    tv_content.setText("正在整理中...");
                 }
             }
         };
