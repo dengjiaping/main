@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.Gravity;
@@ -477,25 +476,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         tablayout.setupWithViewPager(viewpager);
         tablayout.setTabMode(TabLayout.MODE_FIXED); //固定模式
         tablayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (position == 1) {
-                Log.d(TAG, "选中:" + position);
-                    viewpager.resetHeight(100);
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 /*        //中间加分隔线
         for (int i = 0; i < viewGroup.getChildCount(); i++) {
             ViewGroup view = (ViewGroup) viewGroup.getChildAt(i);
