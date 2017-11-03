@@ -65,20 +65,17 @@ public class GameReadFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         context = getActivity();
-        android.util.Log.d(TAG, "onCreateView7777: " + gameInfo);
         View view = inflater.inflate(R.layout.fragment_game_strategy, container, false);
         titleTv = (TextView) view.findViewById(R.id.strategy_title_tv);
         contentTv = (TextView) view.findViewById(R.id.strategy_content_tv);
         if (gameInfo != null && gameInfo.gameStrategy != null) {
             GameStrategy gameStrategy = gameInfo.gameStrategy;
-            android.util.Log.d(TAG, "有数据: "+gameStrategy);
             titleTv.setText("");
             String strategyContent = gameStrategy.getStrategyContent();
             contentTv.setText(strategyContent == null ? "" : strategyContent);
             //getData();
         } else {
-            android.util.Log.d(TAG, "无数据: "+gameInfo);
-            contentTv.setText("无数据");
+            contentTv.setText("暂无数据~");
         }
         return view;
     }
