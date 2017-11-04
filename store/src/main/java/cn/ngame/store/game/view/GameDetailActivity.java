@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.Gravity;
@@ -128,6 +129,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private FragmentManager fm;
     private TextView gameType0, gameType1, gameType2, gameType3;
     private UMImage mUMImage;
+    private GameReadFragment readFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -422,8 +424,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
 
                     //设置ViewPager
                     fragments = new ArrayList<>();
-                    fragments.add(GameDetailFragment.newInstance(gameInfo));
-                    fragments.add(GameReadFragment.newInstance(gameInfo));
+                    fragments.add(new GameDetailFragment(viewpager, gameInfo));
+                    fragments.add(new GameReadFragment(viewpager, gameInfo));
                     if (null != adapter && !hasStop) {
                         adapter.setList(fragments, tabList);
                         if (null != viewpager) {
@@ -465,9 +467,26 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     }
 
     private void initViewPager() {
+        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                viewpager.resetHeight(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        viewpager.resetHeight(0);
         fragments = new ArrayList<>();
-        fragments.add(GameDetailFragment.newInstance(gameInfo));
-        fragments.add(GameReadFragment.newInstance(gameInfo));
+        fragments.add(new GameDetailFragment(viewpager, gameInfo));
+        fragments.add(new GameReadFragment(viewpager,gameInfo));
         adapter = new DCViewPagerAdapter(fm, fragments, tabList);//getChildFragmentManager()
         viewpager.setAdapter(adapter);
     }
@@ -476,6 +495,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         tablayout.setupWithViewPager(viewpager);
         tablayout.setTabMode(TabLayout.MODE_FIXED); //固定模式
         tablayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
 /*        //中间加分隔线
         for (int i = 0; i < viewGroup.getChildCount(); i++) {
             ViewGroup view = (ViewGroup) viewGroup.getChildAt(i);

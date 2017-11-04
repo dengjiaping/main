@@ -27,6 +27,7 @@ import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.bean.GameStrategy;
+import cn.ngame.store.view.AutoHeightViewPager;
 
 /**
  * 必读
@@ -41,24 +42,30 @@ public class GameReadFragment extends Fragment {
     private static GameReadFragment gameStrategyFragment = null;
     private TextView titleTv;
     private TextView contentTv;
+    private static AutoHeightViewPager vp;
 
-    public static GameReadFragment newInstance(GameInfo gameInfo) {
-        android.util.Log.d(TAG, "newInstance: "+gameInfo);
+   /* public static GameReadFragment newInstance(GameInfo gameInfo) {
+        android.util.Log.d(TAG, "newInstance: " + gameInfo);
         GameReadFragment fragment = new GameReadFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(GameInfo.TAG, gameInfo);
         fragment.setArguments(bundle);
         return fragment;
-    }
+    }*/
 
     private Activity context;
     private GameInfo gameInfo;
+
+    public GameReadFragment(AutoHeightViewPager vp, GameInfo gameInfo) {
+        this.gameInfo = gameInfo;
+        this.vp = vp;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         android.util.Log.d(TAG, "onCreate000 : ");
-        gameInfo = (GameInfo) getArguments().getSerializable(GameInfo.TAG);
+        // gameInfo = (GameInfo) getArguments().getSerializable(GameInfo.TAG);
     }
 
     @Nullable
@@ -77,6 +84,7 @@ public class GameReadFragment extends Fragment {
         } else {
             contentTv.setText("暂无数据~");
         }
+        vp.setObjectForPosition(view, 1);
         return view;
     }
 
@@ -128,4 +136,7 @@ public class GameReadFragment extends Fragment {
     }
 
 
+    public void setViewPager(AutoHeightViewPager viewpager) {
+        this.vp = viewpager;
+    }
 }

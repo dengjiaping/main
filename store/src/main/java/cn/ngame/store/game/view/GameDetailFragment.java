@@ -36,6 +36,7 @@ import cn.ngame.store.fragment.ImageDialogFragment;
 import cn.ngame.store.game.presenter.HomeFragmentChangeLayoutListener;
 import cn.ngame.store.gamehub.view.ShowViewActivity;
 import cn.ngame.store.util.ToastUtil;
+import cn.ngame.store.view.AutoHeightViewPager;
 
 import static cn.ngame.store.R.id.tv_show_all2;
 
@@ -48,6 +49,7 @@ import static cn.ngame.store.R.id.tv_show_all2;
 public class GameDetailFragment extends Fragment implements View.OnClickListener {
 
     public static final String TAG = GameDetailFragment.class.getSimpleName();
+    private AutoHeightViewPager vp;
     private Activity context;
     private LinearLayout ll_detail;
     private GameInfo gameInfo;
@@ -66,19 +68,23 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
     private List<GameCategorys> gameLabels;
     private SimpleDraweeView picassoImageView;
 
-    public static GameDetailFragment newInstance(GameInfo gameInfo) {
+    public GameDetailFragment(AutoHeightViewPager viewpager, GameInfo gameInfo) {
+        this.vp=viewpager;
+        this.gameInfo=gameInfo;
+    }
+
+ /*   public static GameDetailFragment newInstance(GameInfo gameInfo) {
         GameDetailFragment fragment = new GameDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(GameInfo.TAG, gameInfo);
         fragment.setArguments(bundle);
         return fragment;
-    }
+    }*/
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //获取初始参数
-        gameInfo = (GameInfo) getArguments().getSerializable(GameInfo.TAG);
+        //gameInfo = (GameInfo) getArguments().getSerializable(GameInfo.TAG);
     }
 
     @Nullable
@@ -146,6 +152,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
                 imgs.add(imageLink);
             }
         }
+        vp.setObjectForPosition(view,0);
         return view;
     }
 
@@ -214,6 +221,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
             String gameAgent = gameInfo.gameAgent;
             tv_company.setText( gameAgent);
         }
+        vp.setObjectForPosition(view,0);
     }
 
     @Override

@@ -16,7 +16,14 @@ import java.util.LinkedHashMap;
  */
 public class AutoHeightViewPager extends ViewPager {
 
-    private static final String TAG = "AutoHeightViewPager";
+    private int current;
+    private int height = 0;
+    /**
+     * 保存position与对于的View   ,这是他的构造方法
+     */
+    private HashMap<Integer, View> mChildrenViews = new LinkedHashMap<Integer, View>();
+
+    private boolean scrollble = true;
 
     public AutoHeightViewPager(Context context) {
         super(context);
@@ -24,35 +31,20 @@ public class AutoHeightViewPager extends ViewPager {
 
     public AutoHeightViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-
     }
 
-    private int current;
-    private int height = 0;
-    /**
-     * 保存position与对于的View
-     */
-    private HashMap<Integer, View> mChildrenViews = new LinkedHashMap<Integer, View>();
-
-    private boolean scrollble = true;
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int height = 0;
-        //下面遍历所有child的高度
-        for (int i = 0; i < getChildCount(); i++) {
-            View child = getChildAt(i);
-            child.measure(widthMeasureSpec,
-                    MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-            int h = child.getMeasuredHeight();
-            if (h > height) {
-                height = h;
+        if (mChildrenViews.size() > current) {
+            View child = mChildrenViews.get(current);
+            if (child != null) {
+                child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+                height = child.getMeasuredHeight();
             }
-            //采用最大的view的高度。
         }
 
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height,
-                MeasureSpec.EXACTLY);
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
@@ -87,7 +79,6 @@ public class AutoHeightViewPager extends ViewPager {
         return super.onTouchEvent(ev);
     }
 
-
     public boolean isScrollble() {
         return scrollble;
     }
@@ -95,4 +86,5 @@ public class AutoHeightViewPager extends ViewPager {
     public void setScrollble(boolean scrollble) {
         this.scrollble = scrollble;
     }
+
 }
