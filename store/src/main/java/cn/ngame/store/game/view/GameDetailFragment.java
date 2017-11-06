@@ -1,5 +1,6 @@
 package cn.ngame.store.game.view;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,9 +28,9 @@ import java.util.Date;
 import java.util.List;
 
 import cn.ngame.store.R;
+import cn.ngame.store.bean.GameCategorys;
 import cn.ngame.store.bean.GameImage;
 import cn.ngame.store.bean.GameInfo;
-import cn.ngame.store.bean.GameCategorys;
 import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.fragment.ImageDialogFragment;
@@ -46,6 +47,7 @@ import static cn.ngame.store.R.id.tv_show_all2;
  * @author flan
  * @since 2016/5/17
  */
+@SuppressLint("ValidFragment")
 public class GameDetailFragment extends Fragment implements View.OnClickListener {
 
     public static final String TAG = GameDetailFragment.class.getSimpleName();
@@ -72,6 +74,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
         this.vp=viewpager;
         this.gameInfo=gameInfo;
     }
+
 
  /*   public static GameDetailFragment newInstance(GameInfo gameInfo) {
         GameDetailFragment fragment = new GameDetailFragment();

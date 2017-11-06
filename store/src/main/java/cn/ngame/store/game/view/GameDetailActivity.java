@@ -92,7 +92,7 @@ import static cn.ngame.store.R.id.sdv_img;
 
 public class GameDetailActivity extends BaseFgActivity implements StickyScrollView.OnScrollChangedListener,
         HomeFragmentChangeLayoutListener {
-    private RelativeLayout rl_top, rl_top2;
+    private RelativeLayout rl_top;
     private StickyScrollView scrollView;
     private SimpleDraweeView game_big_img;
     private Button leftBt;
@@ -102,10 +102,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private ArrayList<Fragment> fragments;
     private DCViewPagerAdapter adapter;
     String[] tabList = {"详情", "必读"};
-    //游戏id
     private long gameId = 0;
     private GameInfo gameInfo;
-    //下载进度条
     private GameLoadProgressBar progressBar;
     private Timer timer = new Timer();
     private Handler handler = new Handler();
@@ -486,7 +484,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         viewpager.resetHeight(0);
         fragments = new ArrayList<>();
         fragments.add(new GameDetailFragment(viewpager, gameInfo));
-        fragments.add(new GameReadFragment(viewpager,gameInfo));
+        fragments.add(new GameReadFragment(viewpager, gameInfo));
         adapter = new DCViewPagerAdapter(fm, fragments, tabList);//getChildFragmentManager()
         viewpager.setAdapter(adapter);
     }
@@ -783,12 +781,12 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 HashMap<String, String> map = new HashMap<>();
                 map.put(KeyConstant.game_Name, gameName);
                 if (id == R.id.choose_01_tv) {
-                    UPDATE_TIPS_OR_DOWNLOAD_EXCEPTION = 1;
-                    //数据埋点  -- 游戏更新提醒
+                    UPDATE_TIPS_OR_DOWNLOAD_EXCEPTION = 1;//游戏更新提醒
+                    //数据埋点
                     MobclickAgent.onEvent(content, UMEventNameConstant.FeedBack_UpdateRemind,
                             map);
-                } else if (id == R.id.choose_02_tv) {//下载异常\
-                    UPDATE_TIPS_OR_DOWNLOAD_EXCEPTION = 2;
+                } else if (id == R.id.choose_02_tv) {
+                    UPDATE_TIPS_OR_DOWNLOAD_EXCEPTION = 2;//下载异常
                     MobclickAgent.onEvent(content, UMEventNameConstant.FeedBack_DownloadException,
                             map);
                 }

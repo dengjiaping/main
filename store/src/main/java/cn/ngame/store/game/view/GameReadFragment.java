@@ -1,9 +1,11 @@
 package cn.ngame.store.game.view;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +42,7 @@ import static cn.ngame.store.R.id.strategy_content_tv;
  * @author zeng
  * @since 2016/12/15
  */
+@SuppressLint("ValidFragment")
 public class GameReadFragment extends Fragment {
 
     public static final String TAG = GameReadFragment.class.getSimpleName();
@@ -55,7 +58,6 @@ public class GameReadFragment extends Fragment {
         fragment.setArguments(bundle);
         return fragment;
     }*/
-
     private Activity context;
     private GameInfo gameInfo;
     private LinearLayout readLL;
@@ -79,6 +81,8 @@ public class GameReadFragment extends Fragment {
         context = getActivity();
         View view = inflater.inflate(R.layout.fragment_game_read, container, false);
         readLL = (LinearLayout) view.findViewById(R.id.read_ll);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
+                .LayoutParams.WRAP_CONTENT);
         if (gameInfo != null && gameInfo.gameStrategyList != null) {
             gameStrategyList = gameInfo.gameStrategyList;
             for (int i = 0; i < gameStrategyList.size(); i++) {
@@ -94,8 +98,6 @@ public class GameReadFragment extends Fragment {
             int height = readLL.getMeasuredHeight();
             int EMPTY_HEIGHT = SCREEN_HEIGHT - height;
             if (EMPTY_HEIGHT > 0) {
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
-                        .LayoutParams.WRAP_CONTENT);
                 params.height = EMPTY_HEIGHT;
                 TextView bottomTv = new TextView(context);
                 bottomTv.setLayoutParams(params);
@@ -103,8 +105,12 @@ public class GameReadFragment extends Fragment {
             }
             android.util.Log.d(TAG, "高度;" + height);
         } else {
+            params.height = SCREEN_HEIGHT;
             TextView contentTv = new TextView(context);
-            contentTv.setText("暂无数据~" + getString(R.string.empty_string));
+            contentTv.setGravity(Gravity.CENTER);
+            contentTv.setText("暂无数据~");
+            contentTv.setLayoutParams(params);
+            readLL.addView(contentTv);
         }
         vp.setObjectForPosition(view, 1);
         return view;
