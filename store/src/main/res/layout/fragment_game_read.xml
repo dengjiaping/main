@@ -11,6 +11,6 @@
         android:layout_height="wrap_content"
         android:fastScrollEnabled="false"
         android:orientation="vertical"
-        android:layout_marginBottom="@dimen/dp_30"
+        android:layout_marginTop="-10dp"
         />
 </LinearLayout>
