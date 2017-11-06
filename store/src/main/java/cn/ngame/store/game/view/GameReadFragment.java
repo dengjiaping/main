@@ -79,10 +79,11 @@ public class GameReadFragment extends Fragment {
             GameStrategy gameStrategy = gameInfo.gameStrategy;
             titleTv.setText("");
             String strategyContent = gameStrategy.getStrategyContent();
-            contentTv.setText(strategyContent == null ? "" : strategyContent);
+            contentTv.setText(strategyContent == null ? getString(R.string.empty_string) : strategyContent+getString(R.string
+                    .empty_string));
             //getData();
         } else {
-            contentTv.setText("暂无数据~");
+            contentTv.setText("暂无数据~"+getString(R.string.empty_string));
         }
         vp.setObjectForPosition(view, 1);
         return view;

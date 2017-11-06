@@ -33,7 +33,6 @@ public class AutoHeightViewPager extends ViewPager {
         super(context, attrs);
     }
 
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (mChildrenViews.size() > current) {
@@ -51,13 +50,18 @@ public class AutoHeightViewPager extends ViewPager {
 
     public void resetHeight(int current) {
         this.current = current;
+
         if (mChildrenViews.size() > current) {
 
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) getLayoutParams();
             if (layoutParams == null) {
                 layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
             } else {
-                layoutParams.height = height;
+                if (1 == current) {
+                    layoutParams.height = 500;
+                } else {
+                    layoutParams.height = height;
+                }
             }
             setLayoutParams(layoutParams);
         }
