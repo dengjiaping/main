@@ -2,7 +2,6 @@ package cn.ngame.store.game.view;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -101,14 +100,13 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private AutoHeightViewPager viewpager;
     private ArrayList<Fragment> fragments;
     private DCViewPagerAdapter adapter;
-    String[] tabList = {"详情", "必读"};
+    private String[] tabList = {"详情", "必读"};
     private long gameId = 0;
     private GameInfo gameInfo;
     private GameLoadProgressBar progressBar;
     private Timer timer = new Timer();
     private Handler handler = new Handler();
     private IFileLoad fileLoad;
-    private Paint paint;
     private SimpleDraweeView game_logo_img;
     private MarqueTextView gameNameTv;
     private TextView downLoadCountTv;
@@ -127,7 +125,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private FragmentManager fm;
     private TextView gameType0, gameType1, gameType2, gameType3;
     private UMImage mUMImage;
-    private GameReadFragment readFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -363,7 +360,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         percentageTv.setText("5.0");//评分0
         game_logo_img.setImageURI(gameInfo.gameLogo);//游戏 -头像
 
-        //厂商
+        //游戏厂商
         String gameAgent = gameInfo.gameAgent;
         changShangTv.setText(gameAgent == null ? "" : gameAgent);
 
@@ -861,6 +858,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
                 params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
                 params.put(KeyConstant.GAME_ID, String.valueOf(gameId));
+                params.put(KeyConstant.gameName, gameName);
                 params.put(KeyConstant.gameVersion, gameInfo.versionName);
                 params.put(KeyConstant.brand, android.os.Build.BRAND);//手机品牌
                 params.put(KeyConstant.model, android.os.Build.MODEL);//手机型号

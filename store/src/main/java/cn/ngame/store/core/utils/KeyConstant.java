@@ -6,6 +6,7 @@ package cn.ngame.store.core.utils;
  */
 public class KeyConstant {
     public static final String GAME_ID = "gameId";
+    public static final String gameName = "gameName";
     public static final String ID = "id";
     public static final String LOGIN_NAME = "loginName";
     public static final String NICK_NAME = "nickName";
