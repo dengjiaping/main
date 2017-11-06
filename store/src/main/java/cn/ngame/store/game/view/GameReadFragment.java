@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -15,7 +16,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cn.ngame.store.R;
@@ -29,6 +32,8 @@ import cn.ngame.store.core.utils.Log;
 import cn.ngame.store.game.bean.GameStrategy;
 import cn.ngame.store.view.AutoHeightViewPager;
 
+import static cn.ngame.store.R.id.strategy_content_tv;
+
 /**
  * 必读
  *
@@ -38,12 +43,10 @@ import cn.ngame.store.view.AutoHeightViewPager;
 public class GameReadFragment extends Fragment {
 
     public static final String TAG = GameReadFragment.class.getSimpleName();
-
-    private static GameReadFragment gameStrategyFragment = null;
     private TextView titleTv;
     private TextView contentTv;
+    private int SCREEN_HEIGHT = 1200;
     private static AutoHeightViewPager vp;
-
    /* public static GameReadFragment newInstance(GameInfo gameInfo) {
         android.util.Log.d(TAG, "newInstance: " + gameInfo);
         GameReadFragment fragment = new GameReadFragment();
@@ -55,6 +58,9 @@ public class GameReadFragment extends Fragment {
 
     private Activity context;
     private GameInfo gameInfo;
+    private LinearLayout readLL;
+    private List<GameStrategy> gameStrategyList = new ArrayList<>();
+    private GameStrategy gameStrategy;
 
     public GameReadFragment(AutoHeightViewPager vp, GameInfo gameInfo) {
         this.gameInfo = gameInfo;
@@ -64,7 +70,6 @@ public class GameReadFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        android.util.Log.d(TAG, "onCreate000 : ");
         // gameInfo = (GameInfo) getArguments().getSerializable(GameInfo.TAG);
     }
 
@@ -72,18 +77,34 @@ public class GameReadFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         context = getActivity();
-        View view = inflater.inflate(R.layout.fragment_game_strategy, container, false);
-        titleTv = (TextView) view.findViewById(R.id.strategy_title_tv);
-        contentTv = (TextView) view.findViewById(R.id.strategy_content_tv);
-        if (gameInfo != null && gameInfo.gameStrategy != null) {
-            GameStrategy gameStrategy = gameInfo.gameStrategy;
-            titleTv.setText("");
-            String strategyContent = gameStrategy.getStrategyContent();
-            contentTv.setText(strategyContent == null ? getString(R.string.empty_string) : strategyContent+getString(R.string
-                    .empty_string));
-            //getData();
+        View view = inflater.inflate(R.layout.fragment_game_read, container, false);
+        readLL = (LinearLayout) view.findViewById(R.id.read_ll);
+        if (gameInfo != null && gameInfo.gameStrategyList != null) {
+            gameStrategyList = gameInfo.gameStrategyList;
+            for (int i = 0; i < gameStrategyList.size(); i++) {
+                View itemView = inflater.inflate(R.layout.fragment_game_strategy, container, false);
+                titleTv = (TextView) itemView.findViewById(R.id.strategy_title_tv);
+                contentTv = (TextView) itemView.findViewById(strategy_content_tv);
+                gameStrategy = gameStrategyList.get(i);
+                titleTv.setText(gameStrategy.getStrategyTitle());
+                contentTv.setText(gameStrategy.getStrategyContent());
+                readLL.addView(itemView);
+            }
+            readLL.measure(0, 0);
+            int height = readLL.getMeasuredHeight();
+            int EMPTY_HEIGHT = SCREEN_HEIGHT - height;
+            if (EMPTY_HEIGHT > 0) {
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
+                        .LayoutParams.WRAP_CONTENT);
+                params.height = EMPTY_HEIGHT;
+                TextView bottomTv = new TextView(context);
+                bottomTv.setLayoutParams(params);
+                readLL.addView(bottomTv);
+            }
+            android.util.Log.d(TAG, "高度;" + height);
         } else {
-            contentTv.setText("暂无数据~"+getString(R.string.empty_string));
+            TextView contentTv = new TextView(context);
+            contentTv.setText("暂无数据~" + getString(R.string.empty_string));
         }
         vp.setObjectForPosition(view, 1);
         return view;
