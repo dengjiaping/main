@@ -189,7 +189,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 final UMWeb web = new UMWeb(getString(R.string.app_download_url_yyb));
                 //final UMWeb web = new UMWeb("http://m.app.so.com/detail/index?pname=cn.ngame.store&id=3419150");
                 web.setTitle(gameName);
-                web.setThumb(mUMImage);//缩略图
+                web.setThumb(mUMImage);
                 web.setDescription(getString(R.string.share_description));//描述
 
                 new ShareAction(content).setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA
@@ -231,12 +231,10 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         } else {
             mUMImage = new UMImage(content, gameInfo.gameLogo);//资源文件
         }
-
-
         final UMWeb web = new UMWeb("http://m.app.so.com/detail/index?pname=cn.ngame.store&id=3419150");
         //UMWeb web = new UMWeb("http://sj.qq.com/myapp/detail.htm?apkName=cn.ngame.store");
         web.setTitle(gameName);
-        web.setThumb(mUMImage);//缩略图
+        web.setThumb(mUMImage);
         web.setDescription(getString(R.string.share_description));//描述
 
         new ShareAction(content).setDisplayList(SHARE_MEDIA.QQ,SHARE_MEDIA.QZONE, SHARE_MEDIA
@@ -291,7 +289,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         @Override
         public void onCancel(SHARE_MEDIA platform) {
             Log.d(TAG, "分享取消了: ");
-            // Toast.makeText(content, "分享取消", Toast.LENGTH_LONG).show();
         }
     };
 
@@ -427,10 +424,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                             viewpager.setAdapter(adapter);
                         }
                     }
-                    Log.d(TAG, "服务器返回成功,有数据 " + df.format(new Date()));
                     setView();
                 } else {
-                    Log.d(TAG, "服务端返回错误: " + df.format(new Date()));
                     Log.d(TAG, "HTTP请求成功：服务端返回错误！");
                 }
             }
@@ -457,7 +452,6 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 return params;
             }
         };
-        Log.d(TAG, "访问服务器开始: " + df.format(new Date()));
         StoreApplication.requestQueue.add(request);
     }
 

@@ -48,7 +48,7 @@ public class GameReadFragment extends Fragment {
     public static final String TAG = GameReadFragment.class.getSimpleName();
     private TextView titleTv;
     private TextView contentTv;
-    private int SCREEN_HEIGHT = 1200;
+    private int SCREEN_HEIGHT = 1950;
     private static AutoHeightViewPager vp;
    /* public static GameReadFragment newInstance(GameInfo gameInfo) {
         android.util.Log.d(TAG, "newInstance: " + gameInfo);
@@ -86,7 +86,7 @@ public class GameReadFragment extends Fragment {
         if (gameInfo != null && gameInfo.gameStrategyList != null) {
             gameStrategyList = gameInfo.gameStrategyList;
             for (int i = 0; i < gameStrategyList.size(); i++) {
-                View itemView = inflater.inflate(R.layout.fragment_game_strategy, container, false);
+                View itemView = inflater.inflate(R.layout.fragment_game_read_item, container, false);
                 titleTv = (TextView) itemView.findViewById(R.id.strategy_title_tv);
                 contentTv = (TextView) itemView.findViewById(strategy_content_tv);
                 gameStrategy = gameStrategyList.get(i);

@@ -131,7 +131,7 @@
         <View
             android:layout_width="@dimen/dp_2"
             android:layout_height="@dimen/dp_17"
-            android:layout_marginRight="@dimen/dp_4"
+            android:layout_marginRight="@dimen/dp_5"
             android:layout_marginTop="@dimen/dm001"
             android:background="@color/color_2cbffe"/>
 
@@ -154,6 +154,7 @@
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_28"
         android:text="暂无"
+        android:lineSpacingExtra="@dimen/dm010"
         android:textColor="@color/color_666666"
         android:textSize="@dimen/dp_14"/>
 
@@ -211,6 +212,7 @@
         android:layout_marginRight="@dimen/dp_28"
         android:fontFamily="sans-serif"
         android:text="暂无更新"
+        android:lineSpacingExtra="@dimen/dm010"
         android:textColor="@color/color_666666"
         android:textSize="@dimen/dp_14"
         />

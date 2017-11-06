@@ -5,13 +5,12 @@
               android:background="@color/white"
               android:orientation="vertical"
     >
-
     <LinearLayout
         android:id="@+id/read_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fastScrollEnabled="false"
         android:orientation="vertical"
-        android:padding="@dimen/dp_20"
-        ></LinearLayout>
+        android:layout_marginBottom="@dimen/dp_30"
+        />
 </LinearLayout>
