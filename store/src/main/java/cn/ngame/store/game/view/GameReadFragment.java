@@ -44,20 +44,18 @@ import static cn.ngame.store.R.id.strategy_content_tv;
  */
 @SuppressLint("ValidFragment")
 public class GameReadFragment extends Fragment {
-
     public static final String TAG = GameReadFragment.class.getSimpleName();
     private TextView titleTv;
     private TextView contentTv;
-    private int SCREEN_HEIGHT = 1950;
+    private int SCREEN_HEIGHT = 2200;
     private static AutoHeightViewPager vp;
-   /* public static GameReadFragment newInstance(GameInfo gameInfo) {
-        android.util.Log.d(TAG, "newInstance: " + gameInfo);
-        GameReadFragment fragment = new GameReadFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(GameInfo.TAG, gameInfo);
-        fragment.setArguments(bundle);
-        return fragment;
-    }*/
+    /* public static GameReadFragment newInstance(GameInfo gameInfo) {
+         GameReadFragment fragment = new GameReadFragment();
+         Bundle bundle = new Bundle();
+         bundle.putSerializable(GameInfo.TAG, gameInfo);
+         fragment.setArguments(bundle);
+         return fragment;
+     }*/
     private Activity context;
     private GameInfo gameInfo;
     private LinearLayout readLL;
@@ -104,7 +102,7 @@ public class GameReadFragment extends Fragment {
                 readLL.addView(bottomTv);
             } else {
                 View contentTv = new View(context);
-                params.height=130;
+                params.height = 130;
                 contentTv.setLayoutParams(params);
                 readLL.addView(contentTv);
             }
