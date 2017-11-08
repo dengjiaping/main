@@ -57,7 +57,6 @@ public class Ranking012345Adapter extends BaseAdapter {
     private FragmentManager fm;
     private List<LikeListBean.DataBean.GameListBean> list;
     private int type;
-
     private static Handler uiHandler = new Handler();
 
     public Ranking012345Adapter(Activity context, FragmentManager fm, List<LikeListBean.DataBean.GameListBean> list, int type) {
@@ -136,12 +135,22 @@ public class Ranking012345Adapter extends BaseAdapter {
         private PopupWindow popupWindow;
         private LinearLayout tank01234LLay;
         private TextView textView;
+        private LinearLayout.LayoutParams params;
+        private String typeNameStr;
+        private String itemTag = "原生手柄";
+        private String itemTag1 = "云适配";
+        private String itemTag2 = "破解";
+        private String itemTag3 = "汉化";
+        private String itemTag4 = "特色游戏";
 
         public ViewHolder(Activity context, FragmentManager fm) {
             this.context = context;
             this.fm = fm;
             fileLoad = FileLoadManager.getInstance(context);
             //init();
+            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup
+                    .LayoutParams.WRAP_CONTENT);
+            params.setMargins(0, 0, 18, 0);
         }
 
         private void init() {
@@ -264,7 +273,7 @@ public class Ranking012345Adapter extends BaseAdapter {
 
             ratingBar.setRating(gameInfo.getScoreLevel());
             //是否手柄、vr，头控,
-            String typeNameStr = gameInfo.getCName();
+            typeNameStr = gameInfo.getCName();
             if (typeNameStr == null) {
                 return;
             }
@@ -272,39 +281,39 @@ public class Ranking012345Adapter extends BaseAdapter {
             tv_vr.setVisibility(View.GONE);
             tv_toukong.setVisibility(View.GONE);
             tv_yun_duan.setVisibility(View.GONE);*/
-            String[] typeNameArray = typeNameStr.split("\\,");
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup
-                    .LayoutParams.WRAP_CONTENT);
-            params.setMargins(0, 0, 18, 0);
+            //String[] typeNameArray = typeNameStr.split("\\,");
+
             tank01234LLay.removeAllViews();
-            for (int i = 0; i < typeNameArray.length; i++) {
+            createTagItemView(itemTag);
+            createTagItemView(itemTag1);
+            createTagItemView(itemTag2);
+            createTagItemView(itemTag3);
+            createTagItemView(itemTag4);
+
+         /*   for (int i = 0; i < typeNameArray.length; i++) {
                 textView = new TextView(context);
-                textView.setText(typeNameArray[i]);
+                String itemText = typeNameArray[i];
+                textView.setText(itemText);
                 textView.setPadding(15, 4, 15, 4);
                 textView.setTextColor(ContextCompat.getColor(context, R.color.color_2abfff));
                 textView.setTextSize(10);
                 textView.setLayoutParams(params);
                 textView.setBackgroundResource(R.drawable.shape_corner8dp_2abfff);
                 tank01234LLay.addView(textView);
-             /*   switch (i) {
-                    case 0:
-                        tv_shoubing.setText(typeNameArray[i]);
-                        tv_shoubing.setVisibility(View.VISIBLE);
-                        break;
-                    case 1:
-                        tv_vr.setText(typeNameArray[i]);
-                        tv_vr.setVisibility(View.VISIBLE);
-                        break;
-                    case 2:
-                        tv_toukong.setText(typeNameArray[i]);
-                        tv_toukong.setVisibility(View.VISIBLE);
-                        break;
-                    case 3:
-                        tv_yun_duan.setText(typeNameArray[i]);
-                        tv_yun_duan.setVisibility(View.VISIBLE);
-                        break;
-                }*/
 
+            }*/
+        }
+
+        private void createTagItemView(String itemTag) {
+            if (typeNameStr.contains(itemTag)) {
+                textView = new TextView(context);
+                textView.setText(itemTag);
+                textView.setPadding(15, 4, 15, 4);
+                textView.setTextColor(ContextCompat.getColor(context, R.color.color_2abfff));
+                textView.setTextSize(10);
+                textView.setLayoutParams(params);
+                textView.setBackgroundResource(R.drawable.shape_corner8dp_2abfff);
+                tank01234LLay.addView(textView);
             }
         }
     }
