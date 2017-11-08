@@ -102,11 +102,10 @@ public class GameReadFragment extends Fragment {
                 readLL.addView(bottomTv);
             } else {
                 View contentTv = new View(context);
-                params.height = 130;
+                params.height = 100;
                 contentTv.setLayoutParams(params);
                 readLL.addView(contentTv);
             }
-            android.util.Log.d(TAG, "高度;" + height);
         } else {
             params.height = SCREEN_HEIGHT;
             TextView contentTv = new TextView(context);

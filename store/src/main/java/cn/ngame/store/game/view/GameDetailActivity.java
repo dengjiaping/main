@@ -781,10 +781,9 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                     MobclickAgent.onEvent(content, UMEventNameConstant.FeedBack_DownloadException,
                             map);
                 }
-                ToastUtil.show(content, "反馈成功");
                 //提交反馈
                 if (gameInfo != null) {
-                    //postFeedBack();
+                    postFeedBack();
                 } else {
                     ToastUtil.show(content, "网络异常,请稍后重试.");
                 }
@@ -820,13 +819,13 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                     dialogHelper.hideAlert();
                 }
                 if (result == null) {
-                    ToastUtil.show(content, "反馈失败,服务器异常,请稍后重试.");
+                    ToastUtil.show(content, "反馈失败,请稍后重试.");
                     return;
                 }
                 if (result.code == 0) {
-                    ToastUtil.show(content, "反馈成功");
+                    ToastUtil.show(content, "反馈成功~");
                 } else {
-                    ToastUtil.show(content, "反馈失败");
+                    ToastUtil.show(content, "反馈失败~");
                 }
             }
         };
