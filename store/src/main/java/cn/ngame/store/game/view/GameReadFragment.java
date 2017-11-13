@@ -49,13 +49,6 @@ public class GameReadFragment extends Fragment {
     private TextView contentTv;
     private int SCREEN_HEIGHT = 2200;
     private static AutoHeightViewPager vp;
-    /* public static GameReadFragment newInstance(GameInfo gameInfo) {
-         GameReadFragment fragment = new GameReadFragment();
-         Bundle bundle = new Bundle();
-         bundle.putSerializable(GameInfo.TAG, gameInfo);
-         fragment.setArguments(bundle);
-         return fragment;
-     }*/
     private Activity context;
     private GameInfo gameInfo;
     private LinearLayout readLL;
@@ -66,13 +59,6 @@ public class GameReadFragment extends Fragment {
         this.gameInfo = gameInfo;
         this.vp = vp;
     }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // gameInfo = (GameInfo) getArguments().getSerializable(GameInfo.TAG);
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -118,6 +104,11 @@ public class GameReadFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // gameInfo = (GameInfo) getArguments().getSerializable(GameInfo.TAG);
+    }
     /**
      * 获取攻略
      */

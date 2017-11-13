@@ -64,7 +64,7 @@
 
         <cn.ngame.store.view.GameLoadProgressBar
             android:id="@+id/progress_bar"
-            android:layout_width="60sp"
+            android:layout_width="60dp"
             android:layout_height="28dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -72,7 +72,7 @@
             android:clickable="true"
             android:text="@string/download"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="14dp"
             android:visibility="invisible"
             ngame:progress="0"
             />

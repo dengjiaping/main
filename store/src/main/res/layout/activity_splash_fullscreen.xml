@@ -24,7 +24,7 @@
         android:background="@drawable/img_welcome_0"
         android:gravity="center"
         android:orientation="vertical"
-        ></FrameLayout>
+        />
     <!--    <LinearLayout
             android:id="@+id/fullscreen_view"
             android:layout_width="match_parent"

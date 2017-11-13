@@ -17,6 +17,7 @@ import cn.ngame.store.core.fileload.FileLoadService;
  * Created by zeng on 2016/11/2.
  */
 public class InstallStatusReceiver extends BroadcastReceiver {
+    public static final String TAG = InstallStatusReceiver.class.getSimpleName();
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -24,30 +25,30 @@ public class InstallStatusReceiver extends BroadcastReceiver {
         //接收安装广播
         if (intent.getAction().equals("android.intent.action.PACKAGE_ADDED")) {
             //System.out.println("安装了:" +packageName + "包名的程序");
-
             String packageName = intent.getDataString();
-            if(packageName != null){
+
+            if (packageName != null) {
+                //packageNma
                 String[] packageNames = packageName.split(":");
-                if(packageNames.length==2){
+                if (packageNames.length == 2) {
                     packageName = packageNames[1];
                 }
             }
-
             PackageManager packageManager = context.getPackageManager();
             List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
             if (packageInfos != null) {
                 for (int i = 0; i < packageInfos.size(); i++) {
                     PackageInfo info = packageInfos.get(i);
                     String pn = info.packageName;
-                    if(packageName.equals(pn)){
-                        if(FileLoadService.packageInfoMap != null)
-                            FileLoadService.packageInfoMap.put(pn,info);
+                    if (packageName.equals(pn)) {
+                        if (FileLoadService.packageInfoMap != null)
+                            FileLoadService.packageInfoMap.put(pn, info);
                     }
                 }
             }
 
             //删除APK文件
-            if(StoreApplication.isDeleteApk){
+            if (StoreApplication.isDeleteApk) {
                 FileLoadManager manager = FileLoadManager.getInstance(context);
                 manager.deleteByPackage(packageName);
             }
@@ -59,13 +60,13 @@ public class InstallStatusReceiver extends BroadcastReceiver {
             //System.out.println("卸载了:"  + packageName + "包名的程序");
 
             String packageName = intent.getDataString();
-            if(packageName != null){
+            if (packageName != null) {
                 String[] packageNames = packageName.split(":");
-                if(packageNames.length==2){
+                if (packageNames.length == 2) {
                     packageName = packageNames[1];
                 }
             }
-            if(FileLoadService.packageInfoMap != null && FileLoadService.packageInfoMap.containsKey(packageName)){
+            if (FileLoadService.packageInfoMap != null && FileLoadService.packageInfoMap.containsKey(packageName)) {
                 FileLoadService.packageInfoMap.remove(packageName);
             }
         }

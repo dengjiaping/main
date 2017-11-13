@@ -20,7 +20,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 400004
-        versionName "V4.0.4.1110"
+        versionName "V4.0.3.1110"
 
         ndk {
             moduleName "Crc8Jni"

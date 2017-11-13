@@ -80,9 +80,6 @@ public class GameLoadProgressBar extends View {
         width = CommonUtil.dip2px(context, Float.valueOf(tempWidth.substring(0, tempWidth.length() - 3)));
         //圆角
         mRadius = CommonUtil.dip2px(context, 4);
-        if (240==width) {
-
-        }
 
         String tempHeight = attrs.getAttributeValue("http://schemas.android.com/apk/res/android", "layout_height");
         height = CommonUtil.dip2px(context, Float.valueOf(tempHeight.substring(0, tempHeight.length() - 3)));
@@ -304,10 +301,9 @@ public class GameLoadProgressBar extends View {
             float baseline = (height - fontMetrics.bottom - fontMetrics.top) / 2;   //设置字体基线
             canvas.drawText(text, width / 2, baseline, paint);
 
-        } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_HAS_INSTALL_OLD) {
-
+        //} else if (gameFileStatus.getStatus() == GameFileStatus.STATE_HAS_INSTALL_OLD) {
             //绘制背景色
-            paint.setColor(nomalColor);
+        /*    paint.setColor(nomalColor);
             paint.setColor(downloadedColor);
             canvas.drawRoundRect(mRadiusRect, mRadius, mRadius, paint);
             // canvas.drawRect(0, 0, width, height, paint);
@@ -318,7 +314,8 @@ public class GameLoadProgressBar extends View {
             paint.setTextAlign(Paint.Align.CENTER);
             Paint.FontMetricsInt fontMetrics = paint.getFontMetricsInt();
             float baseline = (height - fontMetrics.bottom - fontMetrics.top) / 2;   //设置字体基线
-            canvas.drawText(text, width / 2, baseline, paint);
+            canvas.drawText(text, width / 2, baseline, paint);*/
+
 
         } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_DOWNLOAD || gameFileStatus.getStatus() == GameFileStatus
                 .STATE_HAS_DOWNLOAD) {
@@ -377,7 +374,7 @@ public class GameLoadProgressBar extends View {
             float baseline = (height - fontMetrics.bottom - fontMetrics.top) / 2;   //设置字体基线
             canvas.drawText(text, width / 2, baseline, paint);
 
-        } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_HAS_INSTALL) {  //如以下载完成 或已成功安装
+        } else if (gameFileStatus.getStatus() == GameFileStatus.STATE_HAS_INSTALL||gameFileStatus.getStatus() == GameFileStatus.STATE_HAS_INSTALL_OLD) {  //如以下载完成 或已成功安装
           /*  Paint.Style.FILL :填充内部
             Paint.Style.FILL_AND_STROKE ：填充内部和描边
             Paint.Style.STROKE ：仅描边*/

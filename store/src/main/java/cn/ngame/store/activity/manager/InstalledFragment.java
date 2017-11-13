@@ -135,10 +135,10 @@ public class InstalledFragment extends BaseSearchFragment {
                 //非系统应用
                 if (null != applicationInfo) {
                     if ((applicationInfo.flags & applicationInfo.FLAG_SYSTEM) <= 0) {
-                        //String appName = applicationInfo.loadLabel(packageManager).toString();
+                        String appName = applicationInfo.loadLabel(packageManager).toString();
                         String packageName = applicationInfo.packageName;
                         //如果包名   包含在SD文件里
-                        Log.d(TAG, "本地包名/"+packageName+"/");
+                        Log.d(TAG, appName+":本地包名:"+packageName+"版本号:"+packageInfo.versionName+"/"+packageInfo.versionCode);
                         if (pkgNameListStr.contains(packageName)&&!"cn.ngame.store".equals(packageName)) {
                             localAppList.add(packageInfo);
                         }
