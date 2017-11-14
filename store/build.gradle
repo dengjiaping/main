@@ -142,4 +142,6 @@ dependencies {
     //compile files('libs/InMobi-7.0.0-China.jar')
     compile(name: 'sdk-release', ext: 'aar')
     compile files('libs/weiboSDKCore.jar')
+
+    compile 'cn.jzvd:jiaozivideoplayer:6.1.1'
 }
