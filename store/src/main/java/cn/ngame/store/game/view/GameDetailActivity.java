@@ -162,6 +162,19 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         //请求数据
         getGameInfo();
     }
+  /* @Override
+    public void onBackPressed() {
+        if (JZVideoPlayer.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JZVideoPlayer.releaseAllVideos();
+    }*/
 
     //初始化其他控件
     private void initView() {

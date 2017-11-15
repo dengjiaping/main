@@ -40,7 +40,6 @@ public class NgameJZVideoPlayerStandard extends JZVideoPlayerStandard {
             if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
                 //click quit fullscreen
             } else {
-                //click goto fullscreen
             }
         }
     }
@@ -68,6 +67,13 @@ public class NgameJZVideoPlayerStandard extends JZVideoPlayerStandard {
     @Override
     public void onStatePlaying() {
         super.onStatePlaying();
+        fullscreenButton.setImageResource(R.drawable.ic_exit_full);
+        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+            //click quit fullscreen
+            fullscreenButton.setImageResource(R.drawable.ic_exit_full);
+        } else {
+            fullscreenButton.setImageResource(R.drawable.ic_go_full);
+        }
     }
 
     @Override
@@ -98,6 +104,7 @@ public class NgameJZVideoPlayerStandard extends JZVideoPlayerStandard {
     @Override
     public void startWindowFullscreen() {
         super.startWindowFullscreen();
+        fullscreenButton.setImageResource(R.drawable.ic_go_full);
     }
 
     @Override
