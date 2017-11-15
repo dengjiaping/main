@@ -24,22 +24,34 @@
             android:orientation="vertical"
             android:visibility="visible">
             <!--大图-->
-            <com.facebook.drawee.view.SimpleDraweeView
-                xmlns:fresco="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/sdv_img"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                fresco:actualImageScaleType="fitXY"
-                fresco:failureImage="@drawable/ic_def_logo_720_288"
-                fresco:failureImageScaleType="centerCrop"
-                fresco:placeholderImage="@drawable/ic_def_logo_720_288"
-                fresco:placeholderImageScaleType="centerCrop"
-                fresco:progressBarImage="@drawable/ic_def_logo_720_288"
-                fresco:viewAspectRatio="2"/>
+                android:layout_height="@dimen/dm340">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/sdv_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dm340"
+                    android:layout_centerVertical="true"
+                    fresco:actualImageScaleType="fitXY"
+                    fresco:failureImage="@drawable/ic_def_logo_720_288"
+                    fresco:failureImageScaleType="centerCrop"
+                    fresco:placeholderImage="@drawable/ic_def_logo_720_288"
+                    fresco:placeholderImageScaleType="centerCrop"
+                    fresco:progressBarImage="@drawable/ic_def_logo_720_288"
+                    fresco:viewAspectRatio="2"/>
+
+                <cn.ngame.store.view.NgameJZVideoPlayerStandard
+                    android:id="@+id/game_detial_ngame_vp"
+                    android:visibility="invisible"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dm340"/>
+
+            </RelativeLayout>
 
 
-            <!--===============================游戏小图,名称,下载   ↓==========================-->
+            <!--==============================游戏小图,名称,下载   ↓==========================-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -124,12 +136,12 @@
                             android:id="@+id/game_detail_type0"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/dp_16"
+                            android:layout_marginRight="@dimen/dm010"
                             android:background="@drawable/shape_game_detail_item_white_blue"
                             android:gravity="center"
                             android:maxLines="1"
                             android:paddingLeft="@dimen/dp_6"
                             android:paddingRight="@dimen/dp_6"
-                            android:layout_marginRight="@dimen/dm010"
                             android:text="原生手柄"
                             android:textColor="@color/color_2abfff"
                             android:textSize="@dimen/dp_10"
@@ -139,10 +151,10 @@
                             android:id="@+id/game_detail_type1"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/dp_16"
+                            android:layout_marginRight="@dimen/dm010"
                             android:background="@drawable/shape_game_detail_item_white_blue"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:layout_marginRight="@dimen/dm010"
                             android:paddingLeft="@dimen/dp_6"
                             android:paddingRight="@dimen/dp_6"
                             android:text="云存档"
@@ -302,6 +314,7 @@
                 tabs:tabMode="fixed"
                 tabs:tabSelectedTextColor="@color/mainColor"
                 tabs:tabTextColor="@color/aaaaaa"/>
+
             <cn.ngame.store.view.AutoHeightViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
@@ -339,18 +352,18 @@
             />
 
         <ImageView
+            android:id="@+id/shareBtClick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:clickable="true"
             android:ellipsize="end"
-            android:id="@+id/shareBtClick"
             android:focusableInTouchMode="true"
             android:maxLines="1"
-            android:paddingTop="@dimen/dp_24"
             android:paddingLeft="@dimen/dm035"
             android:paddingRight="@dimen/dp_20"
+            android:paddingTop="@dimen/dp_24"
             android:scaleType="centerInside"
             android:src="@drawable/ic_game_detail_share"
             android:textColor="@android:color/white"

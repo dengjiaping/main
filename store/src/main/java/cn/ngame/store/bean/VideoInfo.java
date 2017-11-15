@@ -10,7 +10,24 @@ import java.util.List;
 public class VideoInfo implements Serializable {
 
     public static final String TAG = VideoInfo.class.getSimpleName();
-
+    public int gameVideoType;
+    /**
+     * 预览图片地址
+     */
+    public String gameVideoName;
+    /***/
+    public String gameVideoLink;
+    /***/
+    public String gameImageLink;
+    /***/
+    public String appTypeId;
+    /** 推荐短语 */
+    /**
+     * 更新时间
+     */
+    public long updateTime;
+    public long gameId;
+    public int uploadId;
     public long id;
     /**
      * 视频名称

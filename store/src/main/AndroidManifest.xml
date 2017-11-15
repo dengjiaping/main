@@ -108,6 +108,7 @@
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name=".game.view.GameDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
             />
         <activity

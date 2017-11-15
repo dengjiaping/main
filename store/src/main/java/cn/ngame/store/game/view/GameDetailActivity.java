@@ -1,7 +1,9 @@
 package cn.ngame.store.game.view;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +35,7 @@ import com.android.volley.VolleyError;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.squareup.picasso.Picasso;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
@@ -52,6 +56,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.jzvd.JZVideoPlayerStandard;
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
@@ -62,6 +67,7 @@ import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.JsonResult;
 import cn.ngame.store.bean.Token;
 import cn.ngame.store.bean.UpLoadBean;
+import cn.ngame.store.bean.VideoInfo;
 import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.GameFileStatus;
@@ -80,10 +86,9 @@ import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.AutoHeightViewPager;
 import cn.ngame.store.view.GameLoadProgressBar;
 import cn.ngame.store.view.MarqueTextView;
+import cn.ngame.store.view.NgameJZVideoPlayerStandard;
 import cn.ngame.store.view.ReviewScoreView;
 import cn.ngame.store.view.StickyScrollView;
-
-import static cn.ngame.store.R.id.sdv_img;
 
 /**
  * Created by Administrator on 2017/6/13 0013.
@@ -125,6 +130,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private FragmentManager fm;
     private TextView gameType0, gameType1, gameType2, gameType3;
     private UMImage mUMImage;
+    private NgameJZVideoPlayerStandard jzVideoPlayerStandard;
+    private AudioManager mAudioManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,8 +165,11 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
 
     //初始化其他控件
     private void initView() {
-        game_big_img = (SimpleDraweeView) findViewById(sdv_img);
+        game_big_img = (SimpleDraweeView) findViewById(R.id.sdv_img);
         game_logo_img = (SimpleDraweeView) findViewById(R.id.img_1);
+        jzVideoPlayerStandard = (NgameJZVideoPlayerStandard) findViewById(R.id.game_detial_ngame_vp);
+        jzVideoPlayerStandard.topContainer.setVisibility(View.GONE);
+        //jzVideoPlayerStandard.backButton.setVisibility(View.GONE);
         gameNameTv = (MarqueTextView) findViewById(R.id.tv_title);//游戏名字
         downLoadCountTv = (TextView) findViewById(R.id.download_count_tv);//下载次数
         changShangTv = (TextView) findViewById(R.id.game_chang_shang_tv);//厂商
@@ -207,8 +217,27 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                         }).open();
             }
         });
-    }
 
+        //系统声音
+        mAudioManager= (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_PLAY_SOUND);
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND |
+                        AudioManager.FLAG_SHOW_UI);
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND |
+                        AudioManager.FLAG_SHOW_UI);
+                return true;
+            default:
+                break;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -298,12 +327,32 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             return;
         }
         List<GameImage> imagesList = gameInfo.gameDetailsImages;
-        for (GameImage gameImage : imagesList) {
-            byte type = gameImage.type;
-            if (3 == type) {
-                game_big_img.setImageURI(gameImage.imageLink);//游戏 -大图
-                break;
+        List<VideoInfo> gameVideoList = gameInfo.gameVideoList;
+        if (null == gameVideoList) {
+            jzVideoPlayerStandard.setVisibility(View.INVISIBLE);
+            for (GameImage gameImage : imagesList) {
+                byte type = gameImage.type;
+                if (3 == type) {
+                    game_big_img.setVisibility(View.VISIBLE);
+                    game_big_img.setImageURI(gameImage.imageLink);//游戏 -大图
+                    break;
+                }
             }
+        } else {
+            game_big_img.setVisibility(View.INVISIBLE);
+            //视频播放
+            jzVideoPlayerStandard.setVisibility(View.VISIBLE);
+            for (VideoInfo videoInfo : gameVideoList) {
+                if (1==videoInfo.gameVideoType) {
+                    jzVideoPlayerStandard.thumbImageView.setVisibility(View.VISIBLE);
+                    Picasso.with(content).load(videoInfo.gameImageLink).into(jzVideoPlayerStandard
+                            .thumbImageView);
+                    jzVideoPlayerStandard.setUp(videoInfo.gameVideoLink, JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "");
+                    jzVideoPlayerStandard.backButton.setVisibility(View.GONE);
+                }
+            }
+
+
         }
         gameName = gameInfo.gameName;
         gameNameTv.setText(gameName == null ? "" : gameName);//名字
