@@ -232,18 +232,21 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         });
 
         //系统声音
-        mAudioManager= (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_PLAY_SOUND);
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_VOLUME_UP:
-                mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND |
+                mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager
+                        .FLAG_PLAY_SOUND |
                         AudioManager.FLAG_SHOW_UI);
                 return true;
             case KeyEvent.KEYCODE_VOLUME_DOWN:
-                mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND |
+                mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager
+                        .FLAG_PLAY_SOUND |
                         AudioManager.FLAG_SHOW_UI);
                 return true;
             default:
@@ -251,6 +254,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         }
         return super.onKeyDown(keyCode, event);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -356,12 +360,15 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             //视频播放
             jzVideoPlayerStandard.setVisibility(View.VISIBLE);
             for (VideoInfo videoInfo : gameVideoList) {
-                if (1==videoInfo.gameVideoType) {
+                if (1 == videoInfo.gameVideoType) {
                     jzVideoPlayerStandard.thumbImageView.setVisibility(View.VISIBLE);
                     Picasso.with(content).load(videoInfo.gameImageLink).into(jzVideoPlayerStandard
                             .thumbImageView);
                     jzVideoPlayerStandard.setUp(videoInfo.gameVideoLink, JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "");
                     jzVideoPlayerStandard.backButton.setVisibility(View.GONE);
+                    if (NetUtil.isWifiConnected(content)) {
+                        jzVideoPlayerStandard.startVideo();
+                    }
                 }
             }
 
