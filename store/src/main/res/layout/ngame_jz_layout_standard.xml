@@ -162,7 +162,7 @@
             android:layout_centerVertical="true"
             android:layout_marginBottom="@dimen/dm010"
             android:layout_marginEnd="14dp"
-            android:layout_marginRight="14dp"
+            android:layout_marginRight="15dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -171,7 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/dp_14"
+                android:layout_marginRight="@dimen/dp_8"
                 android:layout_marginTop="@dimen/dm001"
                 android:gravity="center_vertical"
                 android:maxLines="1"
