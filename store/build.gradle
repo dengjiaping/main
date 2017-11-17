@@ -19,8 +19,8 @@ android {
         applicationId "cn.ngame.store"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 400004
-        versionName "V4.0.3.1110"
+        versionCode 400005
+        versionName "V4.0.4.1117"
 
         ndk {
             moduleName "Crc8Jni"
