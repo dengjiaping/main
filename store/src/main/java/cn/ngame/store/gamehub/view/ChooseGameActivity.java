@@ -93,7 +93,7 @@ public class ChooseGameActivity extends BaseFgActivity {
                 isAddGame(otherList.get(position).getGameName());
             }
         });
-        runService(); //请求列表
+        runService();
     }
 
     private void runService() {
