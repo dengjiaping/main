@@ -1,9 +1,7 @@
 apply plugin: 'com.android.application'
-
 android {
 
-    compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    compileSdkVersion 26
     packagingOptions {
         exclude 'META-INF/NOTICE' // will not include NOTICE file
         exclude 'META-INF/LICENSE' // will not include LICENSE file
@@ -18,7 +16,7 @@ android {
     defaultConfig {
         applicationId "cn.ngame.store"
         minSdkVersion 19
-        targetSdkVersion 23
+        targetSdkVersion 26
         versionCode 400005
         versionName "V4.0.4.1117"
 
@@ -28,6 +26,12 @@ android {
         }
         // Enabling multidex support.
         multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
     }
     /*  signingConfigs {
           debug {
@@ -50,6 +54,7 @@ android {
 //            shrinkResources false
             //signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
         }
         release {
             //signingConfig signingConfigs.release
@@ -75,7 +80,9 @@ android {
     sourceSets {
         main {
             //jni.srcDirs = []                          //设置禁止gradle生成Android.mk
-            jniLibs.srcDirs = ['src/main/jniLibs']      //设置目标的so存放路径
+            // jniLibs.srcDirs = ['src/main/jniLibs']      //设置目标的so存放路径
+            jniLibs.srcDir 'libs'
+            jni.srcDirs = []
         }
     }
     configurations.all {
@@ -93,19 +100,18 @@ android {
              flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
          }
      }*/
-}
 
-repositories {
-    flatDir {
-        dirs 'libs' //this way we can find the .aar file in libs folder
+    repositories {
+        flatDir {
+            dirs 'libs' //this way we can find the .aar file in libs folder
+        }
     }
-}
 
+}
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
     //RxJava
     //    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
     //    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
@@ -127,13 +133,14 @@ dependencies {
     compile(name: 'videowidget', ext: 'aar')
     compile project(path: ':RestfulApi')
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
-    compile 'com.android.support:design:23.2.1'
+    compile 'com.android.support:design:26.0.0-alpha1'
     //引入名为imagelib的第三方库（图片截取库）
     compile project(path: ':imagelib')
     compile project(':sliding_menu')
-    compile files('libs/mpermissions.jar')
+    implementation files('libs/mpermissions.jar')
     //解决 dex file cannot execute 64K [multidex]
     compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     compile 'se.emilsjolander:stickylistheaders:2.7.0'
     compile 'com.daimajia.numberprogressbar:library:1.4@aar'

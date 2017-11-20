@@ -1,9 +1,9 @@
 package cn.ngame.store;
 
+import android.app.Application;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.multidex.MultiDexApplication;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -32,7 +32,7 @@ import cn.ngame.store.exception.GlobalExceptionHandler;
  * @author flan
  * @since 2016/5/6
  */
-public class StoreApplication extends MultiDexApplication {
+public class StoreApplication extends Application {
 
     public static RequestQueue requestQueue;
 
