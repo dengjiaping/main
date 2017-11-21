@@ -151,4 +151,5 @@ dependencies {
     compile files('libs/weiboSDKCore.jar')
 
     compile 'cn.jzvd:jiaozivideoplayer:6.1.1'
+   // compile 'com.android.support:multidex:1.0.0'
 }

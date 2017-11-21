@@ -102,7 +102,8 @@ public class DeviceLvAdapter extends BaseAdapter {
         DeviceInfo info = deviceInfos.get(position);
 
         holder.tv_name.setText(info.getName());//蓝牙设备的名称
-        holder.tv_old.setText("当前版本:"+info.getCurrentVersionName());//蓝牙当前的版本号
+        String currentVersionName = info.getCurrentVersionName().equals("V0")?"V1.0":info.getCurrentVersionName();
+        holder.tv_old.setText("当前版本:"+ currentVersionName);//蓝牙当前的版本号
 
         //获取到的设备的新版本号>蓝牙手柄的当前版本号
         if(info.getNewVersionCode() > info.getCurrentVersionCode()){
