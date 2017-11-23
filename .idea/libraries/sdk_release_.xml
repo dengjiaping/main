@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="sdk-release-">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/store/build/intermediates/exploded-aar/sdk-release/res" />
-      <root url="jar://$PROJECT_DIR$/store/build/intermediates/exploded-aar/sdk-release/jars/classes.jar!/" />
-      <root url="jar://$PROJECT_DIR$/store/build/intermediates/exploded-aar/sdk-release/jars/libs/protobuf-lite-3.0.0.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/sdk-release.aar/cc338802deb71f7f2ed28c7bfc273944/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/sdk-release.aar/cc338802deb71f7f2ed28c7bfc273944/jars/libs/protobuf-lite-3.0.0.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/sdk-release.aar/cc338802deb71f7f2ed28c7bfc273944/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

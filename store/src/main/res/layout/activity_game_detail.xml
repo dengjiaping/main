@@ -44,9 +44,9 @@
 
                 <cn.ngame.store.view.NgameJZVideoPlayerStandard
                     android:id="@+id/game_detial_ngame_vp"
-                    android:visibility="invisible"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dm340"/>
+                    android:layout_height="@dimen/dm340"
+                    android:visibility="invisible"/>
 
             </RelativeLayout>
 
@@ -296,6 +296,18 @@
                     android:textSize="@dimen/dp_22"/>
 
             </RelativeLayout>
+
+            <GridLayout
+                android:id="@+id/layout_tags"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:columnCount="2"
+                android:paddingBottom="@dimen/dm016"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/dm001"
+            />
 
             <!--===============================详情  必读 ↓===========================-->
 

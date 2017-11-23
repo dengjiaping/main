@@ -66,7 +66,7 @@ android {
             // 是否进行混淆
             minifyEnabled true
             //Zipalign优化
-            //zipAlignEnabled true
+            zipAlignEnabled true
             // 移除无用的resource文件
             shrinkResources true
             //前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明
@@ -139,7 +139,7 @@ dependencies {
     compile project(':sliding_menu')
     implementation files('libs/mpermissions.jar')
     //解决 dex file cannot execute 64K [multidex]
-    compile 'com.android.support:multidex:1.0.1'
+   // compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     compile 'se.emilsjolander:stickylistheaders:2.7.0'

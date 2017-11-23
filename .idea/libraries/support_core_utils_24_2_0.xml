@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="support-core-utils-24.2.0">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/RestfulApi/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.0/res" />
-      <root url="jar://$PROJECT_DIR$/RestfulApi/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.0/jars/libs/internal_impl-24.2.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/RestfulApi/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.0/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/support-core-utils-24.2.0.aar/6852905d778616fb46443b3aa3c6043c/jars/libs/internal_impl-24.2.0.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/support-core-utils-24.2.0.aar/6852905d778616fb46443b3aa3c6043c/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/support-core-utils-24.2.0.aar/6852905d778616fb46443b3aa3c6043c/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

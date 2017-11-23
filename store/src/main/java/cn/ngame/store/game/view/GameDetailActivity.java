@@ -1,8 +1,12 @@
 package cn.ngame.store.game.view;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +25,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -46,6 +51,9 @@ import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.shareboard.SnsPlatform;
 import com.umeng.socialize.utils.ShareBoardlistener;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -65,6 +73,7 @@ import cn.ngame.store.adapter.ProgressBarStateListener;
 import cn.ngame.store.bean.GameImage;
 import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.JsonResult;
+import cn.ngame.store.bean.LogoInfo;
 import cn.ngame.store.bean.Token;
 import cn.ngame.store.bean.UpLoadBean;
 import cn.ngame.store.bean.VideoInfo;
@@ -93,7 +102,7 @@ import cn.ngame.store.view.StickyScrollView;
 /**
  * Created by Administrator on 2017/6/13 0013.
  */
-
+@SuppressLint("WrongConstant")
 public class GameDetailActivity extends BaseFgActivity implements StickyScrollView.OnScrollChangedListener,
         HomeFragmentChangeLayoutListener {
     private RelativeLayout rl_top;
@@ -132,6 +141,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     private UMImage mUMImage;
     private NgameJZVideoPlayerStandard jzVideoPlayerStandard;
     private AudioManager mAudioManager;
+    private GridLayout mLayoutTags;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,6 +187,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
     }*/
 
     //初始化其他控件
+
     private void initView() {
         game_big_img = (SimpleDraweeView) findViewById(R.id.sdv_img);
         game_logo_img = (SimpleDraweeView) findViewById(R.id.img_1);
@@ -194,6 +205,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         gameType2 = (TextView) findViewById(R.id.game_detail_type2);
         gameType3 = (TextView) findViewById(R.id.game_detail_type3);
         likeIv = (ImageView) findViewById(R.id.game_detail_like_iv);//喜欢按钮
+        mLayoutTags = findViewById(R.id.layout_tags);//喜欢按钮
         progressBar = (GameLoadProgressBar) findViewById(R.id.game_detail_progress_bar);//下载按钮
 
         likeIv.setOnClickListener(gameDetailClickListener);
@@ -447,13 +459,68 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
             }
         }, 0, 500);
 
+
+        //游戏标签
+        List<LogoInfo> gameLogoList = gameInfo.gameLogoList;
+        if (gameLogoList != null) {
+            mLayoutTags.setVisibility(View.VISIBLE);
+            Resources resources = getResources();
+            int screenWidth2 = ImageUtil.getScreenWidth(content) / 2;
+            int dp20 = CommonUtil.dip2px(content, 20);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(screenWidth2, ViewGroup.LayoutParams.WRAP_CONTENT);
+            LayoutInflater from = LayoutInflater.from(this);
+            View view;
+            TextView tv;
+            for (LogoInfo logoInfo : gameLogoList) {
+                if (gameInfo != null) {
+                    view = from.inflate(R.layout.layout_game_detail_logo_item, null);
+                    view.setLayoutParams(params);
+                    SimpleDraweeView sdv = view.findViewById(R.id.logo_items_dv);
+                    sdv.setImageURI(logoInfo.gameLogoImg);
+
+                    tv = view.findViewById(R.id.logo_items_tv);
+                    tv.setText(logoInfo.gameLogoName);
+                    mLayoutTags.addView(view);
+                }
+            }
+        } else {
+            mLayoutTags.setVisibility(View.GONE);
+        }
+
     }
 
     boolean hasStop;
 
     /**
+     * 从网络上获取图片资源
+     *
+     * @param url
+     * @return
+     */
+    public Bitmap getHttpBitmap(String url) {
+        URL myFileURL;
+        Bitmap bitmap = null;
+        try {
+            myFileURL = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) myFileURL.openConnection();
+            conn.setConnectTimeout(6000);
+            conn.setDoInput(true);
+            conn.setUseCaches(false);
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
+    ;
+
+    /**
      * 获取游戏详情
      */
+
     private void getGameInfo() {
         String url = Constant.WEB_SITE + Constant.URL_GAME_DETAIL;
         Response.Listener<JsonResult<GameInfo>> successListener = new Response.Listener<JsonResult<GameInfo>>() {
