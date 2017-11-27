@@ -182,12 +182,16 @@ public class NecessaryFragment extends BaseSearchFragment {
             int id = necessaryListInfo.getId();
             String toolName = necessaryListInfo.getToolName();
             List<NecessaryListInfo.AuxiliaryToolsBean> singeToolList = necessaryListInfo.getAuxiliaryTools();
-            for (int j = 0; j < singeToolList.size(); j++) {
-                mToolInfo = singeToolList.get(j);
-                mNecessaryList.add(new NecessaryItemData(id + "", toolName, mToolInfo.getId(), mToolInfo.getToolName()
-                        , mToolInfo.getInstallDesc(), Formatter.formatFileSize(content, mToolInfo.getFileSize()),
-                        mToolInfo.getToolLogo(), mToolInfo.getToolURL(), mToolInfo.getMd5(), mToolInfo.getFileName(), mToolInfo
-                        .getPackages(), mToolInfo.getToolVersion()));
+            Log.d(TAG, "数据为空: " + singeToolList);
+            if (singeToolList != null) {
+                for (int j = 0; j < singeToolList.size(); j++) {
+                    mToolInfo = singeToolList.get(j);
+                    mNecessaryList.add(new NecessaryItemData(id + "", toolName, mToolInfo.getId(), mToolInfo.getToolName()
+                            , mToolInfo.getInstallDesc(), Formatter.formatFileSize(content, mToolInfo.getFileSize()),
+                            mToolInfo.getToolLogo(), mToolInfo.getToolURL(), mToolInfo.getMd5(), mToolInfo.getFileName(),
+                            mToolInfo
+                            .getPackages(), mToolInfo.getToolVersion()));
+                }
             }
         }
         mNecessaryAdapter.setDate(mNecessaryList);

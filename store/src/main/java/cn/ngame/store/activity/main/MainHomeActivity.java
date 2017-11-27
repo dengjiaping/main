@@ -23,7 +23,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -90,6 +89,7 @@ import cn.ngame.store.push.view.NotifyMsgDetailActivity;
 import cn.ngame.store.search.view.SearchActivity;
 import cn.ngame.store.user.view.LoginActivity;
 import cn.ngame.store.user.view.UserCenterActivity;
+import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.DialogModel;
 
 
@@ -141,7 +141,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private TextView mEditProfileTv;
-    private ImageView mDownloadBt;
+    private ImageView mDownloadBt, mHubBt;
     private TextView menu_gamehub_tv;
     private Button menu_game_hub_bt;
     private GameHubFragment gameHubFragment;
@@ -204,11 +204,13 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         mIconIv = (SimpleDraweeView) findViewById(R.id.iv_icon_title);
         mTitleBgIv = (ImageView) findViewById(R.id.title_iv);
         mTitleTv = (TextView) findViewById(R.id.title_tv);
-        mDownloadBt = (ImageView) findViewById(R.id.main_download_bt);
+        mDownloadBt = findViewById(R.id.main_download_bt);
+        mHubBt = findViewById(R.id.main_hub_bt);
         im_toSearch.setOnClickListener(this);
         fl_notifi.setOnClickListener(this);
         mIconIv.setOnClickListener(this);
         mDownloadBt.setOnClickListener(this);
+        mHubBt.setOnClickListener(this);
 
         colorDark = getResources().getColor(R.color.mainColor);
         colorNormal = getResources().getColor(R.color.color_333333);
@@ -588,6 +590,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 fl_notifi.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 mDownloadBt.setVisibility(View.GONE);
+                mHubBt.setVisibility(View.GONE);
                 tv_home.setTextColor(colorDark);
 
                 //埋点
@@ -611,24 +614,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mTitleBgIv.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 mDownloadBt.setVisibility(View.GONE);
+                mHubBt.setVisibility(View.GONE);
                 tv_game.setTextColor(colorDark);
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainRankButtonClickCount);
-                break;
-            case 2://圈子
-                if (null == gameHubFragment) {
-                    gameHubFragment = new GameHubFragment();
-                    transaction.add(R.id.main_list_fragments, gameHubFragment);
-                } else {
-                    transaction.show(gameHubFragment);
-                }
-                menu_game_hub_bt.setSelected(true);
-                mTitleTv.setText(R.string.main_tab_04);
-                mTitleBgIv.setVisibility(View.GONE);
-                fl_notifi.setVisibility(View.GONE);
-                mDownloadBt.setVisibility(View.GONE);
-                im_toSearch.setVisibility(View.VISIBLE);
-                menu_gamehub_tv.setTextColor(colorDark);
-                MobclickAgent.onEvent(context, UMEventNameConstant.mainCircleButtonClickCount);
                 break;
             case 3://发现
                 if (null == discoverFragment) {
@@ -643,11 +631,29 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 bt_video.setSelected(true);
                 mTitleTv.setText("发现");
                 mDownloadBt.setVisibility(View.GONE);
+                mHubBt.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.GONE);
                 mTitleBgIv.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 tv_video.setTextColor(colorDark);
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainDiscoverButtonClickCount);
+                break;
+            case 2://游趣
+                if (null == gameHubFragment) {
+                    gameHubFragment = new GameHubFragment();
+                    transaction.add(R.id.main_list_fragments, gameHubFragment);
+                } else {
+                    transaction.show(gameHubFragment);
+                }
+                menu_game_hub_bt.setSelected(true);
+                mTitleTv.setText(R.string.main_tab_04);
+                mTitleBgIv.setVisibility(View.GONE);
+                fl_notifi.setVisibility(View.GONE);
+                mDownloadBt.setVisibility(View.GONE);
+                mHubBt.setVisibility(View.VISIBLE);
+                im_toSearch.setVisibility(View.GONE);
+                menu_gamehub_tv.setTextColor(colorDark);
+                MobclickAgent.onEvent(context, UMEventNameConstant.mainCircleButtonClickCount);
                 break;
             case 4://管理
                 if (null == administrationFragment) {
@@ -665,6 +671,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mDownloadBt.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.GONE);
                 mTitleBgIv.setVisibility(View.GONE);
+                mHubBt.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.GONE);
                 tv_manager.setTextColor(colorDark);
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainManagerButtonClickCount);
@@ -835,6 +842,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             case R.id.main_download_bt:
                 startActivity(new Intent(context, DownloadCenterActivity.class));
                 break;
+            case R.id.main_hub_bt:
+                ToastUtil.show(context, "圈子");
+                break;
             case R.id.iv_icon_title:
                 if (null != mSlidingMenu) {
                     mSlidingMenu.toggle();
@@ -869,7 +879,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private void exitBy2Click() {
         if (!isExit) {
             isExit = true;
-            Toast.makeText(this, "再点一次退出", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(context, "再点一次退出");
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -993,7 +1003,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         String fileSizeStr = Formatter.formatFileSize(context, versionInfo.fileSize);
 
-        tv_title.setText("有新版本：V" + versionInfo.versionName + "（" + fileSizeStr+"）");
+        tv_title.setText("有新版本：V" + versionInfo.versionName + "（" + fileSizeStr + "）");
         TextView tv_summary = (TextView) contentView.findViewById(R.id.tv_summary);
         tv_summary.setText(versionInfo.content);
 
