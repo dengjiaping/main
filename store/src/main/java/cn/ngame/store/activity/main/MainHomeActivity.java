@@ -52,6 +52,8 @@ import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.activity.discover.DiscoverFragment;
+import cn.ngame.store.activity.hub.GameHubFragment;
+import cn.ngame.store.activity.hub.HubActivity;
 import cn.ngame.store.activity.manager.DownloadCenterActivity;
 import cn.ngame.store.activity.manager.ManagerFragment;
 import cn.ngame.store.activity.sm.AboutNgameZoneActivity;
@@ -843,7 +845,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 startActivity(new Intent(context, DownloadCenterActivity.class));
                 break;
             case R.id.main_hub_bt:
-                ToastUtil.show(context, "圈子");
+                startActivity(new Intent(context, HubActivity.class));
                 break;
             case R.id.iv_icon_title:
                 if (null != mSlidingMenu) {

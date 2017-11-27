@@ -1,4 +1,4 @@
-package cn.ngame.store.activity.main;
+package cn.ngame.store.activity.hub;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 import cn.ngame.store.R;
+import cn.ngame.store.activity.main.TopicsDetailActivity;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.utils.KeyConstant;

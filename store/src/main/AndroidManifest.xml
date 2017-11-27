@@ -112,7 +112,7 @@
             android:screenOrientation="portrait"
             />
         <activity
-            android:name=".activity.main.GameHubDetailActivity"
+            android:name=".activity.hub.GameHubDetailActivity"
             android:screenOrientation="portrait"
             />
         <activity
@@ -308,6 +308,11 @@
             android:name=".activity.main.MainHomeActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            />
+
+        <activity
+            android:name=".activity.hub.HubActivity"
+            android:screenOrientation="portrait"
             />
         <activity
             android:name=".activity.main.VRActivity"

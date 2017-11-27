@@ -1,4 +1,4 @@
-package cn.ngame.store.activity.main;
+package cn.ngame.store.activity.hub;
 
 import android.app.Dialog;
 import android.graphics.Bitmap;

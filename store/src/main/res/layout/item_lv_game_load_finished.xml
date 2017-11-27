@@ -23,17 +23,6 @@
         fresco:progressBarImage="@drawable/ic_def_logo_188_188"
         fresco:roundedCornerRadius="@dimen/dp_14"/>
 
-    <TextView
-        android:id="@+id/tv_install_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dm018"
-        android:layout_toRightOf="@id/img_1"
-        android:maxLines="1"
-        android:text=""
-        android:textColor="@color/color_020202"
-        android:textSize="@dimen/dm028"/>
-
     <ImageView
         android:id="@+id/manager_installed_more_bt"
         android:layout_width="wrap_content"
@@ -61,4 +50,16 @@
         android:textSize="@dimen/dm022"
         />
 
+    <TextView
+        android:id="@+id/tv_install_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dm018"
+        android:layout_toLeftOf="@id/installed_open_bt"
+        android:layout_toRightOf="@id/img_1"
+        android:maxLines="1"
+        android:text=""
+        android:ellipsize="end"
+        android:textColor="@color/color_020202"
+        android:textSize="@dimen/dm028"/>
 </RelativeLayout>

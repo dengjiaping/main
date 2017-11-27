@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.ngame.store.activity.main;
+package cn.ngame.store.activity.hub;
 
 import android.content.Context;
 import android.os.Handler;
