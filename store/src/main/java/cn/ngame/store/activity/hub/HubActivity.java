@@ -1,13 +1,31 @@
 package cn.ngame.store.activity.hub;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import cn.ngame.store.R;
 import cn.ngame.store.activity.BaseFgActivity;
+import cn.ngame.store.core.utils.ImageUtil;
 
 /**
  * 圈子
@@ -19,6 +37,9 @@ public class HubActivity extends BaseFgActivity {
     private LinearLayout ll_back;
     private HubActivity mContext;
     private TextView titleTv;
+    private ArrayList<String> mDatas;
+    private RecyclerView mRecyclerView;
+    private HubAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,7 +51,7 @@ public class HubActivity extends BaseFgActivity {
     }
 
     private void init() {
-        ll_back =  findViewById(R.id.ll_back);
+        ll_back = findViewById(R.id.ll_back);
         titleTv = findViewById(R.id.tv_title);
         titleTv.setText("圈子");
         ll_back.setOnClickListener(new View.OnClickListener() {
@@ -39,6 +60,92 @@ public class HubActivity extends BaseFgActivity {
                 finish();
             }
         });
+        initDatas();
+        RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
+        mRecyclerView = findViewById(R.id.recyclerview);
+        //设置布局管理器
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mAdapter = new HubAdapter(mContext, mDatas);
+        mRecyclerView.setAdapter(mAdapter);
+        //设置 Header的样式
+        refreshLayout.setRefreshHeader(new ClassicsHeader(this), ImageUtil.getScreenWidth(this), 250);
+        RefreshHeader refreshHeader = refreshLayout.getRefreshHeader();
+        //设置 Footer 为 球脉冲
+        refreshLayout.setRefreshFooter(new ClassicsFooter(mContext));
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(true);
+                mDatas.remove(0);
+                mAdapter.setData(mDatas);
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadmore(true);
+                mDatas.add("新数据");
+                mAdapter.setData(mDatas);
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+
     }
 
+    private void initDatas() {
+        mDatas = new ArrayList<>(Arrays.asList("新游", "明品", "小霸王", "金貂", "科腾", "GT-COUPE机器酷博",
+                "WELCOME惠康", "北通"));
+    }
+
+    public class HubAdapter extends RecyclerView.Adapter<HubAdapter.ViewHolder> {
+        private LayoutInflater mInflater;
+        private List<String> mDatas;
+
+        public HubAdapter(Context context, List<String> datats) {
+            mInflater = LayoutInflater.from(context);
+            mDatas = datats;
+        }
+
+        public void setData(ArrayList<String> data) {
+            this.mDatas = data;
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            public ViewHolder(View arg0) {
+                super(arg0);
+            }
+
+            TextView mTxt;
+        }
+
+        @Override
+        public int getItemCount() {
+            return mDatas.size();
+        }
+
+        /**
+         * 创建ViewHolder
+         */
+        @Override
+        public HubAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            View view = mInflater.inflate(R.layout.item_hub_rv_item,
+                    viewGroup, false);
+            HubAdapter.ViewHolder viewHolder = new HubAdapter.ViewHolder(view);
+            viewHolder.mTxt = view.findViewById(R.id.singer_item_tv);
+            return viewHolder;
+        }
+
+        /**
+         * 设置值
+         */
+        @Override
+        public void onBindViewHolder(final HubAdapter.ViewHolder viewHolder, final int i) {
+            viewHolder.mTxt.setText(mDatas.get(i));
+            Log.d(TAG, "加载数据");
+        }
+
+    }
 }
