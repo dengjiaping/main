@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,7 +26,7 @@ import cn.ngame.store.core.utils.ImageUtil;
 
 /**
  * 圈子
- * Created by gp on 2017/3/23 0023.
+ * Created by liguoliang on 2017/11/23 0023.
  */
 
 public class HubActivity extends BaseFgActivity {
@@ -70,12 +71,17 @@ public class HubActivity extends BaseFgActivity {
         mAdapter = new HubAdapter(mContext, mDatas);
         mRecyclerView.setAdapter(mAdapter);
         //设置 Header的样式
-        refreshLayout.setRefreshHeader(new ClassicsHeader(this), ImageUtil.getScreenWidth(this), 200);
+        ClassicsHeader header = new ClassicsHeader(this);
+        header.getTitleText().setTextSize(14);
+        header.setDrawableProgressSizePx(60);
+        header.setDrawableArrowSizePx(56);
+        refreshLayout.setRefreshHeader(header, ImageUtil.getScreenWidth(this), 200);
         //设置 Footer
         refreshLayout.setRefreshFooter(new ClassicsFooter(mContext));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                Log.d(TAG, "刷新!!");
                 refreshlayout.finishRefresh();
                 mAdapter.setData(mDatas);
                 mAdapter.notifyDataSetChanged();
@@ -84,6 +90,7 @@ public class HubActivity extends BaseFgActivity {
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
+                Log.d(TAG, "加载更多!!");
                 refreshlayout.finishLoadmore();
                 mDatas.add("新数据");
                 mAdapter.setData(mDatas);
