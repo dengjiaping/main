@@ -2,21 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tabs="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
-              android:layout_height="44dp"
-              android:layout_marginTop="1dp"
+              android:layout_height="wrap_content"
               android:gravity="center_vertical"
+              android:orientation="vertical"
     >
 
     <TextView
         android:id="@+id/singer_item_tv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="@dimen/dp_20"
-        android:layout_below="@id/id_index_gallery_item_image"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="@color/white"
+        android:layout_marginLeft="@dimen/dm032"
+        android:layout_marginTop="@dimen/dm044"
         android:gravity="center_vertical"
         android:text=""
-        android:textColor="@color/color_1a"
-        android:textSize="16dp"/>
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/dm024"/>
+
+    <GridLayout
+        android:id="@+id/layout_tags2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dm001"
+        android:columnCount="2"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dm016"
+        />
 </LinearLayout>

@@ -1,18 +1,18 @@
 package cn.ngame.store.activity.hub;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -40,6 +40,7 @@ public class HubActivity extends BaseFgActivity {
     private ArrayList<String> mDatas;
     private RecyclerView mRecyclerView;
     private HubAdapter mAdapter;
+    private LinearLayout.LayoutParams params;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +54,9 @@ public class HubActivity extends BaseFgActivity {
     private void init() {
         ll_back = findViewById(R.id.ll_back);
         titleTv = findViewById(R.id.tv_title);
+        params = new LinearLayout.LayoutParams(ImageUtil.getScreenWidth(this) / 2, ViewGroup
+                .LayoutParams
+                .WRAP_CONTENT);
         titleTv.setText("圈子");
         ll_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +66,8 @@ public class HubActivity extends BaseFgActivity {
         });
         initDatas();
         RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
+        refreshLayout.setPrimaryColors(Color.BLUE);
+        refreshLayout.autoRefresh();
         mRecyclerView = findViewById(R.id.recyclerview);
         //设置布局管理器
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -70,14 +76,13 @@ public class HubActivity extends BaseFgActivity {
         mAdapter = new HubAdapter(mContext, mDatas);
         mRecyclerView.setAdapter(mAdapter);
         //设置 Header的样式
-        refreshLayout.setRefreshHeader(new ClassicsHeader(this), ImageUtil.getScreenWidth(this), 250);
-        RefreshHeader refreshHeader = refreshLayout.getRefreshHeader();
-        //设置 Footer 为 球脉冲
+        refreshLayout.setRefreshHeader(new ClassicsHeader(this), ImageUtil.getScreenWidth(this), 220);
+        //设置 Footer
         refreshLayout.setRefreshFooter(new ClassicsFooter(mContext));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(true);
+                refreshlayout.finishRefresh();
                 mDatas.remove(0);
                 mAdapter.setData(mDatas);
                 mAdapter.notifyDataSetChanged();
@@ -86,7 +91,7 @@ public class HubActivity extends BaseFgActivity {
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadmore(true);
+                refreshlayout.finishLoadmore();
                 mDatas.add("新数据");
                 mAdapter.setData(mDatas);
                 mAdapter.notifyDataSetChanged();
@@ -103,6 +108,8 @@ public class HubActivity extends BaseFgActivity {
     public class HubAdapter extends RecyclerView.Adapter<HubAdapter.ViewHolder> {
         private LayoutInflater mInflater;
         private List<String> mDatas;
+        private TextView tv;
+        private View itemView;
 
         public HubAdapter(Context context, List<String> datats) {
             mInflater = LayoutInflater.from(context);
@@ -118,6 +125,7 @@ public class HubActivity extends BaseFgActivity {
                 super(arg0);
             }
 
+            GridLayout mLayoutTags;
             TextView mTxt;
         }
 
@@ -135,6 +143,7 @@ public class HubActivity extends BaseFgActivity {
                     viewGroup, false);
             HubAdapter.ViewHolder viewHolder = new HubAdapter.ViewHolder(view);
             viewHolder.mTxt = view.findViewById(R.id.singer_item_tv);
+            viewHolder.mLayoutTags = view.findViewById(R.id.layout_tags2);
             return viewHolder;
         }
 
@@ -142,9 +151,16 @@ public class HubActivity extends BaseFgActivity {
          * 设置值
          */
         @Override
-        public void onBindViewHolder(final HubAdapter.ViewHolder viewHolder, final int i) {
-            viewHolder.mTxt.setText(mDatas.get(i));
-            Log.d(TAG, "加载数据");
+        public void onBindViewHolder(HubAdapter.ViewHolder viewHolder, final int position) {
+            viewHolder.mTxt.setText(mDatas.get(position));
+            for (int i = 0; i < 5; i++) {
+                itemView = mInflater.inflate(R.layout.layout_hub_gl_item, null);
+                itemView.setLayoutParams(params);
+                //这是显示数据的控件
+                tv = itemView.findViewById(R.id.hub_gl_item_tv);
+                tv.setText("条目" + i);
+                viewHolder.mLayoutTags.addView(itemView);
+            }
         }
 
     }
