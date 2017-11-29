@@ -311,7 +311,11 @@
             />
 
         <activity
-            android:name=".activity.hub.HubActivity"
+            android:name=".activity.hub.HubPostsActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".activity.hub.HubPostDetailActivity"
             android:screenOrientation="portrait"
             />
         <activity

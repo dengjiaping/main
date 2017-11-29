@@ -53,7 +53,7 @@ import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.activity.discover.DiscoverFragment;
 import cn.ngame.store.activity.hub.GameHubFragment;
-import cn.ngame.store.activity.hub.HubActivity;
+import cn.ngame.store.activity.hub.HubPostsActivity;
 import cn.ngame.store.activity.manager.DownloadCenterActivity;
 import cn.ngame.store.activity.manager.ManagerFragment;
 import cn.ngame.store.activity.sm.AboutNgameZoneActivity;
@@ -845,7 +845,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 startActivity(new Intent(context, DownloadCenterActivity.class));
                 break;
             case R.id.main_hub_bt:
-                startActivity(new Intent(context, HubActivity.class));
+                startActivity(new Intent(context, HubPostsActivity.class));
                 break;
             case R.id.iv_icon_title:
                 if (null != mSlidingMenu) {

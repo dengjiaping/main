@@ -1,5 +1,6 @@
 package cn.ngame.store.adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.ngame.store.R;
-import cn.ngame.store.activity.hub.HubActivity;
+import cn.ngame.store.activity.hub.HubPostDetailActivity;
+import cn.ngame.store.activity.hub.HubPostsActivity;
 import cn.ngame.store.core.utils.ImageUtil;
-import cn.ngame.store.util.ToastUtil;
+import cn.ngame.store.core.utils.KeyConstant;
 
 /**
  * Created by liguoliang
@@ -25,19 +27,21 @@ public class HubAdapter extends RecyclerView.Adapter<HubAdapter.ViewHolder> {
     private LayoutInflater mInflater;
     private List<String> mDatas;
     private TextView tv;
-    private HubActivity mContext;
+    private HubPostsActivity mContext;
     private View itemView;
     private LinearLayout.LayoutParams params;
-    public HubAdapter(HubActivity context, List<String> datats) {
-        mContext=context;
+
+    public HubAdapter(HubPostsActivity context, List<String> datats) {
+        mContext = context;
         mInflater = LayoutInflater.from(context);
         mDatas = datats;
-        params = new LinearLayout.LayoutParams(ImageUtil.getScreenWidth(context) / 2-
+        params = new LinearLayout.LayoutParams(ImageUtil.getScreenWidth(context) / 2 -
                 8, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     public void setData(ArrayList<String> data) {
         this.mDatas = data;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -73,6 +77,7 @@ public class HubAdapter extends RecyclerView.Adapter<HubAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(HubAdapter.ViewHolder viewHolder, final int position) {
         viewHolder.mTxt.setText(mDatas.get(position));
+        viewHolder.mLayoutTags.removeAllViews();
         for (int i = 0; i < 5; i++) {
             itemView = mInflater.inflate(R.layout.layout_hub_gl_item, null);
             itemView.setLayoutParams(params);
@@ -82,7 +87,10 @@ public class HubAdapter extends RecyclerView.Adapter<HubAdapter.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ToastUtil.show(mContext,"条目:");
+                    Intent intent = new Intent();
+                    intent.putExtra(KeyConstant.postId,1000L);
+                    intent.setClass(mContext, HubPostDetailActivity.class);
+                    mContext.startActivity(intent);
                 }
             });
             viewHolder.mLayoutTags.addView(itemView);

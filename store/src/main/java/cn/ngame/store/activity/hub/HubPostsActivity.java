@@ -29,10 +29,10 @@ import cn.ngame.store.core.utils.ImageUtil;
  * Created by liguoliang on 2017/11/23 0023.
  */
 
-public class HubActivity extends BaseFgActivity {
-
+public class HubPostsActivity extends BaseFgActivity {
+    protected static final String TAG = HubPostsActivity.class.getSimpleName();
     private LinearLayout ll_back;
-    private HubActivity mContext;
+    private HubPostsActivity mContext;
     private TextView titleTv;
     private ArrayList<String> mDatas;
     private RecyclerView mRecyclerView;
@@ -42,7 +42,7 @@ public class HubActivity extends BaseFgActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hub);
+        setContentView(R.layout.activity_hub_posts);
         initStatusBar();
         mContext = this;
         init();
@@ -73,8 +73,8 @@ public class HubActivity extends BaseFgActivity {
         //设置 Header的样式
         ClassicsHeader header = new ClassicsHeader(this);
         header.getTitleText().setTextSize(14);
-        header.setDrawableProgressSizePx(60);
-        header.setDrawableArrowSizePx(56);
+        header.setDrawableProgressSizePx(62);
+        header.setDrawableArrowSizePx(57);
         refreshLayout.setRefreshHeader(header, ImageUtil.getScreenWidth(this), 200);
         //设置 Footer
         refreshLayout.setRefreshFooter(new ClassicsFooter(mContext));
@@ -82,9 +82,9 @@ public class HubActivity extends BaseFgActivity {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 Log.d(TAG, "刷新!!");
+                mDatas.add("新数据");
                 refreshlayout.finishRefresh();
                 mAdapter.setData(mDatas);
-                mAdapter.notifyDataSetChanged();
             }
         });
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
@@ -92,9 +92,8 @@ public class HubActivity extends BaseFgActivity {
             public void onLoadmore(RefreshLayout refreshlayout) {
                 Log.d(TAG, "加载更多!!");
                 refreshlayout.finishLoadmore();
-                mDatas.add("新数据");
+                mDatas.add("新数据11");
                 mAdapter.setData(mDatas);
-                mAdapter.notifyDataSetChanged();
             }
         });
 

@@ -49,4 +49,5 @@ public class KeyConstant {
     public static final String cpu = "cpu";
 
     public static final String parentId="parentId";
+    public static final String postId = "postId";
 }
