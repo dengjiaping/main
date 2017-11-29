@@ -14,6 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="@dimen/dm032"
         android:layout_marginTop="@dimen/dm044"
+        android:layout_marginBottom="@dimen/dm008"
         android:gravity="center_vertical"
         android:text=""
         android:textColor="@color/color_666666"
@@ -23,9 +24,7 @@
         android:id="@+id/layout_tags2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dm001"
         android:columnCount="2"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/dm016"
         />
 </LinearLayout>

@@ -26,6 +26,7 @@ import java.util.List;
 import cn.ngame.store.R;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.core.utils.ImageUtil;
+import cn.ngame.store.util.ToastUtil;
 
 /**
  * 圈子
@@ -54,9 +55,8 @@ public class HubActivity extends BaseFgActivity {
     private void init() {
         ll_back = findViewById(R.id.ll_back);
         titleTv = findViewById(R.id.tv_title);
-        params = new LinearLayout.LayoutParams(ImageUtil.getScreenWidth(this) / 2, ViewGroup
-                .LayoutParams
-                .WRAP_CONTENT);
+        params = new LinearLayout.LayoutParams(ImageUtil.getScreenWidth(this) / 2-
+                8, ViewGroup.LayoutParams.WRAP_CONTENT);
         titleTv.setText("圈子");
         ll_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +66,7 @@ public class HubActivity extends BaseFgActivity {
         });
         initDatas();
         RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
-        refreshLayout.setPrimaryColors(Color.BLUE);
+        refreshLayout.setPrimaryColors(Color.WHITE);
         refreshLayout.autoRefresh();
         mRecyclerView = findViewById(R.id.recyclerview);
         //设置布局管理器
@@ -76,14 +76,13 @@ public class HubActivity extends BaseFgActivity {
         mAdapter = new HubAdapter(mContext, mDatas);
         mRecyclerView.setAdapter(mAdapter);
         //设置 Header的样式
-        refreshLayout.setRefreshHeader(new ClassicsHeader(this), ImageUtil.getScreenWidth(this), 220);
+        refreshLayout.setRefreshHeader(new ClassicsHeader(this), ImageUtil.getScreenWidth(this), 200);
         //设置 Footer
         refreshLayout.setRefreshFooter(new ClassicsFooter(mContext));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 refreshlayout.finishRefresh();
-                mDatas.remove(0);
                 mAdapter.setData(mDatas);
                 mAdapter.notifyDataSetChanged();
             }
@@ -101,8 +100,7 @@ public class HubActivity extends BaseFgActivity {
     }
 
     private void initDatas() {
-        mDatas = new ArrayList<>(Arrays.asList("新游", "明品", "小霸王", "金貂", "科腾", "GT-COUPE机器酷博",
-                "WELCOME惠康", "北通"));
+        mDatas = new ArrayList<>(Arrays.asList("新游", "明品", "小霸王", "金貂", "科腾", "北通"));
     }
 
     public class HubAdapter extends RecyclerView.Adapter<HubAdapter.ViewHolder> {
@@ -159,6 +157,13 @@ public class HubActivity extends BaseFgActivity {
                 //这是显示数据的控件
                 tv = itemView.findViewById(R.id.hub_gl_item_tv);
                 tv.setText("条目" + i);
+                final int finalI = i;
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ToastUtil.show(mContext,"条目:"+ finalI);
+                    }
+                });
                 viewHolder.mLayoutTags.addView(itemView);
             }
         }
