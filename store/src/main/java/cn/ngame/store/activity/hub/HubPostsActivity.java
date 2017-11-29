@@ -37,6 +37,7 @@ public class HubPostsActivity extends BaseFgActivity {
     private ArrayList<String> mDatas;
     private RecyclerView mRecyclerView;
     private HubAdapter mAdapter;
+    private TextView headerLastUpdateTv;
 
 
     @Override
@@ -70,20 +71,28 @@ public class HubPostsActivity extends BaseFgActivity {
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mAdapter = new HubAdapter(mContext, mDatas);
         mRecyclerView.setAdapter(mAdapter);
-        //设置 Header的样式
-        ClassicsHeader header = new ClassicsHeader(this);
+
+        //设置 ==============  Header的样式
+        final ClassicsHeader header = new ClassicsHeader(this);
         header.getTitleText().setTextSize(14);
+        headerLastUpdateTv = header.getLastUpdateText();
+        headerLastUpdateTv.setVisibility(View.GONE);
         header.setDrawableProgressSizePx(62);
         header.setDrawableArrowSizePx(57);
         refreshLayout.setRefreshHeader(header, ImageUtil.getScreenWidth(this), 200);
-        //设置 Footer
-        refreshLayout.setRefreshFooter(new ClassicsFooter(mContext));
+        //设置 ==============  Footer
+        ClassicsFooter footer = new ClassicsFooter(mContext);
+        footer.getTitleText().setTextSize(14);
+        footer.setDrawableArrowSizePx(57);
+        refreshLayout.setRefreshFooter(footer,ImageUtil.getScreenWidth(this), 180);
+        refreshLayout.setEnableFooterFollowWhenLoadFinished(true);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
+            public void onRefresh(RefreshLayout refreshLayout) {
                 Log.d(TAG, "刷新!!");
+                refreshLayout.finishRefresh(0);
+                headerLastUpdateTv.setVisibility(View.GONE);
                 mDatas.add("新数据");
-                refreshlayout.finishRefresh();
                 mAdapter.setData(mDatas);
             }
         });
@@ -91,7 +100,7 @@ public class HubPostsActivity extends BaseFgActivity {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 Log.d(TAG, "加载更多!!");
-                refreshlayout.finishLoadmore();
+                refreshlayout.finishLoadmore(0);
                 mDatas.add("新数据11");
                 mAdapter.setData(mDatas);
             }
