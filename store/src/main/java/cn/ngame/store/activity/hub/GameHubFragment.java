@@ -54,12 +54,10 @@ public class GameHubFragment extends BaseSearchFragment {
     public static int PAGE_SIZE = 8;
     List<GameHubMainBean.DataBean> topList = new ArrayList<>();
     List<GameHubMainBean.DataBean> list = new ArrayList<>();
-    private LinearLayout horizontalViewContainer;
     private FragmentActivity context;
     private Intent singeTopicsDetailIntent = new Intent();
     private LinearLayout.LayoutParams hParams;
     private int wrapContent;
-    private SimpleDraweeView simpleImageView;
     private boolean mIsShow = false;
     private ListView refreshableView;
     private Picasso picasso;

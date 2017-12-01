@@ -44,28 +44,11 @@
             android:textSize="@dimen/dm024"/>
 
     </RelativeLayout>
-
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/recommend_game_pic_new"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/recommend_item_game_pic_hight"
-        android:paddingLeft="@dimen/dm020"
-        android:paddingRight="@dimen/dm020"
-        android:scaleType="centerCrop"
-        fresco:actualImageScaleType="fitXY"
-        fresco:failureImage="@drawable/ic_def_logo_720_288"
-        fresco:failureImageScaleType="centerCrop"
-        fresco:placeholderImage="@drawable/ic_def_logo_720_288"
-        fresco:placeholderImageScaleType="centerCrop"
-        fresco:progressBarImage="@drawable/ic_def_logo_720_288"
-        fresco:viewAspectRatio="2"/>
-
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dm020"
-        android:layout_marginTop="@dimen/dm016"
         android:clickable="false"
         android:ellipsize="end"
         android:maxLines="1"
@@ -85,17 +68,32 @@
         android:clickable="false"
         android:ellipsize="end"
         android:lineSpacingExtra="@dimen/dm010"
-        android:maxLines="3"
+        android:maxLines="2"
         android:text=""
         android:textColor="@color/color_808080"
         android:textSize="@dimen/dm022"/>
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/recommend_game_pic_new"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/recommend_item_game_pic_hight"
+        android:paddingLeft="@dimen/dm020"
+        android:paddingRight="@dimen/dm020"
+        android:scaleType="centerCrop"
+        fresco:actualImageScaleType="fitXY"
+        fresco:failureImage="@drawable/ic_def_logo_720_288"
+        fresco:failureImageScaleType="centerCrop"
+        fresco:placeholderImage="@drawable/ic_def_logo_720_288"
+        fresco:placeholderImageScaleType="centerCrop"
+        fresco:progressBarImage="@drawable/ic_def_logo_720_288"
+        fresco:viewAspectRatio="2"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dm020"
         android:layout_marginRight="@dimen/dm020"
-        android:layout_marginTop="@dimen/dm010">
+        android:layout_marginTop="@dimen/dm016"
+    >
 
         <TextView
             android:id="@+id/game_hub_time_tv"

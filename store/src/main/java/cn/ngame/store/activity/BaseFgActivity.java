@@ -79,13 +79,13 @@ public class BaseFgActivity extends FragmentActivity {
         WindowManager.LayoutParams winParams = win.getAttributes();
         final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
         if (on) {
-            winParams.flags |= bits;
+            winParams.flags |= bits
+                                     ;
         } else {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
     }
-
     protected void initStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);

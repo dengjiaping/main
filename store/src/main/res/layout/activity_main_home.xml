@@ -183,8 +183,8 @@
 
             <Button
                 android:id="@+id/menu_game_bt"
-                android:layout_width="23dp"
-                android:layout_height="23dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:background="@drawable/menu_game"
                 android:clickable="false"
                 android:enabled="false"
@@ -200,39 +200,6 @@
                 android:textColor="@color/color_333333"
                 android:textSize="11sp"/>
         </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/menu_video"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingBottom="2dp">
-
-            <Button
-                android:id="@+id/menu_video_bt"
-                android:layout_width="23dp"
-                android:layout_height="23dp"
-                android:background="@drawable/menu_video"
-                android:clickable="false"
-                android:enabled="false"
-                android:focusable="false"/>
-
-            <TextView
-                android:id="@+id/menu_video_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
-                android:layout_marginTop="2dp"
-                android:text="发现"
-                android:textColor="@color/color_333333"
-                android:textSize="11sp"/>
-        </LinearLayout>
-
         <LinearLayout
             android:id="@+id/menu_game_hub"
             android:layout_width="0dp"
@@ -262,6 +229,37 @@
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
                 android:text="@string/main_tab_04"
+                android:textColor="@color/color_333333"
+                android:textSize="11sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/menu_video"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="2dp">
+
+            <Button
+                android:id="@+id/menu_video_bt"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:background="@drawable/menu_video"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false"/>
+
+            <TextView
+                android:id="@+id/menu_video_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:text="发现"
                 android:textColor="@color/color_333333"
                 android:textSize="11sp"/>
         </LinearLayout>
