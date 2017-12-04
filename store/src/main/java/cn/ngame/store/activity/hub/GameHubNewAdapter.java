@@ -19,6 +19,7 @@ package cn.ngame.store.activity.hub;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,12 +32,12 @@ import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameHubMainBean;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import cn.ngame.store.R;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
+import cn.ngame.store.util.ToastUtil;
 
 public class GameHubNewAdapter extends BaseAdapter {
 
@@ -47,17 +48,19 @@ public class GameHubNewAdapter extends BaseAdapter {
     private static Handler uiHandler = new Handler();
     private LinearLayout.LayoutParams params_height_dm196;
     private LinearLayout.LayoutParams params_height_dm296;
+
     public GameHubNewAdapter(Context context, FragmentManager fm, List<GameHubMainBean.DataBean> list, int type) {
         super();
         this.context = context;
         this.fm = fm;
         this.list = list;
         this.type = type;
-        params_height_dm196 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,context.getResources().getDimensionPixelSize
-                (R.dimen.dm196));
-        params_height_dm296 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,context.getResources()
+        params_height_dm196 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, context.getResources()
                 .getDimensionPixelSize
-                (R.dimen.dm296));
+                        (R.dimen.dm196));
+        params_height_dm296 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, context.getResources()
+                .getDimensionPixelSize
+                        (R.dimen.dm296));
     }
 
     public void setList(List<GameHubMainBean.DataBean> list) {
@@ -103,6 +106,7 @@ public class GameHubNewAdapter extends BaseAdapter {
             holder.timeTv = convertView.findViewById(R.id.game_hub_time_tv);
             holder.tv_from = convertView.findViewById(R.id.text1);
             holder.lookNub = convertView.findViewById(R.id.game_hub_look_nub_tv);
+            holder.postNameTv = convertView.findViewById(R.id.game_hub_pos_name_tv);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -122,7 +126,7 @@ public class GameHubNewAdapter extends BaseAdapter {
         private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         private GameHubMainBean.DataBean gameInfo;
         private SimpleDraweeView fromLogoIv;
-        private TextView tv_title, timeTv, lookNub, tv_summary, tv_from;
+        private TextView tv_title, timeTv, lookNub, tv_summary, tv_from, postNameTv;
         private IFileLoad fileLoad;
         private FragmentManager fm;
         private LinearLayout hubPicLayout;
@@ -139,7 +143,7 @@ public class GameHubNewAdapter extends BaseAdapter {
          *
          * @param gameInfo 游戏信息
          */
-        public void update(final GameHubMainBean.DataBean gameInfo, int type, int position) {
+        public void update(final GameHubMainBean.DataBean gameInfo, int type, final int position) {
             this.gameInfo = gameInfo;
             String imgUrl = gameInfo.getPostImage();
             if (imgUrl != null && !imgUrl.trim().equals("")) {
@@ -180,9 +184,18 @@ public class GameHubNewAdapter extends BaseAdapter {
             } else {
                 tv_summary.setText("");
             }
-            timeTv.setText(df.format(new Date(gameInfo.getUpdateTime())));
+            long updateTime = gameInfo.getUpdateTime();
+            timeTv.setText(String.valueOf(DateUtils.getRelativeTimeSpanString(
+                    updateTime)).replace(" ", ""));
+            //timeTv.setText(DateUtils.getRelativeTimeSpanString(gameInfo.getUpdateTime()));
             lookNub.setText(String.valueOf(gameInfo.getWatchNum()));
             tv_from.setText(gameInfo.getPostPublisher());
+            postNameTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ToastUtil.show(context, "点击:" + position);
+                }
+            });
         }
     }
 }
