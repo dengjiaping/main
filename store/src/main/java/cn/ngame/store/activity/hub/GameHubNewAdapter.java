@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -32,7 +33,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 
 import cn.ngame.store.R;
 import cn.ngame.store.core.fileload.FileLoadManager;
@@ -45,13 +45,19 @@ public class GameHubNewAdapter extends BaseAdapter {
     private List<GameHubMainBean.DataBean> list;
     private int type;
     private static Handler uiHandler = new Handler();
-
+    private LinearLayout.LayoutParams params_height_dm196;
+    private LinearLayout.LayoutParams params_height_dm296;
     public GameHubNewAdapter(Context context, FragmentManager fm, List<GameHubMainBean.DataBean> list, int type) {
         super();
         this.context = context;
         this.fm = fm;
         this.list = list;
         this.type = type;
+        params_height_dm196 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,context.getResources().getDimensionPixelSize
+                (R.dimen.dm196));
+        params_height_dm296 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,context.getResources()
+                .getDimensionPixelSize
+                (R.dimen.dm296));
     }
 
     public void setList(List<GameHubMainBean.DataBean> list) {
@@ -87,13 +93,16 @@ public class GameHubNewAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.game_hub_new_lv_item, parent, false);
             holder = new ViewHolder(context, fm);
-            holder.fromLogoIv = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
-            holder.game_logo_Iv = (SimpleDraweeView) convertView.findViewById(R.id.recommend_game_pic_new);
-            holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
-            holder.tv_summary = (TextView) convertView.findViewById(R.id.tv_summary);
-            holder.timeTv = (TextView) convertView.findViewById(R.id.game_hub_time_tv);
-            holder.tv_from = (TextView) convertView.findViewById(R.id.text1);
-            holder.lookNub = (TextView) convertView.findViewById(R.id.game_hub_look_nub_tv);
+            holder.fromLogoIv = convertView.findViewById(R.id.img_1);
+            holder.hubPicLayout = convertView.findViewById(R.id.hub_pic_ll);
+            holder.game_logo_Iv_0 = convertView.findViewById(R.id.recommend_game_pic_new_0);
+            holder.game_logo_Iv_1 = convertView.findViewById(R.id.recommend_game_pic_new_1);
+            holder.game_logo_Iv_2 = convertView.findViewById(R.id.recommend_game_pic_new_2);
+            holder.tv_title = convertView.findViewById(R.id.tv_title);
+            holder.tv_summary = convertView.findViewById(R.id.tv_summary);
+            holder.timeTv = convertView.findViewById(R.id.game_hub_time_tv);
+            holder.tv_from = convertView.findViewById(R.id.text1);
+            holder.lookNub = convertView.findViewById(R.id.game_hub_look_nub_tv);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -106,9 +115,9 @@ public class GameHubNewAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public static final String TAG = GameHubFragment.class.getSimpleName();
+    public final String TAG = GameHubFragment.class.getSimpleName();
 
-    public static class ViewHolder {
+    public class ViewHolder {
         private Context context;
         private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         private GameHubMainBean.DataBean gameInfo;
@@ -116,8 +125,8 @@ public class GameHubNewAdapter extends BaseAdapter {
         private TextView tv_title, timeTv, lookNub, tv_summary, tv_from;
         private IFileLoad fileLoad;
         private FragmentManager fm;
-        private Timer timer = new Timer();
-        public SimpleDraweeView game_logo_Iv;
+        private LinearLayout hubPicLayout;
+        public SimpleDraweeView game_logo_Iv_0, game_logo_Iv_1, game_logo_Iv_2;
 
         public ViewHolder(Context context, FragmentManager fm) {
             this.context = context;
@@ -134,10 +143,30 @@ public class GameHubNewAdapter extends BaseAdapter {
             this.gameInfo = gameInfo;
             String imgUrl = gameInfo.getPostImage();
             if (imgUrl != null && !imgUrl.trim().equals("")) {
-            String[] typeNameArray = imgUrl.split("\\,");
-            if (typeNameArray != null && typeNameArray.length > 0) {
-                game_logo_Iv.setImageURI(typeNameArray[0]);
-            }
+                String[] typeNameArray = imgUrl.split("\\,");
+                if (typeNameArray != null && typeNameArray.length > 0) {
+                    if (position == 0) {
+                        game_logo_Iv_0.setImageURI(typeNameArray[0]);
+                        game_logo_Iv_1.setVisibility(View.GONE);
+                        game_logo_Iv_2.setVisibility(View.GONE);
+                    } else if (position == 1) {
+                        hubPicLayout.setLayoutParams(params_height_dm296);
+                        game_logo_Iv_0.setImageURI(typeNameArray[0]);
+                        //game_logo_Iv_1.setImageURI(typeNameA0rray[0]);
+                        game_logo_Iv_1.setVisibility(View.VISIBLE);
+                        game_logo_Iv_2.setVisibility(View.GONE);
+                    } else if (position == 2) {
+                        hubPicLayout.setLayoutParams(params_height_dm196);
+                        game_logo_Iv_0.setImageURI(typeNameArray[0]);
+                        //game_logo_Iv_1.setImageURI(typeNameArray[0]);
+                        game_logo_Iv_1.setVisibility(View.VISIBLE);
+                        game_logo_Iv_2.setImageURI(typeNameArray[0]);
+                        game_logo_Iv_2.setVisibility(View.VISIBLE);
+                    } else {
+                        game_logo_Iv_1.setVisibility(View.GONE);
+                        game_logo_Iv_2.setVisibility(View.GONE);
+                    }
+                }
             }
             //fromLogoIv.setImageURI(gameInfo.getHeadPhoto());
             String gameName = gameInfo.getPostTitle();
@@ -152,7 +181,7 @@ public class GameHubNewAdapter extends BaseAdapter {
                 tv_summary.setText("");
             }
             timeTv.setText(df.format(new Date(gameInfo.getUpdateTime())));
-            lookNub.setText(gameInfo.getWatchNum() + "");
+            lookNub.setText(String.valueOf(gameInfo.getWatchNum()));
             tv_from.setText(gameInfo.getPostPublisher());
         }
     }

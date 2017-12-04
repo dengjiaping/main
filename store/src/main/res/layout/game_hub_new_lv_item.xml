@@ -74,20 +74,59 @@
         android:textColor="@color/color_808080"
         android:textSize="@dimen/dm024"/>
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/recommend_game_pic_new"
+    <LinearLayout
+        android:id="@+id/hub_pic_ll"
         android:layout_width="match_parent"
         android:layout_height="@dimen/recommend_item_game_pic_hight"
-        android:paddingLeft="@dimen/dm020"
-        android:paddingRight="@dimen/dm020"
-        android:scaleType="centerCrop"
-        fresco:actualImageScaleType="fitXY"
-        fresco:failureImage="@drawable/ic_def_logo_720_288"
-        fresco:failureImageScaleType="centerCrop"
-        fresco:placeholderImage="@drawable/ic_def_logo_720_288"
-        fresco:placeholderImageScaleType="centerCrop"
-        fresco:progressBarImage="@drawable/ic_def_logo_720_288"
-        fresco:viewAspectRatio="2"/>
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dm016"
+        android:paddingRight="@dimen/dm016">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/recommend_game_pic_new_0"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dm004"
+            android:layout_marginRight="@dimen/dm004"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            fresco:actualImageScaleType="centerCrop"
+            fresco:failureImage="@color/f5f5f5"
+            fresco:failureImageScaleType="centerCrop"
+            fresco:placeholderImage="@color/f5f5f5"
+            fresco:placeholderImageScaleType="centerCrop"
+            />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/recommend_game_pic_new_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dm004"
+            android:layout_marginRight="@dimen/dm004"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            fresco:actualImageScaleType="centerCrop"
+            fresco:failureImage="@color/f5f5f5"
+            fresco:failureImageScaleType="centerCrop"
+            fresco:placeholderImage="@color/f5f5f5"
+            fresco:placeholderImageScaleType="centerCrop"
+            />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/recommend_game_pic_new_2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dm004"
+            android:layout_marginRight="@dimen/dm004"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            fresco:actualImageScaleType="centerCrop"
+            fresco:failureImage="@color/f5f5f5"
+            fresco:failureImageScaleType="centerCrop"
+            fresco:placeholderImage="@color/f5f5f5"
+            fresco:placeholderImageScaleType="centerCrop"
+            />
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -111,8 +150,8 @@
         <View
             android:id="@+id/game_hub_time_right_line"
             android:layout_width="@dimen/dm001"
+            android:layout_height="@dimen/dm017"
             android:layout_centerVertical="true"
-            android:layout_height="@dimen/dm018"
             android:layout_toRightOf="@id/game_hub_time_tv"
             android:background="@color/color_808080"/>
 
