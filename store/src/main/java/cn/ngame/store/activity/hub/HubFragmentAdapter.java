@@ -17,6 +17,7 @@
 package cn.ngame.store.activity.hub;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.text.format.DateUtils;
@@ -37,9 +38,9 @@ import java.util.List;
 import cn.ngame.store.R;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.IFileLoad;
-import cn.ngame.store.util.ToastUtil;
+import cn.ngame.store.core.utils.KeyConstant;
 
-public class GameHubNewAdapter extends BaseAdapter {
+public class HubFragmentAdapter extends BaseAdapter {
 
     private Context context;
     private FragmentManager fm;
@@ -49,7 +50,7 @@ public class GameHubNewAdapter extends BaseAdapter {
     private LinearLayout.LayoutParams params_height_dm196;
     private LinearLayout.LayoutParams params_height_dm296;
 
-    public GameHubNewAdapter(Context context, FragmentManager fm, List<GameHubMainBean.DataBean> list, int type) {
+    public HubFragmentAdapter(Context context, FragmentManager fm, List<GameHubMainBean.DataBean> list, int type) {
         super();
         this.context = context;
         this.fm = fm;
@@ -119,7 +120,7 @@ public class GameHubNewAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public final String TAG = GameHubFragment.class.getSimpleName();
+    public final String TAG = HubFragment.class.getSimpleName();
 
     public class ViewHolder {
         private Context context;
@@ -193,7 +194,10 @@ public class GameHubNewAdapter extends BaseAdapter {
             postNameTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ToastUtil.show(context, "点击:" + position);
+                    Intent intent = new Intent();
+                    intent.putExtra(KeyConstant.postId, 1000L);
+                    intent.setClass(context, GameHubActivity.class);
+                    context.startActivity(intent);
                 }
             });
         }

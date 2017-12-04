@@ -79,12 +79,12 @@ import cn.ngame.store.widget.TouchImageView;
  * Created by Administrator on 2017/6/13 0013.
  */
 
-public class GameHubDetailActivity extends BaseFgActivity implements StickyScrollView.OnScrollChangedListener,
+public class HubItemActivity extends BaseFgActivity implements StickyScrollView.OnScrollChangedListener,
         HomeFragmentChangeLayoutListener {
     private RelativeLayout rl_top, rl_top2;
     private StickyScrollView scrollView;
     private Button leftBt;
-    private GameHubDetailActivity content;
+    private HubItemActivity content;
     //游戏id
     private int msgId = 0;
     private GameInfo gameInfo;
@@ -460,7 +460,7 @@ public class GameHubDetailActivity extends BaseFgActivity implements StickyScrol
             }
         }
     };
-    private String TAG = GameHubDetailActivity.class.getSimpleName();
+    private String TAG = HubItemActivity.class.getSimpleName();
 
     @Override
     protected void onStart() {

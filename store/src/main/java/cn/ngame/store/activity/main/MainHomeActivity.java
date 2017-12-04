@@ -52,7 +52,7 @@ import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.activity.discover.DiscoverFragment;
-import cn.ngame.store.activity.hub.GameHubFragment;
+import cn.ngame.store.activity.hub.HubFragment;
 import cn.ngame.store.activity.hub.HubPostsActivity;
 import cn.ngame.store.activity.manager.DownloadCenterActivity;
 import cn.ngame.store.activity.manager.ManagerFragment;
@@ -146,7 +146,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private ImageView mDownloadBt, mHubBt;
     private TextView menu_gamehub_tv;
     private Button menu_game_hub_bt;
-    private GameHubFragment gameHubFragment;
+    private HubFragment gameHubFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -537,7 +537,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
             list.add(RecommendFragment.newInstance(0));
             list.add(RankFragment.newInstance(""));
-            list.add(GameHubFragment.newInstance(0));
+            list.add(HubFragment.newInstance(0));
             list.add(DiscoverFragment.newInstance(""));
             list.add(ManagerFragment.newInstance());
 
@@ -642,7 +642,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 break;
             case 2://游趣
                 if (null == gameHubFragment) {
-                    gameHubFragment = new GameHubFragment();
+                    gameHubFragment = new HubFragment();
                     transaction.add(R.id.main_list_fragments, gameHubFragment);
                 } else {
                     transaction.show(gameHubFragment);

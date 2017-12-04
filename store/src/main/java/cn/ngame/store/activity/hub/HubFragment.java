@@ -41,15 +41,15 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
  * Created by gp on 2017/3/14 0014.
  */
 
-public class GameHubFragment extends BaseSearchFragment {
-    public static final String TAG = GameHubFragment.class.getSimpleName();
+public class HubFragment extends BaseSearchFragment {
+    public static final String TAG = HubFragment.class.getSimpleName();
     private PullToRefreshListView pullListView;
     private ImageView game_big_pic_1, game_big_pic_2;
     private SimpleDraweeView from_img_1, from_img_2;
     private TextView gamename_1, gamename_2, summary_2;
     private TextView from_1, from_2, summary_1;
     private LoadStateView loadStateView;
-    private GameHubNewAdapter adapter;
+    private HubFragmentAdapter adapter;
     private PageAction pageAction;
     public static int PAGE_SIZE = 8;
     List<GameHubMainBean.DataBean> topList = new ArrayList<>();
@@ -63,8 +63,8 @@ public class GameHubFragment extends BaseSearchFragment {
     private Picasso picasso;
 
 
-    public static GameHubFragment newInstance(int arg) {
-        GameHubFragment fragment = new GameHubFragment();
+    public static HubFragment newInstance(int arg) {
+        HubFragment fragment = new HubFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("", arg);
         fragment.setArguments(bundle);
@@ -162,7 +162,7 @@ public class GameHubFragment extends BaseSearchFragment {
             }*/
         }
         if (adapter == null) {
-            adapter = new GameHubNewAdapter(context, getSupportFragmentManager(), list, 0);
+            adapter = new HubFragmentAdapter(context, getSupportFragmentManager(), list, 0);
             pullListView.getRefreshableView().setAdapter(adapter);
         } else {
             adapter.setList(list);
@@ -264,7 +264,7 @@ public class GameHubFragment extends BaseSearchFragment {
                     map.put(KeyConstant.game_Name, dataBean.getGameName());
                     MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPositionClickCount, map);
 */
-                    Intent intent = new Intent(context, GameHubDetailActivity.class);
+                    Intent intent = new Intent(context, HubItemActivity.class);
                     intent.putExtra(KeyConstant.ID, dataBean.getId());
                     startActivity(intent);
             }

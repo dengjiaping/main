@@ -112,7 +112,7 @@
             android:screenOrientation="portrait"
             />
         <activity
-            android:name=".activity.hub.GameHubDetailActivity"
+            android:name=".activity.hub.HubItemActivity"
             android:screenOrientation="portrait"
             />
         <activity
@@ -316,6 +316,10 @@
             />
         <activity
             android:name=".activity.hub.HubPostDetailActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".activity.hub.GameHubActivity"
             android:screenOrientation="portrait"
             />
         <activity
