@@ -99,6 +99,7 @@ public class HubFragmentAdapter extends BaseAdapter {
             holder = new ViewHolder(context, fm);
             holder.fromLogoIv = convertView.findViewById(R.id.img_1);
             holder.hubPicLayout = convertView.findViewById(R.id.hub_pic_ll);
+            holder.hubPicLayout.setLayoutParams(params_height_dm296);
             holder.game_logo_Iv_0 = convertView.findViewById(R.id.recommend_game_pic_new_0);
             holder.game_logo_Iv_1 = convertView.findViewById(R.id.recommend_game_pic_new_1);
             holder.game_logo_Iv_2 = convertView.findViewById(R.id.recommend_game_pic_new_2);
@@ -149,6 +150,7 @@ public class HubFragmentAdapter extends BaseAdapter {
             String imgUrl = gameInfo.getPostImage();
             if (imgUrl != null && !imgUrl.trim().equals("")) {
                 String[] typeNameArray = imgUrl.split("\\,");
+                //todo 这里根据position获取图片的集合数据,然后根据数组的大小判断有几个图片,来控制3个控件的显示
                 if (typeNameArray != null && typeNameArray.length > 0) {
                     if (position == 0) {
                         game_logo_Iv_0.setImageURI(typeNameArray[0]);

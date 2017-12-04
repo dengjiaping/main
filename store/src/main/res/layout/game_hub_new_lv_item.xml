@@ -12,8 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dm016"
         android:layout_marginLeft="@dimen/dm016"
-        android:layout_marginTop="@dimen/dm028"
-        >
+        android:layout_marginTop="@dimen/dm028">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/img_1"
@@ -160,13 +159,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:paddingTop="@dimen/dm004"
-            android:paddingRight="@dimen/dm015"
             android:layout_toRightOf="@id/game_hub_time_right_line"
             android:ellipsize="end"
             android:maxLines="1"
             android:maxWidth="@dimen/dm300"
             android:paddingLeft="@dimen/dm012"
+            android:paddingRight="@dimen/dm015"
+            android:paddingTop="@dimen/dm004"
             android:text="绝地逃亡"
             android:textColor="@color/color_33ccff"
             android:textSize="@dimen/dm020"/>
