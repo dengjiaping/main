@@ -1,18 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:fresco="http://schemas.android.com/apk/res-auto"
-                xmlns:ngame="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:descendantFocusability="blocksDescendants"
-                android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:fresco="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:clipToPadding="false"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
 
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainColor"
+        >
+
+        <Button
+            android:id="@+id/left_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dm036"
+            android:background="@null"
+            android:clickable="true"
+            android:drawableLeft="@drawable/ic_back"
+            android:drawablePadding="@dimen/dp_10"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:onClick="onHubItemBackClick"
+            android:paddingLeft="@dimen/title_left_bt_padding_left"
+            android:paddingRight="@dimen/dp_20"
+            android:text="返回"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_size"
+            />
+    </RelativeLayout>
 
     <cn.ngame.store.view.StickyScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/rl_top"
         android:fillViewport="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
@@ -24,25 +54,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="visible">
-            <!--大图-->
-            <!--   <com.facebook.drawee.view.SimpleDraweeView
-                   xmlns:fresco="http://schemas.android.com/apk/res-auto"
-                   android:id="@+id/sdv_img"
-                   android:layout_width="match_parent"
-                   android:layout_height="@dimen/dm300"
-                   fresco:actualImageScaleType="fitXY"
-                   fresco:failureImage="@drawable/ic_def_logo_720_288"
-                   fresco:failureImageScaleType="centerCrop"
-                   fresco:placeholderImage="@drawable/ic_def_logo_720_288"
-                   fresco:placeholderImageScaleType="centerCrop"
-                   fresco:progressBarImage="@drawable/ic_def_logo_720_288"
-                   fresco:viewAspectRatio="2"/>-->
-            <!-- 实现图片横向滑动组件声明 -->
-            <android.support.v4.view.ViewPager
-                android:id="@+id/imagePages"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/dm350"
-                android:background="@color/f5f5f5"/>
+            <!--  实现图片横向滑动组件声明
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/imagePages"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/dm350"
+                    android:background="@color/f5f5f5"/>-->
 
             <TextView
                 android:id="@+id/pic_nub_seleted_show_tv"
@@ -60,7 +77,6 @@
                 android:id="@+id/game_hub_sdv"
                 android:layout_width="@dimen/dm055"
                 android:layout_height="@dimen/dm055"
-                android:layout_below="@id/imagePages"
                 android:layout_marginLeft="@dimen/dm036"
                 android:layout_marginTop="@dimen/dm020"
                 android:src="@drawable/ic_launcher"
@@ -77,7 +93,6 @@
                 android:id="@+id/hub_detail_from_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/imagePages"
                 android:layout_marginLeft="@dimen/dm016"
                 android:layout_marginTop="@dimen/dm018"
                 android:layout_toRightOf="@id/game_hub_sdv"
@@ -132,86 +147,60 @@
                 android:layout_marginRight="@dimen/dm036"
                 android:lineSpacingExtra="@dimen/dm010"
                 android:paddingBottom="@dimen/dm150"
-                android:text="加载中..."
+                android:text=""
                 android:textColor="@color/color_1a"
                 android:textSize="@dimen/dm026"/>
+
+            <RelativeLayout
+                android:id="@+id/layout_zan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:background="@color/white"
+                >
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dm001"
+                    android:background="@color/e6e6e6"/>
+
+                <TextView
+                    android:id="@+id/game_hub_support_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dm036"
+                    android:paddingTop="@dimen/dm005"
+                    android:text=""
+                    android:textColor="@color/color_1a"
+                    android:textSize="@dimen/dm030"/>
+
+                <ImageView
+                    android:id="@+id/game_hub_support_bt"
+                    android:layout_width="@dimen/dm040"
+                    android:layout_height="@dimen/dm040"
+                    android:layout_marginBottom="@dimen/dm020"
+                    android:layout_marginRight="@dimen/dm010"
+                    android:layout_marginTop="@dimen/dm020"
+                    android:layout_toLeftOf="@id/game_hub_support_tv"
+                    android:background="@drawable/un_zan"
+                    android:clickable="false"
+                    android:scaleType="centerInside"
+                    />
+            </RelativeLayout>
+
+            <cn.ngame.store.view.zan.HeartLayout
+                android:id="@+id/heart_layout"
+                android:layout_width="@dimen/dm160"
+                android:layout_height="@dimen/dm200"
+                android:layout_above="@id/layout_zan"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="-15dp"/>
         </RelativeLayout>
+
     </cn.ngame.store.view.StickyScrollView>
 
-    <RelativeLayout
-        android:id="@+id/rl_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/mainColor"
-        >
 
-        <Button
-            android:id="@+id/left_bt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dm036"
-            android:background="@null"
-            android:clickable="true"
-            android:drawableLeft="@drawable/ic_back"
-            android:drawablePadding="@dimen/dp_10"
-            android:ellipsize="end"
-            android:focusableInTouchMode="true"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingLeft="@dimen/title_left_bt_padding_left"
-            android:paddingRight="@dimen/dp_20"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/title_size"
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/layout_zan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:background="@color/white"
-        >
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dm001"
-            android:background="@color/e6e6e6"/>
-
-        <TextView
-            android:id="@+id/game_hub_support_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dm036"
-            android:paddingTop="@dimen/dm005"
-            android:text=""
-            android:textColor="@color/color_1a"
-            android:textSize="@dimen/dm030"/>
-
-        <ImageView
-            android:id="@+id/game_hub_support_bt"
-            android:layout_width="@dimen/dm040"
-            android:layout_height="@dimen/dm040"
-            android:layout_marginBottom="@dimen/dm020"
-            android:layout_marginRight="@dimen/dm010"
-            android:layout_marginTop="@dimen/dm020"
-            android:layout_toLeftOf="@id/game_hub_support_tv"
-            android:background="@drawable/un_zan"
-            android:clickable="false"
-            android:scaleType="centerInside"
-            />
-    </RelativeLayout>
-
-    <cn.ngame.store.view.zan.HeartLayout
-        android:id="@+id/heart_layout"
-        android:layout_width="@dimen/dm160"
-        android:layout_height="@dimen/dm200"
-        android:layout_above="@id/layout_zan"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="-15dp"/>
-</RelativeLayout>
+</LinearLayout>
