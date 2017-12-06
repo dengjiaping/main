@@ -170,6 +170,7 @@ public class HubFragmentAdapter extends BaseAdapter {
                         game_logo_Iv_2.setImageURI(typeNameArray[0]);
                         game_logo_Iv_2.setVisibility(View.VISIBLE);
                     } else {
+                        game_logo_Iv_2.setImageURI(typeNameArray[0]);
                         game_logo_Iv_1.setVisibility(View.GONE);
                         game_logo_Iv_2.setVisibility(View.GONE);
                     }

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:fresco="http://schemas.android.com/apk/res-auto"
-             xmlns:ngame="http://schemas.android.com/apk/res-auto"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@color/white"
-             android:descendantFocusability="blocksDescendants"
-             android:orientation="vertical">
+                xmlns:fresco="http://schemas.android.com/apk/res-auto"
+                xmlns:ngame="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="vertical">
 
 
     <cn.ngame.store.view.StickyScrollView
@@ -15,8 +15,8 @@
         android:layout_height="wrap_content"
         android:fillViewport="true"
         android:focusable="true"
-        android:scrollbarStyle="outsideOverlay"
         android:focusableInTouchMode="true"
+        android:scrollbarStyle="outsideOverlay"
         android:scrollbars="none">
 
         <RelativeLayout
@@ -44,16 +44,6 @@
                 android:layout_height="@dimen/dm350"
                 android:background="@color/f5f5f5"/>
 
-            <!-- 用于存放导航小圆点 -->
-            <!--   <LinearLayout
-                           android:id="@+id/pointGroup"
-                           android:layout_width="fill_parent"
-                           android:layout_height="20dp"
-                           android:layout_marginTop="@dimen/dm250"
-                           android:layout_gravity="bottom"
-                           android:gravity="center_horizontal"
-                           android:orientation="horizontal" >
-                       </LinearLayout>-->
             <TextView
                 android:id="@+id/pic_nub_seleted_show_tv"
                 android:layout_width="wrap_content"
@@ -68,8 +58,8 @@
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/game_hub_sdv"
-                android:layout_width="@dimen/dm042"
-                android:layout_height="@dimen/dm042"
+                android:layout_width="@dimen/dm055"
+                android:layout_height="@dimen/dm055"
                 android:layout_below="@id/imagePages"
                 android:layout_marginLeft="@dimen/dm036"
                 android:layout_marginTop="@dimen/dm020"
@@ -89,11 +79,23 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/imagePages"
                 android:layout_marginLeft="@dimen/dm016"
-                android:layout_marginTop="@dimen/dm026"
+                android:layout_marginTop="@dimen/dm018"
                 android:layout_toRightOf="@id/game_hub_sdv"
                 android:text=""
                 android:textColor="@color/color_1a"
                 android:textSize="@dimen/dm024"/>
+
+            <TextView
+                android:id="@+id/hub_detail_time_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hub_detail_from_tv"
+                android:layout_marginLeft="@dimen/dm016"
+                android:layout_marginTop="@dimen/dm001"
+                android:layout_toRightOf="@id/game_hub_sdv"
+                android:text="20分钟前"
+                android:textColor="@color/color_1a"
+                android:textSize="@dimen/dm020"/>
 
             <View
                 android:id="@+id/game_hub_line"
@@ -109,13 +111,13 @@
                 android:id="@+id/game_hub_detail_title_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_below="@id/game_hub_line"
                 android:layout_marginBottom="@dimen/dm020"
                 android:layout_marginLeft="@dimen/dm036"
                 android:layout_marginRight="@dimen/dm036"
                 android:layout_marginTop="@dimen/dm020"
                 android:ellipsize="end"
+                android:gravity="center"
                 android:text=""
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/dm032"
@@ -146,10 +148,10 @@
         <Button
             android:id="@+id/left_bt"
             android:layout_width="wrap_content"
-            android:layout_marginRight="@dimen/dm036"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dm036"
             android:background="@null"
             android:clickable="true"
             android:drawableLeft="@drawable/ic_back"
@@ -166,13 +168,14 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_alignParentBottom="true"
         android:id="@+id/layout_zan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:background="@color/white"
         >
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dm001"
@@ -195,19 +198,20 @@
             android:layout_width="@dimen/dm040"
             android:layout_height="@dimen/dm040"
             android:layout_marginBottom="@dimen/dm020"
-            android:clickable="false"
             android:layout_marginRight="@dimen/dm010"
             android:layout_marginTop="@dimen/dm020"
-            android:background="@drawable/un_zan"
             android:layout_toLeftOf="@id/game_hub_support_tv"
+            android:background="@drawable/un_zan"
+            android:clickable="false"
             android:scaleType="centerInside"
-           />
+            />
     </RelativeLayout>
+
     <cn.ngame.store.view.zan.HeartLayout
         android:id="@+id/heart_layout"
-        android:layout_marginBottom="-15dp"
-        android:layout_above="@id/layout_zan"
         android:layout_width="@dimen/dm160"
         android:layout_height="@dimen/dm200"
-        android:layout_alignParentRight="true"/>
+        android:layout_above="@id/layout_zan"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="-15dp"/>
 </RelativeLayout>

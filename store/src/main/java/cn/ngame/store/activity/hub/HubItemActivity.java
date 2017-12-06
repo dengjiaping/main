@@ -120,7 +120,6 @@ public class HubItemActivity extends BaseFgActivity implements StickyScrollView.
         initView();
         try {
             msgId = getIntent().getIntExtra(KeyConstant.ID, 0);
-            Log.d(TAG, "游趣详情" + msgId);
         } catch (Exception e) {
         }
         content = this;
