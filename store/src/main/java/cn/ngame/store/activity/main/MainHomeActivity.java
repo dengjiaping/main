@@ -93,6 +93,7 @@ import cn.ngame.store.user.view.LoginActivity;
 import cn.ngame.store.user.view.UserCenterActivity;
 import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.DialogModel;
+import cn.ngame.store.widget.mulpicture.MulPictureActivity;
 
 
 /**
@@ -164,7 +165,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         CommonUtil.verifyStatePermissions(this);
         preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
         editor = preferences.edit();
-
 //        mfragmentlist = getFragmentList();
 //        FragmentManager FragmentManager = getSupportFragmentManager();
 //        mTransaction = FragmentManager.beginTransaction();

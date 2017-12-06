@@ -269,7 +269,7 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
                                 // }
                             }
                         } else {
-                            ToastUtil.ImageToast(MulPictureActivity.this, R.drawable.common_sad, "最多只能选择" + imageNum + "张照片");
+                            ToastUtil.show(MulPictureActivity.this,  "最多只能选择" + imageNum + "张照片");
                         }
                     } catch (Exception e) {
                         ToastUtil.show(MulPictureActivity.this, "异常信息");
