@@ -27,7 +27,6 @@
         android:textSize="16dp"/>
 
     <ImageView
-        android:id="@+id/singer_item_next_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

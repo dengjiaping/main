@@ -17,7 +17,6 @@
         ngame:right_but_img="@drawable/search_title" />
 
     <ScrollView
-        android:id="@+id/fg_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/f5f5f5"

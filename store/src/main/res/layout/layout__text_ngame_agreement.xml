@@ -15,7 +15,6 @@
         android:textSize="@dimen/dp_12"/>
 
     <TextView
-        android:id="@+id/register_agreement_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="《NGAMEZONE用户隐私协议》"

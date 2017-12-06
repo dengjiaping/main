@@ -93,7 +93,7 @@
                     android:text="其它类游戏"
                     android:textSize="16sp"
                     android:textColor="@color/mainColor"
-                    android:id="@+id/textView3" />
+                    />
 
                 <GridView
                     android:id="@+id/gridView_other"

@@ -14,7 +14,6 @@
         android:background="@drawable/post_add" />
 
     <HorizontalScrollView
-        android:id="@+id/fb_horizontal_gridview"
         android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:layout_marginLeft="5dp"

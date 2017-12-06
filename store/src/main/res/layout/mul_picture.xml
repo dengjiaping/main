@@ -32,7 +32,6 @@
         android:background="@color/f5f5f5" >
 
         <HorizontalScrollView
-            android:id="@+id/scrollview"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/btn_mul_picture_submit"

@@ -109,7 +109,6 @@
 
 
     <View
-        android:id="@+id/item_bottom_line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dm001"
         android:layout_below="@id/neccessary_content_ll"
