@@ -156,6 +156,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="bottom"
                 android:background="@color/white"
                 >
@@ -165,30 +166,30 @@
                     android:layout_height="@dimen/dm001"
                     android:background="@color/e6e6e6"/>
 
-                <TextView
-                    android:id="@+id/game_hub_support_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dm036"
-                    android:paddingTop="@dimen/dm005"
-                    android:text=""
-                    android:textColor="@color/color_1a"
-                    android:textSize="@dimen/dm030"/>
 
                 <ImageView
                     android:id="@+id/game_hub_support_bt"
                     android:layout_width="@dimen/dm040"
                     android:layout_height="@dimen/dm040"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginBottom="@dimen/dm020"
                     android:layout_marginRight="@dimen/dm010"
                     android:layout_marginTop="@dimen/dm020"
-                    android:layout_toLeftOf="@id/game_hub_support_tv"
                     android:background="@drawable/un_zan"
                     android:clickable="false"
                     android:scaleType="centerInside"
                     />
+
+                <TextView
+                    android:id="@+id/game_hub_support_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/game_hub_support_bt"
+                    android:paddingTop="@dimen/dm005"
+                    android:text=""
+                    android:textColor="@color/color_1a"
+                    android:textSize="@dimen/dm030"/>
             </RelativeLayout>
 
             <cn.ngame.store.view.zan.HeartLayout
