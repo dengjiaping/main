@@ -1,10 +1,8 @@
 package cn.ngame.store.activity.hub;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.AddPointBodyBean;
@@ -16,19 +14,14 @@ import com.jzt.hol.android.jkda.sdk.services.gamehub.AddPointClient;
 import com.jzt.hol.android.jkda.sdk.services.gamehub.MsgDetailClient;
 
 import java.util.ArrayList;
-import java.util.Timer;
 
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
-import cn.ngame.store.bean.GameInfo;
 import cn.ngame.store.bean.User;
-import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.util.ToastUtil;
-import cn.ngame.store.view.ReviewScoreView;
-import cn.ngame.store.view.StickyScrollView;
 import cn.ngame.store.view.zan.HeartLayout;
 
 
@@ -37,22 +30,9 @@ import cn.ngame.store.view.zan.HeartLayout;
  */
 
 public class HubItemActivity extends BaseFgActivity {
-    private StickyScrollView scrollView;
     private HubItemActivity content;
-    //游戏id
     private int msgId = 0;
-    private GameInfo gameInfo;
-    //下载进度条
-    private Timer timer = new Timer();
     private String gameName = "";
-    private ReviewScoreView reviewScoreView;
-    private float tabTextSize;
-    private RatingBar ratingBarBig;
-    private float rate;
-    private TextView sumbitTv;
-    private boolean isPrecented = false;
-    private FragmentManager fm;
-    private TextView picNubSeletedTv;
     private TextView mFromTv;
     private TextView mTitleTv;
     private TextView mDescTv;
@@ -71,8 +51,6 @@ public class HubItemActivity extends BaseFgActivity {
         } catch (Exception e) {
         }
         content = this;
-        fm = getSupportFragmentManager();
-        tabTextSize = CommonUtil.dip2px(content, 16f);
         //请求数据
         getData();
     }

@@ -19,7 +19,6 @@ package cn.ngame.store.activity.hub;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -32,22 +31,16 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameHubMainBean;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import cn.ngame.store.R;
-import cn.ngame.store.core.fileload.FileLoadManager;
-import cn.ngame.store.core.fileload.IFileLoad;
 import cn.ngame.store.core.utils.KeyConstant;
 
 public class HubFragmentAdapter extends BaseAdapter {
-
     private Context context;
     private FragmentManager fm;
     private List<GameHubMainBean.DataBean> list;
     private int type;
-    private static Handler uiHandler = new Handler();
     private LinearLayout.LayoutParams params_height_dm196;
     private LinearLayout.LayoutParams params_height_dm296;
 
@@ -126,19 +119,13 @@ public class HubFragmentAdapter extends BaseAdapter {
 
     public class ViewHolder {
         private Context context;
-        private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        private GameHubMainBean.DataBean gameInfo;
         private SimpleDraweeView fromLogoIv;
         private TextView tv_title, timeTv, lookNub, tv_summary, tv_from, postNameTv;
-        private IFileLoad fileLoad;
-        private FragmentManager fm;
         private LinearLayout hubPicLayout;
         public SimpleDraweeView game_logo_Iv_0, game_logo_Iv_1, game_logo_Iv_2;
 
         public ViewHolder(Context context, FragmentManager fm) {
             this.context = context;
-            this.fm = fm;
-            fileLoad = FileLoadManager.getInstance(context);
         }
 
         /**
@@ -148,7 +135,6 @@ public class HubFragmentAdapter extends BaseAdapter {
          */
         @SuppressLint("WrongConstant")
         public void update(final GameHubMainBean.DataBean gameInfo, int type, final int position) {
-            this.gameInfo = gameInfo;
             List<GameHubMainBean.DataBean.PostImageListBean> postImageList = gameInfo.getPostImageList();
             if (null != postImageList) {
                 int size = postImageList.size();

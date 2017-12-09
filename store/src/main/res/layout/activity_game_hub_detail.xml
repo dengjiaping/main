@@ -41,7 +41,7 @@
     <cn.ngame.store.view.StickyScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/rl_top"
         android:fillViewport="true"
         android:focusable="true"
@@ -79,13 +79,10 @@
                 android:layout_height="@dimen/dm055"
                 android:layout_marginLeft="@dimen/dm036"
                 android:layout_marginTop="@dimen/dm020"
-                android:src="@drawable/ic_launcher"
+                android:src="@drawable/ic_def_logo_188_188"
                 fresco:actualImageScaleType="centerCrop"
-                fresco:failureImage="@drawable/ic_launcher"
+                fresco:failureImage="@drawable/ic_def_logo_188_188"
                 fresco:failureImageScaleType="centerCrop"
-                fresco:placeholderImage="@drawable/ic_launcher"
-                fresco:placeholderImageScaleType="centerCrop"
-                fresco:progressBarImage="@drawable/ic_launcher"
                 fresco:roundAsCircle="true"
                 fresco:viewAspectRatio="2"/>
 
@@ -108,7 +105,7 @@
                 android:layout_marginLeft="@dimen/dm016"
                 android:layout_marginTop="@dimen/dm001"
                 android:layout_toRightOf="@id/game_hub_sdv"
-                android:text="20分钟前"
+                android:text=""
                 android:textColor="@color/color_1a"
                 android:textSize="@dimen/dm020"/>
 
