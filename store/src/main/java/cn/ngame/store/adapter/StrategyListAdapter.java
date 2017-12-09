@@ -10,16 +10,9 @@ import android.widget.TextView;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameHubMainBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import org.joda.time.DateTime;
-
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 import cn.ngame.store.R;
-import cn.ngame.store.core.utils.FileUtil;
-import cn.ngame.store.util.DateUtil;
-import cn.ngame.store.util.StringUtil;
 
 /**
  * 战略adapter
@@ -74,7 +67,7 @@ public class StrategyListAdapter extends BaseAdapter {
         } else {
             holder = (MyHolder) view.getTag();
         }
-        GameHubMainBean.DataBean item = list.get(i);
+    /*    GameHubMainBean.DataBean item = list.get(i);
         holder.tv_type.setText(StringUtil.getGameHubMsgType(item.getPostTagId()));
         holder.tv_title.setText(item.getPostTitle());
         holder.tv_content.setText(item.getPostContent());
@@ -96,7 +89,7 @@ public class StrategyListAdapter extends BaseAdapter {
         holder.tv_name.setText(item.getPostPublisher());
         holder.tv_date.setText(DateUtil.getShowTime(new DateTime(new Timestamp(new Date(item.getCreateTime()).getTime())), DateUtil.getStrTime_ymd(item.getCreateTime())));
         holder.tv_look_num.setText(item.getWatchNum() + "");
-        holder.tv_comment_num.setText(item.getCommentNum() + "");
+        holder.tv_comment_num.setText(item.getCommentNum() + "");*/
         return view;
     }
 

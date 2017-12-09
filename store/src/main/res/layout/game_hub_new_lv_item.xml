@@ -90,7 +90,6 @@
             android:layout_weight="1"
             android:scaleType="centerCrop"
             fresco:actualImageScaleType="centerCrop"
-            fresco:failureImage="@color/f5f5f5"
             fresco:failureImageScaleType="centerCrop"
             fresco:placeholderImage="@color/f5f5f5"
             fresco:placeholderImageScaleType="centerCrop"
@@ -103,12 +102,9 @@
             android:layout_marginLeft="@dimen/dm004"
             android:layout_marginRight="@dimen/dm004"
             android:layout_weight="1"
+            android:visibility="gone"
             android:scaleType="centerCrop"
             fresco:actualImageScaleType="centerCrop"
-            fresco:failureImage="@color/f5f5f5"
-            fresco:failureImageScaleType="centerCrop"
-            fresco:placeholderImage="@color/f5f5f5"
-            fresco:placeholderImageScaleType="centerCrop"
             />
 
         <com.facebook.drawee.view.SimpleDraweeView
@@ -118,12 +114,9 @@
             android:layout_marginLeft="@dimen/dm004"
             android:layout_marginRight="@dimen/dm004"
             android:layout_weight="1"
+            android:visibility="gone"
             android:scaleType="centerCrop"
             fresco:actualImageScaleType="centerCrop"
-            fresco:failureImage="@color/f5f5f5"
-            fresco:failureImageScaleType="centerCrop"
-            fresco:placeholderImage="@color/f5f5f5"
-            fresco:placeholderImageScaleType="centerCrop"
             />
     </LinearLayout>
 
@@ -165,8 +158,8 @@
             android:maxWidth="@dimen/dm300"
             android:paddingLeft="@dimen/dm012"
             android:paddingRight="@dimen/dm015"
-            android:paddingTop="@dimen/dm004"
-            android:text="绝地逃亡"
+            android:paddingTop="@dimen/dm002"
+            android:text=""
             android:textColor="@color/color_33ccff"
             android:textSize="@dimen/dm020"/>
 

@@ -13,16 +13,10 @@ import android.widget.TextView;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameHubMainBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import org.joda.time.DateTime;
-
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 import cn.ngame.store.R;
 import cn.ngame.store.core.utils.FileUtil;
-import cn.ngame.store.util.DateUtil;
-import cn.ngame.store.util.StringUtil;
 
 
 /**
@@ -90,10 +84,12 @@ public class GameHubAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        GameHubMainBean.DataBean item = list.get(position);
-        holder.tv_name.setText(item.getPostPublisher());
-//        holder.tv_time.setText(DateUtil.getShowTime(DateTime.parse(DateUtil.getStrTime_ymd_hms(item.getCreateTime()), "yyyy-MM-dd HH:mm:ss")));
-        holder.tv_time.setText(DateUtil.getShowTime(new DateTime(new Timestamp(new Date(item.getCreateTime()).getTime())), DateUtil.getStrTime_ymd(item.getCreateTime())));
+      /*    GameHubMainBean.DataBean item = list.get(position);
+      holder.tv_name.setText(item.getPostPublisher());
+//        holder.tv_time.setText(DateUtil.getShowTime(DateTime.parse(DateUtil.getStrTime_ymd_hms(item.getCreateTime()),
+"yyyy-MM-dd HH:mm:ss")));
+        holder.tv_time.setText(DateUtil.getShowTime(new DateTime(new Timestamp(new Date(item.getCreateTime()).getTime())),
+        DateUtil.getStrTime_ymd(item.getCreateTime())));
 //            DateUtil.getStrTime_ymd_hms(item.getCreateTime());
         holder.tv_title.setText(item.getPostTitle());
         holder.tv_content.setText(item.getPostContent());
@@ -137,7 +133,7 @@ public class GameHubAdapter extends BaseAdapter {
                     setImgPicasso(item.getPostImage(), holder.iv_photo);
                 }
             }
-        }
+        }*/
         return convertView;
     }
 

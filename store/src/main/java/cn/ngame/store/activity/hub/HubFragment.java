@@ -1,5 +1,6 @@
 package cn.ngame.store.activity.hub;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -40,7 +41,7 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
  * 精选
  * Created by gp on 2017/3/14 0014.
  */
-
+@SuppressLint("WrongConstant")
 public class HubFragment extends BaseSearchFragment {
     public static final String TAG = HubFragment.class.getSimpleName();
     private PullToRefreshListView pullListView;
@@ -114,7 +115,7 @@ public class HubFragment extends BaseSearchFragment {
                         if (result != null && result.getCode() == 0) {
                             listData(result);
                         } else {
-                            loadStateView.setVisibility(View.GONE);
+                            loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_data));
                             pullListView.onPullUpRefreshComplete();
                             pullListView.onPullDownRefreshComplete();
                         }
@@ -196,9 +197,9 @@ public class HubFragment extends BaseSearchFragment {
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
-        loadStateView = (LoadStateView) view.findViewById(R.id.load_state_view2);
+        loadStateView =  view.findViewById(R.id.load_state_view2);
         loadStateView.isShowLoadBut(false);
-        pullListView = (PullToRefreshListView) view.findViewById(R.id.pullListView);
+        pullListView =  view.findViewById(R.id.pullListView);
         pullListView.setPullLoadEnabled(true);
         pullListView.setPullRefreshEnabled(true);
         pullListView.setScrollLoadEnabled(true);

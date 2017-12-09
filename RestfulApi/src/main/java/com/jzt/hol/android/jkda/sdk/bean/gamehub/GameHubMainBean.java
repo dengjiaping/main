@@ -105,48 +105,31 @@ public class GameHubMainBean {
     }
 
     public static class DataBean {
+
         /**
-         * id : 3
-         * userCode : UC0000000000069
-         * postPublisher : 新用户76920
-         * headPhoto : http://oss.ngame.cn/upload/userHead/1488614496280.jpg
-         * postTitle : 我不会玩
-         * postTagId : 1
+         * id : 5
+         * postRoleName : 官方推荐
+         * postRoleHeadPhoto :
+         * postCategoryName : 绝地求生
+         * postTitle : 测试绝地求生
+         * postContent : 测试绝地求生编辑
          * watchNum : 0
-         * postContent : 有哦宽松估摸着下午说GPS咯哦哦
-         * createTime : 1488614643000
-         * updateTime : 1488614643000
-         * appTypeId : 0
-         * commentNum : 0
-         * postImage : http://oss.ngame.cn/upload/postImage/1488614642772.png,http://oss.ngame
-         * .cn/upload/postImage/1488614645034.png,http://oss.ngame.cn/upload/postImage/1488614647262.png
-         * pointNum : 0
-         * voteNum : 0
-         * isDelete : 0
-         * isReport : 0
-         * orderNo : 0
-         * isPoint : null
+         * pointNum : 100
+         * updateTime : 1512438480000
+         * postImageList : [{"id":4,"postImageAddress":"http://oss.ngame.cn/upload/1512525551589.png","postId":5,"postOrderNo
+         * ":1,"isDelete":null}]
          */
 
         private int id;
-        private String userCode;
-        private String postPublisher;
-        private String headPhoto;
+        private String postRoleName;
+        private String postRoleHeadPhoto;
+        private String postCategoryName;
         private String postTitle;
-        private int postTagId;
-        private int watchNum;
         private String postContent;
-        private long createTime;
-        private long updateTime;
-        private int appTypeId;
-        private int commentNum;
-        private String postImage;
+        private int watchNum;
         private int pointNum;
-        private int voteNum;
-        private int isDelete;
-        private int isReport;
-        private int orderNo;
-        private Object isPoint;
+        private long updateTime;
+        private List<PostImageListBean> postImageList;
 
         public int getId() {
             return id;
@@ -156,28 +139,28 @@ public class GameHubMainBean {
             this.id = id;
         }
 
-        public String getUserCode() {
-            return userCode;
+        public String getPostRoleName() {
+            return postRoleName;
         }
 
-        public void setUserCode(String userCode) {
-            this.userCode = userCode;
+        public void setPostRoleName(String postRoleName) {
+            this.postRoleName = postRoleName;
         }
 
-        public String getPostPublisher() {
-            return postPublisher;
+        public String getPostRoleHeadPhoto() {
+            return postRoleHeadPhoto;
         }
 
-        public void setPostPublisher(String postPublisher) {
-            this.postPublisher = postPublisher;
+        public void setPostRoleHeadPhoto(String postRoleHeadPhoto) {
+            this.postRoleHeadPhoto = postRoleHeadPhoto;
         }
 
-        public String getHeadPhoto() {
-            return headPhoto;
+        public String getPostCategoryName() {
+            return postCategoryName;
         }
 
-        public void setHeadPhoto(String headPhoto) {
-            this.headPhoto = headPhoto;
+        public void setPostCategoryName(String postCategoryName) {
+            this.postCategoryName = postCategoryName;
         }
 
         public String getPostTitle() {
@@ -188,12 +171,12 @@ public class GameHubMainBean {
             this.postTitle = postTitle;
         }
 
-        public int getPostTagId() {
-            return postTagId;
+        public String getPostContent() {
+            return postContent;
         }
 
-        public void setPostTagId(int postTagId) {
-            this.postTagId = postTagId;
+        public void setPostContent(String postContent) {
+            this.postContent = postContent;
         }
 
         public int getWatchNum() {
@@ -204,20 +187,12 @@ public class GameHubMainBean {
             this.watchNum = watchNum;
         }
 
-        public String getPostContent() {
-            return postContent;
+        public int getPointNum() {
+            return pointNum;
         }
 
-        public void setPostContent(String postContent) {
-            this.postContent = postContent;
-        }
-
-        public long getCreateTime() {
-            return createTime;
-        }
-
-        public void setCreateTime(long createTime) {
-            this.createTime = createTime;
+        public void setPointNum(int pointNum) {
+            this.pointNum = pointNum;
         }
 
         public long getUpdateTime() {
@@ -228,76 +203,68 @@ public class GameHubMainBean {
             this.updateTime = updateTime;
         }
 
-        public int getAppTypeId() {
-            return appTypeId;
+        public List<PostImageListBean> getPostImageList() {
+            return postImageList;
         }
 
-        public void setAppTypeId(int appTypeId) {
-            this.appTypeId = appTypeId;
+        public void setPostImageList(List<PostImageListBean> postImageList) {
+            this.postImageList = postImageList;
         }
 
-        public int getCommentNum() {
-            return commentNum;
-        }
+        public static class PostImageListBean {
+            /**
+             * id : 4
+             * postImageAddress : http://oss.ngame.cn/upload/1512525551589.png
+             * postId : 5
+             * postOrderNo : 1
+             * isDelete : null
+             */
 
-        public void setCommentNum(int commentNum) {
-            this.commentNum = commentNum;
-        }
+            private int id;
+            private String postImageAddress;
+            private int postId;
+            private int postOrderNo;
+            private Object isDelete;
 
-        public String getPostImage() {
-            return postImage;
-        }
+            public int getId() {
+                return id;
+            }
 
-        public void setPostImage(String postImage) {
-            this.postImage = postImage;
-        }
+            public void setId(int id) {
+                this.id = id;
+            }
 
-        public int getPointNum() {
-            return pointNum;
-        }
+            public String getPostImageAddress() {
+                return postImageAddress;
+            }
 
-        public void setPointNum(int pointNum) {
-            this.pointNum = pointNum;
-        }
+            public void setPostImageAddress(String postImageAddress) {
+                this.postImageAddress = postImageAddress;
+            }
 
-        public int getVoteNum() {
-            return voteNum;
-        }
+            public int getPostId() {
+                return postId;
+            }
 
-        public void setVoteNum(int voteNum) {
-            this.voteNum = voteNum;
-        }
+            public void setPostId(int postId) {
+                this.postId = postId;
+            }
 
-        public int getIsDelete() {
-            return isDelete;
-        }
+            public int getPostOrderNo() {
+                return postOrderNo;
+            }
 
-        public void setIsDelete(int isDelete) {
-            this.isDelete = isDelete;
-        }
+            public void setPostOrderNo(int postOrderNo) {
+                this.postOrderNo = postOrderNo;
+            }
 
-        public int getIsReport() {
-            return isReport;
-        }
+            public Object getIsDelete() {
+                return isDelete;
+            }
 
-        public void setIsReport(int isReport) {
-            this.isReport = isReport;
-        }
-
-        public int getOrderNo() {
-            return orderNo;
-        }
-
-        public void setOrderNo(int orderNo) {
-            this.orderNo = orderNo;
-        }
-
-        public Object getIsPoint() {
-            return isPoint;
-        }
-
-        public void setIsPoint(Object isPoint) {
-            this.isPoint = isPoint;
+            public void setIsDelete(Object isDelete) {
+                this.isDelete = isDelete;
+            }
         }
     }
 }

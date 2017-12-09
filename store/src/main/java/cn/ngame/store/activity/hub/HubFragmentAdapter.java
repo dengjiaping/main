@@ -16,6 +16,7 @@
 
 package cn.ngame.store.activity.hub;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -145,38 +146,32 @@ public class HubFragmentAdapter extends BaseAdapter {
          *
          * @param gameInfo 游戏信息
          */
+        @SuppressLint("WrongConstant")
         public void update(final GameHubMainBean.DataBean gameInfo, int type, final int position) {
             this.gameInfo = gameInfo;
-            String imgUrl = gameInfo.getPostImage();
-            if (imgUrl != null && !imgUrl.trim().equals("")) {
-                String[] typeNameArray = imgUrl.split("\\,");
-                //todo 这里根据position获取图片的集合数据,然后根据数组的大小判断有几个图片,来控制3个控件的显示
-                if (typeNameArray != null && typeNameArray.length > 0) {
-                    if (position == 0) {
-                        game_logo_Iv_0.setImageURI(typeNameArray[0]);
-                        game_logo_Iv_1.setVisibility(View.GONE);
-                        game_logo_Iv_2.setVisibility(View.GONE);
-                    } else if (position == 1) {
-                        hubPicLayout.setLayoutParams(params_height_dm296);
-                        game_logo_Iv_0.setImageURI(typeNameArray[0]);
-                        //game_logo_Iv_1.setImageURI(typeNameA0rray[0]);
-                        game_logo_Iv_1.setVisibility(View.VISIBLE);
-                        game_logo_Iv_2.setVisibility(View.GONE);
-                    } else if (position == 2) {
-                        hubPicLayout.setLayoutParams(params_height_dm196);
-                        game_logo_Iv_0.setImageURI(typeNameArray[0]);
-                        //game_logo_Iv_1.setImageURI(typeNameArray[0]);
-                        game_logo_Iv_1.setVisibility(View.VISIBLE);
-                        game_logo_Iv_2.setImageURI(typeNameArray[0]);
-                        game_logo_Iv_2.setVisibility(View.VISIBLE);
-                    } else {
-                        game_logo_Iv_2.setImageURI(typeNameArray[0]);
-                        game_logo_Iv_1.setVisibility(View.GONE);
-                        game_logo_Iv_2.setVisibility(View.GONE);
-                    }
+            List<GameHubMainBean.DataBean.PostImageListBean> postImageList = gameInfo.getPostImageList();
+            if (null != postImageList) {
+                int size = postImageList.size();
+                game_logo_Iv_1.setVisibility(View.GONE);
+                game_logo_Iv_2.setVisibility(View.GONE);
+                if (size >= 1) {
+                    GameHubMainBean.DataBean.PostImageListBean postImageListBean = postImageList.get(0);
+                    game_logo_Iv_0.setImageURI(postImageListBean.getPostImageAddress());
+                }
+                if (size >= 2) {
+                    hubPicLayout.setLayoutParams(params_height_dm296);
+                    GameHubMainBean.DataBean.PostImageListBean postImageListBean1 = postImageList.get(1);
+                    game_logo_Iv_1.setVisibility(View.VISIBLE);
+                    game_logo_Iv_1.setImageURI(postImageListBean1.getPostImageAddress());
+                }
+                if (size >= 3) {
+                    hubPicLayout.setLayoutParams(params_height_dm196);
+                    GameHubMainBean.DataBean.PostImageListBean postImageListBean2 = postImageList.get(2);
+                    game_logo_Iv_2.setVisibility(View.VISIBLE);
+                    game_logo_Iv_2.setImageURI(postImageListBean2.getPostImageAddress());
                 }
             }
-            //fromLogoIv.setImageURI(gameInfo.getHeadPhoto());
+            fromLogoIv.setImageURI(gameInfo.getPostRoleHeadPhoto());
             String gameName = gameInfo.getPostTitle();
             if (!"".equals(gameName)) {
                 tv_title.setText(gameName);
@@ -193,7 +188,8 @@ public class HubFragmentAdapter extends BaseAdapter {
                     updateTime)).replace(" ", ""));
             //timeTv.setText(DateUtils.getRelativeTimeSpanString(gameInfo.getUpdateTime()));
             lookNub.setText(String.valueOf(gameInfo.getWatchNum()));
-            tv_from.setText(gameInfo.getPostPublisher());
+            tv_from.setText(gameInfo.getPostRoleName());
+            postNameTv.setText(gameInfo.getPostCategoryName());
             postNameTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
