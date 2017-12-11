@@ -21,7 +21,6 @@ public class AllClassifyManufacturerAdapter extends BaseAdapter {
 
     private Context context;
     private List<AllClassifyBean.DataBean.GameManufacturerListBean> list;
-    String type;
 
     public AllClassifyManufacturerAdapter(Context context, List<AllClassifyBean.DataBean.GameManufacturerListBean> list) {
         super();

@@ -90,12 +90,10 @@ public class HubFragment extends BaseSearchFragment {
         loadStateView.setVisibility(View.VISIBLE);
         loadStateView.setState(LoadStateView.STATE_ING);
 
-        //------------------------------------------------------------------------------------------
         GameHubMainBodyBean bodyBean = new GameHubMainBodyBean();
         bodyBean.setPageIndex(0);
         bodyBean.setPageIndex(pageAction.getCurrentPage());
         new GameHubMainClient(getActivity(), bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
                 .subscribe(new ObserverWrapper<GameHubMainBean>() {
                     @Override
                     public void onError(Throwable e) {
