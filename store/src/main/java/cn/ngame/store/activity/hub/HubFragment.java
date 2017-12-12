@@ -153,7 +153,7 @@ public class HubFragment extends BaseSearchFragment {
             pageAction.setTotal(totals);
             this.list.addAll(resultData); //清除数据
             this.topList.addAll(resultData);
-            ////设置头部布局
+            //设置头部布局
           /*  if (list.size() > 1) {
                 setHeaderInfo(list);
                 list.remove(0);
@@ -166,13 +166,11 @@ public class HubFragment extends BaseSearchFragment {
         } else {
             adapter.setList(list);
         }
-        //设置下位
        /* if ((mStickyLV.size() == 0 && pageAction.getTotal() == 0) || mStickyLV.size() >= pageAction.getTotal()) {
             pullListView.setPullLoadEnabled(true);
         } else {
             pullListView.setPullLoadEnabled(true);
         }*/
-        //设置上拉刷新后停留的地方  // TODO: 2017/7/17 0017
 
         if (0 == pageAction.getCurrentPage() && result.getData().size() <= 2) {
             //pullListView.setScrollLoadEnabled(false);

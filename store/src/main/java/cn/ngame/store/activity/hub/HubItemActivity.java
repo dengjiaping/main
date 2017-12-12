@@ -1,6 +1,7 @@
 package cn.ngame.store.activity.hub;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
 import cn.ngame.store.bean.User;
+import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.util.ToastUtil;
@@ -65,25 +67,28 @@ public class HubItemActivity extends BaseFgActivity {
         heartLayout = findViewById(R.id.heart_layout);
     }
 
+    protected static final String TAG = HubItemActivity.class.getSimpleName();
+
     private void setMsgDetail(MsgDetailBean result) {
-        MsgDetailBean.DataBean data = result.getData();
+        MsgDetailBean.PostDataBean data = result.getPostData();
+        Log.d(TAG, "setMsgDetail: ==" + data);
         if (data == null) {
             return;
         }
-        mFromTv.setText(data.getPostPublisher());
-        gameName = data.getPostTitle();
-        mTitleTv.setText(gameName);
+        mFromTv.setText(data.getPostRoleName());
+        mTitleTv.setText(data.getPostTitle());
         mDescTv.setText(data.getPostContent());
-        mSupportNumTv.setText(data.getPointCount() + "");
+        mSupportNumTv.setText(data.getPointNum() + "");
 
-        String postImage = data.getPostImage();
+        String postImage = data.getPostRoleHeadPhoto();
         if (postImage != null) {
             String[] typeNameArray = postImage.split("\\,");
             for (int i = 0; i < typeNameArray.length; i++) {
                 imgs.add(typeNameArray[i]);
             }
         }
-        if (data.getIsPoint() == 1) {//已经点赞
+        //if (data.getIsPoint() == 1) {//已经点赞 todo
+        if (1 == 1) {//已经点赞
             mSupportImageView.setBackgroundResource(R.drawable.zan);
             mSupportImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -120,7 +125,7 @@ public class HubItemActivity extends BaseFgActivity {
         } else {
             bodyBean.setDeviceOnlyNum(StoreApplication.deviceId);
         }
-        bodyBean.setType(type);  //type：1表示帖子点赞，2表示评论点赞，3表示投票
+        bodyBean.setAppTypeId(Constant.APP_TYPE_ID_0_ANDROID);  //type：1表示帖子点赞，2表示评论点赞，3表示投票
         bodyBean.setPostId(id);  //帖子id
         new AddPointClient(this, bodyBean).observable()
 //                .compose(this.<DiscountListBean>bindToLifecycle())
@@ -174,7 +179,8 @@ public class HubItemActivity extends BaseFgActivity {
         } else {
             bodyBean.setDeviceOnlyNum(StoreApplication.deviceId);
         }
-        bodyBean.setId(msgId);
+        //bodyBean.setId(msgId); todo
+        bodyBean.setId(1);
         bodyBean.setType(1);
         new MsgDetailClient(this, bodyBean).observable()
 //                .compose(this.<DiscountListBean>bindToLifecycle())

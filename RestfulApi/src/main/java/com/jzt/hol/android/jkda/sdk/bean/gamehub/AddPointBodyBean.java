@@ -9,6 +9,7 @@ public class AddPointBodyBean {
     String userCode;
     String deviceOnlyNum;
     int postId;
+    String appTypeId;
 
     public int getType() {
 
@@ -41,5 +42,13 @@ public class AddPointBodyBean {
 
     public void setPostId(int postId) {
         this.postId = postId;
+    }
+
+    public String getAppTypeId() {
+        return appTypeId;
+    }
+
+    public void setAppTypeId(String appTypeId) {
+        this.appTypeId = appTypeId;
     }
 }

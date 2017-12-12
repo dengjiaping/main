@@ -116,7 +116,7 @@ public interface GameService {
                                           @Body ReportPostBodyBean bean);
 
     // 帖子详情
-    @POST("gameCircle/queryPostDetailById")
+    @POST("gameCircle/getShowPostById")
     Observable<MsgDetailBean> queryPostDetail(@Header("content-type") String type,
                                               @Body MsgDetailBodyBean bean);
 
