@@ -315,11 +315,7 @@
             android:screenOrientation="portrait"
             />
         <activity
-            android:name=".activity.hub.HubPostDetailActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity
-            android:name=".activity.hub.GameHubActivity"
+            android:name=".activity.hub.CircleActivity"
             android:screenOrientation="portrait"
             />
         <activity

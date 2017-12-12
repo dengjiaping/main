@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.ngame.store.R;
-import cn.ngame.store.activity.hub.HubPostDetailActivity;
+import cn.ngame.store.activity.hub.CircleActivity;
 import cn.ngame.store.activity.hub.HubPostsActivity;
 import cn.ngame.store.bean.PostsInfo;
 import cn.ngame.store.core.utils.ImageUtil;
@@ -101,7 +101,7 @@ public class HubAdapter extends RecyclerView.Adapter<HubAdapter.ViewHolder> {
                         public void onClick(View view) {
                             Intent intent = new Intent();
                             intent.putExtra(KeyConstant.postId, showPostCategoryListBean.getId());
-                            intent.setClass(mContext, HubPostDetailActivity.class);
+                            intent.setClass(mContext, CircleActivity.class);
                             mContext.startActivity(intent);
                         }
                     });

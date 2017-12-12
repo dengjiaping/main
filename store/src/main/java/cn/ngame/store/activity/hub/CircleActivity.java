@@ -15,10 +15,10 @@ import cn.ngame.store.core.utils.KeyConstant;
  * Created by liguoliang on 2017/11/23 0023.
  */
 
-public class GameHubActivity extends BaseFgActivity {
-    protected static final String TAG = GameHubActivity.class.getSimpleName();
+public class CircleActivity extends BaseFgActivity {
+    protected static final String TAG = CircleActivity.class.getSimpleName();
     private LinearLayout ll_back;
-    private GameHubActivity mContext;
+    private CircleActivity mContext;
     private TextView titleTv, postIdTv;
     private int postId = 0;
 

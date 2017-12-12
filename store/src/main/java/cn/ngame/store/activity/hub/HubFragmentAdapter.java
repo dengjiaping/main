@@ -184,7 +184,7 @@ public class HubFragmentAdapter extends BaseAdapter {
                     public void onClick(View view) {
                         Intent intent = new Intent();
                         intent.putExtra(KeyConstant.postId, showPostCategoryBean.getId());
-                        intent.setClass(context, GameHubActivity.class);
+                        intent.setClass(context, CircleActivity.class);
                         context.startActivity(intent);
                     }
                 });
