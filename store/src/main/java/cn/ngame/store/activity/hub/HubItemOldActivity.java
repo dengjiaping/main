@@ -38,7 +38,6 @@ import com.jzt.hol.android.jkda.sdk.bean.gamehub.MsgDetailBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.NormalDataBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.gamehub.AddPointClient;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.MsgDetailClient;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.umeng.analytics.MobclickAgent;
 
@@ -245,7 +244,7 @@ public class HubItemOldActivity extends BaseFgActivity implements StickyScrollVi
 
     private void initBanner() {
         viewPager = (ViewPager) main.findViewById(R.id.imagePages);
-        picNubSeletedTv = (TextView) main.findViewById(R.id.pic_nub_seleted_show_tv);
+        //picNubSeletedTv = (TextView) main.findViewById(R.id.pic_nub_seleted_show_tv);
         pointGroup = (ViewGroup) main.findViewById(R.id.pointGroup);
     }
 
@@ -482,24 +481,6 @@ public class HubItemOldActivity extends BaseFgActivity implements StickyScrollVi
         }
         bodyBean.setId(msgId);
         bodyBean.setType(1);
-        new MsgDetailClient(this, bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<MsgDetailBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        mDescTv.setText("服务器开小差咯~");
-                    }
-
-                    @Override
-                    public void onNext(MsgDetailBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            setMsgDetail(result);
-                        } else {
-                            //ToastUtil.show(content, "获取失败");
-                            mDescTv.setText("获取失败~");
-                        }
-                    }
-                });
     }
 
     @Override

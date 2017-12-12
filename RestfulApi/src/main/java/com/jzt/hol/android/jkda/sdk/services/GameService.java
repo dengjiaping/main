@@ -22,6 +22,7 @@ import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameListBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.MsgDetailBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.MsgDetailBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.NormalDataBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.PostDetailBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.PostMsgBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.PostSearchListBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.ReportPostBodyBean;
@@ -117,9 +118,12 @@ public interface GameService {
 
     // 帖子详情
     @POST("gameCircle/getShowPostById")
-    Observable<MsgDetailBean> queryPostDetail(@Header("content-type") String type,
+    Observable<PostDetailBean> queryPostDetail(@Header("content-type") String type,
+                                               @Body MsgDetailBodyBean bean);
+    // 帖子详情
+    @POST("gameCircle/getShowPostById")
+    Observable<MsgDetailBean> queryMsgDetail(@Header("content-type") String type,
                                               @Body MsgDetailBodyBean bean);
-
     // 点赞、投票
     @POST("gameCircle/addPointORVote")
     Observable<NormalDataBean> addPoint(@Header("content-type") String type,

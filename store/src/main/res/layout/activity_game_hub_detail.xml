@@ -60,53 +60,37 @@
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/dm350"
                     android:background="@color/f5f5f5"/>-->
-
-            <TextView
-                android:id="@+id/pic_nub_seleted_show_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/dm036"
-                android:layout_marginTop="@dimen/dm300"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="@dimen/dm027"
-                android:textStyle="bold"/>
-
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/game_hub_sdv"
-                android:layout_width="@dimen/dm055"
-                android:layout_height="@dimen/dm055"
-                android:layout_marginLeft="@dimen/dm036"
-                android:layout_marginTop="@dimen/dm020"
-                android:src="@drawable/ic_def_logo_188_188"
+                android:layout_width="@dimen/dm064"
+                android:layout_height="@dimen/dm064"
+                android:layout_margin="@dimen/dm020"
                 fresco:actualImageScaleType="centerCrop"
                 fresco:failureImage="@drawable/ic_def_logo_188_188"
                 fresco:failureImageScaleType="centerCrop"
                 fresco:roundAsCircle="true"
-                fresco:viewAspectRatio="2"/>
+                />
 
             <TextView
                 android:id="@+id/hub_detail_from_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dm016"
-                android:layout_marginTop="@dimen/dm018"
+                android:layout_alignTop="@id/game_hub_sdv"
                 android:layout_toRightOf="@id/game_hub_sdv"
                 android:text=""
                 android:textColor="@color/color_1a"
-                android:textSize="@dimen/dm024"/>
+                android:textSize="@dimen/dm024"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/hub_detail_time_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/hub_detail_from_tv"
-                android:layout_marginLeft="@dimen/dm016"
-                android:layout_marginTop="@dimen/dm001"
+                android:layout_marginTop="@dimen/dm010"
                 android:layout_toRightOf="@id/game_hub_sdv"
                 android:text=""
-                android:textColor="@color/color_1a"
+                android:textColor="@color/color_808080"
                 android:textSize="@dimen/dm020"/>
 
             <View
@@ -114,10 +98,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dm001"
                 android:layout_below="@id/game_hub_sdv"
-                android:layout_marginLeft="@dimen/dm036"
-                android:layout_marginRight="@dimen/dm036"
-                android:layout_marginTop="@dimen/dm018"
-                android:background="@color/e6e6e6"/>
+                android:background="@color/color_808080"/>
+
+
+            <TextView
+                android:id="@+id/hub_name_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hub_detail_from_tv"
+                android:layout_marginTop="@dimen/dm020"
+                android:layout_toRightOf="@id/game_hub_sdv"
+                android:text="圈子名称"
+                android:textColor="@color/color_808080"
+                android:textSize="@dimen/dm020"/>
+
 
             <TextView
                 android:id="@+id/game_hub_detail_title_tv"

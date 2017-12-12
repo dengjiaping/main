@@ -1,18 +1,20 @@
 package cn.ngame.store.activity.hub;
 
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.AddPointBodyBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.MsgDetailBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.MsgDetailBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.NormalDataBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.PostDetailBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.gamehub.AddPointClient;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.MsgDetailClient;
+import com.jzt.hol.android.jkda.sdk.services.gamehub.PostDetailClient;
 
 import java.util.ArrayList;
 
@@ -35,12 +37,11 @@ public class HubItemActivity extends BaseFgActivity {
     private HubItemActivity content;
     private int msgId = 0;
     private String gameName = "";
-    private TextView mFromTv;
-    private TextView mTitleTv;
-    private TextView mDescTv;
+    private TextView mTitleTv, mFromTv, mDescTv, mTimeTv;
     private TextView mSupportNumTv;
     private ImageView mSupportImageView;
     private HeartLayout heartLayout;
+    private SimpleDraweeView mFromIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +61,10 @@ public class HubItemActivity extends BaseFgActivity {
 
     private void initView() {
         mFromTv = findViewById(R.id.hub_detail_from_tv);
+        mFromIcon = findViewById(R.id.game_hub_sdv);
         mTitleTv = findViewById(R.id.game_hub_detail_title_tv);
         mDescTv = findViewById(R.id.game_hub_detail_desc_tv);
+        mTimeTv = findViewById(R.id.hub_detail_time_tv);
         mSupportNumTv = findViewById(R.id.game_hub_support_tv);
         mSupportImageView = findViewById(R.id.game_hub_support_bt);
         heartLayout = findViewById(R.id.heart_layout);
@@ -69,14 +72,17 @@ public class HubItemActivity extends BaseFgActivity {
 
     protected static final String TAG = HubItemActivity.class.getSimpleName();
 
-    private void setMsgDetail(MsgDetailBean result) {
-        MsgDetailBean.PostDataBean data = result.getPostData();
-        Log.d(TAG, "setMsgDetail: ==" + data);
+    private void setMsgDetail(PostDetailBean result) {
+        PostDetailBean.DataBean data = result.getData();
+        Log.d(TAG, "获取单条数据: ==" + data);
         if (data == null) {
             return;
         }
+        mFromIcon.setImageURI(data.getPostRoleHeadPhoto());
         mFromTv.setText(data.getPostRoleName());
         mTitleTv.setText(data.getPostTitle());
+        mTimeTv.setText(String.valueOf(DateUtils.getRelativeTimeSpanString(
+                data.getUpdateTime())).replace(" ", ""));
         mDescTv.setText(data.getPostContent());
         mSupportNumTv.setText(data.getPointNum() + "");
 
@@ -179,19 +185,17 @@ public class HubItemActivity extends BaseFgActivity {
         } else {
             bodyBean.setDeviceOnlyNum(StoreApplication.deviceId);
         }
-        //bodyBean.setId(msgId); todo
         bodyBean.setPostId(msgId);
         bodyBean.setAppTypeId(Constant.APP_TYPE_ID_0_ANDROID);
-        new MsgDetailClient(this, bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<MsgDetailBean>() {
+        new PostDetailClient(this, bodyBean).observable()
+                .subscribe(new ObserverWrapper<PostDetailBean>() {
                     @Override
                     public void onError(Throwable e) {
                         //("服务器开小差咯~");
                     }
 
                     @Override
-                    public void onNext(MsgDetailBean result) {
+                    public void onNext(PostDetailBean result) {
                         if (result != null && result.getCode() == 0) {
                             setMsgDetail(result);
                         } else {
