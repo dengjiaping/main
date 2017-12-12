@@ -40,7 +40,6 @@ public class Constant {
     public static final String CONFIG_USER_HEAD = "HeadUrl";
     public static final String CFG_RECEIVE_MSG = "ReceiveMsg";
     public static final String CFG_DELETE_APK = "DeleteApk";
-    public static final String CFG_NOTIFY_GAME_UPDATE = "NotifyGameUpdate";
     public static final String CFG_ALLOW_4G_LOAD = "AllowLoadBy4G";
 //    public static final String PUSH_API_KEY = "ncoPF1KvUO5CVcbqZkwvlXE1";       //测试key
     public static final String PUSH_API_KEY = "LUQUlTLy7fybX0oZOVeg9Pwh";       //生产key
@@ -49,8 +48,6 @@ public class Constant {
     public static final String URL_DEL_FAVORITE = "/user/delFavorite";
     public static final String URL_ADD_FAVORITE = "/user/addFavorite";
     public static final String URL_VR_LIST = "/app/queryHotInfo";
-    public static final String URL_SEARCH = "/app/search";
-    public static final String URL_SEARCH_GAME_VIDEO = "/app/queryHotSearchGameAndVideo";
     public static final String URL_APP_UPDATE = "/app/queryCurrentAppVersion";
     public static final String URL_GAME_CATEGORY = "/game/queryGameCategory";
     public static final String URL_GAME_LAB = "/game/gameSubTypeListByParentId";

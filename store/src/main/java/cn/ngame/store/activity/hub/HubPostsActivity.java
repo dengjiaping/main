@@ -1,5 +1,6 @@
 package cn.ngame.store.activity.hub;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -49,6 +50,7 @@ public class HubPostsActivity extends BaseFgActivity {
         init();
     }
 
+    @SuppressLint("WrongConstant")
     private void init() {
         ll_back = findViewById(R.id.ll_back);
         titleTv = findViewById(R.id.tv_title);
@@ -96,13 +98,12 @@ public class HubPostsActivity extends BaseFgActivity {
                 mAdapter.setData(mDatas);
             }
         });
-        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+       refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                Log.d(TAG, "加载更多!!");
                 refreshlayout.finishLoadmore(0);
-                mDatas.add("新数据11");
-                mAdapter.setData(mDatas);
+            /*    mDatas.add("新数据11");
+                mAdapter.setData(mDatas);*/
             }
         });
 

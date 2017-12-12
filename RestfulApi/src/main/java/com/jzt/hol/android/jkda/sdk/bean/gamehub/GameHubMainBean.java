@@ -116,8 +116,9 @@ public class GameHubMainBean {
          * watchNum : 0
          * pointNum : 100
          * updateTime : 1512438480000
-         * postImageList : [{"id":4,"postImageAddress":"http://oss.ngame.cn/upload/1512525551589.png","postId":5,"postOrderNo
-         * ":1,"isDelete":null}]
+         * postImageList : [{"id":4,"postImageAddress":"http://oss.ngame.cn/upload/1512525551589.png","postId":5,
+         * "postOrderNo":1,"isDelete":null}]
+         * showPostCategory : {"id":23,"postCategoryName":"绝地求生","postCategoryCount":0,"postCategoryUrl":null,"showPostCategoryList":null}
          */
 
         private int id;
@@ -129,6 +130,7 @@ public class GameHubMainBean {
         private int watchNum;
         private int pointNum;
         private long updateTime;
+        private ShowPostCategoryBean showPostCategory;
         private List<PostImageListBean> postImageList;
 
         public int getId() {
@@ -203,12 +205,76 @@ public class GameHubMainBean {
             this.updateTime = updateTime;
         }
 
+        public ShowPostCategoryBean getShowPostCategory() {
+            return showPostCategory;
+        }
+
+        public void setShowPostCategory(ShowPostCategoryBean showPostCategory) {
+            this.showPostCategory = showPostCategory;
+        }
+
         public List<PostImageListBean> getPostImageList() {
             return postImageList;
         }
 
         public void setPostImageList(List<PostImageListBean> postImageList) {
             this.postImageList = postImageList;
+        }
+
+        public static class ShowPostCategoryBean {
+            /**
+             * id : 23
+             * postCategoryName : 绝地求生
+             * postCategoryCount : 0
+             * postCategoryUrl : null
+             * showPostCategoryList : null
+             */
+
+            private int id;
+            private String postCategoryName;
+            private int postCategoryCount;
+            private Object postCategoryUrl;
+            private Object showPostCategoryList;
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public String getPostCategoryName() {
+                return postCategoryName;
+            }
+
+            public void setPostCategoryName(String postCategoryName) {
+                this.postCategoryName = postCategoryName;
+            }
+
+            public int getPostCategoryCount() {
+                return postCategoryCount;
+            }
+
+            public void setPostCategoryCount(int postCategoryCount) {
+                this.postCategoryCount = postCategoryCount;
+            }
+
+            public Object getPostCategoryUrl() {
+                return postCategoryUrl;
+            }
+
+            public void setPostCategoryUrl(Object postCategoryUrl) {
+                this.postCategoryUrl = postCategoryUrl;
+            }
+
+            public Object getShowPostCategoryList() {
+                return showPostCategoryList;
+            }
+
+            public void setShowPostCategoryList(Object showPostCategoryList) {
+                this.showPostCategoryList = showPostCategoryList;
+            }
         }
 
         public static class PostImageListBean {

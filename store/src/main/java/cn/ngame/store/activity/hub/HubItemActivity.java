@@ -43,6 +43,7 @@ public class HubItemActivity extends BaseFgActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         initStatusBar();
         setContentView(R.layout.activity_game_hub_detail);
         initView();
@@ -74,7 +75,6 @@ public class HubItemActivity extends BaseFgActivity {
         mTitleTv.setText(gameName);
         mDescTv.setText(data.getPostContent());
         mSupportNumTv.setText(data.getPointCount() + "");
-
 
         String postImage = data.getPostImage();
         if (postImage != null) {

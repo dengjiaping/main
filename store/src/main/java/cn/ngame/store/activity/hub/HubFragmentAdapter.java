@@ -122,6 +122,7 @@ public class HubFragmentAdapter extends BaseAdapter {
         private SimpleDraweeView fromLogoIv;
         private TextView tv_title, timeTv, lookNub, tv_summary, tv_from, postNameTv;
         private LinearLayout hubPicLayout;
+        private GameHubMainBean.DataBean.ShowPostCategoryBean showPostCategoryBean;
         public SimpleDraweeView game_logo_Iv_0, game_logo_Iv_1, game_logo_Iv_2;
 
         public ViewHolder(Context context, FragmentManager fm) {
@@ -175,16 +176,19 @@ public class HubFragmentAdapter extends BaseAdapter {
             //timeTv.setText(DateUtils.getRelativeTimeSpanString(gameInfo.getUpdateTime()));
             lookNub.setText(String.valueOf(gameInfo.getWatchNum()));
             tv_from.setText(gameInfo.getPostRoleName());
-            postNameTv.setText(gameInfo.getPostCategoryName());
-            postNameTv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent();
-                    intent.putExtra(KeyConstant.postId, 1000L);
-                    intent.setClass(context, GameHubActivity.class);
-                    context.startActivity(intent);
-                }
-            });
+            showPostCategoryBean = gameInfo.getShowPostCategory();
+            if (showPostCategoryBean != null) {
+                postNameTv.setText(showPostCategoryBean.getPostCategoryName());
+                postNameTv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.putExtra(KeyConstant.postId, showPostCategoryBean.getId());
+                        intent.setClass(context, GameHubActivity.class);
+                        context.startActivity(intent);
+                    }
+                });
+            }
         }
     }
 }

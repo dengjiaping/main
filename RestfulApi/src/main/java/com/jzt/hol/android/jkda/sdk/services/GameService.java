@@ -86,7 +86,7 @@ public interface GameService {
                                          @Body PostMsgBodyBean bean);
 
     // game圈首页列表
-    @POST("gameCircle/getShowPostList")
+    @POST("gameCircle/getShowPostHome")
     Observable<GameHubMainBean> circleList(@Header("content-type") String type,
                                            @Body GameHubMainBodyBean bean);
 

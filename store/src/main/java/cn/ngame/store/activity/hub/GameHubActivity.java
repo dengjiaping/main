@@ -20,14 +20,14 @@ public class GameHubActivity extends BaseFgActivity {
     private LinearLayout ll_back;
     private GameHubActivity mContext;
     private TextView titleTv, postIdTv;
-    private long postId = 0L;
+    private int postId = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_hub);
         initStatusBar();
-        postId = getIntent().getLongExtra(KeyConstant.postId, 0);
+        postId = getIntent().getIntExtra(KeyConstant.postId, 0);
         mContext = this;
         init();
     }
