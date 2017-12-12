@@ -20,14 +20,14 @@ public class HubPostDetailActivity extends BaseFgActivity {
     private LinearLayout ll_back;
     private HubPostDetailActivity mContext;
     private TextView titleTv, postIdTv;
-    private long postId = 0L;
+    private int postId = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hub_post_detail);
         initStatusBar();
-        postId = getIntent().getLongExtra(KeyConstant.postId, 0);
+        postId = getIntent().getIntExtra(KeyConstant.postId, 0);
         mContext = this;
         init();
     }

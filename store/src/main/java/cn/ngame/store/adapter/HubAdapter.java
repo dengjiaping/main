@@ -9,12 +9,12 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.ngame.store.R;
 import cn.ngame.store.activity.hub.HubPostDetailActivity;
 import cn.ngame.store.activity.hub.HubPostsActivity;
+import cn.ngame.store.bean.PostsInfo;
 import cn.ngame.store.core.utils.ImageUtil;
 import cn.ngame.store.core.utils.KeyConstant;
 
@@ -25,13 +25,14 @@ import cn.ngame.store.core.utils.KeyConstant;
 
 public class HubAdapter extends RecyclerView.Adapter<HubAdapter.ViewHolder> {
     private LayoutInflater mInflater;
-    private List<String> mDatas;
-    private TextView tv;
+    private List<PostsInfo.DataBean> mDatas;
+    private TextView tv, tvPostNum;
     private HubPostsActivity mContext;
     private View itemView;
     private LinearLayout.LayoutParams params;
+    private List<PostsInfo.DataBean.ShowPostCategoryListBean> showPostCategoryList;
 
-    public HubAdapter(HubPostsActivity context, List<String> datats) {
+    public HubAdapter(HubPostsActivity context, List<PostsInfo.DataBean> datats) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mDatas = datats;
@@ -39,7 +40,7 @@ public class HubAdapter extends RecyclerView.Adapter<HubAdapter.ViewHolder> {
                 8, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
-    public void setData(ArrayList<String> data) {
+    public void setData(List<PostsInfo.DataBean> data) {
         this.mDatas = data;
         notifyDataSetChanged();
     }
@@ -76,24 +77,37 @@ public class HubAdapter extends RecyclerView.Adapter<HubAdapter.ViewHolder> {
      */
     @Override
     public void onBindViewHolder(HubAdapter.ViewHolder viewHolder, final int position) {
-        viewHolder.mTxt.setText(mDatas.get(position));
+        PostsInfo.DataBean dataBean = mDatas.get(position);
+        if (dataBean == null) {
+            return;
+        }
+        viewHolder.mTxt.setText(dataBean.getPostCategoryName());
         viewHolder.mLayoutTags.removeAllViews();
-        for (int i = 0; i < 5; i++) {
-            itemView = mInflater.inflate(R.layout.layout_hub_gl_item, null);
-            itemView.setLayoutParams(params);
-            //这是显示数据的控件
-            tv = itemView.findViewById(R.id.hub_gl_item_tv);
-            tv.setText("条目" + i);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent();
-                    intent.putExtra(KeyConstant.postId,1000L);
-                    intent.setClass(mContext, HubPostDetailActivity.class);
-                    mContext.startActivity(intent);
+        showPostCategoryList = dataBean.getShowPostCategoryList();
+        if (showPostCategoryList != null) {
+            for (final PostsInfo.DataBean.ShowPostCategoryListBean showPostCategoryListBean : showPostCategoryList) {
+                if (showPostCategoryListBean != null) {
+                    itemView = mInflater.inflate(R.layout.layout_hub_gl_item, null);
+                    itemView.setLayoutParams(params);
+                    //这是显示数据的控件
+                    tv = itemView.findViewById(R.id.hub_gl_item_tv);
+                    tvPostNum = itemView.findViewById(R.id.hub_gl_item_posts_num_tv);
+
+                    tv.setText(showPostCategoryListBean.getPostCategoryName());
+                    tvPostNum.setText(String.valueOf(showPostCategoryListBean.getPostCategoryCount()));
+
+                    itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent();
+                            intent.putExtra(KeyConstant.postId, showPostCategoryListBean.getId());
+                            intent.setClass(mContext, HubPostDetailActivity.class);
+                            mContext.startActivity(intent);
+                        }
+                    });
+                    viewHolder.mLayoutTags.addView(itemView);
                 }
-            });
-            viewHolder.mLayoutTags.addView(itemView);
+            }
         }
     }
 

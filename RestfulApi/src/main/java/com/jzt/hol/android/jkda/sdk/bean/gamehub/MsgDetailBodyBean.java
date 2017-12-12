@@ -9,6 +9,24 @@ public class MsgDetailBodyBean {
     String userCode;
     String deviceOnlyNum;
     int type;
+    int postId;
+    String appTypeId;
+
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
+
+    public String getAppTypeId() {
+        return appTypeId;
+    }
+
+    public void setAppTypeId(String appTypeId) {
+        this.appTypeId = appTypeId;
+    }
 
     public int getId() {
         return id;

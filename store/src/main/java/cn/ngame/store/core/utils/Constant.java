@@ -70,7 +70,7 @@ public class Constant {
     public static final String URL_FEEDBACK = "/complaint/submitFeedback";
     public static final String URL_FEEDBACK_FILE = "/complaint/uploadFeedbackPhoto";
     public static final String URL_BANNER = "/app/queryCarousel";
-    public static final String URL_DISCOVER_BANNER = "/app/querySpecialCarousel";
+    public static final String URL_POSTS_LIST = "/gameCircle/getShowPostCategoryList";
     public static final String URL_BANNER2 = "/app/queryAdvCarousel";
     public static final String URL_PUSH_MSG_DETAIL = "/message/queryMessageById";
     public static final String URL_WATCH_RECORD_QUERY = "/video/queryVideoPlayRecordList";

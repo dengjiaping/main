@@ -1,5 +1,6 @@
 package cn.ngame.store.activity;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.IntentFilter;
@@ -21,6 +22,7 @@ import cn.ngame.store.base.service.ConnectionChangeReceiver;
 /**
  * 通用基类
  */
+@SuppressLint("WrongConstant")
 public class BaseFgActivity extends FragmentActivity {
 
     public ConnectionChangeReceiver myReceiver;

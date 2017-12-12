@@ -125,7 +125,7 @@ public class HubItemActivity extends BaseFgActivity {
         } else {
             bodyBean.setDeviceOnlyNum(StoreApplication.deviceId);
         }
-        bodyBean.setAppTypeId(Constant.APP_TYPE_ID_0_ANDROID);  //type：1表示帖子点赞，2表示评论点赞，3表示投票
+        bodyBean.setAppTypeId(Constant.APP_TYPE_ID_0_ANDROID);
         bodyBean.setPostId(id);  //帖子id
         new AddPointClient(this, bodyBean).observable()
 //                .compose(this.<DiscountListBean>bindToLifecycle())
@@ -180,8 +180,8 @@ public class HubItemActivity extends BaseFgActivity {
             bodyBean.setDeviceOnlyNum(StoreApplication.deviceId);
         }
         //bodyBean.setId(msgId); todo
-        bodyBean.setId(1);
-        bodyBean.setType(1);
+        bodyBean.setPostId(msgId);
+        bodyBean.setAppTypeId(Constant.APP_TYPE_ID_0_ANDROID);
         new MsgDetailClient(this, bodyBean).observable()
 //                .compose(this.<DiscountListBean>bindToLifecycle())
                 .subscribe(new ObserverWrapper<MsgDetailBean>() {

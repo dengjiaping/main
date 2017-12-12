@@ -1,5 +1,6 @@
 package cn.ngame.store.activity.main;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -93,14 +94,13 @@ import cn.ngame.store.user.view.LoginActivity;
 import cn.ngame.store.user.view.UserCenterActivity;
 import cn.ngame.store.util.ToastUtil;
 import cn.ngame.store.view.DialogModel;
-import cn.ngame.store.widget.mulpicture.MulPictureActivity;
 
 
 /**
  * 首页底部tab栏
  * Created by gp on 2017/3/14 0014.
  */
-
+@SuppressLint("WrongConstant")
 public class MainHomeActivity extends BaseFgActivity implements View.OnClickListener {
     public static final String TAG = MainHomeActivity.class.getSimpleName();
     private final MainHomeActivity context = MainHomeActivity.this;

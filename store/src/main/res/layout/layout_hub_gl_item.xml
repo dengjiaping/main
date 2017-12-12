@@ -39,12 +39,13 @@
             android:textSize="@dimen/dm016"/>
 
         <TextView
+            android:id="@+id/hub_gl_item_posts_num_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/hub_gl_item_tv"
             android:layout_marginTop="@dimen/dm008"
             android:layout_toRightOf="@id/hub_gl_item_post_tv"
-            android:text="1032"
+            android:text=""
             android:textColor="@color/color999999"
             android:textSize="@dimen/dm016"/>
 
