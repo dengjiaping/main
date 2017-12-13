@@ -1,10 +1,13 @@
 package cn.ngame.store.activity.hub;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -36,12 +39,12 @@ import cn.ngame.store.view.zan.HeartLayout;
 public class HubItemActivity extends BaseFgActivity {
     private HubItemActivity content;
     private int msgId = 0;
-    private String gameName = "";
-    private TextView mTitleTv, mFromTv, mDescTv, mTimeTv;
-    private TextView mSupportNumTv;
-    private ImageView mSupportImageView;
+    private TextView mTitleTv, mFromTv, mDescTv, mTimeTv, mHubNameTv, mWatchNum, mSupportNumTv;
+    private ImageView mSupportBt;
     private HeartLayout heartLayout;
-    private SimpleDraweeView mFromIcon;
+    private SimpleDraweeView mFromIcon, mHubImageView;
+    private PostDetailBean.DataBean.ShowPostCategoryBean hubInfo;
+    private RelativeLayout hubLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +69,12 @@ public class HubItemActivity extends BaseFgActivity {
         mDescTv = findViewById(R.id.game_hub_detail_desc_tv);
         mTimeTv = findViewById(R.id.hub_detail_time_tv);
         mSupportNumTv = findViewById(R.id.game_hub_support_tv);
-        mSupportImageView = findViewById(R.id.game_hub_support_bt);
+        mSupportBt = findViewById(R.id.game_hub_support_bt);
+        mWatchNum = findViewById(R.id.see_numb_tv);
+        mHubNameTv = findViewById(R.id.hub_detail_hub_name_tv);
+        mHubImageView = findViewById(R.id.hub_detail_hub_iv);
         heartLayout = findViewById(R.id.heart_layout);
+        hubLayout = findViewById(R.id.hub_detail_hub_layout);
     }
 
     protected static final String TAG = HubItemActivity.class.getSimpleName();
@@ -84,7 +91,22 @@ public class HubItemActivity extends BaseFgActivity {
         mTimeTv.setText(String.valueOf(DateUtils.getRelativeTimeSpanString(
                 data.getUpdateTime())).replace(" ", ""));
         mDescTv.setText(data.getPostContent());
-        mSupportNumTv.setText(data.getPointNum() + "");
+        mSupportNumTv.setText(data.getPointNum() + "赞");
+        mWatchNum.setText(String.valueOf(data.getWatchNum()));
+        hubInfo = data.getShowPostCategory();
+        if (hubInfo != null) {
+            mHubNameTv.setText(hubInfo.getPostCategoryName());
+            mHubImageView.setImageURI(hubInfo.getPostCategoryUrl());
+            hubLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent();
+                    intent.putExtra(KeyConstant.postId, hubInfo.getId());
+                    intent.setClass(content, CircleActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
 
         String postImage = data.getPostRoleHeadPhoto();
         if (postImage != null) {
@@ -93,10 +115,10 @@ public class HubItemActivity extends BaseFgActivity {
                 imgs.add(typeNameArray[i]);
             }
         }
-        //if (data.getIsPoint() == 1) {//已经点赞 todo
-        if (1 == 1) {//已经点赞
-            mSupportImageView.setBackgroundResource(R.drawable.zan);
-            mSupportImageView.setOnClickListener(new View.OnClickListener() {
+        if (data.getIsPoint() == 1) {
+            mSupportBt.setBackgroundResource(R.drawable.zan);
+            mSupportNumTv.setTextColor(ContextCompat.getColor(content, R.color.color_2abfff));
+            mSupportBt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ToastUtil.show(content, "已经点过赞了哦~");
@@ -104,9 +126,9 @@ public class HubItemActivity extends BaseFgActivity {
                 }
             });
         } else {
-            mSupportImageView.setBackgroundResource(R.drawable.un_zan);
-            mSupportImageView.setEnabled(true);
-            mSupportImageView.setOnClickListener(new View.OnClickListener() {
+            mSupportBt.setBackgroundResource(R.drawable.un_zan);
+            mSupportBt.setEnabled(true);
+            mSupportBt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     clickAgree(1, msgId);
@@ -122,7 +144,7 @@ public class HubItemActivity extends BaseFgActivity {
      * @param id   帖子id/评论id
      */
     public void clickAgree(final int type, int id) {
-        mSupportImageView.setEnabled(false);
+        mSupportBt.setEnabled(false);
         //帖子id
         AddPointBodyBean bodyBean = new AddPointBodyBean();
         User user = StoreApplication.user;
@@ -138,7 +160,7 @@ public class HubItemActivity extends BaseFgActivity {
                 .subscribe(new ObserverWrapper<NormalDataBean>() {
                     @Override
                     public void onError(Throwable e) {
-                        mSupportImageView.setEnabled(true);
+                        mSupportBt.setEnabled(true);
                         ToastUtil.show(content, "点赞失败哦,请稍后重试~");
                     }
 
@@ -147,13 +169,14 @@ public class HubItemActivity extends BaseFgActivity {
                         if (content == null || content.isFinishing()) {
                             return;
                         }
-                        mSupportImageView.setEnabled(true);
+                        mSupportBt.setEnabled(true);
                         if (result != null && result.getCode() == 0) {
                             if (type == 1) { //区分帖子点赞和评论点赞
                                 ToastUtil.show(content, "点赞成功~");
-                                mSupportNumTv.setText(ConvUtil.NI(mSupportNumTv.getText().toString()) + 1 + "");
-                                mSupportImageView.setBackgroundResource(R.drawable.zan);
-                                mSupportImageView.setOnClickListener(new View.OnClickListener() {
+                                mSupportNumTv.setText(ConvUtil.NI(mSupportNumTv.getText().toString()) + 1 + "赞");
+                                mSupportNumTv.setTextColor(ContextCompat.getColor(content, R.color.color_2abfff));
+                                mSupportBt.setBackgroundResource(R.drawable.zan);
+                                mSupportBt.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         ToastUtil.show(content, "已经点过赞了哦~");
@@ -168,9 +191,6 @@ public class HubItemActivity extends BaseFgActivity {
                     }
                 });
     }
-
-    private ArrayList<View> imgViews;
-
 
     private ArrayList<String> imgs = new ArrayList<>();
 

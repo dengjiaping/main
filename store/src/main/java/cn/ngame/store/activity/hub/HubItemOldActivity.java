@@ -251,6 +251,10 @@ public class HubItemOldActivity extends BaseFgActivity implements StickyScrollVi
     private ArrayList<String> imgs = new ArrayList<>();
     TouchImageView iv;
 
+    public void onHubLayoutClick(View view) {
+        ToastUtil.show(content,"点击圈子");
+    }
+
     class LoadImageThread extends Thread {
         @Override
         public void run() {
