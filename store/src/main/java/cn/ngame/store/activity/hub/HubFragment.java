@@ -113,7 +113,7 @@ public class HubFragment extends BaseSearchFragment {
                         if (result != null && result.getCode() == 0) {
                             listData(result);
                         } else {
-                            loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_data));
+                            loadStateView.setState(LoadStateView.STATE_END, getString(R.string.server_exception));
                             pullListView.onPullUpRefreshComplete();
                             pullListView.onPullDownRefreshComplete();
                         }

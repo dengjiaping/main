@@ -103,6 +103,8 @@
             android:layout_marginRight="@dimen/dm004"
             android:layout_weight="1"
             android:visibility="gone"
+            fresco:placeholderImage="@color/f5f5f5"
+            fresco:placeholderImageScaleType="centerCrop"
             android:scaleType="centerCrop"
             fresco:actualImageScaleType="centerCrop"
             />
@@ -114,6 +116,8 @@
             android:layout_marginLeft="@dimen/dm004"
             android:layout_marginRight="@dimen/dm004"
             android:layout_weight="1"
+            fresco:placeholderImage="@color/f5f5f5"
+            fresco:placeholderImageScaleType="centerCrop"
             android:visibility="gone"
             android:scaleType="centerCrop"
             fresco:actualImageScaleType="centerCrop"
