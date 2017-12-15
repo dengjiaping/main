@@ -63,7 +63,7 @@ public class CircleAdapter extends BaseAdapter {
         ViewHolder holder;
         if (convertView == null) {
             holder = new CircleAdapter.ViewHolder();
-            convertView = mInflater.inflate(R.layout.item_hub_circle_1, viewGroup, false);
+            convertView = mInflater.inflate(R.layout.item_hub_circle_item, viewGroup, false);
             holder.mTxt = convertView.findViewById(R.id.singer_item_tv);
             convertView.setTag(holder);
         } else {

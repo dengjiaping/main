@@ -78,30 +78,20 @@ public class CircleActivity extends BaseFgActivity {
         RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         refreshLayout.setPrimaryColors(Color.WHITE);
         refreshLayout.autoRefresh();
-        mListView = findViewById(R.id.recyclerview);
+        mListView = findViewById(R.id.hub_circle_lv);
 
         //todo ========================================================================
-        View headerView = LayoutInflater.from(this).inflate(R.layout.item_hub_circle_0, null);
+        View headerView = LayoutInflater.from(this).inflate(R.layout.item_hub_circle_header, null);
         mListView.addHeaderView(headerView);
 
 
         //设置布局管理器
         mAdapter = new CircleAdapter(mContext, mDatas);
         mListView.setAdapter(mAdapter);
-        //设置 ==============  Header的样式
-        final ClassicsHeader header = new ClassicsHeader(this);
-        header.getTitleText().setTextSize(14);
-        headerLastUpdateTv = header.getLastUpdateText();
-        headerLastUpdateTv.setVisibility(View.GONE);
-        header.setDrawableProgressSizePx(62);
-        header.setDrawableArrowSizePx(57);
-        refreshLayout.setRefreshHeader(header, ImageUtil.getScreenWidth(this), 200);
-        //设置 ==============  Footer
-        ClassicsFooter footer = new ClassicsFooter(mContext);
-        footer.getTitleText().setTextSize(14);
-        footer.setDrawableArrowSizePx(57);
-        refreshLayout.setRefreshFooter(footer, ImageUtil.getScreenWidth(this), 180);
-        refreshLayout.setEnableFooterFollowWhenLoadFinished(true);
+
+        //设置下拉刷新和加载
+        setLoadHeaderFooter(refreshLayout);
+
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
@@ -118,6 +108,23 @@ public class CircleActivity extends BaseFgActivity {
             }
         });
 
+    }
+
+    private void setLoadHeaderFooter(RefreshLayout refreshLayout) {
+        // Header
+        final ClassicsHeader header = new ClassicsHeader(this);
+        header.getTitleText().setTextSize(14);
+        headerLastUpdateTv = header.getLastUpdateText();
+        headerLastUpdateTv.setVisibility(View.GONE);
+        header.setDrawableProgressSizePx(62);
+        header.setDrawableArrowSizePx(57);
+        refreshLayout.setRefreshHeader(header, ImageUtil.getScreenWidth(this), 200);
+        // Footer
+        ClassicsFooter footer = new ClassicsFooter(mContext);
+        footer.getTitleText().setTextSize(14);
+        footer.setDrawableArrowSizePx(57);
+        refreshLayout.setRefreshFooter(footer, ImageUtil.getScreenWidth(this), 180);
+        refreshLayout.setEnableFooterFollowWhenLoadFinished(true);
     }
 
     private void getDatas(final RefreshLayout refreshLayout) {
