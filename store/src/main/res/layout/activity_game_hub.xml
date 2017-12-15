@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tabs="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/f5f5f5"
-                android:clipToPadding="false"
-                android:fitsSystemWindows="true"
-                android:orientation="vertical">
+              xmlns:tabs="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/f5f5f5"
+              android:clipToPadding="false"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
 
     <include layout="@layout/title_bar"/>
 
@@ -15,10 +15,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
+        <ListView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"/>
+            android:descendantFocusability="beforeDescendants"
+            android:divider="@color/f5f5f5"
+            android:dividerHeight="@dimen/dm001"
+            android:listSelector="@android:color/transparent"
+            android:overScrollMode="never"
+            android:scrollbars="none"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

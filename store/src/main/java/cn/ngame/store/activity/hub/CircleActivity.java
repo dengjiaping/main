@@ -4,10 +4,10 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -48,8 +48,8 @@ public class CircleActivity extends BaseFgActivity {
     private CircleActivity mContext;
     private TextView titleTv, postIdTv;
     private int postId = 0;
-    private List<PostsInfo.DataBean> mDatas=new ArrayList<>();
-    private RecyclerView mRecyclerView;
+    private List<PostsInfo.DataBean> mDatas = new ArrayList<>();
+    private ListView mListView;
     private CircleAdapter mAdapter;
     private TextView headerLastUpdateTv;
 
@@ -78,14 +78,16 @@ public class CircleActivity extends BaseFgActivity {
         RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         refreshLayout.setPrimaryColors(Color.WHITE);
         refreshLayout.autoRefresh();
-        mRecyclerView = findViewById(R.id.recyclerview);
-        //设置布局管理器
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-        mAdapter = new CircleAdapter(mContext, mDatas);
-        mRecyclerView.setAdapter(mAdapter);
+        mListView = findViewById(R.id.recyclerview);
 
+        //todo ========================================================================
+        View headerView = LayoutInflater.from(this).inflate(R.layout.item_hub_circle_0, null);
+        mListView.addHeaderView(headerView);
+
+
+        //设置布局管理器
+        mAdapter = new CircleAdapter(mContext, mDatas);
+        mListView.setAdapter(mAdapter);
         //设置 ==============  Header的样式
         final ClassicsHeader header = new ClassicsHeader(this);
         header.getTitleText().setTextSize(14);
@@ -132,13 +134,15 @@ public class CircleActivity extends BaseFgActivity {
 
                 refreshLayout.finishRefresh(0);
                 headerLastUpdateTv.setVisibility(View.GONE);
+
             }
         };
 
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
+                refreshLayout.finishRefresh(0);
+                headerLastUpdateTv.setVisibility(View.GONE);
             }
         };
 
