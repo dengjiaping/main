@@ -153,7 +153,7 @@ public class CircleActivity extends BaseFgActivity {
                 }
                 List<CirclePostsInfo.DataBean> mDatas = result.getData();
                 if (mDatas != null) {
-                    mTopLayout.setPadding(0, 12, 0, 10);
+                    mTopLayout.setPadding(0, 14, 0, 10);
                     mTopLayout.removeAllViews();
                     mDataList.clear();
                     for (final CirclePostsInfo.DataBean mData : mDatas) {
