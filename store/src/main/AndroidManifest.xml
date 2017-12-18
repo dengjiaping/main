@@ -114,6 +114,7 @@
         <activity
             android:name=".activity.hub.HubItemActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             />
         <activity
             android:name=".activity.ReviewActivity"

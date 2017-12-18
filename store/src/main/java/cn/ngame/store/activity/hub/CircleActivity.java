@@ -5,9 +5,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -58,9 +59,10 @@ public class CircleActivity extends BaseFgActivity {
     private LinearLayout mTopLayout;
     private View mTopItemBt;
     private TextView mTopTv;
-    private String pageSize = "20";
+    private int pageSize = 30;
     private CirclePostsInfo.DataBean.ShowPostCategoryBean showPostCategoryBean;
     private SimpleDraweeView mHeaderSdv;
+    private String postCategoryName = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,8 +78,6 @@ public class CircleActivity extends BaseFgActivity {
     private void init() {
         ll_back = findViewById(R.id.ll_back);
         titleTv = findViewById(R.id.tv_title);
-
-        titleTv.setText("圈子");
         ll_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,7 +88,16 @@ public class CircleActivity extends BaseFgActivity {
         refreshLayout.setPrimaryColors(Color.WHITE);
         refreshLayout.autoRefresh();
         mListView = findViewById(R.id.hub_circle_lv);
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+            }
 
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+                titleTv.setText(i == 0 ? "" : postCategoryName);
+            }
+        });
         //头部
         View headerView = LayoutInflater.from(this).inflate(R.layout.item_hub_circle_header, null);
         mTopLayout = headerView.findViewById(R.id.circle_post_top_layout);
@@ -116,9 +125,8 @@ public class CircleActivity extends BaseFgActivity {
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadmore(0);
-            /*    mDatas.add("新数据11");
-                mAdapter.setData(mDatas);*/
+                refreshlayout.finishLoadmore();
+                Log.d(TAG, "加载更多");
             }
         });
 
@@ -127,8 +135,7 @@ public class CircleActivity extends BaseFgActivity {
     private void setLoadHeaderFooter(RefreshLayout refreshLayout) {
         // Header
         final ClassicsHeader header = new ClassicsHeader(this);
-        header.getTitleText().setTextSize(14);
-        header.setBackgroundColor(ContextCompat.getColor(mContext, R.color.f5f5f5));
+        header.setTextSizeTitle(14);
         headerLastUpdateTv = header.getLastUpdateText();
         headerLastUpdateTv.setVisibility(View.GONE);
         header.setDrawableProgressSizePx(62);
@@ -136,9 +143,11 @@ public class CircleActivity extends BaseFgActivity {
         refreshLayout.setRefreshHeader(header, ImageUtil.getScreenWidth(this), 200);
         // Footer
         ClassicsFooter footer = new ClassicsFooter(mContext);
-        footer.getTitleText().setTextSize(14);
+        footer.setPrimaryColor(Color.WHITE);
+        footer.setTextSizeTitle(14);
         footer.setDrawableArrowSizePx(57);
-        refreshLayout.setRefreshFooter(footer, ImageUtil.getScreenWidth(this), 180);
+        footer.setDrawableProgressSizePx(62);
+        refreshLayout.setRefreshFooter(footer, ImageUtil.getScreenWidth(this), 200);
         refreshLayout.setEnableFooterFollowWhenLoadFinished(true);
     }
 
@@ -153,7 +162,8 @@ public class CircleActivity extends BaseFgActivity {
                 }
                 List<CirclePostsInfo.DataBean> mDatas = result.getData();
                 if (mDatas != null) {
-                    mTopLayout.setPadding(0, 14, 0, 10);
+                    mTopLayout.setPadding(0, getResources().getDimensionPixelSize(R.dimen.dm012),
+                            0, getResources().getDimensionPixelSize(R.dimen.dm010));
                     mTopLayout.removeAllViews();
                     mDataList.clear();
                     for (final CirclePostsInfo.DataBean mData : mDatas) {
@@ -162,9 +172,11 @@ public class CircleActivity extends BaseFgActivity {
                             if (showPostCategoryBean == null) {
                                 showPostCategoryBean = mData.getShowPostCategory();
                                 mHeaderSdv.setImageURI(showPostCategoryBean.getPostCategoryUrl());
-                                mHeaderName.setText(showPostCategoryBean.getPostCategoryName());
+                                postCategoryName = showPostCategoryBean.getPostCategoryName();
+                                mHeaderName.setText(postCategoryName);
                                 mHeaderPostsNum.setText("帖子：" + showPostCategoryBean.getPostCategoryCount());
                             }
+                            //置顶帖子
                             if (mData.getOrderNO() == 1) {
                                 mTopItemBt = LayoutInflater.from(mContext).inflate(R.layout.layout_circle_top_item, null);
                                 mTopTv = mTopItemBt.findViewById(R.id.circle_top_title_tv);
@@ -212,7 +224,7 @@ public class CircleActivity extends BaseFgActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.postCategoryId, String.valueOf(postId));
                 params.put(KeyConstant.pageIndex, String.valueOf(0));
-                params.put(KeyConstant.PAGE_SIZE, pageSize);
+                params.put(KeyConstant.PAGE_SIZE, String.valueOf(pageSize));
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
                 return params;
             }
