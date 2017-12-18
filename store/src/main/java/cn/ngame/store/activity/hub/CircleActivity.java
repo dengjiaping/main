@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -50,7 +51,7 @@ public class CircleActivity extends BaseFgActivity {
     private CircleActivity mContext;
     private TextView titleTv, postIdTv, mHeaderPostsNum, mHeaderName;
     private int postId = 0;
-    private List<CirclePostsInfo.DataBean> mDatas = new ArrayList<>();
+    private List<CirclePostsInfo.DataBean> mDataList = new ArrayList<>();
     private ListView mListView;
     private CircleAdapter mAdapter;
     private TextView headerLastUpdateTv;
@@ -91,15 +92,15 @@ public class CircleActivity extends BaseFgActivity {
         //头部
         View headerView = LayoutInflater.from(this).inflate(R.layout.item_hub_circle_header, null);
         mTopLayout = headerView.findViewById(R.id.circle_post_top_layout);
-        mHeaderSdv= headerView.findViewById(R.id.circle_header_imageview);
+        mHeaderSdv = headerView.findViewById(R.id.circle_header_imageview);
         mHeaderName = headerView.findViewById(R.id.circle_name_tv);
-        mHeaderPostsNum= headerView.findViewById(R.id.circle_post_nub_tv);
+        mHeaderPostsNum = headerView.findViewById(R.id.circle_post_nub_tv);
 
         mListView.addHeaderView(headerView);
 
 
         //设置布局管理器
-        mAdapter = new CircleAdapter(mContext, mDatas);
+        mAdapter = new CircleAdapter(mContext, mDataList);
         mListView.setAdapter(mAdapter);
 
         //设置下拉刷新和加载
@@ -127,6 +128,7 @@ public class CircleActivity extends BaseFgActivity {
         // Header
         final ClassicsHeader header = new ClassicsHeader(this);
         header.getTitleText().setTextSize(14);
+        header.setBackgroundColor(ContextCompat.getColor(mContext, R.color.f5f5f5));
         headerLastUpdateTv = header.getLastUpdateText();
         headerLastUpdateTv.setVisibility(View.GONE);
         header.setDrawableProgressSizePx(62);
@@ -149,10 +151,11 @@ public class CircleActivity extends BaseFgActivity {
                     ToastUtil.show(mContext, getString(R.string.server_exception));
                     return;
                 }
-                mDatas = result.getData();
+                List<CirclePostsInfo.DataBean> mDatas = result.getData();
                 if (mDatas != null) {
                     mTopLayout.setPadding(0, 12, 0, 10);
                     mTopLayout.removeAllViews();
+                    mDataList.clear();
                     for (final CirclePostsInfo.DataBean mData : mDatas) {
                         if (mData != null) {
                             //顶部
@@ -160,24 +163,29 @@ public class CircleActivity extends BaseFgActivity {
                                 showPostCategoryBean = mData.getShowPostCategory();
                                 mHeaderSdv.setImageURI(showPostCategoryBean.getPostCategoryUrl());
                                 mHeaderName.setText(showPostCategoryBean.getPostCategoryName());
-                                mHeaderPostsNum.setText("帖子："+showPostCategoryBean.getPostCategoryCount());
+                                mHeaderPostsNum.setText("帖子：" + showPostCategoryBean.getPostCategoryCount());
                             }
-                            mTopItemBt = LayoutInflater.from(mContext).inflate(R.layout.layout_circle_top_item, null);
-                            mTopTv = mTopItemBt.findViewById(R.id.circle_top_title_tv);
-                            mTopTv.setText(mData.getPostTitle());
-                            mTopItemBt.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Intent intent = new Intent();
-                                    intent.putExtra(KeyConstant.postId, mData.getId());
-                                    intent.setClass(mContext, HubItemActivity.class);
-                                    mContext.startActivity(intent);
-                                }
-                            });
-                            mTopLayout.addView(mTopItemBt);
+                            if (mData.getOrderNO() == 1) {
+                                mTopItemBt = LayoutInflater.from(mContext).inflate(R.layout.layout_circle_top_item, null);
+                                mTopTv = mTopItemBt.findViewById(R.id.circle_top_title_tv);
+                                mTopTv.setText(mData.getPostTitle());
+                                mTopItemBt.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Intent intent = new Intent();
+                                        intent.putExtra(KeyConstant.ID, mData.getId());
+                                        intent.setClass(mContext, HubItemActivity.class);
+                                        mContext.startActivity(intent);
+                                    }
+                                });
+                                mTopLayout.addView(mTopItemBt);
+                            } else {
+                                //不是置顶的帖子
+                                mDataList.add(mData);
+                            }
                         }
                     }
-                    mAdapter.setData(mDatas);
+                    mAdapter.setData(mDataList);
                 }
 
                 refreshLayout.finishRefresh(0);
