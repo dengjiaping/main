@@ -50,4 +50,6 @@ public class KeyConstant {
 
     public static final String parentId="parentId";
     public static final String postId = "postId";
+    public static final String postCategoryId="postCategoryId";
+    public static final String pageIndex="pageIndex";
 }

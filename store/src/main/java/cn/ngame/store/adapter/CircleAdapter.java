@@ -10,7 +10,7 @@ import java.util.List;
 
 import cn.ngame.store.R;
 import cn.ngame.store.activity.hub.CircleActivity;
-import cn.ngame.store.bean.PostsInfo;
+import cn.ngame.store.bean.CirclePostsInfo;
 
 /**
  * Created by liguoliang
@@ -19,17 +19,17 @@ import cn.ngame.store.bean.PostsInfo;
 
 public class CircleAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
-    private List<PostsInfo.DataBean> mDatas;
+    private List<CirclePostsInfo.DataBean> mDatas;
     private CircleActivity mContext;
 
-    public CircleAdapter(CircleActivity context, List<PostsInfo.DataBean> datats) {
+    public CircleAdapter(CircleActivity context, List<CirclePostsInfo.DataBean> datats) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mDatas = datats;
 
     }
 
-    public void setData(List<PostsInfo.DataBean> data) {
+    public void setData(List<CirclePostsInfo.DataBean> data) {
         this.mDatas = data;
         notifyDataSetChanged();
     }
@@ -70,9 +70,9 @@ public class CircleAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        PostsInfo.DataBean dataBean = mDatas.get(position);
+        CirclePostsInfo.DataBean dataBean = mDatas.get(position);
         if (dataBean != null) {
-            holder.mTxt.setText(dataBean.getPostCategoryName());
+            holder.mTxt.setText(dataBean.getPostTitle());
         }
 
         return convertView;
