@@ -7,6 +7,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,7 +20,7 @@ import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.gamehub.AddPointClient;
 import com.jzt.hol.android.jkda.sdk.services.gamehub.PostDetailClient;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
@@ -45,6 +46,8 @@ public class HubItemActivity extends BaseFgActivity {
     private SimpleDraweeView mFromIcon, mHubImageView;
     private PostDetailBean.DataBean.ShowPostCategoryBean hubInfo;
     private RelativeLayout hubLayout;
+    private LinearLayout imageLayout;
+    private List<PostDetailBean.DataBean.PostImageListBean> postImageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,8 @@ public class HubItemActivity extends BaseFgActivity {
         mHubImageView = findViewById(R.id.hub_detail_hub_iv);
         heartLayout = findViewById(R.id.heart_layout);
         hubLayout = findViewById(R.id.hub_detail_hub_layout);
+
+        imageLayout = findViewById(R.id.hub_item_layout);
     }
 
     protected static final String TAG = HubItemActivity.class.getSimpleName();
@@ -107,14 +112,19 @@ public class HubItemActivity extends BaseFgActivity {
                 }
             });
         }
+        postImageList = data.getPostImageList();
+        if (postImageList != null) {
+            for (int i = 0; i < postImageList.size(); i++) {
+                SimpleDraweeView iv = new SimpleDraweeView(content);
+                LinearLayout.LayoutParams pointParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                iv.setLayoutParams(pointParams);
+                iv.setImageURI(postImageList.get(i).getPostImageAddress());
 
-        String postImage = data.getPostRoleHeadPhoto();
-        if (postImage != null) {
-            String[] typeNameArray = postImage.split("\\,");
-            for (int i = 0; i < typeNameArray.length; i++) {
-                imgs.add(typeNameArray[i]);
+                imageLayout.addView(iv);
             }
         }
+
         if (data.getIsPoint() == 1) {
             mSupportBt.setBackgroundResource(R.drawable.zan);
             mSupportNumTv.setTextColor(ContextCompat.getColor(content, R.color.color_2abfff));
@@ -191,8 +201,6 @@ public class HubItemActivity extends BaseFgActivity {
                     }
                 });
     }
-
-    private ArrayList<String> imgs = new ArrayList<>();
 
     /**
      * 获取游戏详情

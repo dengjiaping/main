@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
@@ -464,9 +463,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         List<LogoInfo> gameLogoList = gameInfo.gameLogoList;
         if (gameLogoList != null) {
             mLayoutTags.setVisibility(View.VISIBLE);
-            Resources resources = getResources();
             int screenWidth2 = ImageUtil.getScreenWidth(content) / 2;
-            int dp20 = CommonUtil.dip2px(content, 20);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(screenWidth2, ViewGroup.LayoutParams.WRAP_CONTENT);
             LayoutInflater from = LayoutInflater.from(this);
             View view;

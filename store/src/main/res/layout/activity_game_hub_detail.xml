@@ -217,11 +217,21 @@
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/dm024"/>
 
+            <LinearLayout
+                android:id="@+id/hub_item_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dm020"
+                android:layout_below="@id/game_hub_detail_desc_tv"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
             <RelativeLayout
                 android:id="@+id/layout_zan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/game_hub_detail_desc_tv"
+                android:layout_below="@id/hub_item_layout"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/dm120"
                 android:layout_marginTop="@dimen/dm050"
@@ -244,8 +254,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/game_hub_support_bt"
-                    android:text=""
                     android:layout_centerHorizontal="true"
+                    android:text=""
                     android:textColor="@color/color_333333"
                     android:textSize="@dimen/dm018"/>
             </RelativeLayout>
