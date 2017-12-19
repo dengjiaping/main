@@ -25,7 +25,7 @@
     <dimen name="sm_top_icon_height">@dimen/dm120</dimen>
     <dimen name="sm_top_name_tv_width">63dp</dimen>
 
-    <dimen name="title_size">18dp</dimen>
+    <dimen name="title_size">@dimen/dm032</dimen>
     <dimen name="title_back_bt_paddingLeft">20dp</dimen>
     <dimen name="recommend_item_from_pic">18dp</dimen>
     <dimen name="recommend_item_game_pic_hight">@dimen/dm320</dimen>

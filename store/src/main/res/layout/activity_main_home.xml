@@ -14,11 +14,10 @@
         <com.facebook.drawee.view.SimpleDraweeView
             xmlns:fresco="http://schemas.android.com/apk/res-auto"
             android:id="@+id/iv_icon_title"
-            android:layout_width="@dimen/dp_55"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="@dimen/dm052"
+            android:layout_height="@dimen/dm052"
             android:layout_centerVertical="true"
-            android:paddingLeft="@dimen/dp_15"
-            android:paddingRight="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dm034"
             android:scaleType="fitXY"
             fresco:actualImageScaleType="fitXY"
             fresco:failureImage="@drawable/ic_def_logo_188_188"
@@ -34,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
+            android:textStyle="bold"
             android:textColor="@color/color_1a"
             android:textSize="@dimen/title_size"/>
 
@@ -61,7 +61,7 @@
                 android:id="@+id/tv_notifi_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dm035"
+                android:layout_marginLeft="@dimen/dm036"
                 android:layout_marginTop="@dimen/dm015"
                 android:background="@drawable/shape_circle_green"
                 android:gravity="center"
