@@ -142,6 +142,7 @@ public class HubFragmentAdapter extends BaseAdapter {
                 game_logo_Iv_1.setVisibility(View.GONE);
                 game_logo_Iv_2.setVisibility(View.GONE);
                 if (size >= 1) {
+                    hubPicLayout.setLayoutParams(params_height_dm296);
                     GameHubMainBean.DataBean.PostImageListBean postImageListBean = postImageList.get(0);
                     game_logo_Iv_0.setImageURI(postImageListBean.getPostImageAddress());
                 }
