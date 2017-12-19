@@ -1,5 +1,6 @@
 package cn.ngame.store.activity.main;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -57,7 +58,7 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
  * 精选
  * Created by gp on 2017/3/14 0014.
  */
-
+@SuppressLint("WrongConstant")
 public class RecommendFragment extends BaseSearchFragment {
     public static final String TAG = RecommendFragment.class.getSimpleName();
     private PullToRefreshListView pullListView;
@@ -468,6 +469,7 @@ public class RecommendFragment extends BaseSearchFragment {
             public void onAdFailed(int errorcode) {
                 android.util.Log.d(TAG, "获取广告失败:onAdFailed: " + errorcode);
             }
+
 
             @Override
             public void onAdLoaded(NativeAdResponse response) {

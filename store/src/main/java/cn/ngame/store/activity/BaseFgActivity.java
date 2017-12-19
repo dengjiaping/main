@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
@@ -14,10 +13,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-
-import cn.ngame.store.R;
 import cn.ngame.store.base.service.ConnectionChangeReceiver;
+import cn.ngame.store.util.StatusBarUtil;
 
 /**
  * 通用基类
@@ -89,13 +86,15 @@ public class BaseFgActivity extends FragmentActivity {
         win.setAttributes(winParams);
     }
     protected void initStatusBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+     /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
             // 激活状态栏设置
             //tintManager.setStatusBarTintEnabled(true); // 激活导航栏设//
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintResource(R.color.mainColor);//通知栏所需颜色
-        }
+        }*/
+        StatusBarUtil.transparencyBar(this); //设置状态栏全透明
+        StatusBarUtil.StatusBarLightMode(this); //设置白底黑字
     }
 }

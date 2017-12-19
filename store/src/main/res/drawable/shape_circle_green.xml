@@ -13,6 +13,6 @@
         android:width="0dp"
         android:color="@android:color/white" />
     <size
-        android:width="13dp"
-        android:height="13dp" />
+        android:width="@dimen/dm015"
+        android:height="@dimen/dm015" />
 </shape>

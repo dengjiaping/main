@@ -2,7 +2,8 @@
 <resources>
 
     <!-- APP 基础色 -->
-    <color name="mainColor">#33ccff</color>
+    <color name="mainColor">#fafafa</color>
+    <color name="mainGreen">#3ecc7a</color>
     <!--<color name="colorPrimary">#0fc7c0</color>-->
     <color name="colorPrimaryLight">#6BFFFF</color>
     <color name="colorPrimaryDark">#000000</color>

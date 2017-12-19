@@ -140,7 +140,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private SimpleDraweeView mSmIconIv;
     private TextView mSmNicknameTv;
     private TextView mTitleTv;
-    private ImageView mTitleBgIv;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private TextView mEditProfileTv;
@@ -204,7 +203,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         tv_notifi_num = (TextView) findViewById(R.id.tv_notifi_num); //右上角消息数目
 
         mIconIv = (SimpleDraweeView) findViewById(R.id.iv_icon_title);
-        mTitleBgIv = (ImageView) findViewById(R.id.title_iv);
         mTitleTv = (TextView) findViewById(R.id.title_tv);
         mDownloadBt = findViewById(R.id.main_download_bt);
         mHubBt = findViewById(R.id.main_hub_bt);
@@ -214,7 +212,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         mDownloadBt.setOnClickListener(this);
         mHubBt.setOnClickListener(this);
 
-        colorDark = getResources().getColor(R.color.mainColor);
+        colorDark = getResources().getColor(R.color.mainGreen);
         colorNormal = getResources().getColor(R.color.color_333333);
 
 //        init(viewPager, getSupportFragmentManager());
@@ -423,7 +421,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     @Override
                     public void run() {
                         if (count == 0) {
-                            tv_notifi_num.setVisibility(View.GONE);
+                            tv_notifi_num.setVisibility(View.VISIBLE);
                         } else {
                             tv_notifi_num.setVisibility(View.VISIBLE);
                             tv_notifi_num.setText(count + "");
@@ -587,8 +585,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     discoverFragment.setShow(false);
                 }
                 bt_home.setSelected(true);
-                mTitleTv.setText("");
-                mTitleBgIv.setVisibility(View.VISIBLE);
+                mTitleTv.setText("热门游戏");
                 fl_notifi.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 mDownloadBt.setVisibility(View.GONE);
@@ -613,7 +610,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 bt_game.setSelected(true);
                 mTitleTv.setText("排行榜");
                 fl_notifi.setVisibility(View.GONE);
-                mTitleBgIv.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 mDownloadBt.setVisibility(View.GONE);
                 mHubBt.setVisibility(View.GONE);
@@ -635,7 +631,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mDownloadBt.setVisibility(View.GONE);
                 mHubBt.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.GONE);
-                mTitleBgIv.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 tv_video.setTextColor(colorDark);
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainDiscoverButtonClickCount);
@@ -649,7 +644,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 }
                 menu_game_hub_bt.setSelected(true);
                 mTitleTv.setText(R.string.main_tab_04);
-                mTitleBgIv.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.GONE);
                 mDownloadBt.setVisibility(View.GONE);
                 mHubBt.setVisibility(View.VISIBLE);
@@ -672,7 +666,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mTitleTv.setText("管理");
                 mDownloadBt.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.GONE);
-                mTitleBgIv.setVisibility(View.GONE);
                 mHubBt.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.GONE);
                 tv_manager.setTextColor(colorDark);
