@@ -113,11 +113,13 @@ public class HubItemActivity extends BaseFgActivity {
             });
         }
         postImageList = data.getPostImageList();
+        LinearLayout.LayoutParams pointParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelSize(R.dimen.dm300));
+        pointParams.topMargin = getResources().getDimensionPixelSize(R.dimen.dm010);
         if (postImageList != null) {
             for (int i = 0; i < postImageList.size(); i++) {
                 SimpleDraweeView iv = new SimpleDraweeView(content);
-                LinearLayout.LayoutParams pointParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 iv.setLayoutParams(pointParams);
                 iv.setImageURI(postImageList.get(i).getPostImageAddress());
 
