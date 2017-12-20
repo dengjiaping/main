@@ -38,6 +38,7 @@ public class TopicsListActivity extends BaseFgActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initStatusBar();
         setContentView(R.layout.selected_topics_activity);
         content = TopicsListActivity.this;
         init();

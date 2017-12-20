@@ -36,7 +36,7 @@
             android:paddingTop="@dimen/dm020"
             android:paddingRight="@dimen/discover_margin_left"
             android:text="@string/see_more"
-            android:textColor="@color/font_18b9fe"
+            android:textColor="@color/mainColor"
             android:textSize="@dimen/dm020"/>
 
         <HorizontalScrollView

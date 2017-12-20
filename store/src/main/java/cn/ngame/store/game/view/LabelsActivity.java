@@ -21,7 +21,6 @@ import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.util.ToastUtil;
 
 /**
- * 游戏精选列表的页面
  * Created by zeng on 2016/8/24.
  */
 public class LabelsActivity extends BaseFgActivity {
@@ -113,7 +112,7 @@ public class LabelsActivity extends BaseFgActivity {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent();
-                    i.setClass(content, MoreGameListActivity.class);
+                    i.setClass(content, SeeMoreActivity.class);
                     i.putExtra(KeyConstant.category_Id, String.valueOf(gameLabels.id));// 动作游戏精选 getId()==369
                     i.putExtra(KeyConstant.TITLE, itemLabelName);//mStickyLV.get(position).getTypeName()
                     startActivity(i);

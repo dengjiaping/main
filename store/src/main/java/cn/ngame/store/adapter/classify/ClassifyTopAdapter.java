@@ -1,5 +1,5 @@
 
-package cn.ngame.store.adapter.discover;
+package cn.ngame.store.adapter.classify;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,26 +9,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverTopBean;
+import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverListBean;
 
 import java.util.List;
 
 import cn.ngame.store.R;
 import cn.ngame.store.core.utils.KeyConstant;
-import cn.ngame.store.game.view.GameDetailActivity;
+import cn.ngame.store.game.view.SeeMoreActivity;
 
 /**
  * @author gp
  */
-public class DiscoverTvIvAdapter extends RecyclerView.Adapter<DiscoverTvIvAdapter.ViewHolder> {
+public class ClassifyTopAdapter extends RecyclerView.Adapter<ClassifyTopAdapter.ViewHolder> {
 
     private final LayoutInflater mInflater;
     private Context context;
-    private List<DiscoverTopBean> list;
+    private List<DiscoverListBean.DataBean.GameCategroyListBean> list;
 
     public interface OnItemClickLitener {
-        void onItemClick(View view, int position, String tag);
+        void onItemClick(View view, int position, int text);
     }
 
     private OnItemClickLitener mOnItemClickLitener;
@@ -37,14 +36,14 @@ public class DiscoverTvIvAdapter extends RecyclerView.Adapter<DiscoverTvIvAdapte
         this.mOnItemClickLitener = mOnItemClickListener;
     }
 
-    public DiscoverTvIvAdapter(Context context, List<DiscoverTopBean> list) {
+    public ClassifyTopAdapter(Context context, List<DiscoverListBean.DataBean.GameCategroyListBean> list) {
         super();
         this.context = context;
         this.list = list;
         mInflater = LayoutInflater.from(context);
     }
 
-    public void setList(List<DiscoverTopBean> list) {
+    public void setList(List<DiscoverListBean.DataBean.GameCategroyListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -52,23 +51,23 @@ public class DiscoverTvIvAdapter extends RecyclerView.Adapter<DiscoverTvIvAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int vieype) {
-        ViewHolder holder = new ViewHolder(mInflater.inflate(R.layout.item_discover_tviv, parent, false));
+        ViewHolder holder = new ViewHolder(mInflater.inflate(R.layout.item_classify_top_classify_singe_tv, parent, false));
         return holder;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-
-        final DiscoverTopBean discoverTopBean = list.get(position);
-        holder.mTV.setText(discoverTopBean.getGameName());
-        holder.mIV.setImageURI(discoverTopBean.getGameLogo());
+        final DiscoverListBean.DataBean.GameCategroyListBean gameCategroyListBean = list.get(position);
+        final String cName = gameCategroyListBean.getCName();
+        holder.tv_content.setText(cName);
         //为ItemView设置监听器
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, GameDetailActivity.class);
-                intent.putExtra(KeyConstant.ID, discoverTopBean.getId());
-                context.startActivity(intent);
+                Intent classifyIntent = new Intent(context, SeeMoreActivity.class);
+                classifyIntent.putExtra(KeyConstant.category_Id, gameCategroyListBean.getId()+"");//原生手柄 id 367
+                classifyIntent.putExtra(KeyConstant.TITLE, cName);
+                context.startActivity(classifyIntent);
             }
         });
     }
@@ -85,13 +84,11 @@ public class DiscoverTvIvAdapter extends RecyclerView.Adapter<DiscoverTvIvAdapte
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView mTV;
-        private SimpleDraweeView mIV;
+        private TextView tv_content;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mTV = (TextView) itemView.findViewById(R.id.tviv_item_tv);
-            mIV = (SimpleDraweeView) itemView.findViewById(R.id.tviv_item_iv);
+            tv_content = (TextView) itemView.findViewById(R.id.singer_item_tv);
         }
     }
 }

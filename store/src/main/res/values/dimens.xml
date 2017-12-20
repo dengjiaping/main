@@ -14,7 +14,7 @@
     <!-- 轮播图片高度 -->
     <dimen name="banner_image_height">214dp</dimen>
     <!-- 发现   轮播图片高度 -->
-    <dimen name="banner_image_height_discover">@dimen/dm268</dimen>
+    <dimen name="classify_top_banner_image_height">@dimen/dm288</dimen>
     <!-- 侧滑菜单宽度 -->
     <dimen name="sliding_menu_width">80dp</dimen>
 

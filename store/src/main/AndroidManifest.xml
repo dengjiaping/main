@@ -184,7 +184,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
-            android:name=".game.view.MoreGameListActivity"
+            android:name=".game.view.SeeMoreActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"/>
 

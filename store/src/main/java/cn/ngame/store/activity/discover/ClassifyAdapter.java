@@ -19,7 +19,6 @@ package cn.ngame.store.activity.discover;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,9 +36,9 @@ import java.util.List;
 import cn.ngame.store.R;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.game.view.GameDetailActivity;
-import cn.ngame.store.game.view.MoreGameListActivity;
+import cn.ngame.store.game.view.SeeMoreActivity;
 
-public class DiscoverAdapter extends BaseAdapter {
+public class ClassifyAdapter extends BaseAdapter {
 
     private final int wrapContent;
     private final Intent labelGameIntent;
@@ -47,12 +46,11 @@ public class DiscoverAdapter extends BaseAdapter {
     private FragmentManager fm;
     private List<DiscoverListBean.DataBean.ResultListBean> list;
     private int type;
-    private static Handler uiHandler = new Handler();
     private final LayoutInflater inflater;
     private TextView gameNameTv;
     private Intent intent;
 
-    public DiscoverAdapter(Context context, FragmentManager fm, List<DiscoverListBean.DataBean.ResultListBean> list, int type) {
+    public ClassifyAdapter(Context context, FragmentManager fm, List<DiscoverListBean.DataBean.ResultListBean> list, int type) {
         super();
         this.context = context;
         this.fm = fm;
@@ -64,7 +62,7 @@ public class DiscoverAdapter extends BaseAdapter {
         intent.setClass(context, GameDetailActivity.class);
 
         labelGameIntent = new Intent();
-        labelGameIntent.setClass(context, MoreGameListActivity.class);
+        labelGameIntent.setClass(context, SeeMoreActivity.class);
     }
 
     public void setList(List<DiscoverListBean.DataBean.ResultListBean> list) {
@@ -99,7 +97,7 @@ public class DiscoverAdapter extends BaseAdapter {
         final DiscoverListBean.DataBean.ResultListBean listInfo = (list == null) ? null : list.get(position);
         final ViewHolder holder;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.discover_list_item, parent, false);
+            convertView = inflater.inflate(R.layout.classify_list_item, parent, false);
             holder = new ViewHolder(context, fm);
             holder.titleTv = (TextView) convertView.findViewById(R.id.discover18_tviv_title);
             holder.moreTv = (TextView) convertView.findViewById(R.id.more_action_tv);
@@ -155,7 +153,7 @@ public class DiscoverAdapter extends BaseAdapter {
             for (int i = 0; i < gameInfoList.size(); i++) {
                 gameInfoBean = gameInfoList.get(i);
                 final String gameImage = gameInfoBean.getGameLogo();//获取每一张图片
-                View view = inflater.inflate(R.layout.item_discover_tviv, horizontalViewContainer, false);
+                View view = inflater.inflate(R.layout.item_classify_tviv, horizontalViewContainer, false);
                 gameIV = (SimpleDraweeView) view.findViewById(R.id.tviv_item_iv);
                 gameNameTv = (TextView) view.findViewById(R.id.tviv_item_tv);
                 gameNameTv.setText(gameInfoBean.getGameName());

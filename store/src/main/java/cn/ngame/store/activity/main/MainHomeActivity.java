@@ -52,7 +52,7 @@ import java.util.TimerTask;
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
-import cn.ngame.store.activity.discover.DiscoverFragment;
+import cn.ngame.store.activity.discover.ClassifyFragment;
 import cn.ngame.store.activity.hub.HubFragment;
 import cn.ngame.store.activity.hub.HubPostsActivity;
 import cn.ngame.store.activity.manager.DownloadCenterActivity;
@@ -120,7 +120,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private boolean isChecking = false;
     private RecommendFragment selectedFragment;
     private RankFragment rankingFragment;
-    private DiscoverFragment discoverFragment;
+    private ClassifyFragment discoverFragment;
     private ManagerFragment administrationFragment;
     private int currentMenu;
     private FragmentViewPagerAdapter adapter;
@@ -535,7 +535,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             list.add(RecommendFragment.newInstance(0));
             //list.add(RankFragment.newInstance(""));
             list.add(HubFragment.newInstance(0));
-            list.add(DiscoverFragment.newInstance(""));
+            list.add(ClassifyFragment.newInstance(""));
             list.add(ManagerFragment.newInstance());
 
             adapter = new FragmentViewPagerAdapter(manager);
@@ -617,7 +617,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 break;*/
             case 3://分类
                 if (null == discoverFragment) {
-                    discoverFragment = new DiscoverFragment();
+                    discoverFragment = new ClassifyFragment();
                     transaction.add(R.id.main_list_fragments, discoverFragment);
                 } else {
                     transaction.show(discoverFragment);

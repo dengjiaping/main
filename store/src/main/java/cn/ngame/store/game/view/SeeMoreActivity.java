@@ -40,9 +40,9 @@ import cn.ngame.store.widget.pulllistview.PullToRefreshListView;
  * 游戏列表
  * Created by zeng on 2016/6/16.
  */
-public class MoreGameListActivity extends BaseFgActivity {
+public class SeeMoreActivity extends BaseFgActivity {
 
-    private String TAG = MoreGameListActivity.class.getSimpleName();
+    private String TAG = SeeMoreActivity.class.getSimpleName();
     private PullToRefreshListView pullListView;
     private LoadStateView loadStateView;
     private MoreGameListAdapter adapter;
@@ -50,21 +50,21 @@ public class MoreGameListActivity extends BaseFgActivity {
     private PageAction pageAction;
     public int PAGE_SIZE = 10;
     private String mLabelId;
-    private MoreGameListActivity content;
+    private SeeMoreActivity content;
     private List<TimerTask> timerTasks = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_more_game_list);
+        initStatusBar();
+        this.setContentView(R.layout.activity_see_more);
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
-        content = MoreGameListActivity.this;
+        content = SeeMoreActivity.this;
         Intent intent = getIntent();
         String title = intent.getStringExtra(KeyConstant.TITLE);
         mLabelId = intent.getStringExtra(KeyConstant.category_Id);
-        android.util.Log.d(TAG, title + ",分类,id:" + mLabelId);
         Button leftBt = (Button) findViewById(R.id.left_bt);
         findViewById(R.id.center_tv).setVisibility(View.GONE);
         leftBt.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +120,7 @@ public class MoreGameListActivity extends BaseFgActivity {
         refreshableView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MoreGameListActivity.this, GameDetailActivity.class);
+                Intent intent = new Intent(SeeMoreActivity.this, GameDetailActivity.class);
                 intent.putExtra(KeyConstant.ID, adapter.getItem(position).getId());
                 startActivity(intent);
             }

@@ -40,7 +40,7 @@ import cn.ngame.store.core.fileload.FileLoadInfo;
 import cn.ngame.store.core.fileload.FileLoadManager;
 import cn.ngame.store.core.fileload.GameFileStatus;
 import cn.ngame.store.core.fileload.IFileLoad;
-import cn.ngame.store.game.view.MoreGameListActivity;
+import cn.ngame.store.game.view.SeeMoreActivity;
 import cn.ngame.store.util.ConvUtil;
 import cn.ngame.store.view.GameLoadProgressBar;
 
@@ -52,7 +52,7 @@ import cn.ngame.store.view.GameLoadProgressBar;
  */
 public class MoreGameListAdapter extends BaseAdapter {
 
-    private static String TAG = MoreGameListActivity.class.getSimpleName();
+    private static String TAG = SeeMoreActivity.class.getSimpleName();
     private List<LikeListBean.DataBean.GameListBean> gameInfoList;
     private static Handler uiHandler = new Handler();
     private Context context;

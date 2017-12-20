@@ -1,5 +1,5 @@
 
-package cn.ngame.store.adapter.discover;
+package cn.ngame.store.adapter.classify;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +20,7 @@ import cn.ngame.store.core.utils.KeyConstant;
 /**
  * @author liguoliang
  */
-public class DiscoverIvAdapter extends RecyclerView.Adapter<DiscoverIvAdapter.ViewHolder> {
+public class ClassifyIvAdapter extends RecyclerView.Adapter<ClassifyIvAdapter.ViewHolder> {
 
     private final LayoutInflater mInflater;
     private Context context;
@@ -29,7 +29,7 @@ public class DiscoverIvAdapter extends RecyclerView.Adapter<DiscoverIvAdapter.Vi
     ;
 
 
-    public DiscoverIvAdapter(Context context, List<YunduanBean.DataBean> list) {
+    public ClassifyIvAdapter(Context context, List<YunduanBean.DataBean> list) {
         super();
         this.context = context;
         this.list = list;
@@ -45,7 +45,7 @@ public class DiscoverIvAdapter extends RecyclerView.Adapter<DiscoverIvAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int vieype) {
-        ViewHolder holder = new ViewHolder(mInflater.inflate(R.layout.item_discover_iv, parent, false));
+        ViewHolder holder = new ViewHolder(mInflater.inflate(R.layout.item_classify_iv, parent, false));
         return holder;
     }
 

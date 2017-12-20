@@ -11,7 +11,7 @@
     <cn.ngame.store.view.BannerView
         android:id="@+id/banner_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/banner_image_height_discover"
+        android:layout_height="@dimen/classify_top_banner_image_height"
         android:background="@drawable/ic_def_logo_720_288"
         android:clickable="true"
         custom:auto_scroll="true"
@@ -78,7 +78,7 @@
             android:paddingRight="@dimen/discover_margin_left"
             android:paddingTop="@dimen/dm020"
             android:text="@string/see_more"
-            android:textColor="@color/font_18b9fe"
+            android:textColor="@color/mainColor"
             android:textSize="@dimen/dm020"/>
 
         <android.support.v7.widget.RecyclerView
@@ -126,7 +126,7 @@
             android:paddingRight="@dimen/discover_margin_left"
             android:paddingTop="@dimen/dm020"
             android:text="@string/see_more"
-            android:textColor="@color/font_18b9fe"
+            android:textColor="@color/mainColor"
             android:textSize="@dimen/dm020"/>
 
         <android.support.v7.widget.RecyclerView
@@ -173,7 +173,7 @@
             android:paddingTop="@dimen/dm020"
             android:paddingRight="@dimen/discover_margin_left"
             android:text="@string/see_more"
-            android:textColor="@color/font_18b9fe"
+            android:textColor="@color/mainColor"
             android:textSize="@dimen/dm020"/>
 
         <android.support.v7.widget.RecyclerView

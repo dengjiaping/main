@@ -17,7 +17,6 @@ import cn.ngame.store.R;
 import static cn.ngame.store.R.id.tv_content;
 
 /**
- * 首页下方攻略列表
  *
  * @author gp
  */
