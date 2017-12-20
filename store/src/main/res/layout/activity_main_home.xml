@@ -49,6 +49,18 @@
             android:scaleType="centerInside"
             android:src="@drawable/ic_sousu"/>
 
+        <ImageView
+            android:id="@+id/main_rank_bt"
+            android:layout_width="@dimen/dm032"
+            android:layout_height="@dimen/dm032"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dm032"
+            android:layout_toLeftOf="@id/im_toSearch"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:scaleType="centerInside"
+            android:src="@drawable/botton_paihang1"/>
+
         <FrameLayout
             android:id="@+id/fl_notifi"
             android:layout_width="wrap_content"
@@ -120,9 +132,9 @@
         android:id="@+id/ll_bot_tab"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dm085"
-        android:background="@color/white"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:background="@color/white"
         >
 
         <LinearLayout
@@ -185,7 +197,7 @@
                 android:textSize="@dimen/dm016"/>
         </LinearLayout>
 
-        <LinearLayout
+<!--        <LinearLayout
             android:id="@+id/menu_game_ll"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -214,7 +226,7 @@
                 android:text="排行"
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/dm016"/>
-        </LinearLayout>
+        </LinearLayout>-->
 
         <LinearLayout
             android:id="@+id/menu_game_hub"

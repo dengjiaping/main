@@ -1,4 +1,4 @@
-package cn.ngame.store.activity.main;
+package cn.ngame.store.activity.rank;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import cn.ngame.store.R;
-import cn.ngame.store.activity.rank.Rank012345Fragment;
 import cn.ngame.store.adapter.RankTopPagerAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.core.utils.CommonUtil;
@@ -23,8 +22,7 @@ import cn.ngame.store.core.utils.CommonUtil;
  * Created by gp on 2017/3/14 0014.
  */
 
-public class
-RankFragment extends BaseSearchFragment {
+public class RankFragment extends BaseSearchFragment {
     private ViewPager viewpager;
     private ArrayList<Fragment> fragments;
     private RankTopPagerAdapter adapter;

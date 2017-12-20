@@ -316,6 +316,10 @@
             android:screenOrientation="portrait"
             />
         <activity
+            android:name=".activity.rank.RankActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
             android:name=".activity.hub.CircleActivity"
             android:screenOrientation="portrait"
             />

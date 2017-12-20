@@ -57,6 +57,8 @@ import cn.ngame.store.activity.hub.HubFragment;
 import cn.ngame.store.activity.hub.HubPostsActivity;
 import cn.ngame.store.activity.manager.DownloadCenterActivity;
 import cn.ngame.store.activity.manager.ManagerFragment;
+import cn.ngame.store.activity.rank.RankActivity;
+import cn.ngame.store.activity.rank.RankFragment;
 import cn.ngame.store.activity.sm.AboutNgameZoneActivity;
 import cn.ngame.store.activity.sm.AdCooperativeActivity;
 import cn.ngame.store.activity.sm.JoypadSettingsActivity;
@@ -123,28 +125,23 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private int currentMenu;
     private FragmentViewPagerAdapter adapter;
     private FragmentManager fragmentManager;
-    private LinearLayout home, game, menu_game_hub, video, manager;
+    private LinearLayout home, menu_game_hub, video, manager;
     private Button bt_home, bt_game, bt_video, bt_manager;
-    private TextView tv_home, tv_game, tv_video, tv_manager;
+    private TextView tv_home, tv_video, tv_manager,mEditProfileTv,tv_notifi_num,menu_gamehub_tv,mSmNicknameTv,mTitleTv;
     private int colorDark;
     private int colorNormal;
     private String imgUrl;
     private List<Fragment> mfragmentlist = new ArrayList<>();
     private int rbIndex;
-    private ImageView im_toSearch;
+    private ImageView im_toSearch,mRankBt;
     private FrameLayout fl_notifi;
-    private TextView tv_notifi_num;
     private SimpleDraweeView mIconIv;
     private String pwd;
     private SlidingMenu mSlidingMenu;
     private SimpleDraweeView mSmIconIv;
-    private TextView mSmNicknameTv;
-    private TextView mTitleTv;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
-    private TextView mEditProfileTv;
     private ImageView mDownloadBt, mHubBt;
-    private TextView menu_gamehub_tv;
     private Button menu_game_hub_bt;
     private HubFragment gameHubFragment;
 
@@ -180,18 +177,18 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         int statusBarHeight = ImageUtil.getStatusBarHeight(context);
         rl_top.setPadding(0, statusBarHeight, 0, 0);*/
         home = (LinearLayout) findViewById(R.id.menu_home_ll);
-        game = (LinearLayout) findViewById(R.id.menu_game_ll);
+        //game = (LinearLayout) findViewById(R.id.menu_game_ll);
         menu_game_hub = (LinearLayout) findViewById(R.id.menu_game_hub);
         video = (LinearLayout) findViewById(R.id.menu_video);
         manager = (LinearLayout) findViewById(R.id.menu_manager);
 
         bt_home = (Button) findViewById(R.id.menu_home_bt1);
-        bt_game = (Button) findViewById(R.id.menu_game_bt);
+        //bt_game = (Button) findViewById(R.id.menu_game_bt);
         bt_video = (Button) findViewById(R.id.menu_video_bt);
         bt_manager = (Button) findViewById(R.id.menu_manager_bt);
 
         tv_home = (TextView) findViewById(R.id.menu_home_tv);
-        tv_game = (TextView) findViewById(R.id.menu_game_tv);
+        //tv_game = (TextView) findViewById(R.id.menu_game_tv);
         menu_gamehub_tv = (TextView) findViewById(R.id.menu_gamehub_tv);
         tv_video = (TextView) findViewById(R.id.menu_video_tv);
         tv_manager = (TextView) findViewById(R.id.menu_manager_tv);
@@ -206,11 +203,13 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         mTitleTv = (TextView) findViewById(R.id.title_tv);
         mDownloadBt = findViewById(R.id.main_download_bt);
         mHubBt = findViewById(R.id.main_hub_bt);
+        mRankBt = findViewById(R.id.main_rank_bt);
         im_toSearch.setOnClickListener(this);
         fl_notifi.setOnClickListener(this);
         mIconIv.setOnClickListener(this);
         mDownloadBt.setOnClickListener(this);
         mHubBt.setOnClickListener(this);
+        mRankBt.setOnClickListener(this);
 
         colorDark = getResources().getColor(R.color.mainColor);
         colorNormal = getResources().getColor(R.color.color_333333);
@@ -534,7 +533,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 //            mStickyLV.add(LocalFragment.getInstance());
 
             list.add(RecommendFragment.newInstance(0));
-            list.add(RankFragment.newInstance(""));
+            //list.add(RankFragment.newInstance(""));
             list.add(HubFragment.newInstance(0));
             list.add(DiscoverFragment.newInstance(""));
             list.add(ManagerFragment.newInstance());
@@ -554,13 +553,13 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         this.currentMenu = currentMenu;
 
         bt_home.setSelected(false);
-        bt_game.setSelected(false);
+        //bt_game.setSelected(false);
         bt_video.setSelected(false);
         bt_manager.setSelected(false);
         menu_game_hub_bt.setSelected(false);
 
         tv_home.setTextColor(colorNormal);
-        tv_game.setTextColor(colorNormal);
+        //tv_game.setTextColor(colorNormal);
         menu_gamehub_tv.setTextColor(colorNormal);
         tv_video.setTextColor(colorNormal);
         tv_manager.setTextColor(colorNormal);
@@ -590,13 +589,14 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 im_toSearch.setVisibility(View.VISIBLE);
                 mDownloadBt.setVisibility(View.GONE);
                 mHubBt.setVisibility(View.GONE);
+                mHubBt.setVisibility(View.GONE);
                 tv_home.setTextColor(colorDark);
 
                 //埋点
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendButtonClickCount);
 
                 break;
-            case 1://排行
+          /*  case 1://排行
                 if (null == rankingFragment) {
                     rankingFragment = new RankFragment();
                     transaction.add(R.id.main_list_fragments, rankingFragment);
@@ -614,9 +614,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mDownloadBt.setVisibility(View.GONE);
                 mHubBt.setVisibility(View.GONE);
                 tv_game.setTextColor(colorDark);
-                MobclickAgent.onEvent(context, UMEventNameConstant.mainRankButtonClickCount);
-                break;
-            case 3://发现
+                break;*/
+            case 3://分类
                 if (null == discoverFragment) {
                     discoverFragment = new DiscoverFragment();
                     transaction.add(R.id.main_list_fragments, discoverFragment);
@@ -627,11 +626,12 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 discoverFragment.setShow(true);
                 selectedFragment.setShow(false);
                 bt_video.setSelected(true);
-                mTitleTv.setText("发现");
+                mTitleTv.setText("分类");
                 mDownloadBt.setVisibility(View.GONE);
                 mHubBt.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.VISIBLE);
+                mRankBt.setVisibility(View.VISIBLE);
                 tv_video.setTextColor(colorDark);
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainDiscoverButtonClickCount);
                 break;
@@ -646,7 +646,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mTitleTv.setText(R.string.main_tab_04);
                 fl_notifi.setVisibility(View.GONE);
                 mDownloadBt.setVisibility(View.GONE);
-                mHubBt.setVisibility(View.VISIBLE);
+                mHubBt.setVisibility(View.GONE);
+                mRankBt.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.GONE);
                 menu_gamehub_tv.setTextColor(colorDark);
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainCircleButtonClickCount);
@@ -665,6 +666,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 bt_manager.setSelected(true);
                 mTitleTv.setText("管理");
                 mDownloadBt.setVisibility(View.VISIBLE);
+                mRankBt.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.GONE);
                 mHubBt.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.GONE);
@@ -679,9 +681,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         if (null != selectedFragment) {
             transaction.hide(selectedFragment);
         }
-        if (null != rankingFragment) {
+     /*   if (null != rankingFragment) {
             transaction.hide(rankingFragment);
-        }
+        }*/
         if (null != gameHubFragment) {
             transaction.hide(gameHubFragment);
         }
@@ -700,7 +702,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
      */
     public void setOnTouchListener(View.OnTouchListener listener) {
         home.setOnTouchListener(listener);
-        game.setOnTouchListener(listener);
+        //game.setOnTouchListener(listener);
         menu_game_hub.setOnTouchListener(listener);
         video.setOnTouchListener(listener);
         manager.setOnTouchListener(listener);
@@ -719,11 +721,11 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                         setCurrentMenu(0);
                     }
                     break;
-                case R.id.menu_game_ll:
+             /*   case R.id.menu_game_ll:
                     if (currentMenu != R.id.menu_game_ll && action == MotionEvent.ACTION_UP) {
                         setCurrentMenu(1);
                     }
-                    break;
+                    break;*/
                 case R.id.menu_game_hub:
                     if (currentMenu != R.id.menu_game_hub && event.getAction() == MotionEvent.ACTION_UP) {
                         setCurrentMenu(2);
@@ -839,6 +841,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 break;
             case R.id.main_hub_bt:
                 startActivity(new Intent(context, HubPostsActivity.class));
+                break;
+            case R.id.main_rank_bt:
+                startActivity(new Intent(context, RankActivity.class));
+                MobclickAgent.onEvent(context, UMEventNameConstant.mainRankButtonClickCount);
                 break;
             case R.id.iv_icon_title:
                 if (null != mSlidingMenu) {
