@@ -33,20 +33,20 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:textStyle="bold"
-            android:textColor="@color/color_1a"
-            android:textSize="@dimen/title_size"/>
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_size"
+            android:textStyle="bold"/>
 
         <ImageView
             android:id="@+id/im_toSearch"
-            android:gravity="center_vertical"
             android:layout_width="@dimen/dm032"
             android:layout_height="@dimen/dm032"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dm032"
             android:layout_alignParentEnd="true"
-            android:scaleType="centerInside"
+            android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/dm032"
+            android:gravity="center_vertical"
+            android:scaleType="centerInside"
             android:src="@drawable/ic_sousu"/>
 
         <FrameLayout
@@ -68,7 +68,7 @@
                 android:text="31"
                 android:textColor="@color/white"
                 android:textSize="@dimen/dm012"
-                android:visibility="visible"/>
+                android:visibility="gone"/>
 
             <ImageView
                 android:layout_width="@dimen/dm030"
@@ -119,10 +119,10 @@
     <LinearLayout
         android:id="@+id/ll_bot_tab"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="@dimen/dm085"
+        android:background="@color/white"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:alpha="1"
         >
 
         <LinearLayout
@@ -137,8 +137,8 @@
 
             <Button
                 android:id="@+id/menu_home_bt1"
-                android:layout_width="23dp"
-                android:layout_height="23dp"
+                android:layout_width="@dimen/dm044"
+                android:layout_height="@dimen/dm044"
                 android:background="@drawable/seletor_home_bottom_hot_bt"
                 android:clickable="false"
                 android:enabled="false"/>
@@ -153,6 +153,7 @@
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/dm016"/>
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/menu_video"
             android:layout_width="0dp"
@@ -166,8 +167,8 @@
 
             <Button
                 android:id="@+id/menu_video_bt"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="@dimen/dm044"
+                android:layout_height="@dimen/dm044"
                 android:background="@drawable/seletor_home_bottom_category_bt"
                 android:clickable="false"
                 android:enabled="false"
@@ -183,6 +184,7 @@
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/dm016"/>
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/menu_game_ll"
             android:layout_width="0dp"
@@ -196,8 +198,8 @@
 
             <Button
                 android:id="@+id/menu_game_bt"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="@dimen/dm044"
+                android:layout_height="@dimen/dm044"
                 android:background="@drawable/menu_game"
                 android:clickable="false"
                 android:enabled="false"
@@ -227,8 +229,8 @@
 
             <Button
                 android:id="@+id/menu_game_hub_bt"
-                android:layout_width="23dp"
-                android:layout_height="23dp"
+                android:layout_width="@dimen/dm044"
+                android:layout_height="@dimen/dm044"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/seletor_home_bottom_hub_bt"
                 android:clickable="false"
@@ -260,8 +262,8 @@
 
             <Button
                 android:id="@+id/menu_manager_bt"
-                android:layout_width="23dp"
-                android:layout_height="23dp"
+                android:layout_width="@dimen/dm044"
+                android:layout_height="@dimen/dm044"
                 android:background="@drawable/seletor_home_bottom_manage_bt"
                 android:clickable="false"
                 android:enabled="false"
@@ -278,6 +280,13 @@
                 android:textSize="@dimen/dm016"/>
         </LinearLayout>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dm001"
+        android:layout_above="@id/ll_bot_tab"
+        android:background="@color/e6e6e6"
+        />
 
 
 </RelativeLayout>

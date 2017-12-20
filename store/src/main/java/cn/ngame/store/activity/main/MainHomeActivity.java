@@ -153,11 +153,11 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         //InMobiSdk.init(this, Constant.InMobiSdk_Id);
         //........ ....................通知栏  >= 4.4(KITKAT)...................
-        initStatusBar();
         Intent serviceIntent = new Intent(this, FileLoadService.class);
         startService(serviceIntent);
         //-----------------------------------------------------------------------------
         setContentView(R.layout.activity_main_home);
+        initStatusBar();
         //首页弹出广告dialog
         showAdverDialog();
         //得到设备id
@@ -212,7 +212,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         mDownloadBt.setOnClickListener(this);
         mHubBt.setOnClickListener(this);
 
-        colorDark = getResources().getColor(R.color.mainGreen);
+        colorDark = getResources().getColor(R.color.mainColor);
         colorNormal = getResources().getColor(R.color.color_333333);
 
 //        init(viewPager, getSupportFragmentManager());
@@ -410,7 +410,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         if (isAvatarChanged) {
             setUserIcon();
         }
-        //右上角消息状态
+        //右上角的消息
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -421,7 +421,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     @Override
                     public void run() {
                         if (count == 0) {
-                            tv_notifi_num.setVisibility(View.VISIBLE);
+                            tv_notifi_num.setVisibility(View.GONE);
                         } else {
                             tv_notifi_num.setVisibility(View.VISIBLE);
                             tv_notifi_num.setText(count + "");
