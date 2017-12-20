@@ -17,7 +17,6 @@
 package cn.ngame.store.adapter;
 
 import android.content.Context;
-import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,11 +30,8 @@ import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import java.util.Timer;
 
 import cn.ngame.store.R;
-import cn.ngame.store.core.fileload.FileLoadManager;
-import cn.ngame.store.core.fileload.IFileLoad;
 
 public class RecommendListAdapter extends BaseAdapter {
 
@@ -43,8 +39,6 @@ public class RecommendListAdapter extends BaseAdapter {
     private FragmentManager fm;
     private List<RecommendListBean.DataBean> list;
     private int type;
-
-    private static Handler uiHandler = new Handler();
 
     public RecommendListAdapter(Context context, FragmentManager fm, List<RecommendListBean.DataBean> list, int type) {
         super();
@@ -87,11 +81,10 @@ public class RecommendListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.recommend_list_item, parent, false);
             holder = new ViewHolder(context, fm);
-            holder.fromIv = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
-            holder.game_logo_Iv = (ImageView) convertView.findViewById(R.id.recommend_game_pic);
-            holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
-            holder.tv_summary = (TextView) convertView.findViewById(R.id.tv_summary);
-            holder.tv_from = (TextView) convertView.findViewById(R.id.text1);
+            holder.fromIv =  convertView.findViewById(R.id.img_1);
+            holder.game_logo_Iv = convertView.findViewById(R.id.recommend_game_pic);
+            holder.tv_title =  convertView.findViewById(R.id.tv_title);
+            holder.tv_summary = convertView.findViewById(R.id.tv_summary);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -106,18 +99,12 @@ public class RecommendListAdapter extends BaseAdapter {
 
     public static class ViewHolder {
         private Context context;
-        private RecommendListBean.DataBean gameInfo;
         private SimpleDraweeView fromIv;
-        private TextView tv_title, tv_summary, tv_from;
-        private IFileLoad fileLoad;
-        private FragmentManager fm;
-        private Timer timer = new Timer();
+        private TextView tv_title, tv_summary;
         public ImageView game_logo_Iv;
 
         public ViewHolder(Context context, FragmentManager fm) {
             this.context = context;
-            this.fm = fm;
-            fileLoad = FileLoadManager.getInstance(context);
         }
 
         /**
@@ -126,7 +113,6 @@ public class RecommendListAdapter extends BaseAdapter {
          * @param gameInfo 游戏信息
          */
         public void update(final RecommendListBean.DataBean gameInfo, int type, int position) {
-            this.gameInfo = gameInfo;
             String imgUrl = gameInfo.getGameRecommendImg();
             String fromUrl = gameInfo.getGameLogo();
             if (imgUrl != null && imgUrl.trim().equals("")) {
@@ -149,8 +135,6 @@ public class RecommendListAdapter extends BaseAdapter {
             } else {
                 tv_summary.setText("");
             }
-
-            tv_from.setText("来自" + gameInfo.getRecommender());
         }
     }
 }

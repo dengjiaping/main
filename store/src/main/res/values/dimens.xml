@@ -27,8 +27,8 @@
 
     <dimen name="title_size">@dimen/dm032</dimen>
     <dimen name="title_back_bt_paddingLeft">20dp</dimen>
-    <dimen name="recommend_item_from_pic">18dp</dimen>
-    <dimen name="recommend_item_game_pic_hight">@dimen/dm320</dimen>
+    <dimen name="recommend_item_from_pic">@dimen/dm038</dimen>
+    <dimen name="recommend_item_game_pic_hight">@dimen/dm260</dimen>
 
 
     <dimen name="dp_05">0.5dp</dimen>
@@ -37,7 +37,7 @@
     <dimen name="dp_16">16dp</dimen>
     <dimen name="dp_20">20dp</dimen>
     <dimen name="dp_30">30dp</dimen>
-    <dimen name="recommend_horizontal_view_height">114dp</dimen>
+    <dimen name="recommend_horizontal_view_height">@dimen/dm180</dimen>
     <dimen name="dp_14">14dp</dimen>
     <dimen name="dp_50">50dp</dimen>
     <dimen name="dp_44">44dp</dimen>

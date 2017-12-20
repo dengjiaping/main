@@ -2,6 +2,7 @@ package cn.ngame.store.activity.main;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -42,7 +43,6 @@ import cn.ngame.store.R;
 import cn.ngame.store.adapter.RecommendListAdapter;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.PageAction;
-import cn.ngame.store.core.utils.CommonUtil;
 import cn.ngame.store.core.utils.Constant;
 import cn.ngame.store.core.utils.KeyConstant;
 import cn.ngame.store.core.utils.Log;
@@ -65,7 +65,7 @@ public class RecommendFragment extends BaseSearchFragment {
     private ImageView game_big_pic_1, game_big_pic_2;
     private SimpleDraweeView from_img_1, from_img_ad, from_img_2;
     private TextView gamename_1, gamename_2, summary_2, summary_ad, title_ad;
-    private TextView from_1, from_2, summary_1;
+    private TextView summary_1;
     private LoadStateView loadStateView;
     private RecommendListAdapter adapter;
     private PageAction pageAction;
@@ -102,10 +102,9 @@ public class RecommendFragment extends BaseSearchFragment {
 
     @Override
     protected void initViewsAndEvents(View view) {
-//        typeValue = getArguments().getInt("", 1);
         context = getActivity();
         picasso = Picasso.with(context);
-        initListView(view);     //初始化
+        initListView(view);
     }
 
     private void getGameList() {
@@ -162,31 +161,36 @@ public class RecommendFragment extends BaseSearchFragment {
                                 Log.d(TAG, "HTTP请求成功：服务端返回错误！");
                             } else {
                                 horizontalViewContainer.removeAllViews();
-                                int dp10 = CommonUtil.dip2px(context, 10);
-                                int width240 = CommonUtil.dip2px(context, 240f);
-                                int heght114 = CommonUtil.dip2px(context, 114f);
                                 int size = gameInfo.size();
+                                Resources resources = getResources();
+                                int px20 = resources.getDimensionPixelOffset(R.dimen.dm020);
+                                int px34 = resources.getDimensionPixelOffset(R.dimen.dm034);
+                                int px400 = resources.getDimensionPixelOffset(R.dimen.dm400);
+                                int px180 = resources.getDimensionPixelOffset(R.dimen.dm180);
+
                                 for (int i = 0; i < size; i++) {
                                     final YunduanBean.DataBean info = gameInfo.get(i);
                                     final String gameImage = info.getLogoUrl();//获取每一张图片
                                     simpleImageView = new SimpleDraweeView(context);
                                     GenericDraweeHierarchy hierarchy = GenericDraweeHierarchyBuilder
-                                            .newInstance(getResources())
-                                            .setActualImageScaleType(ScalingUtils.ScaleType.CENTER)
-                                            .setRoundingParams(RoundingParams.fromCornersRadius(16))
+                                            .newInstance(resources)
+                                            .setPlaceholderImage(R.color.e5e5e5)
+                                            .setFailureImage(R.color.e5e5e5)
+                                            .setActualImageScaleType(ScalingUtils.ScaleType.CENTER_CROP)
+                                            .setRoundingParams(RoundingParams.fromCornersRadius(px34 / 2))
                                             .setFadeDuration(0)
                                             .build();
                                     simpleImageView.setHierarchy(hierarchy);
                                     //为  PicassoImageView设置属性
                                     hParams = new LinearLayout.LayoutParams(
                                             wrapContent, wrapContent);
-                                    hParams.width = width240;
-                                    hParams.height = heght114;
+                                    hParams.width = px400;
+                                    hParams.height = px180;
                                     //有多个图片的话
                                     if (0 == i) {
-                                        hParams.setMargins(dp10, 0, dp10, 0);
+                                        hParams.setMargins(px34, 0, px20, 0);
                                     } else {
-                                        hParams.setMargins(0, 0, dp10, 0);
+                                        hParams.setMargins(0, 0, px20, 0);
                                     }
                                     simpleImageView.setLayoutParams(hParams);
                                     //加载网络图片
@@ -433,14 +437,11 @@ public class RecommendFragment extends BaseSearchFragment {
         title_ad = (TextView) view.findViewById(R.id.tv_gamename_ad);
         summary_ad = (TextView) view.findViewById(R.id.tv_summary_ad);//游戏摘要
         from_img_ad = (SimpleDraweeView) view.findViewById(R.id.img_from_ad);
-        fetchAd();
+        //fetchAd();
         //================广告 结束======================
 
         from_img_1 = (SimpleDraweeView) view.findViewById(R.id.img_from_1);//来自 头像
         from_img_2 = (SimpleDraweeView) view.findViewById(R.id.img_from_2);
-
-        from_1 = (TextView) view.findViewById(R.id.text_from_1);//来自 名字
-        from_2 = (TextView) view.findViewById(R.id.text_from_2);
 
         gamename_1 = (TextView) view.findViewById(R.id.tv_gamename_1);//游戏名字
         gamename_2 = (TextView) view.findViewById(R.id.tv_gamename_2);
@@ -590,7 +591,6 @@ public class RecommendFragment extends BaseSearchFragment {
                 // .resize(screenWidth,150)
                 .into(game_big_pic_1);
         gamename_1.setText(dataBean0.getGameName());
-        from_1.setText("来自" + dataBean0.getRecommender());
         summary_1.setText(dataBean0.getRecommend());
 
         if (null == dataBean1) {
@@ -603,7 +603,6 @@ public class RecommendFragment extends BaseSearchFragment {
         from_img_2.setImageURI(dataBean1.getGameLogo());//来自...头像
 
         gamename_2.setText(dataBean1.getGameName());
-        from_2.setText("来自" + dataBean1.getRecommender());
         summary_2.setText(dataBean1.getRecommend());
 
     }

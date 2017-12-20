@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,7 +25,6 @@ import java.util.Date;
 import java.util.List;
 
 import cn.ngame.store.R;
-import cn.ngame.store.activity.main.TopicsDetailActivity;
 import cn.ngame.store.base.fragment.BaseSearchFragment;
 import cn.ngame.store.bean.PageAction;
 import cn.ngame.store.core.utils.KeyConstant;
@@ -324,30 +322,6 @@ public class HubFragment extends BaseSearchFragment {
             }
         }
     }
-
-    //顶部2个位置
-    private void initHeadView(View view) {
-        from_img_1 = (SimpleDraweeView) view.findViewById(R.id.img_from_1);//来自 头像
-        from_img_2 = (SimpleDraweeView) view.findViewById(R.id.img_from_2);
-
-        from_1 = (TextView) view.findViewById(R.id.text_from_1);//来自 名字
-        from_2 = (TextView) view.findViewById(R.id.text_from_2);
-
-        gamename_1 = (TextView) view.findViewById(R.id.tv_gamename_1);//游戏名字
-        gamename_2 = (TextView) view.findViewById(R.id.tv_gamename_2);
-
-
-        game_big_pic_1 = (ImageView) view.findViewById(R.id.recommend_game_pic_1);//游戏图片
-        game_big_pic_2 = (ImageView) view.findViewById(R.id.recommend_game_pic_2);
-
-        summary_1 = (TextView) view.findViewById(R.id.tv_summary1);//游戏摘要
-        summary_2 = (TextView) view.findViewById(R.id.tv_summary2);
-
-        //横向滑动控件
-        singeTopicsDetailIntent.setClass(context, TopicsDetailActivity.class);
-        wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
-    }
-
     //头部点击
 
     //设置头部数据

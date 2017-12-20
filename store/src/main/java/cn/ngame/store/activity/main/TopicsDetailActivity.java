@@ -1,6 +1,7 @@
 package cn.ngame.store.activity.main;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.jzt.hol.android.jkda.sdk.bean.game.GameListBody;
 import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.main.GameSelectClient;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,7 +62,12 @@ public class TopicsDetailActivity extends BaseFgActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initStatusBar();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(true);
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(R.color.transparent);
+        }
         setContentView(R.layout.topics_detail_activity);
         content = TopicsDetailActivity.this;
         title = getIntent().getStringExtra(KeyConstant.TITLE);

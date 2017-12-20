@@ -87,16 +87,15 @@ public class BaseFgActivity extends FragmentActivity {
         }
         win.setAttributes(winParams);
     }
+
+    //透明状态栏
     protected void initStatusBar() {
-       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
-            // 激活状态栏设置
             //tintManager.setStatusBarTintEnabled(true); // 激活导航栏设//
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintResource(R.color.mainColor);//通知栏所需颜色
         }
-        //StatusBarUtil.transparencyBar(this); //设置状态栏全透明
-        //StatusBarUtil.StatusBarLightMode(this);
     }
 }
