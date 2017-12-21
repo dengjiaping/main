@@ -1,5 +1,5 @@
 
-package cn.ngame.store.activity.discover;
+package cn.ngame.store.activity.classify;
 
 import android.content.Context;
 import android.view.View;
@@ -14,22 +14,21 @@ import java.util.List;
 import cn.ngame.store.R;
 
 /**
- * 首页下方攻略列表
- *
+ *  首页下方攻略列表
  * @author gp
  */
-public class AllClassifyStyleAdapter extends BaseAdapter {
+public class AllClassifyManufacturerAdapter extends BaseAdapter {
 
     private Context context;
-    private List<AllClassifyBean.DataBean.GameStyleListBean> list;
+    private List<AllClassifyBean.DataBean.GameManufacturerListBean> list;
 
-    public AllClassifyStyleAdapter(Context context, List<AllClassifyBean.DataBean.GameStyleListBean> list) {
+    public AllClassifyManufacturerAdapter(Context context, List<AllClassifyBean.DataBean.GameManufacturerListBean> list) {
         super();
         this.context = context;
         this.list = list;
     }
 
-    public void setList(List<AllClassifyBean.DataBean.GameStyleListBean> list) {
+    public void setList(List<AllClassifyBean.DataBean.GameManufacturerListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -37,7 +36,7 @@ public class AllClassifyStyleAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         if (list != null) {
-            return list.size();
+            return  list.size();
         }
         return 0;
     }
@@ -62,7 +61,6 @@ public class AllClassifyStyleAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = View.inflate(parent.getContext(), R.layout.classify_gridview_item, null);
             holder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
-            holder.tv_content.setBackgroundResource(R.drawable.shape_corner4dp_4ac7fc);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.ngame.store.activity.discover;
+package cn.ngame.store.activity.classify;
 
 import android.content.Context;
 import android.content.Intent;

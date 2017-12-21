@@ -1,4 +1,4 @@
-package cn.ngame.store.activity.discover;
+package cn.ngame.store.activity.classify;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -376,7 +376,7 @@
             android:theme="@android:style/Theme.NoTitleBar"
             />
         <activity
-            android:name=".activity.discover.AllClassifyActivity"
+            android:name=".activity.classify.AllClassifyActivity"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.NoTitleBar"
             />

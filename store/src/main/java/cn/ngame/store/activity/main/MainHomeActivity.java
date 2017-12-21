@@ -52,7 +52,7 @@ import java.util.TimerTask;
 import cn.ngame.store.R;
 import cn.ngame.store.StoreApplication;
 import cn.ngame.store.activity.BaseFgActivity;
-import cn.ngame.store.activity.discover.ClassifyFragment;
+import cn.ngame.store.activity.classify.ClassifyFragment;
 import cn.ngame.store.activity.hub.HubFragment;
 import cn.ngame.store.activity.hub.HubPostsActivity;
 import cn.ngame.store.activity.manager.DownloadCenterActivity;
